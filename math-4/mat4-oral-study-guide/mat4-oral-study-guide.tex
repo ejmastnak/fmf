@@ -1,0 +1,2184 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{mwe}
+\usepackage[margin=3.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{bm} % for bold vectors in math mode
+\usepackage{physics} % many useful physics commands
+\usepackage[separate-uncertainty=true]{siunitx} % for scientific notation and units
+
+\usepackage{esint} % various fancy integral symbols
+\usepackage{xparse} % for defined macros with multiple parameters
+
+\usepackage{xcolor}  % to color hyperref links
+\usepackage[colorlinks = true, allcolors=blue]{hyperref}
+
+\setlength{\parindent}{0pt} % don't indent new paragraphs
+\newcommand{\question}[1]{\textit{#1}\vspace{2mm}}
+
+\renewcommand{\div}{\nabla \cdot}
+\renewcommand{\curl}{\nabla \cross}
+\renewcommand{\grad}{\nabla}
+\renewcommand{\laplacian}{\nabla^{2}}
+
+\newcommand{\D}{\mathcal{D}} % shorthand for the complex region D
+\newcommand{\R}{\mathbb{R}} % shorthand for the real numbers
+\newcommand{\C}{\mathbb{C}} % shorthand for the complex numbers
+
+\newcommand{\diff}{\mathop{}\!\mathrm{d}} % differential
+\newcommand{\nhat}{\hat{\mathbf{n}}} % for unit vector n
+
+\NewDocumentCommand\F{mg}{\ensuremath{\widehat{#1} \IfNoValueTF{#2}{}{(#2)}}} % For fourier transform
+
+\pdfinfo{
+	/Title (Matematika 4 Oral Study Guide)
+	/Author (Elijan Mastnak)
+	/Subject (Mathematics)
+}
+
+
+\begin{document}
+\title{Matematika 4 Theoretical Exam Study Guide}
+\author{Elijan Mastnak}
+\date{2019-2020 Summer Semester}
+\maketitle
+
+\begin{center}
+\textbf{About These Notes}
+\end{center}
+These notes give the answers to common questions from the theoretical exam required to pass the course \textit{Matemtika 4} (Mathematics 4), given to second-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. The course covers complex analysis, harmonic functions, and differential equations. I wrote the notes when studying for the exam and am making them publicly available in the hope that they might help others learning the same material. Although the exact exam questions are specific to the the physics program at the University of Ljubljana, the content is fairly standard for an undergraduate course in complex analysis and differential equations and might be useful to others learning similar material.
+
+\vspace{2mm}
+\textit{Navigation}: For easier document navigation, the table of contents is ``clickable'', meaning you can jump directly to a section by clicking the section name in the table of contents.
+
+\vspace{2mm}
+\textit{Disclaimer:} Mistakes---both trivial typos and legitimate errors---are likely. Keep in mind that these are the notes of an undergraduate student in the process of learning the material himself---take what you read with a grain of salt. If you find mistakes and feel like telling me, by Github pull request, email or some other means, I'll be happy to hear from you, even for the most trivial of errors.
+
+
+\tableofcontents
+
+\newpage
+\section{Complex Analysis}
+
+\subsection{Holomorphic Functions and the Cauchy Riemann Equations}
+
+\subsubsection{Common Questions}
+\begin{itemize}
+	\item What is the definition of a holomorphic function?
+	
+	\item When is the function $ f(z) = u(x, y) + iv(x, y) $ (where $ u, v \in C^{1}(\R^2)$) holomorphic? Prove your answer. 
+	
+	\item Provide an example of a function $ f: \C \to \C $ that is differentiable as a real function but is not holomorphic.
+	
+	\item Discuss and prove: How can a holomorphic function be written as a power series, and where does such a power series converge?
+	
+	What is the relationship between holomorphic functions $ f:\C \to \C $ and functions $ f $ that may be written as a power series?
+	
+	How many times is a holomorphic function differentiable? 
+	
+	 \item How can a holomorphic function be written in integral form? 
+
+\end{itemize}
+
+\subsubsection{Definition of  Holomorphic Function}
+\question{What is the definition of a holomorphic function?}
+
+Let $ U \subset \C $ be a region in the complex plane and let $ f : U \to \C $ be a complex function. The function $ f $ is \textit{complex-differentiable at the point $ z_0 \in \C $} if the difference quotient
+\begin{equation*}
+	\lim_{h \to 0} \frac{f(z_0 + h) - f(z_0)}{h}
+\end{equation*} 
+exists at $ z_0 $. In this case, we define the derivative of $ f $ at $ z_0 $, denoted by $ f'(z_0) $, as
+\begin{align*}
+	f'(z_0) = \lim_{h \to 0} \frac{f(z_0 + h) - f(z_0)}{h}
+\end{align*}
+The function $ f $ is called \textit{holomorphic} if it is complex-differentiable for all $ z \in U $.
+
+\subsubsection{Basic Properties of Complex Differentiation}
+\question{When is the function $ f(z) = u(x, y) + iv(x, y) $ (where $ u, v \in C^{1}(\R^2)$) holomorphic? Prove your answer. }
+
+Differentiation of complex functions behaves similarly to differentiation of real functions. Let $ U \subset \C $ be a region in the complex plane and let $ f, g : U \to \C $ be differentiable complex functions and let $ c \in \C $ be a constant. In this case:
+\begin{align*}
+	&(cf)' = cf' && (f \pm g)' = f' \pm g'\\
+	&(fg)' = fg' + f'g && \left(\frac{f}{g}\right)'= \frac{f'g - fg'}{g^2}\\
+	&(c)' = 0 & &\left(z^n\right)'= n z^{n-1}
+\end{align*}
+
+\subsubsection{Holomorphic Functions as a Power Series}
+\question{Discuss and prove: How can a holomorphic function be written as a power series, and where does such a power series converge?}
+	
+\textit{What is the relationship between holomorphic functions $ f:\C \to \C $ and functions $ f $ that may be written as a power series?}
+	
+	\textit{How many times is a holomorphic function differentiable?} 
+
+If the function series $\displaystyle{f(z) = \sum_{k = 0}^{\infty} a_{k}(z - z_0)^{k}} $ converges on the disk $ D(z_0, R) $
+\begin{itemize}
+	\item For all $ z \in D(z_0, R) $,  $ f(z) $'s derivatives are (because $ f(z) $'s uniform convergence, see above, allows term-by-term differentiation)
+	\begin{align*}
+		&f'(z) = \sum_{k = 1}^{\infty}  k a_k (z - z_0)^{k-1}\\
+		&f''(z) = \sum_{k = 2}^{\infty}  k (k-1) a_k (z - z_0)^{k-2}\\
+		&\qquad \quad \quad \ \vdots\\
+		&f^{(n)}(z) = \sum_{k = n}^{\infty}  k (k-1) \cdots (k - n - 1) (z - z_0)^{k-n}
+	\end{align*}
+	
+	\item $ f(z) $ is holomorphic for all $ z \in D(z_0, R) $ with coefficients $ a_k  $ given by $ \displaystyle{	a_k = \frac{f^{(k)}(\alpha)}{k!}} $
+	
+\end{itemize}
+\textbf{Review: Convergence of Complex Power Series}
+\begin{itemize}
+	\item Cauchy criterion: $\displaystyle{ \sum_{k = 0}^{\infty} a_{k}z^{k}} $ converges if for all $ \epsilon > 0 $ there exists $ M_0 \in \mathbb{N}$ so
+	\begin{equation*}
+		\abs{\sum_{k = n}^{m} a_k z^{k}} < \epsilon \qquad \text{for all } m \geq n \geq M_0
+	\end{equation*}
+	
+	\item The \textit{radius of convergence} $ R $ of $\displaystyle{\mathcal{S} = \sum_{k = 0}^{\infty} a_{k}(z - z_0)^{k}} $ is defined as $ \displaystyle{R = \frac{1}{\limsup \sqrt[n]{\abs{a_n}}}} $
+	
+	\item Consider $\displaystyle{\mathcal{S} = \sum_{k = 0}^{\infty} a_{k}(z - z_0)^{k}} \vspace{0.5mm} $ with radius of convergence $ R $ on the  disk $ D(z_0, R) $
+	\begin{enumerate}
+		\item $ \mathcal{S} $ converges absolutely for all $ z \in D(z_0, R) $, 
+		\item $ \mathcal{S} $ diverges for all $ z \notin U $.
+		\item The \textit{function series} $ \displaystyle{f(z) = \sum_{k = 0}^{\infty} a_{k}(z - z_0)^{k}} $ converges uniformly for all $ z \in  D(z_0, R)$.
+	\end{enumerate}
+\end{itemize}
+
+\subsubsection{Cauchy-Riemann Equations and Holomorphic Functions}
+\begin{itemize}
+	\item $ f : U \subset \C \to \C $ can be written with \textit{real components} $ u, v : U \to \R $ as
+	\begin{equation*}
+		f(z) = u(x, y) + iv(x, y) \qquad \text{where} \qquad z = x + iy; \quad x, y \in \R
+	\end{equation*}
+	
+	\item The \textit{Cauchy-Riemann equations} for $ u, v: \R^2 \to \R $, where $ u, v \in C^{1}(\R^{2}) $ are
+	\begin{equation*}
+		u_{x} = v_{y} \iff \pdv{u}{x} = \pdv{v}{y} \qquad \text{and} \qquad v_{x} = - u_{y} \iff \pdv{v}{x} = -\pdv{u}{x}
+	\end{equation*}
+	
+	\item $ f : U \subset \C \to \C $ with real components $ f = u + iv $ is holomorphic if, and only if, $ u $ and $ v $ satisfy the Cauchy-Riemann equations
+\end{itemize}
+
+\subsubsection{Integration and Holomorphic Functions}
+\question{How can a holomorphic function be written in integral form? }
+
+\begin{itemize}
+	\item For the integrable function $ f: U \subset \C \to C $ and path $ \gamma: [a, b] \to U $
+	\begin{equation*}
+		\int_{\gamma} f(z) \diff z = \int_{a}^{b}f(\gamma(t)) \dot{\gamma}(t) \diff t, \qquad \quad  \dot{\gamma}(t) = \dv{}{t}\gamma(t)
+	\end{equation*}
+
+	
+	\item For all holomorphic functions $ f: U \subset \C \to C $ and paths $ \gamma: [a, b] \to U $
+	\begin{equation*}
+		\int_{\gamma} f'(z) \diff z = f\left(\gamma(b)\right) - f\left(\gamma(a)\right)
+	\end{equation*}
+	\textbf{Proof: } Apply the definition of a contour integral, then the chain rule:
+	\begin{equation*}
+		\int_{\gamma} f'(z) \diff z = \int_{a}^{b} f'(\gamma(t)) \dot{\gamma(t)} \diff t = \int_{a}^{b}\dv{}{t} \big[f(\gamma(t))\big] \diff t = f\left(\gamma(b)\right) - f\left(\gamma(a)\right)
+	\end{equation*}
+	
+	\item For all holomorphic $ f: U \to \C $ and \textit{closed} paths $ \gamma: [a, b] \to U $:
+	\begin{equation*}
+		\oint_{\gamma} f'(z) \diff z = 0 \qquad (\text{for closed paths } \gamma )
+	\end{equation*}
+	
+	\item For all continuous functions $ f: U \to \C; \ f \in C(U) $, for which $ \oint f(z) \diff z = 0 $ for all closed $ \gamma : [a, b] \to U $, there exists holomorphic function $ F: U \to \C $ such that $ F'(z) = f(z) $.
+	
+\end{itemize}
+
+
+
+
+
+
+\subsection{Cauchy Theorem and Integral Formula}
+\subsubsection{Common Questions}
+\begin{itemize}
+	\item Define the winding number $ \operatorname{Ind}_{\gamma}(z_0) $ of a smooth curve $ \gamma $ about a point $ z_0 $ in the complex plane. 
+	
+	\item What are some of the winding number's most important properties? State, with proof, what values $ \operatorname{Ind}_{\gamma}(z_0) $ can assume. 
+	
+	\item Let the curve $ \gamma $ be completely contained in the open disk $ D \subset \C $. What is the value of $ \operatorname{Ind}_{\gamma}(z_0) $ for $ z_0 \in \C \setminus D $? Prove. 
+
+	\item State Cauchy's integral theorem and use Green's formula to prove the theorem for the simplified case when the contour $ \gamma $ does not cross over itself.
+\end{itemize}
+
+
+
+\subsubsection{Winding Number and its Properties}
+\question{Define the winding number $ \operatorname{Ind}_{\gamma}(z_0) $ of a smooth curve $ \gamma $ about a point $ z_0 $ in the complex plane. }
+
+\question{What are some of the winding number's most important properties? State, with proof, what values $ \operatorname{Ind}_{\gamma}(z_0) $ can assume.} \textbf{TODO: Proof}
+
+\question{Let the curve $ \gamma $ be completely contained in the open disk $ D \subset \C $. What is the value of $ \operatorname{Ind}_{\gamma}(z_0) $ for $ z_0 \in \C \setminus D $? Prove.} \textbf{TODO: Proof}
+
+Consider the closed path $ \gamma : [a, b] \to \Gamma $.
+\begin{itemize}
+	\item The \textit{winding number} $ \operatorname{Ind}_{\gamma}(z_0) $ of the point $ z_0 \in \C \setminus \Gamma $ with respect to $ \gamma $ is the number of times $ \gamma $ wraps around $ z_0 $ in the counterclockwise direction.
+	\begin{equation*}
+		\operatorname{Ind}_{\gamma}(z_0) = \frac{1}{2\pi i} \oint_{\gamma} \frac{\diff z}{z - z_0} = \frac{1}{2\pi i} \int_{a}^{b} \frac{\dot{\gamma}(t) \diff t}{\gamma(t) - z_0} 
+	\end{equation*}
+	
+	\item Let $ \Omega = \C \setminus \Gamma $ be the complement of $ \Gamma $.
+	\begin{enumerate}
+		\item $ \displaystyle{	\operatorname{Ind}_{\gamma}(z_0)} $ is an integer number for all $ z_0 \in \Omega $. 
+		
+		\item $ \displaystyle{	\operatorname{Ind}_{\gamma}(z_0)} $ has the same value for all $ z_0 $ in a given maximal connected component of $ \Omega $.
+		
+		\item $ \displaystyle{	\operatorname{Ind}_{\gamma}(z_0)} = 0$ if $ z_0 $ is in the unbounded component of $ \Omega $. 
+	\end{enumerate}
+	
+\end{itemize}
+
+
+\subsubsection{Cauchy's Integral Theorem and Formula}
+\question{State Cauchy's integral theorem and use Green's formula to prove the theorem for the simplified case when the contour $ \gamma $ does not cross over itself.}
+
+Consider the holomorphic function $ f: U \to \C $ and closed path $ \gamma : [a, b] \to U $ for which $	\operatorname{Ind}_{\gamma}(z_0) = 0 \ \text{for all } z_0 \in \C \setminus U $.
+\begin{itemize}
+	\item Cauchy's integral theorem: $ \displaystyle{\oint_{\gamma} f(z) \diff z = 0} $
+	
+	\vspace{2mm}
+	\textbf{Proof:} This proof is only for the special case in which $ f $ has the continuously differentiable components $ u, v: \R^2 \to \R $ and the curve $ [\gamma] $ does not cross over itself. We write $ f $ in terms of its components as
+	\begin{align*}
+		&f(z) = u(x, y) + iv(x, y); && z = x + iy, \quad \diff z = \diff x + i \diff y
+	\end{align*}
+	Let $ \Gamma \subset U $ be the region bounded by the curve $ \gamma $. We split the complex line integral into real components and apply Green's formula on the region $ \Gamma $, followed by Cauchy's equations for $ u $ and $ v $ to get
+	\begin{align*}
+		\oint_{\gamma} f(z) \diff z &= \oint_{\gamma}(u + iv)(\diff x + i \diff y)\\
+		&= \oint_{\gamma} u \diff x - v \diff y + i\oint_{\gamma} v \diff x + u \diff y\\
+		&=-\iint_{\Gamma} (v_x + u_y) \diff A + i\iint_{\Gamma} (u_x - v_y) \diff A\\
+		&=\iint_{\Gamma} (0) \diff A + \iint_{\Gamma} (0) \diff A = 0
+	\end{align*}
+	where the last holomorphic holds because $ f $ is holomorphic, so $ u $ and $ v $ satisfy the Cauchy equations and $ u_x = v_y $ and $ u_y = -v_x $. 
+	
+	\item Cauchy's integral formula: $ \displaystyle{\operatorname{Ind}_{\gamma}(z_0) f(z_0) = \frac{1}{2\pi i} \oint_{\gamma} \frac{f(z)}{z - z_0} \diff z} $ for $ z_0 \in U \setminus [\gamma] $.
+	
+	\item On an annulus $ A \subset \C $ with outer radius $ R $ and inner radius $ r $, with the inner disk bounded by $ \gamma_r $ and the outer disk by $ \gamma_R $,  Cauchy's integral formula reads
+	\begin{equation*}
+		f(z_0) = \frac{1}{2\pi i} \left[\oint_{\gamma_R} \frac{f(z)}{z - z_0} \diff z - \oint_{\gamma_r} \frac{f(z)}{z - z_0} \diff z \right] \quad \text{for all } z_{0} \in A
+	\end{equation*}
+	
+\end{itemize}
+
+\subsection{Laurent Series and Isolated Singularities}
+\subsubsection{Common Questions}
+\begin{itemize}
+	
+	\item What is the definition of an isolated singularity of a holomorphic function? 
+	
+	\item How can an (otherwise) holomorphic function $ f $ be expressed in the neighborhood of an isolated singularity $ z_0 $?
+	
+	\item Define and discuss a removable singularity, pole, and essential singularity. 
+	
+	\item Describe, analytically  and with proof, the behavior of a holomorphic function in the neighborhood of an essential singularity. 
+
+
+\end{itemize}
+
+
+\subsubsection{Definition: Laurent Series}
+\question{Not a common question, but worth mentioning.}
+
+Consider the annulus $ A \subset \C $ with inner radius $ r $ and outer radius $ R $ and the function $ f : U \to \C $ such that $ f $ is holomorphic in a neighborhood of $ A $. 
+\begin{itemize}
+	\item For all $ z \in A $, $ f $'s \textit{Laurent series} about the point $ z_0 \in A $ is defined as
+	\begin{align*}
+		f(z) = \sum_{-\infty}^{\infty} a_n (z - z_0)^{n}
+	\end{align*}
+	
+	\item The coefficients $ a_n $ are (via the Cauchy integral formula on an annulus):
+	\[
+		a_n = 
+		\begin{cases}
+			\displaystyle{\frac{1}{2\pi i} \oint_{\gamma_R} \frac{f(z)}{(z - z_0)^{n+1}}\diff z} & n \geq 0 \\[5.0mm]
+			\displaystyle{	\frac{1}{2\pi i} \oint_{\gamma_r} \frac{f(z)}{(z - z_0)^{n+1}}\diff z} & n \leq 0
+		\end{cases}
+	\]
+	where paths of integration $ \gamma_R $ and $ \gamma_r $ describe the positively oriented circles
+	\begin{align*}
+		&y_R: \quad \left\{z \in \C; \ \abs{z - z_0} = R \right\}\\
+		&y_r: \quad \, \left\{z \in \C; \ \abs{z - z_0} = r \right\}
+	\end{align*}
+	More generally, the coefficients $ a_n $ may be written
+	\begin{align*}
+		a_n = \frac{1}{2\pi i} \oint_{\gamma} \frac{f(z)}{(z - z_0)^{n+1}}\diff z
+	\end{align*}
+	where $ \gamma $ is any positively oriented simple closed curve in the annulus $ A $ enclosing $ z_0 $.
+	
+	\item Let the holomorphic function $ f $ have the Laurent series $ \displaystyle{f(z) = \sum_{-\infty}^{\infty} a_n (z - z_0)^{n}} $.
+	\vspace{-5mm}
+	\begin{itemize}
+		\item The terms $ \displaystyle{\sum_{n=0}^{\infty} a_n (z - z_0)^{n}} $ are the \textit{regular part} of $ f $'s Laurent series
+		
+		\item The terms $ \displaystyle{	\sum_{n=-\infty}^{-1} a_n (z - z_0)^{n}} $, are the \textit{principle part} of $ f $'s Laurent series
+	\end{itemize}
+	
+	\item Consider the open disk $ D(z_0, R) \subset U $ and the complex function $ f : U \to \C $ such that $ f $ is holomorphic in a neighborhood of $ D $. For all $ z \in D $, there exists a Taylor series for $ f $ about the point $ z_0 \in D $ that converges for all $ z \in D $:
+	\begin{equation*}
+		f(z) = \sum_{n = 0}^{\infty}a_n (z-z_0)^n, \qquad a_n = \frac{1}{2\pi i} \oint_{\abs{z}=R} \frac{f(z)}{(z - z_0)^{n+1}} \diff z
+	\end{equation*}
+	\textit{Interpretation:} The Taylor series comes from $ f $'s Laurent series on the annulus $ A $ and sending $ r \to 0 $. As $ r \to 0 $, $ A $ converges to $ D $, the principle part of $ f $'s Laurent series vanishes, and the remaining regular part is $ f $'s Taylor series.
+	
+	
+\end{itemize}
+
+
+\subsubsection{Classification of Singularities}
+\question{What is the definition of an isolated singularity of a holomorphic function? }
+
+\question{Define and discuss a removable singularity, pole, and essential singularity.}
+
+Consider the point $ z_{0} \in U $, complex function $ f: U \setminus \{z_0\} \to \C $, and disk $ D(z_{0}, R) $. $ z_0 $ is an \textit{isolated singularity} of  the function $ f $ if $ f $ is holomorphic on $ D \setminus \{z_0\} $. Further:
+\begin{itemize}
+	\item $ z_{0} $ is a \textit{removable singularity} if all coefficients $ a_n $ in the principle part of $ f $'s Laurent series about $ z_0 $ are zero. In this case
+	\begin{equation*}
+		f(z) = \sum_{n=0}^{\infty}a_n(z - z_0)^n
+	\end{equation*}
+	Equivalently, $ z_0 $ is a \textit{removable singularity} if there exists a holomorphic function $ g : U \to \C  $ coinciding with $ f $ on $ U \setminus \{z_0\} $ of the form
+	\[
+		g(z) = \begin{cases}
+			f(z), &  z \in U \setminus \{z_0\}\\
+			a_0, & z = z_0
+		\end{cases}
+	\]
+	where $ a_0 $ is the $ 0 $-index coefficient of $ f $'s Laurent series.
+	
+	\item $ z_{0} $ is a \textit{pole} if only \underline{finitely many} coefficients $ a_n $ in the principle part of $ f $'s Laurent series about $ z_0 $ are nonzero.
+	
+	\item $ z_{0} $ is an \textit{essential singularity} if \underline{all} coefficients $ a_n $ in the principle part of $ f $'s Laurent series about $ z_0 $ are nonzero.
+\end{itemize}
+
+\subsubsection{Holomorphic Function Near Singularities}
+\question{Describe, analytically  and with proof, the behavior of a holomorphic function in the neighborhood of an essential singularity. }
+
+Consider the disk $ D(z_0, R) $ and holomorphic function $ f: D \setminus \{z_{0}\} \to \C $ with isolated singularity $ z_{0} $.
+\begin{itemize}
+	\item $ f $ can be expressed by its Laurent series in a neighborhood of $ z_0 $.
+	
+	\item If $ z_0 $ is an essential singularity, then for all $ w \in \C $ and for all real $ \epsilon, \delta > 0 $ there exists $ z $ in $ D(z_0, \delta) \setminus \{z_0 \} $ such that $ \abs{f(z) - w} < \epsilon $.
+	
+	\textit{Interpretation}: A function $ f(z) $ takes on values arbitrarily close to \textit{every} complex number $ w \in \C $ in every neighborhood of an essential singularity.
+	
+\end{itemize}
+
+
+
+\subsection{Residue and the Residue Theorem}
+\subsubsection{Common Questions}
+\begin{itemize}
+	\item State the residue theorem and discuss its applications
+	
+	\item Calculate $ \int_{-\infty}^{\infty} \frac{e^{cx}}{1+e^{x}}\diff x $ where $ c \in (0, 1) $. (Use a large rectangle as the integration region with two edges on the $ x $ axis and the line $ y = 2\pi $ respectively.)
+\end{itemize}
+
+\subsubsection{Definition: Residue and Properties}
+\question{Not a common question, but worth mentioning.}
+
+Consider the holomorphic function $ f $ with isolated singularity $ z_{0} $.
+\begin{itemize}
+	\item The \textit{residue} of $ f $ at $ z_{0} $, denoted by $ \Res(f;\, z_0) $, is the coefficient $ a_{-1} $ of $ f $'s Laurent series about $ z_0 $.
+
+	\item Consider the closed path $ \gamma : \R \to U $ for which $ \operatorname{Ind}_{\gamma}(z_0) = 1$. If $ f : U \to \C $ is holomorphic on $ U $, except possible at $ z_{0} $, then
+	\begin{align*}
+		\frac{1}{2\pi i}\oint_{\gamma}f(z)\diff z = \Res(f; z_0)
+	\end{align*}
+	\textit{Derivation:} Write $ f(z) $ as a Laurent series and apply the integral identity
+	\[
+		\oint_{\gamma}(z-z_{0})^{k} \diff z = 
+		\begin{cases}
+			2\pi i, & k = -1\\
+			0, & \text{otherwise}
+		\end{cases}
+	\]
+	term by term (where $ \gamma $ is positively oriented simple closed curve enclosing $ z_{0} $); all terms in $ f $'s Laurent series vanish except the term with $ n = -1 $. What remains is the coefficient $ a_{-1} $, which is the residue $ \Res(f; z_0) $.
+		
+	\item If $ z_0  $ is a first degree zero of $ g $ and $ f $ is holomorphic in a neighborhood of $ z_0 $
+	\begin{equation*}
+		\Res(\frac{f}{g}; z_0) = \frac{f(z_0)}{g'(z_0)}
+	\end{equation*}
+	
+	\item If $ z_0 $ is a $ n $th degree pole of $ f $
+	\begin{equation*}
+		\Res(f; z_0) = \lim_{z \to z_0} \frac{\big[  (z-z_0)^n f(z)\big]^{(n-1)}}{(n-1)!} \equiv \lim_{z\to z_0} \dv[(n-1)]{}{z} \left[\frac{(z-z_0)^n f(z)}{(n-1)!}\right]
+	\end{equation*}
+	
+\end{itemize}
+
+
+\subsubsection{Residue Theorem}
+\question{State the residue theorem and discuss its applications}
+
+Let $ f : U \to  \C $ be holomorphic on $ U $ except possibly on a finite set of \underline{isolated} points $ S $. For all closed paths $ \gamma $ in $ U \setminus S $ such that $ \operatorname{Ind}_{\gamma}(z_0) = 0$ for all $ z_0 \in U^{c} $,
+\begin{equation*}
+	\frac{1}{2\pi i} \oint_{\gamma}f(z) \diff z = \sum_{z_0 \in S} \Res(f; z_0) \operatorname{Ind}_{\gamma}(z_0)
+\end{equation*}
+\textit{Interpretation}: In practice, $ S $ is the set of $ f $'s isolated singularities. The theorem expresses the contour integral as the sum of $ f $'s residues at the isolated singularities.
+
+\subsection{Complex Powers and Logarithms}
+\subsubsection{Common Questions}
+\begin{itemize}
+	\item How are the functions $ z \mapsto \ln z $ and $ z \mapsto z^{\alpha} $ defined in the complex plane?
+	
+	\item On what regions are the functions $ z \mapsto \ln z $ and $ z \mapsto z^{\alpha} $ holomorphic? Prove.
+\end{itemize}
+
+\subsubsection{Complex Logarithm and Power Functions}
+\question{How are the functions $ z \mapsto \ln z $ and $ z \mapsto z^{\alpha} $ defined in the complex plane?}
+
+\question{On what regions are the functions $ z \mapsto \ln z $ and $ z \mapsto z^{\alpha} $ holomorphic? Prove.} \textbf{TODO: Proof}
+\begin{itemize}
+	\item A \textit{complex logarithm} of the complex number $ z \in \C $ is any $ w \in \C $ for which $ z = e^{w} $. Because the complex exponent is periodic, $ z \in \C $ in general has multiple, periodic complex logarithms $ (\ln z)_{k} $. 
+	\begin{equation*}
+		\text{If } z = \abs{z}e^{i(\phi + 2\pi k)} \quad \text{then} \quad	(\ln z)_k = \ln \abs{z} + i(\phi + 2\pi k)
+	\end{equation*}
+	
+	\item The \textit{complex logarithmic function} $ \ln : \C \setminus (-\infty, 0] \to \C $ is defined as
+	\begin{equation*}
+		\ln (z) = \ln (\abs{z}e^{i\phi}) = \ln \abs{z} + i \phi,  \qquad \phi \in (-\pi, \pi)
+	\end{equation*}
+	where $ (-\infty, 0] $ is removed to make $ \ln (z) $ holomorphic on its domain.
+	
+	\item For all $ \omega, \omega $ in the complex logarithm's domain $ U = \C \setminus (-\infty, 0]  $
+	\begin{equation*}
+		\ln w - \ln w_0 = \int_{w_0}^{w} \frac{\diff z}{z} = \int_{\gamma} \frac{\diff z}{z} \qquad \text{and} \qquad \dv{}{w} \ln w = \frac{1}{w} \qquad
+	\end{equation*}
+	where $ \gamma \in C^1 $ is a continuously differentiable path in $ U $ starting at $ w_0 $ and ending at $ w $.
+	
+	\item Consider the region $ U \subset \C $ such that $ \operatorname{Ind}_{\gamma}(z) = 0 $ for all $ z \in U^{c} $ and all closed curves $ \gamma $ in $ U $. For all holomorphic $ f: U \to \C $ without zeros on $ U $ there exist (generally multiple) holomorphic $ g = \ln f $ for which $ e^{g(z)} = f(z) $ for all $ z \in U $. Any two such holomorphic functions $ g $ differ by $ 2\pi i k $ where $ k \in \mathbb{Z} $. 
+	
+	\textit{Interpretation}: We can define different \textit{branches} of the complex logarithm on arbitrary complex regions $ U $; such branches differ by multiples of $ 2\pi i $.
+	
+	\item For all $ \alpha \in \C \setminus (-\infty, 0]$ and all $ z \in \C $ the \textit{complex power function} is defined as
+	\begin{equation*}
+		z^{\alpha} = e^{\alpha \ln z}
+	\end{equation*}
+	
+\end{itemize}
+
+\subsection{Open Mapping Theorem and Maximum Modulus Principle}
+
+\subsubsection{Common Questions}
+\begin{itemize}
+	\item What is a meromorphic function and what is an open map?
+
+	\item Discuss bijective meromorphic functions mapping from the expanded complex plane into itself (the M\"{o}bius transform). To what type of curve does such a function map a circle?
+	
+	Find a bijective holomorphic function of the complex plane into itself that maps the points $ z_1, z_{2}, z_{3} $ into $ 0, 1, \infty $, in that order.
+	
+
+	\item State, with proof, the relationship between the difference in the number of zeros and the number of poles poles of a meromorphic function on the unit disk if the function has neither zeros nor poles on the disk's boundary.
+		
+	Let $ f $ be holomorphic on the unit circle, $ f(0) = -1, f'(0) = 2 $ and define $ a \in (0, 1) $. Evaluate the contour integrals $ \oint_{\abs{z} = a} \frac{f(z)}{z} \diff z $ and  $ \oint_{\abs{z} = a} \frac{f(z)}{z^2} \diff z $. 
+
+	
+	\item Discuss and prove the open mapping theorem.
+	
+	\item Discuss the maximum and minimum modulus principals for holomorphic functions and derive them using the open mapping theorem. What are some implications of the maximum and minimum modulus principle?
+	
+
+	\item Discuss the Schwarz lemma for holomorphic mappings between disks that preserve the disk's center, and use the maximum modulus principle to prove the Schwarz lemma.
+	
+	\item State and  prove how the Schwarz lemma allows us to write holomorphic mappings of the unit disk onto itself.
+	
+	For the point $ \alpha \in D(0, 1) $, show that the function $ f_{\alpha}(z) = \frac{z - \alpha}{1 - \overline{\alpha}z} $ maps the border $ \partial D(0, 1) $ into itself, then use this result to show that $ f_{\alpha} $ maps $ D \to D $.
+		
+	Let $ D $ be the unit disk and $ f:D\to D $ be a holomorphic function for which $ f(0) = 0 $. State, with proof, the maximum value of $ \abs{f(z)} $ on $ D $.
+		
+\end{itemize}
+
+
+
+\subsubsection{Definition of an Meromorphic Function and Open Map}
+\question{What is a meromorphic function and what is an open map?}
+
+The map $ f:X \to \C $ is an \textit{open map} if for every open subset $ Y \subset X $, the set $ f(Y) $ is also open. The function $ g $ is \textit{meromorphic} on $ U \subset \C $ if there exists subset $ S \subset U $  such that
+\begin{enumerate}
+	\item $ S $ does not have cluster points in $ U $
+	\item Every point in $ S $ is a pole of $ g $
+	\item $ g $ is holomorphic on $ U \setminus S $
+\end{enumerate}
+Interpretation: An open map maps all open subsets of its domain to open subsets. The function $ g $ is meromorphic if it is holomorphic everywhere on $ U $ except on a set $ S $ of isolated points, which must be $ g $'s poles.
+
+\vspace{2mm}
+\textit{Note}: Every meromorphic function on $ U $ can be expressed as the ratio of two holomorphic functions.
+
+\subsubsection{M\"obious Transformation}
+\question{Discuss bijective meromorphic functions mapping from the expanded complex plane into itself (the M\"{o}bius transform). To what type of curve does such a function map a circle?}
+
+\question{Find a bijective holomorphic function of the complex plane into itself that maps the points $ z_1, z_{2}, z_{3} $ into $ 0, 1, \infty $, in that order.}
+
+
+Every bijective meromorphic function of the form $ f : \hat{\C} \to \hat{\C} $ is a rational linear transformation of the form
+\begin{equation*}
+	f(z) = \frac{az + b}{cz + d}
+\end{equation*}
+where $ a, b, c, d \in \C $ and $ ad - bc \neq 0 $. Such a function is called a \textit{M\"obious transform}; the transformation preserves angles, maps every straight line to a line or circle, and maps every circle to a line or circle.
+
+
+\subsubsection{Poles and Zeros of a Meromorphic On a Disk}
+\question{State, with proof, the relationship between the difference in the number of zeros and the number of poles poles of a meromorphic function on the unit disk if the function has neither zeros nor poles on the disk's boundary.}
+
+
+Consider the meromorphic function $ f: U \to \C $ and the closed disk $ \overline{D} \subset U $ such that $ f $ has no poles or zeros on the border $ \partial D $. If $ \mathcal{Z} $ and $ \mathcal{P} $ are the sums of the multiplicities of $ f $'s zeros and poles, respectively on the interior $ D $, then
+\begin{equation*}
+	\oint_{\partial D}\frac{f'(z)}{f(z)}\diff z = 2\pi i (\mathcal{Z} - \mathcal{P})
+\end{equation*}
+Interpretation: The line integral of a meromorphic function $ f $ along the disk border $ \partial D $ is related directly to the number of $ f $'s poles and zeros \textit{inside} the disk.
+
+\vspace{2mm}
+\textit{Proof}:
+Let $ \alpha_{1}, \ldots, \alpha_{k} $ be all of $ f $'s zeros on $ D $, let $ \beta_{1}, \ldots, \beta_{k} $ be all of $ f $'s poles on $ D $, and let $ n_{1}, \ldots, n_{k} $ and $ m_{1}, \ldots, m_{l} $ be the zeros' and poles' multiplicities, respectively. In this case, $ f $ can be written
+\begin{equation*}
+	f(z) = (z-\alpha_{1})^{m_{1}} \cdots (z - \alpha_{k})^{m_{k}} (z-\beta_{1})^{-n_{1}} \cdots (z - \beta_{l})^{-n_{l}} g(z)
+\end{equation*}
+for some holomorphic function $ g:U \to \C $ that has neither poles nor zeros on $ D $. Use the product rule to find $ f'(z) $, and then evaluate the expression $ \frac{f'(z)}{f(z)} $; the fraction simplifies into a linear combination:
+\begin{align*}
+	\int_{\partial D} \frac{f'(z)}{f(z)} \diff z &= \int_{\partial D} \frac{m_{1}}{(z-\alpha_{1})} \diff z + \dots + \int_{\partial D} \frac{m_{k}}{(z-\alpha_{k})} \diff z\\
+	& - \int_{\partial D} \frac{n_{1}}{(z-\beta_{1})} \diff z - \cdots -  \int_{\partial D} \frac{n_{l}}{(z-\beta_{l})} \diff z
+\end{align*}
+Using the integral identity $ \oint_{\gamma}(z-z_{0})^{-1} \diff z = 2\pi i $, the sum of integrals evaluates to
+\begin{equation*}
+	\int_{\partial D} \frac{f'(z)}{f(z)} \diff z = 2\pi(m_{1} + \ldots + m_{k} - n_{1} - \ldots - n_{l}) = 2\pi i (\mathcal{Z} - \mathcal{N})
+\end{equation*} 
+
+\subsubsection{Open Mapping Theorem}
+\question{Discuss and prove the open mapping theorem.}
+\begin{itemize}
+	\item \textit{Lemma:} Let $ f $ be holomorphic on an open neighborhood $ U $ of the point $ \alpha $ and let $ \beta = f(\alpha) $, so the function $ z \mapsto f(z) - \beta $ has a zero of multiplicity $ n $ at $ \alpha $. In this case, there exist disks $ D(\alpha, \delta) \subset U $ and $ D(\beta, \epsilon) $ such that the equation $ f(z) = w $ has exactly $ n $ unique solutions in the disk $ D(\alpha, \delta) $ for all $ w \in D(\beta, \epsilon) \setminus \{\beta \} $. 
+	
+	\vspace{2mm}
+	\textit{Interpretation}: $ f $ maps the disk $ D(\alpha, \delta) $ surjectively to the disk $ D(\beta, \epsilon) $. Exactly $ n $ unique points in $ D(\alpha, \delta) $ map to the point $ w $ in the disk $ D(\beta, \epsilon) $.
+	
+	\item Every non-constant holomorphic function $ f : U \to \C $ is an open map.
+	
+	\item If the function $ f $ is non-constant and holomorphic on a neighborhood of $ z_0 \in \C $, there exists an open neighborhood $ U $ of $ z_0 $ such that:
+	\begin{enumerate}
+		\item $ f $ maps $ U $ bijectively to the open subset $ f(U) $ (i.e. $ f $ is an open map)
+		\item The inverse function $ f^{-1}: f(U) \to U $ is holomorphic
+	\end{enumerate}
+	
+\end{itemize}
+
+\subsubsection{Maximum Modulus Principle on Open and Compact Sets}
+\question{Discuss the maximum and minimum modulus principals for holomorphic functions and derive them using the open mapping theorem. What are some implications of the maximum and minimum modulus principle?}
+
+Consider the \textit{open} subset $ U \subset \C $ and the \textit{compact} subset $ K \subset \C $.
+\begin{itemize}
+	\item The modulus $ \abs{f} $ of a non-constant holomorphic function $ f: U \to \C $ cannot attain a maximum value at any point in $ U $ while $ \abs{f} $ can attain a minimum value only at $ f $'s zeros.
+	
+	\item Reciprocally, consider the arbitrary function $ g:U\to \C $. If there exists a point $ z_0 \in U $ for which $ \displaystyle{\abs{g(z_0)} \geq \abs{g(z)} \ \text{for all} \ z \in U} $
+	then $ g $ is a constant function.
+	
+	\item The restricted modulus $ \abs{f} \big |_{K} $ of a non-constant function $ f $ that is holomorphic on a neighborhood of $ K $ can attain a maximum only on the border $ \partial K $, while $ \abs{f} \big |_{K} $ can attain a minimum only on the border $ \partial K $ or at $ f $'s zeros.
+\end{itemize}
+\textit{Proof}: The function $ f $'s domain $ U $ is open, so the image $ f(U) $ is also open by the open mapping theorem. If follows that for all $ w \in f(U) $ there exists some $ z \in U $ for which $ f(z) $ is farther from the disk's center than $ w $. Formally, for all $ w \in f(U) $ there exists $ z \in U $ for which $ \abs{f(z)} > w $. It follows that $ f $ cannot attain a maximum on $ U $  as long is not constant.
+
+	
+
+		
+
+\subsubsection{Schwarz Lemma}
+\question{Discuss the Schwarz lemma for holomorphic mappings between disks that preserve the disk's center, and use the maximum modulus principle to prove the Schwarz lemma.}
+
+Consider the positive real numbers $ R, r \in \R^+ $ and the holomorphic function $ f : D(0, R) \to D(0, r) $ such that $ f(0) = 0 $. In this case
+\begin{itemize}
+	\item either $ \displaystyle{\abs{f(z)} < \frac{r}{R}\abs{z}} $ for all $ z \in D(0, R) \setminus \{0 \} $ and $ \displaystyle{\abs{f'(0)} < \frac{r}{R}} $
+	
+	\item or there exists $ w \in \C, \abs{w} = 1 $ for which $ \displaystyle{f(z) = \frac{r}{R} w z } $ for all $ z \in D(0, R) $
+\end{itemize}
+\textit{Proof}: Without loss of generality, let $ R = r = 1 $, otherwise define $ \tilde{f}:D(0,1)\to D(0,1) $ given by $ \tilde{f}(z) = \frac{f(Rz)}{r} $. Because $ f $ preserves the disk's center, $ f(0) = 0 $ which means the function 
+\begin{equation*}
+	g(z) = \frac{f(z)}{z}
+\end{equation*}
+is holomorphic on the entire unit disk. Next, for $ \rho \in (0, 1) $ the maximum modulus principle gives the following bound for $ \abs{g(z)} $ on the disk $ D(0, \rho) $:
+\begin{equation*}
+	\abs{g(z)} \leq \max_{\abs{\zeta} \leq \rho}\abs{g(\zeta)} = \frac{1}{\rho}\max_{\abs{\zeta} \leq \rho}\abs{f(\zeta)} \leq \frac{1}{\rho}
+\end{equation*}
+In the limit $ \rho \to 1 $, it follows that $ \abs{g(z)} \leq 1 $ for all $ z \in D(0,1) $, so $ \abs{f(z)} \leq \abs{z} $ for all $ z \in D(0,1) $ and $ \abs{f'(0)} = \abs{g(0)} \leq 1$. The inequality case gives the first case of the Schwarz lemma. If an equality holds, then $ \abs{f(z_{0})} = \abs{z_{0}} $ for some $ z_{0} \in D(0,1)$, meaning $ \abs{g(z_{0})} = 1 $, so $ g $ is a constant function by the maximum modulus principle. Defining $ g(z) \equiv w $ leads to $ f(z) = wz $ where $ \abs{w} = \abs{g(z_{0})} = 1 $.
+
+
+
+\subsubsection{Biholomorphism and Automorphisms of the Unit Disk}
+\question{State and  prove how the Schwarz lemma allows us to write holomorphic mappings of the unit disk onto itself.}
+
+\question{For the point $ \alpha \in D(0, 1) $, show that the function $ f_{\alpha}(z) = \frac{z - \alpha}{1 - \overline{\alpha}z} $ maps the border $ \partial D(0, 1) $ into itself, then use this result to show that $ f_{\alpha} $ maps $ D \to D $.}
+
+Consider the two open regions $ U, V \in \C $.
+\begin{itemize}
+	\item A bijective holomorphic map $ f : U \to V $ is a \textit{biholomorphism} from $ U $ to $ V $.
+	
+	A bijective holomorphic map $ f: U \to U $ is an \textit{automorphism} of $ U $.
+	
+	\item The function $ f_{\alpha} $ of the form
+		\begin{equation*}
+			f_{\alpha}(z) = \frac{z - \alpha}{1 - \overline{\alpha}z}, \qquad \alpha \in D(0, 1)
+		\end{equation*}
+		is an automorphism of the unit disk $ D(0, 1) $, and \textit{every} automorphism of the unit disk $ f: D(0, 1) \to D(0, 1) $ is of the form 
+		\begin{equation*}
+			f(z) = w f_{\alpha}(z)
+		\end{equation*}
+		for some $ \alpha \in D(0, 1) $ and $ w \in \C $ such that $ \abs{w} = 1 $.
+\end{itemize}
+
+
+\section{Harmonic Functions}
+
+\subsection{Harmonic Functions in the Plane}
+\subsubsection{Common Questions}
+\begin{itemize}
+	\item What is the definition of a harmonic function in $ \R^{2} $ and in general?
+	
+	\item Discuss the relationship between holomorphic functions and harmonic functions in the plane.
+	
+	\item State the mean value theorem for harmonic functions in the plane. How are the values of a harmonic function in the interior of a disk related to the values on the disk's boundary?
+	
+	\item What is the maximum modulus principle for harmonic functions in the plane? Use the mean value theorem for harmonic functions to derive the maximum modulus principle.
+	
+	
+	\item Precisely formulate the Dirichlet problem on the unit circle and state its solution in terms of the Poisson formula.
+\end{itemize}
+
+\subsubsection{Definition of Harmonic Functions}
+\question{What is the definition of a harmonic function in $ \R^{2} $ and in general?}
+
+Harmonic functions are functions $ u: \R^n \to \R $, $ u = u(x_1, \dots, x_n) $, for which
+\begin{equation*}
+	\Delta u = \sum_{i=1}^{n} \pdv[2]{u}{x_i} = 0
+\end{equation*}
+\textit{Interpretation}: Harmonic functions are functions whose Laplacian $ \Delta u $ is zero. 
+
+
+\subsubsection{Poisson Kernel}
+\begin{itemize}
+	\item The function $ P_r : D(0, 1) \to \R $ mapping from the unit disk to $ \R $, given by
+	\begin{equation*}
+		P_r(\theta) = \frac{1 - r^2}{1 - 2r\cos \theta + r^2}; \quad r\in[0, 1), \theta \in \R
+	\end{equation*}
+	is called the \textit{Poisson kernel}.
+	
+	\textbf{Sketch of Derivation}: Define $ \zeta = e^{i\theta} $ and $ z = r e^{i\phi} $ and apply Cauchy's formula to the curve $ \abs{z} = 1 $ (the border of the unit disk) to get the expression:
+	\begin{equation*}
+		f(z) = \frac{1}{2\pi i} \oint_{\gamma} f(\zeta) \frac{1 - \abs{z}^2}{\abs{1-\overline{z}\zeta}^2} \frac{\diff \zeta}{\zeta} \quad \text{for all} \quad  z \in \overline{D}(0,1)
+	\end{equation*}
+	Parameterize the integral with $ z = r e^{i\phi} $ for $ r\in[0, 1), \theta \in \R $ to get
+	\begin{equation*}
+		f(re^{i\phi}) = \frac{1}{2\pi} \int_{0}^{2\pi} \frac{1 - r^2}{1 - 2r \cos(\theta - \phi) + r^2} f(e^{i\phi}) \diff \theta
+	\end{equation*}
+	The integrand with $ \phi = 0 $ is the Poisson kernel.
+	
+	\item The Poisson kernel $ P_r $ is positive, even, and continuous with period $ 2\pi $ for all $ r\in[0, 1) $ and $ \theta \in \R $. Additionally,
+	
+	\vspace{-6mm}
+	\begin{flalign*}
+		\hspace{4mm}
+		\text{\textbf{--} For }  \theta \in [0, 2\pi], \qquad \quad 
+			\lim_{r\to1}P_r(\theta) = 
+			\begin{cases}
+				0, & \theta \neq 0\\
+				\infty, & \theta = 0	
+			\end{cases} &&
+	\end{flalign*}
+	\vspace{-5mm}
+		
+	\begin{itemize}
+		\item $ P_r(\theta) \leq P_r(\phi)  $ for angles $ \phi, \theta $ such that $ 0 \leq \phi \leq \theta \leq \pi $, i.e. at a fixed radius $ r $, the Poisson kernel decreases with increasing angle.
+		
+		\item $ \displaystyle{\frac{1}{2\pi} \int_{0}^{2\pi} P_r(\theta)\diff \theta = 1} $. (The special case $ f = 1 $ and $ \phi = 0 $ ).
+		
+	\end{itemize}
+	
+\end{itemize}
+
+\subsubsection{Poisson Formula}
+\question{How are the values of a harmonic function in the interior of a disk related to the values on the disk's boundary?}
+
+Consider the open unit disk $ D(0, 1) $ and the arbitrary open disk $ D(z_{0}, R) $ with radius $ R $ centered at $ z_{0} $ and let $ \overline{D}(0,1) $ and $ \overline{D}(z_{0}, R) $ denote the closed disks.
+\begin{itemize}
+	\item Poisson Formula on the Unit Disk
+	
+	If the function $ u : \R^{2} \to \R $ is harmonic on $ D(0, 1) $ and continuous on $ \overline{D}(0, 1) $
+	\begin{equation*}
+		u(re^{i\phi}) = \frac{1}{2\pi} \int_{0}^{2\pi} P_r(\theta - \phi) u \big(e^{i\theta} \big)\diff \theta \qquad \text{for all }  r\in[0, 1), \theta \in \R 
+	\end{equation*} 
+
+	
+	\item Poisson Formula on an Arbitrary Disk
+	
+	If $ u: \R^{2} \to \R $ is harmonic on $ D(z_{0}, R) $ and continuous on $ \overline{D}(z_{0}, R) $
+	\begin{equation*}
+		u(z_{0} + re^{i\phi}) = \frac{1}{2\pi} \int_{0}^{2\pi} \frac{R^2 - r^2}{R^2 - 2 Rr \cos(\theta - \phi) + r^2} u(z_{0} + Re^{i\theta}) \diff \theta
+	\end{equation*}
+	for all $ r \in D(z_{0}, R) $ and $ \phi \in \R $.
+	
+	\item \textit{Interpretation:} The Poisson formula uses the Poisson kernel to relate $ u(\alpha + re^{i\phi}) $, the value of a harmonic function $ u $ inside an open disk, to the function's value $ u(\alpha + Re^{i\phi}) $ on the disk's border.
+\end{itemize}
+
+
+\subsubsection{Mean Value Property in the Plane}
+\question{State the mean value theorem for harmonic functions in the plane.}
+
+Consider the open disk $ D(z_{0}, R) $. If the function $ u :\R^{2} \to \R$ is harmonic on $ D(z_{0}, R) $ and continuous on $ \overline{D}(z_{0}, R) $, then
+\begin{equation*}
+	u(z_{0}) = \frac{1}{2\pi}\int_{0}^{2\pi}u(z_{0} + Re^{i\theta}) \diff \theta
+\end{equation*}
+\textit{Interpretation:} This is a special case of the Poisson formula with $ r = 0 $. The property equates the value $ u $ at the disk's center to $ u $'s average value along the disk's border.
+
+
+\subsubsection{Maximum and Minimum Principle for Harmonic Functions in the Plane}
+\question{What is the maximum modulus principle for harmonic functions in the plane? Use the mean value theorem for harmonic functions to derive the maximum modulus principle.}
+
+\begin{itemize}
+	\item If the function $ u $ is non-constant and harmonic on the \textit{open} region $ U \subset \R^{2} $, then $ u $ cannot attain either a maximum or a minimum anywhere on $ U $. 
+	
+	\item If $ u $ is non-constant and harmonic on the \textit{compact} region $ K \subset \R^{2} $, then $ u $ can attain a maximum or a minimum only on the border $ \partial K $.
+\end{itemize}
+
+
+\subsubsection{Dirichlet Problem on the Unit Disk}
+\question{Precisely formulate the Dirichlet problem on the unit circle and state its solution in terms of the Poisson formula.}
+
+Consider the unit disk $ D(0, 1) $ and unit circle $ \partial D(0, 1) $.
+\begin{itemize}
+	
+	\item The Dirichlet problem reads: Find a function $ u : \R^{n} \to \R $ that is harmonic on a given region $ U $ and continuous on the border $ \partial U $, such that $ u $'s values on the border $ \partial U $ match the values of a given function $ f : \partial U \to \R$.
+	
+	
+	\item For a given continuous function $ f : \partial D(0, 1) \to \R$ defined on the unit circle, there exists exactly one function $ u : \R^{2} \to \R $ that is continuous on $ \overline{D}(0, 1) $ and harmonic on $ D(0, 1) $ for which
+	\begin{equation*}
+		f = u \big |_{\partial D(0, 1)}
+	\end{equation*}
+	Such a function $ u $ is given in terms of the Poisson formula as
+	\[
+		u(re^{i\phi}) = 
+		\begin{cases}
+			\displaystyle{\frac{1}{2\pi}\int_{0}^{2\pi}P_r(\theta - \phi) f(e^{i\phi})\diff \phi}, & r < 1\\[2.0mm]
+			f(z) & r = 1
+		\end{cases}	
+	\]
+	
+	\item \textit{Interpretation:} The exists exactly one harmonic function $ u $ that solves the Dirichlet problem on the unit disk for a given function $ f $, and the solution $ u $ is found with the Poisson formula.
+\end{itemize}
+
+
+
+\subsection{Harmonic Functions in Space}
+\subsubsection{Common Questions}
+\begin{itemize}
+
+	\item Find all harmonic functions in $ \R^{3} $ whose value depends only on the distance $ r $ from the origin.
+		
+	\item What are Green's identities? State Green's third identity and the mean value property for harmonic functions in space. Use Green's third identity to derive the mean value property.
+	
+	\item What is the maximum modulus principle for harmonic functions in space? Use the mean value theorem for to derive the maximum modulus principle.
+	
+	\item Define the Green function for a bounded region with a smooth border in $ \R^{3} $ and discuss how the Green function makes it possible to solve a Dirichlet problem for such a region.
+	
+\end{itemize}
+
+
+\subsubsection{Fundamental Solution of the Laplace Equation in Space}
+\question{Find all harmonic functions in $ \R^{3} $ whose value depends only on the distance $ r $ from the origin.}
+
+\begin{itemize}
+	\item The Laplace equation $ \Delta u = 0 $ for harmonic functions $ u : \R^3 \to \R $ reads
+	\begin{equation*}
+		\Delta u = \pdv[2]{u}{x} + \pdv[2]{u}{y} + \pdv[2]{u}{z} = 0
+	\end{equation*}
+	
+	\item For functions $ u = u(r) $ whose value depends only on the distance from the origin, the Laplace equation can be written 
+	\begin{equation*}
+		\Delta u(r) = u''(r) + \frac{2}{r}u'(r) = 0 
+	\end{equation*} 
+	
+	\textit{Derivation:} For functions $ u: \R^{3} \to \R $ whose value depends only on the distance from the origin, we write $ u = u(r) $ where  $ r = \sqrt{x^{2} + y^{2} + z^{2}} $. Because $ \pdv{r}{x} = \frac{x}{r} $, $ u $'s first two derivatives with respect to $ x $ are
+	\begin{equation*}
+		\pdv{u}{x} = \frac{x}{r}u'(r)  \quad \text{and} \quad \pdv[2]{u}{x} = \frac{x^{2}}{r^{2}} u''(r) + \frac{r^{2} - x^{2}}{r^{3}}u'(r)
+	\end{equation*}
+	Similar calculations for $ y $ and $ z $ show $ \Delta u(r)  = u''(r) + \frac{2}{r}u'(r)$ for $ u = u(r) $.
+	
+	\item The general solution to the Laplace equation $ u''(r) + \frac{2}{r}u'(r) = 0 $ for harmonic functions $ u = u(r) $ is $ u(r) = a + \frac{b}{r} $. All harmonic functions  whose value depends only on the distance $ r $ from the origin thus take the form
+	\begin{equation*}
+		 u(r) = a + \frac{b}{r}
+	\end{equation*}
+
+	
+	
+	\item The \textit{fundamental solution} of the Laplace equation in space is the function $ u : \R^+ \to \R $ 
+	\begin{equation*}
+		u(r) = -\frac{1}{4\pi r} \qquad (r > 0)
+	\end{equation*}
+
+\end{itemize}
+
+\subsubsection{Quick Review of Gauss's and Directional Derivatives}
+\question{Not a common question, but we need these three concepts to understand Green's identities, which follow.}
+\begin{enumerate}
+	\item For the continuously differentiable vector field $ \bm{F} : \overline{U} \to \R^3  $
+	\begin{align*}
+		 \iiint_{U} (\div{\bm{F}}) \diff V = \oiint_{\partial U} (\bm{F} \cdot \bm{n}) \diff S
+	\end{align*}
+	Interpretation: The volume integral of the divergence $ \div{\bm{F}} $ over the entire region $ U $ equals the surface integral of $ \bm{F} $ over the region's boundary $ \partial U $.
+	
+	\item The \textit{gradient} of the scalar function $ u: U \to \R $ is $ \displaystyle{\grad{u} = \left(\pdv{u}{x}, \pdv{u}{y}, \pdv{u}{z} \right)} $
+	
+	\item The \textit{directional derivative} of the continuously differentiable scalar function $ u: U \to \R $ in the direction of the vector $ \nhat \in \R^{3} $ is $\, \displaystyle{\pdv{u}{} \equiv u_{\nhat} = \grad{u} \cdot \nhat} $
+\end{enumerate}
+
+
+\subsubsection{Green's Identities in Space}
+\question{State Green's identities.}
+\begin{itemize}
+	\item \textit{Green's identities} for all twice-continuously differentiable scalar functions $ u, v: U \to \R $ defined on a neighborhood of $ U $ and for the point $ \bm{r}_0 \in U $  are
+	\begin{itemize}
+		\item[--] $ \displaystyle{\iiint_{U} \left(v \Delta u +  \grad{u} \cdot \grad{v}\right) \diff V = \oiint_{\partial U} v u_{\nhat}\diff S } $\\
+		
+		\item[--] $ \displaystyle{ \iiint_U \left(v \Delta u - u \Delta v  \right) \diff V = \iint_{\partial U} \left(v u_{\nhat} - u v_{\nhat}  \right)\diff S  } $
+		
+		\item[--] $ \displaystyle{u(\bm{r}_0) = \frac{1}{4\pi} \iint_{\partial U}\left(\frac{u_{\nhat}(\bm{r})}{\norm{\bm{r} - \bm{r}_0}} - u(\bm{r}) \pdv{}{\nhat}\frac{1}{\norm{\bm{r} - \bm{r}_0}}  \right) \diff S - \frac{1}{4\pi} \iiint_U \frac{\Delta u}{\norm{\bm{r} - \bm{r}_0}} \diff V } $
+	\end{itemize}
+	
+	\item \textit{Implication:} For any harmonic function $ u $ on a neighborhood of the closed region $ \overline{U} $
+	\begin{equation*}
+		\oiint_{\partial U} u_{\nhat} \diff S \equiv \oiint_{\partial U} (\grad{u} \cdot \nhat )\diff S  = 0
+	\end{equation*}
+	\textit{Interpretation}: The closed surface integral of a harmonic function $ u $'s directional derivative normal to the surface of integration is zero. Derived directly from the first identity with $ v = 1 $ and $ u : U \to \R $ an arbitrary harmonic function.
+\end{itemize}
+
+\subsubsection{Mean Value Property for Harmonic Functions in Space}
+\question{State Green's third identity and the mean value property for harmonic functions in space. Use Green's third identity to derive the mean value property.}
+
+Consider the closed sphere $ \overline{K}(\bm{r}_0, R) \subset U $ of radius $ R $ centered at $ \bm{r}_{0} $ and contained completely in the region $ U \subset \R^{3} $. For all harmonic functions $ u: U \to \R $
+\begin{equation*}
+	u(\bm{r}_0) = \frac{1}{4\pi R^2} \iint_{\partial K} u(\bm{r}) \diff S
+\end{equation*}
+\textit{Interpretation}: The value of the function $ u $ at the center of the closed sphere $ K $ equals the average value of $ u $ on the sphere's surface.
+
+\vspace{2mm}
+\textit{Proof:} Start with Green's third identity for the function $ u $ and sphere $ K $
+\begin{equation*}
+	u(\bm{r}_0) = \frac{1}{4\pi} \iint_{\partial K}\left(\frac{u_{\nhat}(\bm{r})}{\norm{\bm{r} - \bm{r}_0}} - u(\bm{r}) \pdv{}{\nhat}\frac{1}{\norm{\bm{r} - \bm{r}_0}}  \right) \diff S - \frac{1}{4\pi} \iiint_K \frac{\Delta u}{\norm{\bm{r} - \bm{r}_0}} \diff V
+\end{equation*}
+and apply $ \Delta u = 0 $ and $ \oiint_{\partial U} u_{\nhat} \diff S  = 0 $ for harmonic functions to get
+\begin{equation*}
+	u(\bm{r}_0) = \frac{1}{4\pi} \iint_{\partial K} - u(\bm{r}) \pdv{}{\nhat}\frac{1}{\norm{\bm{r} - \bm{r}_0}}   \diff S 
+\end{equation*}
+On a sphere, $ \norm{\bm{r} - \bm{r}_{0}} \equiv R$ is constant for $ \bm{r} \in \partial K $, and $ -\pdv{}{\nhat}\frac{1}{\norm{\bm{r} - \bm{r}_0}}  = \frac{1}{R^{2}} $, so 
+\begin{equation*}
+	u(\bm{r}_0) = \frac{1}{4\pi R^{2}} \iint_{\partial K} u(\bm{r}) \diff S 
+\end{equation*}
+
+\subsubsection{Maximum and Minimum Principle for Harmonic Functions in Space}
+\question{What is the maximum modulus principle for harmonic functions in space? Use the mean value theorem for to derive the maximum modulus principle.}
+
+Consider the \textit{open} subset $ U \subset \R^{3} $ and the \textit{compact} subset $ \overline{K} \subset \R^3 $.
+\begin{itemize}
+	\item Any non-constant function $ u : U \to \R $ that is harmonic on $ U $ cannot attain either a maximum or a minimum on $ U $. 
+
+	\item Any non-constant function $ u : \overline{K} \to \R $ that is harmonic on $ K $ and continuous on $ \overline{K} $ can attain a maximum or minimum only on the border $ \partial K $. 
+\end{itemize}
+
+
+\subsubsection{Green's Function and Poisson Kernel in Space}
+\question{Define the Green's function for a bounded region with a smooth border in $ \R^{3} $ and discuss how the Green's function makes it possible to solve a Dirichlet problem for such a region.}
+
+\begin{itemize}
+	\item A Green's function of the Laplacian operator $ \Delta $ on the region $ U $ is a function $ G : \overline{U} \cross U \to \R $ for which
+	\begin{itemize}
+		\item The function $ \displaystyle{\bm{r} \mapsto G(\bm{r}, \bm{r}_0) + \frac{1}{4\pi \norm{\bm{r} - \bm{r}_0}}   } $ is continuous on $ \overline{U} $ and harmonic on $ U $ for all $ \bm{r}_0 \in U $:
+		\item $ G(\bm{r}, \bm{r}_0) = 0 $ for all $ \bm{r} \in \partial U $ and for all $ \bm{r}_{0} \in U $
+	\end{itemize}
+	
+	\item In space, the \textit{Poisson kernel} $ P_r : \partial U \cross U \to  \R $ is defined 
+	\begin{equation*}
+		P_r(\bm{r}, \bm{r}_0) = \pdv{}{\nhat} G(\bm{r}, \bm{r}_0)  = \big(\grad{G(\bm{r}, \bm{r}_0)} \big)\cdot \nhat
+	\end{equation*}
+		
+	\item For the harmonic function $ u: U \to \R $ the \textit{Poisson formula} in space reads
+	\begin{equation*}
+		u(\bm{r}_0) = \oiint_{\partial U} \pdv{}{\nhat} G(\bm{r}, \bm{r}_0) u(\bm{r}) \diff S = \oiint_{\partial U} P_r(\bm{r}, \bm{r}_0) u(\bm{r}) \diff S \quad \text{for all } \bm{r}_{0} \in U
+	\end{equation*}
+	
+\end{itemize}
+
+
+\section{Fourier Analysis}
+\subsection{Convolutions}
+
+\subsubsection{Common Questions}
+\begin{itemize}
+	\item State the definition of a convolution of the functions $ f, g: \R \to \C $.
+	
+	\item State some of the most important properties of convolutions. Show that if $ f, g $ are even functions then $ f*g $ is also even.
+	
+	\item Discuss how convolutions prove a means to approximate bounded continuous functions with differentiable functions. 
+	
+	\item What is the Schwartz space of functions? State some of its important properties.
+\end{itemize}
+
+\subsubsection{Definition and Properties of Convolutions in $ \R $}
+\question{State the definition of a convolution of the functions $ f, g: \R \to \C $. State some of the most important properties of convolutions.}
+
+\begin{itemize}
+	\item The \textit{convolution} of the functions $ f, g: \R \to \C $, denoted by $ f * g $ is
+	\begin{align*}
+		(f*g)(x) = \int_{-\infty}^{\infty}f(x-t)g(t)\diff t
+	\end{align*}
+	assuming the integral converges absolutely. 
+	
+	\textit{Condition for Absolute Convergence:} The integral converges absolutely if $ f $ is bounded and piecewise continuous and $ g $ is piecewise continuous and has compact support. 
+	
+	\item Convolutions are linear, commutative, and associative. In terms of the functions $ f, g, h: \R \to \C $	
+	\[
+		\begin{array}{ll}
+		 	\text{Linearity:} & (\alpha f + \beta g)*h =  \alpha (f*g) + \beta (g*h) \\
+		 	\text{Commutativity:} & g*f = f*g \\
+		 	\text{Associativity:} & f*(g*h) = (f*g)*h 
+		\end{array}
+	\]
+	
+\end{itemize}
+
+\subsubsection{Differentiating Convolutions}
+\question{State some of the most important properties of convolutions (continued).}
+
+Consider the two functions $ f, g:\R \to \C $ 
+\begin{itemize}
+	\item If $ f $ is continuously differentiable and $ \int_{-\infty}^{\infty} \abs{f'(x-t)g(t)}\diff t$ converges uniformly on every finite interval of $ x $ then 
+	\begin{equation*}
+		(f*g)' = f'*g \quad \text{for all } g:\R \to \C
+	\end{equation*}
+	
+	\item If $ f $ is smooth (i.e. $ f \in C^{\infty} $) with compact support and $ g $ is integrable then $ f*g $ is also smooth and
+	\begin{equation*}
+		(f*g)^{(n)} = f^{(n)} * g; \quad n \in \mathbb{N}
+	\end{equation*}
+\end{itemize}
+
+
+
+\subsubsection{Convolutions of Functions in $ L^1(\R) $}
+\question{Not a common question, but good background theory for approximation by smooth functions.}
+\begin{itemize}
+	\item 	$ L^1(\R) $ is the space of all measurable functions $ f : \R \to \C $ whose absolute value $ \abs{f} $ is Lebesgue-integrable over the real line. We consider two elements $ f \in L^{1}(\R) $ to be equal if they agree almost everywhere. The norm is
+	\begin{equation*}
+		\norm{f}_{1} = \int_{\R}\abs{f(x)} \diff x
+	\end{equation*}
+	
+	\item Consider the functions $ f, g: \R \to \C $
+	\begin{itemize}
+		\item If $ f \in L^1(\R) $ and $ g $ is bounded and piecewise continuous, then $ f*g $ is continuous.
+		
+		\item If $ f, g \in L^1(\R) $, then $ f * g \in L^1(\R) $ and $ \displaystyle{\norm{f*g}_1 \leq \norm{f}_1 \norm{g}_1} $.
+		
+	
+	\end{itemize}
+\end{itemize}
+
+
+\subsubsection{Convolutions Involving the Function $ g_{(\delta)} $}
+\question{Not a common question, but good background theory for approximation by smooth functions.}
+
+Consider the positive real constant $ \delta > 0 $ and function $ g:L^1(\R) $ such that $ \displaystyle{\int_{-\infty}^{\infty}g(x) \diff x = 1} $
+\begin{itemize}
+	\item In terms of $ g $ and $ \delta $, the function $ g_{(\delta)}(x) $ is defined as
+	\begin{equation*}
+		g_{(\delta)}(x) \coloneqq \frac{1}{\delta} g\left(\frac{x}{\delta}\right) \qquad (\delta > 0)
+	\end{equation*}
+	If $ \displaystyle{\int_{-\infty}^{\infty}g(x) \diff x = 1} $ then $ \displaystyle{\int_{-\infty}^{\infty}g_{\delta}(x) \diff x = 1} $ for all $ \delta > 0 $.
+	
+	\item If $ g $ has compact support then $ g_{(\delta)} $ is non-zero only in a small neighborhood of the point $ 0 $ for small $ \delta $. In this case, for all continuous $ f:\R \to \C $
+		\begin{align*}
+			(f *g_{(\delta)}) = \int_{_{-\infty}}^{\infty}f(x-t)g_{(\delta)}(t) \diff t \approx f(x) \int_{_{-\infty}}^{\infty} g_{(\delta)}(t) \diff t = f(x)
+		\end{align*}
+		
+	\item If $ f:\R \to \C $ is bounded and continuous, the convolution $ f*g_{(\delta)} $ converges uniformly to $ f $ on all finite intervals $ [a, b] \subset \R $ as $ \delta $ approaches $ 0 $. In symbols:
+	\begin{equation*}
+		\lim_{\delta \to 0}  ( f*g_{(\delta)})(x) = f(x)
+	\end{equation*}
+	
+	\item If $ f \in L^1(\R) $, the convolution $ f*g_{(\delta)} $ converges to $ f $ with respect to the $ L^{1} $ norm $ \norm{\cdot}_{1} $ as $ \delta $ approaches $ 0 $. In equation form:
+	\begin{equation*}
+		\lim_{\delta \to 0} \norm{f*g_{(\delta)} - f}_{1}  = 0
+	\end{equation*}
+
+\end{itemize}
+
+\subsubsection{Approximation By Smooth Functions}
+\question{Discuss how convolutions prove a means to approximate bounded continuous functions with differentiable functions. }
+
+Consider the positive real constant $ \delta > 0 $ and function $ g:L^1(\R) $ such that $ \displaystyle{\int_{-\infty}^{\infty}g(x) \diff x = 1} $.
+
+\begin{itemize}
+	\item If $ g $ is smooth with compact support and $ f : \R \to \C $ is continuous, then $ f * g_{(\delta)} $ is smooth (see Differentiating Convolutions and $ g_{(\delta)} $) and $ f $ can be uniformly approximated by smooth functions $ f*g_{(\delta)} $ on every finite interval $ [a, b] \subset \R $. 
+		
+	\item If $ f : \R \to \C $ has compact support on the interval of approximation $ [a, b] $ and $ g $ is a smooth function with compact support on $ [a, b] $, then for all $ \epsilon > 0 $ there exists a sequence $ (f_n) $ of smooth functions with support on $ [a-\epsilon, b+\epsilon] $ that converges uniformly to $ f $.
+	
+	\item Every continuous function  $ f:\R \to \R $ can be uniformly approximated by polynomials on the compact interval $ [a, b] \subset \R $. In symbols, for all $ \epsilon > 0 $ there exists polynomial $ p : \R \to \C $ such that
+	\begin{equation*}
+		\max_{x\in[a, b]} \abs{f(x) - p(x)} < \epsilon
+	\end{equation*}
+\end{itemize}
+
+\subsubsection{The Schwartz Space $  \mathcal{S}(\R) $}
+\question{What is the Schwartz space of functions? State some of its important properties.}
+\begin{itemize}
+	\item The Schwartz space $ \mathcal{S}(\R) $ is the set of all smooth functions $ f:\R \to \C $ for which functions of the form $ x \mapsto f^{(m)}(x)x^n $ are bounded for all $ m, n \in \mathbb{N} $.
+	
+	\textit{Interpretation:} Informally, $ \mathcal{S}(\R) $ is a set of rapidly decreasing functions on $ \R $. Examples of functions in $ \mathcal{S}(\R) $ include $ x \mapsto e^{-cx^{2}} $ and smooth functions with compact support.
+
+	\item For every function $ f \in  \mathcal{S}(\R) $,
+	\begin{itemize}
+		\item all translations $ x \mapsto f(x - t) $,
+		\item all scalings $ x \mapsto f(ax), a \in \R$,
+		\item all derivatives $ f^{(n)} $ and
+		\item all products of the form $ fp $ where $ p:\R \to \C $ is a polynomial
+	\end{itemize}
+	are also elements of $ \mathcal{S}(\R) $.
+	
+	\item If $ f, g : \R \to \C $ are elements of $ \mathcal{S}(\R)  $, the convolution $ f * g $ is also in $ \mathcal{S}(\R)  $.
+\end{itemize}
+
+
+\subsection{The Fourier Transform}
+\subsubsection{Common Questions}
+\begin{itemize}
+	\item How is the Fourier transform defined? 
+	
+	\item How is the inverse Fourier transform defined? 
+	
+	\item State some of the Fourier transform's most important properties. What is the Fourier transform of the convolution of two functions? 
+	
+	\item 	Calculate the Fourier transform of the function $ f(x) = e^{-\frac{x^2}{a}} $ for $ a > 0 $.
+	
+	Calculate the Fourier transform of the function $ f_{a}(x) = \frac{a}{\pi (x^2 + a^2)} $ where $ a \in \R^{+} $ (use the residue theorem). Derive the identity $ \widehat{f_{a} * f_{b}} = \widehat{f}_{a+b} $ for $ a, b > 0 $
+	
+\end{itemize}
+
+
+\subsubsection{Fourier Transform and Important Properties}
+\question{How is the Fourier transform defined?}
+
+\question{State some of the Fourier transform's most important properties. What is the Fourier transform of the convolution of two functions?}
+
+
+\begin{itemize}
+	\item The \textit{Fourier transform} of the function $ f \in L^{1}(\R) $ is
+	\begin{equation*}
+		\widehat{f}(\omega) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} f(x)e^{-i\omega x} \diff x
+	\end{equation*}
+	The integral converges because $ \abs{e^{-i\omega x}} = 1 $ and $ f \in L^{1}(\R) $.
+	
+	\item For all functions $ f \in L^{1}(\R) $
+	\begin{itemize}
+		\item The Fourier transform $ \widehat{f} $ is continuous and $ \abs{\widehat{f}(\omega)} \leq \norm{f}_{1} $ for all $ \omega \in \R $.
+		
+		\item Let $ f_{[a]}(x) \coloneqq f(ax) $ for all $ a > 0 \implies \displaystyle{\widehat{f_{[a]}}(\omega) = \frac{1}{a}\widehat{f}\left(\frac{\omega}{a} \right)} $
+		
+		\item Let $ e_{t}(x) \coloneqq e^{itx} $ for all $ t \in \R \implies \displaystyle{\widehat{fe_t}(\omega) = \widehat{f}(\omega - t)} $
+		
+
+		\item Let $ f_t \coloneqq f(x - t) $ for all $ t \in \R \implies \displaystyle{\widehat{f_{t}}(\omega) = e^{-it\omega} \widehat{f}(\omega)} $
+		
+		\item Let $ \chi(x) = x $ for all $ x \in \R $. If $ \chi f \in L^{1}(\R) $, then $ \widehat{f} $ is differentiable and 
+		\begin{equation*}
+		\big( \widehat{f} \, \big)'(\omega) = -i \big( \widehat{\chi f}\big)(\omega)
+		\end{equation*}
+		\vspace{-7mm}
+		
+		\item If $ f $ is continuously differentiable and $ f' \in L^{1}(\R) $ then $ \widehat{f}'(\omega) = i \omega \widehat{f}(\omega) $.
+		
+		\item For all $ g \in L^{1}(\R) $, $ \displaystyle{\widehat{f*g} = \sqrt{2\pi} \widehat{f} \widehat{g}} $.
+		
+		\item For all $ f \in \mathcal{S}(\R) $, $ \widehat{f} \in \mathcal{S}(\R) $.
+	\end{itemize}
+	
+\end{itemize}
+
+
+\subsubsection{Inverse Fourier Transform}
+\question{How is the inverse Fourier transform defined? }
+
+Consider the function  $ f \in L^{1}(\R) $ for which $ \widehat{f}  \in L^{1}(\R) $
+\begin{itemize}
+	\item \textit{Lemma:} the Fourier transforms of $ x \mapsto e^{-\frac{1}{2}x^2} $ and $ x \mapsto e^{-\frac{1}{2}(ax)^2}, a > 0 $ are
+	\begin{equation*}
+		\F{e^{-\frac{1}{2}x^2}}{\omega}
+		= e^{-\frac{1}{2}x^2} \quad \text{and} \quad \F{e^{-\frac{1}{2}(ax)^2}}{\omega} = \frac{1}{a} e^{-\frac{\omega^2}{2a^2}}
+	\end{equation*}
+	
+	\item The Fourier inversion theorem for the function $ f $ is
+	\begin{equation*}
+		f(x) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} \widehat{f}(\omega) e^{ix \omega} \diff \omega \qquad \text{for almost all } x \in \R
+	\end{equation*}
+	\textit{Interpretation:} The Fourier inversion theorem recovers $ f(x) $ from $ \F{f}{\omega} $.
+	
+	\item The \textit{inverse Fourier transform} $ \check{f} $ of the function $ f $ is
+	\begin{equation*}
+		\check{f}(x) \coloneqq \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} f(\omega) e^{i x \omega} \diff \omega = \widehat{f}(-x)
+	\end{equation*}
+	
+\end{itemize}
+
+\subsubsection{More Fourier Transform Theory}
+\question{State some of the Fourier transform's most important properties (continued).}
+
+\begin{itemize}
+	\item \textit{Riemann-Lebesgue Lemma:} for all $ f \in L^{1}(\R) $, $ \displaystyle{\lim_{\abs{\omega} \to \infty} \widehat{f}(\omega) = 0} $.
+	
+	\textit{Interpretation:} The Fourier transform of the function $ f $ vanishes as the argument $ \omega $ approaches $ \infty $ in absolute value.
+	
+	\item \textit{Fourier Transform and Lipschitz Continuity:} If $ f \in L^{1}(\R) $ is Lipschitz continuous at the point $ x \in \R $, then
+	\begin{equation*}
+		f(x) = \lim_{A \to \infty} \frac{1}{\sqrt{2\pi}} \int_{-A}^{A} \widehat{f}(\omega) e^{ix\omega} \diff \omega
+	\end{equation*}
+	\textit{Interpretation:} We can express the value $ f(x) $ of a Lipschitz continuous function $ f \in L^{1}(\R) $ using the Fourier inversion theorem.
+	
+	\item The Fourier transform maps the space $ \mathcal{S}(\R) $ bijectively onto itself.
+	
+	\item \textit{Plancherel Theorem:} The Fourier transform in $ \mathcal{S}(\R) $ preserves the $ \norm{\cdot}_{2} $ norm and can be uniquely extended to a unitary operator on the space $ L^{2}(\R) $ . For background and proof, see lecture notes.
+\end{itemize}
+
+
+\section{Differential Equations}
+
+\subsection{Partial Differential Equations}
+
+\subsection{Common Questions}
+\begin{itemize}
+	\item Derive the d'Alembert formula for the solutions to the one-dimensional wave equation.
+	\item Derive how the Fourier transform is used to find solutions to the heat equation $ \pdv{u}{t} = c \pdv[2]{u}{x} $ with the initial condition $ u(x, 0) = f(x) $ where $ f: \R \to \R $ is a continuous function that falls to zero at $ \pm \infty $.
+\end{itemize}
+
+\subsubsection{Vibration of an Infinite String with d'Alembert's Formula}
+\question{Derive the d'Alembert formula for the solutions to the one-dimensional wave equation.}
+\begin{itemize}
+	\item We again look for solutions to the wave equation $ u_{tt} = c^{2}u_{xx} $ with the initial conditions $ u(x, 0) = f(x) $ and $ u_{t}(x, 0) = 0$. 
+	
+	\item Assume solutions of the form
+	\begin{equation*}
+		u(x, t) = F(x - ct) + G(x + ct)
+	\end{equation*}	
+	where $ F, G $ are twice differentiable functions.
+	
+	The initial conditions read
+	\begin{equation*}
+		u(x, 0) = F(x) + G(x) = f(x) \qquad u_{t}(x, 0) = c(G'(x) - F(x)) = g(x)
+	\end{equation*}
+	
+	\item Differentiating the first equation, solving for $ F'(x) $, and inserting this into the second equation leads to
+	\begin{equation*}
+		G'(x) = \frac{f'(x)}{2} + \frac{g'(x)}{2c} \quad \text{and} \quad F'(x) = \frac{f'(x)}{2} - \frac{g'(x)}{2c}
+	\end{equation*}
+	
+	\item Integrating the expression for $ G'(x) $ with respect to $ x $ gives
+	\begin{equation*}
+		G(x) = \frac{f(x)}{2} + \frac{1}{2c} \int_{0}^{x} g(\chi)\diff \chi + C
+	\end{equation*}
+	Combining this with $ F(x) + G(x) = f(x) $ leads to
+	\begin{equation*}
+		F(x) = \frac{f(x)}{2} - \frac{1}{2c} \int_{0}^{x} g(\chi)\diff \chi + C
+	\end{equation*}
+	
+	\item The solution for $ u(x, t) = F(x - ct) + G(x + ct) $ is thus
+	\begin{align*}
+		u(x, t) &= \frac{1}{2}\big[ f(x-ct) + f(x + ct)\big] + \frac{1}{2c}\left[\int_{0}^{x+ct}g(\chi)\diff \chi - \int_{0}^{x-ct}g(\chi)\diff \chi \right]\\
+		&= \frac{1}{2}\big[ f(x-ct) + f(x + ct)\big] + \frac{1}{2c}\left[\int_{0}^{x+ct}g(\chi)\diff \chi + \int_{x-ct}^{0}g(\chi)\diff \chi \right]\\
+		&= \frac{1}{2}\big[ f(x-ct) + f(x + ct)\big] + \frac{1}{2c} \int_{x-ct}^{x+ct}g(\chi)\diff \chi
+	\end{align*}
+	which is the \textit{d'Alembert formula} for the one-dimensional wave equation. To satisfy the wave equation, $ f $ must be twice-differentiable and $ g $ once-differentiable.
+	
+	\item If additionally $ f $ and $ g $ are odd periodic functions with period $ 2l $ for which $ f(l) = g(l) = 0 $, then $ u(0, t) = u(a, t) = 0 $ and the d'Alembert formula satisfies the boundary conditions $ u(0, t) = u(a, t) $. 
+	
+	The equality $ u(0, t) = 0 $ follows from the odd condition $ f(-x) = -f(x) $ and identity $ \int_{-a}{a}f(x)\diff x = 0 $ for odd functions
+	\begin{equation*}
+		u(0, t) = \frac{1}{2}\big[ f(-ct) + f(ct)\big] + \frac{1}{2c} \int_{-ct}^{+ct}g(\chi)\diff \chi = \frac{1}{2}\big[-f(ct) + f(ct) \big] + 0 = 0
+	\end{equation*}
+	
+	The equality $ u(a, t) = 0  $ follows from the periodic condition $ f(x + a) = f(x - a) $ and the fact that the integral of an odd function over a full period is zero.
+	\begin{align*}
+		u(a, t) &= \frac{1}{2}\big[ f(a-ct) + f(a + ct)\big] + \frac{1}{2c} \int_{a-ct}^{a+ct}g(\chi)\diff \chi\\
+		&=\frac{1}{2}\big[ -f(ct-a) + f(ct+a)\big] + \frac{1}{2c} \int_{a-ct}^{a+ct}g(\chi)\diff \chi\\
+		&= 0 + 0 = 0
+	\end{align*}
+	
+	
+\end{itemize}
+
+\subsubsection{Solving the Heat Equation with the Fourier Transform}
+\question{Derive how the Fourier transform is used to find solutions to the heat equation $ \pdv{u}{t} = c \pdv[2]{u}{x} $ with the initial condition $ u(x, 0) = f(x) $ where $ f: \R \to \R $ is a continuous function that falls to zero at $ \pm \infty $.}
+\begin{itemize}
+	\item
+	The heat equation is a partial differential equation describing the change of the quantity $ u(\bm{r}, t) $ in space $ \bm{r} \in \R^{3} $ and time $ t \in \R^+ $ of the form
+	\begin{equation*}
+		\pdv{u}{t} = c \left(\pdv[2]{u}{x} + \pdv[2]{u}{y} + \pdv[2]{u}{z}\right) = c \Delta u
+	\end{equation*}
+	where $ c > 0 $ is a constant and $ \Delta u $ is the Laplacian operator.
+	
+	The Fourier transform is used to solve the heat equation with the initial condition $ u(\bm{r}, 0) = f(\bm{r}) $ where $ f(\bm{r}) \to 0 $ as $ \norm{\bm{r}} \to \infty $. 
+	
+	\item The Fourier transform of the solution $ u(\bm{r}, t) $ at time $ t $ is
+	\begin{equation*}
+		\widehat{u}(\bm{\rho}, t) = \frac{1}{(\sqrt{2\pi})^3} \int_{\R^3} u(\bm{r}, t)e^{-i\expval{\bm{r}, \bm{\rho}}} \diff V
+	\end{equation*}
+	and the Fourier transform of the heat equation at fixed $ t $ is
+	\begin{equation*}
+		\widehat{\left(\pdv{u}{t}\right)} = \pdv{\widehat{u}}{t} = -c \big(\rho_{1}^{2} + \rho_{2}^{2} + \rho_{1}^{3}\big)\widehat{u} =- c \norm{\bm{\rho}}^2 \widehat{u}
+	\end{equation*}
+	
+	\item The Fourier transform of the heat equation can be written $ \displaystyle{\pdv{}{t} \left[e^{c\norm{\bm{\rho}^2}t } \widehat{u}\right] = 0} $, so the derivative of $ e^{c\norm{\bm{\rho}^2}t } \widehat{u} $ with respect to time is zero. 
+	
+	Because $ e^{c\norm{\bm{\rho}^2}t } \widehat{u} $ is time-independent, we write
+	\begin{equation}
+		e^{c\norm{\bm{\rho}^2}t } \widehat{u}(\bm{\rho}, t) = A(\bm{\rho}), \qquad A = A(\bm{\rho}) \label{ft:eq:ft_constant}
+	\end{equation}
+	
+	\item The Fourier transform of initial condition $ u(\bm{r}, 0) = f(\bm{r})$ is $ \widehat{u}(\bm{\rho}, 0) = \widehat{f}(\bm{\rho}) $.
+	
+	Evaluating Equation \ref{ft:eq:ft_constant} at $ t = 0 $ produces  $ u(\bm{\rho}, 0) = A(\bm{\rho}) \equiv \widehat{f}(\bm{\rho}) $, leading to
+	\begin{equation*}
+		\widehat{u}(\bm{\rho}, t) = \widehat{f}(\bm{\rho})   e^{-c\norm{\bm{\rho}^2}t }
+	\end{equation*}
+	The plan is to apply the inverse Fourier transform to transform $ \widehat{u}(\bm{\rho}, t) $ back into position-time space $ u(\bm{r}, t) $, thus solving the heat equation.
+	
+	\item \textit{Lemma:} The Fourier transform of $  e^{-c\norm{\bm{\rho}^2}t } $ at time $ t $ is the \textit{heat kernel} $ K_{t}(\bm{r}) $
+	\begin{equation*}
+		\F{ e^{-c\norm{\bm{\rho}^2}t }} = \frac{1}{(\sqrt{2ct})^3} e^{-\frac{\norm{\bm{r}}^2}{4ct}} \equiv K_{t}(\bm{r}) 
+	\end{equation*}
+	
+	\item Using the heat kernel, the inverse transform of $ \displaystyle{\widehat{u}(\bm{\rho}, t) = \widehat{f}(\bm{\rho})   e^{-c\norm{\bm{\rho}^2}t }} $ is
+	\begin{equation*}
+		u(\bm{r}, t) = \frac{1}{(\sqrt{2\pi})^3} (f*K_{t})(\bm{r}) = \frac{1}{(\sqrt{4\pi ct})^3} \int_{\R^3}f(\bm{r} - \bm{s})e^{-\frac{\norm{\bm{s}}^2}{4ct}}\diff^{3} \bm{s}
+	\end{equation*}
+\end{itemize}
+
+\subsubsection{Finite One-Dimensional String with Fourier Method}
+\question{Not a common question, but still useful information.}
+\begin{itemize}
+	\item The one-dimensional wave equation is
+	\begin{equation*}
+		u_{tt} = c^2u_{xx}
+	\end{equation*}
+	If the string is fixed at the endpoints, the boundary conditions are $ u(0, t) = u(l, t) = 0 $. The initial position and velocity distributions $ u(x, 0) $ and $ u_{t}(x, 0) $ are given by $ f(x) $ and $ g(x) $.
+	
+	The goal is to solve the wave equation $ u_{tt} = c^2u_{xx} $ for the boundary conditions $ u(0, t) = u(l, t) = 0 $ and initial conditions $ u(x, 0) = f(x, 0) $ and $ u_{t}(x, 0) = g(x, 0) $.
+	
+	\item Separate the solution into the product $ u(x, t) = X(x)T(t) $ where $ X $ and $ T $ are twice-differentiable non-zero functions. The wave equation becomes
+	\begin{equation*}
+		\frac{1}{c^{2}}\frac{T''(t)}{T(t)} = \frac{X''(x)}{X(x)}
+	\end{equation*}
+	Because the left and right sides of the equation are simultaneously equal and dependent on different variables, they must be constant. We write
+	\begin{equation*}
+  		\frac{1}{c^{2}}\frac{T''(t)}{T(t)} = \frac{X''(x)}{X(x)} \equiv - \lambda
+  	\end{equation*}
+  	which leads to the two equations
+  	\begin{equation*}
+  		X'' + \lambda X = 0 \quad \text{and} \quad T'' + c^{2}\lambda T = 0
+  	\end{equation*}
+  	Because $ T(t) $ is non-zero, the boundary conditions lead to $ X(0) = X(l) = 0$. 
+  	
+  	\item The general solution to $ X'' + \lambda X = 0 $ 
+  	\begin{equation*}
+  		X(x) = A \cos \omega x + B \sin \omega x \qquad (\lambda = \omega^{2})
+  	\end{equation*}
+  	The boundary conditions lead to $ A = 0 $ and $ n $ eigenvalues $ \omega_{n} = \frac{n\pi}{l}, n \in \mathbb{N} $ and eigenfunctions $ X_{n}(x) = B_n \sin \frac{n\pi}{l} $.
+  	
+  	\item The solutions to $ T'' + c^{2}\lambda T = 0 $ with $ \lambda = \omega^{2} = \left(\frac{n\pi}{l}\right)^{2} $ are
+  	\begin{equation*}
+  		T_{n}(t) = A_n \cos(\omega_n c t ) + B_n \sin( \omega_n c t)
+  	\end{equation*}
+  	
+  	\item The solution to $ u(x, t) = X(x)T(t) $ is thus
+  	\begin{equation*}
+  		u_{n}(x, t) = \left[A_n \cos(\frac{n\pi c}{l} t ) + B_n \sin( \frac{n\pi c}{l} t)\right] \sin (\frac{\pi n}{l} x)
+  	\end{equation*}
+  	Because the wave equation is linear, the general solution is a linear superposition of the solutions:
+  	\begin{equation*}
+  		u(x, t) = \sum_{n=1}^{\infty} u_{n}(x, t) = \sum_{n=1}^{\infty}\left(A_n \cos \frac{n\pi c}{l} t  + B_n \sin \frac{n\pi c}{l} t\right)\sin\frac{\pi n}{l} x
+  	\end{equation*}
+  
+  	\item The initial conditions $ u(x, 0) = f(x) $ and $ u_{t}(x, 0) = g(x) $ lead to
+  	\begin{equation*}
+  		f(x) = \sum_{n=1}^{\infty} A_n \sin\frac{\pi n}{l} x \quad \text{and} \quad g(x) = \sum_{n=1}^{\infty} \frac{n\pi c}{l} B_n  \sin\frac{\pi n}{l} x
+  	\end{equation*}
+  	
+  	\item The coefficients $ A_{n} $ and $ B_{n} $ are found with a sine expansion of $ f(x) $ and $ g(x) $. This is possible if $ f, g \in L^{2}(0, l) $. First, $ f, g $ are expanded to the interval $ [-l, l] $ using $ f(x) = -f(x)$ on the interval $ [-a, 0) $ (analogously for $ g $), then expanded onto the entire real line with period $ 2l $. 
+  	
+  	The functions $ f, g $ can then be written as a Fourier sine series with the function $ \sin \frac{n \pi}{l}x $. The Fourier sine expansions produce the solutions for the coefficients:
+  	\begin{equation*}
+  		A_{n} = \frac{2}{l}\int_{-l}^{l}f(x) \sin \frac{n \pi}{l}x \diff x \quad \text{and} \quad B_n = \frac{l}{n\pi c} \frac{2}{l}\int_{-l}^{l}g(x) \sin \frac{n \pi}{l}x \diff x
+  	\end{equation*}
+\end{itemize}
+
+
+
+\subsection{Zeros of Solutions to Homogeneous Second-Order LDEs}
+
+\subsubsection{Common Questions}
+\begin{itemize}
+		
+	\item Can the zeros of a nontrivial solution to the equation $ y'' + p(x)y' + q(x)y = 0 $ (where $ p, q \in C(\R) $) have any cluster points? Prove your answer.
+	
+	\item Discuss the distribution of the zeros of two linearly independent solutions to the equation  $ y'' + p(x)y' + q(x)y = 0 $.
+	
+	\item How many zeros do the nontrivial solutions $ y $ of the equation $ y'' + (1+x^2)y = 0 $ have? Prove.
+	
+\end{itemize}
+
+\subsubsection{Zeros of Homogeneous 2nd Order Linear Differential Equation}
+\question{Can the zeros of a nontrivial solution to the equation $ y'' + p(x)y' + q(x)y = 0 $ (where $ p, q \in C(\R) $) have any cluster points? Prove your answer.}
+
+Consider the homogeneous second-order linear differential equation 
+\begin{equation}
+	y'' + p(x) y' + q(x) y = 0 \label{eq:ldeR}
+\end{equation}
+where $ y = y(x) $ and $ p, q : I \to \R $ are continuous functions on the real interval $ I \subset \R $. 
+
+\begin{itemize}
+	\item The \textit{trivial solution} of Equation \ref{eq:ldeR} is $ y \equiv 0 $. All other solutions are \textit{non-trivial}.
+	
+	\item The zeros of nontrivial solutions of Equation \ref{eq:ldeR} cannot have finite cluster points.
+	
+	All zeros of a nontrivial solution are simple zeros, i.e. $ y(x_0) \hspace{-0.25mm} =\hspace{-0.25mm}  0 \hspace{-0.5mm} \implies \hspace{-0.5mm}  y'(x_0) \hspace{-0.25mm} \neq\hspace{-0.25mm}  0 $
+	
+	\vspace{2mm}
+	\textit{Proof:} Assume $ x_{0} \in I $ is a cluster point of the non-trivial solution $ y $'s zeros. Then, there exists a sequence of zeros $ (x_{n}) $ that converges to $ x_{0} $. Because $ y $ is continuous and$ y(x_{n}) = 0 $, it follows that $ y(x_{0})  = 0$. More so
+	\begin{equation*}
+		y'(x_{0}) = \lim_{x_{n} \to x_{0}} \frac{y(x_{n}) - y(x_{0})}{x_{n} - x_{0}} = 0
+	\end{equation*}
+	A solution satisfying $ y(x_{0}) = 0 $ and $ y'(x_{0}) = 0 $ is $ y \equiv 0 $, and because the solution to a homogeneous second-order LDE for a given pair of initial conditions on $ y $ and $ y' $ is unique, $ y \equiv = 0 $ is the \textit{only} solution to the equation, which contradicts the condition that $ y $ is a non-trivial solution.
+	
+\end{itemize}
+
+
+
+
+\subsubsection{Zeros and Linearly Independent Solutions}
+\question{Discuss the distribution of the zeros of two linearly independent solutions to the equation  $ y'' + p(x)y' + q(x)y = 0 $.}
+\begin{itemize}
+	\item If two solutions $ y_1 $ and $ y_2 $ of Equation \ref{eq:ldeR} have a shared zero, then $ y_{1} $ and $ y_{2} $ are linearly dependent. In symbols, if there exists $ x_0 \in I $ such that $ y_1(x_0) = y_2(x_0) = 0$, there exists constant $ \alpha \in \R $ such that $ y_1 = \alpha y_2 $.
+	
+	\item If $ y_1 $ and $ y_2 $ are linearly independent solutions of Equation \ref{eq:ldeR} then $ y_{2} $ has exactly one zero in the open interval $ (x_1, x_2) $ between any two zeros $ x_{1}, x_{2} $ of $ y_{1} $.
+\end{itemize}
+
+
+\subsubsection{Normal Form and Sturm's Comparison Criterion}
+\question{How many zeros do the nontrivial solutions $ y $ of the equation $ y'' + (1+x^2)y = 0 $ have? (Not solved, but this section provides the relevant theoretical machinery).}
+\begin{itemize}
+	\item If $ p $ is continuously differentiable and $ q $ is continuous, Equation \ref{eq:ldeR} can be written in the \textit{normal form} $ u'' + Q(x)u = 0 $ with the substitution $ y = uv $, where
+	\begin{equation*}
+		v = e^{-\frac{1}{2} \int p(x) \diff x }\qquad \text{and}
+		\qquad Q(x) = q(x) - \frac{p(x)^2}{4} - \frac{p'(x)}{2}
+	\end{equation*}
+	\textit{Derivation:} Inserting $ y = uv $ into Equation \ref{eq:ldeR} and dividing by $ v $ leads to
+	\begin{equation*}
+		u'' + \left(2\frac{v'}{v} + p\right)u' + \left(\frac{v''}{v} + \frac{v'}{v}p + q\right)u = 0
+	\end{equation*}
+	The requirement $ u' = 0 $ leads to $ \frac{v'}{v} = -\frac{p}{2} \implies v = e^{-\frac{1}{2}\int p(x)\diff x}$. Inserting the expression for $ v $ into $ \big(\frac{v''}{v} + \frac{v'}{v}p + q\big) $ leads directly to $ Q(x) = q(x) - \frac{p(x)^2}{4} - \frac{p'(x)}{2} $
+	
+	\item \textit{Sturm Comparison Criterion:} Consider the continuous functions $ q, r: I \to \R $ and non-trivial solution $ u $ of the normal-form equation $ u'' + r u = 0 $.
+	
+	If $ q(x) > r(x)$ for all $ x \in I $, then any solution $ y $ to the equation $ y'' + qy = 0 $ has at least one zero in the interval $ (x_1, x_2) $ between any two zeros $ x_1, x_2 $ of $ u $.
+	
+	\item Consider the non-trivial solution $ y $ of the equation $ y'' + qy = 0 $. 
+	
+	If $ q(x) < 0 $ for all $ x \in I $, then $ y $ has at most one zero in $ I $.
+	
+	If $ q(x) > 0 $ for all $ x \in I $, then $ y $ may have a finite number of zeros in $ I $.
+\end{itemize}
+
+
+
+\subsubsection{Example: Zeroes of the Bessel Equation}
+\question{Not a common question, but a useful example.}
+
+Let $ y $ be a non-trivial solution to the Bessel equation
+\begin{equation*}
+	x^2 y'' + xy' + (x^2 - \nu^2)y = 0 \qquad (x > 0, \nu \geq 0)
+\end{equation*}
+The number of zeros depends on $ \nu $ as follows:
+\begin{itemize}
+	\item If $ \nu \in \left [0, \frac{1}{2}\right ) $, $ y $ has a zero in every interval of width $ \pi $.
+	
+	\item If $ \nu = \frac{1}{2} $, the distance between $ y $'s subsequent zeros is exactly $ \pi $.
+	
+	\item If $ \nu > \frac{1}{2} $, $ y $ has at most one zero in every interval of width $ \pi $.
+\end{itemize}
+In any case, $ y $ has infinitely many zeros on the positive real line $ (0, \infty) $
+
+
+
+\subsection{Sturm-Liouville Theory}
+\subsubsection{Common Questions}
+\begin{itemize}
+
+	\item When is the differential operator $ L(y) = P(x)y'' + Q(x) y' + R(x) y $ formally self-adjoint?
+	
+	\item For which positive function $ \rho = \rho(x) $ must we multiply the operator $ L(y) = x^{2}y'' + y' $ so that $ L $ is formally self-adjoint?
+
+	\item Precisely formulate the regular Sturm-Liouville problem. 
+	
+	\item State the Sturm-Liouville theorem and discuss its applications.
+	
+	\item Discuss the eigenvalues and eigenfunctions and their properties for a regular Strum-Liouville problem. State, with proof, in what sense the eigenfunctions of such a problem are mutually orthogonal.
+	
+	
+%	\item With which weight $ w $ are the eigenfunctions of the $ L $ operator orthogonal for the boundary conditions $ y(1) = y(2) = 0 $? i.e. what are the solutions $ u, v $ of the equations $ \rho L u = - \lambda \rho u $ and $ \rho L v = - \mu \rho v $ and the boundary conditions for $ \mu \neq \lambda $
+		
+%	\item Determine the function $ g $ so that the solutions to the regular Sturm-Liouville problem $ f(x)y'' + g(x)y' + (q(x) + \lambda \rho (x))y $  with $ y(0) = y(1) = 0 $ will be mutually orthogonal with weight $ \rho(x) $ on the interval $ [0, 1] $ for distinct $ \lambda $.
+		
+%	What is the weight for orthogonality for the Sturm-Liouville problem $ (1 + x^2)y'' + xy' + \lambda y = 0 $ with $ y(0) = y(1) = 0 $?
+		
+
+
+\end{itemize}
+
+
+\subsubsection{Definition: The Sturm-Liouville Problem}
+\textit{Not a common question; included for background. Note that this does} not \textit{refer to the} regular \textit{Sturm-Liouville problem, which is discussed later.} 
+\vspace{2mm}
+
+Let $ I = [a, b] \subset \R $ be an interval on the real line. A \textit{Sturm-Liouville problem} is finding the functions $ y : I \to \R $ and constant parameters $ \lambda \in \R $ solving the problem
+\begin{equation*}
+	P(x) y'' + Q(x)y' + R(x) y = - \lambda y
+\end{equation*}
+on the interval $ I $ with boundary conditions
+\begin{align*}
+	&\alpha_1 y(a) + \alpha_2 y'(a) = 0 && \alpha_1^2 + \alpha_2^2 \neq 0\\
+	&\beta_1y(b) + \beta_2 y'(b) = 0 &&  \beta_1^2 + \beta_2^2 \neq 0
+\end{align*}
+where $ P, Q, R : I \to \R $ are continuous real functions and $ \alpha_i, \beta_i \in \R$ are real constants.
+
+
+
+
+\subsubsection{The Second-Degree Linear Differential Operator $ L $}
+\question{Included for background.}
+
+Let $ I = [a, b] \subset \R $ be an interval on the real line.
+\begin{itemize}
+	\item $ C(I) $ and $ C^{2}(I) $ are the spaces of all continuous and twice-continuously differentiable complex functions $ f : I \to \C $ on the interval $ I $ respectively, equipped with the inner product
+	\begin{equation*}
+		\expval{f, g} = \int_{a}^{b} f(x) \overline{g(x)} \diff x
+	\end{equation*}
+	
+	\item For all continuous functions $ P, Q, R:I \to \R $, the mapping $ L $ defined by
+	\begin{equation*}
+		L : C^2(I) \to C(I), \qquad y \mapsto Py'' + Qy' + Ry 
+	\end{equation*}
+	is linear, and is called a \textit{second-degree linear differential operator}. 
+	
+	\item In terms of $ L $, Sturm Liouville problem differential equation reads
+	\begin{equation*}
+		Ly = -\lambda y
+	\end{equation*}
+	which is an eigenvalue problem for the operator $ L $. The Sturm-Liouville problem becomes finding the eigenfunctions $ y \in C^2[a, b] $ and eigenvalues $ \lambda \in \R $ solving the eigenvalue problem.
+\end{itemize}
+
+
+\subsubsection{Adjoint of the Differential Operator $ L $}
+\question{One more section of background, needed for the next question on formal self-adjoint operators.}
+
+Let $ I = [a, b] \subset \R $ be an interval on the real line.
+\begin{itemize}	
+	\item The \textit{adjoint} $ L^* $ of a linear operator $ L $ is defined by the implicit relationship
+	\begin{equation*}
+		\expval{Lu, v} = \expval{u, L^*v}
+	\end{equation*}
+	for all $ u $ in $ L $'s domain all $ v $ in $ L^{*} $'s domain. An operator is \textit{self-adjoint} if it equals its adjoint, i.e
+	\begin{equation*}
+		\expval{Lu, v} = \expval{u, Lv}
+	\end{equation*}
+	for all $ u, v $ in the domain of $ L $ and all $ v $ in the domain of $ L^* $.
+
+	
+	\item For the differential operator $ L $, $ u, v $ are functions in $ C^{2}(I) $ and 
+	\begin{equation*}
+		\expval{Lu, v} = \int_{a}^{b} (Pu'' + Q u' + R u) \overline{v} \diff x
+	\end{equation*}
+	If $ P $ and $ Q $ are twice and once continuously differentiable, respectively, integration by parts leads to
+	\begin{equation*}
+		\expval{Lu, v} = \dots = \big[P(u' \overline{v} - u \overline{v}') + (Q - P)u\overline{v} \big]_{a}^{b} + \int_{a}^{b} u \overline{[(Pv)'' - (Qv)' + Rv]} \diff x
+	\end{equation*}
+	
+	\item If $ \big[P(u' \overline{v} - u \overline{v}') + (Q - P)u\overline{v} \big]_{a}^{b} = 0 $, the adjoint $ L^{*} $ is implicitly defined by
+	\begin{equation*}
+		L^* v = (Pv)'' - (Qv)' + Rv =Pv'' + (2P' - Q)v' + (P'' - Q' + R)v
+	\end{equation*}
+	where $ v \in \C^2(I) $. This definition of $ L^{*} $ recovers the identity $ \expval{Lu, u} = \expval{u, L^*v} $
+	\begin{equation*}
+		\expval{Lu, v} = \int_{a}^{b} u \overline{[(Pv)'' - (Qv)' + Rv]} \diff x = \expval{u, L^*v}
+	\end{equation*}
+	 as long as $ \left[P(u'\overline{v} - u \overline{v}') + (Q - P')u\overline{v}\right]_{a}^{b} = 0 $
+	
+\end{itemize}
+
+
+\subsubsection{Formal Self-Adjoint of the Differential Operator $ L $}
+\question{When is the differential operator $ L(y) = P(x)y'' + Q(x) y' + R(x) y $ formally self-adjoint?}
+
+Let $ I = [a, b] \subset \R $ be an interval on the real line.
+\begin{itemize}
+	\item The operator $ L $ is \textit{formally self-adjoint} if $ L^* = L $. Referring to the definitions
+	\begin{equation*}
+		Ly = Py'' + Q y' + Ry \quad \text{and} \quad L^* y = Py'' + (2P' - Q)y' + (P'' - Q' + R)y
+	\end{equation*} 
+	we see the requirement $ L = L^{*} $ leads to the conditions
+	\begin{equation*}
+		Q = 2P' - Q \quad \text{and} \quad R = P'' - Q' + R \implies Q = P'
+	\end{equation*}
+	
+	\item If $ Q = P' $, the condition $ \left[P(u'\overline{v} - u \overline{v}') + (Q - P')u\overline{v}\right]_{a}^{b} = 0 $ for the existence of the adjoint simplifies to
+	\begin{equation*}
+		\left[P(u'\overline{v} - u \overline{v}') \right]_{a}^{b} = 0
+	\end{equation*}
+	
+	\item If $ Q = P' \implies Py'' + P' y' + Ry = (Py')' + Ry$, the operator $ L $ can be written
+	\begin{equation*}
+		Ly = (Py')' + Ry
+	\end{equation*}
+	If $ L $ can be written $ Ly = (Py')' + Ry $, integration by parts shows $ L $ is formally self-adjoint even if $ P $ is only a once continuously differentiable function.
+	
+	\item \textbf{Condition:} $ L $ is formally self-adjoint on $ I $ if $ Q = P' $, $ P $ is real-valued and continuously differentiable, and $ R $ is real-valued and continuous. In this case
+	\begin{equation*}
+		\expval{Lu, v} = \expval{u, Lv} + \left[P(u'\overline{v} - u \overline{v}') \right]_{a}^{b}
+	\end{equation*}
+	
+	\item If the functions $ u, v \in C^2[a, b] $ satisfy the boundary conditions
+	\begin{align*}
+		&\alpha_{1} y(a) + \alpha_{2} y'(a) = 0 && \alpha_{1}^{2} + \alpha_{2}^{2} \neq 0\\
+		&\beta_{1} y(b) + \beta_{2} y'(b) = 0 && \beta_{1}^{2} + \beta_{2}^{2} \neq 0
+	\end{align*}
+	then $ \expval{Lu, v} = \expval{u, Lv} $ for all formally self-adjoint differential operators $ L $.
+	
+	\textit{Sketched Proof:} Start with the condition $ \expval{Lu, v} = \expval{u, Lv} + \left[P(u'\overline{v} - u \overline{v}') \right]_{a}^{b} $ for formally self-adjoint $ L $, then show that $ u'\overline{v} - u \overline{v}' = 0 $ evaluated at the endpoints $ a $ and $ b $. It follows that $ \left[P(u'\overline{v} - u \overline{v}') \right]_{a}^{b} = 0 $ so  $ \expval{Lu, v} = \expval{u, Lv} $.
+		
+\end{itemize}
+
+
+\subsubsection{Sturm-Liouville Problem with a Weight}
+\question{For which positive function $ \rho = \rho(x) $ must we multiply the operator $ L(y) = x^{2}y'' + y' $ so that $ L $ is formally self-adjoint? (This is not the direct solution, but provides the relevant theory.)}
+
+Let $ I = [a, b] \subset \R $ be an interval on the real line.
+\begin{itemize}
+	\item With a weight, the Sturm-Liouville differential equation $ Ly = -\lambda y $ becomes
+	\begin{equation*}
+		Ly = -\lambda w y
+	\end{equation*}
+	where the \textit{weight}, $ w: I \to \R $, is a positive, continuous function on $ I $.
+	
+	\item The \textit{weighted inner product} $ \expval{\cdot, \cdot}_{w} $ on the space $ C(I) $ becomes
+	\begin{equation*}
+		\expval{f, g}_{w} = \int_{a}^{b} f(x)\overline{g(x)} w(x) \diff x
+	\end{equation*}
+	
+	\item The functions $ f, g $ are \textit{orthogonal with respect to the weight $ w $} if $ \expval{f, g}_{w} = 0 $.
+	
+	\item The \textit{weighted norm} $ \norm{\cdot}_{w} $ induced by the inner product $ \expval{\cdot, \cdot}_{w} $ reads
+	\begin{equation*}
+		\norm{f}_{w} = \sqrt{\expval{f, f}_{w}}
+	\end{equation*}
+	and $ L_{w}^{2}(a, b) $ denotes the completion of the space $ C(I) $ in the norm $ \norm{\cdot}_{w} $
+	
+\end{itemize}
+
+\subsubsection{Definition: Regular Sturm-Liouville Problem}
+\question{Precisely formulate the regular Sturm-Liouville problem.}
+
+Let $ L: C^2(I) \to C(I) $ be a self-adjoint differential operator of the form
+\begin{equation*}
+	Ly = (Py')' + Ry
+\end{equation*}
+where $ P \in C^1(I) $ is real, continuously differentiable, and strictly positive on $ I $ and $ R \in C(I)$ is real and continuous on $ I $, and let the weight $ w \in \C(\R) $ be real, continuous and strictly positive on $ I $. A \textit{regular Sturm-Liouville} is the problem of finding all eigenvalues $ \lambda \in \C $ of the differential operator $ L $ for which the eigenvalue equation
+\begin{equation*}
+	Ly = -\lambda w y
+\end{equation*}
+has a non-trivial solution $ y \in C^2[a, b] $ with respect to the boundary conditions
+\begin{align*}
+	&\alpha_1 y(a) + \alpha_2 y'(a) = 0 && \alpha_1^2 + \alpha_2^2 \neq 0\\
+	&\beta_1y(b) + \beta_2 y'(b) = 0 &&  \beta_1^2 + \beta_2^2
+\end{align*}
+and finding the corresponding solutions $ y : I \to \R $.
+
+\subsubsection{Sturm-Liouville Theorem}
+\question{State the Sturm-Liouville theorem and discuss its applications.}
+
+For all regular Sturm-Liouville problems on the interval $ I = [a, b] \subset \R $:
+\begin{itemize}
+	\item There exists an orthonormal basis of the Hilbert space $ L_{w}^2(I) $ consisting of real eigenfunctions $ y_n :I \to \R $ of the operator $ L $ where $ n \in \mathbb{N} $.
+	
+	\item  $ \displaystyle{\lim_{n \to \infty} \lambda_n = \infty} $ for the eigenvalues $ \lambda_n $ corresponding to the eigenfunctions $ y_n $.
+	
+	\item For all functions $ f \in C^2(I) $ satisfying the boundary conditions, the series
+	\begin{equation*}
+		\sum_{n=1}^{\infty}\expval{f, y_n}_{w}y_n
+	\end{equation*}
+	converges uniformly to $ f $ on the interval $ I $, where $ y_{n} $ are $ L $'s eigenfunctions.
+\end{itemize}
+
+
+
+\subsubsection{Eigenvalues of the Self-Adjoint Differential Operator $ L $}
+\question{Discuss the eigenvalues and eigenfunctions and their properties for a regular Strum-Liouville problem. State, with proof, in what sense the eigenfunctions of such a problem are mutually orthogonal.}
+
+Consider the weighted Sturm-Liouville problem
+\begin{equation*}
+	L y = - \lambda w y 
+\end{equation*}
+on the interval $ I = [a, b] \subset \R $ with boundary conditions
+\begin{align*}
+	&\alpha_1 y(a) + \alpha_2 y'(a) = 0 && \alpha_1^2 + \alpha_2^2 \neq 0\\
+	&\beta_1y(b) + \beta_2 y'(b) = 0 &&  \beta_1^2 + \beta_2^2 \neq 0
+\end{align*}
+If $ L $ is formally self-adjoint of the form $ Ly = (Py')' + Ry $ where $ P: I \to \R  $ and continuously differentiable without zeros on $ I $ and $ R : I \to \R $ is continuous on $ I $
+\begin{itemize}
+	\item The differential operator's $ L $'s eigenvalues $ \lambda $ are real.
+	
+	\textit{Proof:} Let $ u $ be an eigenfunction corresponding to the eigenvalue $ \lambda $. Starting with the expression $ -\lambda  \expval{u, u}_{w} $ apply, in turn:
+	\begin{enumerate}
+		\item  The inner product identities $ \alpha \expval{u, u} = \expval{\alpha u, u} $ and $ \expval{u, u}_{w} = \expval{uw, u} $
+		\item The eigenvalue identity $ Lu = -\lambda w u $
+		\item The equality $ \expval{Lu, u} = \expval{u, Lu} $ (because $ L $ is self-adjoint adjoint and  $ u $ satisfies the boundary conditions).
+		\item The eigenvalue identity $ Lu = -\lambda w u $
+		\item The inner product identities $ \expval{ u,\alpha u} =  \overline{\alpha} \expval{u, u} $ and $ \expval{u, wu} = \expval{u, u}_{w} $
+	\end{enumerate}
+	\vspace{-4mm}
+	\begin{align*}
+		\text{Proof:} \ -\lambda  \expval{u, u}_{w} &=  \expval{- \lambda u, u}_{w} = \expval{- \lambda w u, u} = \expval{L u, u} = \expval{u, Lu}\\
+		&= \expval{u, -\lambda w u} = -\overline{\lambda}\expval{u, w u} = -\overline{\lambda}\expval{u, u}_{w}
+	\end{align*}
+	Comparing the first and last term implies $ \lambda = \overline{\lambda} $, i.e. $ \lambda \in \R $.
+	
+	\item $ L $'s eigenfunctions corresponding to different eigenvalues are mutually orthogonal with respect to the weight $ w $
+
+	\textit{Proof}: Let $ u, v $ be eigenfunctions corresponding to the different eigenvalues $ \lambda, \mu $. Starting with the expression $ -\lambda  \expval{u, v}_{w} $ apply, in turn:
+		\begin{enumerate}
+			\item  The inner product identities $ \alpha \expval{u, v} = \expval{\alpha u, v} $ and $ \expval{u, v}_{w} = \expval{uw, v} $
+			\item The eigenvalue identity $ Lu = -\lambda w u $
+			\item The equality $ \expval{Lu, v} = \expval{u, Lv} $ (because $ L $ is self-adjoint adjoint and  $ u, v $ satisfy the boundary conditions).
+			\item The eigenvalue identity $ Lv = -\mu w v $
+			\item The inner product identities $ \expval{ u,\alpha v} =  \overline{\alpha} \expval{u, v} $ and $ \expval{u, wv} = \expval{u, v}_{w} $
+			\item $ L $'s eigenvalues are real, so $ \mu = \overline{\mu} $.
+		\end{enumerate}
+		\vspace{-4mm}
+		\begin{align*}
+ 			\text{Proof:} \ -\lambda  \expval{u, v}_{w} &=  \expval{- \lambda w u, v} = \expval{L u, v} = \expval{u, Lv} = \expval{u, -\mu w u}\\
+ 			& = -\overline{\mu}\expval{u,  u}_{w} = -\mu \expval{u,  u}_{w}
+		\end{align*}
+		Because $ \lambda \neq \mu $, the equality $ \lambda  \expval{u, v}_{w} = \mu \expval{u,  u}_{w} $ is satisfied only if $ \expval{u, v}_{w} = 0 $.
+		
+		\item $ L $'s eigenfunctions corresponding to the same eigenvalue are linearly dependent.
+	
+	\item \textit{Summary}: If the differential operator $ L $ is formally self-adjoint, its eigenvalues are real, the eigenfunctions of different eigenvalues are orthogonal, and eigenfunctions of the same eigenvalue are linearly dependent.
+\end{itemize}
+
+
+\subsection{Series Solutions to Differential Equations}
+
+\subsubsection{Common Questions}
+\begin{itemize}
+	\item What is the definition of a proper singular point of the differential equation $ y'' + p(z)y' + q(z)y = 0 $?
+		
+	\item Discuss the forms of the nontrivial solutions to the equation $ y'' + p(z)y' + q(z)y = 0 $ in the neighborhood of a proper singular point $ z_0 $. In what cases can the second, linearly independent solution to the equation not be expressed with a generalized power series and how is the solution found? What kind of singularity does the second solution have at $ z_0 $ in this case? 
+	
+	\item When is $ 0 $ a proper singular point of the equation $ y'' + p(z)y' + q(z)y = 0  $?. When is $ \infty $ a proper singular point of the same equation?
+	
+	\item What is a differential equation's inidcial polynomial and what are teh characteristic exponents?
+
+	\item State the conditions on $ p $ and $ q $ so that the equation has exactly three proper singular points $ z_{1}, z_2, z_3 $. State the conditions on $ p $ and $ q $ in equation (*) so that the differential equation has proper singular points only at $ 0, 1 $ and $ \infty $ and at least one of the characteristic exponents at the singular points $ 0 $ and $ 1 $ equals zero.
+\end{itemize}
+
+
+\subsubsection{Finding Series Solutions of Differential Equations}
+\question{Note a common question, but good background.}
+\begin{itemize}
+	\item The goal is to solve the complex homogeneous second-order LDE
+	\begin{equation}
+		y'' + py(z)' + qy(z) = 0	\label{eq:ldeC}
+	\end{equation}
+	in the neighborhood of the point $ z_{0} \in \C $ with the power series ansatz 
+	\begin{equation*}
+		y = \sum_{n=0}^{\infty}c_n(z-z_0)^n
+	\end{equation*}
+	The method assumes $ p, q: \C \to \C  $ are holomorphic in a neighborhood of $ z_{0} $ and can thus be expanded into the power series
+	\begin{equation*}
+		p(z) = \sum_{n= 0}^{\infty} p_n (z-z_{0})^n \qquad \text{and} \qquad q(z) = \sum_{n=0}^{\infty} q_n (z-z_{0})^n
+	\end{equation*}
+	where $ p_k, q_k \in \C $ are in general complex coefficients. 
+	
+	\item The method involves inserting the power series for $ p, q $, and $ y $ into Equation \ref{eq:ldeC} and solving for $ y $'s coefficients $ c_n \in \C $ using a recurrence relation. The series for $ y $ then converges on every disk on which the series for $ p $ and $ q $ also converge.
+	
+	\item Inserting the power series for $ p, q $, and $ y $ into Equation \ref{eq:ldeC} leads to the expression
+	\begin{equation*}
+		c_{n+2} = - \frac{\sum_{k=0}^{n}\left[(k+1)p_{n-k}c_{k+1} + q_{n-k}c_{k} \right]}{(n+2)(n+1)}
+	\end{equation*}
+	This formula produces the coefficients $ c_{n} $ for the series $ y = \sum_{n=0}^{\infty}c_{n}(z-z_{0})^{n} $ in terms of the initial coefficients $ c_{0} $ and $ c_{1} $.
+	
+	\item \textit{Uniqueness of Power Series Solutions}: If the functions $ p, q $ are holomorphic on the disk $ D(z_0, R) \subset \C $ centered at $ z_{0} $, then for any two complex constants $ c_0, c_1 \in \C $ there exists a unique solution $ y $ of the second order LDE 
+	\begin{equation*}
+		y'' + py' + qy = 0
+	\end{equation*}
+	that is holomorphic on the disk $ D(z_0, R) $ and satisfies the conditions $ y(z_0) = c_0 $ and $ y'(z_0) = c_1 $.
+\end{itemize}
+
+\subsubsection{Proper Singular Points of Differential Equations}
+\question{ What is the definition of a proper singular point of the differential equation $ y'' + p(z)y' + q(z)y = 0 $?}
+
+The point $ z_{0} \in \C $ is a \textit{proper singular point} of Equation \ref{eq:ldeC} if $ p $ and $ q $ are holomorphic on a neighborhood of $ z_{0} $, except possible at $ z_{0} $, and $ p $ and $ q $ have poles of degree at most $ 1 $ and $ 2 $, respectively, at $ z_{0} $. If $ p $ and $ q $ are holomorphic at $ z_{0} $, then $ z_{0} $ is a \textit{regular point} of Equation \ref{eq:ldeC}.
+	
+
+
+\subsubsection{Frobenius Method}
+\question{Discuss the forms of the nontrivial solutions to the equation $ y'' + p(z)y' + q(z)y = 0 $ in the neighborhood of a proper singular point $ z_0 $. In what cases can the second, linearly independent solution to the equation not be expressed with a generalized power series and how is the solution found? What kind of singularity does the second solution have at $ z_0 $ in this case? }
+
+\question{What is a differential equation's inidcial polynomial and what are teh characteristic exponents?}
+
+Consider the differential equation $ y'' + py' + qy = 0 $ (Equation \ref{eq:ldeC}) and let $ z_{0} $ be a proper singular point of Equation \ref{eq:ldeC}. Since $ p $ and $ q $ have poles of degree at most $ 1 $ and $ 2 $, respectively, at $ z_{0} $, the functions $ zp $ and $ z^{2}q $ are holomorphic at $ z_{0} $ and can be written as the power series
+\begin{equation*}
+	z p(z) = \sum_{n=0}^{\infty} p_n (z-z_{0})^n \qquad \text{and} \qquad z^{2}q(z) \sum_{n=0}^{\infty} q_n (z-z_{0})^n
+\end{equation*}
+
+\begin{itemize}
+	\item The \textit{Frobenius method} finds solutions to Equation \ref{eq:ldeC} near $ z_{0} $ with the power series ansatz 
+	\begin{equation*}
+		y = (z-z_{0})^{\mu}\sum_{n=0}^{\infty}c_n(z-z_0)^n = \sum_{n=0}^{\infty}c_n(z-z_0)^{n+\mu}
+	\end{equation*}
+	where $ \mu, c_{k} \in \C $ are complex constants and $ c_{0} \neq 0 $. The method involves multiplying Equation \ref{eq:ldeC} by $ z^{2} $ to get
+	\begin{equation*}
+		z^{2} y'' + z^{2} p(z) y' + z^{2} q(z) = 0
+	\end{equation*}
+	then inserting the power series for $ z p, z^{2} q $, and $ y $ and solving for the coefficients $ c_n $ and powers $ \mu $.
+	
+	\item Inserting the power series for $ z p, z^{2} q $, and $ y $ leads to the \textit{recursion relation}
+	\begin{equation*}
+		c_{n} = - \frac{\sum_{k=0}^{n-1}\left[(\mu + k)p_{n-k} + q_{n-k} \right]c_{k}}{(\mu + n)(\mu + n - 1 + p_{0})}
+	\end{equation*}
+	and (using the condition $ c_{0} \neq 0 $), the \textit{indicial polynomial} $ \mu(\mu-1 + p_{0}) + q_{0} = 0$.
+	
+	The solutions $ \mu_{1} $ and $ \mu_{2} $ of the indicial equation are called the \textit{characteristic exponents} of Equation \ref{eq:ldeC} and are ordered by convention so the $ \Re(\mu_{1}) > \Re(\mu_{2}) $.
+	
+	\item In terms of the quadratic function $ f $, the indicial polynomial reads
+	\begin{equation*}
+		f(\mu) = \mu(\mu -1 + p_{0}) + q_{0} \equiv (\mu - \mu_{1})(\mu - \mu_{2})
+	\end{equation*}
+	Note that $ f(\mu + n) = (\mu + n - \mu_{1})(\mu + n - \mu_{2}) $ equals the recursion relation's denominator $ (\mu + n)(\mu + n - 1 + p_{0}) $, so the recursion relation can be written
+	\begin{equation*}
+		c_{n} = - \frac{\sum_{k=0}^{n-1}\left[(\mu + k)p_{n-k} + q_{n-k} \right]c_{k}}{(\mu + n - \mu_{1})(\mu + n - \mu_{2})}
+	\end{equation*}
+	
+	\item When $ \mu = \mu_{1} $, the recursion relation's denominator becomes $ n(\mu_{1} - \mu_{2} + n) $ and is non-zero for all $ n \in \mathbb{N} $ because $ \Re \mu_{1} \geq \Re \mu_{2} $. The coefficients $ c_{n} $ can then be solved for all $ n $ in terms of an initial coefficient $ c_{0} $, and the solution $ y_{1} $ corresponding to the larger characteristic exponent is
+	\begin{equation*}
+		y_{1} = \sum_{n=0}^{\infty}c_n(z-z_0)^{n+\mu_{1}} 
+	\end{equation*}
+	
+	\item When $ \mu = \mu_{2} $, the recursion relation's denominator becomes $ n(n - (\mu_{1} - \mu_{2})) $. If $ \mu_{1} - \mu_{2} \notin \mathbb{N} $, the denominator is always non-zero, so the coefficients $ c_{n} $ are well-defined by the recurrence relation for both $ \mu_{1} $ and $ \mu_{2} $ and the Frobenius method yields two linearly independent solutions, one for each of the characteristic exponents $ \mu_{1}, \mu_{2}$. These are
+	\begin{equation*}
+		y_{1} = \sum_{n=0}^{\infty}c_n(z-z_0)^{n+\mu_{1}} \quad \text{and} \quad y_{2} = \sum_{n=0}^{\infty}d_n(z-z_0)^{n+\mu_{2}}
+	\end{equation*}
+	The more complicated case when $ \mu_{1} - \mu_{2} \in \mathbb{N} $ is discussed in the next section.
+
+	
+\end{itemize}
+	
+
+
+
+\subsubsection{The Frobenius Method when $ \mu_{1} - \mu_{2} $ is a Natural Number}
+\question{Discuss the forms of the nontrivial solutions to the equation $ y'' + p(z)y' + q(z)y = 0 $ in the neighborhood of a proper singular point $ z_0 $. In what cases can the second, linearly independent solution to the equation not be expressed with a generalized power series and how is the solution found? What kind of singularity does the second solution have at $ z_0 $ in this case? (Continued).}
+
+\begin{itemize}
+	\item If $ \mu_{1} - \mu_{2} \in \mathbb{N} $, the denominator is zero when $ n =  \mu_{1} - \mu_{2} $, and the recurrence relation cannot be used to solve for the coefficients $ d_{n} $ corresponding to $ \mu_{2} $, so the Frobenius method fails to produce a solution $ y_{2} $ for $ \mu_{2} $. In this case, the $ y_{2} $ is found with the Liouville formula $ y_{2} = y_{1} v $ where $ v' = y_{1}^{-2} e^{-\int p(z) \diff z} $. 
+
+
+	\item An analysis of the Liouville formula solution shows that $ y_{2} $ is of the form
+	\begin{equation*}
+		y_{2} = \alpha y_{1} \ln (z-z_{0}) + (z-z_{0})^{\mu_{2}}f(z)
+	\end{equation*}
+	for some constant $ \alpha \in \C $ and function $ f : \C \to \C $ that is holomorphic in the neighborhood of $ z_{0} $ and for which $ f(z_{0}) \neq 0$; $ y_{1} $ is the solution corresponding to the larger characteristic exponent $ \mu_{1} $.
+	
+	\item If $ \Re \mu_{2} < 0 $ or $ \Re\mu_{1} = \Re \mu_{2} $, the only solutions to Equation \ref{eq:ldeC} that are bounded in a neighborhood of $ z_{0} $ take the form $ \alpha y_{1} $ where $ \alpha \in \C $ is a constant.
+\end{itemize}
+
+
+\subsubsection{Summary of Series Solutions Near Proper Singular Points}
+\question{Just a summary of the important concepts in this section.}
+
+Consider the differential equation $ y'' + py(z)' + qy(z) = 0 $ (Equation \ref{eq:ldeC}), let $ z_{0} $ be a proper singular point of Equation \ref{eq:ldeC} and let the power series $ (z-z_{0})p(z) $ and $ (z-z_{0})^{2}q(z) $ converge on the disk $ D(z_{0}, R) $. Finally, let $ \mu_{1}, \mu_{2} $ be the roots of the indicial polynomial $ \mu(\mu -1 + p_{0}) + q_{0} $, where $ \Re (\mu_{1}) \geq \Re (\mu_{2})$.
+
+
+
+\begin{itemize}
+	
+	\item In general, as long as $ z_{0} $ is a proper singular point of Equation \ref{eq:ldeC} and the power series $ (z-z_{0})p(z) $ and $ (z-z_{0})^{2}q(z) $ converge on the disk $ D(z_{0}, R) $, there exists at least one solution $ y $ to Equation \ref{eq:ldeC} of the form
+	\begin{equation*}
+		y = (z - z_{0})^{\mu} \sum_{n=0}^{\infty}c_{n}(z-z_{0})^{n} 
+	\end{equation*}
+	that converges uniformly on $  D(z_{0}, R) $ where $ \mu, c_{n} \in \C $ are complex constants.
+	
+	\item If $ (\mu_{1} - \mu_{2}) \notin \mathbb{N} $, Frobenius method yields two linearly independent solutions $ y_{1} $ and $ y_{2} $ to Equation $ \ref{eq:ldeC} $ that converge uniformly on $ D(z) $. These are
+	\begin{equation*}
+		y_{1} = \sum_{n=0}^{\infty}c_n(z-z_0)^{n+\mu_{1}} \quad \text{and} \quad y_{2} = \sum_{n=0}^{\infty}d_n(z-z_0)^{n+\mu_{2}}
+	\end{equation*}
+	where the coefficients $ c_{n} $ and $ d_{n} $ are defined by the recursion relations
+	\begin{align*}
+		&c_{n} = - \frac{\sum_{k=0}^{n-1}\left[(\mu_{1} + k)p_{n-k} + q_{n-k} \right]c_{k}}{n(\mu_{1} - \mu_{2} + n)}\\
+		&d_{n} = - \frac{\sum_{k=0}^{n-1}\left[(\mu_{2} + k)p_{n-k} + q_{n-k} \right]c_{k}}{n(\mu_{2} - \mu_{1} + n)}
+	\end{align*}
+
+	\item If $ (\mu_{1} - \mu_{2}) \in \mathbb{N} $, where $ \Re \mu_{1} \geq \Re \mu_{2}$, the first linearly independent solution to Equation \ref{eq:ldeC} is $ \displaystyle{y_{1} = \sum_{n=0}^{\infty}c_n(z-z_0)^{n+\mu_{1}}} $. The second linearly independent solution $ y_{2} $ is found with the Liouville formula and takes the form
+	\begin{equation*}
+		y_{2} = y_{1}\int y_{1}^{-2} e^{-\int p \diff z} \diff z = \ldots =  \alpha y_{1} \ln (z-z_{0}) + (z-z_{0})^{\mu_{2}}f(z)
+	\end{equation*}
+	for some constant $ \alpha \in \C $ and function $ f : \C \to \C $ that is holomorphic in the neighborhood of $ z_{0} $ and for which $ f(z_{0}) \neq 0$.
+	
+	\item If $ \Re \mu_{1} = \Re \mu_{2}$ or $ (\mu_{1} - \mu_{2}) \in \mathbb{N} $ and $ \Re \mu_{2} < 0 $, the only solutions to Equation \ref{eq:ldeC} that are bounded on a neighborhood of $ z_{0} $ are of the form $ \alpha y_{1} $ where $ \alpha \in \C $ is a constant and $ y_{1} $ is the solution corresponding to the larger root $ \mu_{1} $.
+	
+	
+\end{itemize}
+
+
+\subsection{The Legendre Polynomials}
+\subsubsection{Common Questions}
+\begin{itemize}
+	\item What is the Legendre equation? Discuss the Legendre polynomials and their definition to the Legendre equation.
+	
+	\item How are the Legendre polynomials defined in terms of the Rodrigues formula? Use the Rodrigues formula to derive the Legendre equation.
+	
+	\item Discuss, with proof, the orthogonality relation and norms of the Legendre polynomials. 
+	
+	\iffalse
+	\item How are the Laguerre polynomials defined?
+	
+	\item Derive the second order homogeneous LDE solved by the Laguerre polynomials $ L_{n}(z) = \frac{e^{z}}{n!} \dv[n]{}{z} (z^{n}e^{-z})$.
+	
+	
+	\item What are the Hermite polynomials? What equation to they solve? (Derive the homogeneous 2nd order linear differential equation solved by the Hermite polynomials $ H_{n} $). 
+	
+	\textit{The equation is} $ y'' - 2xy' + 2 \nu y = 0 $. See page 261 of textbook.
+	
+	\item How are the Chebyshev polynomials defined? Derive the homogeneous second-order LDE solved by the Chebyshev polynomials $ T_{n}(z) $.
+	\fi
+\end{itemize}
+
+
+
+
+\subsubsection{Legendre Equation}
+\question{What is the Legendre equation? Discuss the Legendre polynomials and their definition to the Legendre equation.}
+\begin{itemize}
+	\item The \textit{Legendre equation} is a second-order differential equation of the form
+	\begin{equation*}
+		(z^2 - 1)y'' + 2zy' - \nu (\nu + 1) y = y'' + \frac{2z}{z^{2} -1} y' - \frac{\nu(\nu+1)}{z^{2}-1} = 0
+	\end{equation*}
+	where $ p(z) \hspace{-.5mm} = \hspace{-.5mm} \frac{2z}{z^2 - 1} $ and  $ q(z)\hspace{-.5mm} = \hspace{-.5mm} - \frac{\nu (\nu + 1)}{z^2 - 1} $ are  holomorphic on the unit disk $ D(0, 1) $.
+	
+	\item The Legendre equation is solved on the unit disk using the series ansatz $ \displaystyle{y = \sum_{0}^{\infty} c_k z^k} $. The recursion relations for the coefficients are
+	\begin{align*}
+		&c_{2n} = \frac{(-1)^n}{(2n)!} \nu(\nu-2)\cdots(\nu - 2n + 2)(\nu + 1)(\nu + 3)\cdots(\nu + 2n -1)c_0\\
+		&2_{2n+1} = \frac{(-1)^n}{(2n+1)!}(\nu-1)(\nu-3)\cdots(\nu - 2n + 1)(\nu+2)(\nu + 4)\cdots(\nu + 2n)c_1\\
+	\end{align*}
+	
+	\item With the initial coefficients $ c_0 = 1 $ and $ c_1 = 0 $ the solution is 
+	\begin{equation*}
+		y_1 = \sum_{n=0}^{\infty}c_{2n}z^{2n} = 1 - \frac{\nu(\nu+1)}{2!}z^2 + \frac{\nu(\nu-2)(\nu+1)(\nu+3)}{4!}z^4 - \dots
+	\end{equation*}
+	and with the initial coefficients $ c_0 = 0 $ and $ c_1 = 1 $ the solution is
+	\begin{equation*}
+		y_2 = \sum_{n=0}^{\infty}c_{2n+1}z^{2n+1} = z - \frac{(\nu-1)(\nu+2)}{3!}z^3 + \frac{(\nu-1)(\nu-3)(\nu+2)(\nu+4)}{5!}z^5 - \dots
+	\end{equation*}
+	$ y_{1} $ and $ y_{2} $ are linearly independent and both converge on the unit disk. The general solution to the Legendre equation is a linear combination of $ y_{1} $ and $ y_{2} $.
+
+	\item If $ \nu $ is even, i.e. $ \nu = 2m $ for some $ m \in \mathbb{N} $, the coefficients $ c_{2n} $ are zero for $ n > m $ because of the factor $ (\nu - 2n) = (2m - 2m) = 0 $. In this case, $ y_{1} $ is an even polynomial of degree $ 2m $. 
+	
+	Similarly, if $ \nu $ is odd, i.e. $ \nu = 2m + 1 $ for some $ m \in \mathbb{N} $, the coefficients $ c_{2n+1} $ are zero for $ n > m $ because of the factor $ (\nu - 2n -1) = (2m + 1 - 2m - 1) = 0 $. In this case $ y_{2} $ is an odd polynomial of degree $ 2m + 1 $.
+	
+	In general, if $ \nu \in \mathbb{N} $, one of the solutions $ y_{1} $ or $ y_{2} $ is a polynomial of degree $ \nu $.
+\end{itemize}
+
+
+
+\subsubsection{Legendre Polynomials}
+\question{Discuss the Legendre polynomials and their definition to the Legendre equation (continued).}
+
+\question{How are the Legendre polynomials defined in terms of the Rodrigues formula? Use the Rodrigues formula to derive the Legendre equation.}
+
+Consider the Legendre differential equation $ (z^{2}-1)y'' + 2zy' - \nu (\nu +1)y = 0 $.
+\begin{itemize}
+	\item If $ \nu \in \mathbb{N} $, the Legendre equation has an $ n $th degree polynomial solution
+	\begin{equation*}
+		P_n(z) = \sum_{k=0}^{\lfloor \frac{n}{2}\rfloor}(-1)^{k}\frac{(2n-2k)!}{2^nk!(n-k)!(n-2k)!}z^{n-2k}
+	\end{equation*}
+	Where $ \lfloor \cdot \rfloor $ is the floor function. Polynomials of the form $ P_{n}(z) $ that satisfy the Legendre equation for $ \nu \in \mathbb{N} $ are called \textit{Legendre polynomials}.
+	
+	\item The expression for $ P_{n}(z) $ is simplified using $ \frac{(2n-2k)!}{(n-2k)!}z^{n-2k} = \dv[n]{}{z}z^{2n-2k} $
+	\begin{align*}
+		P_n(z) &= \sum_{k=0}^{\lfloor \frac{n}{2}\rfloor}(-1)^{k}\frac{(2n-2k)!}{2^nk!(n-k)!(n-2k)!}z^{n-2k}\\
+		&=\sum_{k=0}^{\lfloor \frac{n}{2}\rfloor} \frac{(-1)^{k}}{2^nk!(n-k)!}\dv[n]{}{z}z^{2n-2k}\\
+		&=\frac{1}{2^{n}n!}\dv[n]{}{z}\sum_{k=0}^{\lfloor \frac{n}{2}\rfloor} (-1)^{k} \binom{n}{k}z^{2n-2k}\\
+		&=\frac{1}{2^{n}n!}\dv[n]{}{z}\sum_{k=0}^{n} (-1)^{k} \binom{n}{k}z^{2n-2k}
+	\end{align*}
+	where the last equality holds because $ \dv[n]{}{z} z^{2n-2k} = 0 $ for $ k > \lfloor \frac{n}{2}\rfloor $. The last sum is $\sum_{k=0}^{n} (-1)^{k} \binom{n}{k}z^{2n-2k} = (z^2 - 1)^n $, leading to the \textit{Rodrigues formula}:
+	\begin{equation*}
+		P_n(z) = \frac{1}{2^nn!}\dv[n]{}{z} (z^2 - 1)^n
+	\end{equation*}
+	
+	\item The Legendre equation can be derived from the Rodrigues formula. First let $ w = (z^{2} - 1)^{n} $, then differentiate and multiply by $ z^{2} - 1 $ to equate $ w $ and $ w' $.
+	\begin{align*}
+		&w \coloneqq (z^{2} - 1)^{n} \implies w' = 2nz(z^{2} - 1)^{n-1}\\
+		&(z^{2} - 1) w' = 2nz (z^{2} - 1)^{n} = 2nz w
+	\end{align*}
+	Take the $ (n+1) $th derivative of the equation using the product rule formula $ (fg)^{(n)} = \sum_{i=0}^{n}\binom{n}{i}f^{(i)}g^{n-i} $
+	\begin{align*}
+		\textstyle\binom{n+1}{0} &(z^{2} - 1)w^{(n+2)} +  \textstyle\binom{n+1}{1}(2z)w^{(n+1)} + \binom{n+1}{2}(2)w^{(n)} =\\
+		&= \textstyle\binom{n+1}{0}2nz w^{(n+1)} + \binom{n+1}{1}2n w^{(n)} 
+	\end{align*}
+	Evaluating the binomial symbols and combining like terms leads to
+	\begin{align*}
+		&(z^{2} - 1)w^{(n+2)} +  (n+1)(2z)w^{(n+1)} + (n+1) n w^{(n)} =
+		2nz w^{(n+1)} + (n+1)2n w^{(n)} \\
+		&(z^{2} - 1)w^{(n+2)} + 2zw^{(n+1)} - n(n+1) w^{(n)} = 0
+	\end{align*}
+	Finally, the substitutions $ w^{(n)} = y $ and $ n = \nu $ recovers the Legendre equation
+	\begin{equation*}
+		(z^{2} - 1)y'' + 2zy' - \nu(\nu+1) y= 0
+	\end{equation*}
+
+	\item The \textit{generating function} for the Legendre polynomials for small $ \abs{t} $ is
+	\begin{equation*}
+		\frac{1}{\sqrt{1-2zt+t^2}} = \sum_{n=0}^{\infty}P_n(z)t^n
+	\end{equation*}
+	
+	\item A useful \textit{recursion formula} for the Legendre polynomials is
+	\begin{equation*}
+		(n+1)P_{n+1}(z) = (2n+1)zP_n(z) - nP_{n-1}(z)
+	\end{equation*}
+	The formula recursively calculates all $ P_{n} $ in terms of $ P_0 = 1 $ and $ P_1 = z $.
+	
+\end{itemize}
+
+\subsubsection{Legendre Polynomials: Orthogonality and Eigenfunctions}
+\question{Discuss, with proof, the orthogonality relation and norms of the Legendre polynomials. }
+
+\begin{itemize}
+	\item The Legendre polynomials $ P_{n} : \R \to \R $ satisfy the \textit{orthogonality relation} 
+	\begin{equation*}
+		\int_{-1}^{1}P_m(x)P_n(x) \diff x = \frac{2}{2n+1}\delta_{m, n}
+	\end{equation*}
+	where $ \delta_{m, n} $ is the Kronecker delta: $ \delta_{m, n} = 1 $ for $ m = n $ and $ \delta_{m, n} = 0 $ otherwise.
+	
+	\item The Legendre polynomials form an orthogonal basis of the Hilbert space $ L^{2}(-1, 1) $, meaning that every function $ f \in L^2(-1, 1) $ can be expanded into an series in terms of the Legendre polynomials
+	\begin{equation*}
+		f(x) = \sum_{n=0}^{\infty}a_nP_n(x) \quad \text{where} \quad  a_n = \frac{2n+1}{2}\int_{-1}^{1}f(x)P_n(x) \diff x
+	\end{equation*}
+	that converges uniformly to $ f $ in the $ \norm{\cdot}_{2} $ norm. For all $ f \in L^2(-1, 1) $
+	\begin{equation*}
+		\lim_{N\to \infty}\norm{\sum_{n=0}^{N}a_n P_n(x) - f(x)}_{2} = 0
+	\end{equation*}
+	where $ \norm{g}_{2} = \sqrt{\int_{-1}^{1} \abs{g(x)}^2\diff x}  $ for all $ g \in L^2(-1, 1) $.
+\end{itemize}
+
+
+\subsubsection{Some Theory on General Orthogonal Polynomials}
+\question{Not a common question, but still useful information.}
+
+Let $ I = (a, b) \subseteq \R $ be an interval on the real line (including the possibility $ I \equiv \R $).
+	
+\begin{itemize}
+	\item If $ w : I \to \R^+ $ is a positive function such that $ \int_{a}^{b} x^n w(x) \diff x < \infty $ for all $ n \in \mathbb{N} $, the Hilbert space of functions $ f : I \to \C $ given by
+	\begin{equation*}
+		L_{w}^2(I) \coloneqq \{f : I \to \C; \int_{a}^{b}\abs{f(x)}^2 w(x)\diff x < \infty \}
+	\end{equation*}
+	contains all polynomials. 
+	
+	\item The family of polynomials $ (p_n) $, where $ n \in \mathbb{N} $, is called a \textit{family of orthogonal polynomials with weight $ w $} if $ \expval{p_n, p_m}_{w} = 0 $ for $ n \neq m $, where
+	\begin{equation*}
+		\expval{f, g}_{w} = \int_{a}^{b} f(x) \overline{g(x)}w(x) \diff x
+	\end{equation*}
+	
+	\item If $ (p_n) $ be a sequence of orthogonal polynomials with weight $ w $ on the interval $ I $ such that $ p_n $ is of degree $ n $, then $ p_n $ has exactly $ n $ zeros on $ I $.
+\end{itemize}
+
+
+\subsubsection{Associated Legendre Polynomials}
+\question{Not a common question, included only as a reference.}
+\begin{itemize}
+	\item Each Legendre polynomial $ P_n $ has a set of $ n $  \textit{associated Legendre polynomials} $ P_{n}^{m} $  given by
+	\begin{equation*}
+		P_{n}^{m}(z) \coloneqq (1 - z^2)^{\frac{m}{2}}\dv[m]{}{z}P_n(z), \qquad m = 0, 1, \dots, n
+	\end{equation*}
+	
+	\item The associated Legendre polynomials satisfy the differential equation
+	\begin{equation*}
+		\left[(1- z^2)y'\right]' + \left[n(n+1)-\frac{m^2}{1-z^2}\right]y = 0
+	\end{equation*}
+	
+	\item For fixed $ m $, the associated polynomials $ P_{n}^{m}(n \geq m) $ are mutually orthogonal.
+	
+	\item For a fixed $ m $, the family of associated Legendre polynomials $ \big(P_{n}^{m}\big)_{n=m}^{\infty} $ form an orthogonal basis of the Hilbert space $ L^2(-1, 1)  $ and
+	\begin{equation*}
+		\norm{P_{n}^{m}}^2 = \frac{2}{2n + 1}\frac{(n+1)!}{(n-m)!}
+	\end{equation*}
+	
+\end{itemize}
+
+
+\subsection{Bessel Equation and Bessel Functions}
+
+\subsubsection{Common Questions}
+\begin{itemize}
+	\item What is the Bessel equation? Discuss the solutions.
+	
+	\item Use the Bessel equation to derive the series for the Bessel functions.
+	
+	\item What is the generating function for the Bessel functions $ J_{n} $ for $ n \in \mathbb{N} $? State and derive how the generating function is expressed in terms of the Bessel functions.
+	
+	
+	\item Use the generating function to derive the integral formula for the Bessel functions $ J_{n} $.
+	
+
+\end{itemize}
+
+\subsubsection{The Bessel Equation}
+\question{What is the Bessel equation? Discuss the solutions.}
+
+The \textit{Bessel equation} is the differential equation, defined for $ \nu \geq 0 $, is
+\begin{equation*}
+	z^{2}y'' + zy' + (z^{2} - \nu^{2})y = 0
+\end{equation*}
+The equation has a proper singular point at $ z = 0 $; the first terms of the power series for $ zp(z) $ and $ z^{2}q(z) $ are $ p_{0} = 1 $ and $ q_{0} = - \nu^{2}$; the indicial polynomial is
+\begin{equation*}
+	\mu (\mu - 1 + p_{0}) + q_{0} = \mu^{2} - \nu^{2} = 0
+\end{equation*}
+and the characteristic exponents are $ \mu_{1} = \nu $ and $ \mu_{2} = - \nu $. 
+
+\subsubsection{Solutions of the Bessel Equation}
+\question{Discuss the solutions of the Bessel equation (continued).}
+
+\question{Use the Bessel equation to derive the series for the Bessel functions.}
+\begin{itemize}
+	\item The Bessel equation's larger characteristic exponent is $ \mu_{1} = \nu $. We can find the solution corresponding to $ \mu_{1} $ with the Frobenius method using the ansatz $ y = \sum_{n=0}^{\infty}c_{n}z^{n+\nu} $. The recursion relation for the coefficients is
+	\begin{equation*}
+		c_{2n + 1}  = 0 \qquad \text{and} \qquad c_{2n} = \frac{(-1)^{n} c_{0}}{2\cdot 4 \cdots 2n(2 + 2\nu)(4 + 2\nu)\cdots (2n + \nu)}
+	\end{equation*}
+	
+	\item If $ c_{0} = \frac{1}{2^{\nu}\nu!} $ where the factorial is defined with the gamma function: $ (\nu)! = \Gamma(\nu + 1) $, the equation for the coefficients becomes
+	\begin{equation*}
+		c_{2n} = \frac{(-1)^{n}}{2^{\nu + 2n}n! (\nu + n)!}
+	\end{equation*}
+	and the solution corresponding to $ \mu_{1} = \nu $ is
+	\begin{equation*}
+		y_{1} = \sum_{n= 0}^{\infty} \frac{(-1)^{n}}{2^{\nu + 2n}n! (\nu + n)!} z^{2n + \nu} = \sum_{n= 0}^{\infty} (-1)^{n}  \frac{\left(\frac{z}{2}\right)^{2n + \nu}}{n! (\nu + n)!}
+	\end{equation*}
+	
+	\item The solution $ y_{1} $ defines \textit{$ \nu $th-order Bessel function} $ J_{\nu} $
+	\begin{equation*}
+		J_{\nu}(z) =  \sum_{n= 0}^{\infty} (-1)^{n}  \frac{\left(\frac{z}{2}\right)^{2n + \nu}}{n! (\nu + n)!}
+	\end{equation*}
+	Since $ zp  $ and $ z^{2}q $ are holomorphic everywhere, $ J_{\nu}(z) $ converges for all $ z \in \C $.
+	
+	\item If the difference in characteristic exponents $ \mu_{1} - \mu_{2} = \nu - (-\nu) = 2\nu$ is not an integer, the second linearly independent solution to the Bessel equation can also be found with the Frobenius method using the ansatz
+	\begin{equation*}
+		y_{2} = \sum_{n=0}^{\infty}c_{n} z^{n-\nu}
+	\end{equation*}
+	The resulting solution, also called a Bessel function, takes the form
+	\begin{equation*}
+		y_{2}(z) = J_{-\nu}(z) = \sum_{n= 0}^{\infty} (-1)^{n}  \frac{\left(\frac{z}{2}\right)^{2n - \nu}}{n! (n - \nu)!}
+	\end{equation*}
+	
+	\item Summary: when $ \nu \notin \mathbb{N}  $, the general solution to the Bessel equation is a linear combination of $ J_{\nu} $ and $ J_{-\nu} $.
+	
+	\item When $ \nu \equiv m \in \mathbb{N} $, the Bessel functions are $ J_{m} $ and $ J_{-m} $
+	\begin{equation*}
+		J_{m}(z) = \sum_{n=0}^{\infty}(-1)^{n} \frac{\left (\frac{z}{2}\right )^{2n + m}}{(m+n)!n!} \qquad J_{-m}(z) = \sum_{n=m}^{\infty}(-1)^{n} \frac{\left (\frac{z}{2}\right )^{2n - m}}{(n-m)!n!}
+	\end{equation*}
+	In this case $ J_{m} $ and $ J_{-m} $ are linearly dependent and $ J_{m}(z) = (-1)^{m}J_{-m}(z)$.
+	
+	\item For $ \nu \in \mathbb{N} $, all solutions of the Bessel equation that are bounded in a neighborhood of 0 are of the form $ \alpha J_{\nu} $ where $ \alpha $ is a constant.
+	
+\end{itemize}
+
+
+\subsubsection{The Weber Function}
+\question{Note a common question, included only as a reference.}
+\begin{itemize}
+	\item For all $ \nu \in \R^{+} \setminus \mathbb{N} $, the \textit{$ \nu $th Weber function} $ Y_{\nu} $ is
+	\begin{equation*}
+		Y_{\nu}(z) = \frac{J_{\nu(z)} \cos \nu \pi - J_{-\nu}(z)}{\sin \nu \pi}
+	\end{equation*}
+	The Weber function $ Y_{\nu} $ is a solution of the Bessel equation and is linearly independent of $ J_{\nu} $.
+	
+	\item If $ \nu = m \in \mathbb{N} $, the Weber function has the indeterminate form $ \frac{0}{0} $. In this case, we use L'Hopital's rule to define
+	\begin{equation*}
+		Y_{m}(z) = \lim_{\nu \to m}Y_{\nu}(z) = \frac{1}{\pi} \left[\pdv{}{\nu}J_{\nu}(z) - (-1)^{m}\pdv{}{\nu}J_{-\nu}(z) \right]_{\nu = m}
+	\end{equation*}
+	For $ \nu = m \in \mathbb{N} $, the Weber function $ Y_{m} $ solves the Bessel equation.
+	
+\end{itemize}
+
+\subsubsection{Generating Function and Properties of the Bessel Functions}
+\question{What is the generating function for the Bessel functions $ J_{n} $ for $ n \in \mathbb{N} $? State, with proof, how the generating function is expressed in terms of the Bessel functions.}
+\begin{itemize}
+	\item The Bessel functions satisfy the recursion relations
+	\begin{align*}
+		&2 J_{\nu}'(z) = J_{\nu -1}(z) - J_{\nu + 1}(z) \quad \text{and} \quad \frac{2\nu}{z} J_{\nu}(z) = J_{\nu -1 }(z) + J_{\nu + 1}(z)
+	\end{align*}
+	
+	\item The \textit{generating function} of the integer-indexed Bessel functions is
+
+	\begin{equation*}
+		e^{\frac{z}{2}\big(t - \frac{1}{t}\big)} = \sum_{n=-\infty}^{\infty} J_{n}(z)t^{n} = J_{0}(z) + \sum_{n=1}^{\infty}J_{n}(z)\big[t^{n} + (-t)^{-n}\big]
+	\end{equation*}
+	\textit{Proof:} Write the generating function as a product of two exponents
+	\begin{equation*}
+		e^{\frac{z}{2}\big(t - \frac{1}{t}\big)} = e^{\frac{zt}{2}}e^{\frac{-z}{2t}} = \sum_{j=0}^{\infty} \frac{1}{j!} \left(\frac{zt}{2}\right)^{j} \sum_{k=0}^{\infty}\frac{1}{k!}\left(\frac{-z}{2t}\right)^{k}
+	\end{equation*}
+	The coefficient of $ m $th power $ t^{m} $ is
+	\begin{equation*}
+		\sum_{j-k = m} \frac{(-1)^{k}}{j!k!2^{j+k}}z^{j+k} = \sum_{k=0}^{\infty} \frac{(-1)^{k}}{k!(k+m)!2^{2k_m}} z^{2k+m} = \sum_{k=0}^{\infty} (-1)^{k}\frac{\left(\frac{z}{2}\right)^{2k+m}}{k!(k+m)!} = J_{m}(z)
+	\end{equation*}
+	which implies $ e^{\frac{z}{2}\big(t - \frac{1}{t}\big)} = \sum_{n=-\infty}^{\infty} J_{n}(z)t^{n} $. The second equality follows from $ J_{m}(z) = (-1)^{m}J_{-m}(z) $ for $ m \in \mathbb{N} $.
+	
+	\item For all $ z, w \in \C $ and all $ m \in \mathbb{N} $, the Bessel functions satisfy the equality
+	\begin{equation*}
+		J_{m}(z + w) = \sum_{n=-\infty}^{\infty}J_{m-n}(z)J_{n}(w)
+	\end{equation*}
+	\vspace{-5mm}
+	
+	\item The Bessel functions satisfy the equality $ \displaystyle{J_{0}(z)^{2} + 2 \sum_{n=1}^{\infty} \left(J_{n}(x)\right)^{2}} $, which implies
+	\begin{equation*}
+		\abs{J_{0}(x)} \leq 1 \quad \text{and} \quad \abs{J_{n}(x)} \leq \frac{1}{\sqrt{2}} \qquad (n \in \mathbb{N})
+	\end{equation*}
+\end{itemize}
+
+\subsubsection{Integral Representation of the Bessel Functions}
+\question{Use the generating function to derive the integral formula for the Bessel functions $ J_{n} $.}
+\begin{itemize}
+	\item For all $ m \in \mathbb{N} $ and $ x \in \R $ the Bessel functions satisfy the integral identity
+	\begin{equation*}
+		J_{m} = \frac{1}{\pi}\int_{0}^{\pi}\cos(m\phi - x\sin \phi)\diff \phi	
+	\end{equation*}
+	\textit{Proof:} For $ t = e^{i\phi} $ and $ z = x $, the generating function reads
+	\begin{equation*}
+		e^{ix\sin} = \sum_{-\infty}^{\infty}J_{n}(x)e^{in\phi}
+	\end{equation*}
+	The real and imaginary parts of this equality are
+	\begin{equation*}
+		\cos (x \sin \phi) = \sum_{-\infty}^{\infty}J_{n}(x)\cos(n\phi) \quad \text{and} \quad \sin(x\sin\phi) = \sum_{-\infty}^{\infty}J_{n}(x)\sin(n\phi)
+	\end{equation*}
+	Multiplying the first equation by $ \cos m \phi $ and the second by $ \sin m \phi $, adding the equations, and using the product-to-sum identities for $ \sin $ and $ \cos $ leads to
+	\begin{equation*}
+		\cos(m\phi - x \sin \phi) = \sum_{-\infty}^{\infty}J_{n}(x)\cos[(m-n)\phi]
+	\end{equation*}
+	Integrating the equality term by term with respect to $ \phi $ for $ \phi \in [0, \pi] $ leads to
+	\begin{equation*}
+		\int_{0}^{\pi} 	\cos(m\phi - x \sin \phi) \diff \phi = \pi J_{m}(x)
+	\end{equation*}
+	where the last equality holds because $ \int_{0}^{\pi} \cos[(m-n)\phi] \diff \phi = \pi \delta_{m, n}$.
+\end{itemize}
+
+\end{document}
+
+
+
+
+
+

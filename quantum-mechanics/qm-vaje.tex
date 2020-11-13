@@ -1,0 +1,1915 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage{mwe}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{bm} % for bold vectors in math mode
+\usepackage{physics} % for differential notation, etc...
+\usepackage[separate-uncertainty=true]{siunitx}
+
+\usepackage[margin=3cm]{geometry}
+%\usepackage[hidelinks,urlcolor=blue]{hyperref}
+\usepackage[colorlinks = true,
+            linkcolor = blue,
+            urlcolor  = blue,
+            citecolor = blue,
+            anchorcolor = blue]{hyperref}
+
+\setlength{\parindent}{0pt} % to stop indenting new paragraphs
+\newcommand{\diff}{\mathop{}\!\mathrm{d}} % differential
+\newcommand{\eqtext}[1]{\qquad \text{#1} \qquad}
+\newcommand{\schro}{Schr\"{o}dinger\xspace}
+
+\renewcommand{\vec}[1]{\bm{#1}} % for vectors
+\renewcommand{\op}[1]{\hat{#1}} % for operators
+\newcommand{\mat}[1]{\mathbf{#1}} % for matrices
+\newcommand{\dvec}[1]{\dot{\vec{#1}}} % for dotted vector quantity
+\newcommand{\tvec}[1]{\tilde{\vec{#1}}} % for tilde vector quantities
+\renewcommand{\H}{\op{H}}
+
+\newcommand{\tev}{e^{-i\frac{H}{\hbar}t}}  % time evolution operator
+\newcommand{\tevp}{e^{i\frac{H}{\hbar}t}}  % time evolution operator with positive exponent
+
+\begin{document}
+\title{Quantum Mechanics Exercises Notes}
+\author{Elijan Mastnak}
+\date{Winter Semester 2020-2021}
+\maketitle
+%\tableofcontents
+
+
+\begin{center}
+\textbf{About}
+\end{center}
+These are my notes are from the \textit{Exercises} (problem-solving) portion of the class \textit{Kvanta Mehanika} (Quantum Mechanics), given to third-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the problem sets and leads us through the solutions. I am making the notes freely available in case they might help others taking a similar course, but credit should go to Prof. Rejec for the problem sets. 
+
+\tableofcontents
+
+\newpage
+
+\section{First Chapter}
+
+\subsection{First Vaje}
+
+\subsubsection{Theory}
+\begin{itemize}
+	\item The basic quantity in quantum mechanics is the wave function. In one dimensions, this is $ \psi(x, t) $. Any measurable quantity can be derived from the wave function. For example probability density
+	\begin{equation*}
+		\rho(x, t) = \abs{\psi(x, t)}^{2} = \dv{p}{x}
+	\end{equation*}
+	$ \diff p $ represents the probability of finding particle with wave function $ \psi(x, t) $ in the $ x $ interval $ \diff x $ at time $ t $. 
+	
+	\item How to find the wave function for arbitrary time? You must know the stationary wave function at a given time, e.g. $ \psi(x, 0) $. You then find the wave function for all time by solving the \schro equation
+	\begin{equation*}
+		i \hbar \pdv{}{t}\psi(x, t) = \H \psi(x, t)
+	\end{equation*}
+	Note that $ \psi(x, t) $ is an element of a Hilbert space!
+	
+	\item The Hamiltonian operator is
+	\begin{equation*}
+		\H = \frac{\op{p}^{2}}{2m} + V(x) \eqtext{where} \op{p} = - i\hbar \pdv{}{x}
+	\end{equation*}
+	
+	\item In practice, we usually solve the stationary \schro equation, which reads
+	\begin{equation*}
+		\op{H}\psi_{n}(x) = E_{n}\psi_{n}(x)
+	\end{equation*}
+	Note that there is no time dependence of $ \psi $ here, and that this is an eigenvalue equation, where $ E_{n} $ are the eigenvalues of the Hamiltonian operator and $ \psi_{n} $ are the corresponding eigenfunctions.
+	
+	We then use the solutions $ \psi_{n}(x) $ of the stationary \schro equation to get the time-dependent wave function $ \psi(x, t) $.
+	
+	The procedure reads: Start with $ \psi(x, 0) $; the time-dependent wave function at a fixed time. Expand $ \psi(x, 0) $ over a basis of the eigenfunctions $ \psi_{n}(x) $.
+	\begin{equation*}
+		\psi(x, 0) = \sum_{n} c_{n} \psi_{n}(x)
+	\end{equation*}
+	The time-dependent wave function is then
+	\begin{equation*}
+		\psi(x, t) = \sum_{n} c_{n}e^{-\frac{iE_{n}}{\hbar}t}\psi_{n}(x)
+	\end{equation*}
+	The idea is to replace the coefficients $ c_{n} $ from the stationary expansion with the modified coefficients e.g. $ \tilde{c}_{n} = c_{n}e^{-\frac{iE_{n}}{\hbar}t} $. Basically the stationary coefficients multiplied by $ e^{-\frac{iE_{n}}{\hbar}t} $ plane waves. 
+	
+	\item Next, on the energy eigenvalues. There typically as many eigenvalues as the dimension of the corresponding Hilbert space containing the particle's wave functions. Often this is infinite! 
+	
+	The set of all energy eigenvalues is $ \{E_{n}\} $, and is often called the spectrum. 
+	
+	An important question: how many linearly independent eigenfunctions does the system have at a given energy eigenvalue? That number is the degeneracy of an energy eigenvalue $ E_{n} $. Or more formally, of the state $ \ket{n} $. 
+	
+	\item Next, on the eigenfunctions. Suppose we have an energy level without degeneracy, i.e. there is one eigenfunction at that energy eigenvalue. Suppose the eigenfunction is given by
+	\begin{equation*}
+		\op{H}\psi_{n}(x) = E_{n}\psi_{n}(x)
+	\end{equation*}
+	If $ \psi_{n} $ is a solution, then mathematically $ \lambda \psi_{n} $ also solves the eigenvalue problem for all $ \lambda \in \mathbb{C} $.
+	
+	But physically, there is a restriction: the probability density must be normalized. So
+	\begin{equation*}
+		\int_{-\infty}^{\infty} \abs{\psi_{n}(x)}^{2} \diff x = 1
+	\end{equation*}
+	We then require $ \abs{\lambda} = 1$. For example $ \lambda = e^{i \alpha} $ where $ \alpha \in \mathbb{R} $. 
+	
+	Suppose we have two wave functions:
+	\begin{equation*}
+		\psi_{n}(x) \eqtext{and} e^{i \alpha}\psi_{n}(x)
+	\end{equation*}
+	Physically, the two wave functions are the same! We can't distinguish between the two in experiments, because the phase factor $ e^{i \alpha} $ is lost during the process of finding the probability density when squaring the absolute value! \textit{All wave functions are determined only up to a constant phase factor.}
+	
+	As an example, the infinite potential well from $ 0 $ to $ a $. The energy eigenvalues are
+	\begin{equation*}
+		E_{n} = \frac{\hbar^{2} \pi^{2} n^{2}}{2ma^{2}} \eqtext{and} \psi_{n}(x) = \sqrt{\frac{2}{a}} \sin \frac{n\pi x}{a}, \qquad n \in \mathbb{N}^{+}
+	\end{equation*}
+	Now for example, $ \tilde{\psi}_{n}(x) = i \sqrt{\frac{2}{a}} \sin \frac{n\pi x}{a}, \qquad n \in \mathbb{N}^{+} $ represents the same physical information as $ \psi_{n} $. 
+\end{itemize}
+
+\subsubsection{Bound States in a Finite Potential Well}
+Find the energy eigenvalues of the bound states of a particle with energy $ E $ in a finite potential well of depth $ V_{0} $ and width $ a $. Assume $ \abs{E} < V_{0} $; note that bound states have negative energies.
+\begin{itemize}
+	\item Split the $ x $ axis into three regions: to the left of the well, inside the well, and to the right of the well, e.g. regions 1, 2 and 3, respectively. The potential energy is
+	\begin{equation*}
+		V(x) =
+		\begin{cases}
+			0, & x \in \text{region 1}\\
+			- V_{0}, & x \in \text{region 2}\\
+			0, & x \in \text{region 3}
+		\end{cases}
+	\end{equation*}
+	
+	\item The \schro equation for region 1 is
+	\begin{equation*}
+		- \frac{\hbar^{2}}{2m}\pdv[2]{\psi}{x} + 0 \cdot \psi = E \psi 
+	\end{equation*}
+	remember that $ V = 0 $ in region 1. The general solution is a linear combination of exponential functions:
+	\begin{equation*}
+		\psi_{1}(x) = A e^{\kappa x} + B e^{- \kappa x}
+	\end{equation*}
+	To find $ \kappa $, insert $ \psi_{1} $ into the \schro equation for region 1. Differentiating, canceling the wave function terms from both sides, and rearranging gives
+	\begin{equation*}
+		-\frac{\hbar^{2}}{2m} \kappa^{2}\left(Ae^{i\kappa x} + B e^{- i\kappa x}\right) = E \left(A e^{i\kappa x} + B e^{- i\kappa x}\right) \implies \kappa^{2} = \frac{2mE_{0}}{\hbar^{2}}
+	\end{equation*}
+	where $ E_{0} = - E $ is a positive quantity.
+	
+	\item The \schro equation for region 2 is
+	\begin{equation*}
+		- \frac{\hbar^{2}}{2m}\pdv[2]{\psi}{x} - V_{0} \cdot \psi = E \psi
+	\end{equation*}
+	We use a plane wave ansatz:
+	\begin{equation*}
+		\psi_{2}(x) = Ce^{ikx} + De^{-ikx}
+	\end{equation*}
+	To find $ k $, insert $ \psi_{2} $ into the \schro equation for region 2. The result after differentiation is
+	\begin{equation*}
+		+\frac{\hbar^{2}}{2m} k^{2}\left(Ce^{ik x} + D e^{- ik x}\right) - V_{0}\left(C e^{ik x} + D e^{- ik x}\right)  = E \left(C e^{ik x} + D e^{- ik x}\right) 
+	\end{equation*}
+	The wave functions terms in parentheses cancel, leading to $ k^{2} = \frac{2m(V_{0}-E_{0})}{\hbar^{2}} $ where $ E_{0} = - E $ is a positive quantity.
+	
+	\item The \schro equation for region 3 is analogous to the equation for region 1. Following a similar procedure, we would get
+	\begin{equation*}
+		\psi_{3} = Fe^{\kappa x} + Ge^{-\kappa x} \eqtext{where} \kappa^{2} = \frac{2mE_{0}}{\hbar^{2}}
+	\end{equation*}
+	
+	\item Next, to find energy, we apply boundary conditions, namely that the wave function is continuous and continuously differentiable at the boundaries between regions and that the functions vanishes at $ \pm \infty $, meaning there is no probability of finding the particle infinitely far away from the well. The conditions are:
+	\[
+		\begin{array}{ccc}
+			\text{Region} & \text{Condition 1} & \text{Condition 2}\\
+			1/2 & \psi_{1}(0) = \psi_{2}(0) &\displaystyle \pdv{\psi_{1}}{x} (0) = \pdv{\psi_{2}}{x} (0)\\[3mm]
+			2\big/3 & \psi_{2}(a) = \psi_{3} (a) &\displaystyle \pdv{\psi_{2}}{x} (a) = \pdv{\psi_{3}}{x} (a)\\[2.5mm]
+			\pm \infty & \psi_{1}(-\infty) = 0 & \psi_{3}(\infty) = 0
+		\end{array}
+	\]
+	The last two conditions at $ \pm \infty $ require that $ B = 0 $ and $ F = 0 $, respectively; otherwise $ \psi_{1} $ and $ \psi_{3} $ would diverge.
+	
+	The continuity conditions (in the Condition 1 column) require
+	\begin{equation*}
+		A = C + D \eqtext{and} Ce^{ika} + De^{-ika} = Ge^{-\kappa a}
+	\end{equation*}
+	The continuous differentiability conditions require 
+	\begin{equation*}
+		A\kappa = ik(C-D) \eqtext{and} ik(Ce^{ika} - De^{-ika}) = - \kappa Ge^{-\kappa a}
+	\end{equation*}
+	
+	\item We could then write the four equations in a $ 4 \cross 4 $ coefficient matrix, require the matrix's determinant be zero for a unique solution, and solve the matrix system of equations
+	\begin{equation*}
+		\begin{bmatrix}
+			\cdots \\
+			\cdots \\
+			\cdots \\
+			\cdots 
+		\end{bmatrix}
+		\begin{bmatrix}
+			A\\
+			B\\
+			C\\
+			D
+		\end{bmatrix}
+		 = 
+		 \begin{bmatrix}
+		 	0\\
+		 	0\\
+		 	0\\
+		 	0
+		 \end{bmatrix}
+	\end{equation*}
+	But that's tedious!
+	
+\end{itemize}
+
+\subsubsection{Finite Potential Well Take 2}
+\begin{itemize}
+	\item Here's how to proceed: The determinant of the coefficient matrix is a function of $ \kappa $ and $ k $, which are in turn functions of energy. We then view the matrix's determinant as a function of energy and try to find its zeros.
+		
+	Each zero is an energy eigenvalue of the particle in a finite potential well.
+	
+	\item First, note the problem has reflection symmetry if we place the center of the well at the origin. The well then reaches from $ -\frac{a}{2} $ to $ \frac{a}{2} $. 
+	
+	In this case $ V(x) = V(-x) $, i.e. the potential is an even function of $ x $. 
+	
+	\item Theorem: for a problem with an even potential, the energy eigenfunctions are either even or odd.
+	
+	Why is this useful? It reduces the number of wave functions we have to find by one. Namely, if the eigenfunctions are even, then $ \psi_{3} $ is a carbon-copy of $ \psi_{1} $. If the eigenfunctions are odd, then $ \psi_{3} = - \psi_{1} $. In both cases, we only need to find $ \psi_{1} $. 
+	
+	We then only need to solve the problem on half of the real axis.
+\end{itemize}
+
+\textbf{Intermezzo: Linearity of Eigenfunctions}\\
+If two eigenfunctions $ \psi_{1} $ and $ \psi_{2} $ have the same eigenvalue $ E $, than any linear combination of $ \psi_{1} $ and $ \psi_{2} $ is also an eigenfunction with eigenvalue $ E $. In equation form, if $ \op{H}\psi_{1}(x) = E \psi_{1}(x) $ and $ \op{H}\psi_{2}(x) = E \psi_{2}(x) $ then
+\begin{equation*}
+	\op{H}\left(\alpha \psi_{1}(x) + \beta \psi_{2}(x)\right) = E \left(\alpha \psi_{1}(x) + \beta \psi_{2}(x)\right)
+\end{equation*}
+This is the superposition principle. 
+
+
+\textbf{Intermezzo: Proof of the Even/Odd Theorem}
+\begin{itemize}
+	\item First, start with the \schro equation
+	\begin{equation*}
+		\op{H}\psi(x) = E \psi(x)
+	\end{equation*}
+	Next, make the parity transformation $ x \to -x $. Note that the Hamiltonian is invariant under parity transformation if $ V $ is even, since $ \pdv{}{(-x)} = - \pdv{}{x} $, and $ \pdv[2]{}{(-x)} = \pdv[2]{}{x} $. So...
+	\begin{equation*}
+		\op{H}\psi(-x) = E\psi(-x)
+	\end{equation*}
+	This means that if $ \psi(x) $ is an eigenfunction of $ \op{H} $ for the eigenvalue $ E $, then $ \psi(-x) $ is also an eigenfunction for the same eigenvalue.
+	
+	\item Next, two options: either the eigenvalue $ E $ is degenerate or not.
+	
+	If $ E $ is not degenerate, then $ \psi(-x) $ and  $\psi(x) $ are equal up to a constant phase factor. In other words, if $ E $ is not degenerate and $ V $ is even, then $ \psi(x) $ and $ \psi(-x) $ are linearly dependent. Or
+	\begin{equation*}
+		 \psi(x) = e^{i\alpha}\psi(-x) = e^{2i\alpha}\psi(x) \implies e^{2i\alpha} = 1 \implies e^{i\alpha} = \pm 1
+	\end{equation*}
+	If $ e^{i\alpha} = 1 $, then $ \psi $ is even, and if $ e^{i\alpha} = - 1 $, then $ \psi $ is odd. There are no other options.
+	
+	\item Next, if $ E $ is degenerate, then $ \psi(x) $ and $ \psi(-x) $ are linearly independent. By the superposition principle, we can create two more linear combinations of $ \psi(x) $ and $ \psi(-x) $: a sum and a difference, e.g.
+	\begin{equation*}
+		\psi_{+}(x) = \psi(x) + \psi(-x) \eqtext{and} \psi_{-}(x) = \psi(x) - \psi(-x) 
+	\end{equation*}
+	Note that $ \psi_{+} $ is even and $ \psi_{-} $ is odd. In other words, even though $ \psi_{1} $ and $ \psi_{2} $ may not be odd or even themselves, we can always create a valid linear combination of the two that is odd or even.
+	
+	\item The general takeaway is: if our problem's potential has reflection symmetry about the origin, we can a priori search for only even or odd functions, because we know there exists a basis of the surrounding Hilbert space formed of only odd and even eigenfunctions.
+\end{itemize}
+\textbf{Back to the Finite Potential Well}
+\begin{itemize}
+	\item First, assuming the solution is an even function. Reusing results from before, for region 3 we have
+	\begin{equation*}
+		\psi_{3} = Ge^{-\kappa x} \eqtext{where} \kappa = \frac{2mE_{0}}{\hbar}
+	\end{equation*}
+	and for region 2, we have
+	\begin{equation*}
+		\psi_{2} = A \cos(kx) \eqtext{where} k = \frac{2m(V_{0} - E_{0})}{\hbar}
+	\end{equation*}
+	There's a few things going on here. We switched from plane waves to sinusoidal functions, where are better suited to odd/even problems. And we dropped the $B\sin(kx)$ term and kept only the cosine because we're solving for an even function a priori.
+	
+	For region 1, because we're searching for even functions, the result is the same as for region 3:
+	\begin{equation*}
+		\psi_{1} = G e^{\kappa x}
+	\end{equation*}
+	
+	\item If we assume an odd solution, we have
+	\begin{equation*}
+		\psi_{3}(x) = G e^{-\kappa x} \qquad \psi_{2}(x) = B \sin (kx) \qquad \psi_{1}(x) = -Ge^{\kappa x}
+	\end{equation*}
+	
+	\item On to boundary conditions. Because an even or odd function will have the same behavior (up to a minus sign for odd functions) at both region boundaries, we only need to consider one region. 
+	
+	Remember we switched the well's boundaries to $ \pm \frac{a}{2} $. The conditions are
+	\begin{equation*}
+		\psi_{2}\left(\frac{a}{2}\right) = \psi_{3}\left(\frac{a}{2}\right) \eqtext{and} \pdv{\psi_{2}}{x}\left(\frac{a}{2}\right) = \pdv{\psi_{3}}{x}\left(\frac{a}{2}\right) 
+	\end{equation*}
+	
+	\item For an even solution, the boundary conditions read:
+	\begin{equation*}
+		A \cos\left(k\frac{a}{2}\right) = Ge^{-\frac{\kappa a}{2}} \eqtext{and} -kA\sin(k\frac{a}{2}) = - \kappa Ge^{-\frac{\kappa a}{2}}
+	\end{equation*}
+	Next, a trick: divide the equations and cancel like terms to get
+	\begin{equation*}
+		k \tan (k\frac{a}{2}) = \kappa 
+	\end{equation*}
+	
+	\item For an odd solution, the boundary conditions read:
+	\begin{equation*}
+		B \sin \left(k\frac{a}{2}\right) = Ge^{-\frac{\kappa a}{2}} \eqtext{and} kB\cos(k\frac{a}{2}) = -\kappa Ge^{-\frac{\kappa a}{2}}
+	\end{equation*}
+	Dividing the equations and cancel like terms gives
+	\begin{equation*}
+		k \cot (k\frac{a}{2}) = -\kappa 
+	\end{equation*}
+	
+	\item The solutions of the two equations
+	\begin{equation*}
+		\tan (k\frac{a}{2}) = \frac{\kappa}{k}  \eqtext{and}  \cot (k\frac{a}{2}) = -\frac{\kappa}{k} 
+	\end{equation*}
+	will give the energy eigenvalues of the even and odd solutions, respectively. 
+	
+	These are transcendental equations. They don't have analytic solutions, and we'll have to solve them graphically. 
+	
+	First, we introduce the dimensionless variable $ u = k a $. 
+	
+	We express $ \kappa $ in terms of $ u $ using
+	\begin{equation*}
+		\kappa^{2} + k^{2} = \kappa^{2} + \frac{u^{2}}{a^{2}}  = \frac{2mV_{0}}{\hbar^{2}}
+	\end{equation*}
+	We did this a little differently, to stay in dimensionless quantities. We defined $ u_{0}^{2} = \frac{2mV_{0}a^{2}}{\hbar^{2}} $ which leads to
+	\begin{equation*}
+		\kappa^{2} = \frac{u_{0}^{2} - u^{2}}{a^{2}}
+	\end{equation*}
+	In terms of $ u $ and $ u_{0} $, the equations become
+	\begin{equation*}
+		\tan(\frac{u}{2}) = \frac{\sqrt{u_{0}^{2} - u^{2}}}{u} = \sqrt{\frac{u_{0}^{2}}{u^{2}} - 1} \eqtext{and} \cot(\frac{u}{2}) = -\sqrt{\frac{u_{0}^{2}}{u^{2}} - 1}
+	\end{equation*}
+	We then plot both sides of the equations and look for values of $ u $ where the left side equals the right side. These values of $ u $ give the energy eigenvalues. 
+	
+	The right sides of the equations are defined only for $ u \leq u_{0} $ and diverge as $ u \to 0 $. 
+	
+	As $ u $ increases, $ k $ increases, $ E $ becomes more positive, and states become less bound. The ground state occurs at the smallest value of $ u $. 
+	
+	The number of bound states increases as $ u_{0} $ increases. This is achieved by increasing $ V_{0} $ (well depth), $ a $ (well width), or $ m $ (particle mass). 
+	
+	And a finite potential well always has at least one bound state, near $ u = 0 $. 
+\end{itemize}
+
+
+
+\subsection{Second Vaje}
+
+\subsubsection{Theory}
+Even bound states in a finite potential well of width $ a $ and depth $ V_{0} $ obey
+\begin{equation*}
+	\tan \frac{u}{2} = \sqrt{\left(\frac{u_{0}}{u}\right)^{2} -1} \eqtext{where} u_{0}^{2} = \frac{2mV_{0}a^{2}}{\hbar^{2}} \eqtext{and} u = ak
+\end{equation*}
+The wave vectors inside and outside the well are
+\begin{equation*}
+	k = \sqrt{\frac{2m(V_{0}- E_{0})}{\hbar^{2}}} \eqtext{and} \kappa = \sqrt{\frac{2mE_{0}}{\hbar^{2}}}
+\end{equation*}
+
+
+
+\subsubsection{Bound States in a Delta Potential Well Version 1}
+\textit{Find the energies and wave functions of the bound states of a quantum particle of mass $ m $ in a delta function potential well by reusing the results from a finite potential well}. 
+\begin{itemize}
+	\item Interpret a delta potential as a finite potential well in the limit 
+	\begin{equation*}
+		a \to 0, \qquad V_{0} \to \infty \eqtext{and} aV_{0} = \text{constant} \equiv \lambda 
+	\end{equation*}
+	where then write the potential as $ V(x) = - \lambda \delta(x) $. The units don't seem to match, but that's how we wrote it. Unless $ \delta(x) $ has units $ L^{-1} $. 
+	
+	\item The limit $ a \to 0 $ forces $ u_{0} \to 0 $, and we expect at most one, even bound state, and we can use the even bound state expression
+	\begin{equation*}
+		\tan \frac{u}{2} = \sqrt{\left(\frac{u_{0}}{u}\right)^{2} -1} \eqtext{where} u_{0}^{2} = \frac{2mV_{0}a^{2}}{\hbar^{2}}
+	\end{equation*}
+	For small $ u $ and $ u_{0} $, we expect $ u $ and $ u_{0} $ to be very close, so we write
+	\begin{equation*}
+		u = u_{0} - \epsilon
+	\end{equation*}
+	where $ \epsilon $ is small. 
+	
+	\item The rest is Taylor expansion and approximation of the even bound state equation. To first order, the tangent function is
+	\begin{equation*}
+		\tan \frac{u}{2} = \tan \frac{u_{0} + \epsilon}{2} \approx \frac{u_{0} + \epsilon}{2} + \dots 
+	\end{equation*}
+	while the square root is
+	\begin{equation*}
+		\sqrt{\left(\frac{u_{0}}{u}\right)^{2} -1} = \sqrt{\left(\frac{u_{0}}{u_{0} + \epsilon}\right)^{2} -1} = \sqrt{\left(1 - \frac{\epsilon}{u_{0}}\right)^{-2} -1} \approx \sqrt{2\frac{\epsilon}{u_{0}}}
+	\end{equation*}
+	
+	
+	\item With the approximations, the original even bound state equation becomes $ \frac{u_{0} + \epsilon}{2} = \sqrt{2\frac{\epsilon}{u_{0}}} $. If we square both sides and take only the leading $ u_{0}^{2} $ term from $ (u_{0} + \epsilon)^{2} $ we get
+	\begin{equation*}
+		\frac{ (u_{0} + \epsilon)^{2}}{4} \approx \frac{u_{0}^{2}}{4} = 2 \frac{\epsilon}{u_{0}} \implies \epsilon = \left(\frac{u_{0}}{2}\right)^{3}
+	\end{equation*}
+	Next, solve for $ u = $ in terms of $ u_{0} $:
+	\begin{equation*}
+		u = u_{0} - \epsilon = u_{0} - \left(\frac{u_{0}}{2}\right)^{3}
+	\end{equation*}
+	
+	\item Manipulate the dispersion relation to solve for $ E $ in terms of $ u_{0} $:
+	\begin{equation*}
+		k = \frac{u}{a} = \sqrt{\frac{2m(V_{0}- E_{0})}{\hbar^{2}}} \implies E_{0} = V_{0} - \frac{\hbar^{2}u^{2}}{2ma^{2}} = V_{0} - \frac{\hbar^{2}}{2ma^{2}}\left[u_{0} - \left(\frac{u_{0}}{2}\right)^{3}\right]^{2}
+	\end{equation*}
+	Drop the small terms of order $ u_{0}^{6} $ and higher to get
+	\begin{equation*}
+		E_{0} = V_{0} - \frac{\hbar^{2}}{2ma^{2}}\left(u_{0}^{2} - \frac{u_{0}^{4}}{4}\right)
+	\end{equation*}
+	Then substitute in the expression $ u_{0}^{2} = \frac{2mV_{0}a^{2}}{\hbar^{2}} $, which simplifies things to
+	\begin{equation*}
+		E_{0} = \frac{ma^{2}V_{0}^{2}}{2\hbar^{2}} = \frac{m\lambda^{2}}{2\hbar^{2}}
+	\end{equation*}
+	where the last equality uses $ \lambda = a V_{0} $. This is the result for the bound state's energy. 
+	
+	\item To find the wave function, use the plane-wave ansatz
+	\begin{equation*}
+		\psi(x) =
+		\begin{cases}
+			A e^{\kappa x} & x < 0\\
+			B e^{-\kappa x} & x > 0
+		\end{cases}
+		\eqtext{where} \kappa = \sqrt{\frac{2mE_{0}}{\hbar^{2}}} = \frac{m\lambda}{\hbar^{2}}
+	\end{equation*}
+	Because the wave function is even, $ A = B $, allowing us to write $ \psi = Ae^{-\kappa \abs{x}} $. Find the coefficient $ A $ from the normalization condition
+	\begin{equation*}
+		1 \equiv \int \abs{\psi(x)}^{2} \diff x = A^{2} \int_{-\infty}^{\infty} e^{-2\kappa \abs{x}} \diff x
+	\end{equation*}
+	Because $ \psi $ is even, we can integrate over only half the real line and double the result:
+	\begin{equation*}
+		1 = 2A^{2} \int_{0}^{\infty} e^{-2\kappa x} \diff x = - \frac{A^{2}}{\kappa} \eval{e^{-2\kappa x}}_{0}^{\infty} = \frac{A^{2}}{\kappa} \implies A^{2} = \kappa
+	\end{equation*}
+	The wave function is thus
+	\begin{equation*}
+		\psi(x) = \sqrt{\kappa} e^{-\kappa \abs{x}} \eqtext{where} \kappa = \frac{m\lambda}{\hbar^{2}}
+	\end{equation*}
+	
+\end{itemize}
+
+\subsubsection{Bound States in a Delta Potential Version 2}
+\textit{Find the energies and wave functions of the bound states of a quantum particle of mass $ m $ in a delta function potential well using a plane wave ansatz and appropriate boundary conditions}. 
+\begin{itemize}
+	\item Write the potential well in the form $ V(x) = - \lambda \delta (x) $. The stationary \schro equation for the potential reads
+	\begin{equation*}
+		- \frac{\hbar^{2}}{2m}\pdv[2]{\psi}{x} - \lambda \delta(x) \psi = E\psi
+	\end{equation*}
+	Find the boundary condition for the derivative $ \psi' $ by integrating the \schro equation over a small region $ [-\epsilon, \epsilon] $. 
+	\begin{equation*}
+		-\frac{\hbar^{2}}{2m} \eval{\pdv{\psi}{x}}_{-\epsilon}^{\epsilon} - \lambda \int_{-\epsilon}^{\epsilon} \delta(x) \psi(x)\diff x = E \int_{-\epsilon}^{\epsilon}\psi(x) \diff x
+	\end{equation*}
+	In the limit $ \epsilon \to 0 $, this becomes
+	\begin{equation*}
+		-\frac{\hbar^{2}}{2m} \left[\psi'(0_{+}) - \psi'(0_{-})\right] - \lambda \psi(0) = 0
+	\end{equation*}
+	where $ \psi'(0_{+}) $ and $ \psi'(0_{-}) $ denote $ \psi $'s derivatives from the right and left, respectively. The appropriate boundary condition $ \psi'(x) $ are thus:
+	\begin{equation*}
+		\psi'(0_{+}) - \psi'(0_{-}) = \frac{2m\lambda\psi(0)}{\hbar^{2}}
+	\end{equation*}
+	
+	
+	\item Construct the solution using the plane-wave ansatz
+	\begin{equation*}
+		\psi(x) =
+		\begin{cases}
+			A e^{\kappa x} & x < 0\\
+			B e^{-\kappa x} & x > 0
+		\end{cases}
+	\end{equation*}
+	For the two boundary conditions, require that $ \psi $ is continuous and that $ \psi' $ obey the earlier condition $ \psi'(0_{+}) - \psi'(0_{-}) = \frac{2m\lambda\psi(0)}{\hbar^{2}} $. Applying the continuity condition at $ x = 0 $ gives
+	\begin{equation*}
+		A e^{\kappa \cdot 0} = B e^{-\kappa \cdot 0} \implies A = B
+	\end{equation*}
+	Applying the condition on the derivatives (and using $ A = B $) gives
+	\begin{equation*}
+		-\kappa A^{-\kappa \cdot 0} -\kappa A^{\kappa \cdot 0} = \frac{2m\lambda}{\hbar^{2}} \psi(0) = \frac{2m\lambda }{\hbar^{2}} Ae^{\kappa \cdot  0} \implies \kappa = \frac{m\lambda}{\hbar^{2}}
+	\end{equation*}
+	The wave function is thus
+	\begin{equation*}
+		\psi(x) = A e^{-\kappa \abs{x}} \eqtext{where} \kappa = \frac{m\lambda}{\hbar^{2}}
+	\end{equation*}
+	
+	\item We can find the bound state's energy from
+	\begin{equation*}
+		\kappa = \sqrt{\frac{2mE_{0}}{\hbar^{2}}} \implies E_{0} = \frac{m\lambda^{2}}{2\hbar^{2}}
+	\end{equation*}
+	which matches the result from the previous problem. To find the wave function, we just need the value of $ A $, which we find from the same normalization condition as in the previous problem:
+	\begin{equation*}
+		1 \equiv \int \abs{\psi(x)}^{2} \diff x = A^{2} \int_{-\infty}^{\infty} e^{-2\kappa \abs{x}} \diff x = 2A^{2} \int_{0}^{\infty} e^{-2\kappa x} \diff x \implies A^{2} = \kappa
+	\end{equation*}
+	The wave function, as before, is thus
+	\begin{equation*}
+		\psi(x) = \sqrt{\kappa} e^{-\kappa \abs{x}} \eqtext{where} \kappa = \frac{m\lambda}{\hbar^{2}}
+	\end{equation*}
+	 
+\end{itemize}
+
+\subsubsection{Theory: Scattering}
+\begin{itemize}
+	\item Here's the situation: a particle with energy $ E $. Two regions on negative and positive $ x $ axis, respectively, with potentials $ V_{1} $ and $ V_{2} $, where $ E > V_{1}, V_{2} $. Both energies and potentials are positive quantities. Because $ E > V_{1}, V_{2} $, the particle is free for large $ \abs{x} $. 
+	
+	Near the origin, we have a small potential barrier where $ V(x) > E $; the exact form of $ V(x) $ is not important for our purposes. 
+	
+	\item Now the general ansatz solutions in regions $ 1 $ and $ 2 $ are
+	\begin{equation*}
+		\psi_{1} = A_{1} e^{ik_{1}x} + B_{1}e^{-ik_{1}x} \eqtext{and} \psi_{2} = A_{2} e^{-ik_{2}x} + B_{2}e^{ik_{2}x}
+	\end{equation*}
+	Convention: terms with $ A $ coefficients represent movement toward the potential barrier 
+	
+	\item In region 3, we don't know $ V(x) $, so we have to be more general. Because $ \psi_{2} $ comes from a second-order linear differential equation (i.e. the \schro equation), its general form is a linear combination of two linearly independent functions. We sum this up with
+	\begin{equation*}
+		\psi_{3} = C f(x) + D g(x)
+	\end{equation*}
+	where $ f $ and $ g $ are linearly independent solutions of the \schro equation in region $ 3 $. 
+	
+	\item Because $ E > V_{1}, V_{2} $, we're dealing with unbound states. This means the particle's Hamiltonian has a continuous spectrum of energy eigenvalues. As a result, energy eigenvalues aren't particularly useful for characterizing the problem. 
+	
+	Instead, for unbound situations with a potential barrier, we describe the problem in terms of transmissivity $ T $ and reflectivity $ R $, describing the probabilities of the particles passing through and reflecting from the barrier, respectively.
+	
+
+	\item \textbf{Theory:} For scattering problems with $ T $ and $ R $, we work in terms of probability current
+	\begin{equation*}
+		j(x) = \frac{\hbar}{2mi}\left[\psi^{*}(x)\psi'(x) - \psi^{'^{*}}(x)\psi(x)\right] = \frac{\hbar}{m} \Im \left\{\psi^{*}\psi'(x)\right\}
+	\end{equation*}
+	Here $ \psi^{*} $ denotes the complex conjugate and $ \psi' $ the derivative.
+	
+	\item Okay then, applying the formula to region 1 gives
+	\begin{align*}
+		j_{1} &= \frac{\hbar}{m}\Im \left\{A_{1}A_{1}^{*}ik_{1} - B_{1}B_{1}^{*}ik_{1} + B_{1}^{*}A_{1}ik_{1}e^{2ik_{1}x} - B_{1}A_{1}^{*}ik_{1}e^{-2ik_{1}x}\right\}\\
+		&=\frac{\hbar k_{1}}{m}(A_{1}A_{1}^{*} - B_{1}B_{1}^{*}) \equiv v_{1}(A_{1}A_{1}^{*} - B_{1}B_{1}^{*}) =  v_{1}(\abs{A}^{2} - \abs{B}^{2})
+	\end{align*}
+	Note that $ \frac{\hbar k_{1}}{m} $ has units of velocity; we've defined $ v_{1} \equiv \frac{\hbar k_{1}}{m} $. 
+	
+	The procedure for $ j_{2} $ would be analogous. The result is
+	\begin{equation*}
+		j_{2} = v_{2}(B_{2}B_{2}^{*} - A_{2}A_{2}^{*}) = v_{2}(\abs{B}_{2}^{2} - \abs{A}_{2}^{2}) \eqtext{where} v_{2} \equiv \frac{\hbar k_{2}}{m}
+	\end{equation*}
+
+	
+	\item Now then: the plane waves in $ \psi_{1} $ can't be normalized. They oscillate! The solution is to normalize $ \psi_{1} $ per unit ``probability velocity''. We redefine 
+	\begin{equation*}
+		\tilde{\psi}_{1} = \frac{A_{1}}{\sqrt{v_{1}}} e^{ik_{1}x} + \frac{B_{1}}{\sqrt{v_{1}}}e^{-ik_{1}x} \eqtext{and} \tilde{\psi}_{2} = \frac{A_{2}}{\sqrt{v_{2}}} e^{-ik_{2}x} + \frac{B_{2}}{\sqrt{v_{2}}}e^{ik_{2}x}
+	\end{equation*}
+	If we calculate the new probability currents, we get
+	\begin{align*}
+		&\tilde{j}_{1}(x) = A_{1}^{*}A_{1} - B_{1}^{*}B_{1} = \abs{A_{1}}^{2} - \abs{B_{1}}^{2}\\
+		&\tilde{j}_{2}(x) = B_{2}^{*}B_{2} - A_{2}^{*}A_{2} = \abs{B_{2}}^{2} - \abs{A_{2}}^{2}
+	\end{align*}
+	\textit{As a general rule, normalize plane waves with $ \frac{1}{\sqrt{v}} $}.
+	
+	\item Next, we would write four boundary conditions on $ \psi $. These are continuity and continuous differentiability at the two boundary regions. 
+	
+	We end up with 4 linearly independent equations for six unknown coefficients. Our plan is to eliminate $ C $ and $ D $ and express $ B_{1} $ and $ B_{2} $ in terms of $ A_{1} $ and $ A_{2} $. The amplitudes $ A_{1} $ and $ A_{2} $ of the waves incident on the potential barrier thus parameterize our problem. Informally, all this means is that if we know what we send in (by specifying the incident amplitudes $ A_{1}, A_{2} $), we can solve for what goes out (the reflected amplitudes $ B_{1}, B_{2} $). In general, it is best practice to parameterize a scattering problem with the \textit{incident} amplitudes. 
+	
+	We end up with a matrix equation
+	\begin{equation*}
+		\begin{bmatrix}
+			B_{1}\\
+			B_{2}
+		\end{bmatrix}
+		= 
+		\mat{S}
+		\begin{bmatrix}
+			A_{1}\\
+			A_{2}
+		\end{bmatrix}
+		\eqtext{or more concisely} \vec{B} = \mat{S} \vec{A}
+	\end{equation*}
+	where $ \mat{S} $ is called the \textit{scattering matrix}, in our case a $ 2 \cross 2 $ matrix. 
+	
+	For a $ 2 \cross 2 $ matrix as above, we parameterize $ \mat{S} $ as
+	\begin{equation*}
+		\mat{S} = 
+		\begin{bmatrix}
+			r & \tilde{t}\\
+			t & \tilde{r}
+		\end{bmatrix}
+	\end{equation*} 
+\end{itemize}
+
+\textbf{Theory: Probability Conservation}
+\begin{itemize}
+	\item Some identities:
+	\begin{equation*}
+		T = \abs{t}^{2} \quad R = \abs{r}^{2} \eqtext{and} 		\tilde{T} = \abs{\tilde{t}}^{2} \quad \tilde{R} = \abs{\tilde{r}}^{2}
+	\end{equation*}
+	The identities $ T + R = 1 $ and $ \tilde{T} + \tilde{R} = 1 $ imply probability conservation, i.e. the total incident and reflected probabilities sum to one. 
+	
+	These relationships hold for our delta function potential and 
+	
+	\item Now, more on probability conservation. The above two cases were special, with $ \vec{A} = (1, 0) $ and $ \vec{A} = (0, 1) $. 
+	
+	In the more general case, the incident current is the sum of the two squares of the incidence amplitudes $ A_{1} $ and $ A_{2} $, while the reflected current is the sum of the reflected amplitudes $ B_{1} $ and $ B_{2} $. 
+	\begin{equation*}
+		j_{\text{in}} = \abs{A_{1}}^{2} + \abs{A_{2}}^{2} \eqtext{and} j_{\text{ref}} = \abs{B_{1}}^{2} + \abs{B_{2}}^{2}
+	\end{equation*}
+	The goal is to show that probability is conserved in the general case. So we re-write
+	\begin{equation*}
+		j_{\text{in}} = A_{1}A_{1}^{*} + A_{2}A_{2}^{*} = \big[A_{1}^{*}, A_{2}^{*}\big]
+		\begin{bmatrix}
+			A_{1}\\
+			A_{2}
+		\end{bmatrix}
+		= \vec{A}^{\dagger}\vec{A}
+	\end{equation*}
+	Analogously, we'd get $ j_{\text{out}} = \vec{B}^{\dagger}\vec{B} $. Conservation of probability requires $ j_{\text{in}} = j_{\text{ref}} $ or $ \vec{A}^{\dagger}\vec{A} = \vec{B}^{\dagger}\vec{B} $. We then use the scattering matrix equation 
+	\begin{equation*}
+		\vec{B} = \mat{S}\vec{A} \implies \vec{A}^{\dagger}\vec{A} = \mat{A}^{\dagger}\vec{S}^{\dagger}\mat{S}\vec{A} \implies \vec{S}^{\dagger}\mat{S} = \mat{I}
+	\end{equation*}
+	In other words, the scattering matrix $ \mat{S} $ must be unitary to conserve probability in the scattering situation.
+
+	\item Exercise for the reader: show that probability is conserved for the delta function potential, namely that $ T + R = 1 $ and $ \tilde{T} + \tilde{R} = 1 $.
+\end{itemize}
+
+\subsubsection{Scattering Off a Delta Potential}
+\begin{itemize}	
+ 	\item Let's try the scattering matrix approach for a delta function potential! So $ V(x) = \lambda \delta(x) $ and particle energy is $ E $. 
+	
+	To solve this, we'll divide the problem into two separate cases. First, we'll assume the particle is incident on the potential barrier only from the left, meaning $ \vec{A} = (1, 0) $. In this case,
+	\begin{equation*}
+		\vec{B} = \mat{S} \vec{A} = 
+		\begin{bmatrix}
+			r & \tilde{t}\\
+			t & \tilde{r}
+		\end{bmatrix}
+		\begin{bmatrix}
+			1\\
+			0
+		\end{bmatrix}
+		= 
+		\begin{bmatrix}
+			r\\
+			t
+		\end{bmatrix}
+	\end{equation*}
+	
+	And similarly, if we send in a particle only from the right, i.e. $ A = (0, 1) $, we get
+	\begin{equation*}
+		\vec{B} = \mat{S} \vec{A} = 
+		\begin{bmatrix}
+			r & \tilde{t}\\
+			t & \tilde{r}
+		\end{bmatrix}
+		\begin{bmatrix}
+			0\\
+			1
+		\end{bmatrix}
+		= 
+		\begin{bmatrix}
+			\tilde{t}\\
+			\tilde{r}
+		\end{bmatrix}
+	\end{equation*}
+		
+	\item So let's solve these two scattering problems! First, for $ \vec{A} = (1, 0) $, the wave functions in region 1 and 2 are
+	\begin{equation*}
+		\psi_{1}(x) = \frac{e^{ikx}}{\sqrt{v}} + \frac{B_{1}}{\sqrt{v}} e^{-ikx} = \frac{e^{ikx}}{\sqrt{v}} + \frac{r}{\sqrt{v}} e^{-ikx} \eqtext{and} \psi_{2} = \frac{B_{2}}{\sqrt{v}} e^{ikx} = \frac{t}{\sqrt{v}} e^{ikx}
+	\end{equation*}
+	Note that because the potential is the same on both sides of the delta function, $ k_{1} = k_{2} \equiv k$ and $ v_{1} = v_{2} \equiv v $, and that we've made use of $ \vec{B} = (r, t) $. 
+	
+	\item On to boundary conditions. We require continuity between regions 1 and 2. We have
+	\begin{equation*}
+		\psi_{1}(0) = \psi_{2}(0) \implies 1 + r = t
+	\end{equation*} 
+	
+	And then use the same delta function modified boundary condition for differentiability as the last problem, noting that we change sign because the delta function points upward, not downward as before. This manifests as
+	\begin{equation*}
+		\psi_{2}'(0) - \psi_{1}'(0) = \frac{2m\lambda}{\hbar^{2}} \psi(0) \implies ik(t + r -1) = \frac{2m\lambda}{\hbar^{2}} t
+	\end{equation*}
+	Substituting in $ t = 1 + r $ gives
+	\begin{equation*}
+		2ikr = \frac{2m\lambda}{\hbar^{2}} (1 + r) \implies r = -\frac{i\alpha}{k + i\alpha} \eqtext{where} \alpha = \frac{m\lambda}{\hbar^{2}}
+	\end{equation*}
+	And using $ t = 1 + r $ we get
+	\begin{equation*}
+		t = 1 + r = \frac{k}{k + i\alpha}
+	\end{equation*}
+	
+	\item We would then find $ \tilde{r} $ and $ \tilde{t} $ using an analogous procedure with the incidence vector $ \vec{A} = (0, 1) $. It turns out the results are the same:
+	\begin{equation*}
+		\tilde{r} = -\frac{i\alpha}{k + i\alpha}  \eqtext{and} \tilde{t} = \frac{k}{k + i\alpha}
+	\end{equation*}
+	
+	The probability matrix can then be written
+	\begin{equation*}
+		\mat{S} = \frac{1}{k + i \alpha} 
+		\begin{bmatrix}
+			- i \alpha & k\\
+			k & - i \alpha
+		\end{bmatrix} 
+		\eqtext{where}
+		\alpha = \frac{m\lambda}{\hbar^{2}}
+	\end{equation*}
+\end{itemize}
+\textbf{On the Problem's Symmetry:} A few notes on why the scattering matrix for the delta potential has only two independent elements.
+\begin{itemize}
+	\item  Start by noting that the wave functions in regions one and two solve the stationary \schro equation in these regions, i.e.
+	\begin{equation*}
+		\op{H} \psi = E \psi \eqtext{where} \op{H} = -\frac{\hbar^{2}}{m}\pdv[2]{}{x} + V(x)
+	\end{equation*}
+	Then, take the complex conjugate of the equation.
+	\begin{equation*}
+		\op{H} \psi^{*} = E\psi^{*}
+	\end{equation*}
+	In other words, if $ \psi $ is a wave function for the energy eigenvalue $ E $, then so is $ \psi^{*} $. This holds in general for a real Hamiltonian. 
+	
+	\item Now for our specific problem in regions 1 and 2, the conjugate wave function has the form
+	\begin{equation*}
+		\psi_{1}^{*} = \frac{A_{1}^{*}}{\sqrt{v}}e^{-ikx} e + \frac{B_{1}^{*}}{\sqrt{v}}e^{ikx} \eqtext{and} \psi_{2}^{*} = \frac{A_{2}^{*}}{\sqrt{v}}e^{ikx} e + \frac{B_{2}^{*}}{\sqrt{v}}e^{ikx}
+	\end{equation*}
+	Recall $ k_{1} = k_{2} = k $ and $ v_{1} = v_{2} = v $.
+	
+	\item The effect of conjugation is to switch the role of the incident and reflected waves: the waves with $ B $ coefficients are now incident and waves with $ A $ coefficients reflected. The equation linking the incident and reflected waves becomes
+	\begin{equation*}
+		\begin{bmatrix}
+			A_{1}^{*}\\
+			A_{2}^{*} 
+		\end{bmatrix}
+		= 
+		\mat{S}
+		\begin{bmatrix}
+			B_{1}^{*}\\
+			B_{2}^{*}
+		\end{bmatrix}
+		\eqtext{or more concisely} \vec{A}^{*} = \mat{S} \vec{B}^{*}
+	\end{equation*}
+	Recall the original equation, before conjugation, was $ \vec{B} = \mat{S} \vec{A} $. Note that the scattering matrix $ \mat{S} $ is the same, since the potential is invariant under conjugation.
+	
+	\item Remember probability conservation requires that $ \mat{S} $ be unitary, i.e. $ \mat{S}^{\dagger}\mat{S} = \mat{I} $. With this in mind, multiply the original equation $ \vec{B} = \mat{S} \vec{A} $ from the left by $ \mat{S}^{\dagger} $, and then take the complex conjugate of the equation, which gives
+	\begin{equation*}
+		\mat{S}^{\dagger}\mat{B} = \mat{A} \implies \mat{A}^{*} = \mat{S}^{T} \mat{B}^{*}
+	\end{equation*}
+	Now, plugging the result $ \mat{A}^{*} = \mat{S}^{T} \mat{B}^{*} $ into the conjugate equation $ \vec{A}^{*} = \mat{S} \vec{B}^{*} $ gives
+	\begin{equation*}
+		\mat{S}^{T} \mat{B}^{*} = \mat{S} \vec{B}^{*}
+	\end{equation*}
+	meaning that $ \mat{S} $ is symmetric. This symmetry is the reason why $ t = \tilde{t} $ in the delta function scattering matrix. Formally, this is a consequence of the problem's Hamiltonian being invariant under time reversal. 
+
+	\item Next, why $ r = \tilde{r} $. This is a consequence of the problem's reflection symmetry. Start again with the \schro equation:
+	\begin{equation*}
+		H \psi(x) = E \psi(x)
+	\end{equation*}
+	The parity transformation gives (recall $ H $ is invariant under parity):
+	\begin{equation*}
+		H\psi(-x) = E\psi(-x)
+	\end{equation*}
+	The parity-transformed wave functions for regions 1 and 2 are
+	\begin{equation*}
+		\psi_{1}(-x) = \frac{A_{1}}{\sqrt{v}} e^{-ikx} + \frac{B_{1}}{\sqrt{v}}e^{ikx} \eqtext{and} \psi_{2}(-x) = \frac{A_{2}}{\sqrt{v}} e^{ikx} + \frac{B_{2}}{\sqrt{v}}e^{-ikx}
+	\end{equation*}
+	The roles of the incident and reflected waves are mixed up under parity. $ \psi_{1}(-x) $ now refers to the region of $ x > 0 $ (right of the delta function), and $ \psi_{2}(-x) $ to the region of $ x < 0 $. The equation linking the incident and reflected waves becomes
+	\begin{equation*}
+		\begin{bmatrix}
+			B_{2}\\
+			B_{1} 
+		\end{bmatrix}
+		= 
+		\mat{S}
+		\begin{bmatrix}
+			A_{2}\\
+			A_{1}
+		\end{bmatrix}
+		\qquad (\text{after reflection})
+	\end{equation*}
+	Recall the original equation, before parity transformation, was
+	\begin{equation*}
+		\begin{bmatrix}
+			B_{1}\\
+			B_{2} 
+		\end{bmatrix}
+		= 
+		\mat{S}
+		\begin{bmatrix}
+			A_{1}\\
+			A_{2}
+		\end{bmatrix}
+		\qquad (\text{before reflection})
+	\end{equation*}
+	We can get the reflected equation from the original one by multiplying the original equation by the first Pauli spin matrix $ \sigma_{x} = 
+	\begin{bmatrix}
+		0 & 1\\
+		1 & 0
+	\end{bmatrix}$. The reflected equation is
+	\begin{equation*}
+		\sigma_{x}\vec{B} = \mat{S} \sigma_{x}\vec{A} \implies \vec{B} = \sigma_{x} \mat{S} \sigma_{x}\vec{A}
+	\end{equation*}
+	If we plug the expression for $ \vec{B} $ into the original equation $ \vec{B} = \mat{S} \vec{A} $ we get
+	\begin{equation*}
+		\sigma_{x} \mat{S} \sigma_{x}\vec{A} = \mat{S} \vec{A} \implies \mat{S} = \sigma_{x} \mat{S} \sigma_{x}
+	\end{equation*}
+	The relationship $ \mat{S} = \sigma_{x} \mat{S} \sigma_{x} $ holds in general for any even Hamiltonian. Applied to our parameterization of $ \mat{S} $, we have
+	\begin{equation*}
+		\mat{S} = \sigma_{x} \mat{S} \sigma_{x} \iff
+		\begin{bmatrix}
+			r & \tilde{t}\\
+			t & \tilde{r}
+		\end{bmatrix}
+		= \sigma_{x}
+		\begin{bmatrix}
+			r & \tilde{t}\\
+			t & \tilde{r}
+		\end{bmatrix}
+		\sigma_{x}
+		=
+		\begin{bmatrix}
+			\tilde{r} & t\\
+			\tilde{t} & r
+		\end{bmatrix}
+	\end{equation*}
+	The result is $ r = \tilde{r} $ and $ t = \tilde{t} $. This accounts for both of the symmetries in our delta function scattering matrix! So invariance under parity transformation is a powerful symmetry: it reduces the number of independent elements in the scattering matrix by two, even under in the absence of time reversal symmetry.
+	
+	
+\end{itemize}
+
+\subsection{Vaje 3: Formalism of Quantum Mechanics} 
+
+\subsubsection{Theory}
+\begin{itemize}
+	\item So a derivation of uncertainty principle stuff for two arbitrary observables, e.g $ A $ and $ B $. What is the uncertainty in the product $ \Delta A \Delta B $?
+	
+	We start by assigning both $ A $ and $ B $ a corresponding Hermitian operator (Hermitian because $ A $ and $ B $ are observable). I will drop the operator notation. Hopefully its clear from context. The operators are
+	\begin{equation*}
+		A = A^{\dagger} \eqtext{and} B = B^{\dagger}
+	\end{equation*}
+	
+	\item By definition, the uncertainty in $ A $ is
+	\begin{equation*}
+		(\Delta A)^{2} = \expval{A^{2}} - \expval{A}^{2} = \expval{(A - \expval{A})} \equiv \big\langle \tilde{A}^{2} \big\rangle
+	\end{equation*}
+	where we've defined $ \tilde{A} = A - \expval{A}I $. Here $ \expval{A} $ is a scalar and $ I $ is the identity operator. 
+	
+	\item First, the definition of an operator's expected value and some review of bra-ket notation.
+	\begin{equation*}
+		\langle A \rangle = \int \psi^{*} A \psi \diff x \equiv \bra{\psi}A\ket{\psi} = \braket{\psi}{A\psi}
+	\end{equation*}
+	Because $ A $ is Hermitian, $ \braket{\psi}{A\psi} = \braket{A\psi}{\psi} $. 
+	
+	This is a special case of the more general adjoint relationship $ \braket{A\psi}{\psi} = \braket{\psi}{A^{*}\psi} $ with $ A = A^{*} $ because $ A $ is Hermitian. 
+	
+	\item The expected value of a Hermitian operator is real. The classic proof reads
+	\begin{equation*}
+		\langle A \rangle \equiv \braket{\psi}{A\psi} = \braket{A^{*}\psi}{\psi} = \braket{A\psi}{\psi} = \braket{\psi}{A\psi}^{*} \equiv \langle A \rangle^{*} \implies \langle A \rangle \in \mathbb{R}
+	\end{equation*}
+	
+	\item In general, when combining two Hermitian operators $ A = A^{\dagger} $ and $ B = B^{\dagger} $:
+	\begin{equation*}
+		(A + B)^{\dagger} = A^{\dagger} + B^{\dagger} = A + B
+	\end{equation*}
+	So the sum of two Hermitian operators is a Hermitian operator. If we return to $ \tilde{A} = A - \expval{A}I  $ it follows that $ \tilde{A}^{\dagger} = \tilde{A} $. 
+	
+	\item Okay, returning back to the product $ \Delta A \Delta B $. First, we square everything, since uncertainty is expressed as $ (\Delta A)^{2} $. 
+	\begin{align*}
+		(\Delta A \Delta B)^{2} &= \big\langle \tilde{A}^{2} \big\rangle \big\langle \tilde{B}^{2} \big\rangle = \bra{\psi}\tilde{A}^{2}\ket{\psi} \bra{\psi}\tilde{B}^{2}\ket{\psi} = \braket{\tilde{A}\psi}{\tilde{A}\psi}\braket{\tilde{B}\psi}{\tilde{B}\psi}\\
+		&= \norm{\tilde{A}\psi}^{2}\norm{\tilde{B}\psi}^{2}
+	\end{align*}
+	The last equality occurs in the Cauchy-Schwartz inequality:
+	\begin{equation*}
+		\norm{\tilde{A}\psi}^{2}\norm{\tilde{B}\psi}^{2} \geq \abs{\braket{\tilde{A}\psi}{\tilde{B}\psi}}^{2} = \abs{\braket{\psi}{\tilde{A}\tilde{B}\psi}}^{2}
+	\end{equation*}
+	
+	\item Next, some more manipulations of the last result:
+	\begin{equation*}
+		 \abs{\bra{\psi}\tilde{A}\tilde{B}\ket{\psi}}^{2} = \abs{\bra{\psi}\tfrac{1}{2}\big(\tilde{A}\tilde{B} - \tilde{B}\tilde{A} + \tilde{A}\tilde{B} + \tilde{B}\tilde{A}\big)\ket{\psi} }^{2}
+	\end{equation*}
+	We introduce two quantities: the commutator and anti-commutator. They're written
+	\begin{equation*}
+		\big[\tilde{A}, \tilde{B}\big] = \tilde{A}\tilde{B} - \tilde{B}\tilde{A} \eqtext{and} \big\{\tilde{A}, \tilde{B}\big\} = \tilde{A}\tilde{B} + \tilde{B}\tilde{A}
+	\end{equation*} 
+\end{itemize}
+
+\textbf{Intermezzo: Some Properties of Commutators}
+\begin{itemize}
+	\item The anti-commutator of two Hermitian operators is a Hermitian operator
+	\begin{align*}
+		\big\{A, B\big\}^{\dagger} &= (AB + BA)^{\dagger} = (AB)^{\dagger} + (BA)^{\dagger} = B^{\dagger}A^{\dagger} + A^{\dagger}B^{\dagger}\\
+		&=AB + BA = \big\{A, B\big\}
+	\end{align*}
+	
+	\item The commutator of two Hermitian operators is anti-Hermitian
+	\begin{align*}
+		\big[A, B\big]^{\dagger} &= (AB - BA)^{\dagger} = (AB)^{\dagger} - (BA)^{\dagger} = B^{\dagger}A^{\dagger} - A^{\dagger}B^{\dagger}\\
+		&= - (AB - BA) = - \big[A, B\big]
+	\end{align*}
+	
+	\item What about the expected value of a anti-Hermitian operator $ A^{\dagger} = - A $?
+	\begin{equation*}
+		\langle A \rangle = \braket{\psi}{A\psi} = \braket{A^{*}\psi}{\psi} = \braket{-A\psi}{\psi} = - \braket{A\psi}{\psi} = - \braket{\psi}{A\psi}^{*} = - \langle A \rangle^{*}
+	\end{equation*}
+	The result implies $ \expval{A} $ is a purely imaginary number if $ A $ is anti-Hermitian.
+\end{itemize}
+
+\textbf{Back to the Uncertainty Principle}
+\begin{itemize}
+	\item Specifically, back to where we left off with
+	\begin{align*}
+		(\Delta A \Delta B)^{2} &= \cdots = \norm{\tilde{A}\psi}^{2}\norm{\tilde{B}\psi}^{2} \geq \abs{\braket{\tilde{A}\psi}{\tilde{B}\psi}}^{2} = \cdots \\
+		& = \abs{\bra{\psi}\tfrac{1}{2}\big[\tilde{A}, \tilde{B}\big] + \tfrac{1}{2}\big\{ \tilde{A}, \tilde{B}\big\}\ket{\psi} }^{2} = \abs{\left\langle \tfrac{1}{2}\big[\tilde{A}, \tilde{B}\big] + \tfrac{1}{2}\big\{ \tilde{A}, \tilde{B}\big\} \right\rangle}^{2}\\
+		&= \frac{1}{4}\left(\abs{\big\langle \big[\tilde{A}, \tilde{B}\big] \big\rangle}^{2} + \abs{\big\langle \big\{\tilde{A}, \tilde{B}\big\} \big\rangle}^{2}\right) 
+	\end{align*}
+	In last parentheses we have a sum of two positive quantities, so we can drop the anti-commutator if we write
+	\begin{equation*}
+		\frac{1}{4}\left(\abs{\big\langle \big[\tilde{A}, \tilde{B}\big] \big\rangle}^{2} + \abs{\big\langle \big\{\tilde{A}, \tilde{B}\big\} \big\rangle}^{2}\right)  \geq \frac{1}{4}\abs{\big\langle \big[\tilde{A}, \tilde{B}\big] \big\rangle}^{2} = \left(\frac{1}{2}\abs{\big\langle [A, B] \big\rangle}\right)^{2}
+	\end{equation*}
+	The last equality uses the identity $ \big[\tilde{A}, \tilde{B}\big] = [A, B] $, which follows from  some basic algebra and the definitions $ \tilde{A} = A - \langle A \rangle I $ and $ \tilde{B} = B - \langle B \rangle I $:
+	\begin{equation*}
+		\big[\tilde{A}, \tilde{B}\big] = \big [A - \langle A \rangle I, B - \langle B \rangle I \big ] = \ldots = AB - BA = [A, B]
+	\end{equation*}
+	
+	\item Okay, so here's the entire derivation so far in one place. Note the two inequalities
+	\begin{align*}
+		(\Delta A \Delta B)^{2} &= \big\langle \tilde{A}^{2} \big\rangle \big\langle \tilde{B}^{2} \big\rangle = \bra{\psi}\tilde{A}^{2}\ket{\psi} \bra{\psi}\tilde{B}^{2}\ket{\psi} = \braket{\tilde{A}\psi}{\tilde{A}\psi}\braket{\tilde{B}\psi}{\tilde{B}\psi}\\
+		&= \norm{\tilde{A}\psi}^{2}\norm{\tilde{B}\psi}^{2} \geq \abs{\braket{\tilde{A}\psi}{\tilde{B}\psi}}^{2} = \abs{\braket{\psi}{\tilde{A}\tilde{B}\psi}}^{2}\\
+		& = \abs{\bra{\psi}\tfrac{1}{2}\big(\tilde{A}\tilde{B} - \tilde{B}\tilde{A} + \tilde{A}\tilde{B} + \tilde{B}\tilde{A}\big)\ket{\psi} }^{2} \equiv  \abs{\bra{\psi}\tfrac{1}{2}\big[\tilde{A}, \tilde{B}\big] + \tfrac{1}{2}\big\{ \tilde{A}, \tilde{B}\big\}\ket{\psi} }^{2} \\
+		& = \abs{\left\langle \tfrac{1}{2}\big[\tilde{A}, \tilde{B}\big] + \tfrac{1}{2}\big\{ \tilde{A}, \tilde{B}\big\} \right\rangle}^{2} = \frac{1}{4}\left(\abs{\big\langle \big[\tilde{A}, \tilde{B}\big] \big\rangle}^{2} + \abs{\big\langle \big\{\tilde{A}, \tilde{B}\big\} \big\rangle}^{2}\right) \\
+		& \geq \frac{1}{4}\abs{\big\langle \big[\tilde{A}, \tilde{B}\big] \big\rangle}^{2} = \left(\frac{1}{2}\abs{\big\langle [A, B] \big\rangle}\right)^{2}
+	\end{align*}
+	
+	\item Now we apply the result specifically to $ x $ and $ p $, where $ x = x $, $ p = -i\hbar \pdv{}{x} $ and $ [x, p] = i \hbar $. The result is
+	\begin{equation*}
+		(\Delta x \Delta p)^{2} \geq \left(\tfrac{1}{2}\abs{\langle [x, p] \rangle}\right)^{2} = \left(\tfrac{1}{2}\abs{\langle i \hbar \rangle}\right)^{2} = \left(\tfrac{1}{2}\abs{i\hbar}\right)^{2} = \left(\tfrac{\hbar}{2}\right)^{2} \implies \Delta x \Delta p \geq \frac{\hbar}{2}
+	\end{equation*}
+
+\end{itemize}
+
+\subsubsection{Wave Functions and Uncertainty Principle}
+\textit{Find all wave functions for which $ \Delta x \Delta p = \frac{\hbar}{2} $}.
+\begin{itemize}
+	\item To solve this, both inequalities in the above proof must be equalities. First, the Cauchy-Schwartz inequality is an equality for two linearly dependent vectors.
+	\begin{equation*}
+		\norm{\tilde{A}\psi}^{2}\norm{\tilde{B}\psi}^{2} = \abs{\braket{\tilde{A}\psi}{\tilde{B}\psi}}^{2} \quad \text{if} \quad \tilde{A}\psi = \alpha \tilde{B}\psi, \qquad \alpha \in \mathbb{C}
+	\end{equation*}
+	The second inequality is an equality if 
+	\begin{equation*}
+		\big\langle \big\{\tilde{A}, \tilde{B}\big\} \big\rangle = 0
+	\end{equation*}
+	
+	\item We have two conditions
+	\begin{equation*}
+		\ket{\tilde{A}\psi} = \alpha \ket{\tilde{B}\psi} \eqtext{and} \big\langle \big\{\tilde{A}, \tilde{B}\big\} \big\rangle = 0
+	\end{equation*}
+	We start with the second condition and do some manipulations...
+	\begin{align*}
+		0 &\equiv \big\{\tilde{A}, \tilde{B}\big\} \big\rangle = \bra{\psi}\tilde{A}\tilde{B} + \tilde{B} \tilde{A} \ket{\psi} = \bra{\psi}\tilde{A}\tilde{B} \ket{\psi} + \bra{\psi}\tilde{B} \tilde{A} \ket{\psi}\\
+		&= \braket{\tilde{A}\psi}{\tilde{B}\psi} + \braket{\tilde{B}\psi}{\tilde{A}\psi} = 0
+	\end{align*}
+	And then substitute in the Cauchy-Schwartz condition...
+	\begin{align*}
+		0 &= \braket{\tilde{A}\psi}{\tilde{B}\psi} + \braket{\tilde{B}\psi}{\tilde{A}\psi} = \braket{\alpha \tilde{B}\psi}{\tilde{B}\psi} + \braket{\tilde{B}\psi}{\alpha \tilde{B}\psi} \\
+		& = \alpha^{*}\braket{ \tilde{B}\psi}{\tilde{B}\psi} + \alpha\braket{\tilde{B}\psi}{\tilde{B}\psi} = (\alpha^{*} + \alpha)\braket{\tilde{B}\psi}{\tilde{B}\psi} = 0
+	\end{align*}
+	Mathematically, the equality holds if either of the two product terms equal zero. But the bra-ket term is $ \braket{\tilde{B}\psi}{\tilde{B}\psi} = \big \langle \tilde{B}^{2} \big \rangle = (\Delta B)^{2}$, and this term being zero would imply zero uncertainty in $ B $, which implies infinite uncertainty in $ A $. We reject this option as non-physical, so we're left with $ (\alpha^{*} + \alpha) = 0 $, meaning $ \alpha $ is a purely imaginary number. 
+	
+	To make this requirement explicit, we write $ \alpha = i c $ where $ c \in \mathbb{R} $. The Cauchy-Schwartz condition then reads 
+	\begin{equation*}
+		\ket{\tilde{A}\psi} = i c \ket{\tilde{B}\psi}, \qquad c \in \mathbb{R}
+	\end{equation*}
+	Substituting in the definition $ \tilde{A} = A - \expval{A}I $ gives
+	\begin{equation*}
+		\ket{A\psi} - \langle A \rangle\ket{\psi} = ic\ket{B\psi} - ic\langle B \rangle\ket{\psi}
+	\end{equation*}
+	
+	\item Any solutions $ \psi $ to this equation will satisfy the equality
+	\begin{equation*}
+		  \Delta A \Delta B = \frac{1}{2}\abs{\big\langle [A, B] \big\rangle}
+	\end{equation*}
+	For the specific case $ A \to x $ and $ B \to p $ where $ p \to  - i \hbar \pdv{}{x} $ and $ \ket{\psi} = \psi(x) $, the equation reads
+	\begin{equation*}
+		x \psi - \expval{x} \psi = \hbar c \pdv{\psi}{x} - ic \expval{p} \psi
+	\end{equation*}
+\end{itemize}
+
+
+\subsection{Fourth Exercises}
+
+\subsubsection{Wave Function Minimizing the Uncertainty Product}
+\textit{Continued from the previous exercise set...}
+\begin{itemize}
+	\item \textit{Review of last exercise set}: we started with two Hermitian operators $ A  $ and $ B $. We then showed
+	\begin{equation*}
+		\Delta A \Delta B \geq \frac{1}{2}\abs{\langle [A, B] \rangle}
+	\end{equation*}
+	The equality holds if
+	\begin{equation*}
+		\ev{\{\tilde{A}, \tilde{B}} = 0 \eqtext{and} \tilde{A}\ket{\psi} = \alpha \tilde{B}\ket{\psi}
+	\end{equation*}
+	where $ \tilde{A} = A - \ev{A}$ and $ \tilde{B} = B - \ev{B}$ and $ \alpha = ic, c \in \mathbb{R} $ is an imaginary proportionality constant.
+	
+	In the concrete momentum-position case, the condition for minimum uncertainty reads
+	\begin{equation*}
+		x \psi(x) - \expval{x} \psi = \hbar c \psi'(x) - ic \expval{p} \psi
+	\end{equation*}
+	The wave functions $ \psi $ solving this equation will minimize the product $ \Delta x \Delta p $. Rearranging gives
+	\begin{equation*}
+		\psi'(x) = \left(\frac{x - \ev{x}}{c\hbar} + \frac{i\ev{p}}{\hbar}\right)\psi(x)
+	\end{equation*}
+	Next, separate variables and integrate
+	\begin{equation*}
+		\frac{\diff \psi}{\psi} = \frac{x - \ev{x}}{c \hbar} + \frac{i\ev{p}}{\hbar} \implies \ln \psi = \frac{(x - \ev{x})^{2}}{2c \hbar} + \frac{i\ev{p}}{\hbar}x + \lambda
+	\end{equation*}
+	Solving for $ x $ gives
+	\begin{equation*}
+		\psi(x) = e^{\lambda}\exp(\frac{(x - \ev{x})^{2}}{2c\hbar})e^{-i\frac{\ev{p}}{\hbar}x}
+	\end{equation*}
+	Now we just have to normalize the wavefunction:
+	\begin{equation*}
+		\int_{-\infty}^{\infty} \abs{\psi(x)}^{2} \diff x \equiv 1 = \abs{e^{\lambda}}^{2} \int_{-\infty}^{\infty}\exp(\frac{(x - \ev{x})^{2}}{2c\hbar})\diff x
+	\end{equation*}
+	Note that $ c $ must be negative for the integral to converge. To make this requirement explicit, we'll write
+	\begin{equation*}
+		1 \equiv  \abs{e^{\lambda}}^{2} \int_{-\infty}^{\infty}\exp(-\frac{(x - \ev{x})^{2}}{2\sigma^{2}})\diff x
+	\end{equation*}
+	where we introduce $ \sigma $ to match the form of a Gauss bell curve, which then implies
+	\begin{equation*}
+		\abs{e^{\lambda}}^{2} = \frac{1}{\sqrt{2\pi \sigma^{2}}}
+	\end{equation*}
+	The final result for $ \psi(x) $ is
+	\begin{equation*}
+		\psi(x) = \frac{1}{\sqrt[4]{2\pi \sigma^{2}}} \exp(\frac{(x - \ev{x})^{2}}{4 \sigma^{2}})e^{-i\frac{\ev{p}}{\hbar}x}
+	\end{equation*}
+	These functions are called \textit{Gaussian wave packets}. This concludes the problem: the functions minimizing the product $ \Delta x \Delta p $ are Gaussian wave packets. 
+	
+	As a final note, the $ e^{-i\frac{\ev{p}}{\hbar}x} $ term is a plane wave, with wavelength
+	\begin{equation*}
+		\frac{\ev{p}}{\hbar} \lambda = 2\pi \implies \lambda = \frac{h}{\ev{p}}
+	\end{equation*}
+	
+\end{itemize}
+
+\subsubsection{Time Evolution of the Gaussian Wave Packet}
+Given a Gaussian wave function$ \psi(x, 0) $ and the time-independent Hamiltonian $ H = \frac{p^{2}}{2m} + V(x) $, find the time evolution $ \psi(x, t) $.
+
+\textbf{Theory: Time Evolution of a Wave Function}
+\begin{itemize}
+	\item We find the time evolution of a wave function by solving the \schro equation
+	\begin{equation*}
+		H\psi(x, t) = i\hbar \pdv{t}\psi(x, t)
+	\end{equation*}
+	One option is to solve the stationary \schro equation
+	\begin{equation*}
+		H \psi_{n}(x) = E_{n}\psi_{n}(x)
+	\end{equation*}
+	and expand the initial state $ \psi(x, 0) $ in terms of the basis functions solving the stationary \schro equation.
+	\begin{equation*}
+		\psi(x, 0) = \sum_{n}c_{n}\psi_{n}(x)
+	\end{equation*}
+	We then find the time evolution by adding a time-dependent phase factor to the eigenfunction expansion
+	\begin{equation*}
+		\psi(x, t) = \sum_{n}c_{n}\psi_{n}(x)e^{-i\frac{E_{n}}{\hbar}t}
+	\end{equation*}
+	In Dirac bra-ket notation, the stationary \schro equation and eigenfunction expansion of the initial state read
+	\begin{equation*}
+		H\ket{n} = E_{n}\ket{n} \eqtext{and} \ket{\psi, 0} = \sum_{n}c_{n}\ket{n} 
+	\end{equation*}
+	and the time evolution reads
+	\begin{equation*}
+		\ket{\psi, t} = \sum_{n}c_{n} e^{-i\frac{E_{n}}{\hbar}t} \ket{n}
+	\end{equation*}
+	The time evolution depends on the potential $ V(x) $ we're working in.
+\end{itemize}
+
+\textbf{Back to Our Problem}
+\begin{itemize}
+	\item We'll work in the potential $ V(x) = 0$. Because the basis functions in a constant potential are continuous, and $ n $ is traditionally used to index discrete quantities, we'll index the basis functions with $ k $. For a particle in a constant potential, the eigenfunctions are plane waves. We have
+	\begin{equation*}
+		\psi_{k}(x) = \frac{e^{ikx}}{\sqrt{2\pi}} \eqtext{and} E_{k} = \frac{\hbar^{2}k^{2}}{2m}
+	\end{equation*}
+	Note the normalization of the plane wave with $ \sqrt{2\pi} $. The factor $ \frac{1}{\sqrt{2\pi}} $ is chosen so that a product of two basis functions produces a delta function:
+	\begin{equation*}
+		\braket{k}{\tilde{k}} \equiv \int \psi_{k}^{*}(x)\psi_{\tilde{k}}(x)\diff x = \frac{1}{2\pi} \int e^{i(\tilde{k}-k)x}\diff x \equiv \delta(\tilde{k} - k)
+	\end{equation*}
+	
+	\item First, an overview: To perform the time evolution, we first expand the initial state $ \psi(x, 0) $ in terms of the basis functions $ \psi_{k} $
+	\begin{equation*}
+		\psi(x, 0) = \int \diff k c(k)\frac{e^{ikx}}{\sqrt{2\pi}}
+	\end{equation*}
+	Note that we use integration instead of summation because the basis functions are continuous and not discrete. The above expansion takes the form of a Fourier transform of $ c(k) $, so $ c(k) $ is found with the inverse Fourier transform
+	\begin{equation*}
+		c(k) = \int \diff x \psi(x, 0)\frac{e^{-ikx}}{\sqrt{2\pi}}
+	\end{equation*}
+	We would then find the time evolution with
+	\begin{equation*}
+		\psi(x, t) = \int \diff k c(k)e^{-i\frac{E_{k}}{\hbar}t}\frac{e^{ikx}}{\sqrt{2\pi}}
+	\end{equation*}
+	Again, integration replaces summation.
+	
+	In the end, we'll be more interested in the observables $ x $ and $ p $ than the actual wave function. For example the expected values of $ x $ and $ p $ at time $ t $, written
+	\begin{equation*}
+		\ev{x, t} \equiv \bra{\psi, t}x\ket{\psi, t} \eqtext{and} \ev{p, t} \equiv \bra{\psi, t}p\ket{\psi, t}
+	\end{equation*}
+	Likewise, we'll be interested in the uncertainties
+	\begin{equation*}
+		\Delta x(t) = \sqrt{\ev{x^{2}, t} - \ev{x, t}^{2}} \eqtext{and} \Delta p(t) = \sqrt{\ev{p^{2}, t} - \ev{p, t}^{2}}
+	\end{equation*}
+	\textit{Note:} directly performing the above eigenfunction expansion and time evolution by solving the integrals is a tedious mathematical exercise. We'll take a slight detour, and introduce some machinery that solves the problem in a more physically elegant way.
+\end{itemize}
+
+\textbf{Theory: Time-Dependent Expectation Values} 
+\begin{itemize}
+	\item Consider an operator $ O $. A function of the operator is defined in terms of the function's Taylor series:
+	\begin{equation*}
+		f(O) = \sum_{n} \frac{1}{\sqrt{N!}}f^{(n)}(0)O^{N}
+	\end{equation*}
+
+	\item Next, consider an arbitrary observable $ A = A^{\dagger} $. We then ask what is the expected value $ \ev{A, t} $ of $ A $ at time $ t $? We can find the wave function $ \ket{\psi, t} $ with
+	\begin{equation*}
+		\ket{\psi, t} = \sum_{n} c_{n}e^{-i \frac{E_{n}}{\hbar}t}\ket{n}
+	\end{equation*}
+	We're about to show that we get the same result by acting on the initial state $ \ket{\psi, 0} $ with the time evolution operator, i.e. 
+	\begin{equation*}
+		\ket{\psi, t} = \sum_{n} c_{n}e^{-i \frac{E_{n}}{\hbar}t}\ket{n} = e^{-i\frac{H}{\hbar}t}\ket{\psi, 0}
+	\end{equation*}
+	\textbf{TODO: record time evolution operator}. To show this, we first expand $ \ket{\psi, 0} $ in terms of its eigenstates and bring the operator inside the sum.
+	\begin{equation*}
+		 e^{-i\frac{H}{\hbar}t}\ket{\psi, 0} =  e^{-i\frac{H}{\hbar}t}\sum_{n}c_{n}\ket{n} = \sum_{n}c_{n}e^{-i\frac{H}{\hbar}t}\ket{n}
+	\end{equation*}
+	We write the exponent of the Hamiltonian operator in terms of the exponential functions Taylor series:
+	\begin{equation*}
+		e^{-i\frac{H}{\hbar}t}\ket{\psi, 0}  = \sum_{n}c_{n} \left[\sum_{m}\frac{1}{m!}\left (-\frac{it}{\hbar}\right )^{m}H^{m}\ket{n}\right]
+	\end{equation*}
+	
+	\item First, we'll tackle the term $ H^{m}\ket{n} $, recalling that $ \ket{n} $ are eigenfunctions of the Hamiltonian.
+	\begin{equation*}
+		H^{m}\ket{n} = H^{m-1}\left(H\ket{n}\right) = H^{m-1}\left(E_{n}\ket{n}\right) = \cdots = E_{n}^{m}\ket{n}
+	\end{equation*}
+	This step is important---it converts the operator $ H $ to the scalar values $ E_{n} $. We then have
+	\begin{equation*}
+		e^{-i\frac{H}{\hbar}t}\ket{\psi, 0} = \sum_{n}c_{n} \left[\sum_{m}\frac{1}{m!}\left (-\frac{it}{\hbar}\right )^{m}E_{n}^{m}\right]\ket{n} = \sum_{n}c_{n}e^{-i\frac{E_{n}}{\hbar}t}\ket{n}
+	\end{equation*}
+	This completes the proof that
+	\begin{equation*}
+		\ket{\psi, t} = \sum_{n} c_{n}e^{-i \frac{E_{n}}{\hbar}t}\ket{n} = e^{-i\frac{H}{\hbar}t}\ket{\psi, 0}
+	\end{equation*} 
+	In other words, instead of finding a time evolution by expanding an initial state $ \ket{\psi, 0} $ in terms of basis functions, we can act directly on the initial state with the time evolution operator.
+	
+	\item Next, we return to the expectation value $ \ev{A, t} $:
+	\begin{equation*}
+		\ev{A, t} \equiv \bra{\psi, t} A \ket{\psi, t}
+	\end{equation*}
+	We've just shown the ket term can be found with the time evolution operator
+	\begin{equation*}
+		\ket{\psi, t} = \tev \ket{\psi, 0}
+	\end{equation*}
+	We find the bra term by taking the complex conjugate of the ket term:
+	\begin{equation*}
+		\bra{\psi, t} = \bra{\psi, 0}\left(\tev\right)^{\dagger} = \bra{\psi, 0}\tevp
+	\end{equation*}
+	Note that the $ \ket{\psi, 0} $ term is reversed under complex conjugation! We then have
+	\begin{equation*}
+		\ev{A, t} = \bra{\psi, 0}\tevp A \tev \ket{\psi, 0} \equiv  \bra{\psi, 0} A(t) \ket{\psi, 0}
+	\end{equation*}
+	where we've defined $ A(t) = \tevp A \tev  $ for shorthand. In general, we'll use the notation
+	\begin{equation*}
+		O(t) = \tevp O \tev
+	\end{equation*}
+	for any operator $ O $. 
+	
+	Notation aside, the above result is useful: we have a new way to find a time-dependent expectation value. If we are given an initial state $ \ket{\psi, 0} $, we can use the time evolution operator to get
+	\begin{equation*}
+		\ev{A, t} = \bra{\psi, 0}\tevp A \tev \ket{\psi, 0} \equiv  \bra{\psi, 0}
+	\end{equation*}
+	In other words, we don't need to find the time evolution of the wave function $ \ket{\psi, t} $. This is convenient, since finding $ \ket{\psi, t} $ is often tedious.
+	
+	\item Finally, some vocabulary. Finding $ \ket{A, t} $ via time evolution of the wave function, i.e. 
+	\begin{equation*}
+		\ev{A, t} = \bra{\psi, t} A \ket{\psi, t}
+	\end{equation*}
+	is called the \textit{\schro approach}. Finding $ \ket{A, t} $ via time evolution of the $ A $ operator, i.e. 
+	\begin{equation*}
+		\ev{A, t} = \bra{\psi, 0}\tevp A \tev \ket{\psi, 0} = \bra{\psi, 0} A(t) \ket{\psi, 0}
+	\end{equation*}
+	is called the \textit{Heisenberg approach}. 
+\end{itemize}
+\textbf{Theory: Time Evolution of an Operator}
+\begin{itemize}
+	\item Next, we ask how to find the time evolution $ A(t) $ of an operator $ A $? To do this, we solve the differential equation
+	\begin{equation*}
+		\dv{t}A(t) = \dv{t}\left[\tevp A \tev \right] = \left(\frac{i}{\hbar}H\right)\tevp A \tev + \tevp A\left(-i\frac{H}{\hbar}\tev\right)
+	\end{equation*}
+	This is found with the Taylor series definition of an operator $ A $. In both terms, we have the product of the Hamiltonian $ H $ with the time evolution operator. These operators commute, so we can switch their order of multiplication and factor to get
+	\begin{equation*}
+		\dv{t}A(t) = \tevp \left(\frac{i}{\hbar}HA - \frac{i}{\hbar}AH\right) \tev = \tevp \frac{i}{\hbar}[H, A]\tev \equiv \frac{i}{\hbar}[H, A](t)
+	\end{equation*}
+	So, we find $ A(t) $ by solving the differential equation
+	\begin{equation*}
+		\dv{t}A(t) = \frac{i}{\hbar}[H, A](t)
+	\end{equation*}
+	
+	\item One more useful identity: consider two operators $ A $ and $ B $. We're interested in the time evolution of their product $ AB $: 
+	\begin{align*}
+		(AB)(t) &= \tevp AB \tev = \tevp A I B \tev\\
+		&=\tevp A \tev \tevp B \tev = A(t)B(t)
+	\end{align*}
+
+\end{itemize}
+
+\textbf{Theory: Commutator Properties}
+\begin{itemize}
+	\item \textbf{TODO: record these!} First, a distributive property
+	\begin{equation*}
+		[AB, C] = A[B, C] + [A, C]B
+	\end{equation*}
+	and second:
+	\begin{equation*}
+		[\lambda A, B] = \lambda [A, B]
+	\end{equation*}
+	and finally:
+	\begin{equation*}
+		[B, A] = -[A, B]
+	\end{equation*}
+\end{itemize}
+
+\textbf{Back to the Time Evolution of the Gaussian Wave Packet}
+\begin{itemize}
+	\item We now have the formalism we need to easily find the expectation values
+	\begin{equation*}
+		\ev{x, t} \equiv \bra{\psi, t}x\ket{\psi, t} \eqtext{and} \ev{p, t} \equiv \bra{\psi, t}p\ket{\psi, t}
+	\end{equation*}
+	for a Gaussian wave packet with the simple Hamiltonian $ H = \frac{p^{2}}{2m} $. Using the Heisenberg approach, we'll first find the time evolution of the operators $ x $ and $ p $, then find the expected values with
+	\begin{equation*}
+		\ev{A, t} = \bra{\psi, 0} A(t) \ket{\psi, 0}
+	\end{equation*}
+	
+	\item First, we'll  the equation for the operator $ x(t) $:
+	\begin{equation*}
+		\dv{t}x(t) = \frac{i}{\hbar}[H, x](t) = \frac{i}{\hbar}\left [\frac{p^{2}}{2m}, x\right ](t)
+	\end{equation*}
+	Writing $ p^{2} = pp $, applying basic commutator properties and recalling the result $ [x, p] = i \hbar $ gives
+	\begin{equation*}
+		\dv{t}x(t) = \frac{i}{2m\hbar}\left(p[p, x] + [p, x]p\right)(t) = \frac{i}{2m\hbar}\left(-pi\hbar -i\hbar p\right)(t) = \frac{p(t)}{m}
+	\end{equation*}
+	Second, the differential for the operator $ p(t) $, noting that $ [p^{2}, p] = 0 $, is
+	\begin{equation*}
+		\dv{p}(t) = \frac{i}{\hbar}\left[H, p\right](t) = \frac{i}{\hbar}\left[\frac{p^{2}}{2m}, p\right](t) = 0
+	\end{equation*}
+	The general solution is a constant: $ p(t) = p_{0} $. We need an initial condition to find a solution specific to our problem, which we get from general expression
+	\begin{equation*}
+		A(t)\big |_{t = 0} = e^{i\frac{H}{\hbar}\cdot 0}Ae^{-i\frac{H}{\hbar}\cdot 0} = A
+	\end{equation*}
+	In our case, $ p(0) = p $, which implies $ p(t) = p$. In other words, the momentum operator stays the same with time; it is always the usual
+	\begin{equation*}
+		p = -i\hbar \pdv{x}
+	\end{equation*}
+	for all time $ t $. Next, with $ p(t) $ known, we solve the equation for $ x(t) $:
+	\begin{equation*}
+		\dv{x} = \frac{p(t)}{m} = \frac{p}{m} \implies x(t) = \frac{p}{m}t + x_{0}
+	\end{equation*}
+	With the initial condition $ x(0) = x $, we now have the expression for the time evolution of the operator $ x(t) $
+	\begin{equation*}
+		x(t) = \frac{p}{m}t + x \to -i\frac{\hbar}{m}t\pdv{x} + x
+	\end{equation*}
+	
+	\item With $ x(t) $ and $ p(t) $ known, we can find the expectation values using
+	\begin{equation*}
+		\ev{A, t} = \bra{\psi, 0} A(t) \ket{\psi, 0}
+	\end{equation*}
+	We start with momentum:
+	\begin{equation*}
+		\ev{p, t} = \bra{\psi, 0} p(t) \ket{\psi, 0} = \bra{\psi, 0} p \ket{\psi, 0} \equiv \ev{p, 0} = \ev{p}
+	\end{equation*}
+	In other words, because $ p(t) = p $ is constant, we can just find the initial expected value $ \ev{p, 0} $ using the initial wave function. This is the same $ \ev{p} $ term in the exponent of the plane wave term in the Gaussian wave packet. 
+	
+	Next, the expectation value of position. Inserting $ x(t) $  and splitting the bra-ket into two parts gives
+	\begin{align*}
+		\ev{x, t} &= \bra{\psi, 0} x(t) \ket{\psi, 0} = \bra{\psi, 0} \frac{p}{m}t + x \ket{\psi, 0} \\
+		&= \frac{t}{m}\bra{\psi, 0} p \ket{\psi, 0} + \bra{\psi, 0} x \ket{\psi, 0} = \frac{t}{m}\ev{p, 0} + \ev{x, 0}
+	\end{align*}
+	These are the same  $ \ev{x} $ and $ \ev{p} $ term in the exponents of the initial the Gaussian wave packet. 
+	
+	\item Next, we want to find the uncertainties
+	\begin{equation*}
+		\Delta x(t) = \sqrt{\ev{x^{2}, t} - \ev{x, t}^{2}} \eqtext{and} \Delta p(t) = \sqrt{\ev{p^{2}, t} - \ev{p, t}^{2}}
+	\end{equation*}
+	It remains to find the the time evolution of the operators $ p^{2} $ and $ x^{2} $ and then the expectation values $ \ev{p^{2}, t} $ and $ \ev{x^{2}, t} $. We start with the operator $ p^{2}(t) $. 
+	\begin{equation*}
+		\ev{p^{2}, t} = \bra{\psi, 0} p^{2}(t) \ket{\psi, 0} = \bra{\psi, 0} \big[p(t)\big]^{2} \ket{\psi, 0} = \bra{\psi, 0} p^{2} \ket{\psi, 0}
+	\end{equation*}
+	In other words, $ \ev{p^{2}, t} $ equals the expectation value of the time-independent operator $ p^{2} $. 
+	
+	Next, the evolution of $ x(t) $. Using $ x^{2}(t) = \big[x(t)\big]^{2} $, substituting in the definition of $ x(t) $, and splitting up the expectation value into three terms gives
+	\begin{align*}
+		\ev{x^{2}, t} &= \bra{\psi, 0} x^{2}(t) \ket{\psi, 0} =  \bra{\psi, 0} \big[x(t)\big]^{2} \ket{\psi, 0} = \bra{\psi, 0}\left(\frac{p}{m}t + x\right)^{2} \ket{\psi, 0}\\
+		&= \bra{\psi, 0}\left(\frac{p^{2}t^{2}}{m^{2}} + \frac{t}{m}(px + xp) + x^{2}\right)\ket{\psi, 0}\\
+		&= \frac{t^{2}}{m^{2}}\bra{\psi, 0} p^{2} \ket{\psi, 0} + \frac{t}{m}\bra{\psi, 0} px + xp \ket{\psi, 0} + \bra{\psi, 0} x^{2} \ket{\psi, 0}
+	\end{align*}
+	We've now succeeded in expressing the time-dependent expectation values of $ x, x^{2}, p $ and $ p^{2} $ in terms of quantities that appear in the initial state, namely the exponent parameters $ \ev{x} $ and $ \ev{p} $. 
+	
+	\item From the beginning of this problem, recall the initial wave function is
+	\begin{equation*}
+		\psi(x, 0) = \frac{1}{\sqrt[4]{2\pi \sigma^{2}}} \exp(\frac{(x - \ev{x})^{2}}{4 \sigma^{2}})e^{-i\frac{\ev{p}}{\hbar}x}
+	\end{equation*}
+	The associated probability density is 
+	\begin{equation*}
+		\rho(x, t) = \frac{1}{\sqrt{2\pi \sigma^{2}}} \exp(\frac{(x - \ev{x})^{2}}{2 \sigma^{2}})
+	\end{equation*}
+	The expected values of $ x $ and $ p $ are simply
+	\begin{equation*}
+		\bra{\psi, 0} x \ket{\psi, 0} = \ev{x} \eqtext{and} \bra{\psi, 0} p \ket{\psi, 0} = \ev{p}
+	\end{equation*}
+	By definition, the initial uncertainty in $ x $ is
+	\begin{equation*}
+		\Delta x(0) = \sqrt{\ev{x^{2}, 0} - \ev{x, 0}^{2}}
+	\end{equation*}
+	There is a shortcut: for a Gaussian wave packet, the uncertainty is simply the wave packet's standard deviation $ \sigma $. We can take advantage of this relationship to easily find $ \ev{x^{2}, 0} $:
+	\begin{equation*}
+		\Delta x(0) = \sqrt{\ev{x^{2}, 0} - \ev{x, 0}^{2}} = \sigma \implies \ev{x^{2}, 0} = \sigma^{2} + \ev{x, 0}^{2}
+	\end{equation*}
+	Another shortcut: instead of the definition, we find the uncertainty in $ p $ using the uncertainty principle, which for a Gaussian wave packet is the equality
+	\begin{equation*}
+		\Delta x \Delta p = \frac{\hbar}{2} \implies \Delta p(0) = \frac{\hbar}{2\Delta x(0)} = \frac{\hbar}{2\sigma}
+	\end{equation*}
+	With $ \Delta p(0) $ in hand, we can find $ \ev{p^{2}, 0} $ with
+	\begin{equation*}
+		\Delta p(0) = \sqrt{\ev{p^{2}, 0} - \ev{p, 0}^{2}} = \frac{\hbar}{2\sigma} \implies \ev{p^{2}, 0} = \frac{\hbar^{2}}{4\sigma^{2}} + \ev{p, 0}^{2}
+	\end{equation*}
+	The last piece remaining to find $ \ev{x^{2}, t} $ is the quantity $ \bra{\psi, 0} px + xp \ket{\psi, 0}  $. To find this, we'll use the relationship $ px = p^{\dagger}x^{\dagger} = (xp)^{\dagger} $. In general,
+	\begin{equation*}
+		\ev{A^{\dagger}} = \bra{\psi}A^{\dagger}\ket{\psi} = \braket{A\psi}{\psi} = \braket{\psi}{A\psi}^{*} = \ev{A}^{*}
+	\end{equation*}
+	which implies $ \ev{A + A^{\dagger}} = \ev{A} + \ev{A}^{*} = 2 \Re \ev{A} $. The expression $  \bra{\psi, 0} px + xp \ket{\psi, 0}  $ then simplifies to
+	\begin{equation*}
+		 \bra{\psi, 0} px + xp \ket{\psi, 0}  = \Re \bra{\psi, 0}xp \ket{\psi, 0} 
+	\end{equation*}
+	\textit{We ran out of time at this point. The problem is completed in the next exercise set.}
+	
+\end{itemize}
+
+
+\subsection{Fifth Exercise Set}
+
+\subsubsection{Time Evolution of a Gaussian Wave Packet (continued)}
+\begin{itemize}
+	\item At the last exercise set, we wanted to find the uncertainties
+	\begin{equation*}
+		\Delta x(t) = \sqrt{\ev{x^{2}, t} - \ev{x, t}^{2}} \eqtext{and} \Delta p(t) = \sqrt{\ev{p^{2}, t} - \ev{p, t}^{2}}
+	\end{equation*}
+	We approached finding the time evolution of the operators $ x(t) $ and $ p(t) $ using the Heisenberg approach. We left off with the following operator expressions:
+	\begin{equation*}
+		p(t) = p \eqtext{and} x(t) = \frac{pt}{m} + x
+	\end{equation*}
+	For expected momentum values, we found
+	\begin{equation*}
+		\ev{p, t} = \ev{p, 0} \eqtext{and} \ev{p^{2}, t} = \ev{p^{2}, 0}
+	\end{equation*}
+	For expected position values, we found
+	\begin{align*}
+		&\ev{x, t} = \frac{t}{m} \ev{p, 0} + \ev{x, 0}\\
+		&\ev{x^{2}, t} = \frac{t^{2}}{m^{2}}\bra{\psi, 0} p^{2} \ket{\psi, 0} + \frac{t}{m}\bra{\psi, 0} px + xp \ket{\psi, 0} + \bra{\psi, 0} x^{2} \ket{\psi, 0}
+	\end{align*}
+	We found nearly all of the initial expected values in terms of the parameters $ \ev{x}, \ev{p} $ and $ \sigma $ in the wave packet. The result were:
+	\begin{align*}
+		&\ev{p, 0} = \ev{p} \qquad \ev{x, 0} = \ev{x}\\
+		&\ev{x^{2}, 0} = \sigma^{2} + \ev{x}^{2} \qquad \ev{p^{2}, 0} = \left(\frac{\hbar}{2\sigma}\right)^{2} + \ev{p}^{2}
+	\end{align*}
+	The only remaining expected value is $ \ev{px + xp, 0} $, which we showed to be
+	\begin{equation*}
+		\ev{xp + px, 0} = \Re \big[\ev{xp, 0}\big]
+	\end{equation*}
+	We finish the expected value by definition, using the wave function:
+	\begin{align*}
+		\ev{xp + px, 0} &= \Re \big[\ev{xp, 0}\big] = 2\Re \int_{-\infty}^{\infty}\psi^{*}(x, 0)x\left[-i\hbar \dv{x}\right]\psi(x, 0) \diff x\\
+		&= 2 \Re \int_{-\infty}^{\infty} \psi^{*}(x, 0) \cdot x \cdot (-i\hbar)\dv{x}\left[\frac{1}{\sqrt[4]{2\pi \sigma^{2}}}e^{-\frac{(x - \ev{x})^{2}}{4\sigma^{2}}}e^{i\frac{\ev{p}}{\hbar}x}\right]  \diff x\\
+		&=2 \int_{-\infty}^{\infty} \psi^{*}(x, 0)x \ev{p} \psi(x, 0) \diff x = 2 \ev{p}\ev{x}
+	\end{align*}
+	Note that the imaginary portion of the derivative in the middle line disappears when taking the real component.
+	
+	\item We now have everything we need to find the uncertainties $ \Delta x $ and $ \Delta p $. Starting with $ \Delta p $, we have:
+	\begin{equation*}
+		\big[\Delta p(t)\big]^{2} = \ev{p^{2}, t} - \ev{p, t}^{2} =  \left(\frac{\hbar}{2\sigma}\right)^{2} + \ev{p}^{2} - \ev{p}^{2} = \left(\frac{\hbar}{2\sigma}\right)^{2}
+	\end{equation*}
+	For position, the uncertainty $ \Delta x $ is
+	\begin{align*}
+		\big[\Delta x(t)\big]^{2} &= \ev{x^{2}, t} - \ev{x, t}^{2} = \frac{t^{2}}{m^{2}}\ev{p^{2}, 0} + \frac{t}{m} \ev{px + xp, 0} + \ev{x^{2}, 0} - \left( \frac{t}{m} \ev{p, 0} + \ev{x, 0} \right)^{2}\\
+		&=\frac{t^{2}}{m^{2}}\left[\ev{p}^{2} + \left(\frac{\hbar}{2\sigma}\right)^{2}\right] + \frac{t}{m}2\ev{p}\ev{x} + \sigma^{2} + \ev{x}^{2} - \frac{t^{2}}{m^{2}}\ev{p}^{2} - 2\frac{t}{m}\ev{p}\ev{x} - \ev{x}^{2}\\
+		&= \sigma^{2} + \left(\frac{\hbar t}{2m\sigma}\right)^{2}
+	\end{align*}
+	The product in the two uncertainties is 
+	\begin{equation*}
+		\Delta x(t) \Delta p(t) = \frac{\hbar}{2\sigma} \sigma \sqrt{1 + \left(\frac{\hbar t}{2m\sigma}\right)^{2}} = \frac{\hbar}{2}\sqrt{1 + \left(\frac{\hbar t}{2m\sigma}\right)^{2}}
+	\end{equation*}
+	Note that the product in uncertainties starts at the initial value $ \frac{\hbar}{2} $ and increases with time. This immediately implies that the time evolution $ \psi(x, t > 0) $ of the initial Gaussian wave packet $ \psi(x, 0) $ is no longer a Gaussian wave packet. It couldn't be---it has an uncertainty product greater $ \Delta x \Delta p > \frac{\hbar}{2} $, but Gaussian wave packets are by definition constructed to have $ \Delta x \Delta p = \frac{\hbar}{2} $. 
+\end{itemize}
+
+\subsubsection{Theory: Particle in a Harmonic Oscillator}
+\begin{itemize}
+	\item The Hamiltonian of a particle of mass $ m $ in a harmonic oscillator reads
+	\begin{equation*}
+		H = \frac{p^{2}}{2m} + \frac{kx^{2}}{2} = \frac{p^{2}}{2m} + \frac{m\omega}{2}x^{2}, \qquad \omega = \sqrt{\frac{k}{m}}
+	\end{equation*}
+	We analyze the harmonic oscillator using the annihilation and creation operators. The annihilation operator $ a $ is
+	\begin{equation*}
+		a = \frac{1}{\sqrt{2}}\left(\frac{x}{x_{0}} + i\frac{p}{p_{0}}\right) \eqtext{where} x_{0} = \sqrt{\frac{\hbar}{m\omega}}, \quad p_{0} = \frac{\hbar}{x_{0}}
+	\end{equation*}
+	while the creation operator, equal to the adjoint of $ a $, is
+	\begin{equation*}
+		a^{\dagger} = \frac{1}{\sqrt{2}}\left(\frac{x}{x_{0}} - i\frac{p}{p_{0}}\right)
+	\end{equation*}
+	The annihilation and creation operators don't commute---their commutator is 
+	\begin{equation*}
+		\big[a, a^{\dagger}\big] = 1
+	\end{equation*}
+	Adding and subtracting the two operators give expressions for $ x $ and $ p $
+	\begin{equation*}
+		x = \frac{x_{0}}{\sqrt{2}}(a + a^{\dagger}) \eqtext{and} p = \frac{p_{0}}{\sqrt{2}i}(a - a^{\dagger})
+	\end{equation*}
+	
+	\item In terms of $ a $ and $ a^{\dagger} $, the harmonic oscillator's Hamiltonian reads
+	\begin{equation*}
+		H = \hbar \omega\left (a^{\dagger}a + \frac{1}{2}\right )
+	\end{equation*}
+	The Hamiltonian's eigenstates are indexed by $ n = 0, 1, 2, \ldots $ and read
+	\begin{equation*}
+		H \ket{n} = \hbar \omega \left(n + \frac{1}{2}\right)\ket{n}, \quad n = 0, 1, 2, \ldots
+	\end{equation*}
+	The annihilation and creation operators act on the oscillator's eigenstates as follows:
+	\begin{equation*}
+		a\ket{n} = \sqrt{n}\ket{n-1} \eqtext{and} a^{\dagger} \ket{n} = \sqrt{n + 1} \ket{n+1}
+	\end{equation*}
+	Note the operator equality $ a^{\dagger}a \ket{n} = n \ket{n}$---in other words, acting on an eigenstate $ \ket{n} $  with the operator $ a^{\dagger}a $ reveals the state's index $ n $. 
+\end{itemize}
+
+\textbf{Theory: Theorem Ehrenfest Theorem}\\
+In our case (for a harmonic oscillator), the theorem reads
+\begin{equation*}
+	\dv{t}\ev{x, t} = \frac{\ev{p, t}}{m} \eqtext{and} \dv{t}\ev{p, t} = \ev{-\dv{x}V(x)} = -k\ev{x, t}
+\end{equation*}
+
+
+\subsubsection{Time Evolution of a Particle in a Harmonic Oscillator}
+\textit{Consider a particle in a harmonic potential with the initial eigenfunction}
+\begin{equation*}
+	\ket{\psi, 0} = \frac{1}{\sqrt{2}}\ket{0} + \frac{1}{\sqrt{2}}\ket{1}
+\end{equation*}
+Compute the wavefunction's time evolution $ \ket{\psi, t} $ the time-dependent expected values $ \ev{x, t} $ and $ \ev{p, t} $ and use this to determine the validity of the Ehrenfest theorem. Finally, determine the product of uncertainties
+\begin{equation*}
+	\Delta x(t) \Delta p(t)
+\end{equation*}
+\begin{itemize}
+	\item First, we find the wavefunction's time evolution. This is relatively simple, since the initial wavefunction is a linear combination of the Hamiltonian's eigenstates. We just have to add the time-dependent phase factors $ e^{-i\frac{E_{n}}{\hbar}t} $. Substituting in the energies for a particle in a harmonic oscillator, the result is
+	\begin{equation*}
+		\ket{\psi, t} = \frac{1}{\sqrt{2}} e^{-i\frac{E_{0}}{\hbar}t}\ket{0} + \frac{1}{\sqrt{2}} e^{-i\frac{E_{1}}{\hbar}t}\ket{1}  =  \frac{1}{\sqrt{2}} e^{-i\frac{\omega}{2}t}\ket{0} + \frac{1}{\sqrt{2}} e^{-i\frac{3\omega}{2}t}\ket{1}
+	\end{equation*}
+	
+	\item Next, working with $ x $ in terms of the annihilation and creation operators, we find the expected value $ \ev{x} $ as
+	\begin{equation*}
+		\ev{x} = \frac{x_{0}}{\sqrt{2}}\ev{a + a^{\dagger}} = \frac{x_{0}}{\sqrt{2}}\left(\ev{a} + \ev{a}^{*}\right) =  \sqrt{2}x_{0} \Re \ev{a}
+	\end{equation*}
+	Following similar lines for $ \ev{p} $, we have
+	\begin{equation*}
+		\ev{p} = \frac{p_{0}}{\sqrt{2}i}\ev{a - a^{\dagger}} = \frac{p_{0}}{\sqrt{2}i}\left(\ev{a} - \ev{a}^{*}\right) = \sqrt{2}p_{0}\Im \ev{a}
+	\end{equation*}
+	These two results are useful: they show that by finding the expectation value $ \ev{a} $ we also determine the values of $ \ev{x} $ and $ \ev{p} $. Naturally, the next step is to find $ \ev{a} $ (we'll find the time-dependent form)
+	\begin{equation*}
+		\ev{a, t} = \bra{\psi, t}a\ket{\psi, t} = \bra{\psi, t}\left(\frac{1}{\sqrt{2}}e^{-i\frac{\omega}{2}t}a \ket{0} + \frac{1}{\sqrt{2}}e^{-i\frac{3\omega}{2}t}a \ket{1}\right)
+	\end{equation*}
+	The annihilation operator eliminates the ground state, i.e. $ a \ket{0} = 0 $ and turns the first state into the ground state, i.e. $ a \ket{1} = \ket{0} $. The expression for $ \ev{a, t} $ becomes
+	\begin{align*}
+		\ev{a, t} &= \bra{\psi, t}\frac{1}{\sqrt{2}}e^{-i\frac{3\omega}{2}t}\ket{0} = \left(\frac{1}{\sqrt{2}}e^{i\frac{\omega}{2}t}\bra{0} + \frac{1}{\sqrt{2}}e^{i\frac{3\omega}{2}t}\bra{1}\right) \frac{1}{\sqrt{2}}e^{-i\frac{3\omega}{2}t}\ket{0}\\
+		&=\frac{1}{2}e^{-i\omega t} 
+	\end{align*}
+	where the last equality makes use of the eigenstate's orthogonality. With $ \ev{a, t} $ known, we can now find the expected values of position and momentum These are
+	\begin{equation*}
+		\ev{x, t} = \sqrt{2}x_{0}\Re\ev{a, t} = \frac{x_{0}}{\sqrt{2}}\cos \omega t \eqtext{and} \ev{p, t} = \sqrt{2}p_{0}\Im\ev{a, t} = - \frac{p_{0}}{\sqrt{2}}\sin \omega t
+	\end{equation*}
+	
+	\item Next, we confirm the validity of the Ehrenfest theorem.
+	\begin{equation*}
+		\dv{t}\ev{x, t} = \dv{t}\left( \frac{x_{0}}{\sqrt{2}}\cos \omega t\right) = - 		\frac{\omega x_{0}}{\sqrt{2}}\sin \omega \stackrel{?}{=} \frac{\ev{p, t}}{m} = - \frac{p_{0}}{\sqrt{2}}\sin \omega t
+	\end{equation*}
+	Comparing the equalities, canceling like terms and inserting the definition of $ p_{0} $ and $ \omega $, we have 
+	\begin{equation*}
+		 \omega x_{0} \stackrel{?}{=}\frac{p_{0}}{m} = \frac{\hbar}{x_{0}m} \implies \omega \stackrel{?}{=} \frac{h}{mx_{0}^{2}} = \frac{\hbar}{m}\frac{m \omega}{\hbar} = \omega
+	\end{equation*}
+	which satisfies the first part of the Ehrenfest theorem. To confirm the second part of the theorem, we compute
+	\begin{equation*}
+		\dv{t}\left(-\frac{p_{0}}{\sqrt{2}}\sin \omega t\right) = -\frac{p_{0}\omega}{\sqrt{2}}\cos \omega t\stackrel{?}{=} - k \ev{x, t}
+	\end{equation*}
+	The equality reduces to
+	\begin{equation*}
+		p_{0}\omega \stackrel{?}{=} kx_{0} \implies \frac{\hbar}{x_{0}}\omega = m \omega^{2}x_{0} \implies x_{0}^{2} \stackrel{?}{=} \frac{\hbar}{m \omega}
+	\end{equation*}
+	The last equality leads to $ \omega = \omega $, already shown above when confirming the first part of the Ehrenfest theorem.
+	
+	\item Finally, we compute the product $ \Delta x(t) \Delta p(t) $. By definition,
+	\begin{equation*}
+		\Delta x(t) = \sqrt{\ev{x^{2}, t} - \ev{x, t}^{2}} \eqtext{and} \Delta p(t) = \sqrt{\ev{p^{2}, t} - \ev{p, t}^{2}}
+	\end{equation*}
+	First, we express $ \ev{x} $ in terms of the annihilation operator $ a $:
+	\begin{align*}
+		\ev{x^{2}} &= \ev{\left[\frac{x_{0}}{\sqrt{2}}(a + a^{\dagger})\right]^{2}} = \frac{x_{0}^{2}}{2}\ev{a^{2} + aa^{\dagger} + a^{\dagger}a + a^{\dagger^{2}}}\\
+		&= \frac{x_{0}^{2}}{2}\ev{a^{2} + 2a^{\dagger}a + a^{\dagger^{2}}+1}
+	\end{align*}
+	Where the last equality uses the identity $ \big[a, a^{\dagger}\big] = 1 \implies aa^{\dagger} = 1 + a^{\dagger}a $. Continuing on, we have
+	\begin{equation*}
+		\ev{x^{2}} = \frac{x_{0}^{2}}{2}\left(2\ev{a^{\dagger}a} + \ev{a^{2}}+ \ev{a^{\dagger^{2}}}+1\right) = x_{0}^{2}\left(\Re\ev{a^{2}} + \ev{a^{\dagger}a} + \tfrac{1}{2}\right)
+	\end{equation*}
+	Next, we express $ \ev{p^{2}} $ in terms of $ a $ with a similar procedure:
+	\begin{align*}
+		\ev{p^{2}} &= \left(\frac{p_{0}}{\sqrt{2}i}\right)^{2}\ev{(a - a^{\dagger})^{2}} = -\frac{p_{0}}{2}\ev{a^{2}- aa^{\dagger} - a^{\dagger}a + a^{\dagger^{2}}}\\
+		& = -\frac{p_{0}}{2} \ev{a^{2} - 2a^{\dagger}a -1 + a^{\dagger^{2}}} = p_{0}^{2}\left(-\Re \ev{a^{2}} + \ev{a^{\dagger}a} + \tfrac{1}{2}\right)
+	\end{align*}
+	Next, we find the expected value $ \ev{a^{2}, t} $:
+	\begin{equation*}
+		\ev{a^{2}, t} = \bra{\psi, t}\left(\frac{1}{\sqrt{2}}e^{-i\frac{\omega}{2}t}a^{2}\ket{0} + \frac{1}{\sqrt{2}}e^{-i\frac{3\omega}{2}t}a^{2}\ket{1} \right) 
+	\end{equation*}
+	Brief intermezzo to note that
+	\begin{equation*}
+		a^{2}\ket{0} = a\left(a\ket{0}\right) = a \cdot 0 = 0 \eqtext{and} a^{2}\ket{1} = a\left(a\ket{1}\right) = a\ket{0} = 0
+	\end{equation*}
+	With these identities in hand, we have
+	\begin{equation*}
+		\ev{a^{2}, t} = \bra{\psi, t} \cdot 0 = 0
+	\end{equation*}
+	One more expected value to go: $ \ev{a^{\dagger}a, t} $
+	\begin{align*}
+		\ev{a^{\dagger}a, t} &=  \bra{\psi, t}\left(\frac{1}{\sqrt{2}}e^{-i\frac{\omega}{2}t}a^{\dagger}a\ket{0} + \frac{1}{\sqrt{2}}e^{-i\frac{3\omega}{2}t}a^{\dagger}a\ket{1} \right) = \bra{\psi, t} \frac{1}{\sqrt{2}}e^{-i\frac{3\omega}{2}t} \ket{1}\\
+		&=\left(\frac{1}{\sqrt{2}}e^{i\frac{\omega}{2}t}\bra{0} + \frac{1}{\sqrt{2}}e^{i\frac{3\omega}{2}t}\bra{1}\right)\frac{1}{\sqrt{2}}e^{-i\frac{3\omega}{2}t} \ket{1}  = \frac{1}{2}
+	\end{align*}
+	The derivation uses identity $ a^{\dagger}a \ket{n} = n \ket{n} $ and the orthogonality of the eigenstates $ \ket{n} $. 
+	
+	\item We now have everything we need to find the product of uncertainties in $ x $ and $ p $. Putting the pieces together, we have
+	\begin{align*}
+		&\ev{x^{2}, t} =  x_{0}^{2}\left(\Re\ev{a^{2}} + \ev{a^{\dagger}a} + \tfrac{1}{2}\right) = x_{0}^{2}\left(0 + \tfrac{1}{2} + \tfrac{1}{2}\right) = x_{0}^{2}\\
+		&\ev{p^{2}, t} = p_{0}^{2}\left(-\Re \ev{a^{2}} + \ev{a^{\dagger}a} + \tfrac{1}{2}\right) = p_{0}^{2}\left(0 + \ev{a^{\dagger}a} + \tfrac{1}{2} \right) = p_{0}^{2}\\
+		&\ev{x, t} = \sqrt{2}x_{0}\Re\ev{a, t} = \frac{x_{0}}{\sqrt{2}}\cos \omega t \\
+		&\ev{p, t} = \sqrt{2}p_{0}\Im\ev{a, t} = - \frac{p_{0}}{\sqrt{2}}\sin \omega t
+	\end{align*}
+	The uncertainties $ \Delta x(t) $ and $ \Delta p $ are then
+	\begin{align*}
+		& \big[\Delta x(t)\big]^{2} = \ev{x^{2}, t} - \ev{x}^{2} = x_{0}^{2} - \frac{x_{0}^{2}}{2}\cos^{2} \omega t = x_{0}^{2}\left(1 - \frac{\cos^{2}\omega t}{2}\right)\\
+		& \big[\Delta p(t)\big]^{2} = \ev{p^{2}, t} - \ev{p}^{2} = p_{0}^{2} - \frac{p_{0}^{2}}{2}\sin^{2} \omega t = p_{0}^{2}\left(1 - \frac{\sin^{2}\omega t}{2}\right)
+	\end{align*}
+	The product in uncertainties is
+	\begin{align*}
+		\Delta x(t) \Delta p(t) &= x_{0}p_{0} \sqrt{\left(1 - \frac{\cos^{2}\omega t}{2}\right)\left(1 - \frac{\sin^{2}\omega t}{2}\right)}\\
+		&=\hbar \sqrt{\frac{1}{2} + \frac{1}{4}\sin^{2}\omega t \cos^{2}\omega t  }  = \hbar \sqrt{\frac{1}{2} +  \frac{1}{16}\sin^{2}2\omega t}
+	\end{align*}
+	In other words, the product of uncertainties oscillates in time between a minimum value of $ \frac{\hbar}{\sqrt{2}} $ to a maximum value of $ \frac{3\hbar}{4} $. 
+
+\end{itemize}
+\textbf{Take Two, Using the Heisenberg Approach}
+\begin{itemize}
+	\item We start with an expression for $ \ev{x, t} $, using the Heisenberg approach
+	\begin{equation*}
+		\ev{x, t} = \sqrt{2}x_{0} \Re \bra{\psi, 0}a(t) \ket{\psi, 0}
+	\end{equation*}
+	We start with the equation for the operator $ a(t) $: 
+	\begin{equation*}
+		\dv{t}a(t) = \frac{i}{\hbar}[H, a](t)
+	\end{equation*}
+	Making use of $ \big[a, a^{\dagger}\big] = 1 $ and $ \big[ a^{\dagger}, a\big] = -1 $ commutator $ [H, a] $ is
+	\begin{equation*}
+		[H, a] = [\hbar \omega (a^{\dagger}a + \tfrac{1}{2}), a] = \hbar \omega \big[a^{\dagger}a, a\big] = \hbar \omega \left([a^{\dagger}, a]a + a^{\dagger}[a, a]\right) = -\hbar \omega a
+	\end{equation*}
+	and the equation for $ a(t) $ reads
+	\begin{align*}
+		&\dv{t}a(t) = -i \omega a(t) \implies \frac{\diff a}{a} = -i\omega \diff t \implies \ln a(t) = -i\omega t + C\\
+		&a(t) = De^{-i\omega t}
+	\end{align*}
+	We find the constant $ D $ with the initial condition $ a(0) = a $, giving the final solution 
+	\begin{equation*}
+		a(t) = ae^{-i\omega t}
+	\end{equation*}
+	Inserting $ a(t) $ into the expression $ \ev{x, t} = \sqrt{2}x_{0} \Re \bra{\psi, 0}a(t) \ket{\psi, 0} $ gives
+	\begin{equation*}
+		\ev{x, t} = \sqrt{2}x_{0} \Re \bra{\psi, 0}ae^{-i\omega t} \ket{\psi, 0} = \sqrt{2}x_{0} \Re \left[e^{-i\omega t} \bra{\psi, 0}a \ket{\psi, 0}\right]
+	\end{equation*}
+	This general result holds for any initial state $ \ket{\psi, 0} $ of a particle in a harmonic potential. For our specific initial state, the expression reads
+	\begin{equation*}
+		\bra{\psi, 0}a \ket{\psi, 0} = 	\bra{\psi, 0} \left(\frac{1}{\sqrt{2}}a \ket{0} + \frac{1}{\sqrt{2}}a\ket{1} \right) \ket{\psi, 0}  =	\bra{\psi, 0} \frac{1}{\sqrt{2}} \ket{0} = \frac{1}{2}
+	\end{equation*}
+	The result for $ \ev{x, t} $ then reads
+	\begin{align*}
+		\ev{x, t} &= \sqrt{2}x_{0} \Re \left[e^{-i\omega t} \bra{\psi, 0}a \ket{\psi, 0}\right] = \sqrt{2}x_{0} \Re \left[\frac{1}{\sqrt{2}} e^{-i\omega t}\right]\\
+		&=\frac{x_{0}}{{\sqrt{2}}}\cos \omega t
+	\end{align*}
+	which matches the result from the earlier \schro approach. 
+\end{itemize}
+
+\subsection{Sixth Exercise Set}
+
+\subsubsection{Harmonic Oscillator in an Electric field}
+\textit{Consider a particle of mass $ m $ and charge $ q $ at the equilibrium position $ x_{0} $ of a spring with spring constant $ k $ constrained to oscillate along the $ x $ axis. At time $ t = 0 $, we turn on an external electric field $ \mathcal{E} $ in the positive $ x $ direction. Solve for the particle's motion using quantum mechanics. }
+
+\begin{itemize}
+	\item First, we find the classical solution with Newton's law to get a feel for the solution. Newton's law reads:
+	\begin{equation*}
+		m\ddot{x} = -k x + q \mathcal{E}
+	\end{equation*}
+	Turning the field exerts a force on the particle in the $ x $ direction, moving the equilibrium position to $ \tilde{x}_{0} = x_{0} + x_{1} > x_{0} $. The particle starts at the far left amplitude $ x_{0} $ and oscillates about the new equilibrium position $ \tilde{x}_{0} $ with amplitude $ x_{1} $. 
+	
+	Placing the origin at $ x_{0} \equiv 0 $, the initial conditions are $ x(0) = 0 $ and $ \dot{x}(0) = 0 $. The solution is
+	\begin{equation*}
+		x(t) = x_{1}(1 - \cos \omega t) \eqtext{where} \omega = \sqrt{\frac{k}{m}}, \quad x_{1} = \frac{q\mathcal{E}}{k}
+	\end{equation*}
+	
+	\item Next, the quantum mechanical picture. The particle's Hamiltonian is
+	\begin{equation*}
+	H(t) = 
+		\begin{cases}
+			\frac{p^{2}}{2m} + \frac{1}{2}kx^{2} & t < 0\\
+			\frac{p^{2}}{2m} + \frac{1}{2}kx^{2} - q\mathcal{E}x & t > 0
+		\end{cases}
+	\end{equation*}
+	Note that turning on the field adds the potential energy term $ - q\mathcal{E}x  $ to the initial Hamiltonian. 
+	
+	\textit{Notation:} all quantities for $ t > 0 $, after the field is turned on, will be written with a tilde. 
+	
+	\item In the classical picture, the particle takes the initial position $ x(0) = 0 $. This doesn't carry over in quantum mechanics---specifying an exact position violates the uncertainty principle. Instead, we place the particle in the harmonic oscillator's ground state: $ \ket{\psi, 0} = \ket{0} $ where $ H\ket{0} = \frac{1}{2}\hbar \omega \ket{0} $. Our goal will be to find the time-dependent wave function $ \ket{\psi, t} $ and then compute the position expectation value $ \ev{x, t} $. 
+	
+	\item Let's begin! As a first step, we expand the electric field Hamiltonian to a perfect square
+	\begin{equation*}
+		\tilde{H} = \frac{p^{2}}{2m} + \frac{k}{2}\left(x - \frac{e\mathcal{E}}{k}\right)^{2} - \frac{1}{2}k\left(\frac{q\mathcal{E}}{k}\right)^{2} = \frac{p^{2}}{2m} + \frac{k}{2}\left(x - x_{1}\right)^{2} - \frac{1}{2}kx_{1}^{2}
+	\end{equation*}
+	Where we have substituted in the amplitude $ x_{1} = \frac{q\mathcal{E}}{k} $ from the classical solution. Next, we denote the post-field potential
+	\begin{equation*}
+		\tilde{V}(x) = \frac{k}{2}\left(x - x_{1}\right)^{2} - \frac{1}{2}kx_{1}^{2}
+	\end{equation*}
+	Note that while the pre-field potential $ V(x) = \frac{1}{2}kx^{2} $ has its minimum at $ (0, 0) $, the post-field potential $ \tilde{V}(x) $'s minimum is shifted to $ \big(x_{1}, - \frac{1}{2}kx_{1}^{2}\big) $. With this shift of the equilibrium position in mind, we introduce new coordinates
+	\begin{equation*}
+		\tilde{x} = x - x_{1} \eqtext{and} \tilde{p} = - i\hbar
+ 		\dv{\tilde{x}} = -i \hbar \dv{x} = p
+ 	\end{equation*}
+ 	The Hamiltonian $ \tilde{H} $ then reads
+ 	\begin{equation*}
+ 		\tilde{H} = \frac{\tilde{p}^{2}}{2m} = \frac{1}{2}k\tilde{x}^{2} - \frac{1}{2}kx_{1}^{2}
+ 	\end{equation*}
+ 	In terms of the shifted annihilation and creation operators
+ 	\begin{equation*}
+ 		\tilde{a} = \frac{1}{\sqrt{2}}\left(\frac{\tilde{x}}{x_{0}} + i\frac{\tilde{p}}{p_{0}}\right) 
+ 	\end{equation*}
+ 	where $ x_{0} = \sqrt{\frac{\hbar}{m\omega}}$ and $ p_{0} = \frac{\hbar}{x_{0}} $. The difference between $ \tilde{a} $  and the unshifted $ a $ is
+ 	\begin{equation*}
+ 		\tilde{a} - a = -\frac{x_{1}}{\sqrt{2}x_{0}} \implies \tilde{a} = a -\frac{x_{1}}{\sqrt{2}x_{0}}
+ 	\end{equation*}
+ 	
+ 	\textbf{Review:} The annihilation operator actions on the quantum harmonic oscillator's eigenstates as
+ 	\begin{equation*}
+ 		\tilde{a}\ket{0} = 0 \eqtext{or, generally} a \ket{n} = \sqrt{n} \ket{n-1}
+ 	\end{equation*}
+ 	
+ 	\item The shifted annihilation operator $ \tilde{a} $ acts on our problem's ground state (and thus initial state $ \ket{\psi, 0} $) as
+ 	\begin{equation*}
+ 		\tilde{a}\ket{0} = - \frac{x_{1}}{\sqrt{2}x_{0}} \tilde{0} \eqtext{or} \tilde{a}\ket{\psi, 0} = - \frac{x_{1}}{\sqrt{2}x_{0}} \ket{\psi, 0}
+ 	\end{equation*}
+ 	In other words, our initial state $ \ket{\psi, 0} $ is an eigenstate of the shifted annihilation operator $ \tilde{a} $ with the eigenvalue $  - \frac{x_{1}}{\sqrt{2}x_{0}} $. 
+
+	
+\end{itemize}
+
+\textbf{Theory: Coherent States of the Quantum Harmonic Oscillator}
+\begin{itemize}
+	\item In general, the annihilation operator's eigenstates are called \textit{coherent} states of the quantum harmonic oscillator's Hamiltonian. To make it easier to solve our problem, we will first take a detour to understand coherent states. 
+	
+	Coherent states  $ \ket{\psi} $ of a QHO satisfy the eigenvalue equation
+	\begin{equation*}
+		a \ket{\psi} = \lambda \ket{\psi}, \qquad \lambda \in \mathbb{C}
+	\end{equation*}
+	Recall that $ a $ is not Hermitian, so the eigenvalue $ \lambda $ is in general not complex. By convention, we make the potential complex nature of $ \lambda $ explicit by writing 
+	\begin{equation*}
+		a \ket{z} = z \ket{z}
+	\end{equation*}
+	Where $ \ket{z} $ is just a new notation for the coherent eigenstates. 
+	
+	\item The next step is to find the coherent states' time evolution $ \ket{z, t} $. One way to do this is to expand the coherent state in the QHO eigenstate basis $ \ket{n} $ in the form
+	\begin{equation*}
+		\ket{z} = \sum_{n} c_{n} \ket{n}
+	\end{equation*}
+	Inserting this expression for $ \ket{z} $ in to the eigenvalue equation $ a \ket{z} = z \ket{z} $ gives
+	\begin{equation*}
+		a \ket{z} = \sum_{n} c_{n} a \ket{n} = z \ket{z} = \sum_{n} c_{n} z \ket{n}
+	\end{equation*}
+	Substituting in the annihilation operator's action  $ a \ket{n} = \sqrt{n}\ket{n-1} $ on the QHO eigenstates $ \ket{n} $ leads to
+	\begin{equation*}
+		 \sum_{n=1}^{\infty} c_{n} \sqrt{n} \ket{n - 1} =  \sum_{n=0}^{\infty} c_{n} z \ket{n}
+	\end{equation*}
+	Note that $ n $ starts at $ 1 $ in the left sum because the annihilation operator eliminates the ground state $ \ket{0} $. Keeping the orthogonality of the eigenstates with different $ n $ in mind, the above equality only holds if the coefficients of each $ \ket{n} $ term in the left and right sums are equal, i.e.
+	\begin{equation*}
+		c_{n+1} \sqrt{n+1} = c_{n}z \implies c_{n+1} = \frac{z}{\sqrt{n+1}}c_{n}
+	\end{equation*}
+	This is a recursive relation between the coefficients $ c_{n} $ of the eigenstate expansion of the coherent states. We can recognize the general form from the pattern in the first few terms:
+	\begin{align*}
+		n &= 0 \implies c_{1} = c_{0}z\\
+		n &= 1 \implies c_{2} = c_{1}\frac{z}{\sqrt{2}} = c_{0}\frac{z^{2}}{\sqrt{1 \cdot 2}}\\[-4mm]
+		&{}\ \, \vdots\\[-4mm]
+		c_{n} &= \frac{z^{n}}{\sqrt{n!}}c_{0}
+	\end{align*}
+	As long as we know $ c_{0} $, we can find all $ c_{n} $ with the above expression. Returning to the expansion of the coherent $ \ket{z} $, we have
+	\begin{equation*}
+		\ket{z} = \sum_{n}c_{n} \ket{n} = c_{0} \sum_{n} \frac{z^{n}}{\sqrt{n!}}\ket{n}
+	\end{equation*}
+	
+	\item We find $ c_{0} $ by requiring the coherent states are normalized:
+	\begin{equation*}
+		1 \equiv \braket{z}{z} = \left(c_{0}^{*} \sum_{n} \frac{z^{*^{n}}}{\sqrt{n!}}\bra{n}\right)\left(c_{0} \sum_{m} \frac{z^{m}}{\sqrt{m!}}\ket{m}\right)
+	\end{equation*}
+	We only have to evaluate one sum, since orthogonality of the QHO eigenstates means $ \braket{n}{m} = \delta_{nm} $. We then have
+	\begin{equation*}
+		1 \equiv \braket{z}{z} = \abs{c_{0}}^{2} \sum_{n}\frac{z^{*^{n}}z^{n}}{n!} = \abs{c_{0}}^{2}\sum_{n}\frac{\abs{z}^{2n}}{n!} = \abs{c_{0}}^{2}e^{\abs{z}^{2}} \equiv 1
+	\end{equation*}
+	Solving the last equality for $ c_{0} $  gives $ c_{0} = e^{-\frac{\abs{z}^{2}}{2}} $. We now have everything we need for the eigenfunction expansion of the coherent states. Putting the pieces together gives
+	\begin{equation*}
+		\ket{z} =  \sum_{n}c_{n} \ket{n} = c_{0} \sum_{n} \frac{z^{n}}{\sqrt{n!}}\ket{n} = e^{-\frac{\abs{z}^{2}}{2}} \sum_{n}\frac{z^{n}}{\sqrt{n!}} \ket{n}
+	\end{equation*}
+	
+	\item We now consider another way to write the coherent states $ \ket{z} $ using creation operator's action on the QHO eigenstates:
+	\begin{align*}
+		a^{\dagger} \ket{0} &= \ket{1} \implies \ket{1} = a^{\dagger}\ket{0}\\
+		a^{\dagger \ket{1}} &= \sqrt{2}\ket{2} \implies \ket{2} = \frac{a^{\dagger}\ket{1}}{\sqrt{2}} = \frac{\big(a^{\dagger}\big)^{2}}{\sqrt{1 \cdot 2}} \ket{0}\\[-4mm]
+		&\ \, \vdots \\[-4mm]
+		\ket{n} &= \frac{\big(a^{\dagger}\big)^{n}}{\sqrt{n!}} \ket{0}
+	\end{align*} 
+	Substituting in the expression for the QHO eigenstate $ \ket{n} $ into the expansion of the coherent states $ \ket{z} $ gives
+	\begin{equation*}
+		\ket{z} = e^{-\frac{\abs{z}^{2}}{2}} \sum_{n}\frac{z^{n}}{\sqrt{n!}} \frac{\big(a^{\dagger}\big)^{n}}{\sqrt{n!}} \ket{0} = e^{-\frac{\abs{z}^{2}}{2}} \sum_{n} \frac{z^{n}\big(a^{\dagger}\big)^{n}}{n!} \ket{0} =  e^{-\frac{\abs{z}^{2}}{2}}  e^{za^{\dagger}} \ket{0}
+	\end{equation*}
+	In other words, the coherent states $ \ket{z} $ and ground state $ \ket{0} $ are related by the exponential operator $ e^{za^{\dagger}} $ via
+	\begin{equation*}
+		\ket{z} =  e^{-\frac{\abs{z}^{2}}{2}}  e^{za^{\dagger}} \ket{0}
+	\end{equation*}
+	
+	\item Next, we will find the time evolution $ \ket{z, t} $ of the coherent states. This is
+	\begin{equation*}
+		\ket{z, t} = e^{-\frac{E_{n}}{\hbar}t} \ket{z} = e^{-\frac{\abs{z}^{2}}{2}} \sum_{n}\frac{z^{n}}{\sqrt{n!}} \left(e^{-i\omega (n + \frac{1}{2})t}\right) \ket{n} 
+	\end{equation*}
+	where we have substituted in the QHO's energy eigenvalues $ E_{n} = \hbar\omega \big(n + \frac{1}{2}\big) $. Some rearranging of $ \ket{z, t} $ leads to
+	\begin{equation*}
+		\ket{z, t} = e^{-i\frac{\omega}{2}t}e^{-\frac{\abs{z}^{2}}{2}}\sum_{n}\frac{z^{n}e^{-i\omega n t}}{\sqrt{n!}}\ket{n} = e^{-i\frac{\omega}{2}t}e^{-\frac{\abs{z}^{2}}{2}} \sum_{n} \frac{(ze^{-i\omega t})^{n}}{\sqrt{n!}} \ket{n}
+	\end{equation*}
+	Next, a slight trick. Using $ \abs{ze^{-i\omega t}} = \abs{z}\abs{e^{-i\omega t}} = \abs{z}$, we re-write the coefficient $ e^{-\frac{\abs{z}^{2}}{2}} $ to get
+	\begin{equation*}
+		\ket{z, t} =  e^{-i\frac{\omega}{2}t}e^{-\frac{\abs{ze^{-i\omega t}}^{2}}{2}} \sum_{n} \frac{(ze^{-i\omega t})^{n}}{\sqrt{n!}} \ket{n}
+	\end{equation*}
+	Except for the factor $ e^{-i\frac{\omega}{2}t} $, this expression has the same form as the earlier result
+	\begin{equation*}
+		\ket{z} = e^{-\frac{\abs{z}^{2}}{2}} \sum_{n}\frac{z^{n}}{\sqrt{n!}} \ket{n}
+	\end{equation*}
+	with $ z $ replaced by $ z e^{-i\omega t} $. We use this relationship to write
+	\begin{equation*}
+		\ket{z, t} = e^{-i \frac{\omega}{2}t} \ket{z e^{-i\omega t}}
+	\end{equation*}
+	
+	\item Finally, one more approach to finding the time evolution $ \ket{z, t} $ using the Heisenberg approach. We write $ \ket{z, t} $ in terms of the time evolution operator and use the earlier relationship between $ \ket{z} $ and $ \ket{0} $ via the creation operator $ a^{\dagger} $ to get
+	\begin{equation*}
+		\ket{z, t} = \tev \ket{z} = \tev\left( e^{-\frac{\abs{z}^{2}}{2}}e^{za^{\dagger}}\ket{0}\right) = e^{-\frac{\abs{z}^{2}}{2}}\tev e^{za^{\dagger}}\tevp \tev \ket{0}
+	\end{equation*}
+	The three terms $ \tev e^{za^{\dagger}} \tevp $, with the exponent written as a Taylor series, are
+	\begin{align*}
+		\tev e^{za^{\dagger}} \tevp &= \tev \left(\sum_{n}\frac{(za^{\dagger})^{n}}{n!}\right)\tevp = \sum_{n} \frac{z^{n}}{n!}\tev (a^{\dagger})^{n} \tevp\\
+		&= \sum_{n}\frac{z^{n}}{n!}\left[\tev a^{\dagger}\tevp \tev a^{\dagger}\tevp \cdots \tev a^{\dagger}\tevp\right]\\
+		&=\sum_{n}\frac{z^{n}}{n!}\left(\tev a^{\dagger}\tevp\right)^{n}
+	\end{align*}
+	Recall that in the Heisenberg approach the time evolution of an operator $ \mathcal{O} $ reads $  \mathcal{O}(t) = \tevp  \mathcal{O} \tev$. Applied to our above expression (note the reversed roles of the time evolution operators), we see
+	\begin{equation*}
+		\tev e^{za^{\dagger}} \tevp = \sum_{n}\frac{z^{n}}{n!}\big(a^{\dagger}(-t)\big)^{n} = e^{za^{\dagger}(-t)}
+	\end{equation*}
+	The initial expression for $ \ket{z, t} $ in the Heisenberg picture then simplifies to
+	\begin{equation*}
+		\ket{z, t} = e^{-\frac{\abs{z}^{2}}{2}}  e^{za^{\dagger}(-t)} \tev \ket{0} = e^{-\frac{\abs{z}^{2}}{2}}  e^{za^{\dagger}(-t)} e^{-i\frac{\omega}{2}t}\ket{0}
+	\end{equation*}
+	
+	\item Next, we find an expression for $ a^{\dagger}(-t) $. In the Heisenberg approach, this is
+	\begin{equation*}
+		a^{\dagger}(-t) = \tev a^{\dagger} \tevp = \left[\tev a \tevp\right]^{\dagger} = \big[a(-t)\big]^{\dagger}
+	\end{equation*}
+	Using the relationship $ a(t) = ae^{-i\omega t} $ from the previous exercise set, we finally have
+	\begin{equation*}
+		a^{\dagger}(-t) = \big[a(-t)\big]^{\dagger} = \left[ae^{i\omega t}\right]^{\dagger} = a^{\dagger}e^{-i\omega t}
+	\end{equation*}
+	Substituting the expression for $  a^{\dagger}(-t)  $ into the time evolution $ \ket{z, t} $ to get
+	\begin{equation*}
+		\ket{z, t} = e^{-\frac{\abs{z}^{2}}{2}}  e^{ze^{-i\omega t}a^{\dagger}} e^{-i\frac{\omega}{2}t}\ket{0} =  e^{-i\frac{\omega}{2}t} e^{-\frac{\abs{ze^{-i\omega t}}^{2}}{2}} e^{ze^{-i\omega t}a^{\dagger}}\ket{0}
+	\end{equation*}
+	Recall that, like before in the \schro approach, the equality $ \abs{z}^{2} = \abs{ze^{-i\omega t}}^{2}$ allows us to introduce the phase factor $ e^{-i\omega t} $ into the exponent of $ e^{-\frac{\abs{z}^{2}}{2}} $. Note the similarity between this last result for $ \ket{z, t} $ to the initial expression 
+	\begin{equation*}
+		\ket{z, t} = \tev e^{-\frac{\abs{z}^{2}}{2}}e^{za^{\dagger}}\ket{0}
+	\end{equation*}
+	Aside from the factor $ e^{-i\frac{\omega}{2}t} $, the expressions are the same, just with $ z $ shifted to $ ze^{-i\omega t} $. This allows us to write
+	\begin{equation*}
+		\ket{z, t} =  e^{-i\frac{\omega}{2}t} e^{-\frac{\abs{ze^{-i\omega t}}^{2}}{2}} e^{ze^{-i\omega t}a^{\dagger}}\ket{0} = e^{-i\frac{\omega}{2}t}\ket{ze^{-i\omega t}}
+	\end{equation*}
+	in agreement with the earlier result using the \schro approach. 
+	
+	\item Next, we want to get a better sense for the behavior of the wave function $ \ket{z, t} $. From the last exercise set, we know the following expressions for any state of quantum harmonic oscillator:
+	\begin{align*}
+		&\ev{x} = \sqrt{2}x_{0} \Re \ev{a} && \ev{p} = \sqrt{2} p_{0} \Im \ev{a}\\
+		&\ev{x^{2}} = x_{0}^{2}\big(\ev{a^{\dagger}a} + \Re \ev{a^{2}} \tfrac{1}{2}\big) && \ev{p^{2}} = p_{0}^{2}\big(\ev{a^{\dagger}a} - \Re \ev{a^{2}} \tfrac{1}{2}\big)
+	\end{align*}
+	Additionally, recall the eigenvalue equation $ a \ket{z} = \zeta \ket{z} $ for coherent states. Just for the time being (even though its not conventional), I've written the eigenvalue as $ \zeta $ instead of $ z $ to highlight the difference between the eigenstate $ \ket{z} $ and the eigenvalue $ \zeta $. Next
+	\begin{equation*}
+		\bra{z}(a^{\dagger})^{n}a^{m}\ket{z} = \braket{a^{n}z}{a^{m}z} = \braket{\zeta^{n}z}{\zeta^{m}z} = \zeta^{*^{n}}\zeta^{m}
+	\end{equation*}
+	We will use this expression to evaluate the expectation values of $ x $ and $ p $ above. 
+	
+	\item First, we will find the expectation value $ \ev{a} $. I will return to the standard notation of $ z $ for the eigenvalues of $ a $ acting on $ \ket{z} $. The expectation value of $ \ev{a} $ is
+	\begin{equation*}
+		\ev{a} = z^{*^{0}}z^{1} = 1 \cdot z^{1} = z
+	\end{equation*}
+	Using $ \ev{a} = z $, the expectation values of $ x $ and $ p $ are
+	\begin{equation*}
+		\ev{x} = \sqrt{2} x_{0}\Re z \eqtext{and} \ev{p} = \sqrt{2}p_{0}\Im z
+	\end{equation*}
+	To find $ \ev{x^{2}} $ and $ \ev{p^{2}} $, we first have to find $ \ev{a^{\dagger}a} $ and $ \ev{a^{2}} $. These are
+	\begin{equation*}
+		\ev{a^{\dagger}a} = \abs{z}^{2} \eqtext{and} \ev{a^{2}} = z^{2}
+	\end{equation*}
+	$ \ev{x^{2}} $ and $ \ev{p^{2}} $ are then
+	\begin{equation*}
+		\ev{x^{2}} = x_{0}^{2} \left(\abs{z}^{2} + \Re z^{2} + \tfrac{1}{2}\right) \eqtext{and} \ev{p^{2}} = p_{0}^{2}\left(\abs{z}^{2} - \Re z^{2} + \tfrac{1}{2}\right)
+	\end{equation*}
+	Next, note that $ \Re z^{2} = \frac{z^{2}+z^{*^{2}}}{2}  $. We then have
+	\begin{equation*}
+		\abs{z}^{2} + \Re z^{2} = \abs{z}^{2} + \frac{z^{2}+z^{*^{2}}}{2} = \frac{1}{2}\big(z + z^{*}\big)^{2} 
+	\end{equation*}
+	which, substituted into $ \ev{x^{2}} $, gives
+	\begin{equation*}
+		\ev{x^{2}} = x_{0}^{2}\left[\tfrac{1}{2}\big(z + z^{*}\big)^{2} + \tfrac{1}{2}\right] = x_{0}^{2}\left(2 \Re^{2}z + \tfrac{1}{2}\right)
+	\end{equation*}
+	a similar procedure for $ \ev{p^{2}} $ gives
+	\begin{equation*}
+		\ev{p^{2}} = p_{0}^{2}\left[-\tfrac{1}{2}\big(z-z^{*}\big) + \tfrac{1}{2}\right] = p_{0}^{2}\left(\tfrac{1}{2} + 2 \Im^{2}z\right)
+	\end{equation*}
+	
+	\item Next, the uncertainties $ \Delta x $ and $ \Delta p $ are
+	\begin{align*}
+		&\big(\Delta x\big)^{2} = \ev{x^{2}} - \ev{x}^{2} = x_{0}^{2}\left(2 \Re^{2}z + \tfrac{1}{2}\right) - \left(\sqrt{2}x_{0}\Re z\right)^{2} = \frac{x_{0}^{2}}{2}\\
+		&\big(\Delta p\big)^{2} = \ev{p^{2}} - \ev{p}^{2} = p_{0}^{2}\left(\tfrac{1}{2} + 2 \Im^{2}z\right) - \left(\sqrt{2}p_{0}\Im z\right)^{2} = \frac{p_{0}^{2}}{2}\\
+	\end{align*}
+	The product of uncertainties, recalling the definition $ p_{0} = \frac{\hbar}{x_{0}} $, is 
+	\begin{equation*}
+		\Delta x \Delta p = \sqrt{\frac{x_{0}^{2}}{2}\frac{p_{0}^{2}}{2}} = \frac{x_{0}p_{0}}{2} = \frac{\hbar}{2}
+	\end{equation*}
+	Note that the product of uncertainties takes the minimum possible value $ \frac{\hbar}{2} $, meaning a coherent state $ \ket{z} $ of the QHO must be a Gaussian wave packet. 
+	
+	\item Recall the general form of a Gaussian wave packet is
+	\begin{equation*}
+		\psi(x) = \frac{1}{\sqrt[4]{2\pi\sigma^{2}}}\exp(-\frac{(x-\ev{x})^{2}}{4\sigma^{2}})e^{i \frac{\ev{p}}{\hbar}x}
+	\end{equation*}
+	For the coherent state $ \ket{z} $, substituting in the values of $ \ev{x} $, $ \ev{p} $ and $ \sigma^{2} \equiv \ev{x^{2}} $, the Gaussian wave packet reads
+	\begin{equation*}
+		\psi_{z} = \frac{1}{\sqrt[4]{\pi x_{0}^{2}}}\exp\left[-\frac{\left(x-\sqrt{2}x_{0}\Re z\right)^{2}}{2x_{0}^{2}}\right]e^{i \frac{\sqrt{2}p_{0}\Im z}{\hbar}x}
+	\end{equation*}
+	
+	\item Finally, we will examine two more properties of the coherent states of a QHO: the expected values of the Hamiltonian $ H $. First, recall the Hamiltonian can be written in terms of $ a $ and $ a^{\dagger} $ as
+	\begin{equation*}
+		H = \hbar \omega\left(a^{\dagger}a + \tfrac{1}{2}\right)
+	\end{equation*}
+	We evaluate this with the help of the earlier identity $ 		\bra{z}(a^{\dagger})^{n}a^{m}\ket{z} = z^{*^{n}}z^{m} $, which I initially wrote the eigenvalues as $ \zeta $ in place of $ z $. Applied to $ a^{\dagger}a $, we have
+	\begin{equation*}
+		\ev{H} = \frac{\hbar \omega}{2} + \hbar \omega \ev{a^{\dagger}a} = \frac{\hbar \omega}{2} + \hbar \omega z^{*}z = \frac{\hbar \omega}{2} + \hbar \omega \abs{z}^{2}
+	\end{equation*}
+	For the expectation value $ \ev{H^{2}} $ we first write $ H $ in terms of $ a  $ and $ a^{\dagger} $: 
+	\begin{equation*}
+		H^{2} = \hbar^{2} \omega^{2}\left(a^{\dagger}aa^{\dagger}a + a^{\dagger}a + \tfrac{1}{4}\right)
+	\end{equation*}
+	To simplify $ a^{\dagger}aa^{\dagger}a $ we use the commutator identity
+	\begin{equation*}
+		\big[a^{\dagger}, a\big] = -1 \implies aa^{\dagger} = 1 + a^{\dagger}a
+	\end{equation*}
+	Substituting $ aa^{\dagger} = 1 + a^{\dagger}a $  into $ H^{2} $ and an intermediate step of algebra gives
+	\begin{equation*}
+		H^{2} = \hbar^{2} \omega^{2}\left(a^{\dagger^{2}}a^{2} + 2a^{\dagger}a + \tfrac{1}{4}\right)
+	\end{equation*}
+	We again use the earlier identity $ 		\bra{z}(a^{\dagger})^{n}a^{m}\ket{z} = z^{*^{n}}z^{m} $ to get
+	\begin{equation*}
+		\ev{H^{2}} = \hbar^{2} \omega^{2} \left(z^{*^{2}}z^{2} + 2z^{*}z + \tfrac{1}{4}\right) = \hbar^{2} \omega^{2} \left(\abs{z}^{4} + 2\abs{z}^{2} + \tfrac{1}{4}\right)
+	\end{equation*}
+	 energy uncertainty is
+	\begin{align*}
+		\big(\Delta H\big)^{2} &= \ev{H^{2}} - \ev{H}^{2} = \hbar^{2} \omega^{2} \left(\abs{z}^{4} + 2\abs{z}^{2} + \tfrac{1}{4}\right) - \left(\frac{\hbar \omega}{2} + \hbar \omega \abs{z}^{2}\right)^{2}\\
+		&= \hbar^{2}\omega^{2}\abs{z}^{2} \implies \Delta H = \hbar \omega \abs{z}
+	\end{align*}
+	
+	\item Next, note the ratio
+	\begin{equation*}
+		\frac{\Delta H}{\ev{H}} = \frac{\hbar \omega \abs{z}}{\hbar \omega \big(\abs{z}^{2} + \tfrac{1}{2}\big)} \approx \frac{1}{\abs{z}}, \quad \abs{z} \gg 1 \quad \implies \quad \lim_{\abs{z} \to \infty} \frac{\Delta H}{\ev{H}} = 0
+	\end{equation*}
+	In other words, the relative uncertainty in energy $ \frac{\Delta H}{\ev{H}} $ approaches zero for large $ \abs{z} $. 
+	
+	We want a better understanding of what  $ \abs{z} \gg 1 $ means. To do this, we first examine the earlier expressions for a QHO coherent state:
+	\begin{equation*}
+		\ev{x} = \sqrt{2}x_{0}\Re z \eqtext{and} \ev{x, t} = \sqrt{2}x_{0}\Re \left\{ze^{-i\omega t}\right\}
+	\end{equation*}
+	If we write the complex number $ z $ in the polar form $ z = \abs{z}e^{i\delta} $, $ \ev{x, t}  $ becomes
+	\begin{equation*}
+		\ev{x, t}  =  \sqrt{2}x_{0}\Re \left\{ze^{i\delta -i\omega t}\right\} = \sqrt{2}x_{0}\abs{z}\cos(\omega t - \delta  )
+	\end{equation*}
+	In other words, large $ \abs{z} $ means a large amplitude of oscillation in the time-dependent expectation value $ \ev{x, t} $. 
+	
+\end{itemize}
+
+\textbf{Returning to the QHO in an Electric Field}
+\begin{itemize}
+	\item Recall
+	\begin{equation*}
+		\tilde{a} \ket{\psi, 0} = - \frac{x_{1}}{\sqrt{2}x_{0}} \ket{\psi, 0}, \qquad x_{1} = \frac{q\mathcal{E}}{k}, \quad \tilde{a} = a - \frac{x_{1}}{\sqrt{2}x_{0}}
+	\end{equation*}
+	So: our initial state $ \ket{\psi, 0} $ is an eigenstate of the annihilation operator (i.e. a coherent state) with eigenvalue $ z = - \frac{x_{1}}{\sqrt{2}x_{0}} $. We know time evolution of a coherent state is still a coherent state from the theory section above via the relationship
+	\begin{equation*}
+		\ket{\psi, t} = e^{-\frac{\omega}{2}t}\ket{ze^{-i\omega t}}
+	\end{equation*}
+	where the eigenvalue $ z $ changes with time as $ 	z(t) = ze^{-i\omega t} $. 
+	
+	\item The time-dependent expectation value of the shifted position $ \tilde{x} $ is then
+	\begin{equation*}
+		\ev{\tilde{x}, t} = \sqrt{2}x_{0}\Re z(t) = \sqrt{2}x_{0}\Re \left\{- \frac{x_{1}}{\sqrt{2}x_{0}}e^{-i\omega t}\right\} = - x_{1} \cos \omega t
+	\end{equation*}
+	The unshifted position is $ x = x_{1} + \tilde{x} $, which implies
+	\begin{equation*}
+		\ev{x, t} = x_{1} - x_{1}\cos \omega t = x_{1}(1 - \cos \omega t)
+	\end{equation*}
+	in agreement with the classical result $ x(t) = x_{1}(1 - \cos \omega t) $. 
+\end{itemize}
+
+
+\end{document}

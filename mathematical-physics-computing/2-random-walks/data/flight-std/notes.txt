@@ -1,0 +1,3 @@
+Standard deviation of 2*ln[MAD(r)] for a large number of flight simulations. Flight parameters below.
+Used to determine error of 2*ln[MAD(r)] when fitting exponent gamma
+Parameters: 100 flights per simulation, 1000 steps per flight, $ \phi_{\text{min}} = 0 $, $ \phi_{\text{min}} = 2\pi $, $ l_{\text{min}} = 10^{-5} $, $ l_{\text{max}} = 10^{25} $.

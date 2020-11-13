@@ -1,0 +1,116 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[english]{babel}
+\usepackage{mwe}
+\usepackage{graphicx}
+\usepackage{siunitx} % for ranges and scientific notation
+\usepackage{amsmath} % for general math things
+\usepackage{amssymb} % for the real and complex number symbols
+\usepackage{siunitx} % for scientific notation
+\usepackage{bm} % for bold vectors in math mode
+\usepackage{mathtools} % for defined equals := symbol
+\usepackage{physics} % for differential notation
+\newcommand*\diff{\mathop{}\!\mathrm{d}} % for differentials to not be italicized and have a little space
+\setlength{\parindent}{0pt} % to stop indenting new paragraphs
+
+\usepackage[hidelinks]{hyperref}
+
+\begin{document}
+	\title{Statistical Thermodynamics 3rd Homework Assignment}
+	\author{Elijan Mastnak}
+	\date{\today}
+	\maketitle
+	
+\textit{The lattice oscillation in a two dimensional solid is described by the Debye model. Determine the Debye frequency if the speed of sound in the solid is $ \SI{2800}{m/s} $, the number density of the constituent atoms is $ \SI{2e20}{m^{-2}} $, and the sound has two degrees of polarization. What is the contribution of the lattice oscillations to the specific heat of the two-dimensional solid at a temperature of $ \SI{3}{K} $? What is the deviation of the specific heat from the high temperature limit at $ \SI{1800}{K} $?}
+
+\subsubsection*{Problem Set-Up}
+We view the solid as a two-dimensional crystal lattice composed of a large number of quantum harmonic oscillators, where the energy of the $ i $th oscillator is given by $ E_i = \hbar \omega_i $. Since we are studying sound, the relevant particles are phonons; since phonons are virtual particles, their chemical potential is zero. In two dimensions, sound has $ \mathcal{P} = $ 2 degrees of polarization and is described by the dispersion relation $ \omega = ck $.
+
+\subsubsection*{Deriving Density of States}
+The phase space $ \Gamma $ consists of position and momentum components; the integral over the position components evaluates to the area $ A $ of the solid.
+\begin{align*}
+	\sum_{i} &\to \mathcal{P} \int \frac{\diff \Gamma}{h^2} = 2 \int \frac{\diff^2 p \diff^2 r}{h^2} = \mathcal{P} A \int \frac{\diff^2 p}{h^2} = \mathcal{P} A \int \frac{\hbar^2 \diff^2 k}{h^2} \\[1.0ex]
+	&= \mathcal{P} A \int \frac{2\pi k \diff k}{(2\pi)^2} = \frac{ \mathcal{P} A }{2\pi}\int  k \diff k = \frac{ \mathcal{P} A }{2\pi}\int  \frac{w}{c^2} \diff \omega
+\end{align*}
+The resulting density of states function is 
+\begin{equation*}
+	g(\omega) = \frac{ \mathcal{P} A }{2\pi}  \frac{w}{c^2} = \frac{ A \omega }{\pi c^2} 
+\end{equation*}
+when evaluated for $ \mathcal{P} = 2 $. 
+\subsubsection*{Deriving 2D Debye Frequency}
+The Debye frequency $ \omega_D $ is the upper limit to the frequency of vibration in the solid. Assuming are $ N $ particles in the two-dimensional solid, there are $ 2N $ quantum harmonic oscillators over the frequency range $ 0 $ to $ \omega_D $. This gives the relationship:
+\begin{align*}
+	&2N = \int_{0}^{\omega_D} g(\omega) \diff \omega = \int_{0}^{\omega_D} \frac{ \mathcal{P} A }{2\pi}  \frac{w}{c^2}  \diff \omega = \frac{ \mathcal{P} A }{4\pi}  \frac{w_D^2}{c^2} \\[1.0ex]
+	&\omega_D = \sqrt{\frac{8\pi}{\mathcal{P}} \frac{N}{A}}c = 2c\sqrt{\pi \frac{N }{A}} = 2 \left(\SI{2800}{m/s}\right) \sqrt{\pi \left(\SI{2e20}{m^{-2}}\right)}\\[1.0ex]
+	&= \boxed{\SI{1.40e14}{Hz}} \iff \nu_D = \frac{\omega_D}{2\pi} = \boxed{\SI{2.23e13}{Hz}} 
+\end{align*}
+The corresponding Debye temperature is 
+\begin{equation*}
+	T_D = \frac{\hbar \omega_D}{k_B} = \frac{(\SI{1.051e-35}{J\cdot s}) ( \SI{1.40e14}{Hz} )}{(\SI{1.38e-23}{J\cdot K^{-1}})} \approx \boxed{\SI{107}{K}}
+\end{equation*}
+\subsubsection*{Average Energy and Heat Capacity}
+Phonons are described by a Bose-Einstein distribution with chemical potential $ \mu $ equal to zero. The expected number $ \expval{n_i} $ of particles occupying an energy state $ E_i $ is thus given by
+\begin{equation*}
+	\expval{n_i}(E_i) = \frac{1}{e^{\beta E_i} - 1} \qquad \text{or} \qquad \expval{n_i}(\omega_i) = \frac{1}{e^{\beta \hbar \omega_i} - 1}
+\end{equation*}
+where $ \beta = \frac{1}{k_B T} $. In terms of the Bose-Einstein distribution and density of states, the average energy $ \expval{E} $ of the system is:
+\begin{align}
+	\expval{E} &= \int_{0}^{\omega_D} [g(\omega)] [\expval{n}(\omega)] [E(\omega)] \diff \omega = \int_{0}^{\omega_D}  \left[ \frac{ A \omega }{\pi c^2} \right] \left[ \frac{1}{e^{\beta \hbar \omega} - 1}\right] \hbar \omega \diff \omega \nonumber \\[1.0ex]
+	&= \frac{A\hbar}{\pi c^2} 	\int_{0}^{\omega_D} \frac{\omega^2}{e^{\beta \hbar \omega} - 1} \diff \omega = \frac{A\hbar}{\pi c^2} \frac{1}{\beta^3 \hbar^3}	\int_{0}^{u_D} \frac{u^2}{e^{u} - 1} \diff u \nonumber \\[1.0ex]
+	& = \frac{A}{\pi} \frac{k_B^3 T^3}{c^2 \hbar^2}	\int_{0}^{u_D} \frac{u^2}{e^{u} - 1} \diff u \label{eq:avg_energy}
+\end{align}
+where $ u = \beta \hbar \omega $. 
+
+\subsubsection*{Low Temperature Heat Capacity}
+Because $ T = \SI{3}{K}$ is significantly less than the Debye temperature $ T_D = \SI{107}{K} $, we can safely operate in the low-temperature limit with $ u_D \to \infty $ as the upper limit of integration. In this case, we can directly evaluate the integral in Equation \ref{eq:avg_energy} using the tabulated value
+\begin{equation*}
+	\int_{0}^{u_D} \frac{u^2}{e^{u} - 1} \diff u \approx 2.404
+\end{equation*}
+The resulting expressions for $ \expval{E} $ and $ C $, respectively, are:
+\begin{align*}
+	&\expval{E} = 2.404 \left(\frac{A}{\pi} \frac{k_B^3 T^3}{c^2 \hbar^2} \right) \\[1.0ex]
+	&C = \dv{\expval{E}}{T} =  7.212 \left(\frac{A}{\pi} \frac{k_B^3 T^2}{c^2 \hbar^2} \right) 
+\end{align*}
+Note that the low-temperature heat capacity is proportional to $ T^2 $, not $ T^3 $ as in the three-dimensional Debye model. Although we do not know the area $ A $ of the solid explicitly, we can calculate the specific heat capacity $ c = \frac{C}{N} $ with the given number density. The resulting value is
+\begin{align*}
+	c &= \frac{C}{N} =  7.212 \left(\frac{A}{N}\right) \left(\frac{k_B^3 T^2}{\pi c^2 \hbar^2} \right) \\[1.0ex]
+	&= 7.212 \left(\frac{1}{\SI{2e20}{m^{-2}}}\right) \left(\frac{\left(\SI{1.38e-23}{J\cdot K^{-1}}\right)^3 (\SI{3}{K})^2}{\pi \left(\SI{2800}{m/s}\right)^2 \left(\SI{1.051e-35}{J\cdot s}\right)^2}\right)\\[1.0ex]
+	&= \boxed{\SI{2.28e-2}{J/K}}
+\end{align*}
+
+\subsubsection*{Deviation from High-Temperature Heat Capacity}
+First, we find the upper-temperature limit, then calculate the deviation from the limit with an appropriate Taylor series expansion. As $ T \to \infty $, the upper limit of integration $ u_D $ in Equation \ref{eq:avg_energy} approaches zero. If we define
+\begin{equation*}
+	f(x) \coloneqq \frac{x^2}{e^x - 1}
+\end{equation*}
+we get (using a mathematics engine such as Wolfram Mathematica) the Taylor series coefficients 
+\begin{align*}
+	&a_0 = \lim_{x \to 0} f(x) = 0 && a_1 =\lim_{x \to 0} f'(x) = 1\\
+	&a_2 = \lim_{x \to 0} f''(x) = 1 && a_3 = \lim_{x \to 0} f'''(x) = \frac{1}{2}
+\end{align*}
+These coefficients give the third-order Taylor series expansion about $ x = 0 $
+\begin{equation*}
+	f(x) \approx a_0 + a_1 x + a_2 \frac{x^2}{2} + a_3 \frac{x^3}{6} = x - \frac{x^2}{2} + \frac{x^3}{12}
+\end{equation*}
+Applying this expansion to our to our expression for $ \expval{E} $ in Equation \ref{eq:avg_energy}, we get:
+\begin{align*}
+	 \expval{E} &\approx \frac{A}{\pi} \frac{k_B^3 T^3}{c^2 \hbar^2} \int_{0}^{u_D} \left(u - \frac{u^2}{2} + \frac{u^3}{12}\right) \diff u = \frac{A}{\pi} \frac{k_B^3 T^3}{c^2 \hbar^2} \left(\frac{u_D^2}{2} - \frac{u_D^3}{6} + \frac{u_D^4}{48}\right)\\[1.0ex]
+	 &= \frac{A}{\pi} \frac{k_B^3 T^3}{c^2 \hbar^2}\frac{u_D^2}{2} \left(1 - \frac{u_D}{3} + \frac{u_D^2}{24}\right)
+\end{align*}
+Plugging in the definitions $ u_D = \beta \hbar \omega_D $ and $ \omega_D =  2c\sqrt{\pi \frac{N }{A}} $ results in
+\begin{align*}
+	&\expval{E} \approx 2k_B T N\left(1 - \frac{\hbar \omega_D}{3k_B T} + \frac{1}{24}\left(\frac{\hbar \omega_D}{k_B T}\right)^2\right)\\[1.0ex]
+	&C = 2k_B N \left(1 - \frac{1}{24}\left(\frac{\hbar \omega_D}{k_B T}\right)^2\right) \\[1.0ex]
+	&c = \frac{C}{N}=  2k_B \left(1 - \frac{1}{24}\left(\frac{\hbar \omega_D}{k_B T}\right)^2\right)
+\end{align*}
+The high temperature limits are $ C = 2k_B N $ and $ c = 2k_B $, which can be interpreted as two-dimensional analogs of the law of Dulong and Petit, while the second-order term is the deviation $ \Delta c $ from the limit. Plugging in values with $ T = \SI{1800}{K} $ gives a deviation of
+\begin{align*}
+	\Delta c &= \frac{k_B}{12}\left(\frac{\hbar \omega_D}{k_B T}\right)^2 = \frac{k_B}{12}\left(\frac{(\SI{1.051e-35}{J\cdot s}) (\SI{1.40e14}{s^{-1}})}{(\SI{1.38e-23}{J\cdot K^{-1}}) \left(\SI{1800}{K} \right)}\right)^2\\[1.0ex]
+	&= \left(\SI{2.92e-4}{}\right)k_B\\[1.0ex]
+	& =\boxed{ \SI{4.035e-27}{J/K}}
+\end{align*}
+
+%(\SI{1.38e-23}{J\cdot K^{-1}})
+\end{document}
+
+
+

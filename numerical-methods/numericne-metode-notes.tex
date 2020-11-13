@@ -1,0 +1,1853 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{mwe}
+\usepackage[margin=3.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{bm} % for bold vectors in math mode
+\usepackage{physics} % many useful physics commands
+\usepackage[separate-uncertainty=true]{siunitx} % for scientific notation and units
+\usepackage{xcolor}  % to color hyperref links
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+
+\setlength{\parindent}{0pt} % to stop indenting new paragraphs
+\newcommand{\eqtext}[1]{\qquad \text{#1} \qquad}
+
+\newcommand{\diff}{\mathop{}\!\mathrm{d}} % differential
+
+\newcommand{\R}{\mathbb{R}} % shorthand for the real numbers
+\newcommand{\C}{\mathbb{C}} % shorthand for the complex numbers
+%\newcommand{\mat{R}}{\mathbf{R}} % shorthand for matrix
+\newcommand{\mat}[1]{\mathbf{#1}} % shorthand for matrices
+
+\pdfinfo{
+	/Title (Numericne Metode Notes)
+	/Author (Elijan Mastnak)
+	/Subject (Mathematics)
+}
+
+
+
+\begin{document}
+\title{Numerical Methods Lecture Notes}
+\author{Elijan Mastnak}
+\date{2019-2020 Summer Semester}
+\maketitle
+
+\begin{center}
+\textbf{About These Notes}
+\end{center}
+These are my lecture notes from the lecture portion of the course \textit{Numeri\v{c}ne Metode} (Numerical Methods), an introductory-level elective course offered to second-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. The exact material herein is specific to the physics program at the University of Ljubljana, but the content is fairly standard for an introductory numerical methods course. I am making the notes publicly available in the hope that they might help others learning the same material.
+
+\vspace{2mm}
+\textit{Note}: For easier document navigation, the table of contents is ``clickable'', meaning you can jump directly to a section by clicking the section name in the table of contents.
+
+\vspace{2mm}
+\textit{On Authorship:} These lecture were given by Professor Emil \v{Z}agar, who accordingly deserves credit for the content herein. I have merely typeset the notes and provided additional comments where I saw fit.
+
+% If applicable: The lecture notes for the course (in Slovene) can be found as of \today \href{URL}{this website}.
+
+\vspace{2mm}
+\textit{Disclaimer:} Mistakes---both trivial typos and---are likely. Keep in mind that these are the notes of an undergraduate student in the process of learning the material himself---take what you read with a grain of salt. If you find mistakes and feel like telling me, by Github pull request, email or some other means, I'll be happy to hear from you, even for the most trivial of errors.
+
+
+
+\tableofcontents
+
+\newpage
+
+\section{Introduction and Linear Algebra Review}
+
+\subsection{Quick Summary of Floating Point Numbers}
+\begin{itemize}
+	\item In numerical calculations, floating point numbers are represented $ x = \pm s b^{e} $
+	\begin{itemize}
+		\item $ b \in \mathbb{N}$ is the \textit{base}. $ b = 2 $ in the binary system used by computers.
+		\item $ s $ is the \textit{significand} (aka \textit{mantissa}) and contains the number's significant figures. The maximum number of digits in the significand is the precision $ p $.
+
+		\item $ e $ is the exponent, an integer value. $ e \in \{L, L+1, \dots, U-1, U \} $
+		
+		\item $ L $ and $ U $ are the smallest (lower) and largest (upper) possible values of the exponent $ e $. $ L $ and $ U $ are integer numbers.
+	\end{itemize}
+	
+	\item A number system's format is concisely written $ P(b, p, L, U) $. 
+	
+	Double precision: Numbers are represented with $ 64 $ bits. $ p = 53 $, encompassing about 16 decimal digits. In the IEEE 754 standard, sign is one bit, $ e $ is $ 11 $ bits, and $ s $ is $ 52 $ bits. $ e $ ranges from $ -1024 $ to $ 1023 $ (signed) or from $ 0 $ to $ 2047 $ (unsigned).
+	
+	Single precision: Numbers are represented with $ 32 $ bits.	$ p = 24 $, encompassing about $ 7 $ decimal digits. Sign is one bit, the $ s $ is $ 23 $ bits, and $ e $ is 8 bits.
+	
+	\item Bound on floating point error: For $ x \in \R $, $ \operatorname{float}(x) = x(1 + \delta), \quad \abs{\delta} \leq \frac{1}{2} b^{1-p} $
+\end{itemize}
+
+
+
+\subsection{Review of Linear Algebra Basics}
+Some concepts from linear algebra we need for later:
+\subsubsection{Matrices}
+\begin{itemize}
+	\item Matrices are two-dimensional grids of numbers with $ m $ rows and $ n $ columns. A real-valued $ m \cross n $ matrix is written $ \mat{A} \in \R^{m\cross n} $. 
+	
+	Matrices are defined element-wise in the form 
+	\begin{equation*}
+		 \mat{A} = [\mathrm{A}_{ij}],  i \in \{1, 2, \dots, m\}, j \in \{1,2, \dots, n\} 
+	\end{equation*}
+	Matrices may also be defined as a collection of $ n $  $ m \cross 1 $ column vectors $ \bm{a}_i \in \R^{m} $.
+	\begin{align*}
+		\mat{A} = [\bm{a}_1 \ \bm{a}_2 \ \cdots \ \bm{a}_n]
+	\end{align*}
+	
+	\item Matrix multiplication: The matrices $ \mat{A} \in \R^{m_{a} \cross n_{a}}$ and $ \mathbf{B} \in \R^{m_{b} \cross n_{b}} $ can be multiplied only if $ n_{a} = m_{b} $, i.e. if $ \mat{A} $ has the same number of columns as $ \mathbf{B} $ has rows. In this case, the product $ \mat{C} = \mat{A} \mat{B} \in \R^{m_{a} \cross n_{b}} $ has $ m_{a} $ rows and $ n_{b} $ columns.
+	
+	\item Multiplying a matrix $ \mathbf{A} $ by a vector $ \bm{b} $ may be thought of as a linear combination of $ \mat{A} $'s column vectors where the coefficients are the elements of $ \bm{b} $.
+	\begin{equation*}
+		\mat{A} \bm{b} = b_1 \bm{a}_1 + b_2 \bm{a}_2 + \cdots + b_n \bm{a}_n
+	\end{equation*}
+	
+	\item Some matrix properties:
+	\begin{itemize}
+		\item A matrix is \textit{singular} if its determinant is zero. A matrix is \textit{non-singular} if its determinant is non-zero.
+		
+		\item $ \mat{A} \in \R^{n \cross n} $ is \textit{symmetric} if $ \mat{A} = \mat{A}^{T} $. Symmetric matrices have all real eigenvalues.
+		
+		\item  $ \mat{A} \in \R^{n \cross n} $ is \textit{positive definite} if $ \bm{x}^{T} \mat{A} \bm{x} \geq 0 $ for all $ \bm{x} \in \R^{n} $. Equivalently, $ \mat{A} $ is positive definite if it has all positive eigenvalues.
+		
+		\item A matrix is \textit{row diagonally dominant} if, for every row in the matrix, the absolute value of the diagonal entry in the row is larger than or equal to the absolute value sum of other elements in the row. In equation form:
+		\begin{equation*}
+			\abs{a_{ii}} \geq \sum_{j \neq i} \abs{a_{ij}} \quad \text{for all } i \iff 	\mat{A} \in \R^{m \cross n} \text{ row diagonally dominant } 
+		\end{equation*}
+				
+		\item A matrix is \textit{column diagonally dominant} if, for every column in the matrix, the absolute value of the diagonal entry in the column is larger than or equal to the absolute value sum of other elements in the column. 
+		\begin{equation*}
+	 		\abs{a_{jj}} \geq \sum_{i \neq j} \abs{a_{ij}} \quad \text{for all } j \iff 	\mat{A} \in \R^{m\cross n} \text{ column diagonally dominant } 
+		\end{equation*}
+
+	\end{itemize}
+
+	
+	
+\end{itemize}
+
+
+\subsubsection{Vector Norms}
+\begin{itemize}
+	\item Vector norms are a way to quantify the ``size'' of a vector. Formally, a vector norm is a function $ \norm{\cdot}: \R^{n \cross 1} \to \R^{+} $ mapping vectors to the positive real numbers. 
+	
+	\item Vector norms satisfy the following three properties for all vectors $ \bm{x}, \bm{y} \in \R^{n} $
+	\begin{enumerate}
+		\item Positive definiteness: $\norm{\bm{x}} \geq 0 $ and $  \norm{\bm{x}} = 0 \iff \bm{x} = \bm{0}$
+		\item Homogeneity/scalability: $ \norm{\alpha \bm{x}} = \abs{\alpha} \norm{\bm{x}}$
+		\item Triangle inequality (subadditivity): $\norm{\bm{x} + \bm{y}} \leq \norm{\bm{x}} + \norm{\bm{y}} $
+	\end{enumerate}
+	
+	\item Three important vector norms are:
+	\begin{enumerate}
+		\item The Euclidean norm $ \displaystyle{\norm{\bm{x}}}_2 = \sqrt{\sum_{i = 1}^{n}\abs{x_i}^2}  $, the intuitive distance between two points in Euclidean space.
+		
+		\item The one-norm $ \displaystyle{\norm{\bm{x}}}_1 = \sum_{i = 1}^{n}\abs{x_i}  $, the absolute value sum of $ \bm{x} $'s components. 
+				
+		\item The infinity-norm $ \displaystyle{\norm{\bm{x}}}_\infty = \max_{i= 1}^{n} \abs{x_i} $, the largest component by absolute value.
+		
+	\end{enumerate}
+	
+\end{itemize}
+
+\subsubsection{Matrix Norms}
+\begin{itemize}
+	\item Matrix norms are a way to quantify the ``size'' of a matrix. Formally, a matrix norm is a function $ \norm{\cdot }: \R^{m \cross n} \to \R^{+} $ mapping matrices to the positive real numbers.
+	
+	\item Matrix norms satisfy the following properties for all matrices $ \mat{A}, \mathbf{B} \in \R^{m \cross n}$
+	\begin{enumerate}
+		\item $\norm{\mat{A}} \geq 0 \quad $
+		\item $ \norm{\mat{A}} = 0 \iff \mat{A} = \bm{0}$
+		\item $ \norm{\alpha \mat{A}} = \alpha \norm{\mat{A}}$
+		\item $ \norm{\mat{A} + \mathbf{B}} \leq \norm{\mat{A}} + \norm{\mathbf{B}}$ 
+		\item Additionally, for square matrices, $ \norm{\mat{A} \mathbf{B}} \leq \norm{\mat{A}} \norm{\mathbf{B}} $ (sub-multiplicative)
+	\end{enumerate}
+	
+	\item  Four important matrix norms are:
+	\begin{enumerate}
+		\item The $ 2 $-norm $ \displaystyle{\norm{\mat{A}}}_2 =  \max_{i} \sqrt{\lambda_i \in  \operatorname{eig}( \mat{A}^{T}\mat{A} )} $, the square root of the matrix $ \mat{A}^{T}\mat{A} $'s largest eigenvalue.
+		
+		\item The $ 1 $-norm $ \displaystyle{\norm{\mat{A}}_1 = \max_{1\leq j \leq n} \sum_{i=1}^{m}\abs{a_{ij}}}$, $ \mat{A} $'s largest absolute value column sum.
+	
+		\item The $ \infty $-norm $ \displaystyle{\norm{\mat{A}}_\infty \max_{1\leq i \leq m} \sum_{j=1}^{n}\abs{a_{ij}}} $,$ \mat{A} $'s largest absolute value row sum.
+		
+		\item The Frobenius or $ F $-norm $ \displaystyle{\norm{\mat{A}}_F = \sqrt{\sum_{i=1}^{m} \sum_{j=1}^{n} \abs{a_{ij}}^2 } = \sqrt{\tr (\mat{A}^{{}^{*}} \mat{A })}}$, the square root of the sum of the squares of every element in $ \mat{A} $.
+	\end{enumerate}
+\end{itemize}
+
+
+\subsubsection{Determinant}
+Every square matrix $ \mat{A} \in \R^{n \cross n} $ has an associated scalar value called the determinant, denoted by $ \det \mat{A} $. Some useful properties are:
+\begin{itemize}
+	\item The determinant of a diagonal matrix (including upper and lower diagonal matrices) is the product of the diagonal terms
+	
+	\item The determinant of the identity matrix $ \mathbf{I} $ is one. Each switch of $ \mathbf{I} $'s rows or columns multiplies the determinant of the resulting matrix by one.
+\end{itemize}
+
+
+
+\section{Systems of Linear Equations}
+
+\subsection{Introduction}
+
+\subsubsection{Convention for Linear Systems of Equations}
+\begin{itemize}
+	\item In matrix form, a system of $ m $ linear equations with $ n $ unknowns is written
+	\begin{equation*}
+		\mat{A} \bm{x} = \bm{b}
+	\end{equation*}
+	where $ \mat{A} \in \R^{m \cross n}, \bm{x} \in \R^{n \cross 1}, $ and  $\bm{b} \in \R^{m \cross 1} $. In general, a system of linear equations can have $ 0, 1 $, or infinite solutions.
+		
+	In general, the goal is: given the matrix $ \mat{A} $ and the column vector $ \bm{b} $, find the column vector $ \bm{x} $ satisfying the equation $ \mat{A} \bm{x} = \bm{b} $.
+
+	
+	\item For the majority of this course, we consider only the case $ m = n $, corresponding to the same number of equations and unknowns. In this case $ \mat{A} \in \R^{n \cross n} $ and $ \bm{x}, \bm{b} \in \R^{n \cross 1}$, and the corresponding system of $ n $ equations for $ n $ unknowns has a unique solution if  $ \rank \mat{A} = \rank[\mat{A} + \bm{b}] $.
+	
+\end{itemize}
+
+
+
+
+\subsubsection{Condition Number}
+\begin{itemize}
+	\item Every matrix has an associated condition number $ \kappa \geq 1 $ measuring the matrix's tendency to propagate error resulting from numerical calculations.
+	
+	\item A matrix's condition number is defined as $ \kappa(\mat{A}) = \norm{\mat{A}} \norm{\mat{A}^{-1}} $.  
+	
+	\item $ \kappa \geq 1 $ for all matrices, and is equal to 1 for the identity matrix. The definition holds for any norm satisfying $ \kappa(\mat{A}) = \norm{\mat{A}} \norm{\mat{A}^{-1}} \geq \norm{\mat{A}\mat{A}^{-1}} = \norm{\mat{I}} = 1 $.
+	
+	\item In general, the more a matrix's columns are linearly dependent, the larger the matrix's condition number.
+	
+	\item \textbf{Bound for Error:} For a system of linear equations $ \mat{A} \bm{x} = \bm{b} $
+	\begin{equation*}
+		\frac{\norm{\delta \bm{x}}}{\norm{\bm{x}}} \leq \Bigg(\frac{\kappa(\mat{A})}{1 - \kappa(\mat{A}) \frac{\norm{\delta \mat{A}}}{\norm{\mat{A}}}}\Bigg) \left(\frac{\norm{\delta \mat{A}}}{\norm{\mat{A}}} + 	\frac{\norm{\delta \bm{b}}}{\norm{\bm{b}}}\right)
+	\end{equation*}
+	Interpretation: For a system of linear equations, the matrix $ \mat{A} $'s condition number relates small variations in the matrix $\mat{A} $ and vector $ \bm{b} $ to the resulting changes in the solution $ \bm{x} $. 
+	
+\end{itemize}
+
+
+
+
+\subsubsection{Upper and Lower Triangular Systems}
+\begin{itemize}
+	\item A \textit{lower triangular system} is a matrix equation of the form 
+	\begin{align*}
+	 	\mat{L} \bm{x} = \bm{b}
+	\end{align*}
+	where $ \mat{L} $ is a $ n \cross n $ non-singular lower-triangular matrix with elements $ l_{ij} $.
+
+	An \textit{upper triangular system} is a matrix equation of the form
+	\begin{align*}
+		 \mat{U} \bm{x} = \bm{b}
+	\end{align*}
+	where $ \mat{U} $ is a $ n \cross n $ non-singular upper-triangular matrix with elements $ u_{ij} $.
+	
+	\item Lower triangular system are solved with the method of \textit{forward substitution}, which takes advantage of the matrix $ \mat{L} $'s lower triangular shape. To solve the system $ \mat{L} \bm{x} = \bm{b} $, working from $ \mat{L} $'s top row to bottom, we find the $ i $th component $ x_i $ with the algorithm:
+	\begin{equation*}
+		x_i = \frac{1}{\operatorname{L}_{ii}} \left(b_i - \sum_{j = 1}^{i-1} \operatorname{L}_{ij} x_j\right)
+	\end{equation*}
+	The computational complexity is $ \mathcal{O}(n^2) $.
+	
+	\item Upper triangular system are solved with the method of \textit{back substitution}, which takes advantage of the matrix $ \mat{U} $'s upper triangular shape. To solve the system $ \mat{U} \bm{x} = \bm{b} $, working from $ \mat{U} $'s bottom row to top, we find the $ i $th component $ x_i $ with the algorithm:
+	\begin{equation*}
+		x_i = \frac{1}{\operatorname{U}_{ii}} \left(b_i - \sum_{j = i + 1}^{n} \operatorname{U}_{ij} x_j\right)
+	\end{equation*}
+	The computational complexity is $ \mathcal{O}(n^2) $
+
+\end{itemize}
+
+\subsection{LU Decomposition}
+LU decomposition is the process of decomposing an arbitrary matrix $ \mat{A} \in \R^{m \cross n} $ into a product of a lower triangular and upper triangular matrix; these are easier to work with than the original matrix. Although in principle LU decomposition works with arbitrary matrices, this document considers only square matrices.
+
+\subsubsection{LU Decomposition without Pivoting}
+\begin{itemize}
+	\item A matrix $ \mat{A} \in \R^{n \cross n}$ has an \textit{LU decomposition} if it can be written in the form $ \mat{A} = \mat{L} \mat{U} $ where $ \mat{L} $ and $ \mat{U} $ are lower and upper-triangular matrices, respectively.
+	
+	\item A square matrix $ \mat{A} \in \R^{n \cross n} $ has a unique LU decomposition, if and only if, all of its leading principle minors are nonzero. In symbols:
+	\begin{equation*}
+		\mat{A} = \mat{L}\mat{U} \iff \det \text{sub}_{ i i}[\mat{A}] \neq 0 \quad \text{for all } i = 1, 2, \dots, n
+	\end{equation*}
+	\textit{Interpretation:} The condition ensures no zeros occur along $ \mat{A} $'s main diagonal at any step in the decomposition process. An equivalent condition to non-zero leading principle minors is strict diagonal dominance.
+	
+	\item Assuming the LU decomposition exists, it is found using \textit{LU decomposition without pivoting} algorithm. 
+	
+	\textbf{Algorithm}: For a matrix $ \mat{A} \in \mat{R}^{n \cross n} $ with an LU decomposition, let $ \mat{A}^{(j)} $ be the matrix $ \mat{A} $ on the algorithm's $ j $th iteration. Start with $ j = 1 $ and $ \mat{A}^{(j)} = \mat{A} $.
+	\begin{enumerate}
+		
+		\item Perform row subtraction on the rows $ j + 1 $ to $ n $ of $ \mat{A}^{(j)} $ to make the $ j $th column have zeros in the rows $ j+1 $ to $ n $. \textit{Record the row subtraction coefficient in the matrix $ \mat{L} $ by writing each row subtraction coefficient in corresponding row of the $ j $th column.}
+		
+		The coefficients are $ \alpha_{k} $ satisfying $ \mat{A}^{(j)}_{k, j} - \alpha \mat{A}^{(j)}_{j, j}= 0 $ where $ k \in [j+1, n] $.
+		
+		In human language: perform row subtraction but only on the principle sub-matrix of size $ (n - j + 1) \cross (n - j + 1) $. On the first iteration $ j = 1 $ this is the full $ n \cross n $ matrix, on the second iteration $ j = 2 $, the principle sub-matrix of size $ (n-1) \cross (n-1) $ and so on. The row subtraction coefficient is the number you multiplied the top row by to make the target row vanish. 
+		
+		\item Increment $ j $ by one and repeat the algorithm, using the matrix from the previous step as $ \mat{A}^{(j+1)} $.
+	\end{enumerate}
+	\textit{To finish:} The matrix $ \mat{L} $ has ones on its main diagonal, and its lower non-zero elements are the row-subtraction coefficients recorded in the last iteration $ \mat{A}^{(n-1)} $. The matrix $ \mat{U} $ has upper non-zero elements matching the upper non-zero elements of $ \mat{A}^{(n-1)} $. The algorithm's time cost is $ \mathcal{O}(n) $.
+	
+	
+	
+
+\end{itemize}
+
+
+
+
+\subsubsection{LU Decomposition with Partial Pivoting}
+\begin{itemize}
+	\item An LUP decomposition is a generalization of the LU decomposition in which a permutation matrix $ \mat{P} $ that re-arranges $ \mat{A} $'s rows so that $ \mat{P} \mat{A} $ has a unique LU decomposition.
+	
+	\item Theorem: For all non-singular matrices $ \mat{A} \in \R^{n \cross n} $, there exists a permutation matrix $ \mat{P}  \in \R^{n \cross n}$ such that $ \mat{P}\mat{A} $ has a unique LU decomposition. The permutation matrix is not unique, and many $ \mat{P} $ may exist for a given $ \mat{A} $; however, for each $ \mat{P} $, the matrix $ \mat{P} \mat{A} $ has a unique LU decomposition.
+	
+	\textit{Interpretation:}  The permutation matrix $ \mathbf{P} $ just represents the way to rearrange $ \mat{A} $'s rows in such a way that the rearranged $ \mat{A} $ has an LU decomposition.
+
+	\item \textbf{Algorithm}: Let $ \mat{A}^{(j)} $ be the matrix $ \mat{A} $ on the $ j $th iteration of the algorithm.
+	
+	Starting with $ j = 1 $, $ \mat{A}^{(j)} = \mat{A} $ and $ \mathbf{P} = \mathbf{I} $:
+	\begin{enumerate}
+		\item Find the largest element by absolute value in column $ j $ from rows $ j $ to $ n $, i.e. $ \displaystyle{\max_{j\leq i\leq n} \abs{a_{ij}^{(j)}}} $. If the largest element occurs in multiple rows, use the row closest to the top.
+	
+		\item Switch the row containing the maximum element with the $ j $th row. \textit{Record the row switch in the permutation matrix $ \mathbf{P} $} by switching the corresponding rows in $ \mathbf{P} $.
+		
+		\item Perform row subtraction on the rows $ j + 1 $ to $ n $ of the switched-row matrix to make the $ j $th column have zeros in the rows $ j+1 $ to $ n $. \textit{Record the row subtraction coefficient in the matrix $ \mat{L} $}. (By convention write the coefficients in the $ j $th column in the corresponding rows $ j + 1 $ to $ n $).
+		
+		\begin{itemize}
+			\item Coefficients are elements in row $ j+1, \dots, n $ divided by element in row $ j $.
+		\end{itemize}
+		
+		\item Increment $ j $ by one and repeat the algorithm, using the matrix from the previous step as $ \mat{A}^{(j+1)} $.
+	\end{enumerate}
+	
+	
+	
+\end{itemize}
+
+
+
+
+
+
+\subsection{Applications of the LU Decomposition}
+\begin{itemize}
+	\item \textit{Solving Systems of Linear Equations}: To solve the system $ \mat{A} \bm{x} = \bm{b} $
+	\begin{enumerate}
+		\item Find $ \mat{A} $'s LU decomposition
+		
+		\item Write the system as
+		\begin{equation*}
+			\mat{A} = \mat{L} \mat{U} \quad \implies \quad (\mat{L} \mat{U}) \bm{x} = \bm{b} \quad \implies \quad \mat{L} (\mat{U} \bm{x}) = \bm{b}
+		\end{equation*}
+		This step uses $ \mat{A} $'s LU decomposition and the associativity of matrix multiplication.
+	
+	
+		\item Let $ \bm{y} \coloneqq \mat{U} \bm{x} $ and solve the lower-triangular system $ \mat{L} \bm{y} = \bm{b} $ with direct substitution to find $ \bm{y} $.
+		
+		\item With the known value of $ \bm{y} $, solve the upper-triangular system $ \mat{U} \bm{x} = \bm{y} $ with backward substitution to find $ \bm{x} $.
+	\end{enumerate}
+	
+	\item \textit{Solving Matrix Equations}: To find $ \mat{X} $ solving $ \mat{A} \mathbf{X} = \mathbf{B} $ where $ \mat{A} \in \R^{n \cross n} $, $ \mathbf{X}, \mathbf{B} \in \R^{n \cross p} $.
+	\begin{enumerate}
+		\item Find $ \mat{A} $'s LU decomposition
+		
+		\item Write the system in column form:
+		\begin{equation*}
+			\mat{A} [\bm{x}_1, \bm{x}_{2}, \dots, \bm{x}_n] = [\bm{b}_1, \bm{b}_{2}, \dots, \bm{b}_n] 
+		\end{equation*}
+		
+		\item Solve the $ p $ vector systems 
+		\begin{equation*}
+			\mat{A} \bm{x}_{j} = \bm{b}_{j}; \qquad j = 1, 2, \dots, p
+		\end{equation*}
+		using the technique for solving vector systems in the previous section.
+		
+	\end{enumerate}
+	
+	\item \textit{To Find a Matrix's Inverse}: To find the inverse of the matrix $ \mat{A} \in \R^{n \cross n}$, solve the matrix equation $ \mat{A} \mat{X} = \mat{I} $ where  $ \mathbf{X} = \mat{A}^{-1} $.
+	
+	\item \textit{Calculating Determinants} The LU decomposition of $ \mat{A} $ with partial pivoting leads to the formula
+	\begin{align*}
+		\det \mat{A} = (-1)^{s} \det \mat{U}
+	\end{align*}
+	where $ s $ is the number of row switches in the permutation matrix $ \mathbf{P} $.
+	
+	\textit{Derivation}: Applying the multiplicative nature of the determinant to the $ LU $ decomposition leads to
+	\begin{equation*}
+		\mathbf{P} \mat{A} = \mat{L} \mat{U} \quad \implies \quad \det \mathbf{P} \det \mat{A} = \det \mat{L} \det \mat{U}
+	\end{equation*}
+	The determinant of a diagonal matrix is the product of the diagonal terms and the matrix $ \mat{L} $ has ones along its diagonal, so $ \det \mat{L} = 1 $. The determinant of $ \mathbf{P} $ starts as the determinant of the identity matrix $ \mathbf{I} $ and is multiplied by $ -1 $ for every row switch. Setting $ \det \mat{L} = 1, \det \mathbf{P} = (-1)^s $ and dividing  by $ \det \mathbf{P} $ produces the above determinant formula.
+\end{itemize}
+
+
+
+
+\subsection{Methods for Special Linear Systems}
+
+
+\subsubsection{The Cholesky Decomposition}
+\begin{itemize}
+	\item Symmetric, positive definite matrices have a special decomposition called the \textit{Cholesky decomposition} of the form	
+	\begin{equation*}
+		\mat{A} = \mathbf{L} \mathbf{L}^{T}
+	\end{equation*}
+	where $ \mathbf{L} $ is a non-singular lower triangular matrix. 
+	
+	The Cholesky decomposition is an efficient way to solve the system $ \mat{A} \bm{x} = \bm{b} $ if $ \mat{A} \in \R^{n\cross n} $ is a symmetric, positive definite matrix. The resulting system $ \mat{L}\mat{L}^{T}\bm{x} = \bm{b} $ is solved analogously to $ \mat{L}\mat{U}\bm{x} = \bm{b} $
+	
+	\item \textit{Algorithm}: For $ k = 1 $ initialize $ \mat{L}_{1} = \sqrt{\operatorname{A_{11}}} $. For $ k = 2, \ldots, n $, solve $ \mat{L}_{k_{-1}}\bm{l}_{k} = \bm{a}_{k} $ for $ \bm{l}_{k} $. Solve $ \operatorname{L_{kk}} = \sqrt{\operatorname{A}_{kk} - \bm{l}_{k}^{T}\bm{l}_{k}} $. Assemble $ \mat{L}_{k} = \left[\begin{matrix}\mat{L}_{k-1} & \bm{0}_{k}\\ \bm{l}_{k}^{T} & \operatorname{L}_{kk}\end{matrix}\right] \in \R^{k\cross k}, \bm{0}_{k} \in \R^{k} $. Finish with $ \mat{L} = \mat{L}_{n} $.\\
+	\textit{Notation:} Matrix $ \mat{L}_{k} $: $ k \cross k $ principle sub-matrix of $ \mat{L} $. Vectors $ \bm{a}_{k}, \bm{l}_{k} $: first $ k-1 $ entries in column $ k $ of $ \mat{A} $ and $ \mat{L}^{T} $.
+	
+	The time cost is $ \frac{1}{3}n^{3} + \mathcal{O}(n^2) $. Calculated with
+	\begin{equation*}
+		\sum_{k=1}^{n}(2(k-1) + (n-k)(2k-1)) = \frac{1}{3}n^{3} + \mathcal{O}(n^{2})
+	\end{equation*}
+
+
+	\item \textit{Verifying positive definiteness} To efficiently determine if a matrix is positive definite: Perform Cholesky decomposition on the matrix; if the process produces square roots of negative numbers, the matrix is not positive definite. Otherwise it is.
+\end{itemize}
+
+
+
+
+
+
+\subsubsection{Tridiagonal Systems}
+\begin{itemize}
+	\item A \textit{tridiagonal matrix} has nonzero elements along its main diagonal and on the diagonals immediately above and below the main diagonal; it is zero elsewhere. It looks like this:
+	\[
+		\mat{T} = \begin{bmatrix}
+			a_1 & b_1 &  &  &\\
+			b_{1} & a_1 & b_2 &  &\\
+			& \ddots & \ddots & \ddots &\\
+			& & b_{n-2} & a_{n-1} & b_{n-1}\\
+			& & & b_{n-1} & a_{n}
+		\end{bmatrix}
+	\]
+	
+	\item \textit{Theorem:} If a tridiagonal matrix $ \mat{T} \in \R^{n\cross n} $ is diagonally dominant (and strictly diagonally column dominant in at least one column) is has a unique LU decomposition, which can be found without pivoting. In this case, $ \mat{L} $ and $ \mat{U} $ take the form
+	\[
+		\mat{L} = 
+		\begin{bmatrix}
+			1 &  &  &\\
+			l_{1} & 1&  &\\
+			& \ddots & \ddots &\\
+			& & l_{n-1} & 1
+		\end{bmatrix}		
+		\qquad \mat{U} = 
+		\begin{bmatrix}
+			u_{1} & b_{1} &  &\\
+			& \ddots & \ddots & \\
+			& & u_{n-1} & b_{n-1}\\
+			& & & u_{n}
+		\end{bmatrix}		
+	\]
+	
+	\item The computational complexity of solving a tridiagonal system without pivoting is only $ \mathcal{O}(n) $.
+		
+\end{itemize}
+
+\newpage
+
+\section{Non-Linear Equations}
+
+Solving an equation can be interpreted as, given a function $ f : \R \to \R $, finding the values of $ x $ satisfying
+\begin{equation*}
+	f(x) = 0
+\end{equation*}
+The values of $ x $ are called the roots or zeros of the function $ f $. 
+
+
+
+
+\subsection{Bisection}
+\begin{itemize}
+	\item First the theoretical basis: If a continuous function $ f:[a, b] \to \R $ has opposite signs at its endpoints $ a $ and $ b $, the function has at least on zero on $ [a, b] $. In symbols, if $ f(a)\cdot f(b) < 0 $, there exists at least on $ x \in [a, b] $ for which $ f(x) = 0 $.
+	
+	\textit{Interpretation:} if $ f $ is continuous and changes sign on the interval $ [a, b] $, it must have crossed through zero at least once, and thus has at least one zero.
+	
+	\item The \textit{bisection method} is a reliable but relatively slow method for finding the roots of any continuous function $ f : [a, b] \subset \R \to \R $. 
+	
+	\item To find zeros of a continuous function $ f: [a, b] \to \R $ on the interval $ [a, b] $, the algorithm uses a variable left endpoint $ \alpha $, variable right endpoint $ \beta $, a midpoint $ c $, and tolerance $ \epsilon $	for the interval width. Starting with $ \alpha = a, \beta = b $,
+	\begin{enumerate}
+		\item Calculate the midpoint with $ c = \alpha + \frac{\beta - \alpha}{2} $
+		
+		\item Contract the interval width. If $ \operatorname{sign}f(\alpha) = \operatorname{sign}f(c) $, let $ \alpha = c $; if $ \operatorname{sign}f(\alpha) \neq \operatorname{sign}f(c) $, let $ \beta = c $. 
+
+	\end{enumerate}
+	Repeat until $ \abs{\beta - \alpha} \leq \epsilon $, then return root $ x_{0} = \alpha + \frac{\beta - \alpha}{2} $.
+	
+	\item Some notes
+	\begin{itemize}
+	
+		\item The algorithm doesn't evaluate exact function values but only checks the function's sign, which is faster than calculating the exact function value. $ c = \alpha + \frac{\beta - \alpha}{2} $ is used to find midpoint instead of $ c = \frac{\alpha + \beta}{2} $ to reduce risk of overflow.
+		
+		\item If $ f $ has multiple zeros on $ [a, b] $, the algorithm behaves unpredictably. It will converge to one of the zeros, but we cannot predetermine which one.
+		
+		\item The interval $ [\alpha, \beta] $ halves in width during each iteration. After $ k $ iterations, the interval has width $ \ell = \frac{b-a}{2^{k}} $
+		
+		\smallskip 
+		A tolerance $ \epsilon $ for interval width requires at least $ k \geq \log_{2}\left (\frac{b-a}{\epsilon}\right )  $ iterations to converge.
+	\end{itemize}
+	
+\end{itemize}
+
+\subsection{Fixed-Point Iteration}
+
+\begin{itemize}
+	\item Start with the equation $ f(x) = 0$ where $ f: [a, b] \to \R $ and manipulate this expression into the form $ x = g(x) $. In other words, isolate the linear term $ x $ and put all other forms of $ x $ on the other side of the equation. The function $ g $ is called the \textit{iteration function}. 
+
+	For a given equation $ f(x) = 0 $, there are in general multiple ways to express $ x = g(x) $; the iteration function $ g(x) $ is not unique. For example, for the polynomial root problem $ f(x) = x^{4} - 2x^{3} + 3x = 0 $, possible iteration functions are
+	\begin{equation*}
+		x_{a} = \frac{2x^{3} - x^{4}}{3} \qquad x_{b} = \sqrt[3]{\frac{x^{4}+ 3x}{2}}\qquad x_{c} = \sqrt[4]{2x^{3} - 3x}
+	\end{equation*}
+
+	\item The algorithm is simple. Choose an initial guess $ x_0 \in [a, b]$ and tolerance $ \epsilon $, then iterate with the formula $ x_{i + 1} = g(x_{i}) $ until the $ x_{i+1} $ and $ x_{i} $ differ by less than $ \epsilon $.
+\end{itemize}	
+	
+\subsubsection{Some Theory on Convergence of Fixed Point Iteration}
+\begin{itemize}
+	\item A \textit{fixed point} of a function is an element of the function's domain that is mapped to itself, i.e. $ \alpha $ is a fixed point of the function $ g $ if $ g(\alpha) = \alpha $.
+	
+	\item Let $ \alpha $ be the fixed point and let $ I = [\alpha - \delta, \alpha + \delta ] $ be an interval centered at $ \alpha $. If the iterative function $ g $ satisfies the Lipschitz continuity condition on $ I $; i.e there exists real number $ \theta \in [0, 1) $ such that 
+	\begin{align*}
+		\abs{g(x) - g(y)} \leq \theta \abs{x - y} \quad \text{ for all } x, y, \in I
+	\end{align*}
+	then the iterative sequence $ x_{i + 1} = g(x_i) $ converges to $ \alpha $ for all initial $ x_0 \in I $.
+	
+	More so, we have the following bounds:
+	\begin{align*}
+		\abs{x_{j} - \alpha} \leq \theta^{j}\abs{x_0 - \alpha} && \abs{x_{j+1} - \alpha} \leq \frac{\theta}{1 - \theta} \abs{x_{j} - x_{j+1}}
+	\end{align*}
+	
+	
+	
+	\item Some theory: consider the function $ g : [a, b] \to \R $. The point $ \alpha \in [a, b] $ is a \textit{fixed point} of $ g $ if for all $ x, y $ in the interval $ I = [\alpha - \delta, \alpha + \delta] $ centered at $ \alpha $
+	\begin{equation*}
+		\abs{g(x) - g(y)} \leq m \abs{x - y}, \qquad m \in [0, 1)
+	\end{equation*}
+	In this case, for all initial values $ x_{0} \in I $ and $ k = 0, 1, 2, \ldots $
+	\begin{itemize}
+		\item The sequence $ x_{k + 1} = g(x_{k}) $ converges to $ \alpha $ 
+		\item $ \abs{x_{k} - \alpha} \leq m^{k} \abs{x_{0} - \alpha} $
+		\item $ \abs{x_{k+1} - \alpha} \leq \frac{m}{1-m}\abs{x_{j} - x_{j-1}} $
+	\end{itemize}
+	
+	\item If $\alpha$ is a fixed point of $ g: [a, b] \to \R $ and $ g $ is continuously differentiable at $ \alpha $ and the derivative is bounded by $ \abs{g'(\alpha)} < 1$, there exists a neighborhood $ I = [\alpha - \delta, \alpha + \delta] $ of the point $ \alpha $ on which the sequence $ x_{k + 1} = g(x_{k}) $ converges to $ \alpha $ for all initial values $ x_{0} \in I $ and $ k = 0, 1, 2, \ldots $
+	
+	\textit{Interpretation:} In practice, this is just an alternate, more practical condition for convergence of an iteration function than the Lipschitz continuity condition. It's usually easier to evaluate the first derivative than to prove Lipschitz continuity. 
+	
+	
+	\item \textbf{Rate of Convergence} Let the iterative function $ g $ be $ p $-times continuously differentiable at the fixed point $ \alpha $ and let 
+	\begin{align*}
+		 g^{(p)} (\alpha) = 0 \quad \text{for } j = 1, 2, \dots, p-1
+	\end{align*}
+	and $ g^{(p)}(\alpha) \neq 0 $. In this case, the iterative sequence $ x_{j+1} = g(x_j) $ has order of convergence $ p $ in a neighborhood of $ \alpha $.
+	
+	Basically the order of continuous differentiability determines the order of convergence.
+	
+	\item \textbf{Definition of order of convergence:} Let the sequence $ \displaystyle{\big( x_{j} \big)_{j=0}^{\infty}} $ converge to the limit $ L $. The sequence's order of convergence is $ p $ if there exists finite constant $ M $ such that
+	\begin{align*}
+		\lim_{j \to \infty} \frac{\abs{x_{j+1} - L}}{\abs{x_{j} - L}^{p}} < M
+	\end{align*}
+	 
+\end{itemize}
+
+
+\subsubsection{Newton's Method}
+\begin{itemize}
+	\item Newton's method is an example of fixed point iteration that uses the tangent line to find the next point. The next approximation is the intersection of the tangent line at the previous approximation with the $ x $ axis.
+	
+	\item \textit{Algorithm:} To find a zero of the continuously differentiable function $ f:[a, b] \to \R $ choose a tolerance $ \epsilon $ and initial guess $ x_{0} $. Calculate successive approximations with $ x_{j+1} = x_{j} - \frac{f(x_{j})}{f'(x_{j})} $ and repeat until $ \abs{x_{j+1} - x_{j}} < \epsilon$.
+	
+	\smallskip
+	Note that Newton's method is a form of fixed-point iteration with the iteration function $ g(x) = x - \frac{f(x)}{f'(x)} $
+
+	
+	\item \textit{Convergence}: Newton's method converges converges at least quadratically to any simple zero $ x_{0} $, i.e. a zero for which $ f'(x_{0}) \neq 0 $. Convergence is quadratic if $ f''(x_{0}) \neq 0 $ and at least cubic if $ f''(x_{0}) = 0 $.
+	
+	For higher-order zeros, i.e. zeros for which $ f'(x_{0}) = 0$, Newton's method converges at least linearly.
+	
+	\item Theory: If $ \alpha $ is a simple zero of the twice-continuously differentiable function $ f:[a, b] \to \R $, there exists a constant $ C \in \R $ and neighborhood $ I = [\alpha - \delta, \alpha + \delta] $ of the zero $ \alpha $ such that Newton's method converges for all $ x_{0} \in I $ and the approximations $ x_{i} $ satisfy the bound
+	\begin{equation*}
+		\abs{x_{j+1} = \alpha} \leq C(x_{i} - \alpha)^{2}
+	\end{equation*}
+	
+	\item Sort of interesting note: If $ f $ is a twice-continuously differentiable, increasing, convex function on the interval $ I = [a, \infty) $ with a zero $ \alpha \in I $, then Newton's method converges to $ \alpha $ for all initial guesses $ x_{0} \in I $.
+	
+	\textit{Interpretation:} For example, a parabola or an exponential function satisfy these criterion. The conditions are in my opinion too strict to be useful, but the theorem is interesting because it guarantees convergence for all values in an infinitely large interval.
+	
+	
+\end{itemize}
+
+
+\subsubsection{Secant Method}
+\begin{itemize}
+	\item The second method is a finite-difference approximation to Newton's method. Newton's method requires the derivative $ f' $, which is not always known. When the derivative $ f' $ of a function is not known, the secant method replaces Newton's method.
+	
+	\item The secant method is a form of fixed-point iteration with the iteration function
+	\begin{equation*}
+		x_{j+1} = x_{j} - f(x_{j}) \frac{x_{j} - x_{j-1}}{f(x_{j}) - f(x_{j-1})}
+	\end{equation*}
+	The algorithm is analogous to Newton's method and other fixed-point methods.
+	
+	\item The downside to the secant method is the need to store two previous approximations $ x_{j} $ and $ x_{j-1} $ in memory.
+	
+	\item The rate of convergence is super-linear with $ p \approx 1.62 $. 
+	
+	
+\end{itemize}
+
+
+\subsection{Roots of Polynomial Equations}
+\begin{itemize}
+	\item The general problem is to find all roots of an $ n $th degree polynomial 
+	\begin{equation*}
+		p(x) = a_{n}x^{n} + \cdots + a_{1}x + a_{0}
+	\end{equation*}
+	
+	\item Although any of the methods listed above work for polynomial equations, there are more efficient methods designed specifically for polynomials.
+	
+	\item All polynomial root methods can implement \textit{deflation}. This means that, once you find a zero $ x_{k} $ of $ p $, you divide $ p $ by $ (x - x_{k}) $ and find the zeros of the resulting polynomial. This way you don't re-find a zero you already found and you reduce the complexity of the polynomial you are working with. In general, it is best do deflate in order of increasing magnitude of the zeros.
+
+\end{itemize}
+
+\subsubsection{Companion Matrix}
+The roots of the polynomial equation $ p(x) = a_n x^n + \dots + a_1 x + a_0 $ are the eigenvalues of the associated $(n \cross n) $ \textit{companion matrix}
+\[ \mat{A}_{n} =  
+	\begin{bmatrix}
+		0 & 1 & 0 & \cdots & 0 \\
+		0 & 0 & 1 & \cdots & 0\\
+ 		\vdots & \vdots & \vdots & \ddots & \vdots \\
+		0 & 0 & 0 & \cdots & 1\\
+		- \frac{a_0}{a_n} &  - \frac{a_1}{a_n} & - \frac{a_2}{a_n}& \dots &  - \frac{a_{n-1}}{a_n}
+	\end{bmatrix}
+\]
+The zeros of $ p $ are the eigenvalues $\operatorname{eig}(\mat{A}_{p}) $.
+
+ 
+
+\subsubsection{Laguerre Method}
+To find the roots of the polynomial equation $ p(x) = a_n x^n + \dots + a_1 x + a_0 $, make an initial guess $ x_{0} $ and choose a tolerance $ \epsilon $. For $ j = 0, 1, 2, \dots $
+
+\begin{enumerate}
+	\item Calculate $ G = \frac{p'(x_{j})}{p(x_{j})} $ and $ H  = G^{2} - \frac{p''(x_{j})}{p(x_{j})}$
+	
+	\item Calculate the approximation $ \alpha = \frac{n}{G \pm \sqrt{(n-1)(nH - G^{2})}} $ choosing the $ \pm $ sign so the denominator has maximum absolute value.
+	
+	\item Repeat the iteration with $ x_{j+1} = x_{j} - a $
+\end{enumerate}
+Repeat until $ \alpha \leq \epsilon $; the root is $ x_{j} $. The Laguerre method converges cubically in the neighborhood of a simple zero.
+
+\subsection{Systems of Non-Linear Equations}
+Given a system of non-linear functions $ \bm{F} = (f_1, f_2, \dots, f_n) $ written as a vector function $ \bm{F} : \R^{n} \to \R^{n} $, find the vectors $ \bm{x} \in \R^{n} $ satisfying the vector equation:
+\begin{align*}
+	\bm{F}(\bm{x}) = \bm{0}
+\end{align*}
+Note that this can be written in the form
+\begin{align*}
+	f_{1}(x_1, x_2, \dots, x_n) &= 0\\
+	f_{2}(x_1, x_2, \dots, x_n) &= 0\\
+	&\ \, \vdots\\
+	f_{n}(x_1, x_2, \dots, x_n) &= 0
+\end{align*}
+In this case $ \bm{F} = (f_1, f_2, \dots, f_n)^{T} $ and $ \bm{x} = (x_1, x_2, \dots, x_n)^{T}$
+
+These methods are mostly beyond the scope of this course; we take only a brief look at fixed-point iteration.
+
+\subsubsection{Fixed-Point Iteration}
+\begin{itemize}
+	\item Just a higher-dimensional analog of fixed-point iteration for higher dimensions in which the Jacobian determinant replaces the role of the derivative.
+	
+	\item Manipulate $ \bm{F}(\bm{x}) = 0 $ into the form $ \bm{x} = \bm{G}(\bm{x}) $ and use fixed point iteration of the form $ \bm{x}_{j+1} = \bm{G}(\bm{x}_{j}) $
+	
+	\item The Jacobi matrix $ \mat{J_{G}}(\bm{x}) $ of the function $ \bm{G} $ at the point $ \bm{x} \in \R^{n} $ is
+	\[
+		\mat{J_{G}}(\bm{x}) = 
+		\begin{bmatrix}
+			\pdv{g_{1}}{x_{1}} (\bm{x}) & \cdots & \pdv{g_{1}}{x_{n}} (\bm{x})\\
+			\vdots & \ddots & \vdots\\
+			\pdv{g_{n}}{x_{1}} (\bm{x}) & \cdots & \pdv{g_{n}}{x_{n}} (\bm{x})
+		\end{bmatrix}
+	\]
+	The spectral radius $ \rho (\mat{A}) $ of a matrix $ \mat{A} \in \R^{n \cross n} $ is $ \mat{A} $'s largest eigenvalue by absolute value.
+	
+	\item On convergence: If there exists a region $ \Omega \subset \R^{n} $ for which $ \bm{G}(\bm{x}) \in \Omega $ and $ \rho(\mat{J_{G}}(\bm{x})) < 1$ for all $ \bm{x} \in \Omega $, the sequence $ \bm{x}_{j+1} = \bm{G}(\bm{x}_{j}) $ converges to a unique solution $ \bm{\alpha} \in \R^{n} $ for all initial guesses $ \bm{x}_{0} \in \Omega $
+	
+	\item Implication for convergence: The sequence $ \bm{x}_{j+1} = \bm{G}(\bm{x}_{j}) $ converges to a unique solution $ \bm{\alpha} \in \R^{n} $ for all initial guesses $ \bm{x}_{0} \in \Omega $ if  $ \bm{G}(\bm{x}) \in \Omega $ for all $ \bm{x} \in \Omega $ and for $ m < 1 $ and $ k = 1, 2, \dots, n$
+	\begin{equation*}
+		\sum_{j = 1}^{n} \abs{\pdv{g_{k}}{x_{j}} (\bm{x})} \leq m
+	\end{equation*}
+	In this case $ \norm{\bm{x}_{j} - \bm{\alpha}}_{\infty} \leq \frac{m^{j}}{1-m}\norm{\bm{x}_{1} - \bm{x}_{0}}_{\infty} $ for $ j = 0, 1, 2, \ldots $
+\end{itemize}
+
+\subsubsection{Newton's Method}
+\begin{itemize}
+	\item Analogous to Newton's method in one dimension, with the Jacobi matrix replacing the derivative. The iteration function is
+	\begin{equation*}
+		\bm{G}(\bm{x}) = \bm{x} - \mat{J}_{F}(\bm{x})^{-1} \bm{F}(\bm{x})
+	\end{equation*}
+	And for $ j = 0, 1, 2, \ldots $, the iteration reads
+	\begin{equation*}
+		\bm{x}_{j+1} = \bm{x}_{j} - \mat{J}_{F}(\bm{x}_{j})^{-1} \bm{F}(\bm{x}_{j})
+	\end{equation*}
+	
+	\item In practice, instead of calculating the inverse $ \mat{J}_{F}(\bm{x}_{j})^{-1} $, we solve the system 
+	\begin{equation*}
+		\mat{J}_{F}(\bm{x}_{j}) (\bm{x}_{j+1} - \bm{x}_{j}) = - F(\bm{x}_{j})
+	\end{equation*}
+	
+	\item Formal conditions for convergence of the higher-dimensional Newton's method exist, but are hard to verify in practice. Instead, we settle for a good initial guess and usually things work out.
+\end{itemize}
+
+
+\section{Linear Least Squares}
+
+
+Given many data points and a model function described by a few parameters (much fewer than the number of data points), find the values of the parameters for which the function best models the data points. Our actors are: 
+\begin{itemize}
+	\item $ m $ data points $ (x_1, y_1), (x_2, y_2), \dots, (x_n, y_m) $.
+	
+	\item $ n $ parameters $ a_1, a_2, \dots, a_n $
+	
+	\item A model function $ f(x, a_1, a_2, \dots, a_n) $
+\end{itemize}
+Some notes
+\begin{itemize}
+
+	\item The linear least squares problem can be written in matrix form as follows: Given a matrix $ \mat{A} \in \R^{m \cross n} $ and a vector of data points $ \bm{b} \in \R^{m} $, find the vector of parameters $ \bm{x} \in \R^{n} $ minimizing the expression $ \displaystyle{\norm{\mat{A} \bm{x} - \bm{b}}_{2} } $. The entries $ \operatorname{A}_{ij} $ of the matrix are the coefficients of the $ j $th parameter for the $ i $th data point, $ i = 1, \dots, m $ and $ j = 1, \dots, n $.
+	
+	\item In this formulation, the goal is to find the vector $ \bm{x} $ minimizing the expression
+	\begin{equation*}
+		\norm{\bm{b} - \mat{A}\bm{x}}^{2}_{2} = (\bm{b} - \mat{A}\bm{x})^{T} \cdot  (\bm{b} - \mat{A}\bm{x})= (b_{1} - \mat{A}^{T}_{1}\bm{x})^{2} + \cdots + (b_{m} - \mat{A}^{T}_{m}\bm{x})^{2}
+	\end{equation*}
+	where $ \mat{A}_{m}^{T} $ is the matrix $ \mat{A} $'s $ m $th row, or equivalently the matrix $ \mat{A}^{T} $'s $ m $th column.
+	
+	\item Such a system is called an \textit{overdetermined system} because there are more (often many more!) equations than unknowns. Each data point produces an equation, while the number of unknowns (number of parameters) is usually small in comparison.
+	
+	\item We assume in this text $ \rank \mat{A} = n $; i.e. $ \mat{A} $ has full rank. If $ \mat{A} $ does not have full rank, the solution to the system is not unique.
+		
+\end{itemize}
+
+
+\subsection{Normal System}
+\begin{itemize}
+	\item As system of equations of the form $ \mat{A}^{T}\mat{A} \bm{x} = \mat{A}^{T}\bm{b} $ is called a \textit{normal system} of equations. The normal system arises naturally in the linear least squares problem, where $ \bm{b} \in \R^{m} $ is the vector of data points, $ \bm{x} \in \R^{n} $ is the vector of parameters, and $ \mat{A} \in \R^{m \cross n} $ is the matrix of parameter coefficients.
+	
+	The system is called normal because it specifies that the residual $ \bm{x} $ must be normal (orthogonal) to every vector in $ \operatorname{span} \mat{A} $.
+	
+	\item Solving the normal system of equations for the parameter vector $ \bm{x} $ is equivalent to solving by the method of least squares; the parameters $ \bm{x} $ are those minimizing the sum of the squared residuals.
+	
+	\item The stuff goes like this: define $ f(\bm{x}) = \norm{\bm{b} - \mat{A}\bm{x}}^{2}_{2} = (\bm{b} - \mat{A}\bm{x})^{T} \cdot  (\bm{b} - \mat{A}\bm{x}) $, which we want to minimize. It turns out that
+	\begin{equation*}
+		\nabla f(\bm{x}) = 2 \mat{A}^{T}\mat{A} \bm{x} - 2 \mat{A}^{T} \bm{b}
+	\end{equation*}
+	So solving $ \nabla f(\bm{x}) = \bm{0} $ is equivalent to solving the normal system $  \mat{A}^{T}\mat{A} \bm{x} = \mat{A}^{T} \bm{b} $.
+	
+	In general, $ \bm{x} $ could be a minimum, maximum, or saddle point when $ \nabla f(\bm{x}) = 0$. However, $ \mat{A}^{T}\mat{A} $ is positive semi-definite which implies that $ \bm{x} $ solving $ \nabla f(\bm{x}) = 0$ is a global minimum of the function $ f(\bm{x}) $.
+	
+	\item Since $ \mat{A}^{T}\mat{A} $ is positive semi-definite, it can be decomposed into the form $ \mat{L}\mat{L}^{T} $ with the Cholesky decomposition. The Cholesky decomposition is the most efficient way to solve the normal system. However, the method becomes unstable if $ \mat{A}^{T}\mat{A} $'s columns are close to being linearly dependent.
+\end{itemize}
+
+
+
+\subsection{QR Decomposition}
+\begin{itemize}
+	\item The \textit{QR decomposition} of a matrix $ \mat{A} \in \R^{m \cross n} $ is $ \mat{A} = \mat{Q} \mat{R} $ where $ \mat{Q} \in \R^{m \cross n} $ has orthonormal columns and $ \mat{R} \in \R^{n \cross n} $ is upper triangular.
+	
+	\item The QR decomposition can be used to solve the linear least squares problem. If the parameter coefficient matrix has the QR decomposition $ \mat{A} = \mat{Q} \mat{R}  $, then the vector of parameters $ \bm{x} $ is 
+	\begin{equation*}
+		\bm{x} = \left(\mat{A}^{T}\mat{A} \right)^{-1} \mat{A}^{T} \mat{b} = \mat{R}^{-1}\mat{Q}^{T} \bm{b}
+	\end{equation*}
+	The proof is a direct application of $ \mat{Q} $'s orthogonality, which implies $ \mat{Q}^{T} \mat{Q} = \mat{I} $.
+	\begin{align*}
+		\left(\mat{A}^{T}\mat{A} \right)^{-1} \mat{A}^{T} &= \left((\mat{Q}\mat{R})^{T} (\mat{Q}\mat{R}) \right)^{-1} (\mat{Q}\mat{R})^{T} = \left(\mat{R}^{T}\mat{Q}^{T}\mat{Q}\mat{R}\right)^{-1} \mat{R}^{T} \mat{Q}^{T}\\
+		&= \left(\mat{R}^{T}\mat{I}\mat{R}\right)^{-1} \mat{R}^{T} \mat{Q}^{T} = \left(\mat{R}^{T}\right)^{-1}\mat{R}^{-1} \mat{R}^{T} \mat{Q}^{T} \\
+		&= \mat{R}^{-1} \left(\mat{R}^{T}\right)^{-1} \mat{R}^{T} \mat{Q}^{T} = \mat{R}^{-1} \mat{I} \mat{Q}^{T} = \mat{R}^{-1} \mat{Q}^{T}
+	\end{align*}
+	It follows that $ \bm{x} =  \left(\mat{A}^{T}\mat{A} \right)^{-1} \mat{A}^{T} \mat{b} = \mat{R}^{-1}\mat{Q}^{T} \bm{b} $.
+	
+	\item If we known the QR decomposition $ \mat{A} = \mat{Q} \mat{R}  $, we can solve the least squares problem by solving the upper triangular system
+	\begin{equation*}
+		\mat{R} \bm{x} = \mat{Q}^{T} \bm{b}
+	\end{equation*}
+	Solving a least squares by QR decomposition is more stable than directly solving the corresponding normal system.
+	
+	\item Theorem: Every matrix $ \mat{A} \in \R^{m \cross n} $ with $ \rank \mat{A} = n $ (where $ m \geq n $) has a unique QR decomposition $ \mat{A} = \mat{Q} \mat{R} $ where $ \mat{Q} \in \R^{m \cross n} $ has orthonormal columns and $ \mat{R} \in \R^{n \cross n} $ is upper triangular.
+	
+\end{itemize}
+
+
+\subsection{Methods of QR Decomposition}
+
+\subsubsection{Gram-Schmidt Orthonormalization}
+The Gram-Schmidt orthonormalization algorithm is used to convert a system of column vectors $ \bm{v}_1, \bm{v}_2, \dots, \bm{v}_n $ into a normalized, mutually orthogonal set of vectors $ (\bm{u}_1, \bm{u}_2, \dots, \bm{u}_n) $ where $ \norm{\bm{u}_i} = 1 $ for $ i = 1, \dots, n $ and $ \bm{u}_i \perp \bm{u}_j  $ for all $ i \neq j $.
+
+\textbf{Algorithm}
+The Gram-Schmidt algorithm is recursive. To use it, one iterates over each basis vector and first normalizes it, then makes it orthogonal to every basis vector that came before it using the formula for an orthogonal projection. Given a set of vectors $ \bm{v}_1, \bm{v}_2, \dots, \bm{v}_n $
+\begin{enumerate}
+	\item Normalize the first vector $ \bm{v}_1 $ to get the normalized vector $ \bm{u}_1 = \frac{\bm{v}_1}{\norm{\bm{v}_1}}$
+
+	\item Orthogonalize the second vector $ \bm{v}_2 $ relative to $ \bm{u}_{1} $ to get the vector $ \bm{v}_{2}' $ using
+	\begin{equation*}
+		\bm{v}_{2}' = \bm{v}_2 - \expval{\bm{v}_2,\bm{u}_1} \bm{u}_1
+	\end{equation*}
+	Normalize $ \bm{v}_{2}' $ to get the second orthonormalized vector $ \bm{u}_2 = \frac{\bm{v}_{2}'}{\norm{\bm{v}_{2}'}}$ 
+	
+	\item Orthogonalize the third vector $ \bm{v}_3 $ relative to $ \bm{u}_{1} $ and $ \bm{u}_{2} $ to get the vector $ \bm{v}_{3}' $ using
+	\begin{equation*}
+		\bm{v}_{3}' = \bm{v}_3 -  \expval{\bm{v}_3, \bm{u}_2}  \bm{u}_2 - \expval{\bm{v}_2, \bm{u}_1} \bm{u}_1
+	\end{equation*}
+	Normalize $ \bm{v}_{3}' $ to get the third orthonormalized vector $ \bm{u}_3 = \frac{\bm{v}_{3}'}{\norm{\bm{v}_{3}'}}$.
+
+	\item Continue recursively using the general formula
+	\begin{equation*}
+		\bm{v}_{k}' = \bm{v}_k - \expval{\bm{v}_k, \bm{u}_{k-1}} \bm{u}_{k-1} - \dots - \expval{\bm{v}_k, \bm{u}_1} \bm{u}_1 \qquad \text{and} \qquad \bm{u}_k = \frac{\bm{v}_{k}'}{\norm{\bm{v}_{k}'}}
+	\end{equation*}
+
+\end{enumerate}
+
+
+
+\subsubsection{Modified Gram-Schmidt}
+The modified Gram-Schmidt algorithm gives the same answer as the classic Gram-Schmidt algorithm when performed in exact arithmetic, but gives slightly more stable/accurate results in floating point arithmetic.
+
+In the classic Gram-Schmidt algorithm, the $ k $th orthonormal vector $ \bm{u}_{k} $ is found with
+\begin{equation*}
+	\bm{u}_{k} = \bm{v}_{k} - \operatorname{proj}_{\bm{u}_{1}}(\bm{v}_{k}) -  \operatorname{proj}_{\bm{u}_{2}}(\bm{v}_{k}) - \cdots - \operatorname{proj}_{\bm{u}_{k-1}}(\bm{v}_{k})
+\end{equation*}
+where $ \operatorname{proj}_{\bm{u}}(\bm{v}) = \frac{\expval{\bm{u}, \bm{v}}}{\expval{\bm{u}, \bm{u}}}\bm{u}$. In The modified version, the algorithm reads
+\begin{align*}
+	\bm{u}_{k}^{(1)} &= \bm{v}_{k} - \operatorname{proj}_{\bm{u}_{1}}(\bm{v}_{k})\\
+	\bm{u}_{k}^{(2)} &= \bm{u}_{k}^{(1)} - \operatorname{proj}_{\bm{u}_{2}}(\bm{u}_{k}^{(1)})\\[-3mm]
+	&\ \, \vdots\\[-3mm]
+	\bm{u}_{k}^{(k-1)} &= \bm{u}_{k}^{(k-2)} - \operatorname{proj}_{\bm{u}_{k-1}}(\bm{u}_{k}^{(k-2)})
+\end{align*}
+and finishes with $ \bm{u}_{k} = \frac{\bm{u}_{k}^{(k-1)}}{\norm{\bm{u}_{k}^{(k-1)}}}$
+
+\subsubsection{Gram-Schmidt For QR Decomposition}
+Suppose you start with the matrix $ \mat{A} \in \R^{m \cross n} $ with column vectors $ \bm{A} = (\bm{a}_{1}, \ldots, \bm{a}_{n}) $. Use the Gram-Schmidt process to orthonormalize  $ (\bm{a}_{1}, \ldots, \bm{a}_{n})  $ into $ (\bm{q}_{1}, \ldots, \bm{q}_{n})  $. In this case
+\[
+	\mat{Q} = [\bm{q}_{1}, \ldots, \bm{q}_{n}] \quad \text{and} \quad 
+	\mat{R} = 
+	\begin{bmatrix}
+		 \expval{\bm{e}_{1},\bm{a}_{1}} & \expval{\bm{e}_{1},\bm{a}_{2}} & \expval{\bm{e}_{1},\bm{a}_{3}} &\cdots & \expval{\bm{e}_{1},\bm{a}_{n}} \\0
+		&\expval{\bm{e}_{2},\bm{a}_{2}} & \expval{\bm{e}_{2},\bm{a}_{3}} &\cdots & \expval{\bm{e}_{2},\bm{a}_{n}}\\
+		0 & 0 & \expval{\bm{e}_{3},\bm{a}_{3}} & \cdots & \expval{\bm{e}_{3},\bm{a}_{n}}\\
+		\vdots &\vdots &\cdots &\ddots & \vdots \\
+		0 & 0 & 0 & 0 & \expval{\bm{e}_{n},\bm{a}_{n}}
+		\end{bmatrix} 
+	\quad \text{where} \  \bm{e}_{i} = \frac{\bm{q_{i}}}{\norm{q_{i}}} 
+\]
+
+
+\subsubsection{Givens Rotations}
+Excellent link \href{https://www.math.usm.edu/lambers/mat610/sum10/lecture9.pdf}{\underline{here}}.
+\begin{itemize}
+	\item The rotation of the vector $ \bm{x} \in \R^{2}$ about the origin by the angle $ \phi $ in the counter-clockwise (positive) direction is encoded by the rotation matrix
+	\begin{equation*}
+		\mat{R}_{\phi} =
+		\begin{bmatrix}
+			\cos \phi & - \sin \phi\\
+			\sin \phi & \cos \phi
+		\end{bmatrix}
+	\end{equation*}
+	and the rotated vector is $ \bm{x}' = \mat{R} \bm{x} $. 
+	
+	\item For rotation in a planar subspace of $ \mat{R}^{n} $ spanned by the basis vectors $ \bm{e}_{i}, \bm{e}_{j} $, the corresponding rotation matrix $ \mat{R}_{ij} $ is the $ n \cross n $ identity matrix with the elements in the $ j $ and $ i $th column of the $ j $th row replaced by $ \cos \phi $ and $ - \sin \phi $ and the elements in the $ j $ and $ i $th column of the $ i $th row replaced by $ \cos \phi $ and $ \sin \phi $.
+	
+	\item A Given's rotation is a matrix of the form
+	\[
+		\mat{G}^{T}_{ij}(\phi) = 
+		\begin{bmatrix}
+			1&\cdots &0&\cdots &0&\cdots &0\\
+			\vdots &\ddots &\vdots &&\vdots &&\vdots \\
+			0&\cdots &c&\cdots &-s&\cdots &0\\
+			\vdots &&\vdots &\ddots &\vdots &&\vdots \\
+			0&\cdots &s&\cdots &c&\cdots &0\\
+			\vdots &&\vdots &&\vdots &\ddots &\vdots \\
+			0&\cdots &0&\cdots &0&\cdots &1
+		\end{bmatrix}^{T}
+	\]
+	where $ c = \cos \phi $ and $ s = \sin \phi $.
+	
+	For $ \bm{x} \in \R^{n} $, the product $ \mat{G}_{ij}(\phi) \bm{x} $ yields a counterclockwise rotation of the vector $ \bm{x} $ by an angle of $ \phi $ radians in the planar subspace spanned by the basis vectors $ \bm{e}_{i} $ and $ \bm{e}_{j} $.
+	
+	\item When a Given's rotation $ \mat{G}^{T}_{ij} \in \R^{n \cross n}$ multiplies another matrix $ \mat{A}\in \R^{n \cross n} $ from the left, only the $ i $ and $ j $th rows of $ \mat{A} $ are affected.
+	
+	\item In two dimensions, for a vector $ \begin{bmatrix} a \\ b \end{bmatrix} $, the goal is to find $ c $ and $ s $ such that
+	\begin{equation*}
+		\begin{bmatrix}
+			c & -s\\
+			s & c
+		\end{bmatrix}^{T}
+		\begin{bmatrix} a \\ b \end{bmatrix} = 
+		\begin{bmatrix} r \\ 0 \end{bmatrix}
+	\end{equation*}
+	where $ r = \sqrt{a^{2} + b^{2}} $. The solution is $ c = \frac{a}{r} $ and $ s = \frac{b}{r} $
+	
+	\setcounter{MaxMatrixCols}{11}
+	\item In $ n $ dimensions:
+	\[
+		\begin{bmatrix}
+			1 &  & &  & & & &  & & & \\
+			& \ddots & & & & & & & & &  \\
+			& & 1 &  & & & &  & & & \\
+			& &  & c &  & &  & -s &  & & \\
+			& & &  & 1 & & &  & & & \\
+			& & & & & \ddots & & & & & \\
+			& & &  & & & 1 &  & & & \\
+			& &  & s &  & &  & c &  & & \\
+			& & &  & & & &  & 1 & & \\
+			& & & & & & & & & \ddots & \\
+			& & & & & & & & & & 1 
+		\end{bmatrix}^{T} 
+		\begin{bmatrix}
+			\cross \\
+			\vdots\\
+			\cross \\
+			a \\
+			\cross\\
+			\vdots\\
+			\cross\\
+			b\\
+			\cross\\
+			\vdots\\
+			\cross
+		\end{bmatrix} 
+		= 
+		\begin{bmatrix}
+			\cross \\
+			\vdots\\
+			\cross \\
+			r \\
+			\cross\\
+			\vdots\\
+			\cross\\
+			0\\
+			\cross\\
+			\vdots\\
+			\cross
+		\end{bmatrix}	
+	\]
+	So, to zero the element at the $ i $th row and $ j $th column (\textit{assuming $ i > j $}) of a matrix $ \mat{A} $, create a Given's rotation matrix $ \mat{G}_{ij}^{T} $ with the $ j $th and $ i $th column of the $ j $th row replaced by $ \cos \phi $ and $ - \sin \phi $ and the elements in the $ j $th and $ i $th column of the $ i $th row replaced by $ \cos \phi $ and $ \sin \phi $. 
+	
+	The terms $ c $ and $ s $ are found using $ c = \frac{a}{r} $ and $ s = \frac{b}{r} $ where $ a $ is the element $ \mat{A} $'s $ j $th column in row $ j $ and $ b $ is the element $ \mat{A} $'s $ j $th column in row $ i $.
+	
+	\item To use Given rotations to QR decompose the matrix $ \mat{A} $, working from left to right column, use Givens rotations to create zeros in $ \mat{A} $'s columns from the bottom row to the top. Note that the Givens matrix is always square, but the matrix $ \mat{A} $ does not have to be.
+	
+	\item The upper-triangular matrix $ \mat{R} $ is the result of applying all of the Givens rotations to $ \mat{A} $ until $ \mat{A} $ is upper-triangular. In general, $ \mat{R} $ can be quasi-upper triangular. 
+	
+	Meanwhile, $ \mat{Q} $ is the product of all of the $ \mat{G}_{ij} $ matrices (\textit{not} the transposed $ \mat{G}_{ij}^{T} $). The left-most term in the product should be the last givens matrix calculated, and the rightmost term should be the first Givens matrix (left column, bottom row).
+\end{itemize}
+
+
+
+
+\subsubsection{Householder Reflections}
+Householder reflections are yet another way to find a matrix's $ QR $ decomposition, which is in turn, remember, used to solve a linear least squares problem.
+\begin{itemize}
+	\item A \textit{Householder reflection matrix} is a matrix of the form
+	\begin{equation*}	
+		\mat{P} = \mat{I} - \frac{2}{\bm{v}^{T} \cdot \bm{v}} \bm{v} \cdot \bm{v}^{T}
+	\end{equation*}
+	where $ \bm{w} $ is a non-zero vector in $ \R^{n} $.
+	
+	The matrix $ \mat{P} $ is symmetric and orthogonal ($ \mat{P}\mat{P}^{T} = \mat{I} $) by construction.
+	
+	\item The product $ \mat{P}\bm{x} $ represents a reflection of the vector $ \bm{x} \in \R^{n} $ about the hyperplane normal to the vector $ \bm{v} $ used to define $ \mat{P} $.
+	
+	\item The general problem: Start with a vector $ \bm{x} \in \R^{n} $ and construct a Householder reflection $ \mat{P} \in \R^{m \cross n} $ such that $ \mat{P}\bm{x} = \alpha \bm{e}_{1} $. From 
+	\begin{equation*}
+		\norm{\mat{P}\bm{x}}_{2} = \norm{\bm{x}}_{2} \qquad \text{and} \qquad \norm{\alpha \bm{e}_{1}}_{2} = \abs{\alpha}\norm{\bm{e}_{1}}_{2} = \abs{\alpha}
+	\end{equation*}
+	it follows that $\abs{\alpha} = \norm{\bm{x}}_{2} $.
+	
+\end{itemize}
+\textit{Algorithm:} To use Householder reflections to find the QR decomposition of the matrix $ \mat{A} \in \R^{m \cross n} $, we construct on Householder reflection for each of $ \mat{A} $'s columns.
+\begin{enumerate}
+	 
+	\item Start with $ \mat{A}^{(1)} = \mat{A} $ and find the vector $ \bm{v}^{(1)} $ defining $ \mat{P}^{(1)} $ such that $ \mat{P}^{(1)} \bm{a}_1 = \alpha \bm{e}_1 $ where $ \bm{a}_{1} $ is $ \mat{A}^{(1)} $'s first column. Use the formula
+	\[
+		\bm{v}^{(1)} = 
+		\begin{bmatrix}
+			\bm{a}_{1_{1}} + \operatorname{sgn}(\bm{a}_{1_{1}}) \alpha\\
+			\bm{a}_{1_{2}}\\
+			\vdots\\
+			\bm{a}_{1_{n}}
+		\end{bmatrix}
+	\]
+	Note that $ \bm{a}_{1_{1}} $ and $ \alpha $ are chosen to have the same sign to avoid cancellation i.e. to avoid $ \bm{a}_{1_{1}} + \alpha \approx 0$.
+	
+	Apply $ \mat{P}^{(1)} $ to $ \mat{A}^{(1)} $ and get a matrix $ \mat{A}^{(2)} = \mat{P}^{(1)} \mat{A}^{(1)} $ with an orthogonal first column. 
+	
+	\item Next, with the first column zeroed out, we turn our attention to $ \mat{A}^{(2)} $'s first $ (n-1) \cross (n-1) $ principle sub-matrix. Find the next vector $ \bm{v}^{(2)} $ so that the associated Householder reflection $ \tilde{\mat{P}}^{(2)} $ turns the first column of the principle sub-matrix into $ \alpha \bm{e}_{1} $ where $ \bm{e}_{1} \in \R^{n-1} $. Note that $ \tilde{\mat{P}}^{(2)} \in \R^{n-1 \cross n-1}$ because the first sub-matrix is one dimension smaller! Then construct the $ (n-1) \cross (n-1) $ matrix $ \mat{P}^{(2)} = \begin{bmatrix} 1 & 0\\ 0 & \tilde{\mat{P}}_{2} \end{bmatrix} $.
+	
+	Apply $ \mat{P}^{(2)} $ to $ \mat{A}^{(2)} $ and get a matrix $ \mat{A}^{(3)} = \mat{P}^{(2)} \mat{A}^{(2)} $ with an upper-triangular first and second column.
+	
+	\item Continue in the same manner along $ \mat{A}^{(j)} $'s principle sub-matrices for $ j = 1, \ldots, n $. You should have to find $ n $ reflections for each of $ \mat{A} $'s $ n $ columns. 
+	
+	Should look something like this: for $ j = 1, 2, \ldots, n $, $ \mat{P}^{(j)} = \begin{bmatrix}
+		\mat{I}_{j-1} & 0\\ 0 & \tilde{\mat{P}}_{j}
+	\end{bmatrix} $ where $ \mat{I}_{j-1} $ is the $ (j-1) \cross (j-1) $ identity matrix.
+	
+	\item We then apply a new $ \mat{P} $ to the next sub-matrix of $ \mat{A} $ and repeat the process. We get:
+	\[
+		\mat{P}_n \dots \mat{P}_2 \mat{P}_1 \mat{A} = 
+		\begin{bmatrix}
+			\mat{R}\\
+			\mat{0}
+		\end{bmatrix}
+	\] 
+	where $ \mat{R} $ is upper triangular. The orthogonal matrix $ \mat{Q} $ is
+	\begin{equation*}
+		\mat{Q} = (\mat{P}_{n} \mat{P}_{n-1} \dots \mat{P}_{1})^{T} = \dots = \mat{P}_{1} \mat{P}_{2} \dots \mat{P}_{n}
+	\end{equation*}
+	where the last equality uses the orthogonality of the $ \mat{P} $ reflection matrices.
+	
+	\item The computational complexity of using Householder reflections to solve an over-determined system found in the linear least squares problem is approximately $ 2mn^{2} - \frac{2}{3} n^{3} $.
+	
+	The computational complexity of using Householder reflections to take the QR decomposition of an $ n \cross n $ matrix is approximately $ n^{3} + n^{2} $.
+
+	
+	
+\end{enumerate}
+
+\subsubsection{Comparison of Computational Complexities}
+To solve the over-determined system $ \mat{A} \bm{x} = \bm{b} $ where $ \mat{A} \in \R^{m \cross n}, \bm{x} \in \R^{n} $ and $ \bm{b} \in R^{m} $ where $ m \gg n $, for example like in the linear least squares problem.
+\begin{itemize}
+	\item Solving the normal system takes $ mn^{2} $ but is often unstable
+	\item Modified Gram Schmidt is $ 2mn^{2} $; this is more stable than the normal system
+	\item Givens takes $ 3mn^{2} - n^{3} $ and is quite stable
+	\item Householder takes $ 2mn^{2} - \frac{2}{3} n^{3}  $
+\end{itemize}
+To solve the square system $ \mat{A} \bm{x} = \bm{b} $ where $ \mat{A} \in \R^{n \cross n} $ and $ \bm{x}, \bm{b} \in R^{n} $.
+\begin{itemize}
+	\item LU decomposition takes $ \frac{2}{3}n^{3} $
+	\item Givens takes $ 2n^{3} $
+	\item Householder takes $ \frac{4}{3}n^{3} $.
+\end{itemize}
+Although LU is faster, Householder and Givens are more stable.
+
+
+\subsubsection{Singular Decomposition}
+\begin{itemize}
+	\item For all matrices $ \mat{A} \in \R^{m \cross n} $ where $ m \geq n $ there exists a \textit{singular decomposition} 
+	\begin{equation*}
+		\mat{A} = \mat{U} \mat{\Sigma}\mat{V}^{T}
+	\end{equation*}
+	where $ \mat{U} \in \R^{m \cross m}$ and $ \mat{V} \in \R^{n \cross n} $ are orthogonal and $ \mat{\Sigma} \in \R^{m \cross n} $ is a quasi-diagonal matrix (basically diagonal, but not square. Nonzero elements on what would be the main diagonal and then a few totally zero rows at the bottom) with elements $ \sigma_{1} \geq \sigma_{2} \geq \cdots \geq \sigma_{n} $. The elements $ \sigma_{j} $ are called \textit{singular values}. The columns of the matrix $ \mat{U} $ are called left-singular vectors and the columns of $ \mat{V} $ are called right-singular vectors.
+	
+	\item For $ \mat{A} \in \R^{m \cross n} $ for which $ \rank \mat{A} = n $ with singular decomposition $ \mat{A} = \mat{U} \mat{\Sigma}\mat{V}^{T} $, the minimum $ \norm{\mat{A} \bm{x} - \bm{b}}_{2} $ occurs for
+	\begin{equation*}
+		\bm{x} = \sum_{j=1}^{n} \frac{\bm{u}_{j}^{T}\bm{b}}{\sigma_{j}}\bm{v}_{j}
+	\end{equation*}
+	
+\end{itemize}
+
+
+
+\iffalse
+\subsection{Example: Linearization}
+Just an example from vaje.
+
+
+\begin{enumerate}
+	\item Linearize the model if necessary, using inverse functions. The function should be linear in the fit parameters.
+	
+	\item Normalize the scale of the dependent variable, typically to a range from $ 0 $ to $ 1 $. To do this, if the original variable was $ x $, then the new variable $ t $ is found with
+	\begin{align*}
+		t = \frac{x - x_i}{x_f - x_i}
+	\end{align*}
+	where $ x_i $ and $ x_f $ are the smallest and largest values of $ x $, respectively.
+	
+	\item Write the linearized system in matrix form
+	\begin{align*}
+		\mat{A} = \bm{x} \bm{b}
+	\end{align*}
+	where 
+	\begin{itemize}
+		\item $ A $ is a $ n \cross m $ matrix consisting of the parameters' coefficients in terms of the \textit{linearized} data points
+		
+		\item $ \bm{b} $ is a $ n \cross 1 $ column vector containing the linearized function's value at each data point.
+		
+		\item $ \bm{x} $ is a $ m \cross 1 $ column vector of the unknown fit parameters.
+	\end{itemize}
+	
+	\item We then solve the system $ \mat{A} \bm{x} = \bm{c} $ such that the expression $ \displaystyle{\min_{x}\norm{\mat{A}\bm{x} - \bm{c}}_{2}^2 } $ is minimized. 
+	
+	The method we know how to use is a normal system. 
+	The system we get in that case is $ \mat{A}^{T}\mat{A} \bm{x} = \mat{A}^{T}\bm{c} $ and we can solve it, for example, with the Cholesky decomposition.
+\end{enumerate}
+\fi
+
+\section{Eigenvalues and Eigenvectors}
+
+\subsection{Some Eigenvalue Theory}
+\begin{itemize}
+	\item The vector $ \bm{x} \in \mathbb{C}^{n} $ and scalar $ \lambda \in \mathbb{C}  $ is called an \textit{eigenvector-eigenvalue pair} of the matrix $ \mat{A} \in \mathbb{C}^{n \cross n} $ if $ \mat{A} \bm{x} = \lambda \bm{x} $. The scalar $ \lambda $ is the eigenvalue and the vector $ \bm{x} $ is the corresponding right-sided eigenvector. 
+	
+	\item The vector $ \bm{y} \in \mathbb{C}^{n} $ is a \textit{left eigenvector} of $ \mat{A} $ if $ \bm{y}^{H} \mat{A} = \lambda \bm{y}^{H}$ where $ \cdot^{H} $ denotes the hermitian transpose. The eigenvalue $ \lambda $ is the same for both the right and left eigenvectors.
+	
+	\item The eigenvectors of a symmetric matrix $ \mat{A} \in \R^{n \cross n} $ corresponding to different eigenvalues $ \lambda, \mu \in  \C$ are mutually orthogonal.
+	
+	\item Formally, the eigenvalues of a matrix $ \mat{A} \in \R^{n \cross n} $ are the zeros of the matrix's associated \textit{characteristic polynomial} $ p_{\mat{A}}(\lambda) = \det(\mat{A} - \lambda \mat{I}) $. However. there are more efficient ways to find a matrix's eigenvalues than from the zeros of the characteristic polynomial. 
+	
+	Eigenvalue-finding algorithms can be further optimized for sparse and symmetric matrices.
+	
+	\item For every square matrix $ \mat{A} \in \C^{n \cross n} $ there exist unitary matrix $ \mat{Q} \in \C^{n \cross n} $ and upper triangular matrix $ \mat{U} \in \C^{n \cross n} $, called a \textit{Schur form} of $ \mat{A} $, such that $ \mat{Q}^{H}\mat{A} \mat{Q} = \mat{U} $. The decomposition $ \mat{A} = \mat{Q} \mat{U} \mat{Q}^{H}  $ is called the \textit{Schur decomposition} of $ \mat{A} $.
+	
+	Analogously, for every real square matrix $ \mat{A} \in \R^{n \cross n} $ there exists an orthogonal matrix $ \mat{Q} \in \R^{n \cross n} $ and (possibly quasi-) upper triangular matrix $ \mat{U} \in \R^{n \cross n} $ such that $ \mat{Q}^{T}\mat{A} \mat{Q} = \mat{U} $. $ \mat{U} $ is quasi-diagonal if $ \mat{A} $ has complex eigenvalues, in which case the corresponding diagonal element is replaced by a $ 2 \cross 2 $ block.
+\end{itemize}
+
+
+
+\subsection{Power Method and Reduction}
+
+\subsubsection{The Power Method}
+The power method reliably finds a matrix's largest eigenvalue by absolute value.
+\begin{itemize}
+	\item The \textit{dominant eigenvalue} of a matrix is the matrix's largest eigenvalue by absolute value.
+
+	\item \textit{Algorithm:} Starting with a square matrix $ \mat{A} \in \R^{n \cross n} $, choose an initial vector $ \bm{y}_0 \in \R^{n} $ (which can be random in practice) and a tolerance $ \epsilon $. For $ k = 0, 1, \dots $ calculate
+	\begin{equation*}
+	 	\bm{y}_{k+1} = \frac{\mat{A}\bm{y}_{k}}{\norm{\mat{A}\bm{y}_{k}}} 
+	\end{equation*}
+	and stop iteration when $ \norm{\mat{A} \bm{y}_{k} - \rho_k \bm{y}_k} \leq \epsilon $, where $ \rho(\bm{x}, \mat{A}) = \frac{\bm{x}^{T}\mat{A} \bm{x}}{\bm{x}^{T}\bm{x}} $. 
+	
+	$ \rho_k $ is the approximation for $ \mat{A} $'s dominant eigenvalue and $ \bm{y}_{k} $ is the approximation for an eigenvector corresponding to $ \mat{A} $'s dominant eigenvalue.
+	
+	The normalization avoids the expression $ \bm{y}_{k+1} = \mat{A}^{k}\bm{y}_{0} $ diverging for large $ k $.
+	
+	\item \textit{On convergence:} The power method converges to a dominant eigenvalue-eigenvector pair as long as the initial vector $ \bm{y}_{0} $ has a non-zero component in the position corresponding to the dominant eigenvalue's direction. As long as $ \bm{y}_{0} $ has non-zero elements, the power method converges.
+
+	In practice, because of numerical error, we never actually encounter exact zeros in computer arithmetic, and numerical error would theoretically recover the convergence process even for a zero component in the position of the dominant eigenvalue.
+	
+	\item \textit{On stopping iteration:} The goal is to stop when $ \bm{y}_k $ and $ \bm{y}_{k+1} $ have an arbitrary similar \textit{direction}. Instead of comparing $ \bm{y}_k $ and $ \bm{y}_{k+1} $ with a norm, we use the Rayleigh quotient, defined for the $ \bm{x} \in \R^{n} $ and matrix $ \mat{A} \in \R^{n \cross n} $ as
+	\begin{equation*}
+		\rho(\bm{x}, \mat{A}) = \frac{\bm{x}^{T}\mat{A} \bm{x}}{\bm{x}^{T}\bm{x}}
+	\end{equation*}
+	When $ \bm{x} $ is close to one of $ \mat{A} $'s eigenvectors, $ \rho $ is close to the corresponding eigenvalue.
+	
+	We stop power iteration when $ \norm{\mat{A} \bm{y}_{k} - \rho_k \bm{y}_k} \leq \epsilon $ in which case $ \rho_k $ is the approximation for $ \mat{A} $'s largest eigenvalue.
+	
+	\item \textit{How the algorithm works:} A very rough idea is that because dominant eigenvalue is larger than the other eigenvalues, the product $ \bm{y}_{k+1} = \mat{A}^{k}\bm{y}_{0} $ converges to a corresponding eigenvector after many multiplications.
+	
+	
+	\item Power iteration is a very simple algorithm but may converge slowly. The most time-consuming operation is the matrix multiplication step, so the algorithm can be implemented efficiently for sparse matrices where multiplication is simple. 
+	
+	The order of convergence is linear, and the method converges faster when the largest eigenvalue is much larger than the second-largest.
+	
+	
+\end{itemize}
+ 
+\subsubsection{Reduction}
+\begin{itemize}
+	\item Reduction allows us to use power iteration to find all of a matrix's eigenvalues, not just the largest one. Suppose we've use the power method to find $ \mat{A} $'s dominant eigenvalue-eigenvector pair $ \lambda_{1}, \bm{x}_{1} $. 
+	
+	The general idea of reduction is to modify $ \mat{A} $ by somehow ``removing'' the dominant eigenvalue. We could then use power method on the modified matrix to find $ \mat{A} $'s second-largest eigenvalue, and repeat the reduction-power iteration process for all of $ \mat{A} $'s eigenvalues.
+	
+	Formally, the goal of reduction is to create a new matrix $ \mat{B} $ whose eigenvalues match all of $ \mat{A} $'s eigenvalues except the dominant eigenvalue, which should be replaced by zero. With the dominant eigenvalue replaced by zero, there is no chance of it being found again by the power method (because every other eigenvalue will be larger in magnitude.)
+	
+\end{itemize}
+
+\subsubsection{Reduction of Symmetric Matrices} 
+Reduction is easy for symmetric matrices; we take advantage of the fact that symmetric matrices have orthogonal eigenvectors. Reduction of symmetric matrices is sometimes called \textit{Hotelling deflation}. 
+\begin{itemize}
+	\item For a symmetric matrix $ \mat{A} \in \R^{n\cross n} $ with a dominant eigenvalue-eigenvector pair $ \lambda_1, \bm{x}_1 $, where $ \bm{x}_{1} $ \textit{must be normalized} (i.e. $ \norm{\bm{x}_{1}}_{2} = 1 $) the formula for the reduced matrix $ \mat{B} $ is then
+	\begin{equation*}
+		\mat{B} = \mat{A} - \lambda_{1} \bm{x}_1 \bm{x}_{1}^T
+	\end{equation*}
+	In this case, if $ \lambda_{j}, \bm{x}_{j} $ are $ \mat{A} $'s eigenvalue-eigenvector pairs for $ j = 1, \dots, n $ with $ \lambda_1, \bm{x}_1 $ the dominant pair, then $ \mat{B} \bm{x}_{1} = \bm{0} $ and $ \mat{B}\bm{x}_{j} = \lambda_{j} \bm{x}_{j}  $ for $ j \neq 1 $.
+	
+	\item \textit{Quick Proof:} To show $ \mat{B} \bm{x}_{1} = \bm{0} $, use the definition of $ \mat{B} $, the eigenvalue identity $ \mat{A} \bm{x}_{1} = \lambda_{1}\bm{x}_{1}$, and the condition $ \norm{\bm{x}_{1}}_{2} = 1  $ to get
+	\begin{align*}
+		\mat{B}\bm{x}_{1} &= \mat{A}\bm{x}_{1} - \lambda_{1} (\bm{x}_1 \bm{x}_{1}^T)\bm{x}_{1} = \lambda_{1}\bm{x}_{1} - \lambda_{1} \bm{x}_1 (\bm{x}_{1}^T\bm{x}_{1})\\
+		& = \lambda_{1}\bm{x}_{1} - \lambda_{1} \bm{x}_1 \left (\norm{\bm{x}_{1}}_{2}\right )  = \lambda_{1}\bm{x}_{1} - \lambda_{1} \bm{x}_1  = 0
+	\end{align*}
+	To show $ \mat{B}\bm{x}_{j} = \lambda_{j} \bm{x}_{j}  $ for $ j \neq 1 $, use the fact that symmetric matrices have orthogonal eigenvectors, so $ \bm{x}_{i} \cdot \bm{x}_{j} = \delta_{i, j} $ for the eigenvectors $ \bm{x}_{i, j} $, meaning $ \bm{x}_{1} \cdot \bm{x}_{j} = 0 $ for $ j \neq 1 $.
+	\begin{align*}
+		\mat{B}\bm{x}_{j} &= \mat{A}\bm{x}_{j} - \lambda_{1} (\bm{x}_1 \bm{x}_{1}^T)\bm{x}_{j} = \lambda_{j}\bm{x}_{j} - \lambda_{1} \bm{x}_1 (\bm{x}_{1}^T\bm{x}_{j})\\
+		& = \lambda_{j}\bm{x}_{j} - \lambda_{1} \bm{x}_1 (0) = \lambda_{j}\bm{x}_{j}
+	\end{align*}	
+	
+	\item Applying the power method to $ \mat{B} $ would produce $ \mat{A} $'s second-largest eigenvalue-eigenvector pair. Because $ \mat{B}\bm{y} = \mat{A}\mat{y} - \lambda_{1}(\bm{x}_{1}^{T}\bm{y})\bm{x}_{1}$, we don't need to explicitly calculate $ \mat{B} $.
+	
+
+\end{itemize}
+
+\subsubsection{Reduction of Non-Symmetric Matrices}
+\begin{itemize}
+	\item For an arbitrary real matrix $ \mat{A} \in \R^{n\cross n} $ with a dominant eigenvalue-eigenvector pair $ \lambda_1, \bm{x}_1 $, where $ \bm{x}_{1} $ \textit{must be normalized} (i.e. $ \norm{\bm{x}_{1}}_{2} = 1 $) the formula for the reduced matrix $ \mat{B} $ is
+	\begin{equation*}
+		\mat{B} = \mat{Q}\mat{A}\mat{Q}^{T} 
+	\end{equation*}
+	where the orthogonal matrix $ \mat{Q} $ is a Householder reflection mapping $ \bm{x}_{1} $ to $ \alpha \bm{e}_{1} $, i.e. $ \mat{Q}\bm{x}_1  = \alpha \bm{e}_1$. In this case, $ \mat{B} $ has the form
+	\begin{equation*}
+		\mat{B} = \begin{bmatrix}
+			\lambda_{1} & \bm{b}^{T}\\
+			\bm{0} & \mat{C}
+		\end{bmatrix}
+	\end{equation*}
+	for some vector $ \bm{b} \in \R^{n - 1} $ and matrix $ \mat{C} \in \R^{n-1 \cross n-1}  $ whose eigenvalues match $ \mat{A} $'s eigenvalues $ \lambda_{2}, \ldots, \lambda_{n} $.
+	
+	
+\end{itemize}
+
+
+
+\subsubsection{Inverse Iteration}
+\begin{itemize}
+	\item Inverse iteration is used to find the \textit{smallest} eigenvalue-eigenvector pair of a matrix $ \mat{A} \in \R^{n \cross n} $. Inverse iteration works on the principle of the eigenvalue-eigenvector pair $ \lambda_j, \bm{x}_j $ of the matrix $ \mat{A} $ corresponding to the pair $ \frac{1}{\lambda_j}, \bm{x}_j $ of $ \mat{A} $'s inverse.
+	
+	\item \textit{Quick proof:} For an arbitrary eigenvalue-eigenvector pair $ \lambda_{i}, \bm{x}_{i} $ from the matrix $ \mat{A} $, start with the trivial equality $ \bm{x}_{i} = \bm{x}_{i} $, use the fact that $ \mat{A}^{-1}\mat{A} \bm{x}_{i} = \mat{I} \bm{x}_{i} = \bm{x}_{i}$ , and apply the eigenvalue property $ \mat{A}\mat{x}_{i} = \lambda_{i}\bm{x}_{i}  $
+	\begin{equation*}
+		\bm{x}_{i} = \bm{x}_{i} \implies \mat{A}^{-1}\mat{A} \bm{x}_{i} = \bm{x}_{i} \implies \mat{A}^{-1}\lambda_{i}\bm{x}_{i} = \bm{x}_{i} \implies \mat{A}^{-1}\bm{x}_{i} = \frac{1}{\lambda_{i}}\bm{x}_{i} 
+	\end{equation*}
+	If follows that $ \mat{A} $'s eigenvalue-eigenvector pair $ \lambda_i, \bm{x}_i $ corresponds to the pair $ \frac{1}{\lambda_i}, \bm{x}_i $ of $ \mat{A} $'s inverse $ \mat{A}^{-1} $.
+	
+	\item \textit{Algorithm:} To find the \textit{smallest} eigenvalue-eigenvector pair of a matrix $ \mat{A} \in \R^{n \cross n} $, use modified power iteration on the inverse matrix $ \mat{A}^{-1} $ as follows:
+	
+	For efficiency (to avoid calculating the inverse), iterate using $ \bm{y}_{k+1} $ by solving the system $ \mat{A} \bm{y}_{k+1} = \bm{y}_{k} $ instead of proceeding directly with $ \bm{y}_{k+1} = \mat{A}^{-1} \bm{y}_{k} $. 
+	
+	The power iteration will produce the eigenvalue $ \lambda_{j} $, the largest eigenvalue of $ \mat{A}^{-1} $. $ \mat{A} $'s smallest eigenvalue is then $ \frac{1}{\lambda_{j}} $.
+	
+	
+\end{itemize}
+
+
+
+
+\subsubsection{QR Iteration}
+QR iteration is the most efficient way to find all eigenvalues of a general, non-symmetric square matrix $ \mat{A} \in \R^{n \cross n} $.
+\begin{itemize}
+	\item \textit{Algorithm:} Start with $ \mat{A}_0 = \mat{A} $. For $ k = 0, 1, \dots $ 
+	\begin{enumerate}
+		\item Find the QR decomposition $ \mat{A}_k = \mat{Q}_k \mat{R}_k $. 
+		\item Calculate the next matrix with $ \mat{A}_{k+1} = \mat{R}_k \mat{Q}_k $
+	\end{enumerate}
+		
+	\item If $ \mat{A} $ has only real eigenvalues, then for large $ k $, $ \mat{A}_k $ becomes upper-triangular and $ \mat{A}_{k} $'s diagonal entries approach $ \mat{A} $'s eigenvalues. If $ \mat{A} $ has unique eigenvalues by absolute value, $ \mat{A} $ converges to its Schur form.
+	
+	If $ \mat{A} $ has $ m $ complex eigenvalues (where $ m < n $), then for large $ k $, $ \mat{A}_k $ becomes quasi-upper triangular, $ \mat{A}_{k} $'s diagonal entries approach $ \mat{A} $'s real eigenvalues, and a $ m \cross m $ sub-matrix whose eigenvalues are $ \mat{A} $'s complex eigenvalues remains on $ \mat{A}_{k} $'s diagonal.
+	
+	
+\end{itemize}
+
+
+\subsection{Eigenvalues of Symmetric Matrices}
+Eigenvalue methods for symmetric methods make use of the principle that every symmetric matrix is orthogonally similar to a tridiagonal matrix. The methods in this section also assume a priori the tridiagonal matrix is irreducible, i.e. has no zeros on upper tridiagonal. If it had zeros, the matrix could be split into two principle sub-matrix blocks to eliminate the zero while preserving the eigenvalues.
+
+\subsubsection{Tridiagonalization}
+\begin{itemize}
+	\item Because we can change any symmetric matrix $ \mat{A} \in \R^{n \cross n}$ into a tridiagonal matrix $ \mat{T} = \mat{P}\mat{A}\mat{P}^{T} $ with similarity transformations.
+	
+	\item More so, as long as $ \mat{A} $ is symmetric $ \mat{T} $ is also symmetric, so we assume for this section that we start each method with a symmetric tridiagonal matrix. 
+	
+\end{itemize}
+
+
+\subsubsection{Sturm Sequence}
+\begin{itemize}
+
+	\item Start with the tridiagonal, irreducible, symmetric matrix $ \mat{T} $ of the form
+	\[
+		\mat{T} = \begin{bmatrix}
+			a_1 & b_1 &  &  &\\
+			b_{1} & a_1 & b_2 &  &\\
+			& \ddots & \ddots & \ddots &\\
+			& & b_{n-2} & a_{n-1} & b_{n-1}\\
+			& & & b_{n-1} & a_{n}
+		\end{bmatrix}
+	\]
+	and let $ \mat{T}_j $ be the principle $ j \cross j $ sub-matrix of $ \mat{T} $. $  \mat{T}_j $'s characteristic polynomial is
+	\begin{equation*}
+		f_{j}(\lambda) = \det(\mat{T}_j - \lambda \mat{I}_{j}) 
+	\end{equation*}
+	where $ f_{j} $ is a Sturm-sequence as defined immediately below.
+	
+	\item Formally, sequence of polynomials $ p_j $ for $ j = 0, 1, \dots, n $ is a \textit{Sturm sequence} if
+	\begin{enumerate}
+		\item $ f_{0}(\lambda) \neq 0 $ for all $ \lambda $, i.e. the first polynomial in the sequence has no zeros
+		\item In the interior of the sequence (for $ j < n $), if $ f_{j}(\lambda_0) = 0$, then  $ f_{j-1}(\lambda_0) \cdot f_{j+1}(\lambda_0) < 0$.
+		
+		\item If $ f_{n}(\lambda_0) = 0 $, then $ f_{n-1}(\lambda_0) \cdot f'_{n}(\lambda_0) < 0$.
+	\end{enumerate}
+	
+	\item We can recursively construct the characteristic polynomials of all of the principle sub-matrices $ \mat{T}_{j} $ in terms of the elements $ a_{j}, b_{j} $ with the Sturm function sequence
+	\begin{equation*}
+		f_{j+1}(\lambda) = (a_{j+1} - \lambda)f_{j}(\lambda) - b_{j}^2f_{j-1}(\lambda)
+	\end{equation*}
+	where $ f_{0}(\lambda) = 1 $ and $ f_{1}(\lambda) = a_1 - \lambda $. The Sturm sequence is an easy way to construct $ \mat{T} $'s characteristic polynomial $ f_{j}(\lambda) = \det(\mat{T}_j - \lambda I)  $ instead of by definition involving a determinant.
+	
+	Note that if $ \lambda_0 $ is root of $ f_{n}(\lambda) $, then the last polynomial in the Sturm sequence equals zero when evaluated at $ \lambda_0 $. This is important for determining if $ \lambda_0 $ is an eigenvalue of $ \mat{T} $.
+	
+	\item \textit{Note:} $ \mat{T} $ has unique eigenvalues because all zeros of the Sturm sequence are simple zeros. More generally, any irreducible tridiagonal symmetric matrix has unique eigenvalues.
+	
+	\item \textit{Lemma: On Counting Sign Agreements}\\
+	For a chosen $ \lambda_0 $, let $ s(\lambda_0) $ denote the number of sign agreements between successive terms in the sequence $ f_{s}(\lambda_0) $ for $ s = 0, 1, \dots, n $, using the following ruls
+	\begin{itemize}
+		\item Two adjacent terms with the same sign count as one sign agreement
+		\item Interior zeros count as one sign agreement, zeros at the sequence's border do not.
+		\item Some examples:
+		\begin{align*}
+			& + \ +  && \text{1 sign agreement}\\
+			& - \ + \ + \ 0 \ - \ -  && \text{3 sign agreements}\\
+			&+ \ - \ - \ +  \ - \ + \ + \ - \ 0 && \text{2 sign agreements}\\
+			&+ \ + \ - \ -  \ + \ + \ 0 \ + \ - \ - && \text{5 sign agreements}
+		\end{align*}
+		
+	\end{itemize}
+	
+	\item \textit{Theorem:} The number of sign agreements $ s(\lambda_0) $ is the number of $ \mat{T} $'s eigenvalues that are strictly larger than $ \lambda_0 $. (In the usual sense, including sign, not larger by absolute value).
+		
+	\item \textit{Algorithm:}
+	We choose an initial value $ \lambda^{(0)}_0 $ and calculate the number of sign agreements $ s^{(0)}(\lambda^{(0)}_0) $ as described above. Starting with $ j = 0 $:
+	\begin{enumerate}
+		
+		\item If $ f_{n}(\lambda^{(j)}_0) = 0 $, then $ \lambda^{(j)}_0 $ is an eigenvalue of $ \mat{T} $, and we end the method.
+		
+		\item In the more likely case $ f_{n}(\lambda^{(j)}_0) \neq 0 $, proceed with bisection method logic. Choose a larger guess $ \lambda_0^{(j+1)} $ on the next step. If the number $ u(\lambda_0^{(j+1)}) $ changes by 1, then there is precisely one eigenvalue between $ \lambda_0^{(j)} $ and $ \lambda_0^{(j+1)} $. 
+	\end{enumerate}
+	The guesses $ \lambda^{(j)}_0 $ are approximations for $ \mat{T} $'s eigenvalues, and the sign agreements $ s( \lambda^{(j)}_0) $ are a reference for how close the guesses are to the true eigenvalues. If $ s( \lambda_{j} - \epsilon) = j $ and $ s( \lambda_{j} + \epsilon) = j -1 $, the $ \lambda_{j} $ is an approximation for $ \mat{T} $'s $ j $th eigenvalue.
+	
+	\item \textit{On Initial Guesses} How to choose the initial guess for $ \lambda_0 $ for efficient convergence? Use the infinity norm of $ \mat{A} $ as a reference to establish range in which eigenvalues fall.
+	\begin{equation*}
+		\operatorname{eig}(A) \in \big [-\norm{\mat{A}}_{\infty}, + \norm{\mat{A}}_{\infty}\big ]
+	\end{equation*}
+	Choose a in initial guess $ \lambda_{0}^{(0)} $ in the range  $ [-\norm{\mat{A}}_{\infty}, + \norm{\mat{A}}_{\infty}\big ] $.
+
+\end{itemize}
+
+\subsection{Jacobi Iteration for Eigenvalues}
+\begin{itemize}
+	\item Jacobi iteration uses the principle of all symmetric matrices being diagonalizable, which the diagonal elements precisely the matrix's eigenvalues.
+	
+	\item Jacobi iteration uses left and right Givens rotations to transform the symmetric matrix $ \mat{A} \in \R^{n \cross n} $ into a diagonal form; the diagonal elements are $ \mat{A} $'s eigenvalues.
+	
+	The goal is to find $ \mat{R} = \begin{bmatrix}
+		c & - s \\ s & c
+	\end{bmatrix} $ such that application to a symmetric matrix yields
+	\begin{equation*}
+		\mat{R}^{T} 
+		\begin{bmatrix}
+			a_{ii} & a_{ij}\\
+			a_{ij} & a_{jj}
+		\end{bmatrix}
+		\mat{R} = 
+		\begin{bmatrix}
+			\lambda_{1} & 0\\
+			0 & \lambda_{2}
+		\end{bmatrix}
+	\end{equation*}
+	In this case, the Givens rotation matrix values are
+	\begin{equation*}
+		c = \frac{1}{\sqrt{1 + t^{2}}} \qquad s = ct
+	\end{equation*}
+	where
+	\begin{equation*}
+		t = \frac{\operatorname{sgn}(\tau)}{\abs{\tau} + \sqrt{1 + \tau^{2}}} \qquad \tau = \frac{a_{ii}- a_{jj}}{2a_{ij}}
+	\end{equation*}
+	For matrices larger than $ 2 \cross 2 $ the Givens rotation matrix is a modified identity matrix with the 2x2 Givens matrix plugged on the diagonal. To zero the element in $ \mat{A} \in \R^{n \cross n} $ at the point $ (i, j) $, (assuming $ i > j $) modify the $ n \cross n $ identity matrix by plugging in $ c $ at $ (j, j) $, $ -s $ at $ (j, i) $, $ s $ at $ (i, j) $, and $ c $ at $ (i, i) $, as in the Givens rotation section.
+	
+	
+	\item \textit{Definition:} The \textit{offset value} of a matrix $ \mat{A} \in \R^{n \cross } $ is $ \mat{A} $'s Frobenius norm excluding the diagonal elements. 
+	\begin{equation*}
+		\operatorname{off}(\mat{A}) = \sqrt{\sum_{j\neq k}^{n}\abs{a_{jk}}^2 } 
+	\end{equation*}
+	The offset value measures how close to diagonal a matrix is. The closer $ \operatorname{off}(\mat{A}) $  is to zero, the closer $ \mat{A} $ is to being diagonal.
+		
+	
+	\item In Jacobi iteration, $ \mat{A} $'s offset value decreases after each Givens rotation. This makes sense, because each iteration zeros a non-diagonal element. For Jacobi iteration:
+	\begin{equation*}
+		\left(\operatorname{off}\mat{A}^{(n+1)}\right)^2 = \left(\operatorname{off}\mat{A}^{(n)}\right)^2 - 2a^2_{ij}
+	\end{equation*}
+	where $ a_{ij} $ is the off-diagonal element that was made to vanish with the Given's rotation on step $ n $.
+	
+	
+	\item \textit{Algorithm Idea:} To find the eigenvalues of a symmetric matrix $ \mat{A} \in \R^{n \cross n} $ with Jacobi iteration, perform the above Givens rotations and turning non-diagonal elements $ a_{ij} $ into zero until the offset value $ \operatorname{off}(A) $ becomes smaller than chosen tolerance $ \epsilon $.
+	
+	Once $ \mat{A} $ is nearly diagonal, the diagonal elements approximate $ \mat{A} $'s eigenvalues. 
+	
+	
+	\item In passing, note there are different ways to choose which off-diagonal element to make zero in Jacobi iteration. Some methods are
+	\begin{itemize}
+		\item Classical method: zero the largest off-diagonal element by absolute value
+		\item Cyclic method: zero all off-diagonal elements in a chosen order
+		\item Prague method: zero all off-diagonal elements in a chosen order, as long as the element is larger by absolute value than a small boundary value.
+	\end{itemize}
+	
+\end{itemize}
+
+
+
+
+\section{Polynomial Interpolation}
+
+\subsection{Introduction}
+\begin{itemize}
+	\item Given points $ (x_i, y_i) $ where $ i = 0, 1, \dots, n $ and no two $ x_i $ values are equal, the goal is to find a polynomial of lowest possible degree such that
+	\begin{equation*}
+		p(x_i) = y_i
+	\end{equation*}
+	for all $ i $. In other words, the polynomial must pass through all points in the data set. 
+	
+	\item Polynomial interpolation rests on the following theorem: for the data points $ (x_i, y_i) $ where $ i = 0, 1, \dots, n $ and no two $ x_i $ values are equal, there exists a unique interpolation polynomial $ p_{n} $ of degree less than or equal to $ n $.
+	
+	\item The interpolation polynomial is generally used to estimate values the data would take on at points $ x \neq x_{i} $.
+	
+	\item In practice, classic interpolation polynomials are useful only for small $ n $; for larger sets of data points, \textit{spline interpolation} is used instead, in which low-order polynomials are ``glued'' together into a piecewise polynomial called a spline.
+\end{itemize}
+
+
+\subsubsection{Classic Form}
+Find a polynomial of degree $ \leq n $ passing through the data points $ (x_{i}, y_{i}) $, $ i = 0, 1, \ldots, n $.
+\begin{itemize}
+	\item The interpolation polynomial is written in standard form 
+	\begin{equation*}
+		p_n(x) = a_n x^n + \dots + a_1 x + a_0
+	\end{equation*}
+	The goal is to find the values of the coefficients $ a_{0}, a_{1}, \ldots, a_{n} $ for which $ p_{n} $ passes through $ (x_{i}, y_{i}) $.
+	
+	\item Plug all $ (n+1) $ data points $ (x_i, y_i) $ into the polynomial $ p_{n} $ to get a system of $ n + 1 $ linear equations for the coefficients $ a_{i} $. This system takes the form
+	\begin{align*}
+		a_n x_0^n + \dots + a_1 x_0 + a_0 &= y_0\\
+		a_n x_1^n + \dots + a_1 x_1 + a_0 &= y_1\\
+		&\ \, \vdots\\
+		a_n x_n^n + \dots + a_1 x_n + a_0 &= y_n
+	\end{align*}
+	
+	\item The system of equations for the coefficients can be written in matrix form
+	\begin{equation*}
+		\mat{V}\bm{a} = \bm{y}, \qquad \qquad \mat{V} = 
+		\begin{bmatrix} 
+			x_{0}^{n} & x_{0}^{n-1} & \cdots & x_{0} & 1\\
+			x_{1}^{n} & x_{1}^{n-1} & \cdots & x_{1} & 1\\
+			\vdots & \vdots & \ddots & \vdots & \vdots\\
+			x_{n}^{n} & x_{n}^{n-1} & \cdots & x_{n} & 1\\
+		\end{bmatrix}
+	\end{equation*}
+	where $ \mat{V} $ is the matrix of $ x_{i} $ values, $ \bm{a} $ is unknown vector of coefficients and $ \bm{y} $ are the known function values. $ \mat{V} $ is often called the \textit{Vandermonde matrix}.
+	
+	\item The Vandermonde matrix is non-singular ($ \det \mat{V} = \prod_{i < j} (x_{i} - x_{j}) \neq 0$) since $ x_{i} \neq x_{j} $ for $ i \neq j $, so the system has a unique solution for the vector of coefficients $ \bm{a} $.
+	
+	
+	\item The classical method of finding the $ (n+1) $ polynomial coefficients $ a_{1} $ directly from a system of linear equation only works for small $ n $. Problems are:
+	\begin{enumerate}
+		\item Calculation quickly grows to costly and cumbersome
+		\item Large sensitivity values $ \kappa $ for large $ n $
+		\item Interpolation polynomial begins to oscillate wildly between subsequent points for large $ n $ (Runge's phenomenon)
+	\end{enumerate}
+	Solution is to use splines. In this case the interpolant is a chain of several lower-degree polynomials.
+\end{itemize}
+
+
+\subsubsection{Lagrange Polynomial Interpolation}
+Instead of using the standard polynomial basis $ 1, x, x^{2}, \ldots, x^{n} $, Lagrange interpolation constructs the interpolation polynomial using a basis of \textit{Lagrange polynomials} $ l_{n} $.
+\begin{itemize}
+	\item Given data points $ (x_i, y_{i}), i = 0, 1, \dots, n $ we construct the Lagrange polynomials via
+	\begin{equation*}
+		l_{i}(x) = \prod_{j \neq i}^{n}\frac{x - x_j}{x_i - x_j}
+	\end{equation*}
+	The polynomial $ l_{i} $ is constructed to have zeros at all $ x_j $ values except at $ x_i $, for which $ l_{i}(x_{i}) = 1 $.
+	
+	\item The interpolation polynomial $ p_{n} $ is a linear combination of the Lagrange polynomials
+	\begin{equation*}
+		p_n(x) = \sum_{i=0}^{n}y_i l_{i}(x)
+	\end{equation*}
+	Because the $ l_{i} $ are constructed so $ l_{i}(x_{j}) = \delta_{i, j}$, the polynomial equals $ y_{i} $ at each $ x_{i} $.
+	
+	\item In terms of $ \omega(x) = (x - x_0)\cdots(x- x_n)$, then the Lagrange polynomials are
+	\begin{equation*}
+		l_{i} = \frac{\omega(x)}{(x-x_i)\omega'(x_i)}
+	\end{equation*}
+	
+	\item \textit{Error Bound:} Consider the function $ f \in C^{n+1}([a, b]) $ and the unique points $ x_{0}, x_{1}, \ldots, x_{n} \in [a, b] $. For each $ x \in [a, b] $ there exists $ \xi \in [a, b] $ for which
+	\begin{equation*}
+		f(x) - p_n(x) = \frac{f^{(n+1)}(\zeta)}{(n+1)!}\omega(x)
+	\end{equation*}
+	This theorem provides a theoretical bound to the error of the interpolation polynomial for estimating function values at $ x \neq x_{i}$ if the original function is known.
+	\begin{equation*}
+	 \max_{x\in [a,b]} \abs{f(x) - p_{n}(x)} \leq \frac{1}{(n+1)!} \max_{\xi \in [a,b]} \abs{f^{(n+1)}(\xi)} \max_{x \in [a,b]} \abs{\omega(x)}
+	\end{equation*}
+	 The theorem is not particularly useful in practice since it provides no information on the location of the value $ \xi $ and the original function is rarely known a priori.
+	 
+\end{itemize}
+
+
+\subsubsection{Newton Form of Polynomial Interpolation}
+Newton's form of polynomial interpolation makes it possible to interpolate derivative as well as function values. The method uses the concept of \textit{divided differences}, which we introduce first.
+\begin{itemize}
+	\item The \textit{divided difference} of the function $ f $ for the points $ x_0, x_1, \dots, x_n $  is the leading coefficient of the interpolation polynomial $ p_n $ interpolating $ f $ at the points $ x_0, x_1, \dots, x_n $. The divided difference is denoted by $ [x_0, x_1, \dots, x_n]f $.
+	
+	\item Calculating divided differences using the interpolation polynomial is inefficient. Instead, we find divided differences with the recursive formula
+	\begin{equation*}
+		[ x_0, x_1, \dots, x_n ] f = \frac{[x_1, \dots, x_n ]f - [x_0, x_1, \dots, x_{n-1}]f }{x_n - x_0}
+	\end{equation*}
+	where $ f $'s divided difference for single point $ x_{i} $ is  $ [x_i]f = f(x_i) $. 
+	
+	\item Divided differences are related to a function's derivative by the following formula
+	\begin{equation*}
+		\lim_{x_1 \to x_{0}} [x_{0}, x_{1}]f = \lim_{x_1 \to x_{0}} \frac{f(x_1) - f(x_0)}{x_1 - x_0} = f'(x_0)
+	\end{equation*}
+	which leads to the generalized definition of divided difference which works even when the points $ x_0, \dots x_n $ are equal
+	\[
+		[x_0, \dots, x_n]f =
+		\begin{cases}
+			\dfrac{f^{(n)}(x_0)}{n!} , & x_0 = \dots = x_n\\[1mm]
+			\dfrac{[x_1, \dots, x_n]f - [x_0, \dots, x_{n-1}]f}{x_n - x_0}, & \text{otherwise}
+		\end{cases}
+	\]
+
+	\item The Newton polynomial interpolating the function $ f $ at the points $ x_0, x_1, \dots, x_n $ is
+	\begin{equation*}
+		p_{n}(x) = [x_0]f + (x - x_0)[x_0, x_1]f + \dots + (x - x_0)(x - x_1) \cdots (x - x_{n-1})[x_0, x_1, \dots x_n]f
+	\end{equation*}
+	If we use multiple occurrences of the same interpolation point, the polynomial will also interpolate the function's derivatives. So if we repeat $ x_i $ say $ n $ times, the Newton polynomial will interpolate $ f(x_{i}), f'(x_{i}), \ldots, f^{(n-1)}(x_{i})$.
+	
+	\item Newton polynomial interpolation has an analogous error bound to Lagrange interpolation, except that the Newton form permits multiple occurrences of the same $ x_{i} $ values. If we define
+	\begin{equation*}
+		 \omega(x) = (x-x_{1})^{k_{1}}(x-x_{2})^{k_{2}}\cdots(x-x_{n})^{k_{n}}
+	\end{equation*}
+	where $ k_{i} $ denotes the number of occurrences of the point $ x_{i} $, then
+	\begin{equation*}
+		f(x) - p_{n}(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!}\omega(x)
+	\end{equation*}
+	for some $ \xi $ in the interpolation interval. As with Lagrange interpolation, the associated error bound is
+	\begin{equation*}
+	 	\max_{x\in [a,b]} \abs{f(x) - p_{n}(x)} \leq \frac{1}{(n+1)!} \max_{\xi \in [a,b]} \abs{f^{(n+1)}(\xi)} \max_{x \in [a,b]} \abs{\omega(x)}
+	\end{equation*}
+	
+\end{itemize}
+
+
+
+\subsection{Numerical Differentiation}
+The general goal is to numerically calculate the derivative values of a continuously differentiable function $ f: [a, b] \to R $ at points $ c \in [a, b] $. In general, numerical differentiation is highly sensitive to numerical errors and is not well suited to numerical methods. 
+
+A numerical derivative can be found using the method of undetermined coefficients or from the derivative of an interpolation polynomial or spline.
+
+\subsubsection{Undetermined Coefficients}
+\begin{itemize}
+	\item The goal in the undetermined coefficient method is to calculate the derivative $ f'(c) $ in terms of a linear combination of function values in a neighborhood of $ c $. 
+	
+	\item Goal is for the formula for approximation to work for polynomials of as high order as possible. 
+	
+	\item Choose a basis for the space of polynomials of degree $ n $, where $ n + 1 $ is the number of terms in the linear combination. So e.g. an approximation with three points and function values would have $ n = 2 $, i.e. a second-order polynomial.
+\end{itemize}
+
+For a three point approximation of $ x_1 $ using the neighboring points $ x_0 $ and $ x_2 $, we get to the symmetric difference quotient
+\begin{equation*}
+	f'(x_1) = \frac{f(x_2) - f(x_0)}{2h} = \frac{f(x_1 + h) - f(x_1 - h)}{2h}
+\end{equation*}
+This is generally written 
+\begin{equation*}
+	f'(x) = \frac{f(x + h) - f(x-h)}{2h}
+\end{equation*}
+
+\textbf{Problem}: In numerical computation, for very small $ h $, the approximation doesn't work well because of numerical error. The problem is that as $ h \to 0 $, $ f(x + h) \to f(x-h) $, and we are subtracting two values that are very close together. Possible error because we can only represent 16 decimal places, and likewise we divide this by a small number which blows up the error even more!
+
+\textbf{Error}: A Taylor expansion gives
+\begin{equation*}
+	\frac{f(x + h) - f(x-h)}{2h} \approx f'(x) + \frac{h^2}{3}f^{(3)}(x) + \mathcal{O}(h^3)
+\end{equation*}
+Note that the $ f''(x) $ term vanishes because of $ \pm h $.
+
+The Taylor error is $ \propto A h^2 $ and the numerical rounding error (given/told) adds a term to the error $ \propto \frac{u}{h} $ where $ u \approx 10^{-16} $ is the rounding error. The total error in the numerical approach is then $ \propto Ah^2 + \frac{u}{h} $. This is minimized not as $ h \to 0 $ but for an intermediate value.
+
+
+\section{Numerical Methods for Ordinary Differential Equations}
+\subsection{First Order}
+
+\subsubsection{Overview}
+\begin{itemize}
+	\item The general problem is to solve the first-order initial value problem 
+	\begin{equation*}
+		y' = \dv{y}{x} = f(x, y) \qquad y(x_{0}) = y_{0}
+	\end{equation*}
+	on the interval $ x \in [a, b] $
+	
+	\item A first-order initial value problem is solved numerically by dividing the interval $ [a, b] $ with $ n+1 $ partition points $ \{x_{i}\}_{i=0}^{n} $ where
+	\begin{equation*}
+		a = x_0 < x_1 < \dots < x_{n-1} < x_{n} = b
+	\end{equation*}
+	In general, spacing between individual points could be arbitrary. Often, however, the points are separated uniformly by the distance $ h = x_{i+1} - x_{i} $.	
+	
+	\item  The goal is to find numerical approximations to the solution $ y $ at each point $ x_{i} $. So basically to find a value $ y_{i} $ at each partition point $ x_{i} $, and then approximate the solution $ y $ by the values $ y_{i} $ at the partition points. In general, the more partition points, the more approximations $ y_{i} $ and the better the solution.
+			
+	\item The approximations $ y_{i} $ are found either with an \textit{explicit} or \textit{implicit}. An explicit method starts with the initial value $ y_{0} $ and calculates successive approximations directly on the basis of the previous approximations, for example
+	\begin{equation*}
+		y_{i+1} = \Phi(h, x_{i}, y_{i-k}, \ldots, y_{i-1}, y_{i})
+	\end{equation*}
+	Typically we use only the previous approximation $ y_{i} $ and have $ y_{i+1} = \Phi(h, x_{i}, y_{i}) $.
+	
+	
+	 An implicit method calculates approximations by solving a (generally non-linear) equation involving previous approximations and the next approximation, e.g.
+ 	\begin{equation*}
+ 		y_{i+1} = \Phi(h, x_{i}, y_{i-k}, \ldots, y_{i}, y_{i+1})
+ 	\end{equation*}
+	
+	\item Both explicit and implicit methods are either \textit{single step} or \textit{multi-step}. In single step methods, the next approximation $ y_{i+1} $ is found only from the previous approximation $ y_{i} $. In multi-step methods, the next approximation is found with multiple previous approximations $ y_{i}, y_{i-1}, \ldots $
+	
+\end{itemize}
+
+\subsubsection{Local and Global Error}
+\begin{itemize}
+	\item \textit{Local error} of a numerical method at a point $ x_{i} $ is the difference between the approximation $ y_{i} $ and the value of the analytic solution at that point, i.e.
+	\begin{equation*}
+		\text{local error at } x_{i} = y_{i} - \psi(x_{i+1})
+	\end{equation*}
+	where $ \psi $ is the analytic solution to the initial value problem.
+
+	\item \textit{Global error} is the cumulative sum of the local errors at each data point $ \{x_{i}\}_{i=0}^{n} $
+	
+	\item Local error is of the order $ p \in \mathbb{N} $ if
+	\begin{equation*}
+		y_{i+1} - z_{x_{i+1}} = C h^{p+1} + \mathcal{O}(h^{p+2})
+	\end{equation*}
+	where $ C $ is a constant independent of the step size $ h $.
+\end{itemize}
+
+
+\subsubsection{Explicit Euler's Method}
+\begin{itemize}
+	\item To solve the initial value problem $ y' = f(x, y),  y(x_{0}) = y_{0} $ in the interval $ [a, b] $, choose a step size $ h $ and split $ [a, b] $ into the points
+	\begin{equation*}
+		a = x_0 < x_1 < \dots < x_{n-1} < x_{n} = b
+	\end{equation*}
+	where $ x_{i+1} - x_{i} = h$.
+	
+	\item Starting with $ y(x_{0}) = y_{0}$, calculate the next point using the formula
+	\begin{equation*}
+		y_{i+1} = y_{i} + hf(x_i, y_i) 
+	\end{equation*}
+	for $ i = 0, 1, \ldots, n $.
+\end{itemize}
+
+
+\subsubsection{Runge-Kutta Methods}
+There is a large range of Runge-Kutta methods. The example below is the fourth-order RK4 method.
+\begin{itemize}
+	\item As usual, to solve the initial value problem $ y' = f(x, y),  y(x_{0}) = y_{0} $ in the interval $ [a, b] $, choose a step size $ h $ and split $ [a, b] $ into the points
+	\begin{equation*}
+		a = x_0 < x_1 < \dots < x_{n-1} < x_{n} = b
+	\end{equation*}
+	where $ x_{i+1} - x_{i} = h$.
+	
+	\item Starting with with $ y(x_{0}) = y_{0}$, calculate the coefficients 
+	\begin{align*}
+		 k_{1} = hf(x_{i}, y_{i}) \\
+		 k_{2} = hf(x_{i} + \frac{1}{2}h, y_{i} + \frac{1}{2} k_{1}) \\
+		 k_{3} = hf(x_{i} + \frac{1}{2}h, y_{i} + \frac{1}{2} k_{2}) \\
+		 k_{4} = hf(x_{i} + h, y_{i} + k_{3})
+\end{align*}
+	and calculate the next term with the formula
+	\begin{equation*}
+		y_{i+1} = y_{i} + \frac{1}{6}k_{1} + \frac{1}{3}k_{2} + \frac{1}{3}k_{3} + \frac{1}{6}k_{4} + \mathcal{O}(h^{5})
+	\end{equation*}
+	for $ i = 0, 1, \ldots, n $.
+
+	\item Runge-Kutta methods are more stable than the Euler method, but calculating the coefficients $ k_{1}-k_{4} $ makes RK methods significantly more costly.
+	
+	\item The coefficients are chosen so as many terms as possible vanish in the Taylor series expansion, which minimizes error. The coefficients must add up to one for the method to behave well for constant functions. 
+
+\end{itemize}
+
+
+\subsubsection{Single Step Implicit Methods}
+\begin{itemize}
+	\item Implicit single step methods take the general form
+	\begin{equation*}
+		y_{i+1} = \Phi(h, x_{i}, y_{i}, y_{i+1}, f)
+	\end{equation*}
+	where the value $ y_{i+1} $ occurs implicitly and generally non-linearly. The approximations $ y_{i+1} $ are found by solving the resulting non-linear equation, often with iterative methods.
+	
+	\item Fixed-point iteration for $ y_{i+1} = \Phi(h, x_{i}, y_{i}, y_{i+1}, f) $ converges if
+	\begin{equation*}
+		\abs{\pdv{\Phi}{y} (h, x_{i}, y_{i}, y, f)} \leq 1, \qquad y \approx y_{i+1}
+	\end{equation*}
+	Implicit methods can generally be made to converge by choosing a small step size $ h $.
+	
+	\item A simple implicit method is the trapezoid method, in which new approximations are found with
+	\begin{equation*}
+		y_{i+1} = y_{i} + \frac{h}{2}\big[f(x_{i}, y_{i}) + f(x_{i+1}, y_{i+1}) \big] 
+	\end{equation*}
+\end{itemize}
+
+\subsubsection{Systems of First-Order Linear Differential Equations}
+\begin{itemize}
+	\item The problem is to solve the system of first order LDEs
+	\begin{align*}
+		y_{1}' &= f_{1}(x, y_{1}, \ldots, y_{n}) \\
+		y_{2}' &= f_{2}(x, y_{1}, \ldots, y_{n})\\[-3mm]
+		& \ \, \vdots\\[-2.5mm]
+		y_{n}' &= f_{1}(x, y_{1}, \ldots, y_{n})
+	\end{align*}
+	given the $ n $ initial conditions $ y_{1}(x_{0}) = y_{1_{0}}, y_{2}(x_{0}) = y_{2_{0}}, \ldots, y_{n}(x_{0}) = y_{n_{0}} $.
+	
+	\item We use the vector notation $ \bm{Y} = (y_{1}, \ldots, y_{n})^{T} $, $ \bm{F} = (f_{1}, \ldots, f_{n})^{T} $ and $ \bm{Y}_{0} = ( y_{1_{0}}, y_{2_{0}}, \ldots, y_{n_{0}}) $and write the system in vector form
+	\begin{equation*}
+		\bm{Y}' = \bm{F}(x, \bm{Y}), \qquad \bm{Y}(x_{0}) = \bm{Y}_{0}
+	\end{equation*}
+	
+	\item The system is solved analogously to a single linear differential equation, with each equation solved individually. For example, the explicit Euler method in vector form reads
+	\begin{equation*}
+		\bm{Y}_{i+1} = \bm{Y}_{i} + h \bm{F}(x_{i}, \bm{Y}_{i})
+	\end{equation*}
+	
+\end{itemize}
+
+
+\subsubsection{Higher-Order Linear Differential Equations}
+\begin{itemize}
+	\item The goal is numerically approximation the solution a single $ n $th-order linear differential equation
+	\begin{equation*}
+		y^{(n)} = f(x, y, y', \dots, y^{(n-1)})
+	\end{equation*}
+	with the initial conditions $ y(x_{0}) = y_{0}, y'(x_{0}) = y'_{0}, \ldots, y^{(n-1)}(x_{0}) = y^{(n-1)}_{0} $.
+	
+	\item The equation is solved by converting the single $ n $th-order equation into a system of $ n $ linear differential equations. This is done recursively with the new variables $ u_{1} = y $, $ u_{2} = y', \ldots, u_{n} = y^{(n-1)} $. It follows that $ u_{n}' = y^{(n)} $, which leads to the recursive system of first-order LDEs
+	\begin{align*}
+		u_{1}' &= u_{2} \\
+		u_{2}' &= u_{3}\\[-3mm]
+		& \ \, \vdots\\[-2.5mm]
+		u_{n}' &= y^{(n)} = f(x, y, y', \dots, y^{(n-1)})
+	\end{align*}
+	with initial conditions $ u_{1}(x_{0}) = y_{0}, \ldots, u_{n}(x_{0}) = y^{(n-1)}(x_{0}) $
+	
+	\item The resulting system of linear equations is solved using the earlier methods, and the solution $ y $ is found from $ y = u_{1} $.
+\end{itemize}
+
+
+
+\subsection{Linear Second-Order Boundary Problems}
+\begin{itemize}
+	\item The general form of a linear second-order boundary problem on the interval $ [a, b] $ is
+	\begin{align*}
+		&y'' + p(x)y' + q(x) y = r(x)\\
+		&y(a) = \alpha, y(b) = \beta
+	\end{align*}
+	where $ p, q, r: [a, b] \to \R$ are (generally continuous) functions and $ \alpha, \beta \in \R $ are constants. Note that the equation is linear in $ y $.
+	
+	\item If $ y_{1} $ and $ y_{2} $ solve the second-order boundary problem, the linear combination 
+	\begin{equation*}
+		y = \lambda y_{1} + (1 - \lambda) y_{2},  \qquad \lambda \in \R
+	\end{equation*}
+	also solves the equation $ y'' + p(x)y' + q(x) y = r(x) $, and $ y(a) = \alpha$. 
+	
+	\item This principle forms the basis for the following method: First, solve two initial-value problems of the form
+	\begin{equation*}
+		y'' + p(x)y' + q(x) y = r(x)
+	\end{equation*}
+	with the two conditions $ y(a) = \alpha, y'(a) = \delta_{1}$ and $ y(a) = \alpha, y'(a) = \delta_{2} $ and denote the solutions $ y_{1} $ and $ y_{2} $. 
+	
+ 	\item  In this case, the function
+ 	\begin{equation*}
+		y = \lambda y_{1} + (1 - \lambda) y_{2},  \qquad \lambda \in \R
+	\end{equation*}
+	solves the equation and satisfies the boundary condition $ y(a) = \alpha $. The condition $ y(b) = \beta $ is satisfied if
+	\begin{equation*}
+		\lambda = \frac{\beta - y_{2}(b)}{y_{1}(b) - y_{2}(b)}
+	\end{equation*}
+	In the possible but unlikely event that the constants $ \delta_{1, 2} $ where chosen so that $ y_{1}(b) = y_{2}(b) $, we must choose a new constant e.g. $ \delta_{3} $ to replace either $ \delta_{1}  $ or $ \delta_{2}  $ and repeat the problem.
+\end{itemize}
+
+\subsubsection{Finite Difference Method}
+\begin{itemize}
+	\item The finite difference method is used to solve the general second-order boundary problem
+	\begin{align*}
+		&y'' + p(x)y' + q(x) y = r(x)\\
+		&y(a) = \alpha, y(b) = \beta
+	\end{align*}
+	 on the interval $ [a, b] $.
+	
+	\item Choose a step size $ h $ and split $ [a, b] $ into $ n+2 $ points
+	\begin{equation*}
+		a = x_0 < x_1 < \dots < x_{n} < x_{n+1} = b
+	\end{equation*}
+	where $ x_{i+1} - x_{i} = h$. Note that, in general, the partition points need not be equidistant.
+	
+	\item Find approximations for $ y''(x) $, $ y'(x) $ and $ y (x)$ using the formula
+	\begin{align*}
+		&y''(x_{i}) = \frac{y(x_{i+1}) - 2y(x_{i}) + y(x_{i-1})}{h^{2}} \approx \frac{y_{i+1} - 2y_{i} + y_{i-1}}{h^{2}} \\
+		&y'(x_{i}) = \frac{y(x_{i+1})-y(x_{i-1})}{2h} \approx  \frac{y_{i+1}-y_{i-1}}{2h}\\
+		&y(x_{j}) \approx y_{j}
+	\end{align*}
+	for $ i = 1, \ldots, n $ and for $ j = 0, 1, \ldots, n+1 $.
+	
+	\item Denoting $ p(x_{i}), q(x_{i}), r(x_{i}) = p_{i}, q_{i}, r_{i} $ and applying the boundary conditions $ y(a) = \alpha $ and $ y(b) = \beta $ leads to the system of equations
+	\begin{align*}
+		&y_{2}(p_{1}h + 2) + 2y_{1}(h^{2}q_{1} - 2) - \alpha(p_{1}h - 2) = 2 r_{1}h^{2}\\
+		&y_{i+1}(p_{i}h + 2) + 2y_{i}(h^{2}q_{i} - 2) - y_{i-1}(p_{i}h - 2) = 2 r_{i}h^{2}\\
+		&\beta(p_{n}h + 2) + 2y_{n}(h^{2}q_{n} - 2) - y_{n-1}(p_{n}h - 2) = 2 r_{n}h^{2}
+	\end{align*}
+	for $ i = 2, 3, \ldots, n-1 $.
+	
+	\item The system can be written in matrix form $ \mat{A} \bm{y} = \bm{r} $, where $ \mat{A} \in \R^{n \cross n}$ is a tridiagonal matrix of coefficients, $ \bm{y} \in \bm{R}^{n} $ is the numerical approximation for the solution, and $ \bm{r} \in \R^{n} $ is the right-hand vector.
+	
+	As long as $ A $ is diagonally dominant and strictly diagonally dominant in at least one row or column, the system can be efficiently solved with the Thomas algorithm, with computational cost $ \mat{O}(n^{2}) $.
+\end{itemize}
+
+\subsection{Non-Linear Second-Order Boundary Value Problems}
+The goal is to solve a boundary value problem of the form
+\begin{equation*}
+	y'' = f(x, y, y')
+\end{equation*}
+on the interval $ [a, b] $ with the boundary conditions $ y(a) = \alpha, y(b) = \beta $. Because $ f $ is in general not linear in $ y $, the problem can be difficult to solve.
+
+\subsubsection{General Finite Difference Method}
+\begin{itemize}
+	\item As before, split the $ [a, b] $ into $ n+2 $ partition points
+	\begin{equation*}
+		a = x_0 < x_1 < \dots < x_{n} < x_{n+1} = b
+	\end{equation*}
+	with step size $ h = x_{i+1} - x_{i}$.
+	
+	\item Use the same approximations for $ y''(x) $, $ y'(x) $ and $ y (x)$ as before, namely
+	\begin{align*}
+		&y''(x_{i}) = \frac{y(x_{i+1}) - 2y(x_{i}) + y(x_{i-1})}{h^{2}} \approx \frac{y_{i+1} - 2y_{i} + y_{i-1}}{h^{2}} \\
+		&y'(x_{i}) = \frac{y(x_{i+1})-y(x_{i-1})}{2h} \approx  \frac{y_{i+1}-y_{i-1}}{2h}\\
+		&y(x_{j}) \approx y_{j}
+	\end{align*}
+	for $ i = 1, \ldots, n $ and for $ j = 0, 1, \ldots, n+1 $.
+	
+	\item Inserting the approximations into the differential equation gives
+	\begin{equation*}
+		y_{i-1} - 2y_{i} + y_{i+1} = h^{2} f\left(x_{i}, y_{i}, \frac{y_{i+1} - y_{i-1}}{2h}\right)
+	\end{equation*}
+	for $ i = 1, 2, \ldots, n $.  
+	
+	\item Applying the boundary conditions $ y(a) = \alpha, y(b) = \beta $ leads to s system of $ n $ non-linear equations with $ n $ unknowns $ y_{i} $. The system could be solved, for instance, with iterative methods for systems of non-linear equations.
+	
+\end{itemize}
+
+\subsubsection{Shooting Method}
+\begin{itemize}
+	\item As before, the goal is to solve the non-linear boundary value problem
+	\begin{equation*}
+		y'' = f(x, y, y')
+	\end{equation*}
+	on the interval $ [a, b] $ with the boundary conditions $ y(a) = \alpha, y(b) = \beta $.
+	
+	\item The idea is to solve the equation as an initial value problem with $ y(a) = \alpha $ and $ y'(a) = k_{0} $. This leads to the solution $ y(x; k_{0}) $. Naturally, because $ y'(a) = k_{0}  $ is chosen randomly $ y(x; k_{0}) $ will not satisfy the boundary condition $ y(b;k_{0}) = \beta $. The idea is to keep making initial guesses for $ y'(a) = k_{i} $ so that $ y(x;k_{i}) $ come closer and closer to satisfying the boundary condition $ y(b) = \beta $.
+	
+	\item The goal is to find a value $ k = y'(a) $ for which the corresponding initial-value solution $ y(x;k) $ satisfies the boundary condition $ y(b;k) = \beta $. If we define $ F(k) = y(b; k) - \beta $, the goal is to find $ k $ for which $ F(k) = 0 $, 
+	
+	The solution to the non-linear equation $ F(k) = 0  $ is often found with the secant method
+	\begin{equation*}
+		k_{i+2} = k_{i+1} - F(k_{i+1}) \cdot \frac{k_{i+1} - k_{i}}{F(k_{i+1}) - F(k_{i})}, \qquad i = 0, 2, \ldots
+	\end{equation*}
+	On each step, we must solve the initial value problem $ y'(a) = k_{i} $ to determine agreement with the boundary condition $ y(b;k) = \beta $.
+	
+\end{itemize}
+
+\end{document}	
+
+
+
+
+
+
+
+
+
