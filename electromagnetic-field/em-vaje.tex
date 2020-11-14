@@ -49,9 +49,23 @@
 
 
 \begin{center}
-\textbf{About}
+\textbf{About These Notes}
 \end{center}
-These are my notes from the \textit{Exercises} (problem-solving) portion of the course \textit{Elektromagnetno Polje} (Electromagnetic Field), given to third-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. The exercises are led by Asst. Prof. Martin Klan\v{s}ek, who has curated the problem sets and leads us through the solutions. I am making the notes freely available in case they might help others taking a similar course, but credit should go to Prof. Klan\v{s}ek for the problem sets. 
+These are my notes are from the problem-solving (\textit{Exercises}) portion of the class \textit{Elektromagnetno Polje} (Electromagnetic Field), given to third-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. The exact problem sets herein are specific to the physics program at the University of Ljubljana, but the content is fairly standard for an late-undergraduate electromagnetism course. I am making the notes publicly available in the hope that they might help others learning the same material.
+
+\vspace{2mm}
+\textit{Navigation}: For easier document navigation, the table of contents is ``clickable'', meaning you can jump directly to a section by clicking the section name in the table of contents. 
+
+\textbf{Note:} The clickable links do not work in most online or mobile PDF viewers. Unfortunately, you have to download the file first.
+
+\vspace{2mm}
+\textit{On Authorship:} 
+The exercises are led by Asst. Prof. Martin Klan\v{s}ek, who has curated the problem sets and guides us through the solutions. Accordingly, credit for the problems in these notes goes to Prof. Klan\v{s}ek. I have merely typeset the problems and provided additional explanations where I saw fit. The original exercise in Slovene (without solutions) can be found on \href{https://www-f5.ijs.si/emp-2020-2021.html}{the course website}. 
+
+\vspace{2mm}
+\textit{Disclaimer:} Mistakes---both trivial typos and legitimate errors---are likely. Keep in mind that these are the notes of an undergraduate student in the process of learning the material himself---take what you read with a grain of salt. If you find mistakes and feel like telling me, by Github pull request, email or some other means, I'll be happy to hear from you, even for the most trivial of errors.
+
+
 
 \tableofcontents
 
@@ -59,14 +73,14 @@ These are my notes from the \textit{Exercises} (problem-solving) portion of the 
 
 \section{Electrostatics}
 
-\subsection{First}
+\subsection{First Exercise Set}
 
-\subsubsection{Background Theory}
-Electric field of a charge distribution. 
+\subsubsection{Background Theory: Electric Field of a Charge Distribution}
+The electric field of a spatial charge distribution with volume charge density $ \rho(\r) $ is
 \begin{equation*}
 	\vec{E}(\vec{r}) = \frac{1}{4\pi \epsilon_{0}}\int \frac{\rho(\tvec{r}) \diff^{3}\tvec{r} }{\abs{\vec{r} - \tvec{r}}^{2}} \frac{\vec{r} - \tvec{r}}{\abs{\vec{r} - \tvec{r}}}
 \end{equation*}
-where $ \rho $ is volume charge density and $ \tvec{r} $ is a dummy variable for integration over the position vector $ \vec{r} $. Think of $ \rho(\tvec{r}) \diff^{3}\tvec{r} $ as an infinitesimal element of charge at the position $ \tvec{r} $, while $ \vec{r} - \tvec{r} $ represents the position of each charge. The term $ \frac{\vec{r} - \tvec{r}}{\abs{\vec{r} - \tvec{r}}} $ just gives the direction of each charge element.
+where $ \tvec{r} $ is a dummy variable for integration. Think of $ \rho(\tvec{r}) \diff^{3}\tvec{r} $ as an infinitesimal element of charge at the position $ \tvec{r} $, while $ \vec{r} - \tvec{r} $ represents the position of each charge. The term $ \frac{\vec{r} - \tvec{r}}{\abs{\vec{r} - \tvec{r}}} $ just gives the direction of each charge element.
 
 \subsubsection{Charged Disk}
 \textit{A charged disk has surface charge density $ \sigma $ and radius $ a $. What is the disk's electric field $ E(z) $ along an axis through the disk's center and normal to the disk? Investigate the limit behavior of $ E(z) $ for small and large $ z $. }
@@ -152,94 +166,87 @@ where $ \rho $ is volume charge density and $ \tvec{r} $ is a dummy variable for
 \end{itemize} 
 
 
-\subsection{Second}
-\subsubsection{Theory}
-Start with Gauss's law in differential form
-\begin{equation*}
-	\div \cdot \vec{E} = \frac{\rho}{\epsilon_{0}}
-\end{equation*}
-and 
-\begin{equation*}
-	\vec{E} = - \grad U
-\end{equation*}
-where $ U $ is electric potential. Plug into Gauss's law:
-\begin{equation*}
-	- \div \grad U = \frac{\rho}{\epsilon_{0}} \implies \nabla^{2}U = -\frac{\rho}{\epsilon_{0}}
-\end{equation*}
-The idea is: if we know charge distribution $ \rho $, we can find electric field potential $ U $, and we can then find electric field $ \vec{E} $. 
+\subsection{Second Exercise Set}
+\subsubsection{Theory: The Poisson Equation and the Fourier Transform}
 
-As a simple example for a point charge: the charge distribution is a delta function.
-\begin{equation*}
-	\rho(\vec{r}) = q \delta(\vec{r})
-\end{equation*}
-then plugging in gives
-\begin{equation*}
-	\nabla^{2}U(\r) = - \frac{q}{\epsilon_{0}}\delta(\r)
-\end{equation*}
-This the Poisson equation for a point charge---in general anything with $ \nabla^{2}f(\r) = g(\r) $ is a Poisson equation. 
-
-We will solve this with a Fourier transform! 
-\textbf{The Fourier Transform}\\
-Think of it as an expansion over a basis of plane waves of the form $ e^{i \vec{k} \cdot \r} $. 
-
-We just need some kind of weight to determine how much each wave contributes. 
-\begin{equation*}
-	U(\r) = \int \diff^{3}k U(\vec{k}) e^{i \vec{k}\cdot \r}
-\end{equation*}
-where $ U(\vec{k}) $ is the amplitude of a plane wave with wave vector $ \vec{k} $. And how to find $ U(\vec{k}) $? Use a dot product with a basis function $ e^{-i \tvec{k}\cdot\r} $, as usual! Because basis functions are orthogonal. So dot and integrate both sides over $ \r $
-\begin{equation*}
-	\int U(\r) e^{-i \tvec{k}\cdot \r} \diff^{3}r = \int \int \diff^{3}k \diff^{3}r U(\vec{k}) e^{i (\vec{k} - \tvec{k})\cdot \r}
-\end{equation*}
-Integral over $ \r $ is relatively simple. It is a delta function!? I guess because the waves cancel out over all space except at the origin, where they constructively interfere to infinity. So 
-\begin{equation*}
-	\int U(\r) e^{-i \tvec{k}\cdot \r} \diff^{3}r = (2\pi)^{3} \int U(\vec{k}) \delta (\vec{k} - \tvec{k}) \diff^{3}k = (2\pi)^{3} U(\tvec{k})
-\end{equation*}
-The delta function suppresses the integral everywhere besides at $ (\vec{k} - \tvec{k}) $. And that's how you get the amplitude $ U(\tvec{k}) $ for a wave vector $ \tvec{k} $. 
-\begin{equation*}
-	U(\tvec{k}) = \frac{1}{(2\pi)^{3}} \int U(\r) e^{-i\vec{k}\cdot \r} \diff^{3}r
-\end{equation*}
-This is also an inverse Fourier transform of sorts, to get $ U(\vec{k}) $ from $ U(\r) $.
-
-\textbf{Recipe:} Take the function you're working with e.g. $ U $, expand it over a basis of plane waves, find the amplitude of each plane wave. Take the plane waves back into the Fourier transform and find $ U(\r) $. 
-
-\textbf{First of Two More Notes:} What happens if we insert gradient into the Fourier transform? Remember it acts only on $ \r $. So
-\begin{equation*}
-	\grad U(\r) = \int \diff^{3}k U(\vec{k}) \grad e^{i \vec{k}\cdot \r}
-\end{equation*}
-Evaluate the gradient over $ (x, y, z) $ components. The result is 
-\begin{equation*}
-	\grad e^{i \vec{k}\cdot \r} = 
-	\begin{bmatrix}
-		ikx\\
-		iky\\
-		ikz
-	\end{bmatrix}
-	e^{i(k_{1}x + k_{2}y + k_{3}z)} = ik e^{i\vec{k}\cdot \r}
-\end{equation*}
-
-So:
-\begin{equation*}
-	\grad U(\r) = \int \diff^{3}k U(\vec{k}) \grad e^{i \vec{k}\cdot \r} = \int \diff^{3}k U(\vec{k})i \vec{k} e^{i \vec{k}\cdot \r}
-\end{equation*}
-which has the form of a Fourier transform! This time of the function $ U(\vec{k})i \vec{k} $. 
-
-The interpretation is that $ \grad $ transforms to $ i\vec{k} $ under the Fourier transform. Analogously, $ \nabla^{2} $ would transform into $ (i\vec{k})^{2} = i k^{2} $. 
-
-
-\textbf{Second of Two More Notes:} What happens if we insert $ \delta(\r $ into the Fourier transform? Let $ \delta(\vec{k}) $ denote the amplitude in the expansion of $ \delta(\r) $. Like $ U(\vec{k}) $ for $ U(\r) $. Well, using the inverse Fourier transform the integral properties of the delta function
-\begin{equation*}
-	\delta (\vec{k}) = \frac{1}{(2\pi)^{3}} \delta(\r) e^{-i\vec{k}\cdot\r}\diff^{3}r = \frac{1}{(2\pi)^{3}} e^{-i\vec{k}\cdot 0} = \frac{1}{(2\pi)^{3}}
-\end{equation*}
-
-So now we have the machinery we need. The goal is to solve the Poisson equation for point particle.
+\begin{itemize}
+	\item Start with Gauss's law in differential form and the relationship between $ \E $ and $ U $
+	\begin{equation*}
+		\div \vec{E} = \frac{\rho}{\epsilon_{0}} \eqtext{and} \vec{E} = - \grad U
+	\end{equation*}
+	where $ U $ is electric potential. Substitute $ \E $ into Gauss's law to get
+	\begin{equation*}
+		\div \big[-\grad U\big] = \frac{\rho}{\epsilon_{0}} \implies \nabla^{2}U = -\frac{\rho}{\epsilon_{0}}
+	\end{equation*}
+	The last equality takes the form of a \textit{Poisson equation}.\footnote{In general any equation of the form $ \nabla^{2}f(\r) = g(\r) $ is called a Poisson equation.} It relates charge density $ \rho $ to electric potential $ U $. In other words, if we know a spatial charge distribution $ \rho $, we can find the electric field potential $ U $ thus the electric field $ \vec{E} $ with $ \E = - \grad U $.
+	
+	\item As a simple example we start with a point charge. The charge distribution is
+	\begin{equation*}
+		\rho(\vec{r}) = q \delta(\vec{r}) \implies \nabla^{2}U = -\frac{\rho}{\epsilon_{0}} = - \frac{q}{\epsilon_{0}}\delta(\r)
+	\end{equation*}
+	This the Poisson equation for a point charge. We will solve the equation with a Fourier transform.
+	
+	\item First, a review of the Fourier transform. Think of it as an expansion over a basis of plane waves of the form $ e^{i \vec{k} \cdot \r} $. 
+	
+	We just need some kind of weight to determine how much each wave contributes. 
+	\begin{equation*}
+		U(\r) = \int \diff^{3}k U(\vec{k}) e^{i \vec{k}\cdot \r}
+	\end{equation*}
+	where $ U(\vec{k}) $ is the amplitude of a plane wave with wave vector $ \vec{k} $. And how to find $ U(\vec{k}) $? Use a dot product with a basis function $ e^{-i \tvec{k}\cdot\r} $, as usual! Because basis functions are orthogonal. So dot and integrate both sides over $ \r $
+	\begin{equation*}
+		\int U(\r) e^{-i \tvec{k}\cdot \r} \diff^{3}r = \int \int \diff^{3}k \diff^{3}r U(\vec{k}) e^{i (\vec{k} - \tvec{k})\cdot \r}
+	\end{equation*}
+	Integral over $ \r $ is relatively simple. It is a delta function!? I guess because the waves cancel out over all space except at the origin, where they constructively interfere to infinity. So 
+	\begin{equation*}
+		\int U(\r) e^{-i \tvec{k}\cdot \r} \diff^{3}r = (2\pi)^{3} \int U(\vec{k}) \delta (\vec{k} - \tvec{k}) \diff^{3}k = (2\pi)^{3} U(\tvec{k})
+	\end{equation*}
+	The delta function suppresses the integral everywhere besides at $ (\vec{k} - \tvec{k}) $. And that's how you get the amplitude $ U(\tvec{k}) $ for a wave vector $ \tvec{k} $. 
+	\begin{equation*}
+		U(\tvec{k}) = \frac{1}{(2\pi)^{3}} \int U(\r) e^{-i\vec{k}\cdot \r} \diff^{3}r
+	\end{equation*}
+	This is also an inverse Fourier transform of sorts, to get $ U(\vec{k}) $ from $ U(\r) $.
+	
+	\textbf{Recipe:} Take the function you're working with e.g. $ U $, expand it over a basis of plane waves, find the amplitude of each plane wave. Take the plane waves back into the Fourier transform and find $ U(\r) $. 
+	
+	\item Here is the first of two more notes. What happens if we insert gradient into the Fourier transform? Remember it acts only on $ \r $. So
+	\begin{equation*}
+		\grad U(\r) = \int \diff^{3}k U(\vec{k}) \grad e^{i \vec{k}\cdot \r}
+	\end{equation*}
+	Evaluate the gradient over $ (x, y, z) $ components. The result is 
+	\begin{equation*}
+		\grad e^{i \vec{k}\cdot \r} = 
+		\begin{bmatrix}
+			ikx\\
+			iky\\
+			ikz
+		\end{bmatrix}
+		e^{i(k_{1}x + k_{2}y + k_{3}z)} = ik e^{i\vec{k}\cdot \r}
+	\end{equation*}
+	
+	So:
+	\begin{equation*}
+		\grad U(\r) = \int \diff^{3}k U(\vec{k}) \grad e^{i \vec{k}\cdot \r} = \int \diff^{3}k U(\vec{k})i \vec{k} e^{i \vec{k}\cdot \r}
+	\end{equation*}
+	which has the form of a Fourier transform! This time of the function $ U(\vec{k})i \vec{k} $. 
+	
+	The interpretation is that $ \grad $ transforms to $ i\vec{k} $ under the Fourier transform. Analogously, $ \nabla^{2} $ would transform into $ (i\vec{k})^{2} = i k^{2} $. 
+	
+	
+	\item And the second of the two notes: What happens if we insert $ \delta(\r) $ into the Fourier transform? Let $ \delta(\vec{k}) $ denote the amplitude in the expansion of $ \delta(\r) $. Like $ U(\vec{k}) $ for $ U(\r) $. Well, using the inverse Fourier transform the integral properties of the delta function
+	\begin{equation*}
+		\delta (\vec{k}) = \frac{1}{(2\pi)^{3}} \delta(\r) e^{-i\vec{k}\cdot\r}\diff^{3}r = \frac{1}{(2\pi)^{3}} e^{-i\vec{k}\cdot 0} = \frac{1}{(2\pi)^{3}}
+	\end{equation*}
+	
+	So now we have the machinery we need. The goal is to solve the Poisson equation for point particle.
+\end{itemize}
 
 
 \subsubsection{Poisson Equation for a Point Particle}
-The Poisson equation for a point particle is
+\textit{The Poisson equation for a point particle is}
 \begin{equation*}
 	\nabla^{2}U(\r) = - \frac{q}{\epsilon_{0}} \delta (\r)
 \end{equation*}
-Solve equation for $ U(\r) $.
+\textit{Solve equation for $ U(\r) $.}
 \begin{itemize}
 	
 	\item The plan is to transform into $ \vec{k} $ space, solve for $ U(\vec{k}) $, then transform back to $ U(\r) $. 
@@ -302,11 +309,11 @@ Solve equation for $ U(\r) $.
 \end{itemize}
 
 \subsubsection{Electric Field of a Hydrogen Atom}
-The Hydrogen atom has the electric potential
+\textit{The hydrogen atom has the electric potential}
 \begin{equation*}
 	U(\r) = \frac{q}{4\pi \epsilon_{0}} \frac{e^{-\alpha r}}{r}\left(1 + \frac{\alpha r}{2}\right), \qquad \alpha = \frac{2}{r_{B}}
 \end{equation*}
-Find the charge density $ \rho(\r) $ generates this potential.
+\textit{Find the charge density $ \rho(\r) $ that generates this potential.}
 \begin{itemize}
 	\item Use the Poisson equation, which connects $ U $ and $ \rho $
 	\begin{equation*}
@@ -352,18 +359,14 @@ Find the charge density $ \rho(\r) $ generates this potential.
 	
 \end{itemize}
 
-\subsection{Third}
+\subsection{Third Exercise Set}
 
-\subsubsection{Theory}
-\begin{itemize}
-	\item Review from last time for potential from Poisson equation
-	\begin{equation*}
-		\nabla^{2}U(\r) = - \frac{\rho(\r)}{\e} \eqtext{where} \laplacian = \pdv[2]{}{x} + \pdv[2]{}{y}
-	\end{equation*}
-	Often $ \rho(\r) = 0 $ in places we're solving for the electric potential. 
-	
-	In this case $ \laplacian U(\r) = 0 $. This is called a Laplace equation.
-\end{itemize}
+\subsubsection{Theory: Laplace Equation}
+Just a quick review from the last exercise set: the Poisson equation used to solve for the electric field potential generated by a charge density $ \rho $ is
+\begin{equation*}
+	\nabla^{2}U(\r) = - \frac{\rho(\r)}{\e} \eqtext{where} \laplacian = \pdv[2]{}{x} + \pdv[2]{}{y} + \pdv[2]{}{z}
+\end{equation*}
+Often $ \rho(\r) = 0 $ in places we're solving for the electric potential. In this case $ \laplacian U(\r) = 0 $. This equation is called a \textit{Laplace equation}.
 
 \subsubsection{Perpendicular Ribbon in a Parallel-Plate Capacitor}
 \textit{A parallel plate capacitor means large plate size compared to the distance between them. Distance between them is $ a $. Place a metal ribbon in the space between the plates---almost touching both plates with a little bit of air/insulation between ribbon ends and plates. Ground both plates and set potential of ribbon to $ U_{0} $. What is $ U(\r) $ inside the capacitor?}
@@ -627,16 +630,8 @@ Imagine a long cylinder of radius $ a $ cut in half along a plane running along 
 	
 \end{itemize}
 
-\subsection{Fourth}
+\subsection{Fourth Exercise Set}
 
-\subsubsection{Theory}
-
-
-\subsubsection{Conducting Cylinder, Continued}
-\textit{First, we completed the cylindrical capacitor problem from the previous set of exercises, starting with the general solution. I wrote the solution in the previous exercise set.}
-\begin{equation*}
-	U(r, \phi) = \sum_{m = 1}^{\infty}\Phi_{m}(\phi)R_{m}(m) = \sum_{m = 1}^{\infty} \left(A_{m} \sin(m\phi) + B_{m}\cos(m\phi)\right)\left( C_{m}r^{m} + D_{m}r^{-m} \right)
-\end{equation*}
 
 \subsubsection{Conducting Sphere in a Uniform Electric Field}
 \textit{A sphere of radius $ a $ placed in a uniform electric field $ E_{0} $ pointing in the e.g. $ z $ direction. Find the electric field $ U $ inside and outside the sphere.} 
@@ -695,7 +690,7 @@ Imagine a long cylinder of radius $ a $ cut in half along a plane running along 
 \end{itemize}
 
 
-\subsection{Fourth Vaje}
+\subsection{Fifth Exercise Set}
 
 \subsubsection{Conducting Sphere in a Uniform Electric Field (continued)}
 \begin{itemize}
@@ -852,11 +847,12 @@ Imagine a long cylinder of radius $ a $ cut in half along a plane running along 
 	
 	\item Next, we ask what is the electrostatic force on the point charge above the plane? First, some theory:
 \end{itemize}  
-\textbf{Theory: Electrostatic Force}
+\textbf{Theory: Electrostatic Force}\\[2mm]
+The total electrostatic force $ \vec{F} $ acting on the charges enclosed in a region of space $ V $ permeated with an electric field $ \E $ is
 \begin{equation*}
-	\vec{F}_{e} = \e \oint \left[\E(\E \cdot \uvec{n}) - \frac{1}{2}E^{2}\uvec{n}\right]\diff S
+	\vec{F} = \e \oint_{\partial V} \left[\E(\E \cdot \uvec{n}) - \frac{1}{2}E^{2}\uvec{n}\right]\diff S
 \end{equation*}
-$ \uvec{n} $ is the normal to the surface. This is the electrostatic force on a point charge in an electric field...? Like with Gauss's law, a good choice of the integration surface, usually taking advantage of the problem's symmetries, tends to simplify the problem. Alternatively, if the electric field vanishes at infinity, we choose a surface that closes at infinity. 
+where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the charges. Like with Gauss's law, a good choice of the boundary surface, usually taking advantage of the problem's symmetries, tends to simplify the problem. Alternatively, if the electric field vanishes at infinity, we choose a surface that closes at infinity. 
 
 \begin{itemize}
 	\item Back to our problem: we choose an infinite surface whose base runs along the plane, then turns upward and closes at infinity to enclose the upper half of space above the plane. The field in this case is the same $ E_{\perp} $ calculated above:
@@ -882,13 +878,13 @@ $ \uvec{n} $ is the normal to the surface. This is the electrostatic force on a 
 
 \subsection{Sixth Exercise Set}
 
-\subsubsection{Theory}
-\begin{itemize}
-	\item Recall that we defined electrostatic force on a region of space $ V $ as
-	\begin{equation*}
-		\vec{F}_{e} = \e \oint_{\partial V}\left[\E(\E\cdot \uvec{n}) - \frac{1}{2}\E\cdot \vec{n}\right] \diff S
-	\end{equation*}
-\end{itemize}
+\subsubsection{Theory: Electrostatic Force}
+Recall the total electrostatic force $ \vec{F} $ acting on the charges enclosed in a region of space $ V $ permeated with an electric field $ \E $ is
+\begin{equation*}
+	\vec{F}_{e} = \e \oint_{\partial V}\left[\E(\E\cdot \uvec{n}) - \frac{1}{2}\E\cdot \vec{n}\right] \diff S
+\end{equation*}
+where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the charges.
+
 
 \subsubsection{Force on a Conducting Spherical Shell}
 \textit{We place a conducting sphere of radius $ a $ in a homogeneous electric field $ E_{0} $. Find the electrostatic force on the upper half of the sphere.}
