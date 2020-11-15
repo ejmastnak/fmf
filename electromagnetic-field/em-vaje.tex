@@ -83,7 +83,7 @@ The electric field of a spatial charge distribution with volume charge density $
 where $ \tvec{r} $ is a dummy variable for integration. Think of $ \rho(\tvec{r}) \diff^{3}\tvec{r} $ as an infinitesimal element of charge at the position $ \tvec{r} $, while $ \vec{r} - \tvec{r} $ represents the position of each charge. The term $ \frac{\vec{r} - \tvec{r}}{\abs{\vec{r} - \tvec{r}}} $ just gives the direction of each charge element.
 
 \subsubsection{Charged Disk}
-\textit{A charged disk has surface charge density $ \sigma $ and radius $ a $. What is the disk's electric field $ E(z) $ along an axis through the disk's center and normal to the disk? Investigate the limit behavior of $ E(z) $ for small and large $ z $. }
+\textit{A charged disk has surface charge density $ \sigma $ and radius $ a $. What is the disk's electric field $ E(z) $ along an axis through the disk's center and normal to the disk? Investigate the limit behavior of $ E(z) $ for small and large $ z $.}
 \begin{itemize}
 	\item Break the disk into infinitesimal concentric rings and integrate over the contributions $ \diff E $ of each ring; $ r $ and $ \diff r $ represent the radius and thickness of a ring, respectively.
 	
@@ -128,7 +128,7 @@ where $ \tvec{r} $ is a dummy variable for integration. Think of $ \rho(\tvec{r}
 
 
 \subsubsection{Charged Plate with a Slit}
-\textit{We take an infinitely large charged rectangular plate with surface charged density $ \sigma $ and remove a slit of width $ a $ from the plate. Determine the electric field $ E $ in the plate perpendicular to the plate and passing through the center of the slit as a function the orthogonal distance $ z $ from the plate. Investigate the limit behavior of $ E(z) $ for small and large $ z $.}
+\textit{We take an infinitely large charged rectangular plate with surface charged density $ \sigma $ and remove a slit of width $ a $ from the plate. Determine the electric field $ E $ in the plane perpendicular to the plate and passing through the center of the slit as a function of the vertical distance $ z $ from the plate. Investigate the limit behavior of $ E(z) $ for small and large $ z $.}
 \begin{itemize}
 	\item Break the plate into thin ribbons and integrate over the contributions $ \diff E $ of each ribbon; $ r $ and $ \diff r $ represent the orthogonal distance from the slit and the thickness of each ribbon, respectively.
 	
@@ -174,7 +174,7 @@ where $ \tvec{r} $ is a dummy variable for integration. Think of $ \rho(\tvec{r}
 	\begin{equation*}
 		\div \vec{E} = \frac{\rho}{\epsilon_{0}} \eqtext{and} \vec{E} = - \grad U
 	\end{equation*}
-	where $ U $ is electric potential. Substitute $ \E $ into Gauss's law to get
+	Substitute $ \E = - \grad U $ into Gauss's law to get
 	\begin{equation*}
 		\div \big[-\grad U\big] = \frac{\rho}{\epsilon_{0}} \implies \nabla^{2}U = -\frac{\rho}{\epsilon_{0}}
 	\end{equation*}
@@ -186,17 +186,15 @@ where $ \tvec{r} $ is a dummy variable for integration. Think of $ \rho(\tvec{r}
 	\end{equation*}
 	This the Poisson equation for a point charge. We will solve the equation with a Fourier transform.
 	
-	\item First, a review of the Fourier transform. Think of it as an expansion over a basis of plane waves of the form $ e^{i \vec{k} \cdot \r} $. 
-	
-	We just need some kind of weight to determine how much each wave contributes. 
+	\item First, a review of the Fourier transform. Think of it as an expansion over a basis of plane waves of the form $ e^{i \vec{k} \cdot \r} $. Where $ U(\vec{k}) $ plays the role of a weight function determining how much each wave contributes to the expansion
 	\begin{equation*}
 		U(\r) = \int \diff^{3}k U(\vec{k}) e^{i \vec{k}\cdot \r}
 	\end{equation*}
-	where $ U(\vec{k}) $ is the amplitude of a plane wave with wave vector $ \vec{k} $. And how to find $ U(\vec{k}) $? Use a dot product with a basis function $ e^{-i \tvec{k}\cdot\r} $, as usual! Because basis functions are orthogonal. So dot and integrate both sides over $ \r $
+	where $ U(\vec{k}) $ is the amplitude of the plane wave with wave vector $ \vec{k} $. To find $ U(\vec{k}) $ we take the inner product of both sides of the above equation with the basis function $ e^{-i \tvec{k}\cdot\r} $. 
 	\begin{equation*}
 		\int U(\r) e^{-i \tvec{k}\cdot \r} \diff^{3}r = \int \int \diff^{3}k \diff^{3}r U(\vec{k}) e^{i (\vec{k} - \tvec{k})\cdot \r}
 	\end{equation*}
-	Integral over $ \r $ is relatively simple. It is a delta function!? I guess because the waves cancel out over all space except at the origin, where they constructively interfere to infinity. So 
+	The integrals over $ \r $ on the right-hand side is in fact a delta function, because the orthogonal plane waves cancel out over all space except at the origin, where they constructively interfere to infinity. So 
 	\begin{equation*}
 		\int U(\r) e^{-i \tvec{k}\cdot \r} \diff^{3}r = (2\pi)^{3} \int U(\vec{k}) \delta (\vec{k} - \tvec{k}) \diff^{3}k = (2\pi)^{3} U(\tvec{k})
 	\end{equation*}
@@ -206,13 +204,17 @@ where $ \tvec{r} $ is a dummy variable for integration. Think of $ \rho(\tvec{r}
 	\end{equation*}
 	This is also an inverse Fourier transform of sorts, to get $ U(\vec{k}) $ from $ U(\r) $.
 	
-	\textbf{Recipe:} Take the function you're working with e.g. $ U $, expand it over a basis of plane waves, find the amplitude of each plane wave. Take the plane waves back into the Fourier transform and find $ U(\r) $. 
+	\textbf{Recipe:} Fourier transform the Poisson equation from $ \r $ into $ \vec{k} $ space (where the Laplacian operator $ \laplacian $ simplifies to $ -ik^{2} $ under $ \mathcal{F} $) and solve for the amplitude $ U(\vec{k}) $ of each plane wave $ e^{-i\vec{k}\cdot \r} $. Substitute $ U(\vec{k}) $ into the Fourier transform
+	\begin{equation*}
+		U(\r) = \int \diff^{3}k U(\vec{k}) e^{i \vec{k}\cdot \r}
+	\end{equation*}
+	and evaluate the integral---usually in spherical coordinates---to find find $ U(\r) $. 
 	
-	\item Here is the first of two more notes. What happens if we insert gradient into the Fourier transform? Remember it acts only on $ \r $. So
+	\item Here is the first of two more notes. What happens if we insert gradient into the Fourier transform? Remember the gradient operator acts only on $ \r $. So
 	\begin{equation*}
 		\grad U(\r) = \int \diff^{3}k U(\vec{k}) \grad e^{i \vec{k}\cdot \r}
 	\end{equation*}
-	Evaluate the gradient over $ (x, y, z) $ components. The result is 
+	Evaluating the gradient over $ (x, y, z) $ components gives
 	\begin{equation*}
 		\grad e^{i \vec{k}\cdot \r} = 
 		\begin{bmatrix}
@@ -229,15 +231,13 @@ where $ \tvec{r} $ is a dummy variable for integration. Think of $ \rho(\tvec{r}
 	\end{equation*}
 	which has the form of a Fourier transform! This time of the function $ U(\vec{k})i \vec{k} $. 
 	
-	The interpretation is that $ \grad $ transforms to $ i\vec{k} $ under the Fourier transform. Analogously, $ \nabla^{2} $ would transform into $ (i\vec{k})^{2} = i k^{2} $. 
+	The interpretation is that the gradient operator $ \grad $ transforms to multiplication by $ i\vec{k} $ under the Fourier transform. Analogously, the Laplacian $ \nabla^{2} $ would transform into multiplication by $ (i\vec{k})^{2} = - k^{2} $. 
 	
 	
-	\item And the second of the two notes: What happens if we insert $ \delta(\r) $ into the Fourier transform? Let $ \delta(\vec{k}) $ denote the amplitude in the expansion of $ \delta(\r) $. Like $ U(\vec{k}) $ for $ U(\r) $. Well, using the inverse Fourier transform the integral properties of the delta function
+	\item And the second of the two notes: What happens if we insert $ \delta(\r) $ into the Fourier transform? Let $ \delta(\vec{k}) $ denote the amplitude in the expansion of $ \delta(\r) $, analogous to $ U(\vec{k}) $ for $ U(\r) $. Using the inverse Fourier transform and the integral properties of the delta function produces
 	\begin{equation*}
-		\delta (\vec{k}) = \frac{1}{(2\pi)^{3}} \delta(\r) e^{-i\vec{k}\cdot\r}\diff^{3}r = \frac{1}{(2\pi)^{3}} e^{-i\vec{k}\cdot 0} = \frac{1}{(2\pi)^{3}}
+		\delta (\vec{k}) = \frac{1}{(2\pi)^{3}} \int \delta(\r) e^{-i\vec{k}\cdot\r}\diff^{3}r = \frac{1}{(2\pi)^{3}} e^{-i\vec{k}\cdot 0} = \frac{1}{(2\pi)^{3}}
 	\end{equation*}
-	
-	So now we have the machinery we need. The goal is to solve the Poisson equation for point particle.
 \end{itemize}
 
 
@@ -246,12 +246,12 @@ where $ \tvec{r} $ is a dummy variable for integration. Think of $ \rho(\tvec{r}
 \begin{equation*}
 	\nabla^{2}U(\r) = - \frac{q}{\epsilon_{0}} \delta (\r)
 \end{equation*}
-\textit{Solve equation for $ U(\r) $.}
+\textit{Solve the equation for $ U(\r) $.}
 \begin{itemize}
 	
 	\item The plan is to transform into $ \vec{k} $ space, solve for $ U(\vec{k}) $, then transform back to $ U(\r) $. 
 	
-	First, take the Fourier transform of both sides. Remember the identities for how $ \nabla^{2} $ becomes $ -k^{2} $ and $ \delta(\r) $ becomes $ \frac{1}{(2\pi)^{3}} $.
+	First, take the Fourier transform of both sides---use the Fourier transform identities $ \nabla^{2} \to -k^{2} $ and $ \delta(\r) \to \frac{1}{(2\pi)^{3}} $ from the theory section.
 	\begin{equation*}
 		- k^{2}U(\vec{k}) = - \frac{q}{\epsilon_{0}} \frac{1}{(2\pi)^{3}} \implies U(\vec{k}) = \frac{q}{(2\pi)^{3} \epsilon_{0} k^{2}}
 	\end{equation*}
@@ -263,7 +263,7 @@ where $ \tvec{r} $ is a dummy variable for integration. Think of $ \rho(\tvec{r}
 	
 	\item Now, how to solve the integral? Suppose $ \theta $ is the angle between $ \r $ and $ \vec{k} $. To simplify the dot product. And then integrate in spherical coordinates:
 	\begin{equation*}
-		U(\r) =  \frac{q}{(2\pi)^{3}\epsilon_{0}} \int_{0}^{2\pi}\int_{-1}^{1}\int_{0}^{\infty} \diff \phi \diff [\cos \theta] k^{2} \diff k \frac{e^{ik r\cos \theta}}{k^{2}} 
+		U(\r) =  \frac{q}{(2\pi)^{3}\epsilon_{0}} \int_{0}^{2\pi}\diff \phi \int_{-1}^{1} \diff [\cos \theta] \int_{0}^{\infty} \diff k k^{2} \frac{e^{ik r\cos \theta}}{k^{2}} 
 	\end{equation*}
 	So integrate over $ \phi $, which is simple and gives $ 2\pi $:
 	\begin{equation*}
@@ -282,18 +282,18 @@ where $ \tvec{r} $ is a dummy variable for integration. Think of $ \rho(\tvec{r}
 		U(\r) = \frac{2q}{(2\pi)^{2}\epsilon_{0}}\frac{\pi}{2r} = \frac{q}{4\pi \epsilon_{0}r}
 	\end{equation*}
 	which is the electric potential of a point charge. Cool! We derived it directly from Maxwell's equations.
+	
+	\item Finally, substitute our result for $ U(\r) $ into the Poisson equation for a point charge. The result is
+	\begin{equation*}
+		\laplacian \frac{q}{4\pi \epsilon_{0}r} = -\frac{q}{\e}\delta (\r) \implies \nabla^{2}\frac{1}{r} = - 4\pi \delta(\r),
+	\end{equation*}
+	which will be useful in the next problems. 
+	
 \end{itemize}
 
-\subsubsection{Interlude: More Theory}
+\subsubsection{Theory Interlude: Electric Field of a General Charge Distribution}
 \begin{itemize}
-
-	\item Next, plug $ U(\r) $ into the Poisson equation. The result, after moving constants around, is
-	\begin{equation*}
-		\nabla^{2}\frac{1}{r} = - 4\pi \delta(\r)
-	\end{equation*}
-	This will be useful in the next problems. 
-	
-	\item Another consideration. We solved the Poisson equation for the simple case $ \rho(\r) = \delta(\r) $. Can we use this result to solve the general case $ \rho = \rho(\r) $? We could, if we expand $ \rho(\r) $ over a basis of delta functions, as follows:
+	\item We just solved the Poisson equation for the simple case $ \rho(\r) = \delta(\r) $. Can we use this result to solve the general case $ \rho = \rho(\r) $? The answer is yes, if we expand $ \rho(\r) $ over a basis of delta functions, as follows:
 	\begin{equation*}
 		\rho(\r) = \int \diff^{3}\tilde{r} \rho(\tvec{r}) \delta(\r - \tvec{r})
 	\end{equation*}
@@ -305,7 +305,7 @@ where $ \tvec{r} $ is a dummy variable for integration. Think of $ \rho(\tvec{r}
 	\begin{equation*}
 		\vec{E} = - \grad U = \frac{1}{4\pi \epsilon_{0}} \int\frac{\diff^{3}\tilde{r}\rho(\tvec{r})}{\abs{\r - \tvec{r}}^{2}} \frac{\r - \tvec{r}}{\abs{r - \tvec{r}}}
 	\end{equation*}
-	which agrees with the result from the previous Exercises.
+	which agrees with the equation quoted in the previous exercise set.
 \end{itemize}
 
 \subsubsection{Electric Field of a Hydrogen Atom}
@@ -324,7 +324,7 @@ where $ \tvec{r} $ is a dummy variable for integration. Think of $ \rho(\tvec{r}
 		\nabla^{2} = \frac{1}{r^{2}} \pdv{}{r}\left(r^{2} \pdv{}{r}\right)
 	\end{equation*}
 	
-	\item Applying $ \nabla^{2} $ to $ U(r) $, after some uncomplicated but rather tedious differentiation, leads to
+	\item Applying $ \nabla^{2} $ to $ U(r) $, after some straightforward but rather tedious differentiation, leads to
 	\begin{equation*}
 		\nabla^{2}U(\r) = \frac{q\alpha^{3}}{8 \pi \epsilon_{0}}e^{-\alpha r}
 	\end{equation*}
@@ -355,7 +355,7 @@ where $ \tvec{r} $ is a dummy variable for integration. Think of $ \rho(\tvec{r}
 		\rho(\r) = q \delta(\r) - \frac{q\alpha^{3}}{8 \pi}e^{-\alpha r}
 	\end{equation*}
 	
-	\textit{Lesson: Be careful when working with the Poisson equation when $ U(r) $ has singularities!}
+	\textit{Lesson: Be careful when working with the Poisson equation if $ U(r) $ has singularities!}
 	
 \end{itemize}
 
