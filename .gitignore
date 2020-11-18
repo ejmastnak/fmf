@@ -1,4 +1,4 @@
-# Latex Files #
+# Latex files #
 ###################
 *.aux
 *.log
@@ -7,6 +7,9 @@
 *.toc
 *.listing
 _minted**/
+
+# Figure directories #
+figures/
 
 # Packages #
 ############
