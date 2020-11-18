@@ -369,12 +369,12 @@ Just a quick review from the last exercise set: the Poisson equation used to sol
 Often $ \rho(\r) = 0 $ in places we're solving for the electric potential. In this case $ \laplacian U(\r) = 0 $. This equation is called a \textit{Laplace equation}.
 
 \subsubsection{Perpendicular Ribbon in a Parallel-Plate Capacitor}
-\textit{A parallel plate capacitor means large plate size compared to the distance between them. Distance between them is $ a $. Place a metal ribbon in the space between the plates---almost touching both plates with a little bit of air/insulation between ribbon ends and plates. Ground both plates and set potential of ribbon to $ U_{0} $. What is $ U(\r) $ inside the capacitor?}
+\textit{We place a long, thin conducting ribbon between the plates of a large parallel-plate capacitor, perpendicularly to the plates; the ribbon almost touches both plates with a little bit of air/insulation between the ribbon edges and the plates. The ribbon height and distance between the plates is $ a $. We ground both plates and set the ribbon potential to $ U_{0} $. What is the electric potential inside the capacitor?}
 
 \begin{itemize}
-	\item First, decide on a coordinate system. Choose Cartesian coordinates since the problem is rectangular. Put the origin at the bottom of the ribbon---$ y $ axis along ribbon, $ x $ axis along plates and $ z $ axis ``out of the page''. 
+	\item First, decide on a coordinate system. Choose Cartesian coordinates since the problem has rectangular symmetry. I will try to describe the axes, but you basically need to see a picture. Here's my attempt: we drew a 2D projection on lined paper where the capacitor plates run from left to right along the page and are separated vertically by the distance $ a $; the ribbon is a vertical line between the top and bottom plates. In this case, the $ y $ axis runs vertically upward along the ribbon (connecting the top and bottom plates), the $ x $ axis runs left to right along the page, and the $ z $ axis points out of the page. 
 	
-	Note that the problem is independent of $ z $ (translation symmetry), so we only need $ U(x, y) $. More so, the problem has reflection symmetry, so we can find the solution on only one side of the ribbon (one half of the $ x $ axis) and reflect the solution about the $ y $ axis.
+	Note that the problem is independent of $ z $ (by translation symmetry in the $ z $ direction), so we only need $ U(x, y) $. More so, the problem has reflection symmetry, so we can find the solution on only one side of the ribbon (one half of the $ x $ axis) and reflect the solution about the $ y $ axis.
 	
 	\item The space between the capacitor plates is empty---there is no charge, and we use the Laplace equation for the space between the plates.
 	\begin{equation*}
@@ -400,7 +400,7 @@ Often $ \rho(\r) = 0 $ in places we're solving for the electric potential. In th
 	\begin{equation*}
 		X(x) = Ae^{\kappa x} + Be^{-\kappa x} \eqtext{and} Y(y) = C\sin(\kappa y) + D\cos (\kappa y)
 	\end{equation*}
-	We then plug the expressions for $ X $ and $ Y $ back into the ansatz:
+	We then substitute the expressions for $ X $ and $ Y $ back into the ansatz $ U = XY $:
 	\begin{equation*}
 		U(x, y)  = X(x)Y(y) = \left(Ae^{\kappa x} + Be^{-\kappa x}\right)\left(C\sin(\kappa y) + D\cos (\kappa y)\right)
 	\end{equation*}
@@ -408,7 +408,7 @@ Often $ \rho(\r) = 0 $ in places we're solving for the electric potential. In th
 	
 	\item We find the coefficients $ A, B, C $ and $ D $ using the boundary conditions. 
 	\begin{itemize}
-		\item Start with the most powerful condition, that $ U(x \to \infty, y) $ is bounded. This conditions implies $ A = 0 $ to suppress the divergent exponential function $ e^{\kappa } $. 
+		\item Start with the most powerful condition, that $ U(x \to \infty, y) $ is bounded. This condition implies $ A = 0 $ to suppress the divergent exponential function $ e^{\kappa } $. 
 			
 		\item Then, use the next two simplest conditions, the ones requiring $ U(x, y) = 0 $. Starting with $ U(x, 0) = 0 $ gives
 		\begin{equation*}
@@ -468,7 +468,8 @@ Often $ \rho(\r) = 0 $ in places we're solving for the electric potential. In th
 	\begin{equation*}
 		U(x, y) = \frac{4U_{0}}{\pi}\exp(-\frac{\pi x}{a}) \sin (\frac{\pi y}{a})
 	\end{equation*}
-	A separate case for which we can find a nice analytic solution is in the center of the capacitor at $ y = \frac{a}{2} $. The solution reads
+	
+	\item A separate case for which we can find a nice analytic solution is in the center of the capacitor at $ y = \frac{a}{2} $. The solution reads
 	\begin{equation*}
 		U(x, \tfrac{a}{2}) = \frac{2U_{0}}{\pi} \sum_{n = 1}^{\infty}\frac{1 - (-1)^{n}}{n}\exp(-\frac{n\pi x}{a}) \sin(\frac{n\pi}{2})
 	\end{equation*}
@@ -496,16 +497,16 @@ Often $ \rho(\r) = 0 $ in places we're solving for the electric potential. In th
 \end{itemize}
 
 \subsubsection{A Halved Conducting Cylinder}
-Imagine a long cylinder of radius $ a $ cut in half along a plane running along the cylinder's longitudinal axis. We separate the two cylinder halves by a small amount (so they are insulated) and apply a potential difference $ U_{0} $ between the two halves. The halved cylinder acts as a capacitor. Find the electric potential $ U $ inside the cylinder.
+\textit{Consider a long cylinder of radius $ a $ cut in half along a plane running along the cylinder's longitudinal axis. We separate the two cylinder halves by an arbitrarily small amount (so the halves are insulated) and apply a potential difference $ U_{0} $ between the two halves. The halved cylinder acts as a capacitor. Find the electric potential inside the cylinder.}
 
 \begin{itemize}
-	\item Decide on a coordinate system: our problem has cylindrical symmetry, so cylindrical coordinates are the natural choice. Let the $ z $ axis run along the cylinder's longitudinal axis. Because of translational symmetry along the $ z $ axis, $ U $ is independent of $ z $. 
+	\item Decide on a coordinate system: we use cylindrical coordinates because our problem has cylindrical symmetry. Let the $ z $ axis run along the cylinder's longitudinal axis. Because of translational symmetry along the $ z $ axis, $ U $ is independent of $ z $. 
 	
 	\item There is no charge inside the cylinder, so we get a Laplace equation
 	\begin{equation*}
 		\laplacian U(r, \phi) = 0
 	\end{equation*}
-	In cylindrical coordinates (when independent of $ z $), the Laplacian operator reads \textbf{TODO: record in eq sheet}
+	In cylindrical coordinates (when acting on a function independent of $ z $), the Laplacian operator reads
 	\begin{equation*}
 		\laplacian = \frac{1}{r}\pdv{r}\left(r \pdv{r}\right) + \frac{1}{r^{2}} \pdv[2]{}{\phi}
 	\end{equation*}
@@ -531,7 +532,7 @@ Imagine a long cylinder of radius $ a $ cut in half along a plane running along 
 	\begin{equation*}
 		\Phi(\phi) = A \sin(m\phi) + B\cos(m\phi)
 	\end{equation*}
-	Now, our cylindrical problem is periodic in $ \phi $ with period $ 2\pi $---this just means the cylinder repeats after on revolution. Periodicity in $ \phi $ is possible only if $ m $ takes on integer values, so we can immediately index the solutions for $ \Phi $ with
+	Now, our cylindrical problem is periodic in $ \phi $ with period $ 2\pi $---this just means the cylinder repeats after one revolution. Periodicity in $ \phi $ is possible only if $ m $ takes on integer values, so we can immediately index the solutions for $ \Phi $ with
 	\begin{equation*}
 		\Phi_{m}(\phi) = A_{m} \sin(m\phi) + B_{m}\cos(m\phi), \quad m = 1, 2, 3, \ldots 
 	\end{equation*}
@@ -542,13 +543,16 @@ Imagine a long cylinder of radius $ a $ cut in half along a plane running along 
 		R_{m}(r) = C_{m}r^{m} + D_{m}r^{-m}
 	\end{equation*}
 	
-	\item The general solution is the linear superposition \textbf{TODO: record this general solution in eq sheet}
+	\item The general solution is the linear superposition
 	\begin{equation*}
 		U(r, \phi) = \sum_{m = 1}^{\infty}\Phi_{m}(\phi)R_{m}(m) = \sum_{m = 1}^{\infty} \left(A_{m} \sin(m\phi) + B_{m}\cos(m\phi)\right)\left( C_{m}r^{m} + D_{m}r^{-m} \right)
 	\end{equation*}
-	\textit{Note: we ended the problem at this point (out of time) and  in the fourth set of exercises. I'm completing the problem in this section to maintain continuity.}
+	\textit{Note: We ended the problem at this point (ran out of time) and continued in the fourth exercise set. I'm completing the problem in this section to maintain continuity.}
 	
-	\item To find a solution specific to our problem, we apply boundary conditions---in our case, that the capacitor halves have a potential difference $ U_{0} $ between them. It is best to write this potential difference in the symmetric form
+	\item To find a solution specific to our problem, we apply boundary conditions. We already applied the periodic boundary condition $ U(r, \phi) = U(r, \phi + 2\pi) $, which required $ m $ be integer-valued.
+	
+	
+	A second boundary condition requires the capacitor halves have a potential difference $ U_{0} $ between them. It is best to write this potential difference in the symmetric form
 	\begin{equation*}
 		U(a, \phi) = 
 		\begin{cases}
@@ -558,13 +562,13 @@ Imagine a long cylinder of radius $ a $ cut in half along a plane running along 
 	\end{equation*}
 	There is another condition---that $ U $ does not diverge at $ r = 0 $. This condition implies the $ D_{m} $ coefficients are zero, because the $ D_{m}r^{-m} $ term diverges at $ r = 0 $. 
 	
-	Observation: the main boundary condition is an odd function of $ \phi $. This implies that only odd (sine) terms can appear in the final solution. This allows us to set the $ A_{m} $ coefficients equal to zero to eliminate the cosine terms. We are left with
+	Observation: the second boundary condition is an odd function of $ \phi $. This implies that only odd (sine) terms can appear in the final solution. This allows us to set the $ A_{m} $ coefficients equal to zero to eliminate the cosine terms. We are left with
 	\begin{equation*}
 		U(r, \phi) = \sum_{m=1}^{\infty} F_{m}r^{m} \sin (m\phi)
 	\end{equation*}
 	where we have defined $ B_{m}C_{m} \equiv F_{m} $. 
 	
-	\item Applying the main boundary condition gives
+	\item Applying the second boundary condition at $ r = a $ gives
 	\begin{equation*}
 		U(a, \phi) = \sum_{m=1}^{\infty} F_{m}a^{m} \sin (m\phi)
 	\end{equation*} 
@@ -581,27 +585,27 @@ Imagine a long cylinder of radius $ a $ cut in half along a plane running along 
 		&\frac{U_{0}}{2}\left[-\frac{1}{n}\cos(n\phi)\big |_{0}^{\pi} + \frac{1}{n}\cos (n\phi)\big |_{\pi}^{2\pi} \right] = \frac{U_{0}}{2n}\left[-\cos(\pi n) + 1 + 1 - \cos(n\pi)\right]\\
 		&{}\qquad = \frac{U_{0}}{n}\left(1 - (-1)^{n}\right)
 	\end{align*}
-	where we have written the $ \cos(n\pi) $ terms in terms of $ (-1)^{n} $. \textbf{TODO record the cosine identity}.
+	where we've used the identity $ \cos(n\pi) = (-1)^{n} $.
 	
-	\item Next, we solve the right-hand side. Switching the order of integration and summation gives \textbf{TODO: record the simple result}
+	\item Next, we solve the right-hand side. Switching the order of integration and summation gives
 	\begin{equation*}
 		  \sum_{m=1}^{\infty} F_{m}a^{m} \int_{0}^{2\pi}  \sin (m\phi) \sin(n \phi) \diff \phi = \sum_{m=1}^{\infty} F_{m}a^{m}\left (\frac{2\pi}{2}\delta_{mn} \right ) = F_{n}a^{n} \pi
 	\end{equation*}
 	Combining the left and right sides gives
 	\begin{equation*}
-		F_{n} = \frac{U_{0}}{\pi}\frac{1 - (-1)^{n}}{n a^{n}}
+		F_{n} = \frac{U_{0}\big[1 - (-1)^{n}\big]}{\pi n a^{n}}
 	\end{equation*}
 	So, the solution for $ U(r, \phi) $ is
 	\begin{equation*}
-		U(r, \phi) = \sum_{n = 1}^{\infty} \frac{U_{0}}{\pi}\frac{1 - (-1)^{n}}{n a^{n}} r^{n}\sin(n\phi) = \sum_{n = 1}^{\infty} \frac{U_{0}}{\pi}\left(\frac{r}{a}\right)^{n} \frac{1 - (-1)^{n}}{n }\sin(n\phi)
+		U(r, \phi) = \sum_{n = 1}^{\infty} \left[\frac{U_{0}\big[1 - (-1)^{n}\big]}{\pi n a^{n}}\right]r^{n}\sin(n\phi) = \frac{U_{0}}{\pi} \sum_{n = 1}^{\infty} \left(\frac{r}{a}\right)^{n} \frac{\big[1 - (-1)^{n}\big]}{n}\sin(n\phi)
 	\end{equation*}
 	
 	\item Next, some limiting cases. It will be easier to work in terms of electric field instead of potential. We will find the electric field in the two planes parallel and perpendicular to the slit between the capacitor halves. 
 	
 	First, in the perpendicular (vertical) plane. The field points from high to low potential, so from the top half of the capacitor to the bottom half. In this plane we can work with just one coordinate $ r $, which represents the vertical distance from the cylinder's center. Note that $ \phi = \frac{\pi}{2} $. The component $ E_{r} $ we're after is
 	\begin{align*}
-		E_{r} &= - \pdv{r}\eval{U(r, \phi)}_{\phi = \frac{\pi}{2}}  = - \frac{U_{0}}{\pi} \sum_{n = 1}^{\infty} n\left(\frac{r}{a}\right)^{n -1}\frac{1}{a}\frac{1 - (-1)^{n}}{n}\sin(n\phi)\bigg|_{\phi = \frac{\pi}{2}}\\
-		&=  -\frac{U_{0}}{\pi a} \sum_{n= 1}^{\infty}\left(\frac{r}{a}\right)^{n-1} \frac{1 - (-1)^{n}}{n}\sin(\frac{n\pi}{2})
+		E_{r} &= - \pdv{r}\eval{U(r, \phi)}_{\phi = \frac{\pi}{2}}  = - \frac{U_{0}}{\pi} \sum_{n = 1}^{\infty} n\left(\frac{r}{a}\right)^{n -1}\frac{1}{a}\frac{\big[1 - (-1)^{n}\big]}{n}\sin(n\phi)\bigg|_{\phi = \frac{\pi}{2}}\\
+		&=  -\frac{U_{0}}{\pi a} \sum_{n= 1}^{\infty}\left(\frac{r}{a}\right)^{n-1} \frac{\big[1 - (-1)^{n}\big]}{n}\sin(\frac{n\pi}{2})
 	\end{align*}
 	The sum simplifies considerably when you realize
 	\begin{equation*}
