@@ -26,6 +26,7 @@
 \newcommand{\mat}[1]{\mathbf{#1}} % for matrices
 \newcommand{\dvec}[1]{\dot{\vec{#1}}} % for dotted vector quantity
 \newcommand{\tvec}[1]{\tilde{\vec{#1}}} % for tilde vector quantities
+\renewcommand{\t}[1]{\tilde{#1}} % shorthand for tilde
 
 \renewcommand{\r}{\vec{r}}
 \newcommand{\E}{\vec{E}} % for electric field; it's used alot!
@@ -33,6 +34,7 @@
 \newcommand{\A}{\vec{A}} % for magnetic vector potential
 \newcommand{\e}{\epsilon_{0}} % vacuum permittivity
 \newcommand{\pe}{\vec{p}_{e}} % electric dipole moment
+\newcommand{\m}{\vec{m}} % magnetic dipole moment
 
 
 \renewcommand{\div}{\nabla \cdot}
@@ -51,7 +53,7 @@
 \begin{center}
 \textbf{About These Notes}
 \end{center}
-These are my notes are from the problem-solving (\textit{Exercises}) portion of the class \textit{Elektromagnetno Polje} (Electromagnetic Field), given to third-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. The exact problem sets herein are specific to the physics program at the University of Ljubljana, but the content is fairly standard for an late-undergraduate electromagnetism course. I am making the notes publicly available in the hope that they might help others learning the same material.
+These are my notes are from the Exercises portion of the class \textit{Elektromagnetno Polje} (Electromagnetic Field), given to third-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. The exact problem sets herein are specific to the physics program at the University of Ljubljana, but the content is fairly standard for an late-undergraduate electromagnetism course. I am making the notes publicly available in the hope that they might help others learning the same material.
 
 \vspace{2mm}
 \textit{Navigation}: For easier document navigation, the table of contents is ``clickable'', meaning you can jump directly to a section by clicking the section name in the table of contents. 
@@ -63,7 +65,7 @@ These are my notes are from the problem-solving (\textit{Exercises}) portion of 
 The exercises are led by Asst. Prof. Martin Klan\v{s}ek, who has curated the problem sets and guides us through the solutions. Accordingly, credit for the problems in these notes goes to Prof. Klan\v{s}ek. I have merely typeset the problems and provided additional explanations where I saw fit. The original exercise in Slovene (without solutions) can be found on \href{https://www-f5.ijs.si/emp-2020-2021.html}{the course website}. 
 
 \vspace{2mm}
-\textit{Disclaimer:} Mistakes---both trivial typos and legitimate errors---are likely. Keep in mind that these are the notes of an undergraduate student in the process of learning the material himself---take what you read with a grain of salt. If you find mistakes and feel like telling me, by Github pull request, email or some other means, I'll be happy to hear from you, even for the most trivial of errors.
+\textit{Disclaimer:} Mistakes---both trivial typos and legitimate errors---are likely. Keep in mind that these are the notes of an undergraduate student in the process of learning the material himself---take what you read with a grain of salt. If you find mistakes and feel like telling me, by \href{https://github.com/ejmastnak/fmf}{Github} pull request, \href{mailto:ejmastnak@gmail.com}{email} or some other means, I'll be happy to hear from you, even for the most trivial of errors.
 
 
 
@@ -1053,29 +1055,237 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 	\begin{equation*}
 		\curl \big(\curl \A\big) = \div \big(\div \A\big) - \laplacian \A = \mu_{0} \vec{j}
 	\end{equation*}
-	The magnetic vector potential is defined only up to a constant; we usually choose $ \A $ so that $ \div \A = 0 $. In this convention, we have
+	
+	\item The magnetic vector potential is defined only up to a constant; we usually choose $ \A $ so that $ \div \A = 0 $. In this convention, we have
 	\begin{equation*}
 		\laplacian \A = - \mu_{0}\vec{j}
 	\end{equation*}
-	Which is a vector analog of the Poisson equation $ \laplacian U = - \frac{\rho}{\e} $ from electrostatics. Similarly to how the electrostatic potential $ U $ at a point $ \r $ in region of space with charge density $ \rho $ is found with
+	where $ \vec{j} $ is the current density vector. This equation is a vector analog of the Poisson equation $ \laplacian U = - \frac{\rho}{\e} $ from electrostatics. Similarly to how the electrostatic potential $ U $ at a point $ \r $ in region of space with charge density $ \rho $ is found with
 	\begin{equation*}
-		U = \frac{1}{4 \pi \e} \int \frac{\rho(\tvec{r})\diff^{3}\tilde{r}}{\abs{\r - \tilde{r}}}
+		U = \frac{1}{4 \pi \e} \int \frac{\rho(\tvec{r})\diff^{3}\tilde{r}}{\abs{\r - \tvec{r}}}
 	\end{equation*}
-	we find the magnetic potential at a point $ \r $ in region of space with magnetic flux $ \vec{j} $ with
+	The magnetic potential at a point $ \r $ in region of space with current density $ \vec{j} $ is
 	\begin{equation*}
-		\A = \frac{\mu_{0}}{4 \pi} \int \frac{\vec{j}(\tvec{r})\diff^{3}\tilde{r}}{\abs{\r - \tilde{r}}}
+		\A = \frac{\mu_{0}}{4 \pi} \int \frac{\vec{j}(\tvec{r})\diff^{3}\tilde{r}}{\abs{\r - \tvec{r}}}
 	\end{equation*}
-	We often encounter problems involving one-dimensional conductors, in which $ \vec{j} $ is non-zero only along the conductor. In this case, the expression for $ \vec{j}(\tvec{r})\diff^{3}\tilde{r} $ simplifies to
+	
+	\item In problems involving one-dimensional conductors, where $ \vec{j} $ is non-zero only along the conductor, the expression for $ \vec{j}(\tvec{r})\diff^{3}\tilde{r} $ simplifies to
 	\begin{equation*}
-		\vec{j}(\tvec{r})\diff^{3}\tilde{r} = \vec{j}(\tvec{r}) \diff \tilde{S} \diff \tilde{l} = \big(I \uvec{t}\big) \diff \tilde{l} = I \diff \tvec{l}
+		\vec{j}(\tvec{r})\diff^{3}\tilde{r} = \vec{j}(\tvec{r}) \diff \tilde{S} \diff \tilde{l} = I \uvec{t} \diff \tilde{l}
 	\end{equation*}
-	where $ \uvec{t} $ is the unit normal vector tangent to the conductor, $ I $ is the current through the conductor at the point $ \tvec{r} $, $ \diff \tilde{l} $ is a small distance element along the conductor's length, and $ \diff \tvec{l} $ is length element $ \diff \tilde{l} $ with the direction of $ \uvec{t} $. The magnetic vector potential for a one-dimensional conductor then simplifies to
+	where $ \uvec{t} $ is the unit normal vector tangent to the conductor, $ I $ is the current through the conductor at the point $ \tvec{r} $ and $ \diff \tilde{l} $ is a small distance element along the conductor's length. The magnetic vector potential for a one-dimensional conductor carrying a current $ I $ then simplifies to
 	\begin{equation*}
-		\A(\r) = \frac{\mu_{0}I}{4\pi} \int \frac{\diff \tvec{l}}{\abs{\r - \tvec{r}}}
+		\A(\r) = \frac{\mu_{0}I}{4\pi} \int \frac{\uvec{t} \diff l}{\abs{\r - \tvec{r}}}
 	\end{equation*}
+	
+	\item Recall $ \B = \curl \A $. Taking the curl of the general expression for $ \A $ in terms of current density $ \vec{j} $ gives general expression for the magnetic field 
+	\begin{equation*}
+		\B (\r) = \frac{\mu_{0}}{4\pi}\int \frac{\vec{j}(\tvec{r}) \cross (\r - \tvec{r})}{\abs{\r - \tvec{r}}^{3}} \diff^{3}\tilde{r}
+	\end{equation*}
+	This is a general form of the Biot-Savart law for the magnetic field $ \B $ of a current distribution.
+	
 \end{itemize}
 
+\subsubsection{Magnetic Field of a Circular Current Loop}
+\textit{A conducting loop with radius $ a $ carries a current $ I $. What is the magnetic vector potential far from the conducting loop?}
+\begin{itemize}
+	\item Our starting point is the vector potential of a one-dimensional conductor from the theory section, i.e.
+	\begin{equation*}
+		\A(\r) = \frac{\mu_{0}I}{4\pi} \int \frac{\uvec{t} \diff l}{\abs{\r - \tvec{r}}}
+	\end{equation*}
+	We need expressions for $ \r $, $ \tvec{r} $ and $ \uvec{t} $.
+	
+	Assume the the loop lies in the $ x, y $ plane with the $ z $ axis normal to the loop. For mathematical convenience, we rotate the $ x, y $ plane so $ \r $ lies in the $ x, z $ plane; this just gives us one less non-zero component to work with, since the $ y $ component of $ \r $ is zero. In polar coordinates $ \r $ reads
+	\begin{equation*}
+		\r = \big (r \sin \theta, 0, r \cos \theta \big )
+	\end{equation*}
+	where $ \theta $ is the angle between $ \r $ and the $ z $ axis. 
+	
+	The integration variable $ \tvec{r} $, which runs over the current loop in the $ x, y $ plane, reads
+	\begin{equation*}
+		\tvec{r} = \big(a \cos \tilde{\phi}, a \sin \tilde{\phi}, 0 \big)
+	\end{equation*}
+	Where $ \tilde{\phi} $ is the azimuthal angle between $ \tvec{r} $ and the $ x $ axis. 
+	
+	Finally, the expression for $ \uvec{t} $, the tangent to the current loop, is
+	\begin{equation*}
+		\uvec{t} = \big( -\sin \tilde{\phi},  \cos \tilde{\phi}, 0\big)
+	\end{equation*}
+	The small distance element is $ \diff \tilde{l} = a \tilde{\phi}$ .
+	
+	\item We can now but the pieces together in the equation for $ \A $. First,
+	\begin{align*}
+		\abs{\r - \tvec{r}} &= \sqrt{(r \sin \theta - a \cos \tilde{\phi} )^{2} + a^{2}\sin^{2}\tilde{\phi} + r^{2}\cos^{2} \theta}\\
+		& = \sqrt{r^{2} + a^{2} - 2ra \sin \theta \cos \tilde \phi}\\
+		&\approx \sqrt{r^{2} - 2ra \sin \theta \cos \tilde \phi} = r \sqrt{1 - \frac{2a}{r}\sin \theta \cos \tilde{\phi}}
+	\end{align*}
+	where the last lines uses $ r \gg a $ (recall we're interested in the solution far from the conducting loop). We now have, again using $ a \ll r \implies \frac{a}{r} \ll 1 $,
+	\begin{equation*}
+		\frac{1}{\abs{\r - \tvec{r}}} = \frac{1}{r} \left(1 - \frac{2a}{r}\sin \theta \cos \tilde{\phi}\right)^{-1/2} \approx \frac{1}{r}\left(1 + \frac{1}{2}  \frac{2a}{r}\sin \theta \cos \tilde{\phi}\right)
+	\end{equation*}
+	Substituting the expressions for $ \frac{1}{\abs{\r - \tvec{r}}} $, $ \uvec{t} $ and $ \diff \tilde{l} $ into expression for $ \A $ gives
+	\begin{align*}
+		\A(\r) &= \frac{\mu_{0}I}{4\pi} \int \frac{\uvec{t} \diff l}{\abs{\r - \tvec{r}}} = \frac{\mu_{0}I}{4\pi} \frac{a}{r} \int_{0}^{2\pi} \diff \tilde{\phi}  
+		\begin{bmatrix}
+			- \sin \tilde{\phi}\\
+			\cos \tilde{\phi}\\
+			0
+		\end{bmatrix}
+		\left(1 + \frac{1}{2}  \frac{2a}{r}\sin \theta \cos \tilde{\phi}\right)
+	\end{align*}
+	
+	\item The integrals conveniently simplify, since we are integrating sinusoidal terms over an entire period. Only the integral of $ \cos^{2} \tilde{\phi} $ in the $ y $ component is nonzero. We end up with $ A_{x} = A_{z} = 0 $ and
+	\begin{equation*}
+		A_{y}(r) = \frac{\mu_{0}I}{4\pi} \frac{a}{r} \int_{0}^{2\pi} \cos^{2} \tilde{\phi}
+		 \frac{2a}{r}\sin \theta \diff \tilde{\phi} = \frac{\mu_{0}I}{4\pi} \frac{a^{2}}{r^{2}}  \sin \theta 
+	\end{equation*}
+	or, in vector form,
+	\begin{equation*}
+		\A(\r) = \frac{\mu_{0}I}{4\pi} \frac{a^{2}}{r^{2}}  \sin \theta \uvec{y} = \frac{\mu_{0}I}{4\pi} \frac{a^{2}}{r^{2}} \uvec{z} \cross \uvec{r}
+	\end{equation*}
+	The second expression is preferable: the first, in terms of $ \uvec{y} $, holds only with $ x, y $ plane is rotated so $ \r $ lies in the $ x, z $ plane. The second, which uses $ \sin \theta \uvec{y} = \uvec{z} \cross \uvec{r} $, holds for any orientation of the $ x, y $ plane. 
+	
+	
+	Finally, using $ I \pi a^{2} $ = $ \abs{\vec{m}} $ (where $ \m $ is the loop's magnetic dipole moment, which points in the direction of the loop's normal), the expression for $ \A $ simplifies to
+	\begin{equation*}
+		\A(\r) = \frac{\mu_{0} \m \cross \r}{4\pi r^{3}}
+	\end{equation*}
+	This is the same form of magnetic vector potential as for a magnetic dipole. In other words, a circular current loop behaves as magnetic dipole at long distances.
+	
+\end{itemize}
 
+\subsubsection{Magnetic Field of a Rotating Charged Disk}
+\textit{Consider a charged, insulating disk with uniform surface charge density $ \sigma $ and radius $ a $. The disk rotates uniformly about an axis through its center with constant angular velocity $ \vec{\omega} = (0, 0, \omega) $. Find the magnetic field along the axis of rotation.}
+\begin{itemize}
+	\item We choose a coordinate system so the disk lies in the $ x, y $ plane and the axis rotation coincides with the $ z $ axis. We start with the general Biot-Savart law
+	\begin{equation*}
+		\B (\r) = \frac{\mu_{0}}{4\pi}\int \frac{\vec{j}(\tvec{r}) \cross (\r - \tvec{r})}{\abs{\r - \tvec{r}}^{3}} \diff^{3}\tilde{r}
+	\end{equation*}
+	and, like in the previous problem, find expressions for each vector quantity in the equation. The expression for $ \r $ along the $ z $ axis is simply $ \r = (0, 0, z) $, while the expression for $ \tvec{r} $, which lies in the disk in the $ x, y $ plane, is
+	\begin{equation*}
+		\tvec{r} = \big(\tilde{r} \cos \tilde{\phi}, \tilde{r} \sin \tilde{\phi}, 0 \big)
+	\end{equation*}
+	The difference of $ \r $ and $ \tvec{r} $ and its magnitude is
+	\begin{equation*}
+		\r - \tvec{r} = \big(-\tilde{r} \cos \tilde{\phi}, - \tilde{r} \sin \tilde{\phi}, z \big) \eqtext{and} \abs{\r - \tvec{r}} = \sqrt{\tilde{r}^{2} + z^{2}}
+	\end{equation*}
+	Finally, the current density $ \vec{j} $, which points tangent to the disk's rotation, is
+	\begin{equation*}
+		\vec{j} = j(-\sin \t{\phi}, \cos \t{\phi},0 )
+	\end{equation*}
+%	The volume element $ \diff^{3}\tilde{r} $ is $ \diff^{3}\tilde{r} = \t{r} \diff \t{\phi} \diff \t{r} \diff h$ where $ \diff h $ is the disk's thickness. 
+	
+	\item Using the expressions for our vector quantities, the cross product $ \vec{j}(\tvec{r}) \cross (\r - \tvec{r}) $ is
+	\begin{equation*}
+		\vec{j}(\tvec{r}) \cross (\r - \tvec{r}) = j
+		\begin{bmatrix}
+			-\sin \t{\phi}\\
+			\cos \t{\phi}\\
+			0
+		\end{bmatrix}
+		\begin{bmatrix}
+			-\tilde{r} \cos \tilde{\phi}\\
+			- \tilde{r} \sin \tilde{\phi}\\
+			z
+		\end{bmatrix}
+		= j
+		\begin{bmatrix}
+			z \cos \t{\phi}\\
+			z \sin \t{\phi}\\
+			\t{r}
+		\end{bmatrix}
+	\end{equation*}
+	Substituting $ \vec{j}(\tvec{r}) \cross (\r - \tvec{r}) $ and $  \abs{\r - \tvec{r}} $ into the Biot-Savart law gives
+	\begin{equation*}
+		\B(z) = \frac{\mu_{0}}{4 \pi} \int \frac{j \diff^{3} \t{r}}{\big(\tilde{r}^{2} + z^{2}\big)^{3/2}} 
+		\begin{bmatrix}
+			z \cos \t{\phi}\\
+			z \sin \t{\phi}\\
+			\t{r}
+		\end{bmatrix}
+	\end{equation*}
+	Next, we write $ j \diff^{3}\t{r} = j \diff \t{S} \diff \t{l} = j \diff \t{S} (\t{r} \diff \t{\phi} ) = \diff I \t{r} \diff \t{\phi} $. Note that the product $ j \diff \t{S} $ is the current element $ \diff I $ in the surface element $ \diff \tilde{S} $. The current $ \diff I $ at the radius $ \t{r} $ on the disk rotating with period $ t_{0} = \frac{2\pi}{\omega} $ is
+	\begin{equation*}
+		\diff I = \frac{\diff q}{t_{0}} = \frac{\diff q}{2\pi} \omega  = \frac{(\sigma 2\pi \t{r}\diff \t r)}{2\pi} \omega = \sigma \omega \t{r} \diff \t{r}
+	\end{equation*}
+	Substituting $ j \diff^{3}\t{r} =  \diff I \t{r} \diff \t{\phi}  =  \sigma \omega \t{r}^{2} \diff \t{r} \diff \t{\phi}  $ into the Biot-Savart law gives
+	\begin{equation*}
+		\B(z) = \frac{\mu_{0}}{4 \pi} \int_{0}^{a} \diff \t{r} \int_{0}^{2\pi} \diff \t{\phi}	\frac{\sigma \omega \t{r}^{2}}{\big(\tilde{r}^{2} + z^{2}\big)^{3/2}} 
+		\begin{bmatrix}
+			z \cos \t{\phi}\\
+			z \sin \t{\phi}\\
+			\t{r}
+		\end{bmatrix}
+	\end{equation*}
+	The first and second components of $ \B $ contain integrals $ \cos $ and $ \sin $ terms over a full period---the result is zero. After integrating over $ \t{\phi} $, the magnetic field simplifies to
+	\begin{equation*}
+		\B(z) = \frac{\mu_{0}}{4 \pi} \int_{0}^{a} \diff \t{r} \frac{\sigma \omega \t{r}^{2}}{\big(\tilde{r}^{2} + z^{2}\big)^{3/2}} 
+		\begin{bmatrix}
+			0\\
+			0\\
+			2\pi \t{r}
+		\end{bmatrix}
+	\end{equation*}
+	Only the $ z $ component of $ \B $ is non-zero; it is
+	\begin{equation*}
+		B_{z}(z) = \frac{\mu_{0}}{2} \int_{0}^{a} \diff \t{r} \frac{\sigma \omega \t{r}^{3}}{\big(\tilde{r}^{2} + z^{2}\big)^{3/2}} 
+	\end{equation*}
+	In terms of the new variable $ u = \tilde{r}^{2} + z^{2} $, the integral evaluates to
+	\begin{align*}
+		B_{z}(z) &= \frac{\mu_{0}}{2} \frac{\sigma \omega}{2}\int_{z^{2}}^{z^{2} + a^{2}}\frac{u-z^{2}}{u^{3/2}} \diff u = \frac{\mu_{0}\sigma \omega}{4} \left[2u^{1/2} + 2z^{2}u^{-1/2}\right]_{a^{2}}^{z^{2}+a^{2}}\\
+		 & = \frac{\mu_{0}\sigma \omega}{2} \left(\sqrt{z^{2} + a^{2}} - z + \frac{z^{2}}{\sqrt{z^{2} + a^{2}}} - z\right)\\
+		 & = \frac{\mu_{0}\sigma \omega }{2}\left(\frac{2z^{2} + a^{2}}{\sqrt{z^{2} + a^{2}}} - 2z\right)
+	\end{align*}
+	The magnetic field along the $ z $ axis is thus $ \B = (0, 0, B_{z}) $ with $ B_{z} $ as above.
+	
+	\item Next, we consider the limit case $ z \gg a $, far from the rotating disk. Expanding the square root to fourth order in the small quantity $ \frac{a}{z} $, multiplying out and simplifying like terms gives
+	\begin{align*}
+		B_{z} &= \frac{\mu_{0}\sigma \omega}{2} \left(\frac{2z^{2} + a^{2}}{z\sqrt{1 + \frac{a^{2}}{z^{2}}}} - 2z\right) \approx \frac{\mu_{0}\sigma \omega}{2} \left[\left(2z + \frac{a^{2}}{z}\right)\left(1 - \frac{a^{2}}{2z^{2}} + \frac{3}{8}\frac{a^{4}}{z^{4}}\right) - 2z \right]\\
+		& = \frac{\mu_{0}\sigma \omega}{2} \left[2z + \frac{a^{2}}{z} - \frac{a^{2}}{z} - \frac{1}{2}\frac{a^{4}}{z^{3}} + \frac{3}{4}\frac{a^{4}}{z^{3}} + \frac{3}{8}\frac{a^{6}}{z^{5}} - 2z\right] = \frac{\mu_{0}\sigma \omega}{2} \left[ \frac{1}{4}\frac{a^{4}}{z^{3}} + \frac{3}{8}\frac{a^{6}}{z^{5}}\right] 
+	\end{align*}
+	Neglecting the highest-order $ \frac{a^{6}}{z^{5}} $ term gives the simple result
+	\begin{equation*}
+		B_{z} \approx  \frac{\mu_{0}\sigma \omega}{8} \frac{a^{4}}{z^{3}}, \qquad z \gg a
+	\end{equation*}
+	In other words, far from the disk, the magnetic field falls off as $ z^{-3} $, just like the field of a magnetic dipole.
+	
+	\item Next, we will try to write the magnetic field in the form $ B_{z} \propto \frac{\abs{\m}}{z^{3}} $ where $ \m $ is the disk's magnetic dipole moment. Integrating over concentric rings with area $ S $ carrying current $ \diff I $, the disk's magnetic dipole moment is
+	\begin{equation*}
+		\abs{\m} = \int S \diff I = \int_{0}^{a} (\pi \t{r}^{2}) \cdot (\sigma \omega \t{r}\diff \t{r}) = \pi \sigma \omega \int_{0}^{a} \t{r}^{3} \diff \t{r} = \frac{\pi}{4}\sigma \omega a^{4}
+	\end{equation*}
+	Comparing this expression for $ \abs{\m} $ to the similar expression for $ B_{z} $ leads to 
+	\begin{equation*}
+		B_{z} \approx  \frac{\mu_{0}\sigma \omega}{8} \frac{a^{4}}{z^{3}} = \frac{\mu_{0}\abs{\m}}{2\pi z^{3}}
+	\end{equation*}	
+	which is in the desired form $  B_{z} \propto \frac{\abs{\m}}{z^{3}} $. The general form for the magnetic field of a magnetic dipole is
+	\begin{equation*}
+		\B(\r) = \frac{\mu_{0}}{4\pi}\frac{3(\m \cdot \r)\r - \m r^{2}}{r^{5}}
+	\end{equation*}
+	In fact, this expression is equivalent to our result $ B_{z}(z) = \frac{\mu_{0}\abs{\m}}{2\pi z^{3}} $. Since $ \m $ and $ \r $ both point along the $ z $ axis, their dot product is $ \m \cdot \r = \abs{m}r $. Along the $ z $ axis, $ \r = (0, 0, z) $ and the general expression for the dipole magnetic field simplifies to
+	\begin{equation*}
+		\B(\r) = \frac{\mu_{0}}{4\pi} \frac{3\abs{m}z^{2} - \abs{m}z^{2}}{z^{5}}\uvec{z} = \frac{\mu_{0}\abs{\m}}{2\pi z^{3}} \uvec{z},
+	\end{equation*}
+	in agreement with our expression for $ B_{z} $ for $ z \gg a $.
+	
+\end{itemize}
+
+\textbf{Theory: Magnetic Force}\vspace{2mm}
+
+The magnetic force $ \vec{F} $ on the matter contained in the region of space enclosed in the region $ V $ and permeated by the magnetic field $ \B $ is
+\begin{equation*}
+	\vec{F} = \frac{1}{\mu_{0}}\oint_{\partial V}\big[\B(\B \cdot \uvec{n}) - \frac{1}{2}\B^{2}\uvec{n}\big] \diff S
+\end{equation*}
+where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
+
+\iffalse
+\subsubsection{Magnetic Force in a Coaxial Cable}
+\textit{A long coaxial cable consists of a thin inner wire and outer sheath with radius $ a $. The inner wire carries a current $ I $, and we connect the sheath to the inner wire at the cable's ends so that the current $ I $ returns along the outer sheath in the opposite direction as the current along the inner wire. Find the magnetic force per unit length on the outer sheath.}
+
+\begin{itemize}
+	\item There are two contributions to the magnetic force on the sheath: the repulsive, radial force between the sheath and the inner wire and an attractive ``surface tension'' force on sheath's surface, which carries uniformly distributed current $ I $. 
+	
+\end{itemize}
+\fi 
 
 \end{document}
 
