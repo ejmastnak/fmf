@@ -1912,18 +1912,15 @@ def practice():
 
 
 def run():
-    # practice()
+    practice()
 
     # generate_fixed_step_solutions()
     # generate_adaptive_step_solutions()
 
     # compile_error_h_table()
 
-
-
     # compile_fixed_step_times()
     # compile_adaptive_step_times()
-
 
     # generate_step_size_vs_error()
 
@@ -1938,7 +1935,7 @@ def run():
     # plot_fixed_step_stability()
     # plot_adaptive_step_stability()
 
-    plot_solution()
+    # plot_solution()
 
 
 run()
