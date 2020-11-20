@@ -1,0 +1,368 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{mwe}
+\usepackage[margin=3.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bm} % for bold vectors in math mode
+\usepackage{physics} % many useful physics commands
+\usepackage[separate-uncertainty=true]{siunitx} % for scientific notation and units
+
+\usepackage{graphicx}
+\graphicspath{{"../figures/"}}
+\usepackage[section]{placeins} % to keep figures in their sections
+\usepackage{subcaption} % for subfigure captions
+\usepackage[export]{adjustbox} % centers figures wider than text width
+
+\usepackage{xcolor}  % to color hyperref links
+\usepackage[colorlinks = true, allcolors=blue]{hyperref}
+
+\setlength{\parindent}{0pt} % to stop indenting new paragraphs
+\newcommand{\eqtext}[1]{\qquad \text{#1} \qquad}
+\newcommand{\diff}{\mathop{}\!\mathrm{d}} % differential
+\newcommand{\fwhm}{\mathrm{FWHM}}
+\newcommand{\isoptope}[2]{${}^{#2}${#1}}
+
+\begin{document}
+\title{Correlation of Annihilation Radiation}
+\author{Elijan Mastnak}
+\date{Winter Semester 2020-2021}
+\maketitle
+\tableofcontents
+\newpage
+		
+
+\section{Tasks}
+\begin{enumerate}
+
+	\item Initialize and calibrate the time-digital converter, then measure the TDC's resolution.
+	
+	\item Measure the distribution of time intervals between radioactive decays for the \isoptope{Na}{22} source. 
+	
+	\item Find the coincidences of annihilation gamma rays and measure their angular correlation.
+	
+	\item Measure the coincidence circuit's delay curve. Compare the resulting time resolution to the value determined by measuring stochastic coincidence.
+	
+\end{enumerate}
+
+
+
+\section{Equipment, Procedure and Data}
+\textbf{The Basis of the Experiment}
+\begin{itemize}
+	\item A source of radioactive \isoptope{Na}{22} serves as a positron source via beta decay. The positrons annihilate with electrons, which dominantly leads the emission of colinear gamma ray photons with energy $ \SI{511}{\kilo \electronvolt} $. The two gamma rays are correlated by time and angle. The experiment's goal is to detect coincidences, which we define as the near simultaneous detection of a gamma ray in the \SI{0.511}{\mega \electronvolt} photopeak of each detector.
+	
+	\item Analog pulses from the scintillation detector are processed by a single-channel analyzer (SCA), which only passes pulses within a window of the lower limit. We set the lower limit and window to pass only the pulses from photopeak.
+	
+	When a pulse falls in the SCA's window, it emits a ``high'' logic pulse---a \SI{0.5}{\volt}, \SI{0.5}{\micro \second} pulse. The SCA pulses indicate a gamma ray event in the photopeak.
+	
+	\item The logic pulses from the SCA connect to a Gate and Delay Generator, which outputs a \SI{5}{\volt} pulse that lasts a few microseconds after the arrival of the SCA logic pulse which initiated it. The GDG pulse is called the gating signal and is routed to the PHA's gate input. After further processing, these logic pulses lead to a time-to-digital converter's (TDC) inputs; the TDC data is processed by the Red Pitaya computer to generate coincidence data.
+\end{itemize}
+
+\subsection{Procedure}
+\begin{enumerate}
+	\item Set discriminator level for both scintillators to only register gamma rays in the \isoptope{Na}{22} photopeak. Observe peaks on the oscilloscope, note the inverted pulse shape. Calibrate the both TDC channels.
+		
+	\item Measure the distribution of time intervals between radioactive decays for the \isoptope{Na}{22} source using a single channel. Get a characteristic Poisson distribution.
+	
+	\item Switch to two-channel measurement to measure coincidences. Ensure delay on both scintillator channels is equal. Measure the TDC's time resolution with both TDC inputs connected to the same pulse source. 
+		
+	\item Measure the dependence of count rate on the angular displacement between the scintillators.
+	
+\end{enumerate}
+
+
+\subsection{Data}
+\textit{Independent variables}: configuration of pulse signals supplied to the TDC channels and, when measuring angular correlation, the linear separation and angular displacement between the scintillators.
+
+\textit{Dependent variables}: histogram-style data counting the number of radiation events in time bins corresponding to the delay between events arriving at the \texttt{START} and \texttt{STOP} channels.
+
+
+
+%The two-channel measurement measures the difference in time between pulses arriving in the \texttt{START} and \texttt{STOP} channels.
+
+\section{Analysis}
+I estimated background activity using the data from the \texttt{Gamma Spectroscopy} experiment, using the data near the \SI{0.551}{\mega \electronvolt} spectral peak, corresponding to channel number 265 on the multi-channel analyzer.
+
+\subsection{Measuring TDC Resolution}
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=\linewidth]{tdc-resolution}
+\caption{The time-digital converter's coincidence peak with both inputs connected to the same pulse source. The TDC's resolution is the peak's variance $ \sigma^{2} $}
+\label{korzargam:fig:tdc-resolution}
+\end{figure}
+I estimated the TDC's time resolution as the full width at half maximum (FWHM) of a Gaussian bell curve fit to the coincidence peak with both TDC inputs connected to the same pulse source. The variance is roughly $ \sigma = \SI{18}{\pico \second} $, corresponding to a FWHM of about $ \SI{40}{\pico \second} $. Figure \ref{korzargam:fig:tdc-resolution} shows the coincidence peak and corresponding fit. 
+
+
+\subsection{Time Interval Distribution of Radioactive Decays}
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=\linewidth]{poisson-histogram}
+\caption{The characteristic exponential distribution of time intervals between successive radiation counts.}
+\label{korzargam:fig:poisson-hist}
+\end{figure}
+
+
+Figure \ref{korzargam:fig:poisson-hist} shows the distribution of time-intervals between successive radiation counts, which displays a characteristic exponential decay. The histogram data corresponds to the exponential relationship
+\begin{equation*}
+	\frac{\Delta p}{\Delta t} \approx \dv{p}{t} = Re^{-Rt}
+\end{equation*}
+representing the probability of detecting a pulse in the time $ t $, where $ R $ is the average pulse rate. Figure \ref{korzargam:fig:poisson-fit} shows the same data with a linear fit, corresponding to the linearized relationship
+\begin{equation*}
+	\ln(\frac{\Delta p}{\Delta t}) = \ln R - Rt
+\end{equation*}
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=\linewidth]{poisson-fit}
+\caption{The linearized distribution of time intervals between radiation counts with a corresponding linear fit. The parameter $ R $ represents the average count rate.}
+\label{korzargam:fig:poisson-fit}
+\end{figure}
+
+The measured average count rate is
+\begin{equation*}
+	R_{\text{measured}} = \frac{N}{\Delta t} = \frac{81665}{\SI{30}{\second}} \approx \SI{2.72}{\milli \second^{-1}}
+\end{equation*}
+The average count rate from the linear fit is
+\begin{equation*}
+	R_{\text{fit}} = \SI{2.91}{\milli \second^{-1}}
+\end{equation*}
+The two quantities agree relatively well---the discrepancy is about 7 percent. 
+
+
+\subsection{Random Coincidence of Annihilation Gamma Rays}
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{oscilloscope-random}
+\caption{Increasing delay between scintillator channels when measuring random coincidences. Note the lack of overlap between the two pulses.}
+\label{korzargam:fig:oscilloscope}
+\end{figure}
+
+The theoretically predicted random coincidence rate $ R_{\text{rand}} $ when the total count rates on the two TDC channels are $ R_{1} $ and $ R_{2} $, respectively, with a coincidence time measurement window $ \tau $ is
+\begin{equation*}
+	R_{\text{rand}} = R_{1}R_{2}\tau
+\end{equation*}
+To measure the random coincidence rate, I increased the delay between the two coincidence channels well beyond the width of the coincidence peak, where only random coincidences are expected (see the oscilloscope signals in Figure \ref{korzargam:fig:oscilloscope}). The measured random count rate $ R_{\text{rand}} $ is the number of measured coincidences divided by the \SI{30}{\second} measurement time. The values $ R_{1} $ and $ R_{2} $ are the measured total count rates on each TDC channel, and $ \tau $ is the measurement window. An example calculation for $ \tau = \SI{338}{\nano \second} $ reads
+\begin{equation*}
+	R_{\text{rand}} =  R_{1}R_{2}\tau = \frac{80735}{\SI{30}{\second}} \cdot \frac{53970}{\SI{30}{\second}} \cdot \SI{338}{\nano \second} = \SI{1.626}{\second^{-1}}
+\end{equation*}
+Table \ref{korzargam:table:random} shows the results for three different time windows $ \tau $. The measured and theoretical values agree to within ten percent or so for each value of $ \tau $. 
+\begin{table}
+\centering
+\begin{tabular}{c|c|c}
+	Window $ \tau $ [\si{\nano \second}]& Measured $ R_{\text{rand}} $ [$ \si{\second}^{-1} $] & Theoretical $ R_{\text{rand}} $ [$ \si{\second}^{-1} $]\\
+	\hline 
+	164 & 0.73 $ \pm $ 0.07 & 0.79 $ \pm $ 0.04\\
+	236 & 1.06 $ \pm $ 0.09 & 1.14 $ \pm $ 0.06\\
+	338 & 1.99 $ \pm $ 0.12 & 1.63 $ \pm $ 0.08
+\end{tabular}
+\caption{Measured and theoretically predicted random coincidence rate $ R_{\text{rand}} $ for three coincidence windows $ \tau $. }
+\label{korzargam:table:random}
+\end{table}
+
+
+
+\subsection{Angular Correlation} \label{korzargam:ss:ang-cor}
+This part of the experiment is run in two-channel mode with each scintillator connected to one of the TDC channels. Note that I used the \href{https://belle2.ijs.si/fmf2020/gamagama/}{online simulator} for this portion of the experiment, which explains why the coincidence peak is a near perfect bell curve. I ran the simulation with the following parameters: measurement time \SI{30}{\second}, distance between scintillators \SI{25}{\centi \meter}. 200 histogram bins, bins from -500 to 500 nanoseconds. Measurement type: angular correlation.
+
+I estimated the time resolution of the coincidence peak as the peak's FWHM, found by fitting a Gaussian curve to the count data. Figure \ref{korzargam:fig:ang-zero-resolutionn} shows the results---note that the time resolution is three orders of magnitude larger than the TDC resolution.
+
+Finally, Figure \ref{korzargam:fig:ang-correlation} shows the dependence of the coincidence rate on the angular displacement between the scintillators. Note the rapid decrease in count rate with increasing angle. 
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=\linewidth]{ang-zero-resolution}
+\caption{The coincidence peak's variance with colinear scintillators at a separation of $ \SI{25}{\centi \meter} $ approximately \SI{40}{\nano \second}---three orders of magnitude larger than when measuring the TDC resolution.}
+\label{korzargam:fig:ang-zero-resolutionn}
+\end{figure}
+
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=\linewidth]{ang-correlation}
+\caption{The coincidence count rate falls rapidly as the angle between the scintillators increases. Error bars are not shown.}
+\label{korzargam:fig:ang-correlation}
+\end{figure}
+
+
+\section{Error Analysis}
+
+\subsection{TDC Resolution} \label{korzargam:ss:tdc-res-error}
+Input data: number of counts $ N $ in a histogram bin $ \Delta t $. Because $ N $ is radioactive count data, I estimated the error (standard deviation) directly from the square root of the count number:
+\begin{equation*}
+	\sigma_{N} \approx \sqrt{N}
+\end{equation*}
+I assumed the histogram bin width $ \Delta t $ carried negligible uncertainty relative to $ \sigma_{N} $. The TDC's time resolution is that standard deviation of the coincidence peak in Figure \ref{korzargam:fig:tdc-resolution}, which I found by fitting a Gaussian curve to the coincidence peak with the fitting function \texttt{curve\_fit}. The estimate for resolution error is the square root of the corresponding entry in the fit's covariance matrix. 
+
+\vspace{2mm}
+\textit{Note:} The \texttt{curve\_fit} function's covariance matrix diverged when fitting the Gaussian curve as long as the input error in $ N $ was anything other than zero. As such, the uncertainty in Figure \ref{korzargam:fig:tdc-resolution} is only representative of the raw fit and does not account for the $ \sqrt{N} $ radioactive decay uncertainty in $ N $. 
+
+\subsection{Time Interval Distribution of Decays}
+\textbf{Fitted Average Count Rate:} First (assuming error in bin size $ \Delta t $ is negligible), I estimated the error in the linearized quantity $ \ln \frac{\Delta N}{\Delta t} $ by Taylor expanding the logarithm:
+\begin{equation*}
+	\ln(N + \delta N) \approx \ln N  + \delta N \dv{\ln N}{N} = \ln N + \frac{\delta N}{N}
+\end{equation*}
+implying the uncertainty in $ \ln \frac{\Delta N}{\Delta t} $ could be estimated as $ \frac{u_{n}}{N} $ where $ u_{n} = \sqrt{N} $ is the radioactive decay uncertainty in $ N $. I used this estimate as the input error in $  \ln \frac{\Delta N}{\Delta t} $ when performing the fit in Figure \ref{korzargam:fig:poisson-fit}. 
+
+\vspace{2mm}
+\textbf{Measured Average Count Rate:} The measured average count rate is found with
+\begin{equation*}
+	R_{\text{measured}} = \frac{N}{\Delta t_{\text{m}}}
+\end{equation*}
+where $ N = 81665 $ is the total number of counts in the \SI{30}{\second} measurement period  $ \Delta t_{\text{m}} $. The input error in $ N $ is $ u_{N} = \frac{\sqrt{N}}{\sqrt{n}} = \frac{286}{\sqrt{5}} $ (I measured the count rate $ n = 5 $ times) and the input error in $ t_{\text{m}}  $ is $ u_{t} = \SI{0.05}{\second} $. The associated sensitivity coefficients are
+\begin{equation*}
+	c_{N} = \pdv{R_{\text{measured}}}{N} = \frac{1}{\Delta t_{\text{m}}} \eqtext{and} c_{t} =  \pdv{R_{\text{measured}}}{\Delta t_{\text{m}}} = - \frac{N}{\big(\Delta t_{\text{m}}\big)^{2}}
+\end{equation*}
+The corresponding error estimate for $ R_{\text{measured}} $ is
+\begin{equation*}
+	u_{R} = \sqrt{(c_{N}u_{N})^{2} + (c_{t}u_{t})^{2}} \stackrel{!!!}{\approx} \SI{6.22}{s^{-1}}
+\end{equation*}
+The result, clearly, is absurdly large. This is due to my using $ \sqrt{N} $ as a basis for calculating $ u_{N} $, i.e. the random error estimate $ u_{N} $ is large due to the uncertain nature of radioactive decay. To get a useful result, I would have to perform many more runs of the same experiment than my humble $ n = 5 $ runs, in which case the random error would slowly fall as $ \sqrt{n} $. 
+
+
+\subsection{Random Coincidences}
+\textbf{Theoretically Predicted Value:} The theoretically predicted random coincidence rate is found with
+\begin{equation*}
+	R_{\text{rand}} = R_{1}R_{2}\tau
+\end{equation*}
+I assume the measurement window $ \tau $ carries negligible error. The errors in the rates $ R_{1} $ and $ R_{2} $ found like in the previous section. Sensitivity coefficients are
+\begin{equation*}
+	c_{1} = \pdv{R_{\text{rand}}}{R_{1}} = R_{2}\tau \eqtext{and} c_{2} = \pdv{R_{\text{rand}}}{R_{2}} = R_{1}\tau
+\end{equation*}
+and the associated error is
+\begin{equation*}
+	u_{R} = \sqrt{(c_{1}u_{1})^{2} + (c_{2}u_{2})^{2}} 
+\end{equation*}
+
+\vspace{2mm}
+\textbf{Measured Value:} If estimated the error in the measured random coincidence rate as for all count rates so far, taking $ N $ as the measured number of coincidences, not total counts. Table \ref{korzargam:table:random} shows the errors in both the theoretical and measured cases.
+
+\section{Results}
+\subsection{Time Resolutions}
+The TDC's time resolution---the FWHM of a Gaussian curve fitted to the coincidence peak with both TDC channels connected to the same pulse source---was
+\begin{equation*}
+	\sigma^{2}_{\text{TDC}} = \SI{18\pm 1}{\pico \second}  \implies 	\fwhm_{\text{TDC}} = \SI{42\pm 3}{\pico \second}
+\end{equation*}
+Note that the uncertainty corresponds only to the fit uncertainty and does not account for uncertainty in radioactive decay counts (as discussed in Subsection \ref{korzargam:ss:tdc-res-error}). 
+
+The coincidence peak's time resolution with the TDC channels connected to different scintillators (using simulated data, see Subsection \ref{korzargam:ss:ang-cor}) was
+\begin{equation*}
+	\sigma^{2}_{\text{scintillator}} \approx \SI{40}{\nano \second} \implies \fwhm_{\text{scintillator}} \approx \SI{90}{\nano \second}
+\end{equation*}
+Note the result is 3 orders of magnitude larger than the pure TDC resolution---the scintillators are at fault for the worsened resolution.
+
+\subsection{Time Interval Distribution of Radioactive Decays}
+The average radioactive decay count rate found with a linear fit of the linearized histogram data was
+\begin{equation*}
+	R_{\text{fit}} = \SI{2.9 \pm 0.5}{\milli \second^{-1}}
+\end{equation*}
+The measured  was
+\begin{equation*}
+	R_{\text{measured}} \approx \SI{2.7}{\milli \second^{-1}}
+\end{equation*}
+
+\subsection{Random Count Rate}
+The measured and theoretically predicted random round rate $ R_{\text{rand}} $ for three values of window size $ \tau $ are shown in the table below.
+\begin{table}[htb!]
+\centering
+\begin{tabular}{c|c|c}
+	Window $ \tau $ [\si{\nano \second}]& Measured $ R_{\text{rand}} $ [$ \si{\second}^{-1} $] & Theoretical $ R_{\text{rand}} $ [$ \si{\second}^{-1} $]\\
+	\hline 
+	164 & 0.73 $ \pm $ 0.07 & 0.79 $ \pm $ 0.04\\
+	236 & 1.06 $ \pm $ 0.09 & 1.14 $ \pm $ 0.06\\
+	338 & 1.99 $ \pm $ 0.12 & 1.63 $ \pm $ 0.08
+\end{tabular}
+\caption{Copy of measured and theoretically predicted random coincidence rate $ R_{\text{rand}} $ for three coincidence windows $ \tau $, reprinted here for convenience.}
+\end{table}
+
+
+
+\appendix 
+\section{Theory}
+
+\subsection{Positronium Annihilation}
+An electron and positron form a bound system similar to the hydrogen atom in which the electron orbits the positron before the two annihilate. The system is called \textit{positronium}. 
+\begin{itemize}
+	\item The positronium ground state, just like the hydrogen atom ground state, has orbital angular momentum $ l = 0 $ and two possible spin states depending on the spins of the electron and positron.
+	
+	In the singlet state the electron and positron have anti-parallel spins and the positronium system has spin $ s = 0 $ and total angular momentum $ j = 0 $. The spectroscopic notation is $ {}^{1}\text{S}_{0} $
+	
+	In the triplet state the electron and positron have parallel spins and the system has total spin $ s = 1 $ and total angular momentum $ j = 1 $. The spectroscopic notation is $ {}^{3}\text{S}_{1} $.
+	
+	\item The positronium ground state has energy $ E = -\SI{6.8}{\electronvolt} $. The triplet state is less bound than the singlet state by approximately $ \SI{e-3}{\electronvolt} $.
+	
+	\item The electron and positron annihilate upon collision and emit gamma rays subject to energy and momentum conservation. 
+	
+	In the ground state, which has zero total angular momentum, gamma ray emission is isotropic. By momentum conservation---positronium has zero momentum in the center of mass frame---two photons are formed in the annihilation process with equal and opposite momenta. To conserve the system's angular momentum $ j = 0 $, both photons are either left or right-polarized.
+	
+	In the triplet state, simultaneous linear and angular momentum conservation requires the creation of three or more photons. 
+	
+	\item The lifetime of the singlet configuration is approximately $ \SI{0.12}{\nano \second} $ while the lifetime of the triplet configuration is approximately $ \SI{140}{\nano \second} $, or roughly three orders of magnitude larger. Because the singlet lifetime is much shorter, the annihilation of positronium dominantly results in two-photon emission. 
+\end{itemize}
+
+\subsection{Coincidence Circuit}
+\begin{itemize}
+	\item A coincidence circuit has multiple (in our case two) inputs and one output. The inputs are active-high (\texttt{off} by default and triggered by short \texttt{on} pulses). The output turns \texttt{on} only if the two inputs receive \texttt{on} pulses within a time interval shorter than the circuit's resolution $ \tau $. The resolution is the sum of the widths $ \tau_{1} $ and $ \tau_{2} $ of the pulses at the two inputs, respectively. Generally $ \tau $ is much smaller than the average separation time between \texttt{on} pulses arriving at the inputs, so the coincidence circuit only turns \texttt{on} if when two \texttt{on} pulses arrive nearly simultaneously.
+	
+	\item Typically the input pulses from particle detectors are not well-defined square waves, so we process them with monostable multivibrators. Likewise, the coincidence circuit's output is usually normalized to constant width with a monostable multivibrator. 
+	
+	\item How to determine the coincidence circuit's resolution? We take pulses from a single source, then lead them through different branches of a delay circuit. The idea is to gradually increase the delay between the two branches and measure when the coincidence circuit stops detecting the two pulses as coincident. 
+	
+	\item In practice, for each delay setting, we count how many coincident pulses are registered in a fixed measurement period and repeat for a large range of delays. The result is a distribution of coincidence counts with respect to delay setting, called the coincidence circuit's \textit{delay curve}.  The closer to a uniform (rectangular) distribution, the more ideal the coincidence circuit. The circuit's resolution is the distributions full width at half maximum (FWHM) value.
+	
+\end{itemize}
+
+\textbf{Random Coincidences}
+\begin{itemize}
+	\item  In general, we register a coincidence event when both inputs receive stochastic \texttt{on} pulses within $ \tau $ of each other. We're interested in the total number $ N $ of random counts per unit time in the case of $ N_{1} $ and $ N_{2} $ pulses per unit time to inputs $ 1 $ and $ 2 $, respectively. 
+		
+	\item Due to pulses delivered to input $ 1 $ the circuit is open to pulses on input $ 2 $ for an average time $ t_{1} = N_{1}\tau $. In this time, on average, $ N_{2} t_{1} $ will reach input 2 and trigger the circuit. The number of total of random counts is then
+	\begin{equation*}
+		N_{\text{rand}} = N_{2}t_{1} = N_{1}N_{2} \tau
+	\end{equation*}
+	The number of stochastic coincidence counts is thus proportional to the circuit's resolution $ \tau $.
+		
+\end{itemize}
+
+
+\iffalse
+\textbf{Nuclear Physics Theory}
+\begin{itemize}
+	\item \isoptope{Na}{22} decays with 90 percent probability via $ \beta^{+} $ decay and with 10 percent probability via electron capture into an excited state of \isoptope{Ne}{22}. The excited \isoptope{Ne}{22} nucleus decays to the ground state with a mean life \SI{3}{\pico \second} by emitting a \SI{1.27}{\mega \electronvolt} gamma ray.
+	
+	The beta decay positrons are emitted with a range of kinetic energy up to a maximum energy of about \SI{0.5}{\mega \electronvolt}. The positrons lose their energy in the surrounding material in a time of nanosecond order, and when they reach atomic energies capture a surround electron to form positronium.
+	
+	\item The positronium decays with a lifetime of order \SI{0.1}{\nano \second} via electron-positron annihilation, which obeys energy and momentum conservation. In the positronium rest frame, the two gamma rays have equal and opposite momentum and energy equal to the positronium rest mass energy. Each of the gamma rays has an energy of \SI{0.511}{\mega \electronvolt}, equal to half the positronium rest mass energy.
+	
+	\item In the lab frame, the positronium is not a rest but has kinetic energy of electronvolt order, so the gamma energies in the lab frame might deviate from \SI{0.511}{\mega \electronvolt}. The deviation is typically small, and the annihilation gamma rays are usually emitted within a few degrees of \ang{180} from each other.
+	
+\end{itemize}
+\fi 
+
+\subsection{Poisson Decay Theory}
+For a Poisson distribution, the probability $ P $ that $ N $ event counts occur in a time interval in which the average number of events is $ \bar{N} $ is
+\begin{equation*}
+	P = \frac{\bar{N}^{N}}{N!}e^{-\bar{N}}
+\end{equation*}
+We can define an average count rate $ R = \frac{\bar{N}}{t} $ and consider the distribution of time intervals between successive decays. Naturally, no counts are measured during the waiting time between between successive counts. We set $ N = 0$ in the Poisson distribution and get
+\begin{equation*}
+	P(0) = e^{-\bar{N}} = e^{-Rt} \equiv q
+\end{equation*}
+The probability $ q $ of not detecting a pulse falls exponentially with $ t $, like for a Poisson distribution. The probability $ p $ for \textit{detecting} a pulse is the complement of $ q $:
+\begin{equation*}
+	p = 1-q = 1 - e^{-Rt}
+\end{equation*}
+The change in probability with respect to time is then
+\begin{equation*}
+	\dv{p}{t} = Re^{-Rt}
+\end{equation*}
+The histogram in Figure \ref{korzargam:fig:poisson-hist} measures the discrete analog $ \frac{\Delta p}{\Delta t} $ where $ \Delta p $ is the number of pulses in a histogram bin and $ \Delta t $ is the bin width. To extract $ R $, we linearize the exponential relationship and find the line's slope and $ y $ intercept
+\begin{equation*}
+	\ln(\frac{\Delta p}{\Delta t}) = \ln R - Rt
+\end{equation*}
+
+
+
+\end{document}

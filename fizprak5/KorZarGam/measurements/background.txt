@@ -1,0 +1,21 @@
+# Average number of background counts in a 790 s measurement in a 10 channel window about sodium's 0.551 Mev peak
+54
+56
+55
+49
+55
+55
+47
+71
+58
+44
+50
+49
+67
+64
+49
+44
+51
+46
+43
+42

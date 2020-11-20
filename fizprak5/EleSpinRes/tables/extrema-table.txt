@@ -1,0 +1,12 @@
+\begin{table}[h]
+\begin{center}
+    \begin{tabular}{c|c|c|c}
+        Frequency &  Minimum &  Maximum &  Difference \\
+        \hline
+        73.0 & 2.585 & 2.720 & 13.5\\
+        80.5 & 2.845 & 2.985 & 14.0\\
+        86.0 & 3.070 & 3.205 & 13.5 
+	\end{tabular}
+	\caption{REPLACEME}
+\end{center}
+\end{table}
