@@ -632,7 +632,7 @@ Often $ \rho(\r) = 0 $ in places we're solving for the electric potential. In th
 
 
 \subsubsection{Conducting Sphere in a Uniform Electric Field}
-\textit{A sphere of radius $ a $ placed in a uniform electric field $ E_{0} $ pointing in the e.g. $ z $ direction. Find the electric field $ U $ inside and outside the sphere.} 
+\textit{A conducting sphere of radius $ a $ is placed in a uniform electric field $ E_{0} $ pointing in the $ z $ direction. Find the electric field $ U $ inside and outside the sphere.} 
 
 \begin{itemize}
 	\item Use spherical coordinates to take advantage of spherical symmetry. This means we want $ U(r, \phi, \theta) $. Because of the problem's rotational symmetry, the solution will be independent of $ \phi $. We need only $ U(r, \theta) $. 
@@ -641,13 +641,13 @@ Often $ \rho(\r) = 0 $ in places we're solving for the electric potential. In th
 	\begin{equation*}
 		\laplacian U(r, \theta) = 0
 	\end{equation*}
-	We would separate variables into $ U = R(r)\Theta(\theta) $ as usual. The result is
+	We then separate variables via $ U = R(r)\Theta(\theta) $, which leads to the general solution
 	\begin{equation*}
 		U(r, \theta) = \sum_{l = 0}^{\infty} \left[A_{l}r^{l}+B_{l}r^{-(l+1)}\right]P_{l}(\cos \theta)
 	\end{equation*}
-	where $ P_{l} $ are the Legendre polynomials. \textbf{TODO: record the Legendre polynomials}.  \textbf{TODO: record this general solution}. 
+	where $ P_{l} $ are the Legendre polynomials. 
 	
-	\item On to the boundary conditions. On the surface we'll set $ U(a, \theta) 0 $. And at infinity, we use the boundary condition 
+	\item On to the boundary conditions. On the surface we'll set $ U(a, \theta) = 0 $. And at infinity, we use the boundary condition 
 	\begin{equation*}
 		U(r \to \infty, 0) = - E_{0}z = -E_{0}r \cos \theta
 	\end{equation*}
@@ -661,7 +661,7 @@ Often $ \rho(\r) = 0 $ in places we're solving for the electric potential. In th
 	\begin{equation*}
 		\sum_{l = 0}^{\infty} A_{l}r^{l} P_{l}(\cos \theta) = -E_{0}r \cos \theta
 	\end{equation*}
-	Note that the $ r^{-(l+1)} $ terms vanish as $ r \to \infty $. The entire series equals a single term. Evidently, we get the $ \cos \theta $ term from $ P_{1}(\cos \theta) = \cos \theta $ ie. $ P_{1}(x) = x $. So only the $ l = 1 $ term in the series is non-zero. The non-zero term is
+	Note that the $ r^{-(l+1)} $ terms vanish as $ r \to \infty $. The entire series equals a single term proportional to $ \cos \theta $ and the equality holds if only the $ l = 1 $ term in the series is non-zero, which generates a corresponding $ \cos \theta $ term from $ P_{1}(\cos \theta) = \cos \theta $ ie. $ P_{1}(x) = x $. The $ l = 1 $ term is
 	\begin{equation*}
 		A_{1}r \cos \theta = -E_{0}r \cos \theta \implies A_{1} = - E_{0}
 	\end{equation*}
@@ -680,9 +680,9 @@ Often $ \rho(\r) = 0 $ in places we're solving for the electric potential. In th
 	\end{equation*}
 	With $ A_{l} $ and $ B_{l} $ known for all $ l $, the final result is
 	\begin{equation*}
-		U(r, \theta) = - E_{0} \cos \theta + \frac{E_{0}a^{3}}{r^{2}}\cos \theta
+		U(r, \theta) = - E_{0} r \cos \theta + \frac{E_{0}a^{3}}{r^{2}}\cos \theta
 	\end{equation*}
-	The first term, $ - E_{0} \cos \theta $, is the potential of the uniform external field $ E_{0} $. The second term comes from the sphere. In fact, this second term has the same form as the potential of an electric dipole!
+	The first term, $ - E_{0} r \cos \theta $, is the potential of the uniform external field $ E_{0} $. The second term comes from the sphere. In fact, this second term has the same form as the potential of an electric dipole!
 	
 	\textit{Limiting cases are discussed in the next exercise set.}
 \end{itemize}
@@ -702,31 +702,31 @@ Often $ \rho(\r) = 0 $ in places we're solving for the electric potential. In th
 	
 	We write Gauss's law for the small surface element, which is simple because the electric field is perpendicular to the surface
 	\begin{equation*}
-		\int \vec{E} \cdot \diff \vec{S} = E_{\perp} \diff S = \frac{\diff q}{\e} \implies \dv{e}{S} = \sigma = \e E_{\perp}
+		E_{\perp} \diff S = \frac{\diff q}{\e} \implies \dv{e}{S} = \sigma = \e E_{\perp}
 	\end{equation*}
 	This equality gives us an expression for $ \sigma $ in terms of the electric field $ E_{\perp} $ perpendicular to the surface. We can find $ E_{\perp} $ from the potential:
 	\begin{equation*}
 		E_{\perp} = -\pdv{U}{r}\bigg |_{r = a} = E_{0}\cos \theta + 2E_{0}\cos \theta \implies \sigma = 3\e E_{0} \cos \theta
 	\end{equation*}
-	The charge density's dependence on $ \sigma $ quantitatively demonstrates the sphere's dipole-like charge distribution. 
+	The charge density's dependence on $ \theta $ quantitatively demonstrates the sphere's dipole-like charge distribution. 
 	
-	\item With the charge density $ \sigma $ in hand, we can find the sphere's electric dipole moment via
+	\item With charge density $ \sigma $ known, we can find the sphere's electric dipole moment via
 	\begin{equation*}
 		\vec{p}_{e} = \int \tvec{r} \diff q
 	\end{equation*}
 	We qualitatively expect $ \vec{p}_{e} $ to point upward (from the negative to the positively charged hemisphere), and confirm this analytically. By spherical symmetry, only the $ z $ component of $ \vec{p}_{e} $ is non-zero; this is
 	\begin{equation*}
-		p_{e_{z}} = \int \tilde{z} \diff q = \int (a \cos \theta) \cdot (\sigma \diff S) = \int( a \cos \theta) \cdot (3 \e E_{0}) \cdot \diff S
+		p_{e_{z}} = \int \tilde{z} \diff q = \int (a \cos \theta) \cdot (\sigma \diff S) = \int( a \cos \theta) \cdot (3 \e E_{0} \cos \theta) \cdot \diff S
 	\end{equation*}
 	To find $ \diff S $, we find the area of a small band of width $ \diff a $ around the sphere's surface. The band's area is $ 2\pi r \diff a = 2\pi (a \sin \theta ) (a \diff \theta) $. The dipole moment $ p_{e_{z}} $ is then
 	\begin{align*}
-		p_{e_{z}} &= \int_{0}^{\pi}( a \cos \theta) \cdot (3 \e E_{0}) \cdot 2\pi (a \sin \theta ) (a \diff \theta) = 6a^{3}\pi \e E_{0} \int_{-1}^{1}\cos^{2}\theta \diff [\cos \theta]\\
+		p_{e_{z}} &= \int_{0}^{\pi}(3\e E_{0}a\cos^{2}\theta) \cdot 2\pi (a \sin \theta ) (a \diff \theta) = 6a^{3}\pi \e E_{0} \int_{-1}^{1}\cos^{2}\theta \diff [\cos \theta]\\
 		& = 6a^{3}\pi \e E_{0} \left[\frac{1}{3}\cos^{3}\theta \right]_{-1}^{1} = 4\pi \e E_{0} a^{3}
 	\end{align*}
 \end{itemize}
 
 \subsubsection{Electric Dipole in a Conducting Spherical Shell}
-\textit{We place an electric dipole with dipole moment $ \pe $ in the center of an empty spherical conducting shell of radius $ a $. What is the electric potential inside the shell?}
+\textit{We place an electric dipole with dipole moment $ \pe $ in the center of a conducting spherical shell of radius $ a $. What is the electric potential inside the shell?}
 
 \begin{itemize}
 	\item We use spherical coordinates, which are best suited to the problem's spherical symmetry. By rotational symmetry, the potential depends only on the coordinates $ r $ and $ \theta $, not $ \phi $. Besides at the center, the charge density inside the sphere is zero, so we solve the Laplace equation
@@ -752,7 +752,7 @@ Often $ \rho(\r) = 0 $ in places we're solving for the electric potential. In th
 	\begin{equation*}
 		B_{1}r^{-2}\cos \theta = \frac{p_{e}\cos \theta}{4\pi \e }r^{-2} \implies B_{1} = \frac{p_{e}}{4\pi \e} \eqtext{and} B_{l\neq 1} = 0
 	\end{equation*}
-	Note the use of $ P_{1}(x) = x $. The intermediate solution at this stage is
+	Note the use of $ P_{1}(\cos \theta) = \cos \theta $. The intermediate solution at this stage is
 	\begin{equation*}
 		U(r, \theta) = \sum_{l = 0}^{\infty} A_{l} r^{l} P_{l}(\cos \theta) + \frac{p_{e}}{4\pi \e}r^{-2} \cos \theta
 	\end{equation*}
@@ -772,11 +772,11 @@ Often $ \rho(\r) = 0 $ in places we're solving for the electric potential. In th
 	
 	\item The induced term is worth a closer look, noting that $ r\cos \theta = z $. 
 	\begin{equation*}
-		U_{\text{induced}} = -\frac{p_{e}}{4\pi \e a}r\cos \theta = -\frac{p_{e}}{4\pi \e a}z
+		U_{\text{induced}} = -\frac{p_{e}}{4\pi \e a^{3}}r\cos \theta = -\frac{p_{e}}{4\pi \e a^{3}}z
 	\end{equation*}
 	In particular, the associated electric field is
 	\begin{equation*}
-		E_{\text{induced}} = -\pdv{z}U_{\text{induced}} = \frac{p_{e}}{4\pi \e a}
+		E_{\text{induced}} = -\pdv{z}U_{\text{induced}} = \frac{p_{e}}{4\pi \e a^{3}}
 	\end{equation*}
 	In other words, the electric field generated by the induced charge is constant! The uniform field also tells us about the charge distribution on the sphere's surface: to create a uniform field in the $ z $ direction, the shell must have a dipole-like charge distribution, with positive charge on the lower hemisphere and negative charge on the upper hemisphere. 
 	
@@ -813,8 +813,20 @@ Often $ \rho(\r) = 0 $ in places we're solving for the electric potential. In th
 	\begin{equation*}
 		\abs{\r \pm \vec{d}} = \sqrt{r^{2}+d^{2} \pm 2rd\cos \theta}
 	\end{equation*}
+	The expression for $ U(\r) $ for the two charges is then simply
+	\begin{equation*}
+		U_{2}(\r) = \frac{q}{4\pi \e}\left[\frac{1}{\sqrt{r^{2}+d^{2} \pm 2rd\cos \theta}} - \frac{1}{\sqrt{r^{2}+d^{2} \pm 2rd\cos \theta}}\right]
+	\end{equation*}
+	For the original configuration of a single positive charge a distance $ d $ above the plane, the potential above the plane agrees with $ U_{2} $, while the potential below the plane, where there is in reality no charge, is zero. The correct expression for the single charge $ +q $ is then
+	\begin{equation*}
+		U(\r) = 
+		\begin{cases}
+			U_{2}(\r) & \text{above the plane}\\
+			0 & \text{below the plane}
+		\end{cases}
+	\end{equation*}
 	
-	\item Next, we're interested in the surface charge density $ \sigma(\rho) $ on the plane where $ \rho $ is the radial distance from the origin. As usual, we start with Gauss's law for a small surface element of the plane: 
+	\item Next, we're interested in the surface charge density $ \sigma(\rho) $ on the plane where $ \rho $ is the radial distance in the plane from the origin. As usual, we start with Gauss's law for a small surface element of the plane: 
 	\begin{equation*}
 		-E_{\perp}\diff S = \frac{\diff q}{\e} \implies \sigma \equiv \frac{\diff q}{\diff S} =  -\sigma E_{\perp}
 	\end{equation*}
@@ -879,7 +891,7 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 \subsubsection{Theory: Electrostatic Force}
 Recall the total electrostatic force $ \vec{F} $ acting on the charges enclosed in a region of space $ V $ permeated with an electric field $ \E $ is
 \begin{equation*}
-	\vec{F}_{e} = \e \oint_{\partial V}\left[\E(\E\cdot \uvec{n}) - \frac{1}{2}\E\cdot \vec{n}\right] \diff S
+	\vec{F}_{e} = \e \oint_{\partial V}\left[\E(\E\cdot \uvec{n}) - \frac{1}{2}E^{2} \uvec{n}\right] \diff S
 \end{equation*}
 where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the charges.
 
@@ -906,7 +918,7 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 	
 	\item Next, we find the magnitude $ E $ on the sphere's surface from the potential $ U(r, \theta) $. The field points radially outwards, so we differentiate $ U $ with respect to $ r $ to get
 	\begin{equation*}
-		E - \pdv{U}{r} \bigg |_{r = a} = E_{0} \cos \theta + 2 E_{0} \cos \theta = 3E_{0} \cos \theta
+		E = \pdv{U}{r} \bigg |_{r = a} = E_{0} \cos \theta + 2 E_{0} \cos \theta = 3E_{0} \cos \theta
 	\end{equation*}
 	Inserting $ E $ into the force equation gives
 	\begin{equation*}
@@ -948,7 +960,7 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 \subsubsection{Point Charge Between Two Conducting Plates}
 \textit{We place two large conducting plates at a right angle to each other, so that the plates come close together but just barely do not touch. We then place a point charge $ q $ along the line bisecting the right angle between the plates, at a perpendicular distance $ a $ from each plate. Both plates are grounded. What is the electric potential in the region bounded by the plates at large distances from the plates' intersection?}
 \begin{itemize}
-	\item Assume $ r = 0 $ along the line connecting the two plates. For a single plate, we could solve the problem with the method of images---see the previous exercise set. With two plates we proceed analogously, with a mirror image for each plate. Because of the two reflections from the two plates, we end up with three imaginary charges plus the one original one in a quadrupole arrangement. (This is hard to describe in words, it is best to see a picture). For large $ r $, the charge arrangement will have the field of an electric quadrupole. Solving the problem thus reduces to a multipole expansion to the quadrupole term.  
+	\item Assume $ r = 0 $ along the line connecting the two plates. For a single plate, we could solve the problem with the method of images---see the previous exercise set. With two plates we proceed analogously, with a mirror image for each plate. Because of the two reflections from the two plates, we end up with three imaginary charges plus the one original one in a quadrupole arrangement. (This is hard to describe in words, it is best to see a picture). For large $ r $, the charge arrangement will have the field of an electric quadrupole. Solving the problem thus reduces to a multipole expansion of the electric potential to the quadrupole term.  
 \end{itemize}	
 	
 \textbf{Theory: Multipole Expansion}
@@ -956,7 +968,7 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 
 	\item The multipole expansion of $ U $ to quadrupole order, using the Einstein summation convention, is
 	\begin{equation*}
-		U(r) = \frac{1}{4\pi \e} \left[\frac{q}{r} + \frac{p_{i}r_{i}}{r^{3}} + \frac{Q_{ij}r_{i}r_{j}}{r^{5}} \right]
+		U(r) = \frac{1}{4\pi \e} \left[\frac{q}{r} + \frac{p_{i}r_{i}}{r^{3}} + \frac{\mathrm{Q}_{ij}r_{i}r_{j}}{r^{5}} \right]
 	\end{equation*}
 	where $ \vec{p} $ is the electric dipole moment and $ \mat{Q} $ is the quadrupole moment tensor. \textit{Note}: we could think of the charge $ q $ is a scalar monopole moment, creating a logical progression from scalar monopole moment to vector dipole moment to tensor quadrupole moment. 
 	
@@ -966,11 +978,11 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 	\end{equation*}
 	We find the quadrupole moment by components:
 	\begin{equation*}
-		Q_{ij} = \int  \diff^{3} \tilde{r} \rho(\tvec{r}) \big( 3\tilde{r}_{i}\tilde{r}_{j} - \delta_{ij}\tilde{r}^{2} \big)
+		\mathrm{Q}_{ij} = \int  \diff^{3} \tilde{r} \rho(\tvec{r}) \big( 3\tilde{r}_{i}\tilde{r}_{j} - \delta_{ij}\tilde{r}^{2} \big)
 	\end{equation*}
 	The discrete analog a configuration of $ N $ charges reads
 	\begin{equation*}
-		Q_{ij} = \sum_{n=1}^{N} q_{n} \left(3r_{n_{i}}r_{n_{j}} - \delta_{ij}r_{n}^{2}\right)
+		\mathrm{Q}_{ij} = \sum_{n=1}^{N} q_{n} \left(3r_{n_{i}}r_{n_{j}} - \delta_{ij}r_{n}^{2}\right)
 	\end{equation*}
 	Note that both definitions produces a symmetric tensor. Also important: the tensor's trace---the sum of the diagonal elements is zero:
 	\begin{equation*}
@@ -982,19 +994,19 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 \begin{itemize}
 	\item For our imaginary quadrupole configuration of four charges, the total charge, and thus the monopole moment, is zero. Analogously, the total dipole moment of the arrangement, which consists of two positive and two negative charges, is zero---the two dipoles cancel each other out. 
 	
-	From the three terms in our multipole expansion of $ U(r) $, only the quadrupole term remains. We just have to calculate the quadrupole tensor $ Q_{ij} $. We label the four charges in the imaginary quadrupole configuration as 1, 2, 3, and 4, where 1 is the original positive charge in the upper right corner, 2 is the negative image charge in the upper left corner, 3 is the positive image charge in the lower left corner, and 4 is the negative image charge in the lower right corner. 
+	From the three terms in our multipole expansion of $ U(r) $, only the quadrupole term remains. We just have to calculate the quadrupole tensor $ \mathrm{Q}_{ij} $. We label the four charges in the imaginary quadrupole configuration as 1, 2, 3, and 4, where 1 is the original positive charge in the upper right corner, 2 is the negative image charge in the upper left corner, 3 is the positive image charge in the lower left corner, and 4 is the negative image charge in the lower right corner. 
 	
-	\item Using the discrete formula for $ Q_{ij} $, the first component $ Q_{xx} $ is 
+	\item Using the discrete formula for $ \mathrm{Q}_{ij} $, the first component $ \mathrm{Q}_{xx} $ is 
 	\begin{align*}
-		Q_{xx} &= \sum_{n=1}^{N} q_{n} \left(3x_{n}^{2} - \delta_{ij}r_{n}^{2}\right) = q\left(3a^{2} - 2a^{2}\right) +  (-q)\left(3a^{2} - 2a^{2}\right)\\
+		\mathrm{Q}_{xx} &= \sum_{n=1}^{N} q_{n} \left(3x_{n}^{2} - \delta_{ij}r_{n}^{2}\right) = q\left(3a^{2} - 2a^{2}\right) +  (-q)\left(3a^{2} - 2a^{2}\right)\\
 		&= q\left(3a^{2} - 2a^{2}\right) +  (-q)\left(3a^{2} - 2a^{2}\right) = 0
 	\end{align*}
-	The other diagonal terms $ Q_{yy} $ and $ Q_{zz} $ will analogously sum to zero.
+	The other diagonal terms $ \mathrm{Q}_{yy} $ and $ \mathrm{Q}_{zz} $ will analogously sum to zero.
 	
 	All off-diagonal terms with a $ z $ component are also zero, since the charges lie in a plane with $ z = 0 $. We thus have
-	$ Q_{xz} = Q_{zx} = Q_{yz} = Q_{zy} = 0$. We have just two terms left calculate: $ Q_{xy} $  and $ Q_{yx} $. By the tensor's symmetry, the two are equal, so we really only have one term:
+	$ \mathrm{Q}_{xz} = \mathrm{Q}_{zx} = \mathrm{Q}_{yz} = \mathrm{Q}_{zy} = 0$. We have just two terms left calculate: $ \mathrm{Q}_{xy} $  and $ \mathrm{Q}_{yx} $. By the tensor's symmetry, the two are equal, so we really only have one term:
 	\begin{align*}
-		Q_{xy} &= \sum_{n=1}^{N} q_{n} \left(3x_{n}y_{n} - 0\cdot r_{n}^{2}\right) = 3qa^{2} + 3(-q)(-a^{2}) + 3qa^{2} + 3(-q)(-a^{2})\\
+		\mathrm{Q}_{xy} &= \sum_{n=1}^{N} q_{n} \left(3x_{n}y_{n} - 0\cdot r_{n}^{2}\right) = 3qa^{2} + 3(-q)(-a^{2}) + 3qa^{2} + 3(-q)(-a^{2})\\
 		 &= 12qa^{2}
 	\end{align*}
 	The quadrupole tensor is
@@ -1010,22 +1022,24 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 	
 	\item Recall the quadrupole expansion of $ U(r) $:
 	\begin{equation*}
-		U(r) = \frac{1}{4\pi \e} \left[\frac{q}{r} + \frac{p_{i}r_{i}}{r^{3}} + \frac{Q_{ij}r_{i}r_{j}}{r^{5}} \right]
+		U(r) = \frac{1}{4\pi \e} \left[\frac{q}{r} + \frac{p_{i}r_{i}}{r^{3}} + \frac{\mathrm{Q}_{ij}r_{i}r_{j}}{r^{5}} \right]
 	\end{equation*}
 	In our case, with $ q = 0 $ and $ \vec{p} = 0 $, we have
 	\begin{align*}
-		U(r) &= \frac{1}{4\pi \e} \left[\frac{12qa^{2}xy}{r^{5}} + \frac{12qa^{2}yx}{r^{5}} + 0 + \cdots + 0\right] = \frac{6qa^{2}}{4\pi \e} \frac{xy}{r^{5}}\\
-		&=\frac{6qa^{2}}{4\pi \e} \frac{\cos \phi \sin \phi \sin^{2}\theta}{r^{3}}
+		U(r) &= \frac{1}{4\pi \e} \left[\frac{12qa^{2}xy}{r^{5}} + \frac{12qa^{2}yx}{r^{5}} + 0 + \cdots + 0\right] = \frac{6qa^{2}}{\pi \e} \frac{xy}{r^{5}}\\
+		&=\frac{6qa^{2}}{\pi \e} \frac{\cos \phi \sin \phi \sin^{2}\theta}{r^{3}}
 	\end{align*}
 	The second line uses the spherical coordinates $ x = r\cos \phi \sin \theta $ and $ y = r\sin \phi \sin \theta $. In fact, the expression for $ U(r) $ takes the exact same form as the wave function of a $ d $ electron orbital (angular momentum quantum number $ l = 2 $) in a hydrogen atom. The equipotential surfaces of $ U(r) $ have the same spatial distribution as the $ d_{xy} $  orbitals for a hydrogen wave function. 
 	
 \end{itemize}
 
+\newpage
+
 \section{Magnetostatics}
 
 \subsection{Seventh Exercise Set}
 
-\subsubsection{Theory}
+\subsubsection{Theory: Magnetic Vector Potential and the Biot-Savart Law}
 \begin{itemize}
 	\item We will need to use two more Maxwell equations for magnetostatics. The first is
 	\begin{equation*}
@@ -1058,7 +1072,7 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 	\end{equation*}
 	The magnetic potential at a point $ \r $ in region of space with current density $ \vec{j} $ is
 	\begin{equation*}
-		\A = \frac{\mu_{0}}{4 \pi} \int \frac{\vec{j}(\tvec{r})\diff^{3}\tilde{r}}{\abs{\r - \tvec{r}}}
+		\A(\r) = \frac{\mu_{0}}{4 \pi} \int \frac{\vec{j}(\tvec{r})\diff^{3}\tilde{r}}{\abs{\r - \tvec{r}}}
 	\end{equation*}
 	
 	\item In problems involving one-dimensional conductors, where $ \vec{j} $ is non-zero only along the conductor, the expression for $ \vec{j}(\tvec{r})\diff^{3}\tilde{r} $ simplifies to
@@ -1079,7 +1093,7 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 \end{itemize}
 
 \subsubsection{Magnetic Field of a Circular Current Loop}
-\textit{A conducting loop with radius $ a $ carries a current $ I $. What is the magnetic vector potential far from the conducting loop?}
+\textit{A closed conducting loop of radius $ a $ carries current $ I $. What is the magnetic vector potential far from the conducting loop?}
 \begin{itemize}
 	\item Our starting point is the vector potential of a one-dimensional conductor from the theory section, i.e.
 	\begin{equation*}
@@ -1087,7 +1101,7 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 	\end{equation*}
 	We need expressions for $ \r $, $ \tvec{r} $ and $ \uvec{t} $.
 	
-	Assume the the loop lies in the $ x, y $ plane with the $ z $ axis normal to the loop. For mathematical convenience, we rotate the $ x, y $ plane so $ \r $ lies in the $ x, z $ plane; this just gives us one less non-zero component to work with, since the $ y $ component of $ \r $ is zero. In polar coordinates $ \r $ reads
+	Assume the the loop lies in the $ x, y $ plane with the $ z $ axis normal to the loop. For mathematical convenience, we rotate the $ x, y $ plane so $ \r $ lies in the $ x, z $ plane (i.e. $ \phi = 0 $); this just gives us one less non-zero component to work with, since the $ \sin \phi $ term in the $ y $ component of $ \r $ is zero. In polar coordinates $ \r $ reads
 	\begin{equation*}
 		\r = \big (r \sin \theta, 0, r \cos \theta \big )
 	\end{equation*}
@@ -1105,7 +1119,7 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 	\end{equation*}
 	The small distance element is $ \diff \tilde{l} = a \tilde{\phi}$ .
 	
-	\item We can now but the pieces together in the equation for $ \A $. First,
+%	\item We can now put the pieces together in the equation for $ \A $. First,
 	\begin{align*}
 		\abs{\r - \tvec{r}} &= \sqrt{(r \sin \theta - a \cos \tilde{\phi} )^{2} + a^{2}\sin^{2}\tilde{\phi} + r^{2}\cos^{2} \theta}\\
 		& = \sqrt{r^{2} + a^{2} - 2ra \sin \theta \cos \tilde \phi}\\
@@ -1128,28 +1142,28 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 	
 	\item The integrals conveniently simplify, since we are integrating sinusoidal terms over an entire period. Only the integral of $ \cos^{2} \tilde{\phi} $ in the $ y $ component is nonzero. We end up with $ A_{x} = A_{z} = 0 $ and
 	\begin{equation*}
-		A_{y}(r) = \frac{\mu_{0}I}{4\pi} \frac{a}{r} \int_{0}^{2\pi} \cos^{2} \tilde{\phi}
-		 \frac{2a}{r}\sin \theta \diff \tilde{\phi} = \frac{\mu_{0}I}{4\pi} \frac{a^{2}}{r^{2}}  \sin \theta 
+		A_{y}(r) = \frac{\mu_{0}I}{4\pi} \frac{a}{r} \int_{0}^{2\pi}
+		 \frac{a\sin \theta}{r} \cos^{2} \tilde{\phi} \diff \tilde{\phi} = \frac{\mu_{0}I}{4} \frac{a^{2}}{r^{2}}  \sin \theta 
 	\end{equation*}
 	or, in vector form,
 	\begin{equation*}
-		\A(\r) = \frac{\mu_{0}I}{4\pi} \frac{a^{2}}{r^{2}}  \sin \theta \uvec{y} = \frac{\mu_{0}I}{4\pi} \frac{a^{2}}{r^{2}} \uvec{z} \cross \uvec{r}
+		\A(\r) = \frac{\mu_{0}I}{4} \frac{a^{2}}{r^{2}}  \sin \theta \uvec{y} = \frac{\mu_{0}I}{4} \frac{a^{2}}{r^{2}} \uvec{z} \cross \uvec{r}
 	\end{equation*}
-	The second expression is preferable: the first, in terms of $ \uvec{y} $, holds only with $ x, y $ plane is rotated so $ \r $ lies in the $ x, z $ plane. The second, which uses $ \sin \theta \uvec{y} = \uvec{z} \cross \uvec{r} $, holds for any orientation of the $ x, y $ plane. 
+	The second expression is preferable: the first, in terms of $ \uvec{y} $, holds only with $ x, y $ plane rotated so $ \phi = 0 $ and $ \r $ lies in the $ x, z $ plane. The second, which uses $ \sin \theta \uvec{y} = \uvec{z} \cross \uvec{r} $, holds for any orientation of the $ x, y $ plane. 
 	
 	
 	Finally, using $ I \pi a^{2} $ = $ \abs{\vec{m}} $ (where $ \m $ is the loop's magnetic dipole moment, which points in the direction of the loop's normal), the expression for $ \A $ simplifies to
 	\begin{equation*}
-		\A(\r) = \frac{\mu_{0} \m \cross \r}{4\pi r^{3}}
+		\A(\r) = \frac{\mu_{0} \m \cross \uvec{r}}{4\pi r^{2}} = \frac{\mu_{0} \m \cross \r}{4\pi r^{3}}
 	\end{equation*}
 	This is the same form of magnetic vector potential as for a magnetic dipole. In other words, a circular current loop behaves as magnetic dipole at long distances.
 	
 \end{itemize}
 
 \subsubsection{Magnetic Field of a Rotating Charged Disk}
-\textit{Consider a charged, insulating disk with uniform surface charge density $ \sigma $ and radius $ a $. The disk rotates uniformly about an axis through its center with constant angular velocity $ \vec{\omega} = (0, 0, \omega) $. Find the magnetic field along the axis of rotation.}
+\textit{Consider a charged, insulating disk with uniform surface charge density $ \sigma $ and radius $ a $. The disk rotates uniformly about an axis through its center with constant angular speed $ \omega $. Find the magnetic field along the axis of rotation.}
 \begin{itemize}
-	\item We choose a coordinate system so the disk lies in the $ x, y $ plane and the axis rotation coincides with the $ z $ axis. We start with the general Biot-Savart law
+	\item We choose a coordinate system so the disk lies in the $ x, y $ plane and the rotation axis coincides with the $ z $ axis, so $ \bm{\omega} = (0, 0, \omega) $. Start with the general Biot-Savart law
 	\begin{equation*}
 		\B (\r) = \frac{\mu_{0}}{4\pi}\int \frac{\vec{j}(\tvec{r}) \cross (\r - \tvec{r})}{\abs{\r - \tvec{r}}^{3}} \diff^{3}\tilde{r}
 	\end{equation*}
