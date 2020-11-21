@@ -10,7 +10,10 @@ _minted**/
 
 # Figure directories #
 figures/
+
+# Auxiliary Python and PyCharm IDE files
 .idea/
+__pycache__/
 
 # Packages #
 ############
