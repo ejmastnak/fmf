@@ -254,8 +254,6 @@ def generate_fixed_step_solutions():
         for coefficient in range(1,11):  # coefficients for h
             h = coefficient*(10**exponent)  # i.e. h = coef*10^exponent
             h = clean_float(h)  # cleans up floating point sillyness e.g. 0.7000000000004 -> 0.7
-            # n = int((tmax - tmin) / h)  # number of points
-            # t = np.linspace(tmin, tmax, n, endpoint=False)
             t = get_time_values(h)
             T_analytic = T_simple(t, T0)
             for method in methods:
@@ -865,7 +863,7 @@ def run():
     # practice()
 
     # generate_fixed_step_solutions()
-    # generate_adaptive_step_solutions()
+    generate_adaptive_step_solutions()
 
     # compile_error_h_table()
 
@@ -874,7 +872,7 @@ def run():
 
     # generate_step_size_vs_error()
 
-    # plot_fixed_step_error()
+    plot_fixed_step_error()
     # plot_step_size_vs_error()
     # plot_adaptive_step_error()
     # plot_embedded_error_estimate()

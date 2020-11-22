@@ -901,6 +901,15 @@ def dp45(f, a, b, x0, tol, hmax, hmin):
             break
 
     return T, X
+
+
+def get_next_h(h, error_guess, tol):
+    """Used to find optimal step size for adaptive step methods.
+        Formally correct for rkf45 4(5)th order; I use it also for 2(3) order methods. """
+    try:
+        return h * min(max(0.84 * (tol / error_guess) ** 0.25, 0.1), 4.0)
+    except ZeroDivisionError:
+        return 4.0 * h
 # -----------------------------------------------------------------------------
 # END ADAPTIVE STEP METHODS
 # -----------------------------------------------------------------------------
@@ -975,13 +984,6 @@ def pc4(f, x0, t):
     return x
 
 
-def get_next_h(h, error_guess, tol):
-    """Used to find optimal step size for adaptive step methods.
-        Formally correct for rkf45 4(5)th order; I use it also for 2(3) order methods. """
-    try:
-        return h * min(max(0.84 * (tol / error_guess) ** 0.25, 0.1), 4.0)
-    except ZeroDivisionError:
-        return 4.0 * h
 # -----------------------------------------------------------------------------
 # END MULTISTEP METHODS
 # -----------------------------------------------------------------------------
