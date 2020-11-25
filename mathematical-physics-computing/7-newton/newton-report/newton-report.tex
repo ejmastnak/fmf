@@ -1,0 +1,502 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{mwe}
+\usepackage[margin=3.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bm} % for bold vectors in math mode
+\usepackage{physics} % many useful physics commands
+\usepackage[separate-uncertainty=true]{siunitx} % for scientific notation and units
+
+\usepackage{graphicx}
+\graphicspath{{"../figures/"}}
+\usepackage[section]{placeins} % to keep figures in their sections
+\usepackage[export]{adjustbox} % for subcaptionbox figures
+
+\usepackage[most, minted]{tcolorbox} % for displaying code
+
+\usepackage{xcolor}  % to color hyperref links
+\usepackage[colorlinks = true, allcolors=blue]{hyperref}
+
+\setlength{\parindent}{0pt} % to stop indenting new paragraphs
+\newcommand{\diff}{\mathop{}\!\mathrm{d}} % differential
+\newcommand{\eqtext}[1]{\qquad \text{#1} \qquad}
+\renewcommand{\O}{\mathcal{O}}  % for order of DE methods
+
+\newtcblisting{python}{%
+	listing engine=minted,
+	minted language=python,
+	listing only,
+	breakable,
+	enhanced,
+	minted options = {
+		linenos, 
+		breaklines=true, 
+		tabsize=2,
+		fontsize=\footnotesize, 
+		numbersep=2mm
+	},
+	overlay={%
+		\begin{tcbclipinterior}
+			\fill[gray!25] (frame.south west) rectangle ([xshift=4mm]frame.north west);
+		\end{tcbclipinterior}
+	}   
+}
+
+
+\begin{document}
+\title{Newton's Second Law and the Nonlinear Pendulum}
+\author{Elijan Jakob Mastnak\\[1mm]\small{Student ID: 28181157}}
+\date{November 2020}
+\maketitle
+
+\tableofcontents
+
+\newpage
+\begin{center}
+\textbf{Assignment}
+\begin{enumerate}
+	\item Thoroughly analyze the motion of the mathematical pendulum with the initial conditions $ x(0) = 1 $ and $ \dot{x}(0) = 0 $. Use a variety of numerical methods---the more the better---to solve the pendulum's equation of motion. 
+	
+	\item Using the analytic solution in terms of elliptic integrals for reference, find a time step for which the numerical solution is accurate to at least three decimal places.
+	
+	\item Observe how the pendulum's amplitude and energy change over time (e.g. 20 periods) as a result of numerical error.
+	
+	\item Plot the pendulum's motion in position-momentum phase space. 
+	
+	\item \textit{Optional:} Investigate the resonance curve of a driven, damped mathematical pendulum:
+	\begin{equation*}
+		\dv[2]{x}{t} + \beta \dv{x}{t} + \sin x = v \cos \omega_{0}t
+	\end{equation*}
+	where $ \beta $ is the damping coefficient while $ v $ and $ \omega_{0} $ are the driving amplitude and frequency. Observe the pendulum's angular displacement and velocity for $ \beta = 0.5 $, $ \omega_{0} = \frac{2}{3} $ and $ v \in (0.5, 1.5) $. Try to detect hysteresis in the pendulum's resonance curve at large driving amplitudes. 
+	
+	\item \textit{Optional:} Analyze the phase space of the van der Pol oscillator
+	\begin{equation*}
+		\dv[2]{x}{t} - \lambda \dv{x}{t}(1 - x^{2}) + x = v \cos \omega_{0}t
+	\end{equation*}
+	for the parameter values $ \omega_{0} = 1 $, $ v = 10 $ and $ \lambda = 1 $ or $ \lambda = 100 $. 
+	
+	
+\end{enumerate}
+\end{center}
+
+\vspace{2mm}
+
+\rule{\textwidth}{0.2pt}
+
+\section{Theory} \label{newton:s:theory}
+\vspace{-2mm}
+\textit{To jump right to the solution, see \hyperref[newton:s:solution]{Section \ref{newton:s:solution}}}.
+zoo
+
+\subsection{Newton's Law in One Dimension}
+Newton's law describes the motion of a particle of mass $ m $ in a force field $ F $ via the second-order differential equation
+\begin{equation*}
+	m \dv[2]{x}{t} = F \eqtext{or, in 3D,} m \dv[2]{\bm{r}}{t} = \bm{F}
+\end{equation*}
+We solve the equation in numerically by working with the equivalent system of first-order equations
+\begin{equation*}
+	m \dv{x}{t} = p \eqtext{and} \dv{p}{t} = F
+\end{equation*}
+A unique solution requires two initial conditions, $ x(t = 0) \equiv x_{0} $ and $ \dot{x}(t = 0) \equiv v_{0} $. 
+
+
+\subsection{The Nonlinear Simple Pendulum}
+A simple pendulum is a mass $ m $ attached to a light, mass-less rod. Motion takes place in a vertical plane with a single degree of freedom, the pendulum's angular displacement $ \theta $ from the equilibrium position. Newton's law reads
+\begin{equation*}
+	\dv[2]{\theta}{t} = - \omega_{0}^{2} \sin \theta, \qquad \omega_{0} = \sqrt{\frac{g}{l}}
+\end{equation*}
+where $ l $ is the pendulum's length and $ g $ is the gravitational acceleration. The equation is non-linear in $ \theta $ because of the $ \sin \theta $ term. The pendulum's period is
+\begin{equation*}
+	T_{0} = \frac{4}{\omega_{0}}K\big(\sin^{2}\tfrac{\theta_{0}}{2}\big)
+\end{equation*}
+where $ K(m) $ is a complete elliptical integral of the first kind, implemented in this report with the $ m $ (and not $ m^{2} $) convention
+\begin{equation*}
+	K(m) = \int_{0}^{1}\frac{\diff z}{\sqrt{(1 - z^{2})(1 - mz^{2})}} = \int_{0}^{\pi/2} \frac{\diff u}{\sqrt{1 - m\sin^{2}u}}
+\end{equation*}
+
+
+\subsection{Symplectic Integrators}
+Symplectic integration methods apply to functions $ f $ that are a function of only coordinates and preserve's the system's Hamiltonian. In this report, I used the second-order Verlet method and a fourth-order position-extended Forest-Ruth-like method. For a second-order derivative of the coordinate $ y $ given by
+\begin{equation*}
+	f(y) = \dv[2]{y}{t}
+\end{equation*}
+and time points $ t_{n} = t_{0} + n\cdot h $ with time step $ h $, the Verlet method gives expressions for $ y_{n} $ and $ v_{n} \equiv \dot{y}(n) $ in the form
+\begin{align*}
+	& y_{n+1} = y_{n} + hv_{n} + \frac{h^{2}}{2}f(y_{n})\\
+	&v_{n+1} = v_{n} + \frac{h}{2}\big[f(y_{n}) + f(y_{n+1})\big]
+\end{align*}
+
+\section{Initial Analytic Steps}  \label{newton:s:solution}
+
+\subsection{Pendulum Energy and Equation of Motion}
+Before beginning the simulation, I needed an expression for the simple pendulum's energy. The energy is simply
+\begin{equation*}
+	E = T + V = \frac{ml^{2}}{2}\dot{\theta}^{2} + mgl\left(1 - \cos \theta \right)
+\end{equation*}
+We find the equation of motion from the Lagrangian $ L = T - V $
+\begin{equation*}
+	L = T - V = \frac{1}{2}ml^{2} \dot{\theta}^{2} - mgl\left(1 - \cos \theta\right),
+\end{equation*}
+and the corresponding Lagrange-Euler equations for the coordinates $ \theta $ and $ \dot{\theta} $:
+\begin{equation*}
+	\dv{t}\left[\pdv{L}{\ddot{\theta}}\right] = ml^{2}\dot{\theta} \equiv \pdv{L}{\theta} = -mgl \sin \theta \implies \ddot{\theta} = -\frac{g}{l}\sin \theta
+\end{equation*}
+
+\subsubsection{Dimensionless Expressions}
+I found it most convenient to work in a dimensionless set of units with $ l = g = 1 $, in which the equation of motion and energy are simply 
+\begin{equation*}
+	\ddot{\theta} = - \sin \theta \eqtext{and} E = \frac{\dot{\theta}^{2}}{2} + 1 - \cos \theta
+\end{equation*}
+The pendulum is bound for $ E < 2 $ (e.g. for $ \dot{\theta}_{0} = 0 $ and $ \theta_{0} \in (0, \pi) $) and free for $ E > 2 $ (meaning it will ``tip over''). The initial energy is
+\begin{equation}
+	E_{0} = \frac{\dot{\theta_{0}}^{2}}{2} + 1 - \cos \theta_{0} \label{newton:eq:E0}
+\end{equation}
+All oscillating systems in this report are solved in dimensionless form.
+
+
+\subsection{Implementing Period and Analytic Solution} \label{newton:ss:analytic}
+I implemented the analytic solution for the simple pendulum's  angular displacement with the initial condition $ \theta(0) = \theta_{0}, \dot{\theta}(0) = 0 $ according to \cite{belendez}
+\begin{equation*}
+	\theta(t) = 2 \arcsin\left\{\sin \frac{\theta_{0}}{2} \, \text{sn} \left [K\left(\sin^{2}\frac{\theta_{0}}{2}\right) - t; \sin^{2}\frac{\theta_{0}}{2}\right ]\right\}
+\end{equation*}
+where $ K $ is the complete elliptic integral of the first kind and $ \text{sn} $ is the Jacobi elliptic function $ \text{sn}(u;m) $ with argument $ u $ and parameter $ m $. Meanwhile, the pendulum's period $ T_{0} $, again for the initial condition $ \theta(0) = \theta_{0}, \dot{\theta}(0) = 0 $, is 
+\begin{equation*}
+	T_{0} = \frac{4}{\omega_{0}}K\left(\sin \frac{\theta_{0}}{2}\right)
+\end{equation*}
+
+I implemented these expressions in Python using the built-in \texttt{ellipk} and \texttt{ellipj} from the package \texttt{scipy.special}. The angular displacement is
+\begin{python}
+import numpy as np
+from scipy.special import ellipk, ellipj
+def simple_pendulum_analytic(t, initial_state, w0=1.0):
+    """ Returns the simple pendulum's angular displacement as a function of time for the initial condition [x0, 0] """
+    k = np.sin(initial_state[0] / 2)
+    return 2*np.arcsin(k * ellipj(ellipk(k**2) - w0*t, k**2)[0])
+\end{python}
+while the oscillation period reads
+\begin{python}
+def get_simple_pendulum_period(x0):
+    """ Returns the simple pendulum's period for initial angular displacement x0 and angular velocity v0 = 0 """
+    k = np.sin(x0/2)
+    return 4*ellipk(k**2)
+\end{python}
+
+
+ 
+\subsection{Implementing Differential Equations of State} \label{newton:ss:eq-state}
+I implemented the pendulum's differential equation of state, which returns angular velocity and acceleration for a given angular displacement and velocity, in two forms: a time-dependent format for use with generic methods for ODEs and a time-independent format, depending on only the angular displacement, for use with symplectic integrators. The following example Python code blocks give a feel for the difference between the standard ODE and symplectic approaches
+\begin{python}
+def get_simple_pendulum_state_ode(state, t):
+    """ 
+    Dimensionless differential equation of motion for a simple (mathematical) pendulum written for compatibility with ODE methods.
+    :param state: 2-element [position, velocity] array i.e. state = [x, v]
+    :return: 2-element array holding velocity and acceleration i.e. [v, a]
+    """
+    return_state = np.zeros(np.shape(state))
+    return_state[0] = state[1]
+    return_state[1] = -np.sin(state[0])
+    return return_state  # returns both velocity and acceleration
+\end{python}
+
+\begin{python}
+def get_simple_pendulum_state_symp(x):
+    """
+    Dimensionless differential equation of motion for a simple (mathematical) pendulum written for compatibility with symplectic integrators.
+    :param x: the pendulum's angular displacement from equilibrium
+    :return: the pendulum's angular acceleration
+    """
+    return -np.sin(x)  # returns only acceleration!
+
+\end{python}
+Note that the symplectic method is a function of only the system's coordinates and returns only the acceleration. The ODE method is in general a function of the coordinates, velocities and time, and returns both velocity and acceleration.
+
+
+\subsubsection{Numerical Methods Used in This Report}
+I tested the following 19 methods for numerically solving the simple pendulum's motion. Source code is included in the attached \texttt{numerical\_methods\_odes.py} file. 
+
+\vspace{2mm}
+\underline{Fixed time step explicit methods}
+\begin{itemize}
+	\item Euler method \texttt{euler}
+	
+	\item Heun's method \texttt{heun} and midpoint method \texttt{rk2}.
+	
+	\item Ralston's 3rd Runge-Kutta method \texttt{rk3r} and 3rd order strong stability preserving Runge-Kutta  \texttt{rk3ssp}
+	
+	\item Classic 4th order Runge-Kutta \texttt{rk4} and Ralston's 4th order Runge-Kutta method \texttt{rk4r}
+	
+\end{itemize}
+
+\vspace{2mm}
+\underline{Single-step, embedded, adaptive-step Runge-Kutta methods:}
+\begin{itemize}
+	
+	\item Adaptive 4-5th order Runge-Kutta-Fehlberg method \texttt{rkf45}
+	
+	\item Adaptive 4-5th order Cash-Karp method \texttt{ck45}
+
+\end{itemize}
+
+\underline{Multistep methods}
+\begin{itemize}
+	\item 4th order multi-step predictor-corrector Adams-Bashforth-Moulton method \texttt{pc4}
+\end{itemize}
+
+\underline{Symplectic methods}
+\begin{itemize}
+	\item 2nd order Verlet method \texttt{verlet}
+	
+	\item 4th order position-extended Forest-Ruth-like method \texttt{pefrl}.
+\end{itemize}
+
+
+\underline{Built-in methods}
+\begin{itemize}
+	\item SciPy's \texttt{odeint}
+	\item SciPy's \texttt{solve\_ivp} with the explicit Runge-Kutta methods \texttt{RK23},  \texttt{RK45}, \texttt{DOP853}
+	
+	\item SciPy's \texttt{solve\_ivp} with the implicit \texttt{Randau} (family of implicit Runge-Kutta methods) and \texttt{BDF} (family of backward-differentiation methods)
+	
+	\item SciPy's \texttt{solve\_ivp} with the \texttt{LSODA} option, a wrapper for FORTRAN code. 
+	
+\end{itemize}
+
+\subsection{A Few Solution Graphs}
+It feels appropriate to start with a solution for the pendulum's motion: Figures \ref{newton:fig:simple-motion1} and \ref{newton:fig:simple-motion2} show the simple pendulum's motion for three classes of initial conditions. Note the approximately sinusoidal behavior for the moderate initial displacement $ \theta_{0} = 1.0 $, the non-harmonic behavior near the tipping point with $ \theta_{0} = 0.99 \pi $, and the free motion for $ \theta_{0} = 0.99 \pi $ and $ \dot{\theta}_{0} = 0.1 $. 
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=\linewidth]{simple-motion-small}\vfill
+
+\caption{The simple pendulum's approximately harmonic motion for  initial conditions $ (\theta_{0}, \dot{\theta_{0}}) = (1.0, 0) $. Note that both angular displacement $ \theta $ and angular velocity $ \dot{\theta} $ share a single plot. Found with \texttt{pefrl}.}
+\vspace{-3mm}
+\label{newton:fig:simple-motion1}
+\end{figure}
+
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=\linewidth]{simple-motion-large}\vfill
+\includegraphics[width=\linewidth]{simple-motion-free} \vfill
+\vspace{-3mm}
+\caption{The simple pendulum's just-bound motion near the tip-over point with $ (\theta_{0}, \dot{\theta_{0}}) = (0.99 \pi, 0) $ and free motion with $ (\theta_{0}, \dot{\theta_{0}}) = (0.99 \pi, 0.1) $.  Note that both angular displacement $ \theta $ and angular velocity $ \dot{\theta} $ share a single plot. Found with \texttt{pefrl}.}
+
+\label{newton:fig:simple-motion2}
+\end{figure}
+
+
+\section{Accuracy}
+For this report, I chose to classify the method by the use of a fixed or adaptive time step. There are of course many other ways group the methods.
+
+\subsection{Fixed-Step Methods}
+Figures \ref{newton:fig:error-x-fixed} and \ref{newton:fig:error-E-fixed} show the error in the simple pendulum's displacement and energy, respectively, over the course of an approximately 15-period simulation for various fixed-step numerical methods using the initial condition  $ \theta_{0} = 1.0 $ and $ \dot{\theta}_{0} = 0 $. Displacement error is measured with respect to the analytic solution given in \hyperref[newton:ss:analytic]{Subsection \ref{newton:ss:analytic}}, while energy error is the deviation from the initial energy in Equation \ref{newton:eq:E0}. 
+
+Note that the symplectic methods (shown in purple with diamond markers) maintain a roughly constant energy, while the energy in other fixed-step solutions diverges from the initial value over time. The 4th-order symplectic \texttt{pefrl} method outperformed all other fixed-step methods at a given step size, which seems reasonable for an energy-conserving system like the simple pendulum. However, the 2nd-order symplectic \texttt{verlet} was reliably outperformed by by the non-symplectic 4th-order Runge-Kutta methods \texttt{rk4} and \texttt{rk4r}. 
+
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=\linewidth]{error-x-fixed-step}
+
+\caption{Error in angular displacement over time for various fixed-step numerical solutions to the simple pendulum's motion over approximately 15 periods for four step sizes $ h $. Tested with $ \theta_{0} = 1.0 $ and $ \dot{\theta}_{0} = 0 $.}
+
+\label{newton:fig:error-x-fixed}
+\end{figure}
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=\linewidth]{error-E-fixed-step}
+
+\caption{Error in energy (deviation from the initial energy) over time for various fixed-step numerical solutions to the simple pendulum's motion over approximately 15 periods for four step sizes $ h $. The symplectic methods maintain a roughly constant error over time. Tested with $ \theta_{0} = 1.0 $ and $ \dot{\theta}_{0} = 0 $.}
+
+\label{newton:fig:error-E-fixed}
+\end{figure}
+
+
+\subsection{Adaptive-Step Methods}
+
+Figures \ref{newton:fig:error-x-adaptive} and \ref{newton:fig:error-E-adaptive} show the error in the simple pendulum's displacement and energy, respectively over the course of an approximately 15-period simulation for various adaptive-step numerical methods using the initial condition  $ \theta_{0} = 1.0 $ and $ \dot{\theta}_{0} = 0 $. The 4th order symplectic \texttt{pefrl}, with a step-size $ h $ approximately tailored to match adaptive-step tolerance $ \epsilon $, is shown for reference. As for the fixed step methods, displacement error is measured with respect to the analytic solution given in \hyperref[newton:ss:analytic]{Subsection \ref{newton:ss:analytic}}, while energy error is the deviation from the initial energy in Equation \ref{newton:eq:E0}. 
+
+
+In general the built-in implicit methods \texttt{BDF}, \texttt{Radau} and \texttt{LSODA} from SciPy's \texttt{solve\_ivp} perform relatively poorly at a given tolerance compared to explicit methods, but the poor accuracy should be taken with a grain of salt, since I did not specify a Jacobian matrix for use with the fixed-step methods and relied on the presumably less accurate built-in finite-difference approximation. That said, I was surprised to find \texttt{Radau}'s relative performance improved for large tolerances (see e.g. the plots with $ \epsilon = 0.5 $). Perhaps the chief takeaway is the symplectic \texttt{pefrl}'s method's excellent performance relative to the built-in methods from \texttt{solve\_ivp}.
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=\linewidth]{error-x-adaptive-step}
+
+\caption{Error in angular displacement over time for adaptive-step solutions to the simple pendulum's motion over approximately 15 periods for four step sizes. Tested with $ \theta_{0} = 1.0 $ and $ \dot{\theta}_{0} = 0 $.}
+
+\label{newton:fig:error-x-adaptive}
+\end{figure}
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=\linewidth]{error-E-adaptive-step}
+
+\caption{Error in energy (deviation from the initial energy) over time for various adaptive-step solutions to the simple pendulum's motion over approximately 15 periods for four error tolerance $ \epsilon $. The symplectic \texttt{pefrl}, using four corresponding step sizes, is shown for reference. Tested with $ \theta_{0} = 1.0 $ and $ \dot{\theta}_{0} = 0 $.}
+
+\label{newton:fig:error-E-adaptive}
+\end{figure}
+
+
+\subsection{Brief Case Study: Built-In Methods Aren't Always Better}
+To test the energy conservation of symplectic methods, I simulated the simple pendulum's motion over 100 simulation using the 4th-order symplectic \texttt{pefrl}; \texttt{rk4}, a standard implementation of the canonical 4th-order fixed-step Runge-Kutta method; and SciPy's \texttt{odeint}, which is a wrapper for the \texttt{lsoda} method from the FORTRAN library \texttt{odepack}. I used \texttt{pefrl} and \texttt{rk4} with a step size of 0.05 and---intentionally---left \texttt{odeint} with its default settings.
+
+Figure \ref{newton:fig:energy-long} shows the results of the 100-period simulation. \texttt{pefrl} performs superbly, showing negligible deviation from the initial energy over the entire simulation. Meanwhile, I was surprised to find \texttt{rk4} outperformed \texttt{odeint}! I must stress that I used \texttt{odeint} with its default settings (I'm sure appropriately adjusting its many parameters would produce a better result), but this was intentional. Namely, I wanted to demonstrate that blindly using built-in methods like \texttt{odeint} without consideration to the system at hand will not always produce a better result than even relatively simple ``hand-built'' methods well-suited to the system, e.g. \texttt{pefrl}.
+% (an assertion I would have met with skepticism even a few months ago, before taking this course!).
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=\linewidth]{energy-long}
+
+\caption{Energy deviation from the initial The symplectic \texttt{pefrl}, using four corresponding step sizes, is shown for reference. Tested with $ \theta_{0} = 1.0 $ and $ \dot{\theta}_{0} = 0 $.}
+
+\label{newton:fig:energy-long}
+\end{figure}
+
+\section{Phase Portraits}
+All phase portraits are drawn with the same protocol: I defined angular displacement and angular velocity grids spanning $ \theta \in [-3\pi, 3\pi] $ and $ \dot{\theta} \in [-3, 3] $ on which to draw the portrait, and plotted the angular velocity and acceleration at each point on the grid using Matplotib's \texttt{streamplot} function. The angular and velocity and acceleration are found using the differential equation of state for each pendulum discussed in \hyperref[newton:ss:eq-state]{Subsection \ref{newton:ss:eq-state}}, which returns $ \ddot{\theta}, \dot{\theta} $ at a given value of $ \dot{\theta}, \theta $ and time. The following Python block shows the protocol for a generic function \texttt{get\_pendulum\_state}, which would be replaced with the function for the appropriate system.
+\begin{python}
+from matplotlib import pyplot as plt
+def plot_phase_space_example():
+    x1D = np.linspace(-3*np.pi, 3*np.pi, 100)  # domain of displacements
+    v1D = np.linspace(-3, 3, 100)  # domain of velocities 
+    xgrid, vgrid = np.meshgrid(x1D, v1D)  # 2D grids for x and v
+    Vgrid, Agrid = np.zeros(np.shape(xgrid)), np.zeros(np.shape(vgrid))
+    for i in range(np.shape(xgrid)[0]):
+        for j in range(np.shape(xgrid)[1]):
+            x = xgrid[i, j]
+            v = vgrid[i, j]
+            state = get_pendulum_state([x, v], 0)  # returns [v, a] at t=0
+            Vgrid[i, j] = state[0]
+            Agrid[i, j] = state[1]
+    plt.streamplot(xgrid, vgrid, Vgrid, Agrid)  # draw with streamplot
+    plt.show()
+\end{python}
+Figures \ref{newton:fig:phase-simple} and \ref{newton:fig:phase-simple-damped} show the phase portraits of a frictionless and damped ($ \beta = 0.5 $) simple pendulum. \hyperref[newton:s:vdp]{Appendix \ref{newton:s:vdp}} in shows phase portraits for both an un-driven and driven Van der Pol oscillator.
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{phase-simple}
+
+\caption{Phase portrait of a simple pendulum---note the distinction between bound and unbound states, which correspond to the circular and undulated streams.}
+
+\label{newton:fig:phase-simple}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{phase-simple-damped}
+\vspace{-3mm}
+\caption{Phase portrait of a damped simple pendulum---note the spirals towards $ \dot{\theta} = 0 $, which correspond to damped energy loss. Tested with $ \beta = 0.5 $.}
+
+\label{newton:fig:phase-simple-damped}
+\end{figure}
+
+
+\section{Damped, Driven Simple Pendulum}
+Figure \ref{newton:fig:phase-simple-damped-driven} shows the phase space of a damped, driven simple pendulum, tested with $ \beta = 0.5, \omega_{d} = 2/3 $ and $ A_{d} = 1.0 $.  Figure \ref{newton:fig:resonance} shows the pendulum's resonance curve for various driving amplitudes $ A_{d} $, which plot the pendulum's maximum amplitude over 40 oscillation periods as a function of driving frequency $ \omega_{d} $. I was frankly baffled by the resonance curve's behavior for driving amplitudes above $ A_{d} = 1.0 $, which show periodic divergence to pendulum amplitudes upwards of $ 400 $ and a plateau for $ A_{d} = 1.5 $ in the range $ \omega_{d} \in (0.65, 0.8) $. The pendulum's resonance behavior ideally deserves further study, but, under time pressure and an abundance of other interesting tasks to preoccupy myself with, I did not investigate further.
+
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=\linewidth]{phase-simple-damped-driven}
+\vspace{-5mm}
+\caption{Phase portrait of a damped, driven simple pendulum. Tested with $ \beta = 0.5, \omega_{d} = 2/3 $ and $ A_{d} = 1.0 $.}
+
+\label{newton:fig:phase-simple-damped-driven}
+\end{figure}
+
+
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{resonance-small} \vfill 
+
+\includegraphics[width=\linewidth]{resonance-large} \vfill 
+
+\caption{Resonance curve of a damped, driven simple pendulum for both small and large driving amplitudes. The plots show the pendulum's maximum amplitude over 40 periods as a function of driving frequency. Note the divergence for driving amplitudes above $ A_{d} = 1.0 $.}
+
+\label{newton:fig:resonance}
+\end{figure}
+
+
+\appendix
+
+\section{Phase Portraits of the Van der Pol Oscillator} \label{newton:s:vdp}
+
+\subsection{``Un-Driven'' Van der Pol Oscillator}
+Figure \ref{newton:fig:vdp} shows phase portraits of an un-driven Van der Pol oscillator for two values of the damping parameter $ \lambda $. Both phase portraits decay toward the origin at $ \theta, \dot{\theta} = (0, 0) $ which corresponds to damped energy loss. The decay for small damping with $ \lambda = 0.1 $ is gradual, while the decay is quite sharp for $ \lambda = 1.0 $. 
+
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=\linewidth]{{phase-vdp-0.1}.png} \vfill 
+
+\includegraphics[width=\linewidth]{{phase-vdp-1.0}.png} \vfill 
+
+\caption{Phase portrait of an un-driven Van der Pol oscillator for two values of the damping parameter $ \lambda $. }
+
+\label{newton:fig:vdp}
+\end{figure}
+
+\subsection{Driven Van der Pol Oscillator}
+Figure \ref{newton:fig:vdp-driven} shows phase portraits of a driven Van der Pol oscillator for three driving amplitudes $ A_{d} $---the oscillator appears to diverge at large driving amplitudes.
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=\linewidth]{{phase-vdp-driven-1.0}.png} \vfill 
+
+\includegraphics[width=\linewidth]{{phase-vdp-driven-5.0}.png} \vfill 
+
+\includegraphics[width=\linewidth]{{phase-vdp-driven-10}.png} \vfill 
+
+\caption{Phase portrait of a Van der Pol oscillator for three driving amplitudes $ A_{d} $. Tested $ \lambda = 1.0 $ and $ \omega_{d} = 1.0 $. }
+
+\label{newton:fig:vdp-driven}
+\end{figure}
+
+
+
+\section{Extra: Simulating the Earth-Moon-Sun System}
+As an extra, in the spirit of Newton's second law, I tried simulating the Earth-Moon-Sun three-body system using the differential equation methods in this report. As a simplification, I assumed the sun was fixed in inertial space, and solved only for the motion of the earth and moon around the sun, which reduces the problem to a system of 12 equations (2 bodies $ \cross $ 3 spatial dimensions $ \cross $ 2nd order differential equation). The corresponding code is included in the file \texttt{newton-ems.py}. Figure \ref{newton:fig:ems} shows the earth and moon's orbit around the sun over the course of one year with Figure \ref{newton:fig:moon} shows the moon's 18.6 year nodal precession period. The attached files \texttt{ems-animated-365.mp4} and \texttt{moon-precession.mp4} show animated versions of the same graphs.
+
+\begin{figure}[htb!]
+\includegraphics[width=\linewidth]{ems-orbits}
+\caption{Motion of the earth and moon around the sun over the course of one year. The $ z $ axis is scaled down by three orders of magnitude to show the moon's $ z $ variation as it orbits the earth.}
+\label{newton:fig:ems}
+\end{figure}
+
+\begin{figure}[htb!]
+\includegraphics[width=\linewidth]{em-precesion}
+\caption{Visualizing the moon's 18.6 year nodal precession as it orbits the earth.}
+\label{newton:fig:moon}
+\end{figure}
+
+
+
+\begin{thebibliography}{}
+\setlength{\itemsep}{.2\itemsep}\setlength{\parsep}{.5\parsep}
+
+\bibitem{belendez} Bel\'{e}ndez, Augusto, et al. ``Exact solution for the nonlinear pendulum''. Revista Brasileira de Ensino de Física. \textbf{29}, 645 (2007).
+
+\bibitem{ochs} Ochs, Karlheinz. ``A comprehensive analytical solution of the nonlinear pendulum''. European Journal of Physics. \textbf{32}, 479 (2011). 
+
+
+\bibitem{cite_mercury_sim}
+Körber, Christopher and Hammer, Inka and Wynen, Jan-Lukas and Heuer, Joseline and Müller, Christian and Hanhart, Christoph. (2018). A primer to numerical simulations: The perihelion motion of Mercury. Physics Education. 53. 10.1088/1361-6552/aac487.
+
+
+
+\bibitem{cite_moon_facts} 
+Dr. David R. Williams. Moon fact sheet. \url{https://nssdc.gsfc.nasa.gov/planetary/factsheet/moonfact.html}.
+
+
+
+\end{thebibliography}
+
+
+\end{document}
+
+
+
