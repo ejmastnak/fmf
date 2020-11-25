@@ -1,0 +1,313 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{mwe}
+\usepackage[margin=3.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bm} % for bold vectors in math mode
+\usepackage{physics} % many useful physics commands
+\usepackage[separate-uncertainty=true]{siunitx} % for scientific notation and units
+
+\usepackage{graphicx}
+\graphicspath{{"../figures/"}}
+\usepackage[section]{placeins} % to keep figures in their sections
+\usepackage{subcaption} % for subfigure captions
+\usepackage[export]{adjustbox} % centers figures wider than text width
+
+\usepackage{xcolor}  % to color hyperref links
+\usepackage[colorlinks = true, allcolors=blue]{hyperref}
+
+\setlength{\parindent}{0pt} % to stop indenting new paragraphs
+\newcommand{\eqtext}[1]{\qquad \text{#1} \qquad}
+\newcommand{\diff}{\mathop{}\!\mathrm{d}} % differential
+
+
+\begin{document}
+\title{Electro-Optical Effect}
+\author{Elijan Mastnak}
+\date{Winter Semester 2020-2021}
+\maketitle
+%\tableofcontents
+		
+		
+\section{Tasks}
+ Determine the liquid crystal's relaxation time constant $ \tau $ from the frequency dependence of the electro-optical response's real and imaginary components.
+
+
+\section{Equipment, Procedure and Data}
+
+
+\subsection{Equipment}
+The experiment was simulated with a computer, but a physical experiment would involve the following equipment:
+\begin{itemize}
+	\item A laser as a source of monochromatic light incident on the liquid crystal sample
+	
+	\item Liquid crystal sample and an analyzer for detecting polarized light
+	
+	\item Photodiode and output resistor to convert photocurrent to voltage
+	
+	\item Lock-in amplifier, used to observe the photodiode signal, with a sinusoidal reference signal with frequency of order 10 to \SI{100}{\hertz} applied to the liquid crystal. 
+	
+\end{itemize}
+
+\subsection{Procedure}
+\begin{itemize}
+	\item Apply a roughly $ \SI{3}{\volt} $ alternating signal to the liquid crystal using a signal generator and use the same signal as the phase detector's reference input. Observe the photodiode signal on an oscilloscope and rotate the analyzer so that the alternating component of the photodiode signal is as large as possible. 
+		
+			
+	\item Connect the photodiode signal to the phase detector's \texttt{A} input and adjust the detector's sensitivity as necessary to stay in the allowed amplitude range. Set the detector filter's time constant to roughly $ \SI{1}{\second} $ and set the phase of the reference signal to zero.
+	
+	\item At a fixed voltage amplitude, vary the frequency of the signal applied to the liquid crystal using the signal generator, and at each frequency measure the photodiode signal's in-phase and out-of-phase components using the lock-in detector.
+\end{itemize}
+
+
+
+\subsection{Data}
+\textbf{Independent variables}: Frequency of the alternating signal applied to the liquid crystal sample. Varied using a simulated function generator. 
+	
+\vspace{2mm}
+\textbf{Dependent variable}: In-phase (real) and out-of-phase (imaginary) components $ \psi_{\text{Re}} $ and $ \psi_{\text{Im}} $ of the photodiode signal, measured with a lock-in amplifier.
+
+\vspace{2mm}
+\textbf{Parameters:} Filter time constant: $ \tau = \SI{1}{\second} $. Applied signal amplitude $ U_{ref} = \SI{1.0}{\volt} $. 
+
+
+\section{Analysis}
+
+Figure \ref{eleopt:fig:eleopt-response} shows the in-phase and out-of-phase components of the photodiode signal---which corresponds to the liquid crystal's electro-optical response---for two values of the analyzer angle $ \phi $. The photodiode signal is largely in-phase with the reference signal applied to the liquid crystal for small frequencies and grows increasingly out of phase as the applied signal frequency increases. 
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=\linewidth]{real-im-plot-45} \vfill
+\vspace{-7mm}
+\includegraphics[width=\linewidth]{real-im-plot-90} \vfill
+
+\caption{Real and imaginary components of the crystal's electro-optical response, corresponding to the in-phase and out-of-phase components of the photodiode signal for two different analyzer angles $ \phi $. Note the signal's sign inversion for the difference polarization angles.}
+\label{eleopt:fig:eleopt-response}
+\end{figure}
+
+\subsection{Relaxation Time From Linear Fit} \label{eleopt:ss:tau-linear-fit}
+Plotting the ratio of $ \psi_{\text{Im}} $ and $ \psi_{\text{Re}} $ versus angular frequency $ \omega $ produces a line whose slope is $ -\tau $. Quick derivation: the components $ \psi_{\text{Re}} $ and  $ \psi_{\text{Im}} $  are defined as
+\begin{equation}
+	\psi_{\text{Re}} = \frac{\psi_{0}}{1 + \omega^{2}\tau^{2}} \eqtext{and} \psi_{\text{Im}} = - \frac{\psi_{0}\omega \tau}{1 + \omega^{2}\tau^{2}} \label{eleopt:eq:phi-im-re}
+\end{equation}
+and their ratio is
+\begin{equation*}
+	\frac{\psi_{\text{Im}}}{\psi_{\text{Re}}}\big(\omega\big) = - \frac{\psi_{0}\omega \tau}{1 + \omega^{2}\tau^{2}} \cdot \frac{1 + \omega^{2}\tau^{2}}{\psi_{0}} = - \omega \tau
+\end{equation*}
+Evidently, plotting $ \frac{\psi_{\text{Im}}}{\psi_{\text{Re}}} $ on the ordinate axis and $ \omega $ on the abscissa produces a line with slope $ -\tau $. Figure \ref{eleopt:fig:tau-linear-fit} shows a plot and the corresponding linear fit for an analyzer angle $ \phi = \ang{45} $. 
+
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=\linewidth]{linear-fit-45} \vfill
+
+\caption{Finding the liquid crystal's relaxation time with a linear fit of the ratio of $ \psi_{\text{Im}} $ and $ \psi_{\text{Re}} $ versus angular frequency $ \omega $ for $ \omega \in (0, 1500)$ \si{\hertz}.}
+\label{eleopt:fig:tau-linear-fit}
+\end{figure}
+
+
+\begin{table}
+\centering
+\begin{tabular}{l|c|c|c|c|c|c|c}
+	$ \phi $ [$ ^{\circ} $] & 0 & 15 & 30 & 45 & 60 & 75 & 90\\
+		\hline
+	$ \tau $ [\si{\milli \second}] & 2.99 & 3.01 & 3.06 & 2.99 & 3.00 & 3.04 & 3.01\\
+\end{tabular}
+\caption{Liquid crystal relaxation times $ \tau $ found with the linear fit discussed in Subsection \ref{eleopt:ss:tau-linear-fit} for various analyzer angles $ \phi $. All $ \tau $ carry an uncertainty of $ \pm \SI{0.02}{\milli \second} $. }
+
+\end{table}
+
+
+
+\subsection{Relaxation Time from an Analysis Approach} \label{eleopt:ss:tau-analytic}
+Following is an alternate approach to finding $ \tau $. Basic single-variable calculus shows the extremum of $ \psi_{\text{Im}} $ (Equation \ref{eleopt:eq:phi-im-re}) occurs at the frequency 
+\begin{equation*}
+	\omega_{\text{peak}}^{2} = \frac{1}{\tau^{2}}
+\end{equation*}
+Inserting the extremum frequency $ \omega_{\text{peak}} $ into $ \psi_{\text{Im}}(\omega) $ shows the peak occurs at
+\begin{equation*}
+	\psi_{\text{Im}}(\omega_{\text{peak}}) = - \frac{\psi_{0}}{1 + 1} = - \frac{\psi_{0}}{2} \implies \psi_{0} = 
+	\begin{cases}
+		- 2 \min \big[\psi_{\text{Im}}(\omega)\big] & \psi_{\text{Im}} < 0\\
+		- 2 \max \big[\psi_{\text{Im}}(\omega)\big] & \psi_{\text{Im}} > 0
+	\end{cases}
+\end{equation*}
+In other words, the value of $ \psi_{0} $ can be found directly from the extremum in a plot of $ \psi_{\text{Im}}(\omega) $. With $ \psi_{0} $, known, we can solve $ \psi_{\text{Re}} $ for $ \tau $ to get
+\begin{equation*}
+	\tau = \frac{1}{\omega} \sqrt{\frac{\psi_{0}}{\psi_{\text{Re}}} - 1} = \frac{1}{\omega} \sqrt{\frac{-2}{\psi_{\text{Re}}}\cdot \text{peak} \big[\psi_{\text{Im}}(\omega)\big] - 1} 
+\end{equation*}
+This gives a roughly steady value for most $ \omega $, except for very small $ \omega $ and large $ \omega $, where the value for $ \tau $  begins to diverge from the average value. Figure \ref{eleopt:fig:tau-analytic} show a distribution of the value of $ \tau $ and their average value found using the analytic approach in this section, using the electro-optical signal with an analyzer angle of $ \ang{45} $. Other analyzer angles produced similar results, shown in Table
+
+\begin{table}
+\centering
+\begin{tabular}{l|c|c|c|c|c|c|c}
+	$ \phi $ [$ ^{\circ} $] & 0 & 15 & 30 & 45 & 60 & 75 & 90\\
+		\hline
+	$ \tau $ [\si{\milli \second}] & 3.06 & 3.09 & 3.08 & 3.07 & 3.07 & 3.01 & 3.02\\
+\end{tabular}
+\caption{Average liquid crystal relaxation time $ \tau $ found the analytic approach in Subsection \ref{eleopt:ss:tau-analytic} for various analyzer angles $ \phi $. All $ \tau $ carry an uncertainty of $ \pm \SI{0.15}{\milli \second} $.  }
+
+\end{table}
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=\linewidth]{tau-analytic-45} \vfill
+
+\caption{Finding the liquid crystal's relaxation time as an average of the values found with the analytic approach discussed in Subsection \ref{eleopt:ss:tau-analytic}.}
+\label{eleopt:fig:tau-analytic}
+\end{figure}
+
+\section{Error Analysis}
+
+\subsection{Relaxation Time From Linear Fit}
+The relaxation time in the linear fit approach is the slope of the line
+\begin{equation*}
+	\frac{\psi_{\text{Im}}}{\psi_{\text{Re}}}\big(\omega\big) \equiv \mathcal{R}(\omega) = - \omega \tau
+\end{equation*}
+Input data are the in-phase and out-of-phase photodiode signal components $ \psi_{\text{Re}} $ and $ \psi_{\text{Im}} $ versus frequency. Input error on $ \psi_{\text{Re}} $ and $ \psi_{\text{Im}} $ was not specified in the computer simulation, so I assumed the data was accurate to within two percent, which is an fair assumption for good lock-in amplifier. 
+
+I estimated the uncertainty in the ratio $ \frac{\psi_{\text{Im}}}{\psi_{\text{Re}}} $ with sensitivity coefficients:
+\begin{equation*}
+	c_{\text{Im}} = \pdv{\mathcal{R}}{\psi_{\text{Im}}} = \frac{1}{\psi_{\text{Re}}} \eqtext{and} c_{\text{Re}} = \pdv{\mathcal{R}}{\psi_{\text{Re}}} = -\frac{\psi_{\text{Im}}}{\psi^{2}_{\text{Re}}} 
+\end{equation*}
+The corresponding error in the ratio $ \mathcal{R} $ is then
+\begin{equation*}
+	u_{\mathcal{R}} = \sqrt{(c_{\text{Im}}u_{\text{Im}})^{2} + (c_{\text{Re}}u_{\text{Re}})^{2} }
+\end{equation*} 
+where $ u_{\text{Im}} $ and $ u_{\text{Re}} $ are the measurement errors in $ \psi_{\text{Im}} $ and $ \psi_{\text{Re}} $. 
+
+The error in the relaxation time $ \tau $ is then the uncertainty in the fitted slope (from the fit's covariance matrix) shown in Figure \ref{eleopt:fig:tau-linear-fit}, taking into account the uncertainty $ u_{\mathcal{R}} $ in the $ \mathcal{R} $ data points on the ordinate axes.
+
+\subsection{Relaxation Time from an Analysis Approach}
+In the real-analysis/calculus-oriented approach, I found $ \tau $ with
+\begin{equation*}
+	\tau = \frac{1}{\omega} \sqrt{\frac{\psi_{0}}{\psi_{\text{Re}}} - 1}
+\end{equation*}
+where $ \psi_{0} $ is twice the value of the $ \psi_{\text{Im}}(\omega) $ extremum. The input data for each calculation of $ \tau $ is angular frequency $ \omega $, the corresponding in-phase component $ \psi_{\text{Re}} $, and the out-of-phase extremum value $ \psi_{0} $. The associated sensitivity coefficients are
+\begin{align*}
+	&c_{\omega} = \pdv{\tau}{\omega} = -\frac{1}{\omega^{2}} \sqrt{\frac{\psi_{0}}{\psi_{\text{Re}}} - 1}\\
+	&c_{0} = \pdv{\tau}{\psi_{0}} = \frac{1}{2\omega \psi_{\text{Re}}} \left(\frac{\psi_{0}}{\psi_{\text{Re}}} - 1\right)^{-1/2}\\
+	&c_{\text{Re}} = \pdv{\tau}{\psi_{\text{Re}}} = - \frac{\psi_{0}}{2\omega \psi^{2}_{\text{Re}}} \left(\frac{\psi_{0}}{\psi_{\text{Re}}} - 1\right)^{-1/2}
+\end{align*}
+and the estimated error in $ \tau $ is
+\begin{equation*}
+	u_{\tau} = \sqrt{(c_{\omega}u_{\omega})^{2} + (c_{0}u_{0})^{2} + (c_{\text{Re}}u_{\text{Re}})^{2} } 
+\end{equation*}
+
+
+
+
+
+
+\section{Results}
+Using a linear fit, the average value of the liquid crystal's relaxation time $ \tau $ was
+\begin{equation*}
+	\boxed{\tau = \SI{3.01 \pm 0.02}{\milli \second}}
+\end{equation*}
+Using at analytic approach in Subsection \ref{eleopt:ss:tau-analytic}, the average value of $ \tau $ was
+\begin{equation*}
+	\boxed{\tau = \SI{3.06 \pm 0.15}{\milli \second}}
+\end{equation*}
+
+
+
+\appendix
+\section{Background}
+\begin{itemize}
+	\item Liquid crystals are formed of elongated molecules; at moderate temperatures the molecules align into a state of macroscopic order. In addition to ordered orientation of the constituent molecules, \textit{smectic} liquid crystals display a distinctive planar structure, i.e. one-dimensional positional order. The molecules align into layers, and the layers themselves behave as a two-dimensional liquid. 
+	
+	\item In A-type smectics the characteristic direction of macroscopic order, called the \textit{director}, points along the normal to the planes. In C-type smectics, the director makes an angle to the normal, generally between 10 and 30 degrees. 
+	
+	\item Ferroelectric smectics of type $ \mathrm{C}^{*} $ are made of molecules with large electric dipole moments orthogonal to the longitudinal axis of the molecules. Because of the large dipole moment, $ \mathrm{C}^{*} $-type smectics display electric polarization in the plane of the layers and perpendicular to the director; the electric polarization is approximately proportional to the angle between the director and the normal to the planar layers.
+	
+	\item Liquid crystals are particularly useful because of their birefringence, which arises from the orientational order of the molecules. The optical axis is parallel to the director.
+	
+	\item In a large sample of ferroelectric liquid crystal the orientation of the molecules and thus the direction of the electric polarization in the smectic plane gradually changes along the normal to the plane. 
+	
+	The helix traced out by the director's endpoint generally makes a full revolution every few hundred to one thousand players. Because of the periodic helical structure (of the orientation of the molecules) the macroscopic electric polarization of the liquid crystal is zero.
+	
+	\item We can align the polarization of the layers of molecules either with an external electric field or by constructing the liquid crystal with specially treated thin plates which fix the orientation of the molecules either by mechanical or chemical means.
+	
+	If the spacing between the plates is small enough (e.g. less than $ \SI{5}{\micro \meter} $) the director aligns in plate-specified direction throughout the entire liquid crystal sample. 
+	
+	In such a plate-stabilized ferroelectric liquid crystal the smectic planes are orthogonal to the plates and the electric polarization lies in the plane of the plates.
+	
+	\item If the plate-stabilized ferroelectric liquid crystal is placed in an external electric field perpendicular to the stabilizing plates, the crystal's electric polarization partially rotates in the direction of the external field. 
+	
+	Because the polarization is related to the director, the director also partially rotates (in the cone of allowed orientations determined by angle of the director to the normal plane) in the direction of the external field. Because the director rotates, the crystal's optical axis also rotates.
+	
+	The rotation (angular displacement) of the electric polarization is linearly dependent on the electric field, as is the rotation of the optical axis. The linear dependence of the crystal's index of refraction on the external electric field is called the \textit{electrooptical effect}.
+\end{itemize}
+
+\textbf{Frequency}
+\begin{itemize}
+	\item The rotation of the crystal's polarization and director in an alternating electric field also depends on the field's frequency. If the frequency is too large, the polarization cannot keep up with the field. The dependence of the polarization change $ \delta P $ on frequency $ \omega $ is described by the Debye relaxation model
+	\begin{equation}
+		\delta P = \delta P_{0} \frac{1}{1 + i\omega \tau} \label{eleopt:eq:debye_relaxation}
+	\end{equation}
+	The relaxation time $ \tau $ depends on the viscosity of the liquid crystal and on the thickness of the sample. 
+	
+	The rotation of the optical axis (which is proportional to $ \delta P $) has the same frequency dependence as $ \delta P $.
+	
+	\item We can detect the change in direction of the optical axis by observing how the polarization of light changes as it passes through the sample. See figure in instructions for the measurement schematic.  
+	
+	Set-up is, from left to right along the optical axis: laser with polarized light, liquid crystal sample, analyzer, photodiode.
+	
+	We shine polarized light on the sample and measure the power of the light passing through the analyzer placed behind the substance. We denote the angle between the incident polarization and the optical axis by $ \alpha $ and the angle between the optical axis and analyzer by $ \beta $. 
+	
+	\item We decompose the incident polarization on a component parallel to the optical axis and a component perpendicular to the optical axis. After passing through a sample of thickness $ h $, the phase difference between the parallel and perpendicular rays is $ kh \Delta n $ where $ k $ is the light's wave vector and $ \Delta n $ is the difference in the two ray's indexes of refraction.
+	
+	
+	The analyzer passes only the projection of the field on the passing direction. The transmitted electric field $ E $ and intensity $ I $ are
+	\begin{align*}
+		&E_{p} = E_{0}\left [\cos \alpha \cos \beta + \sin \alpha \sin \beta e^{ikh\Delta n}\right]\\
+		&I_{p} = I_{0}\left [\cos^{2}(\alpha-\beta) - \sin 2\alpha \sin 2\beta \sin^{2}\left(\frac{kh\Delta n}{2}\right)\right]
+	\end{align*}
+	
+	\item We are particularly interested in small changes of the transmitted power resulting from small changes in the direction of the optical axis. Because of the small changes of the optical axis, the angles $ \alpha $ and $ \beta $ have a small time dependence
+	\begin{equation*}
+		\alpha(t) = \alpha_{0} + \psi(t) \eqtext{and} \beta(t) = \beta_{0} + \psi(t)
+	\end{equation*}
+	Expanding the transmitted intensity up to linear order in $ \psi $ gives an alternating component of transmitted intensity of the form
+	\begin{equation*}
+		I_{t}(\omega) = -2 I_{0} \sin\big[2(\alpha_{0} + \beta_{0})\big]\sin^{2}\left(\frac{kh\Delta n}{2}\right) \psi(\omega)
+	\end{equation*}
+	The modulation of the transmitted intensity will be largest when $ \alpha_{0} + \beta_{0} = \frac{\pi}{4}$ or $ \sin\big[2(\alpha_{0} + \beta_{0})\big] = 1$. 
+
+\end{itemize}
+
+\textbf{Phase Detection}
+\begin{itemize}
+	\item The response of a system to small periodic external perturbations is best measured with a phase detector, which multiplies the inputted signal with a reference alternating signal of a fixed modulation frequency. In our case, the modulation frequency is the frequency of the external electric field applied to the liquid crystal. In this case, both the input and modulation signals have the same frequency, since the perturbations are dependent on the electric field.  
+	
+	\item In its Fourier decomposition, the product of the signals contains a component at twice the electric field frequency and a constant component, which we filter out with a low-pass filter. 
+	
+	The filter's time constant determines the effective width of the frequency interval (bandwidth) in which we can observe the signal. The larger the filter's time constant, the smaller the bandwidth and noise.
+	
+	\item We connect the reference signal onto a special input of the phase detector that allows us to change the phase of the reference signal's phase. The reference signal is of the form
+	\begin{equation*}
+		U_{r} = U_{0} \cos (\omega t + \phi)
+	\end{equation*}
+	The signal is not in general in phase with the disturbance, which we write
+	\begin{equation*}
+		S = S_{1} \omega t + S_{2} \sin \omega t
+	\end{equation*}
+	
+	\item The aforementioned constant component of product of the perturbation and reference signal outputted from the phase detector is 
+	\begin{equation*}
+		U_{i} = \frac{U_{0}}{2} (S_{1}\cos \phi + S_{2}\sin \phi)
+	\end{equation*}
+	By appropriately choosing the phase $ \phi $, we can thus separate the system's response exactly in phase with the driving signal and the system's response exactly out of phase with the driving signal.
+	
+	\item In a liquid crystal the rotation $ \psi $ of the optical axis lags behind the external electric field because of the crystal's viscosity. The components of the rotation exactly in phase and exactly out of phase with the electric field are the real and imaginary components of Equation \ref{eleopt:eq:debye_relaxation}, respectively. These are:
+	\begin{equation}
+		\psi_{r} = \frac{\psi{r}}{1 + \omega^{2}\tau^{2}} \eqtext{and} \psi_{i} = - \frac{\psi_{i}\omega \tau}{1 + \omega^{2}\tau^{2}} \label{eleopt:eq:real_im_response}
+	\end{equation}
+	
+	\item By measuring $ \psi_{r} $ and $ \psi_{i} $ we can determine the crystal's relaxation time $ \tau $ by manipulating the expressions for $ \psi_{r} $ and $ \psi_{i} $ to fit the measurements.
+	
+	
+	Alternatively, we observe that the points $ \big(\psi_{r}(\omega), \psi_{i}(\omega) \big) $ form a circle in the complex plane parameterized by $ \omega $. The center of the circle lies on the real axis at the value $ \psi_{r} $ and corresponds to the frequency $ \omega = \frac{1}{\tau} $. By determining the circle's center, we can thus find $ \tau $.
+\end{itemize}
+\end{document}
