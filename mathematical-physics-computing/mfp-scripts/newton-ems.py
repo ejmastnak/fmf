@@ -1,10 +1,14 @@
 import numpy as np
-from scipy.integrate import odeint
-from scipy.optimize import curve_fit
-import matplotlib.pyplot as plot
-# from mpl_toolkits.mplot3d import Axes3D
+import matplotlib
+from matplotlib import pyplot as plt
+from matplotlib import rc
+from matplotlib.colors import LinearSegmentedColormap
+from mpl_toolkits.mplot3d import axes3d
+import matplotlib.animation as animation
 from numerical_methods_odes import *
 
+matplotlib.rcParams['mathtext.fontset'] = 'cm'
+matplotlib.rcParams['font.family'] = 'STIXGeneral'
 
 # -----------------------------------------------------------------------------
 # START GLOBAL CONSTANTS AND PARAMETERS
@@ -20,7 +24,13 @@ moon_to_earth = 3.75e8
 moon_inclination = 0.09  # inclination of the moon to the ecliptic in radians (5.2 degrees)
 moon_orbital_velocity = 1.02e3  # the moon's mean orbital velocity around the earth in m/s
 
-save_figures = False
+blue_light, blue_dark = "#b3e5fc", "#01579b"  # lighter and darker blue
+blue_cmap = LinearSegmentedColormap.from_list("blues", [blue_light, blue_dark], N=100)
+gray_light, gray_dark = "#BBBBBB", "#333333"
+gray_cmap = LinearSegmentedColormap.from_list("grays", [gray_light, gray_dark], N=100)
+
+figure_dir = "/Users/ejmastnak/Documents/Dropbox/academics/fmf-local/fmf-winter-3/mafiprak/7-newton/figures/"
+save_figures = True
 # -----------------------------------------------------------------------------
 # END GLOBAL CONSTANTS AND PARAMETERS
 # -----------------------------------------------------------------------------
@@ -55,18 +65,18 @@ def get_ems_state(state, t):
     r_y = state[4] - state[1]
     r_z = state[5] - state[2]
 
-    aex = -G * ((m_S * state[0] / (vec_mag([state[0], state[1], state[2]]) ** 3)) -
-                (m_M * r_x / (vec_mag([r_x, r_y, r_z]) ** 3)))
-    aey = -G * ((m_S * state[1] / (vec_mag([state[0], state[1], state[2]]) ** 3)) -
-                (m_M * r_y / (vec_mag([r_x, r_y, r_z]) ** 3)))
-    aez = -G * ((m_S * state[2] / (vec_mag([state[0], state[1], state[2]]) ** 3)) -
-                (m_M * r_z / (vec_mag([r_x, r_y, r_z]) ** 3)))
-    amx = -G * ((m_S * state[3] / (vec_mag([state[3], state[4], state[5]]) ** 3)) +
-                (m_E * r_x / (vec_mag([r_x, r_y, r_z]) ** 3)))
-    amy = -G * ((m_S * state[4] / (vec_mag([state[3], state[4], state[5]]) ** 3)) +
-                (m_E * r_y / (vec_mag([r_x, r_y, r_z]) ** 3)))
-    amz = -G * ((m_S * state[5] / (vec_mag([state[3], state[4], state[5]]) ** 3)) +
-                (m_E * r_z / (vec_mag([r_x, r_y, r_z]) ** 3)))
+    aex = -G * ((m_S * state[0] / (vector_magnitude([state[0], state[1], state[2]]) ** 3)) -
+                (m_M * r_x / (vector_magnitude([r_x, r_y, r_z]) ** 3)))
+    aey = -G * ((m_S * state[1] / (vector_magnitude([state[0], state[1], state[2]]) ** 3)) -
+                (m_M * r_y / (vector_magnitude([r_x, r_y, r_z]) ** 3)))
+    aez = -G * ((m_S * state[2] / (vector_magnitude([state[0], state[1], state[2]]) ** 3)) -
+                (m_M * r_z / (vector_magnitude([r_x, r_y, r_z]) ** 3)))
+    amx = -G * ((m_S * state[3] / (vector_magnitude([state[3], state[4], state[5]]) ** 3)) +
+                (m_E * r_x / (vector_magnitude([r_x, r_y, r_z]) ** 3)))
+    amy = -G * ((m_S * state[4] / (vector_magnitude([state[3], state[4], state[5]]) ** 3)) +
+                (m_E * r_y / (vector_magnitude([r_x, r_y, r_z]) ** 3)))
+    amz = -G * ((m_S * state[5] / (vector_magnitude([state[3], state[4], state[5]]) ** 3)) +
+                (m_E * r_z / (vector_magnitude([r_x, r_y, r_z]) ** 3)))
 
     return_state = np.zeros(np.shape(state))
     for i in range(6, 12):
@@ -99,24 +109,29 @@ def get_ems_state_symp(coordinates):
     r_y = coordinates[4] - coordinates[1]
     r_z = coordinates[5] - coordinates[2]
 
-    aex = -G * ((m_S * coordinates[0] / (vec_mag([coordinates[0], coordinates[1], coordinates[2]]) ** 3)) -
-                (m_M * r_x / (vec_mag([r_x, r_y, r_z]) ** 3)))
-    aey = -G * ((m_S * coordinates[1] / (vec_mag([coordinates[0], coordinates[1], coordinates[2]]) ** 3)) -
-                (m_M * r_y / (vec_mag([r_x, r_y, r_z]) ** 3)))
-    aez = -G * ((m_S * coordinates[2] / (vec_mag([coordinates[0], coordinates[1], coordinates[2]]) ** 3)) -
-                (m_M * r_z / (vec_mag([r_x, r_y, r_z]) ** 3)))
-    amx = -G * ((m_S * coordinates[3] / (vec_mag([coordinates[3], coordinates[4], coordinates[5]]) ** 3)) +
-                (m_E * r_x / (vec_mag([r_x, r_y, r_z]) ** 3)))
-    amy = -G * ((m_S * coordinates[4] / (vec_mag([coordinates[3], coordinates[4], coordinates[5]]) ** 3)) +
-                (m_E * r_y / (vec_mag([r_x, r_y, r_z]) ** 3)))
-    amz = -G * ((m_S * coordinates[5] / (vec_mag([coordinates[3], coordinates[4], coordinates[5]]) ** 3)) +
-                (m_E * r_z / (vec_mag([r_x, r_y, r_z]) ** 3)))
+    aex = -G * ((m_S * coordinates[0] / (vector_magnitude([coordinates[0], coordinates[1], coordinates[2]]) ** 3)) -
+                (m_M * r_x / (vector_magnitude([r_x, r_y, r_z]) ** 3)))
+    aey = -G * ((m_S * coordinates[1] / (vector_magnitude([coordinates[0], coordinates[1], coordinates[2]]) ** 3)) -
+                (m_M * r_y / (vector_magnitude([r_x, r_y, r_z]) ** 3)))
+    aez = -G * ((m_S * coordinates[2] / (vector_magnitude([coordinates[0], coordinates[1], coordinates[2]]) ** 3)) -
+                (m_M * r_z / (vector_magnitude([r_x, r_y, r_z]) ** 3)))
+    amx = -G * ((m_S * coordinates[3] / (vector_magnitude([coordinates[3], coordinates[4], coordinates[5]]) ** 3)) +
+                (m_E * r_x / (vector_magnitude([r_x, r_y, r_z]) ** 3)))
+    amy = -G * ((m_S * coordinates[4] / (vector_magnitude([coordinates[3], coordinates[4], coordinates[5]]) ** 3)) +
+                (m_E * r_y / (vector_magnitude([r_x, r_y, r_z]) ** 3)))
+    amz = -G * ((m_S * coordinates[5] / (vector_magnitude([coordinates[3], coordinates[4], coordinates[5]]) ** 3)) +
+                (m_E * r_z / (vector_magnitude([r_x, r_y, r_z]) ** 3)))
 
     accelerations = np.zeros(np.shape(coordinates))
     accelerations[0], accelerations[1], accelerations[2] = aex, aey, aez
     accelerations[3], accelerations[4], accelerations[5] = amx, amy, amz
 
     return accelerations
+
+
+def vector_magnitude(r):
+    """ Helper funciton to return the length (magnitude) of a 3D vector """
+    return np.sqrt(r[0] ** 2 + r[1] ** 2 + r[2] ** 2)
 
 
 def get_initial_conditions():
@@ -142,28 +157,51 @@ def get_initial_conditions():
     return [xe0, ye0, ze0, xm0, ym0, zm0, vex0, vey0, vez0, vmx0, vmy0, vmz0]
 
 
-def solve_ems_motion(t):
+def get_ems_motion(sim_years=1.0, dt=1e5):
     """
     Solves the motion of the Earth-Moon-Sun system using the model in get_ems_state on the time values t
-    :param t: 1D array of time values on which to find the solution
+    :param sim_years: number of years over which to run the simulation
+    :param dt: time step, in seconds
     :return: position and velocity of the earth and moon over the time t
     """
+    t_min = 0  # start time
+    t_max = (3600. * 24. * 365. * sim_years)  # convert years to second to maintain SI units
+    t = np.linspace(t_min, t_max, int((t_max - t_min) / dt))
+
     # get the array of initial conditions from the auxiliary function
     initial_state = get_initial_conditions()
     x0 = initial_state[0:6]
     v0 = initial_state[6:12]
 
-    # # time parameters
-    # sim_years = 10  # number of years over which to run the simulation; depracated
-    # t_min = 0 # start time
-    # t_max = (3600. * 24. * 365. * sim_years) # seconds hours days years
-    # dt = 10000 # time step
-    # time_values = np.linspace(t_min, t_max, int((t_max - t_min) / dt))
-
-    # call odeint and get solutions
     # return odeint(get_ems_state, initial_state, t)
-    return rk4(get_ems_state, initial_state, t)
-    # return pefrl(get_ems_state_symp, x0, v0, t)[0]
+    # return rk4(get_ems_state, initial_state, t)
+    return pefrl(get_ems_state_symp, x0, v0, t)
+
+
+def get_em_motion(sim_years=1.0, dt=1e5):
+    """
+    Solves the motion of the Earth-Moon-Sun system using the model in get_ems_state on the time values t
+    :param sim_years: number of years over which to run the simulation
+    :param dt: time step, in seconds
+    :return: position and velocity of the earth and moon over the time t
+    """
+    t_min = 0  # start time
+    t_max = (3600. * 24. * 365. * sim_years)  # convert years to second to maintain SI units
+    t = np.linspace(t_min, t_max, int((t_max - t_min) / dt))
+
+    # get the array of initial conditions from the auxiliary function
+    initial_state = get_initial_conditions()
+    x0 = initial_state[0:6]
+    v0 = initial_state[6:12]
+
+    ems_positions = pefrl(get_ems_state_symp, x0, v0, t)[0]
+
+    # get the moon's position relative to the earth through the simulation
+    moon_positions = np.empty([ems_positions.shape[0], 3])  # 2-d np array (i.e. matrix) holding moon's positions relative to earth
+    for i in range(ems_positions.shape[0]):
+        moon_positions[i] = ems_positions[i][3:6] - ems_positions[i][0:3]  # moon xyz - earth xyz to get moon relative to earth
+        i += 1
+    return moon_positions
 
 # -----------------------------------------------------------------------------
 # END EMS DE EQUATION FUNCTIONS
@@ -173,281 +211,199 @@ def solve_ems_motion(t):
 # -----------------------------------------------------------------------------
 # START GRAPHING FUNCTIONS
 # -----------------------------------------------------------------------------
-def plot_ems_orbits(ems_orbits, sim_years):
+def plot_ems_orbits():
     """ Plots the orbit of the earth and moon around the sun in 3 dimensions """
+    sim_years = 1.0
+    ems_orbits = get_ems_motion(sim_years=sim_years)[0]
+    indeces = np.arange(0, np.shape(ems_orbits)[0], 1)  # for use with color map
 
-    ax = plot.axes(projection="3d")
-    ax.plot([], [], ' ', label="Simulation: {:.2f} years".format(sim_years))  # hacked blank label for simulation time
-    ax.scatter(0, 0, 0, c='orange', s=350, label="Sun")  # the sun
-    ax.plot3D(ems_orbits[:, 3], ems_orbits[:, 4], ems_orbits[:, 5], 'b', alpha=0.75, label="Moon orbiting sun")
-    ax.plot3D(ems_orbits[:, 0], ems_orbits[:, 1], ems_orbits[:, 2], 'g', label="Earth orbiting sun")
-    ax.set_zlim([-1e8, 1e8])
-    plot.legend(framealpha=0.9)
-    if save_figures: plot.savefig("ems-orbits-{:.2f}_.png".format(sim_years))
-    plot.show()
+    ax = plt.axes(projection="3d")
+    xlim, ylim, zlim = 1.5e11, 1.5e11, 1e8
+    ax.set_xlim3d([-xlim, xlim])
+    ax.set_ylim3d([-ylim, ylim])
+    ax.set_zlim3d([-zlim, zlim])
+    ax.view_init(18, -60)  # set view angle
+
+    # time_label = ax.text(-0.8*xlim, ylim, 0.7*zlim, 'Hi!',bbox=dict(facecolor='#FFFFFF', edgecolor='#222222', boxstyle='round,pad=0.3'))
+
+    ax.scatter(0, 0, 0, c='orange', s=400, label="Sun")  # the sun
+    ax.scatter(ems_orbits[:, 0], ems_orbits[:, 1], ems_orbits[:, 2], c=indeces, cmap=blue_cmap, s=30, label="earth")
+    ax.scatter(ems_orbits[:, 3], ems_orbits[:, 4], ems_orbits[:, 5], c=indeces, cmap=gray_cmap, s=10, alpha=0.75, label="moon")
+
+    # plt.legend(framealpha=0.9)
+    plt.tight_layout()
+    if save_figures: plt.savefig(figure_dir + "ems-orbits_.png", dpi=200)
+    plt.show()
 
 
-def plot_em_orbits(ems_orbits, sim_years):
+def plot_em_orbits():
     """ Plots the orbit of the moon around the earth in 3 dimensions """
 
-    ax = plot.axes(projection="3d")
-    ax.plot([], [], ' ', label="Simulation: {:.2f} years".format(sim_years))  # hacked blank label for simulation time
-    ax.scatter(0, 0, 0, c='g', s=100, label="Earth")  # the label for the earth
-    ax.scatter(0, 0, 0, c='g', s=500)  # the earth
-    ax.plot3D(np.subtract(ems_orbits[:, 3], ems_orbits[:, 0]),
-              np.subtract(ems_orbits[:, 4], ems_orbits[:, 1]),
-              np.subtract(ems_orbits[:, 5], ems_orbits[:, 2]),
-              'b', alpha=0.85, label="Moon orbiting Earth")
-    ax.set_zlim([-5e7, 5e7])
-    plot.legend(framealpha=0.9)
-    if save_figures: plot.savefig("moon-earth-orbit-{:.2f}_.png".format(sim_years))
-    plot.show()
+    sim_years = 16.0
+    moon_positions = get_em_motion(sim_years=sim_years)
+    indeces = np.arange(0, np.shape(moon_positions)[0], 1)  # for use with color map
+
+    ax = plt.axes(projection="3d")
+    xlim, ylim, zlim = 4e8, 4e8, 4e7
+    ax.set_xlim3d([-xlim, xlim])
+    ax.set_ylim3d([-ylim, ylim])
+    ax.set_zlim3d([-zlim, zlim])
+    ax.view_init(18, -60)  # set view angle
+
+    ax.scatter(0, 0, 0, c=blue_dark, s=400)  # big blue earth
+    ax.text(-1.1*xlim, ylim, 0.88*zlim, 'Years: 18.6', bbox=dict(facecolor='#FFFFFF', edgecolor='#222222', boxstyle='round,pad=0.3'), zorder=10)
+    ax.scatter(moon_positions[:, 0], moon_positions[:, 1], moon_positions[:, 2], c=indeces, cmap=gray_cmap, alpha=0.85)
+
+    plt.tight_layout()
+    if save_figures: plt.savefig("em-orbit-{:.2f}_.png".format(sim_years))
+    plt.show()
 
 
-def extract_apsidal_precession(moon_positions, sim_years):
-    # calculate earth-moon distance throughout the simulation
-    distances = np.empty(moon_positions.shape[0]) # empty array to hold distances
-    i = 0
-    while i < moon_positions.shape[0]:
-        distances[i] = vec_mag(moon_positions[i])
-        i += 1
+def plot_nodal_precession():
+    """ Plots the orbit of the moon around the earth in 3 dimensions """
 
-    # Plots distances to moon during the orbit
-    plot_2d(np.linspace(0, sim_years, distances.shape[0]), distances, "Earth-Moon distance", marker="-",
-            xlabel="Time [years]", ylabel="Distance [m]", save_figures=save_figures,
-            extra_label="Simulation: %.2f years" % sim_years)
+    fig = plt.figure(figsize=(7, 6))
+    for i, sim_years in enumerate((1.0, 6.0, 12.0, 18.6)):
+        ax = fig.add_subplot(2, 2, i+1, projection='3d')
+        moon_positions = get_em_motion(sim_years=sim_years)
 
-    # TODO clean this part up. Consider changing all while loops
+        xlim, ylim, zlim = 4e8, 4e8, 4e7
+        ax.set_xlim3d([-xlim, xlim])
+        ax.set_ylim3d([-ylim, ylim])
+        ax.set_zlim3d([-zlim, zlim])
+        ax.view_init(18, -60)  # set view angle
 
-    # create an empty array to hold perigee and apogee positions
-    perigee_positions = np.empty([0, 3])
-    apogee_positions = np.empty([0, 3])
-    cut_off_distance = 0.035e8 # hacky auxiliary variable
+        start, stop = -100, -1
+        indeces = np.arange(0, stop-start, 1)
 
-    before_last_position = moon_positions[0]  # temporary variable
-    last_position = moon_positions[1] # temporary variable
+        ax.text(-1.1*xlim, ylim, 0.88*zlim, 'Years: {:.1f}'.format(sim_years), bbox=dict(facecolor='#FFFFFF', edgecolor='#222222', boxstyle='round,pad=0.3'), zorder=10)
+        ax.scatter(moon_positions[start:stop, 0], moon_positions[start:stop, 1], moon_positions[start:stop, 2], c=indeces, cmap=gray_cmap, alpha=0.85)
+        ax.scatter(0, 0, 0, c=blue_dark, s=300, zorder=10)  # big blue earth
 
-    # loop through the moon's positions find the perigees and apogees,
-    # store the perigees and apogees in arrays
-    i = 2
-    while i < moon_positions.shape[0]:
-
-        # condition for a perigee position (have to do checking for little double mins and maxes)
-        if (vec_mag(before_last_position) > vec_mag(last_position)) and (vec_mag(last_position) < vec_mag(moon_positions[i])):
-            # Essentially if the very first extrema
-            if apogee_positions.shape[0] == 0:
-                perigee_positions = np.append(perigee_positions, [last_position], axis=0)
-
-            # To avoid double maxes (if abs(last_max - current_min) > cut_off_distance)
-            elif np.abs(vec_mag(apogee_positions[apogee_positions.shape[0] - 1]) - vec_mag(last_position)) > cut_off_distance:
-                perigee_positions = np.append(perigee_positions, [last_position], axis=0)
-
-        # conditions for an apogee position (have to do checking for little double mins and maxes)
-        elif (vec_mag(before_last_position) < vec_mag(last_position)) and (vec_mag(last_position) > vec_mag(moon_positions[i])):
-
-            # Essentially if the very first extrema
-            if perigee_positions.shape[0] == 0:
-                apogee_positions = np.append(apogee_positions, [last_position], axis=0)
-
-            # To avoid double maxes (if abs(current_max - last_min) > cut_off_distance)
-            elif np.abs(vec_mag(last_position) - vec_mag(perigee_positions[perigee_positions.shape[0] - 1])) > cut_off_distance:
-                apogee_positions = np.append(apogee_positions, [last_position], axis=0)
-
-        # update before-last and last positions
-        before_last_position = last_position
-        last_position = moon_positions[i]
-
-        i += 1
-
-    # Plot perigee and apogee positions
-    fig = plot.figure()
-    ax = plot.axes(projection="3d")
-    ax.plot([], [], ' ', label="Simulation: %.2f years" % sim_years)  # blank label for simulation time
-    ax.scatter(perigee_positions[:, 0], perigee_positions[:, 1], perigee_positions[:, 2], label="Perigee Positions")
-    ax.scatter(apogee_positions[:, 0], apogee_positions[:, 1], apogee_positions[:, 2], label="Apogee Positions")
-    ax.scatter(0, 0, 0, c='g', s=250, label="Earth")  # the earth
-    ax.set_zlim([-1e8, 1e8])  # adjust z axis scale
-    plot.legend()
-    if save_figures: plot.savefig("Aps_Preces_Visual_%.f.png" % sim_years)
-    plot.show()
-
-    # Declare an empty array to hold perigee and apogee angles
-    perigee_angles = np.empty(perigee_positions.shape[0]-1)
-    apogee_angles = np.empty(apogee_positions.shape[0]-1)
-
-    # Calculate perigee angles
-    for i in range(0, perigee_angles.shape[0]): # loop through the empty angles array
-        perigee_angles[i] = angle_btwn(perigee_positions[0], perigee_positions[i + 1])
-
-    # TODO for loop example here
-    # Calculate apogee angles
-    for i in range(0, apogee_angles.shape[0]):  # loop through the empty angles array
-        apogee_angles[i] = angle_btwn(apogee_positions[0], apogee_positions[i + 1])
-
-    # plot angle between sucessive perigees over time
-    plot_2d(np.linspace(0, sim_years, perigee_angles.shape[0]), perigee_angles, "Angular displacement of perigee", xlabel="Time [years]", ylabel="Angle [degrees]", marker="--", save_figures=save_figures, extra_label="Simulation: %.2f years" % sim_years)
-
-    # fit a sine curve to the perigee angle over time
-    fit_sin_curve(np.linspace(0, sim_years, perigee_angles.shape[0]), perigee_angles, a_guess=90, w_guess=2*np.pi/8.85, k_guess=90, data_label="Angular displacement of perigee", save_figures=save_figures)
-    fit_sin_curve(np.linspace(0, sim_years, apogee_angles.shape[0]), apogee_angles, a_guess=90, w_guess=2*np.pi/8.85, k_guess=90, data_label="Angular displacement of apogee", save_figures=save_figures)
+    plt.tight_layout()
+    if save_figures: plt.savefig(figure_dir + "em-precesion_.png", dpi=200)
+    plt.show()
+# -----------------------------------------------------------------------------
+# END GRAPHING FUNCTIONS
+# -----------------------------------------------------------------------------
 
 
-def extract_nodal_precession(moon_positions, sim_years):
-    asc_node_positions = np.empty([0, 3]) # array to hold ascending node positions
-    desc_node_positions = np.empty([0, 3]) # array to hold desending node positions
-    last_position = moon_positions[0]  # tempory variable
-
-    # loop through the moon's positions, find asc and desc nodes, store them in arrays
-    i = 1
-    while i < moon_positions.shape[0]:
-
-        # condition for an ascending node position
-        if (last_position[2] < 0.0) and (moon_positions[i][2] >= 0.0):
-            asc_node_positions = np.append(asc_node_positions, [last_position], axis=0)
-
-        # condition for an descending node position
-        if (last_position[2] > 0.0) and (moon_positions[i][2] <= 0.0):
-            desc_node_positions = np.append(desc_node_positions, [last_position], axis=0)
-
-        last_position = moon_positions[i] # update last positions
-
-        i += 1
-
-    # plots positions of ascending and descending nodes
-    fig = plot.figure()
-    ax = plot.axes(projection="3d")
-    ax.plot([], [], ' ', label="Simulation: %.2f years" % sim_years)  # blank label for simulation time
-
-    ax.scatter(asc_node_positions[:, 0], asc_node_positions[:, 1], asc_node_positions[:, 2],
-               label="Ascending Node Positions")
-    ax.scatter(desc_node_positions[:, 0], desc_node_positions[:, 1], desc_node_positions[:, 2],
-               label="Descending Node Positions")
-    ax.scatter(0, 0, 0, c='g', s=250, label="Earth")  # the earth
-    ax.set_zlim([-1e8, 1e8])
-    plot.legend()
-    if save_figures: plot.savefig("Nodal_Preces_Visual_%.f.png" % sim_years)
-    plot.show()
-
-    # Declare an empty array to hold ascending and descending node angles
-    asc_node_angles = np.empty(asc_node_positions.shape[0] - 1)
-    desc_node_angles = np.empty(desc_node_positions.shape[0] - 1)
-
-    # Calculate ascending node angles
-    for i in range(0, asc_node_angles.shape[0]):  # loop through the empty angles array
-        asc_node_angles[i] = angle_btwn(asc_node_positions[0], asc_node_positions[i + 1])
-
-    # Calculate descending node angles
-    for i in range(0, desc_node_angles.shape[0]):  # loop through the empty angles array
-        desc_node_angles[i] = angle_btwn(desc_node_positions[0], desc_node_positions[i + 1])
-
+# -----------------------------------------------------------------------------
+# START ANIMATION FUNCTIONS
+# -----------------------------------------------------------------------------
+def animate_ems_scatters(i, ems, earth_scatter, moon_scatter, time_label, time_label_template, N_points, sim_years):
     """
-    # plot angle between sucessive ascending angles over time
-    plot_2d(np.linspace(0, sim_years, asc_node_angles.shape[0]), asc_node_angles,
-            "Angular displacement of ascending node", xlabel="Time [years]", ylabel="Angle [degrees]",
-            save_figures=save_figures, extra_label="Simulation: %.2f years" % sim_years)
+    Update the data held by the scatter plot and therefore animates it.
     """
+    # earth_scatter._offsets3d = (ems[i, 0:1], ems[i, 1:2], ems[i, 2:3])
+    # moon_scatter._offsets3d = (ems[i, 3:4], ems[i, 4:5], ems[i, 5:6])
 
-    # fit a sine curve to the ascending and descending angles over time
-    fit_sin_curve(np.linspace(0, sim_years, asc_node_angles.shape[0]), asc_node_angles, a_guess=90, w_guess=2 * np.pi / 18.6,
-                  k_guess=90, data_label="Angular displacement of ascending node")
-    fit_sin_curve(np.linspace(0, sim_years, desc_node_angles.shape[0]), desc_node_angles, a_guess=90, w_guess=2 * np.pi / 18.6,
-                  k_guess=90, data_label="Angular displacement of descending node")
+    print("{} of {}".format(i, N_points))
+    offset = min(i, N_points)
+    earth_scatter._offsets3d = (ems[i-offset:i, 0], ems[i-offset:i, 1], ems[i-offset:i, 2])
+    moon_scatter._offsets3d = (ems[i-offset:i, 3], ems[i-offset:i, 4], ems[i-offset:i, 5])
+    time_label.set_text(time_label_template.format(365*i*sim_years/N_points))
+
+    return earth_scatter, moon_scatter
 
 
-def plot_2d(x_values, y_values, label, xlabel="", ylabel="", marker="--", save_figures=False, extra_label=None):
+def create_ems_animation():
+    """ Creates a simulation of the earth and moon orbiting the sun """
+
+    sim_years = 1.003
+    ems = get_ems_motion(sim_years=sim_years)[0]
+    iterations = np.shape(ems)[0]
+
+    # Attaching 3D axis to the figure
+    fig = plt.figure()
+    ax = axes3d.Axes3D(fig)
+    xlim, ylim, zlim = 1.5e11, 1.5e11, 1e8
+    ax.set_xlim3d([-xlim, xlim])
+    ax.set_ylim3d([-ylim, ylim])
+    ax.set_zlim3d([-zlim, zlim])
+    ax.view_init(18, -60)  # set view angle
+
+    ax.scatter(0, 0, 0, c='orange', s=400)  # big orange sun
+
+    time_label_template = "Days: {:.0f}"
+    time_label = ax.text(-0.8*xlim, ylim, 0.7*zlim, '',bbox=dict(facecolor='#FFFFFF', edgecolor='#222222', boxstyle='round,pad=0.3'))
+
+    earth_scatter = ax.scatter(ems[0, 0:1], ems[0, 1:2], ems[0, 2:3], color=blue_dark, s=30)
+    moon_scatter = ax.scatter(ems[0, 3:4], ems[0, 3:5], ems[0, 5:6], c="#999999", s=15)
+    ems_animation = animation.FuncAnimation(fig, animate_ems_scatters, iterations,
+                                            fargs=(ems, earth_scatter, moon_scatter, time_label, time_label_template, iterations, sim_years),
+                                            interval=50, blit=True, repeat=True)
+
+    Writer = animation.writers['ffmpeg']
+    writer = Writer(fps=30, metadata=dict(artist='Me'), bitrate=1800, extra_args=['-vcodec', 'libx264'])
+    ems_animation.save(figure_dir + 'ems-animated.mp4', writer=writer)
+
+
+def animate_em_scatters(i, moon_positions, moon_scatter, time_label, time_label_template, N_points, sim_years):
     """
-    A simple function to plot a 2-D array
+    Update the data held by the scatter plot and therefore animates it.
     """
-    if extra_label is not None:
-        plot.plot([], [], ' ', label=extra_label)
+    print("{} of {}".format(i, N_points))
+    offset = min(i, 100)
+    moon_scatter._offsets3d = (moon_positions[i - offset:i, 0], moon_positions[i - offset:i, 1], moon_positions[i - offset:i, 2])
+    time_label.set_text(time_label_template.format(i*sim_years/N_points))
 
-    plot.plot(x_values, y_values, marker, color="b", label=label)
-    plot.xlabel(xlabel)
-    plot.ylabel(ylabel)
-
-    plot.legend(framealpha=0.85)
-    if save_figures: plot.savefig(label + ".png")
-    plot.show()
-    plot.close()
+    return moon_scatter
 
 
-def vec_mag(r):
-    """
-    Returns the length (magnitude) of a 3D vector
-    :param r: A 3D vector e.g. r = [r1, r2, r3], generally position r = [x, y, z]
-    :return:
-    """
-    return np.sqrt(r[0] ** 2 + r[1] ** 2 + r[2] ** 2)
+def create_em_animation():
+    """ Creates a simulation of the moon orbitting the earth """
+
+    sim_years = 18.6
+    moon_positions = get_em_motion(sim_years=sim_years)
+    iterations = np.shape(moon_positions)[0]
+
+    # Attaching 3D axis to the figure
+    fig = plt.figure()
+    ax = axes3d.Axes3D(fig)
+    xlim, ylim, zlim = 4e8, 4e8, 4e7
+    ax.set_xlim3d([-xlim, xlim])
+    ax.set_ylim3d([-ylim, ylim])
+    ax.set_zlim3d([-zlim, zlim])
+    ax.view_init(18, -60)  # set view angle
+
+    ax.scatter(0, 0, 0, c=blue_dark, s=400)  # big blue earth
+    time_label_template = "Years: {:.1f}"
+    time_label = ax.text(-1.1*xlim, ylim, 0.88*zlim, '', bbox=dict(facecolor='#FFFFFF', edgecolor='#222222', boxstyle='round,pad=0.3'), zorder=10)
+
+    moon_scatter = ax.scatter(moon_positions[0, 0:1], moon_positions[0, 1:2], moon_positions[0, 2:3], c="#999999", s=15)
+    em_animation = animation.FuncAnimation(fig, animate_em_scatters, iterations,
+                                           fargs=(moon_positions, moon_scatter, time_label, time_label_template, iterations, sim_years),
+                                           interval=1, blit=False, repeat=True)
+
+    Writer = animation.writers['ffmpeg']
+    writer = Writer(fps=30, metadata=dict(artist='Me'), bitrate=1800, extra_args=['-vcodec', 'libx264'])
+    em_animation.save(figure_dir + 'em-animated-{:.1f}_.mp4'.format(sim_years), writer=writer)
+# -----------------------------------------------------------------------------
+# END ANIMATION FUNCTIONS
+# -----------------------------------------------------------------------------
 
 
-def dot(r1, r2):
-    """
-    Returns the dot product of two 3D vectors represented by length 3 arrays of the form [x, y, z]
-    """
-    return r1[0] * r2[0] + r1[1] * r2[1] + r1[2] * r2[2]
+def practice():
+    # rows = 10
+    # cols = 6
+    # a = np.zeros((10, 6))
+    # for r in range(rows):
+    #     for c in range(cols):
+    #         a[r][c] = c + 1
+    # print(a)
+    # print(a[0:4, 2:3])
+
+    a = np.arange(1, 10, 1)
+    print(a)
+    print(a[-4:-1])
 
 
-def angle_btwn(r1, r2):
-    """
-    Returns the angle in degrees between two 3D vectors
-    """
-    return np.arccos(dot(r1, r2) / (vec_mag(r1) * vec_mag(r2))) * 180.0 / np.pi
+# practice()
+# create_ems_animation()
+# plot_ems_orbits()
+# plot_em_orbits()
+plot_nodal_precession()
+# create_ems_animation()
+# create_em_animation()
 
-
-def sin_model(t, a, w, k):
-    return a * np.sin(w * t) + k
-
-
-def fit_sin_curve(x_values, y_values, a_guess=1., w_guess=1., k_guess=1., data_label="", save_figures=False):
-    """
-    Fits a sin curve to the x-y data points x_values and y_values
-    using the parameters a (amplitude) w (angular frequency) and k (vertical shift) and plots
-    the fitted curve
-    """
-    p0 = (a_guess, w_guess, k_guess) # guesses for coefficients a and k
-    opt, p_cov = curve_fit(sin_model, x_values, y_values, p0)
-
-    a, w, k = opt
-
-    x2 = np.linspace(x_values[0], x_values[x_values.shape[0]-1], 100)
-    y2 = sin_model(x2, a, w, k)
-
-    plot.plot(x_values, y_values, 'o', c="orange", alpha=0.5, label=data_label)
-    plot.plot(x2, y2, c="blue", linewidth=2.0, label='Fit: f(x) = %.f sin(%.3f $t$) + %.f' % (a, w, k))
-    plot.plot([], [], ' ', label="Precession period: %.2f years" % (2 * np.pi / w))
-    plot.xlabel("Time [years]")
-    plot.ylabel("Angle [degrees]")
-    plot.legend(framealpha=1.0)
-    if save_figures: plot.savefig(data_label + ".png")
-    plot.show()
-
-
-def run_simulation():
-    """ Wrapper function to run the simulation """
-
-    sim_years = 1  # number of years over which to run the simulation; depracated
-    t_min = 0  # start time
-    t_max = (3600. * 24. * 365. * sim_years)  # seconds hours days years
-    dt = 10000  # time step
-    time_values = np.linspace(t_min, t_max, int((t_max - t_min) / dt))
-
-    ems_system_solution = solve_ems_motion(time_values)
-
-    # call function to graph the orbits of the earth moon
-    plot_ems_orbits(ems_system_solution, sim_years)
-
-    # # get the moon's position relative to the earth through the simulation
-    # moon_positions = np.empty([np.shape(ems_system_solution)[0], 3])  # 2-d np array (i.e. matrix) holding moon's positions relative to earth
-    # i = 0
-    # while i < np.shape(ems_system_solution)[0]:
-    #     moon_positions[i] = ems_system_solution[i][3:6] - ems_system_solution[i][0:3]  # moon xyz - earth xyz to get moon relative to earth
-    #     i += 1
-    #
-    # # call functions to extract apsidal precession
-    # extract_apsidal_precession(moon_positions, sim_years)
-    #
-    # # call functions to extract nodal precession
-    # extract_nodal_precession(moon_positions, sim_years)
-
-
-run_simulation()

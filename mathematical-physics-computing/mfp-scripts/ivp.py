@@ -473,7 +473,6 @@ def plot_solution():
                  xytext=xytext, arrowprops=dict(facecolor='black', width=1, headwidth=8), fontsize=16,
                  bbox=dict(facecolor='#FFFFFF', edgecolor='#222222', boxstyle='round,pad=0.3'))
 
-
     if T0 > 0:
         t_text = 7.5
         T_text = 3.6

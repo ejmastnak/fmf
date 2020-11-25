@@ -44,6 +44,22 @@ def get_simple_pendulum_state(state, t):
     return return_state
 
 
+def get_simple_pendulum_damped_state(state, t, b=0.5):
+    """
+    Dimensionless differential equation of motion for a damped simple pendulum
+     written to work with numerical methods for ODEs
+
+    :param state: 2-element array holding position and velocity i.e. state = [x, v]
+    :param t: time
+    :param b: damping coefficient
+    :return: 2-element array holding velocity and acceleration i.e. return [v, a]
+    """
+    return_state = np.zeros(np.shape(state))
+    return_state[0] = state[1]
+    return_state[1] = - b*state[1] - np.sin(state[0])
+    return return_state
+
+
 def get_simple_pendulum_damped_driven_state(state, t, b=0.5, w_d=(2/3), a_d=1.0):
     """
     Dimensionless differential equation of motion for a damped and driven simple pendulum
