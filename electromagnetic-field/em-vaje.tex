@@ -1046,7 +1046,7 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 
 \newpage
 
-\section{Magnetostatics}
+\section{Magnetostatics and Electrodynamics}
 
 \subsection{Seventh Exercise Set}
 
@@ -1286,23 +1286,166 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 	
 \end{itemize}
 
+\subsection{Eighth Exercise Set}
+
 \textbf{Theory: Magnetic Force}\vspace{2mm}
 
 The magnetic force $ \vec{F} $ on the matter contained in the region of space enclosed in the region $ V $ and permeated by the magnetic field $ \B $ is
 \begin{equation*}
-	\vec{F} = \frac{1}{\mu_{0}}\oint_{\partial V}\big[\B(\B \cdot \uvec{n}) - \frac{1}{2}\B^{2}\uvec{n}\big] \diff S
+	\vec{F} = \frac{1}{\mu_{0}}\oint_{\partial V}\left [\B(\B \cdot \uvec{n}) - \frac{1}{2}\B^{2}\uvec{n}\right ] \diff S
 \end{equation*}
 where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 
-\iffalse
 \subsubsection{Magnetic Force in a Coaxial Cable}
 \textit{A long coaxial cable consists of a thin inner wire and outer sheath with radius $ a $. The inner wire carries a current $ I $, and we connect the sheath to the inner wire at the cable's ends so that the current $ I $ returns along the outer sheath in the opposite direction as the current along the inner wire. Find the magnetic force per unit length on the outer sheath.}
 
 \begin{itemize}
-	\item There are two contributions to the magnetic force on the sheath: the repulsive, radial force between the sheath and the inner wire and an attractive ``surface tension'' force on sheath's surface, which carries uniformly distributed current $ I $. 
+	\item There are two contributions to the magnetic force on the sheath: the repulsive, radially outward force between the sheath and the inner wire and an attractive ``surface tension'' force distributed across the sheath's surface, which carries uniformly distributed current $ I $ (think of the sheath as a collection of parallel conducting wires, which attract each other).
+	
+	\item Consider one-half of the sheath, which forms a semicircular cross section. There are downward forces $ F_{1} $ at end of the semicircle and an upward magnetic force $ F_{m} $ acting on the top of the sheath. In equilibrium, the forces are related by $ F_{m} = 2F_{1} $.
+	
+	\item First, we find the magnetic field in the conductor. Inside the sheath, Ampere's law with a circular path encircling the inner wire reads
+	\begin{equation*}
+		\oint \vec{B} \cdot \diff \bm{l} = \mu_{0} I \implies B (2\pi r) = \mu_{0}I \implies B = \frac{\mu_{0}I}{2\pi r}
+	\end{equation*}
+	Outside the conductor, the net current enclosed by a circular path encircling both the outer sheath and inner wire is zero, and the Ampere's law reads
+	\begin{equation*}
+		\int \vec{B} \cdot \diff \bm{l} = \mu_{0} (+I - I) = 0 \implies B = 0
+	\end{equation*}
+	In other words, there is no magnetic field outside the conductor.
+	
+	\item With the coaxial cable's magnetic field known, we now find the magnetic force $ \vec{F}_{m} $ on a semi-circular half of the outer sheath.
+	\begin{equation*}
+		\vec{F}_{m} = \frac{1}{\mu_{0}}\oint_{\partial V}\left [\B(\B \cdot \uvec{n}) - \frac{1}{2}B^{2}\uvec{n}\right ] \diff S
+	\end{equation*}
+	We choose an integration surface tightly hugging the half-sheath and work in cylindrical coordinates $ r, \phi $. Outside the sheath, the magnetic field is zero and there is no contribution to $ \bm{F}_{m} $. Inside the sheath, the magnetic field is tangent to the semicircle, so $ \vec{B}\cdot \uvec{n} = 0 $, and the force integral reads
+	\begin{equation*}
+		\vec{F}_{m} = \frac{1}{\mu_{0}} \int \big[0 - \frac{1}{2}B^{2}\uvec{n}\big] \diff S 
+	\end{equation*}
+	The magnetic field at along the sheath (where $ r = a $) is constant and equal to $ B = \frac{\mu_{0}I}{2\pi a} $ and can be moved outside the integral. The normal vector in cylindrical coordinates reads 
+	\begin{equation*}
+		\uvec{n} = (- \cos \phi, -\sin \phi, 0)
+	\end{equation*} 
+	while the surface element is $ \diff S = a l \diff \phi $. The force integral reads
+	\begin{equation*}
+		\vec{F}_{m} = - \frac{1}{2}\frac{\mu_{0}I^{2}}{4\pi^{2}a^{2}} \int_{0}^{\pi}
+		\begin{bmatrix}
+			- \cos \phi\\
+			 -\sin \phi\\
+			  0
+		\end{bmatrix}
+		l a \diff \phi
+	\end{equation*}
+	The $ x $ component with $ \cos \phi $ integrates to zero over $ \phi \in [0, \pi] $. Only the $ y $ component is nonzero, and the vector force reads
+	\begin{equation*}
+	 	\vec{F}_{m} = +\frac{1}{2}\frac{\mu_{0}I^{2}}{4\pi^{2}a^{2}} (2a l)\uvec{y} = \frac{\mu_{0}I^{2}l}{4\pi^{2}a} \uvec{y}
+	\end{equation*}
+	
+	\item The forces $ F_{1} $ at the two ends of the semicircle are then
+	\begin{equation*}
+		F_{1} = \frac{F_{m}}{2} =  \frac{\mu_{0}I^{2}l}{8\pi^{2}a} \implies \frac{F}{l} = \frac{\mu_{0}I^{2}}{8\pi^{2}a} 
+	\end{equation*}
+\end{itemize}
+
+
+\subsubsection{Tension in a Toroidal Inductor}
+\textit{A toroidal inductor with $ N $ coils radius $ r_{1} $ and cross-sectional radius $ r_{2} $ carries a current $ I $. Find the tension force on a single coil if $ r_{1} \gg r_{2} $.}
+\begin{itemize}
+	\item First, we find the magnetic field inside the inductor with Ampere's law using a closed circular path of radius $ r \in (r_{1}, r_{1} + r_{2}) $ in the inductor's equatorial plane. Ampere's law reads
+	\begin{equation*}
+		B_{\text{in}} (2\pi r) = \mu_{0} (NI) \implies B_{\text{in}} = \frac{\mu_{0}NI}{2\pi r}
+	\end{equation*}
+	Outside the inductor, with a circular path of radius $ r > r_{1} + r_{2} $ in the inductor's equatorial plane, Ampere's law reads
+	\begin{equation*}
+		B_{\text{out}} (2\pi r) = \mu_{0} (NI + N(-I)) = 0 \implies B_{\text{out}} = 0
+	\end{equation*}
+	
+	\item Consider a semicircular half of a single inductor coil. As in the previous problem, the magnetic force with magnitude $ F_{m} $ acts upwards on the top of the semicircle, while two ``surface tension'' forces $ F_{1} = \frac{F_{m}}{2} $ act downward at the semicircle's two ends. As usual, we find the magnetic force $ \vec{F}_{m} $ using
+	\begin{equation*}
+		\vec{F}_{m} = \frac{1}{\mu_{0}}\oint_{\partial V}\left [\B(\B \cdot \uvec{n}) - \frac{1}{2}B^{2}\uvec{n}\right ] \diff S
+	\end{equation*}
+	For the integration surface (awkward to describe, best to see a picture) we choose a surface that looks like a a coin cut in half, basically a thin three-dimensional extension of a semicircle enclosing the coil's semicircular upper half. We split the surface into four parts: the left and right semicircular faces, the circular ribbon along the surface's outer radius, and the thin rectangular plane along the surface's bottom. 
+	
+	The circular upper ribbon occurs just outside the inductor coil (where $ B = 0 $) and thus does not contribute the magnetic force. The left and right semicircular faces have equal magnitude and opposite-sign contributions, since the normal to the surface changes sign for each face. 
+	
+	\item Only the rectangular plane has a nonzero contribution to $ \vec{F}_{m} $. Under the assumption $ r_{1} \gg r_{2} $, the magnetic field along the plane simplifies to
+	\begin{equation*}
+		B = \int_{r_{1}}^{r_{1} + r_{2}} \frac{\mu_{0}NI}{2\pi \tilde{r}} \diff \tilde{r} \approx \frac{\mu_{0}NI}{2\pi r_{1}}
+	\end{equation*}
+	$ \vec{B} $ points along the toroid's longitudinal axis (into the plane of a cross-sectional coil) and is perpendicular to the normal $ \uvec{n} $ to the planar integration surface, so $ \uvec{B} \cdot \uvec{n} = 0 $. The magnetic force simplifies to
+	\begin{align*}
+		\vec{F}_{m} &= \frac{1}{\mu_{0}}\left [0 - \frac{1}{2}B^{2}\uvec{n}\right ] \diff S = - \frac{1}{2\mu_{0}} \left(\frac{\mu_{0}NI}{2\pi r_{1}}\right)^{2} \uvec{n} \int \diff S \\
+		&= - \frac{1}{2\mu_{0}} \left(\frac{\mu_{0}NI}{2\pi r_{1}}\right)^{2} \uvec{n} \left (r_{2} \frac{2\pi r_{1}}{N}\right ) = - \frac{\mu_{0}NI^{2}}{2\pi}\frac{r_{2}}{r_{1}} \uvec{n}
+	\end{align*}
+	$ \uvec{n} $ points downward, so $ -\uvec{n} $ and thus $ \vec{F}_{m} $ point upward and pull the coil apart. The magnitude of the tension on the coil is then
+	\begin{equation*}
+		F_{1} = \frac{F_{m}}{2} =  \frac{\mu_{0}NI^{2}}{4\pi}\frac{r_{2}}{r_{1}}
+	\end{equation*}
 	
 \end{itemize}
-\fi 
+
+\subsection{Resistance of a Thin Conducting Plate}
+\textit{The conducting plate is half of a thin annulus with inner radius $ r_{1} $, outer radius $ r_{2} $, thickness $ h $ and resistivity $ \sigma $ with electrodes at each end.  Find the plates electric resistance $ R $ when we establish a potential difference $ U_{0}$ between the electrodes at the plate's ends.}
+
+\begin{itemize}
+	\item We first find the current density in the conducting plate using Ohm's law
+	\begin{equation*}
+		\vec{j} = \sigma \E = \rho 
+	\end{equation*}
+	where $ \vec{j} $ and $ \E $ are the current density and electric field in the conductor. We write $ \vec{j} $ in terms of the continuity equation
+	\begin{equation*}
+		\div \vec{j} + \pdv{\rho}{t} = 0
+	\end{equation*}
+	For a stationary charge distribution, we have $ \div \vec{j} = 0 $. We then take the divergence of both sides of the equation $ \vec{j} = \sigma \E = \rho  $ and apply $ \E = - \grad U $ to get
+	\begin{equation*}
+		\div \vec{j} = \sigma \div \E = - \sigma \laplacian U = \div \vec{j} = 0 \implies \laplacian U = 0
+	\end{equation*}
+	We end up with a Laplace equation for $ U $ in the conductor. The plan is to find $ U(\r) $, then $ \E(r) $, then $ \vec{j} $ via $ \vec{j} = \sigma \E $, then $ I $ and finally resistance with $ R = \frac{U}{I} $. 
+	
+	\item The general solution of the Laplace equation in cylindrical coordinates (including the $ m = 0 $ term) is
+	\begin{align*}
+		U(r, \phi) &= \sum_{m=1}^{\infty} \big[A_{m}\cos(m\phi) + B_{m}\sin(m \phi)\big] \cdot \big[C_{m}r^{m} + D_{m}r^{-m}\big]\\
+		& \qquad \qquad  + (a \phi + b)(c \ln r + d)
+	\end{align*}
+	To find a unique solution, we need boundary conditions for our particular problem. At the first electrode at $ \phi = 0 $, the electric potential is constant; we'll set $ U(r, 0) = 0 $  for convenience. At the second electrode, the potential is $ U(r, \pi)  = -U_{0}$ to make a potential difference $ U_{0} $ between electrodes (we choose $ -U_{0} $ so the current runs in the direction of increasing $ \phi $). 
+	
+	Along the annulus's semicircular boundaries the electric field must be tangent to the surface to satisfy $ \div \vec{j} = 0 $. Along these surfaces the radial component of both $ \vec{j} $ and $ \E $ is zero; $ E_{r} = 0 $ gives the boundary condition
+	\begin{equation*}
+		E_{r} = - \eval{\pdv{U}{r}}_{r_{1}, r_{2}} = 0
+	\end{equation*}
+	
+	\item The general solution for $ U(r, \phi) $ satisfies the boundary condition $ \eval{\pdv{U}{r}}_{r_{1}, r_{2}} = 0 $ for all $ \phi $ only if $ C_{m} = D_{m} = c = 0 $ (try finding $ \eval{\pdv{U}{r}}_{r_{1}, r_{2}}  $ to see for yourself). With $  C_{m} = D_{m} = c = 0 $, the expression for $ U(r, \phi) $ simplifies to
+	\begin{equation*}
+		U(r, \phi) = (a \phi + b)d \equiv \t{a}\phi + \t{b}
+	\end{equation*}
+	The boundary condition $ U(r, 0) = 0 $ gives
+	\begin{equation*}
+		U(r, 0) \equiv = 0 + \t{b} \implies \t{b} = 0
+	\end{equation*}
+	The final boundary condition $ U(r, \pi) = -U_{0} $ gives
+	\begin{equation*}
+		U(r, \pi) \equiv = - U_{0} \implies \t{a} = -\frac{U_{0}}{\pi} \implies U(r, \phi) = - \frac{U_{0}}{\pi} \phi
+	\end{equation*}
+	In other words, the electric potential is a linear function of $ \phi $. 
+	
+	\item With $ U(r, \phi) $ known, we find the tangential electric field $ E_{t} $ with
+	\begin{equation*}
+		E_{t} = - \frac{1}{r}\pdv{U}{\phi} = \frac{U_{0}}{\pi r},
+	\end{equation*}
+	from which we find the tangential current density $ j_{t} $ with
+	\begin{equation*}
+		j_{t} = \sigma E_{t} = \frac{\sigma U_{0}}{\pi r}
+	\end{equation*}
+	We find the total current $ I $ from the current density via
+	\begin{equation*}
+		I = \int j_{t} \diff S = \int_{r_{1}}^{r_{2}} \left(\frac{\sigma U_{0}}{\pi r}\right) \cdot h \diff r = \frac{\sigma U_{0} h}{\pi} \ln \frac{r_{2}}{r_{1}}
+	\end{equation*}
+	where $ h $ is the plate's thickness. The electrical resistance is then
+	\begin{equation*}
+		R = \frac{U_{0}}{I} = \frac{\pi}{\sigma h \ln \frac{r_{2}}{r_{1}}}
+	\end{equation*}
+\end{itemize}
+
 
 \end{document}
 
