@@ -23,10 +23,12 @@
 \newcommand{\mat}[1]{\mathbf{#1}} % for matrices
 \newcommand{\dvec}[1]{\dot{\vec{#1}}} % for dotted vector quantity
 \newcommand{\tvec}[1]{\tilde{\vec{#1}}} % for tilde vector quantities
-
+\newcommand{\uvec}[1]{\hat{\vec{#1}}} % for dotted vector quantity
 
 \newcommand{\tev}{e^{-i\frac{H}{\hbar}t}}  % time evolution operator
 \newcommand{\tevp}{e^{i\frac{H}{\hbar}t}}  % time evolution operator with positive exponent
+
+\newcommand{\m}{\vec{\mu}}  % magnetic moment
 
 \begin{document}
 \title{Quantum Mechanics Exercises Notes}
@@ -40,7 +42,7 @@
 \textbf{About These Notes}
 \end{center}
 
-These are my notes are from the Exercises portion of the class \textit{Kvanta Mehanika} (Quantum Mechanics), given to third-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. The exact problem sets herein are specific to the physics program at the University of Ljubljana, but the content is fairly standard for an undergraduate Quantum Mechanics course. I am making the notes publicly available in the hope that they might help others learning the same material.
+These are my notes from the Exercises portion of the class \textit{Kvanta Mehanika} (Quantum Mechanics), a required course for third-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. The exact problem sets herein are specific to the physics program at the University of Ljubljana, but the content is fairly standard for an late-undergraduate Quantum Mechanics course. I am making the notes publicly available in the hope that they might help others learning the same material.
 
 \vspace{2mm}
 \textit{Navigation}: For easier document navigation, the table of contents is ``clickable'', meaning you can jump directly to a section by clicking the colored section names in the table of contents. Unfortunately, \uline{the clickable links do not work in most online or mobile PDF viewers}; you have to download the file first.
@@ -2048,10 +2050,10 @@ In our case (for a harmonic oscillator), the theorem reads
 	
 \end{itemize}
 
-\subsubsection{Two-Dimensional Harmonic Oscillator}
+\subsubsection{Two-Dimensional Isotropic Harmonic Oscillator}
 \textit{Consider a two-dimensional isotropic harmonic oscillator. Within the subspace of energy eigenstates with energy $ E = 2\hbar \omega $, find those states that are also eigenstates of the $ z $-component of angular momentum $ L_{z} $.}
 \begin{itemize}
-	\item The energy $ E = 2\hbar \omega $ corresponds to the isotropic oscillator's first two excited states $ \ket{10} $ and $ \ket{01} $. These states have degeneracy two, meaning the subspace is spanned by two linearly independent states. The subspace is formed of all normalized linear combinations of $ \ket{01} $ and $ \ket{10} $, i.e. all $ \psi $ for which
+	\item The energy $ E = 2\hbar \omega $ corresponds to the isotropic oscillator's first two excited states $ \ket{10} $ and $ \ket{01} $. These states have degeneracy two, meaning the subspace is spanned by two linearly independent states. The subspace is formed of all normalized linear combinations of $ \ket{01} $ and $ \ket{10} $, i.e. all $ \ket{\psi} $ for which
 	\begin{equation*}
 		\ket{\psi} = \alpha \ket{10} + \beta \ket{01}, \qquad \alpha, \beta \in \mathbb{C}, \quad \abs{\alpha}^{2} + \abs{\beta}^{2} = 1
 	\end{equation*}
@@ -2061,14 +2063,12 @@ In our case (for a harmonic oscillator), the theorem reads
 		&=2\hbar \omega \big(\alpha \ket{10} + \beta \ket{01}\big) = 2\hbar \omega \ket{\psi}
 	\end{align*}
 	
-	\item We are interested in $ \psi $ that are eigenfunctions of $ L_{z} $, which we know satisfy the eigenvalue equation
+	\item We are interested in $ \psi $ that are also eigenfunctions of $ L_{z} $, which must satisfy the eigenvalue equation
 	\begin{equation*}
 		L_{z}\ket{\psi} = m \hbar \ket{\psi}
 	\end{equation*}
 	
-	\item If is possible to find functions that are simultaneously eigenfunctions of two operators under the condition that the two operators commute. Applied to our problem, if we show that $ H $ and $ L_{z} $ commute, we can be sure there exist functions that are eigenfunctions of both $ H $ and $ L_{z} $. In other words, we want to show our problem is solvable by proving $ \big[H, L_{z}\big] = 0 $. 
-	
-	We will first write the Hamiltonian in polar coordinates:
+	\item IT is possible to find functions that are simultaneously eigenfunctions of two operators if the two operators commute. Applied to our problem, if we show that $ H $ and $ L_{z} $ commute, we can be sure there exist functions that are eigenfunctions of both $ H $ and $ L_{z} $. In other words, we want to show our problem is solvable by proving $ \big[H, L_{z}\big] = 0 $. We will first write the Hamiltonian in polar coordinates:
 	\begin{equation*}
 		H = \frac{\vec{p}^{2}}{2m} + \frac{1}{2}kr^{2} = -\frac{\hbar^{2}}{2m} \laplacian + \frac{1}{2}kr^{2} = -\frac{\hbar^{2}}{2m}\left [\frac{1}{r}\pdv{r}\left(r\pdv{r}\right) + \frac{1}{r^{2}}\pdv[2]{}{\phi}\right ] + \frac{1}{2}kr^{2}
 	\end{equation*}
@@ -2083,15 +2083,15 @@ In our case (for a harmonic oscillator), the theorem reads
 	\end{equation*} 
 	The derivatives with respect to $ \phi $ then cancel the $ r $-dependent terms in the Hamiltonian. All we did here is show that eigenfunctions solving our problem exist in the first place by showing $ H $ and $ L_{z} $ commute.
 	
-	\item To actually solve the problem, we will take a heuristic and a formal approach. We start with a heuristic approach. From the introductory theory section, the eigenfunctions solving $ H \ket{10} = 2\hbar \omega \ket{10}$ and $ H \ket{01} = 2\hbar \omega \ket{01}$ can be written in the separated form
+	\item To actually solve the problem, we will take both a heuristic and a formal approach. We start with a heuristic approach. From the introductory theory section, the eigenfunctions solving $ H \ket{10} = 2\hbar \omega \ket{10}$ and $ H \ket{01} = 2\hbar \omega \ket{01}$ can be written in the separated form
 	\begin{equation*}
 		\psi_{10}(x, y) = \psi_{1}(x)\psi_{0}(y) \eqtext{and} \psi_{01}(x, y) = \psi_{0}(x)\psi_{1}(y)
 	\end{equation*}
-	
-	\begin{equation*}
-		H = \frac{p_{x}^{2}}{2m} \frac{1}{2}kx^{2}
-	\end{equation*}
-	Recall the annihilation operator action on the ground state produces
+%	
+%	\begin{equation*}
+%		H = \frac{p_{x}^{2}}{2m} \frac{1}{2}kx^{2}
+%	\end{equation*}
+	Next, recall the annihilation operator action on the ground state produces
 	\begin{equation*}
 		a \ket{0} = 0 \ket{0}
 	\end{equation*}
@@ -2099,7 +2099,8 @@ In our case (for a harmonic oscillator), the theorem reads
 	\begin{equation*}
 		\psi_{0}(x) = \frac{1}{\sqrt[4]{\pi x_{0}^{2}}}e^{-\frac{x^{2}}{2x_{0}^{2}}}
 	\end{equation*}
-	We can get an expression for the first excited state $ \ket{1} $ with the creation operator $ a^{\dagger}\ket{0} = \ket{1} $. In the coordinate picture:
+
+	\item We can get an expression for the first excited state $ \ket{1} $ with the creation operator $ a^{\dagger}\ket{0} = \ket{1} $. In the coordinate representation of the wave function, this reads
 	\begin{align*}
 		\psi_{1}(x) &= a^{\dagger}\psi_{0}(x) = \frac{1}{\sqrt{2}}\left(\frac{x}{x_{0}}-i\frac{p}{p_{0}}\right)\psi_{0}(x)  = \frac{1}{\sqrt{2}}\left(\frac{x}{x_{0}}-\frac{\hbar}{p_{0}}\dv{x}\right)\psi_{0}(x) \\
 		& = \frac{1}{\sqrt{2}}\left(\frac{x}{x_{0}}-x_{0}\dv{x}\right)\psi_{0}(x)
@@ -2116,14 +2117,391 @@ In our case (for a harmonic oscillator), the theorem reads
 	\end{align*}
 	and, analogously, 
 	\begin{equation*}
-		\psi_{10}(x, y) = \frac{\sqrt{2}r \sin \phi}{x_{0}\sqrt{\pi x_{0}^{2}}}e^{-\frac{r^{2}}{2x_{0}^{2}}}
+		\psi_{01}(x, y) = \psi_{0}(x)\psi_{1}(y) = \frac{\sqrt{2}r \sin \phi}{x_{0}\sqrt{\pi x_{0}^{2}}}e^{-\frac{r^{2}}{2x_{0}^{2}}}
+	\end{equation*}
+	\textit{We ran out of time at this point; the problem is continued in the eight exercise set.}
+	
+\end{itemize}
+
+\subsection{Eight Exercise Set}
+
+\subsubsection{Two-Dimensional Isotropic Harmonic Oscillator (continued)}
+We left off in the previous exercise set having found he harmonic oscillator's states $ \psi_{10}(x,y) $ and $ \psi_{01}(x, y) $; these were
+\begin{equation*}
+	\psi_{10}(x, y) = \frac{\sqrt{2}r \cos \phi}{x_{0}\sqrt{\pi x_{0}^{2}}}e^{-\frac{r^{2}}{2x_{0}^{2}}} \eqtext{and} \psi_{01}(x, y) = \frac{\sqrt{2}r \sin \phi}{x_{0}\sqrt{\pi x_{0}^{2}}}e^{-\frac{r^{2}}{2x_{0}^{2}}}
+\end{equation*}
+These are the two linearly independent states spanning the isotropic harmonic oscillator's subspace of eigenstates with energy $ E = 2\hbar \omega $. Our next step is to find the linear combinations of $ \psi_{10} $ and $ \psi_{01} $ that are also eigenstates of the angular momentum operator $ L_{z} $. 
+	
+\vspace{2mm}
+\textbf{Heuristic Approach}
+\begin{itemize}
+	\item Recall that the eigenfunctions of $ L_{z} $ are 
+	\begin{equation*}
+		\psi_{m}(\phi) = \frac{1}{\sqrt{2\pi}}e^{im\phi}, \qquad m \in \mathbb{Z}
+	\end{equation*}
+	Recall also the identities $ \cos \phi + i \sin \phi = e^{i\phi} $ and $ \cos \phi - i \sin \phi = e^{-i\phi} $. 
+	
+	\item Comparing these identities to the definitions of $ \psi_{10} $, $ \psi_{01} $ and $ \psi_{m}(\phi) $, we can construct the $ L_{z} $ eigenstate with $ m = 1 $ via
+	\begin{equation*}
+		\ket{m=1} = \frac{1}{\sqrt{2}}\big(\ket{10} + i\ket{01}\big)
+	\end{equation*}
+	where the $ \frac{1}{\sqrt{2}} $ term ensures the state is normalized. To confirm the state $ \ket{m=1} $ is normalized, note that
+	\begin{align*}
+		\braket{m=1}{m=1} &= \frac{1}{2}\big(\bra{10} - i\bra{01}\big)\big(\ket{10} + i\ket{01}\big)\\
+		&= \frac{1}{2}\big(\braket{10}{10} - i \braket{01}{10} + i\braket{10}{01} + \braket{01}{01}\big)\\
+		&=\frac{1}{2}\big(1 -i + i + 1\big) = 1
+	\end{align*}
+	Finally, we construct the state with $ m = -1 $ with
+	\begin{equation*}
+		\ket{m=-1} = \frac{1}{\sqrt{2}} \big(\ket{10} - i \ket{01}\big)
 	\end{equation*}
 	
 \end{itemize}
 
+\textbf{Formal Approach}
+\begin{itemize}
+	\item Consider an eigenstate $ \ket{\psi} $ that is both an eigenstate of $ H $ with $ E = 2\hbar \omega $ and an eigenstate of $ L_{z} $. This state must satisfy
+	\begin{equation*}
+		\ket{\psi} = \alpha \ket{10} + \beta \ket{01} \eqtext{and} L_{z}\ket{\psi} = \lambda \ket{\psi}.
+	\end{equation*}
+	First, we write the 2D Hamiltonian $ H $ in terms of the creation and annihilation operators:
+	\begin{align*}
+		H = \hbar \omega_{x}\big(a_{x}^{\dagger}a_{x} + \tfrac{1}{2}\big) + \hbar \omega_{y}\big(a_{y}^{\dagger}a_{y} + \tfrac{1}{2}\big) \equiv H_{x} + H_{y}
+	\end{align*}
+
+	\item For the isotropic oscillator with $ \omega_{x} $ = $ \omega_{y} $, this simplifies to
+	\begin{equation*}
+		H = \hbar \omega + \big(a_{x}^{\dagger}a_{x} + a_{y}^{\dagger}a_{y} + 1\big)
+	\end{equation*}
+	More so, both the constants $ x_{0} $, $ y_{0} $ and $ p_{0_{x}} $, $ p_{0_{y}} $ are equal for the $ x $ and $ y $ annihilation and creation operators; we have
+	\begin{equation*}
+		a_{x} = \frac{1}{\sqrt{2}}\left(\frac{x}{x_{0}} + i\frac{p_{x}}{p_{0}}\right) \eqtext{and} a_{y} = \frac{1}{\sqrt{2}}\left(\frac{y}{x_{0}} + i\frac{p_{y}}{p_{0}}\right)
+	\end{equation*}
+	where $ x_{0} = \sqrt{\frac{\hbar}{m \omega}} $ and $ p_{0} = \frac{\hbar}{x_{0}} $. 
+	
+	\item The angular momentum operator is $ L_{z} = x p_{y} - y p_{x} $; in terms of the annihilation and creation operators this becomes
+	\begin{align*}
+		L_{z} &= \frac{x_{0}}{\sqrt{2}}\big(a_{x} + a_{x}^{\dagger}\big)\cdot \frac{p_{0}}{\sqrt{2}i}\big(a_{y} - a_{y}^{\dagger}\big) - \frac{x_{0}}{\sqrt{2}}\big(a_{y} + a_{y}^{\dagger}\big)\cdot \frac{p_{0}}{\sqrt{2}i}\big(a_{x} - a_{x}^{\dagger}\big)\\
+		&=\frac{x_{0}p_{0}}{2i}\left[\big(a_{x}+a_{x}^{\dagger}\big)\big(a_{y}-a_{y}^{\dagger}\big) - \big(a_{y}+a_{y}^{\dagger}\big)\big(a_{x}-a_{x}^{\dagger}\big)\right]
+	\end{align*}
+	Applying $ x_{0}p_{0} = \hbar $ and multiplying out the terms in parentheses and combining like terms (recall $ a_{x} $, $ a_{y} $ and $ a_{x}^{\dagger} $, $ a_{y}^{\dagger} $ commute) simplifies the expression for $ L_{z} $  to
+	\begin{equation*}
+		L_{z} = \frac{\hbar}{2i}\big(2a_{x}^{\dagger}a_{y} - 2a_{x}a_{y}^{\dagger}\big) = \frac{\hbar}{i}\big(a_{x}^{\dagger}a_{y} - a_{x}a_{y}^{\dagger}\big)
+	\end{equation*}
+	
+	\item Next, using the just-derived expression for $ L_{z} $ in terms of $ a_{x,y} $ and $ a_{x,y}^{\dagger} $, we investigate the action of $ L_{z} $ on our desired state $ \ket{\psi} $; we have
+	\begin{equation*}
+		L_{z}\ket{\psi} = \alpha L_{z}\ket{10} + \beta L_{z} \ket{01} =  \frac{\hbar}{i}\alpha\big(a_{x}^{\dagger}a_{y} - a_{x}a_{y}^{\dagger}\big)\ket{10} +  \frac{\hbar}{i}\beta\big(a_{x}^{\dagger}a_{y} - a_{x}a_{y}^{\dagger}\big)\ket{01}
+	\end{equation*}
+	Using the identities $ a\ket{0} = 0 $ and $ a\ket{1} = \ket{0} $, we see that $ a_{x}^{\dagger}a_{y} \ket{10} = 0 $---the $ a_{y} $ operator acts on the zero $ y $ component of $ \ket{10} $ to produce zero. Analogously, $ a_{x}a_{y}^{\dagger} \ket{01} = 0 $, where $ a_{x} $ acts on the zero $ x $ component $ of \ket{01} $ to produce zero. We're left with
+	\begin{equation*}
+		L_{z}\ket{\psi} = -\frac{\hbar}{i}\alpha a_{x}\ket{1}a_{y}^{\dagger}\ket{0} + \frac{\hbar}{i}\beta a_{x}^{\dagger}\ket{0}a_{y}\ket{1}
+	\end{equation*}
+	Remember $ a_{x} $ and $ a_{y} $ act only on their respective components of $ \ket{01} $ and $ \ket{10} $, which can be factored into $ \ket{0}\ket{1} $ and $ \ket{1}\ket{0} $. Finally, using the identities $ a^{\dagger}\ket{0} = \ket{1} $ and $ a^{\dagger}\ket{1} = \sqrt{2}\ket{2} $, $ L_{z}\ket{\psi} $ simplifies further to
+	\begin{equation*}
+		L_{z}\ket{\psi} = -\frac{\hbar}{i}\alpha\ket{0}\ket{1} + \frac{\hbar}{i}\beta \ket{1}\ket{0} = \frac{\hbar}{i}\big(-\alpha \ket{01} + \beta \ket{10}\big)
+	\end{equation*}
+	
+	\item To be an eigenstate of $ L_{z} $, $ \ket{\psi} $ must satisfy the eigenvalue equation $ L_{z}\ket{\psi} = \lambda \ket{\psi}  $. Using our just-derived expression for $ L_{z}\ket{\psi}  $, the eigenvalue equation reads
+	\begin{equation*}
+		L_{z}\ket{\psi} = \lambda \ket{\psi} \implies \frac{\hbar}{i}\big(-\alpha \ket{01} + \beta \ket{10}\big) = \lambda \big(-\alpha \ket{01} + \beta \ket{10}\big)
+	\end{equation*}
+	Multiplying (scalar product on the Hilbert space) the equation from the left by $ \bra{10} $ and applying the orthonormality of $ \ket{00} $ and $ \ket{10} $ leaves
+	\begin{equation*}
+		\frac{\hbar}{i}\beta = \lambda \alpha,
+	\end{equation*}
+	while multiplying the equation from the left by $ \bra{01} $ produces
+	\begin{equation*}
+		-\frac{\hbar}{i}\alpha = \lambda \beta
+	\end{equation*}
+	In matrix form, these two equations form a simple eigenvalue problem:
+	\begin{equation*}
+		\begin{bmatrix}
+			0 & \frac{\hbar}{i}\\
+			-\frac{\hbar}{i} & 0
+		\end{bmatrix}
+		\begin{bmatrix}
+			\alpha\\
+			\beta
+		\end{bmatrix}
+		= \lambda
+		\begin{bmatrix}
+			\alpha\\
+			\beta
+		\end{bmatrix}
+	\end{equation*}
+	We solve the problem by finding the zeros of the characteristic polynomial:
+	\begin{equation*}
+		\det 
+		\begin{bmatrix}
+			-\lambda & \frac{\hbar}{i}\\
+			-\frac{\hbar}{i} & -\lambda
+		\end{bmatrix} \equiv 0 \implies \lambda^{2} - \hbar^{2} = 0 \implies \lambda = \pm \hbar
+	\end{equation*}
+	Recall $ L_{z} $'s eigenvalues are $ \lambda = m \hbar $, so we have  $ \lambda = \hbar m = \pm \hbar \implies m = \pm 1$ (we had found the same solutions $ m = \pm 1 $ in the earlier heuristic approach). 
+	
+	\item Substituting the $ m = 1 \implies \lambda = \hbar $ solution into the matrix equation gives
+	\begin{equation*}
+		\begin{bmatrix}
+			-\hbar & \frac{\hbar}{i}\\
+			-\frac{\hbar}{i} & -\hbar
+		\end{bmatrix}
+		\begin{bmatrix}
+			\alpha\\
+			\beta
+		\end{bmatrix}
+		= 0 \implies \beta = i \alpha
+	\end{equation*}
+	Substituting the $ m = 1 $ result $ \beta = i \alpha $ into the general linear combination $ \ket{\psi} = \alpha \ket{10} + \beta \ket{01} $ produces
+	\begin{equation*}
+		\ket{m=1} = \alpha \ket{10} + (i\alpha)\ket{01} = \alpha \big(\ket{10} + i \ket{01}\big)
+	\end{equation*}
+	The normalization condition requires $ \alpha = \frac{1}{\sqrt{2}} $, which gives
+	\begin{equation*}
+		\ket{m=1} = \frac{1}{\sqrt{2}}\big(\ket{10} + i \ket{01}\big)
+	\end{equation*}
+	which agrees with the $ m = 1 $ solution in the heuristic approach.
+	
+	\item Substituting the $ m = - 1 \implies \lambda = -\hbar $ solution into the matrix equation gives
+	\begin{equation*}
+		\begin{bmatrix}
+			+\hbar & \frac{\hbar}{i}\\
+			-\frac{\hbar}{i} & +\hbar
+		\end{bmatrix}
+		\begin{bmatrix}
+			\alpha\\
+			\beta
+		\end{bmatrix}
+		= 0 \implies \beta = - i \alpha
+	\end{equation*}
+	Analogously to the $ m = 1 $ case, substituting the $ m = -1 $ result $ \beta = -i \alpha $ into the general linear combination $ \ket{\psi} = \alpha \ket{10} + \beta \ket{01} $ produces
+	\begin{equation*}
+		\ket{m=-1} = \alpha \ket{10} + (-i\alpha)\ket{01} = \alpha \big(\ket{10} - i \ket{01}\big)
+	\end{equation*}
+	The normalization condition requires $ \alpha = \frac{1}{\sqrt{2}} $, which gives
+	\begin{equation*}
+		\ket{m=-1} = \frac{1}{\sqrt{2}}\big(\ket{10} - i \ket{01}\big)
+	\end{equation*}
+	which agrees with the $ m = - 1 $ solution in the heuristic approach.
+	
+	\item The final solution for the eigenstates of $ H $ with energy $ 2\hbar \omega $ that are also eigenstates of $ L_{z} $ is thus
+	\begin{align*}
+		&\ket{m=1} = \frac{1}{\sqrt{2}}\big(\ket{10} + i \ket{01}\big)\\
+		&\ket{m=-1} = \frac{1}{\sqrt{2}}\big(\ket{10} - i \ket{01}\big)
+	\end{align*}
+\end{itemize}
+\textbf{Motivation: Why This Result is Useful}\\
+\begin{itemize}
+	\item Next, we ask why we would be interested in finding states that are simultaneously eigenstates of two operators (e.g. both $ H $ and $ L_{z} $). As an example, consider a 2D isotropic harmonic oscillator in an external magnetic field $ \vec{B} $. Its Hamiltonian is
+	\begin{equation*}
+		H = H_{0} - \vec{\mu} \cdot \vec{B}
+	\end{equation*}
+	where $ H_{0} $ is the Hamiltonian of a 2D isotropic harmonic oscillator without a magnetic field and $ \vec{\mu} $ is the particle's magnetic moment. The magnetic moment is proportional to the angular momentum, i.e. $ \vec{\mu} = \gamma \vec{L} $, where $ \gamma $ is a constant proportionality factor.
+	
+	\item Assume the magnetic field points in the $ z $ direction (i.e. $ \vec{B} = B \uvec{z} $) in which case the Hamiltonian simplifies to
+	\begin{equation*}
+		H = H_{0} - \gamma B L_{z}
+	\end{equation*}
+	In this case, the states that are simultaneously eigenstates of both $ H_{0} $ and $ L_{z} $ will also be eigenstates of the Hamiltonian $ H = H_{0} - \gamma B L_{z}$, which is useful for analyzing particles in  a external magnetic field. 
+	
+	For example, using our earlier solutions $ \ket{m = \pm 1} $, we have the eigenvalue equation
+	\begin{align*}
+		H \ket{m = \pm 1} &= H_{0}\ket{m = \pm 1} - \gamma B L_{z} \ket{m = \pm 1} \\
+		& = 2\hbar \omega \ket{m = \pm 1} - \gamma B (\pm 1 \cdot \hbar)\ket{m = \pm 1} \\
+		&= (2\hbar \omega \pm \gamma B\hbar)\ket{m = \pm 1}
+	\end{align*}
+	In other words, $ \ket{m = \pm 1} $ are indeed eigenstates of $ H $, with eigenvalues $ (2\hbar \omega \pm \gamma B\hbar) $.
+\end{itemize}
 
 
+\subsubsection{Larmor Precession}
+\textit{Analyze the dynamics of a quantum-mechanical particle with magnetic moment $ \mu $ and angular momentum quantum number $ l = 1 $ in an external magnetic field $ \vec{B} = B\uvec{z} $, where $ \mu $ forms an initial angle $ \theta $ with $ \vec{B} $ at $ t = 0 $.}
 
+\begin{itemize}
+	\item We consider a particle in an external magnetic field $ \vec{B} = B\uvec{z} $ whose magnetic moment $ \vec{\mu} $ makes an initial angle $ \theta $ with the magnetic field. The particle's Hamiltonian is
+	\begin{equation*}
+		H = - \m \cdot \vec{B} = - \gamma \vec{L} \cdot \vec{B} = - \gamma B L_{z}
+	\end{equation*}
+	Recall the values of angular momentum are quantized. In general, a quantum particle with angular momentum quantum number $ l = 1 $ exists in a $ 2l + 1 $ dimensional Hilbert space with basis $ \ket{lm} $, where $ m \in \{-l, -l+1, \ldots, l-1, l\}  $. In our case $ l = 1 $, meaning $ m \in \{-1, 0, 1\} $.
+	
+	\item In Cartesian coordinates, the angular momentum operator is $ \vec{L} = (L_{x}, L_{y}, L_{z}) $. The operator $ L^{2} $ acts on the state $ \ket{lm} $ as $ L^{2}\ket{lm} = h^{2}l(l+1) \ket{lm}$. The operator $ L_{z} $ acts on $ \ket{lm} $ as $ L_{z} \ket{lm} = \hbar m \ket{lm} $. In other words, the basis $ \ket{lm} $ is the basis of states that are eigenstates of the operator $ L^{2} $ with eigenvalue $ h^{2}l(l+1) $ and eigenstates of the operator $ L_{z} $ with eigenvalue $ \hbar m $. 
+	
+	In the coordinate wave function representation, the states $ \ket{lm} $ are the spherical harmonics
+	\begin{equation*}
+		\ket{lm} = Y_{lm}(\phi, \theta)
+	\end{equation*}
+	The $ \phi $ component of $ Y_{lm} $ is proportional to $ \frac{e^{iml}}{\sqrt{2\pi}} $. 
+	
+	\item We return to the Hamiltonian of a particle with a magnetic moment in an external magnetic field: $ H = -\gamma BL_{z} $. For a particle with $ l = 1 $ (and thus magnitude of angular momentum $ L^{2} = \hbar^{2}l (l+1) = 2\hbar^{2} $), the Hamiltonian's eigenstates $ \ket{\psi} $ occurs in a $ 2l + 1 = 3 $ dimensional Hilbert space. In the $ \ket{lm} $ basis, the general expression for $ \ket{\psi} $ is thus the linear combination
+	\begin{equation*}
+		\ket{\psi} = a \ket{11} + b \ket{10} + c \ket{1 -1}
+	\end{equation*}
+	where $ l = 1 $ and $ m = 1, 0, -1 $. 
+	
+	\item At $ t = 0 $, the particle's magnetic moment forms a polar angle $ \theta $ with the magnetic field $ \vec{B} = B \uvec{z} $. Our first step will be finding an appropriate expression for this initial condition in the language of quantum mechanics.
+\end{itemize}
+
+\textbf{Finding the Initial State}
+\begin{itemize}	
+	\item In general, if some state $ \ket{\psi} $ is an eigenstate of the operator $ \vec{L}\cdot \uvec{e} $, (i.e. the projection of angular momentum operator in the direction $ \uvec{e} $), and the operator acts on $ \psi $ as $  \vec{L}\cdot \uvec{e} \ket{\psi} = \hbar l \ket{\psi} $ (i.e. produces the eigenvalue $ \hbar l $), then we say the state $ \ket{\psi} $'s angular momentum points in the direction $ \uvec{e} $. As an example, for $ l = 1 $, if $ L_{x} \ket{\psi} = \hbar \ket{\psi} $, then the angular momentum in the state $ \ket{\psi} $ points in the $ x $ direction.
+	
+	Back to the initial condition. We write $ \vec{L}\cdot\uvec{e} \ket{\psi, 0} = \hbar \ket{\psi, 0} $ where $ \uvec{e} $ points in the initial direction of the magnetic moment $ \m $. If we assume the magnitude moment initially lies in the $ x, z $ plane with $ \phi = 0 $, the unit vector $ \uvec{e} $, in spherical coordinates, reads
+	\begin{equation*}
+		\uvec{e} = (\sin \theta, 0, \cos \theta)
+	\end{equation*}
+	To summarize, the quantum mechanical version of the initial condition that the particle's magnetic moment forms an initial angle $ \theta $ with the magnetic field $ \vec{B} = B \uvec{z} $ reads $ \vec{L}\cdot\uvec{e} \ket{\psi, 0} = \hbar \ket{\psi, 0} $ where $ \ket{\psi, 0} $ is the particle's initial wave function and $ \uvec{e} = (\sin \theta, 0, \cos \theta) $. 
+	
+	\item To find $ \ket{\psi, 0} $, we need to find the constants $ a, b, c $ in the linear combination $ \ket{\psi} = a \ket{11} + b \ket{10} + c \ket{1 -1} $. Inserting $ \uvec{e} $ into the condition $ \vec{L}\cdot\uvec{e} \ket{\psi, 0} = \hbar \ket{\psi, 0} $ gives
+	\begin{equation*}
+		(L_{x}\sin \theta + L_{z}\cos \theta)\ket{\psi, 0} = \hbar \ket{\psi, 0}
+	\end{equation*}
+	Substituting in the linear combination $ \ket{\psi} = a \ket{11} + b \ket{10} + c \ket{1 -1} $ and rearranging gives
+	\begin{equation*}
+		(L_{x}\sin \theta + L_{z}\cos \theta - h)\big(a \ket{11} + b\ket{10} + c\ket{1-1}\big) = 0
+	\end{equation*}
+	
+\end{itemize}
+
+\textbf{Theoretical Interlude: Action of $ L_{x, y} $ on $ \ket{ml} $}
+\begin{itemize}
+	\item Recall the eigenvalue equation $ L_{z} \ket{lm} = \hbar m \ket{lm} $ for the operator $ L_{z} $. We now ask how $ L_{x} $ and $ L_{y} $ act on the states $ \ket{lm} $. To do this, we introduce the new operators
+	\begin{equation*}
+		L_{+} \equiv L_{x} + i L_{y} \eqtext{and} L_{-} \equiv L_{+}^{\dagger} = L_{x} - i L_{y}
+	\end{equation*}
+	In terms of $ L_{+} $ and $ L_{-} $, $ L_{x} $ and $ L_{y} $ read
+	\begin{equation*}
+		L_{x} = \frac{L_{+} + L_{-}}{2} \eqtext{and} L_{y} = \frac{L_{+} - L_{-}}{2}
+	\end{equation*}
+	The plan is to find out how $ L_{+} $ and $ L_{-} $ act on $ \ket{lm} $, and then reconstruct the action of $ L_{x} $ and $ L_{y} $ on $ \ket{lm} $ using the relationship between $ L_{+, -} $ and $ L_{x, y} $. 
+	
+	\item Without proof (or e.g. see the lecture notes), $ L_{+} $ acts on $ \ket{lm} $ as
+	\begin{align*}
+		&L_{+}\ket{lm} = \hbar \sqrt{l (l+1) - m(m+1)} \ket{l, m+1} \\
+		&L_{-}\ket{lm} = \hbar \sqrt{l (l+1) - m(m-1)} \ket{l, m-1} 
+	\end{align*}
+	
+	\item In our case (working with a particle with $ l = 1 $ and thus $ m \in \{-1, 0, 1\} $), we have $ L_{+}\ket{11} = 0 $ (nominally this would create a state with $ m = 2 $, which is outside the range of allowed $ m $). In general, $ L_{+}\ket{l, m=l} = 0 $, since $ m $  cannot increase beyond $ l $. 
+	
+	Next, $ L_{+}\ket{10} = \sqrt{2}\hbar \ket{11} $ and $ L_{+}\ket{1 -1} = \sqrt{2}\hbar \ket{10} $.
+	
+	Meanwhile, for $ L_{-} $ gives $ L_{-}\ket{11} = \sqrt{2}\hbar \ket{10} $, $ L_{-}\ket{10} = \sqrt{2}\hbar \ket{1-1} $ and $ L_{-}\ket{1-1} = 0 $, since $ m $ cannot decrease below $ l = 01 $. In general, $ L_{+}\ket{l, m=-l} = 0 $, since $ m $  cannot decrease below $ -l $. 
+	
+\end{itemize}
+
+\textbf{Back to Finding the Initial State}
+\begin{itemize}
+	\item We left off with
+	\begin{equation*}
+		(L_{x}\sin \theta + L_{z}\cos \theta - h)\big(a \ket{11} + b\ket{10} + c\ket{1-1}\big) = 0
+	\end{equation*}
+	Writing $ L_{x, y} $ in terms of $ L_{+,-} $ and substituting the just-derived action of $ L_{+,-} $ on $ \ket{11}, \ket{10} $ and $ \ket{1-1} $ gives
+	\begin{align*}
+		0 &= \left(\frac{L_{+}+L_{-}}{2}\sin \theta + L_{z}\cos \theta - h\right)\big(a \ket{11} + b\ket{10} + c\ket{1-1}\big)\\
+		&=a\left(\frac{\sqrt{2}\hbar}{2}\ket{10}\sin \theta + \hbar \cos \theta \ket{11} - h\ket{11}\right) \\
+		&{} \quad + b\left(\frac{\sqrt{2}\hbar}{2}\ket{11}\sin \theta + \frac{\sqrt{2}\hbar}{2}\sin \theta\ket{1-1} - \hbar\ket{10}\right)\\
+		&{} \quad + c\left(\frac{\sqrt{2}\hbar}{2}\ket{10}\sin \theta -\hbar \cos \theta\ket{1-1} - \hbar\ket{1-1}\right)
+	\end{align*}
+	Notice that this equation now involves only scalar values; all operators are gone.
+	
+	\item Next, we find the constants $ a, b $ and $ c $. Multiplying the above equation by $ \bar{11} $ and applying orthonormality of the states $ \ket{11} $, $ \ket{10} $, $ \ket{1-1} $, we have
+	\begin{equation*}
+		a \hbar \cos \theta - a \hbar + \frac{b}{\sqrt{2}}\hbar \sin \theta = 0
+	\end{equation*}
+	Next, multiplying the equation by $ \ket{10} $ gives
+	\begin{equation*}
+		\frac{a\hbar}{\sqrt{2}}\sin \theta - b \hbar + \frac{c\hbar}{\sqrt{2}}\sin \theta = 0
+	\end{equation*}
+	Finally, multiplying the equation by $ \ket{1-1} $ gives
+	\begin{equation*}
+		\frac{b\hbar}{\sqrt{2}} \sin \theta - c\hbar \cos \theta - c\hbar = 0
+	\end{equation*}
+	
+	\item We've found a system of three equations for the three unknowns $ a $, $ b $ and $ c $. Recall from e.g. introductory linear algebra that because the system of equations is homogeneous (the right side of each equation is zero), the system has a solution only up to a free parameter. 
+	
+	Solving the first equation for $ a $ in terms of $ b $ gives
+	\begin{equation*}
+		a(\cos \theta - 1) + \frac{b}{\sqrt{2}} \sin \theta = 0 \implies a = \frac{b\sin \theta}{\sqrt{2}(1 - \cos \theta)}
+	\end{equation*}
+	From the third equation, we get $ c $ in terms of $ b $:
+	\begin{equation*}
+		\frac{b}{\sqrt{2}}\sin \theta - c(1 + \cos \theta) = 0 \implies c = \frac{b\sin \theta}{\sqrt{2}(1 + \cos \theta)}
+	\end{equation*}
+	
+	\item The solution is easier to find with $ \sin \theta  $ and $ \cos \theta $ written in terms of double angle identities, which produce
+	\begin{equation*}
+		 a = \frac{b}{\sqrt{2}
+		 }\cot \frac{\theta}{2} \eqtext{and}  c = \frac{b}{\sqrt{2}}\tan \frac{\theta}{2} 
+	\end{equation*}
+	
+	\item With $ a $ and $ c $ known in terms of the free parameter $ b $, the initial condition on $ \ket{\psi, 0} $ reads
+	\begin{equation*}
+		\ket{\psi, 0} = b\left(\frac{1}{\sqrt{2}}\cot \frac{\theta}{2}\ket{11} + \ket{10} + \frac{1}{\sqrt{2}}\tan \frac{\theta}{2}\ket{1-1}  \right)
+	\end{equation*}
+	We find $ b $ from the normalization condition, which, with the help of some trigonometric identities, reads
+	\begin{align*}
+		\braket{\psi, 0}{\psi, 0} \equiv 1 &= \abs{b}^{2}\left(\frac{1}{2}\cot^{2}\frac{\theta}{2} + 1 + \frac{1}{2}\tan^{2}\frac{\theta}{2} \right) = \abs{b}^{2}\left(\frac{\cos^{4}\frac{\theta}{2} + 2 \cos^{2}\frac{\theta}{2}\sin^{2}\frac{\theta}{2} + \sin^{4}\frac{\theta}{2}}{2\sin^{2}\frac{\theta}{2}\cos^{2}\frac{\theta}{2}}\right)\\
+		&=\abs{b}^{2}\frac{\big(\cos^{2}\frac{\theta}{2} + \sin^{2}\frac{\theta}{2}\big)^{2}}{2 \sin^{2}\frac{\theta}{2} \cos^{2}\frac{\theta}{2}}  = \frac{\abs{b}^{2}}{2 \sin^{2}\frac{\theta}{2} \cos^{2}\frac{\theta}{2}} \equiv 1
+	\end{align*}
+	Because of the $ \abs{b}^{2} $, $ b $ is mathematically determined only up to a constant phase factor $ e^{i\phi} $ of magnitude $ 1 $; if we make the simple choice $ e^{i\phi} = 1 $, the normalization condition gives
+	\begin{equation*}
+		b = \sqrt{2}\sin \frac{\theta}{2} \cos \theta
+	\end{equation*}
+	
+	\item Substituting $ b = \sqrt{2}\sin \frac{\theta}{2} \cos \theta $ into the expression for $ \ket{\psi, 0} $ gives the desired result
+	\begin{equation*}
+		\ket{\psi, 0} = \cos^{2} \frac{\theta}{2} \ket{11} + \sqrt{2}\sin \frac{\theta}{2} \cos \frac{\theta}{2} \ket{10} + \sin^{2}\frac{\theta}{2} \ket{1 -1}
+	\end{equation*}
+	To summarize: precisely this state $ \ket{\psi, 0} $ satisfies the initial condition that a particle's magnitude moment $ \m $ makes an angle $ \theta $ with an external magnetic field $ \vec{B} = B \uvec{z} $. 
+\end{itemize}
+
+\textbf{Time Evolution of the Initial State}
+\begin{itemize}
+	\item With the initial state $ \ket{\psi, 0} $ known, the next step is to find the time-dependent wave function $ \ket{\psi, t} $ for a particle with magnetic moment $ \m $ in an external magnetic field. We'll find the time evolution in the \schro picture using the particle's Hamiltonian $ H = -\gamma BL_{z}  $. 
+	
+	\item We'll first solve the stationary \schro equation $ H \ket{\psi} = E \ket{\psi} $ for the basis functions $ \ket{11} $, $ \ket{10} $ and $ \ket{1-1} $; this gives
+	\begin{align*}
+		&H \ket{11} = - \gamma BL_{z}\ket{11} = -\gamma B (1\cdot \hbar) \ket{11} = -\gamma B \hbar \ket{11}\\
+		&H\ket{10} = - \gamma BL_{z}\ket{10} = -\gamma B (0\cdot \hbar) \ket{10} = 0 \ket{10}\\
+		&H \ket{1-1} = - \gamma BL_{z}\ket{1-1} = -\gamma B (-1\cdot \hbar) \ket{1-1} = \gamma B \hbar \ket{1-1}
+	\end{align*}
+	These expressions are relatively simple because our initial state $ \ket{\psi, 0} $ was already written in the basis $ \ket{11} $, $ \ket{10} $, $ \ket{1-1} $. 
+	
+	\item Using the energy eigenvalues $ E_{11} = -\gamma B \hbar $, $ E_{10} = 0 $ and $ E_{1-1} = \gamma B \hbar $, the time-evolved wave function $ \ket{\psi, t} $ is then
+	\begin{align*}
+		\ket{\psi, t} &= \cos^{2} \frac{\theta}{2} e^{-\frac{i(-\gamma B\hbar)}{\hbar}t}\ket{11} + \sqrt{2}\sin \frac{\theta}{2} \cos \frac{\theta}{2} e^{-\frac{i\cdot 0}{\hbar}t}\ket{10} + \sin^{2}\frac{\theta}{2} e^{-\frac{i\gamma B\hbar}{\hbar}t}\ket{1 -1}\\
+		&=\cos^{2} \frac{\theta}{2} e^{i\gamma B t}\ket{11} + \sqrt{2}\sin \frac{\theta}{2} \cos \frac{\theta}{2} \ket{10} + \sin^{2}\frac{\theta}{2} e^{-\gamma B t}\ket{1 -1}\\
+		&=\cos^{2} \frac{\theta}{2} e^{i \omega_{L} t}\ket{11} + \sqrt{2}\sin \frac{\theta}{2} \cos \frac{\theta}{2} \ket{10} + \sin^{2}\frac{\theta}{2} e^{-\omega_{L} t}\ket{1 -1}
+	\end{align*}
+	where in the last line we've defined the \textit{Larmor frequency} $ \omega_{L} \equiv \gamma B $. 
+	
+	\item Next, using the wave function $ \ket{\psi, t} $, we will find the expectation value $ \ev{\m, t} $ of the particle's magnetic moment at time $ t $, which is related to angular momentum $ \vec{L} $ via
+	\begin{equation*}
+		\ev{\m, t} = \gamma \ev{L, t} = \gamma
+		\begin{bmatrix}
+			\ev{L_{x}, t}\\
+			\ev{L_{y}, t}\\
+			\ev{L_{z}, t}
+		\end{bmatrix}
+	\end{equation*}
+	We'll start by finding $ L_{z} $, using the general definition of an expectation value:
+	\begin{align*}
+		\ev{L_{z}, t} = \bra{\psi, t}L_{z}\ket{\psi, t} &= \left(\cos^{2} \frac{\theta}{2} e^{-i \omega_{L} t}\bra{11} + \sqrt{2}\sin \frac{\theta}{2} \cos \frac{\theta}{2} \bra{10} + \sin^{2}\frac{\theta}{2} e^{\omega_{L} t}\bra{1 -1}\right) \\
+		&\cdot L_{z}\left(\cos^{2} \frac{\theta}{2} e^{i \omega_{L} t}\hbar\ket{11} + 0 - \sin^{2}\frac{\theta}{2} e^{-\omega_{L} t}\hbar\ket{1 -1}\right)
+	\end{align*}
+	where the operator $ L_{z} $ acts on the basis states $ \ket{11} $, $ \ket{10} $ and $ \ket{1-1} $ to produce the eigenvalues $ \hbar, 0 $ and $ -\hbar $. Multiplying out the terms and applying the orthonormality of the basis states, followed by some trigonometric identities leads, to the considerably simpler expression
+	\begin{align*}
+		\ev{L_{z}, t} &= \hbar \cos^{4}\frac{\theta}{2} - \hbar \sin^{4}\frac{\theta}{2} = \hbar\left(\cos^{2}\frac{\theta}{2} +  \sin^{2}\frac{\theta}{2}\right)\left(\cos^{2}\frac{\theta}{2} -  \sin^{2}\frac{\theta}{2}\right)\\
+		&=\hbar\cdot (1) \cdot (\cos \theta) = \hbar \cos \theta
+	\end{align*}
+	In other words, the $ z $ component of angular momentum $ L_{z} $ is constant!
+	
+	\textit{We ran out of time at this point and continued in the ninth exercise set}
+	
+\end{itemize}
+
+\subsection{Ninth Exercise Set}
+\subsubsection{Larmor Precession (continued)}
+\textbf{TODO}
 
 \end{document}
 
