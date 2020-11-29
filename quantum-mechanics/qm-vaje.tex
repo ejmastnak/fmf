@@ -29,6 +29,10 @@
 \newcommand{\tevp}{e^{i\frac{H}{\hbar}t}}  % time evolution operator with positive exponent
 
 \newcommand{\m}{\vec{\mu}}  % magnetic moment
+\renewcommand{\H}{\mathcal{H}}  % Hilbert space
+\newcommand{\ua}{\uparrow}  % for spin up states
+\newcommand{\da}{\downarrow}  % for spin down states
+\renewcommand{\k}{\vec{k}}  % wave vector
 
 \begin{document}
 \title{Quantum Mechanics Exercises Notes}
@@ -2050,7 +2054,7 @@ In our case (for a harmonic oscillator), the theorem reads
 	
 \end{itemize}
 
-\subsubsection{Two-Dimensional Isotropic Harmonic Oscillator}
+\subsubsection{Two-Dimensional Isotropic Harmonic Oscillator} \label{qmv:sss:2dqho}
 \textit{Consider a two-dimensional isotropic harmonic oscillator. Within the subspace of energy eigenstates with energy $ E = 2\hbar \omega $, find those states that are also eigenstates of the $ z $-component of angular momentum $ L_{z} $.}
 \begin{itemize}
 	\item The energy $ E = 2\hbar \omega $ corresponds to the isotropic oscillator's first two excited states $ \ket{10} $ and $ \ket{01} $. These states have degeneracy two, meaning the subspace is spanned by two linearly independent states. The subspace is formed of all normalized linear combinations of $ \ket{01} $ and $ \ket{10} $, i.e. all $ \ket{\psi} $ for which
@@ -2315,7 +2319,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 
 
 \subsubsection{Larmor Precession}
-\textit{Analyze the dynamics of a quantum-mechanical particle with magnetic moment $ \mu $ and angular momentum quantum number $ l = 1 $ in an external magnetic field $ \vec{B} = B\uvec{z} $, where $ \mu $ forms an initial angle $ \theta $ with $ \vec{B} $ at $ t = 0 $.}
+\textit{Analyze the motion of a quantum-mechanical particle with magnetic moment $ \mu $ and angular momentum quantum number $ l = 1 $ in an external magnetic field $ \vec{B} = B\uvec{z} $, where $ \mu $ forms an initial angle $ \theta $ with $ \vec{B} $ at $ t = 0 $.}
 
 \begin{itemize}
 	\item We consider a particle in an external magnetic field $ \vec{B} = B\uvec{z} $ whose magnetic moment $ \vec{\mu} $ makes an initial angle $ \theta $ with the magnetic field. The particle's Hamiltonian is
@@ -2501,7 +2505,392 @@ These are the two linearly independent states spanning the isotropic harmonic os
 
 \subsection{Ninth Exercise Set}
 \subsubsection{Larmor Precession (continued)}
-\textbf{TODO}
+\textit{Analyze the motion of a quantum-mechanical particle with magnetic moment $ \mu $ and angular momentum quantum number $ l = 1 $ in an external magnetic field $ \vec{B} = B\uvec{z} $, where $ \mu $ forms an initial angle $ \theta $ with $ \vec{B} $ at $ t = 0 $.}
+\begin{itemize}
+	\item In the last exercise set we found the particle's time-dependent wave function
+	\begin{equation*}
+		\ket{\psi, t} =\cos^{2} \frac{\theta}{2} e^{i \omega_{L} t}\ket{11} + \sqrt{2}\sin \frac{\theta}{2} \cos \frac{\theta}{2} \ket{10} + \sin^{2}\frac{\theta}{2} e^{-\omega_{L} t}\ket{1 -1}
+	\end{equation*}
+	where $ \omega_{L} \equiv \gamma B $ is the Larmor frequency. We left off with using $ \ket{\psi, t} $ to find the expectation value $ \ev{L_{z}, t} $, which turned out to be the constant quantity $ \ket{L_{z}, t} = \hbar \cos \theta $. Next, we will use $ \ket{\psi, t} $ to find $ L_{x} $ and $ L_{y} $, which we will use to find the particle's magnetic moment via $ \ket{\m, t} = \gamma \big(\ev{L_{x}, t}, \ev{L_{y}, t}, \ev{L_{z}, t}\big) $.
+	
+	\item It will be easiest to find $ \ev{L_{x}, t} $ and $ \ev{L_{y}, t} $ indirectly, in terms of the operators $ L_{+} $ and $ L_{-} $; recall these are related by 
+	\begin{align*}
+		& L_{+} = L_{x} + iL_{y} \eqtext{and} L_{-} = L_{x} - i L_{y}\\
+		& L_{x} = \frac{L_{+}+L_{-}}{2} \eqtext{and} L_{y} = \frac{L_{+}iL_{-}}{2i}
+	\end{align*}
+	It  follows that  $ \ev{L_{x}, t} $ and $ \ev{L_{y}, t} $ can be found via
+	\begin{equation*}
+		\ev{L_{x}, t} = \frac{1}{2}\big(\ev{L_{+}, t} + \ev{L_{-}, t} \big) \eqtext{and} \ev{L_{y}, t} = \frac{1}{2i}\big(\ev{L_{+}, t} - \ev{L_{-}, t} \big)
+	\end{equation*}
+	In fact, $ \ev{L_{-}, t} = \ev{L_{+}, t}^{*} $ is the complex conjugate of  $ \ev{L_{+}, t} $, so we only need to find $ \ev{L_{+}, t} $, from which we can find $ \ev{L_{-}, t} $ using the general identity $ \ev{\mathcal{O}^{\dagger}} = \ev{\mathcal{O}}^{*} $. We then have
+	\begin{align*}
+		& \ev{L_{x}, t} = \frac{1}{2}\big(\ev{L_{+}, t} + \ev{L_{+}, t}^{*} \big) = \Re \ev{L_{+}, t}\\
+		& \ev{L_{y}, t} = \frac{1}{2i}\big(\ev{L_{+}, t} - \ev{L_{+}, t} \big) = \Im \ev{L_{+}, t}
+	\end{align*}
+	
+	\item We now find $ \ev{L_{+}, t} $ using the definition of the expectation value (we'll use the identities $ L_{+}\ket{1, -1} = \sqrt{2}\hbar \ket{10} $, $ L_{+}\ket{10} = \sqrt{2}\hbar \ket{11} $, and $ L_{+}\ket{11} = 0 $). The expectation value $ \ev{L_{+}, t} $ is then:
+	\begin{align*}
+		\ev{L_{+}, t} &= \bra{\psi, t} L_{+}\ket{\psi, t} = \bra{\psi, t} \left(2 \hbar \sin \frac{\theta}{2} \cos \frac{\theta}{2}\ket{11} + \sqrt{2}\hbar \sin^{2}\frac{\theta}{2}e^{-i\omega_{L}t}\ket{10}\right)\\
+		&=\left(\cos^{2}\frac{\theta}{2} e^{-i\omega_{L}t}\right)\cdot \left(2\hbar \sin\frac{\theta}{2}\cos\frac{\theta}{2}\right) + \left(\sqrt{2}\sin \frac{\theta}{2}\cos \frac{\theta}{2}\right)\left(\sqrt{2}\hbar\sin^{2}\frac{\theta}{2}e^{-i\omega_{L}t}\right)\\
+		&=2\hbar\cos\frac{\theta}{2}\sin\frac{\theta}{2}\left(\cos^{2}\frac{\theta}{2} + \sin^{2}\frac{\theta}{2}\right)e^{-i\omega_{L}t}= \hbar \sin\theta e^{-i\omega_{L}t}
+	\end{align*}
+	The angular momentum components $ \ev{L_{x}, t} $ and $ \ev{L_{y}, t} $ are then
+	\begin{align*}
+		&\ev{L_{x}, t} = \Re \ev{L_{+}, t} = \hbar \sin \theta \cos( \omega_{L}t)\\
+		& \ev{L_{y}, t} = \Im \ev{L_{+}, t} = \hbar \sin \theta \sin( \omega_{L}t)
+	\end{align*}
+	In one place, the components of angular momentum are
+	\begin{equation*}
+		\ev{L_{x}, t} = \hbar \sin \theta \cos( \omega_{L}t) \qquad 	\ev{L_{y}, t} = \hbar \sin \theta \sin( \omega_{L}t) \qquad 
+		\ev{L_{z}, t} = \hbar \cos \theta
+	\end{equation*}
+	In other words, analogously to the classical picture, the expectation values $ \ev{L_{x}, t} $ and $ \ev{L_{y}, t} $ precess around the direction of the external magnetic field $ \vec{B} = B \uvec{z} $ with the Larmor frequency $ \omega_{L} = \gamma B $. 
+	
+	\item Recall that an physical measurement (observation) generally disturbs quantum mechanical systems. With this issue in mind, we'll find what happens with an observation of $ L_{z} $  at the time $ t $. 
+	
+\end{itemize}
+\textbf{Theoretical Interlude: Observation in Quantum Mechanics}
+\begin{itemize}
+	\item We make an observation of a physical quantity in quantum mechanics as follows. First, expand the relevant system's wave function in the basis consisting of the eigenfunctions of the operator corresponding to the quantity being measured (e.g. to measure a system's $ L_{z} $, expand the system wave function in the $ L_{z} $ basis $ \ket{lm} $. ) 
+	
+	\item The possible outcomes of the observation are the discrete eigenvalues of the operator corresponding to the quantity being measured. 
+	
+	When the wavefunction is a linear combination of multiple eigenstates, each of the states' corresponding eigenvalues is a possible outcome, and the probability of each eigenvalue being the outcome is the squared absolute value of the corresponding eigenstate's coefficient.
+	
+	\item Finally, immediately after an observation yielding a given eigenvalue, the system's wavefunction assumes (``collapses into'') the eigenfunction corresponding to the measured eigenvalue.
+\end{itemize}
+
+\textbf{Back to the Observation of $ L_{z} $}
+\begin{itemize}
+	\item Our particle's wave function $ \ket{\psi, t} $ is already expanded in $ L_{z} $ basis $ \ket{lm} $; recall the wave function is 
+	\begin{equation*}
+		\ket{\psi, t} =\cos^{2} \frac{\theta}{2} e^{i \omega_{L} t}\ket{11} + \sqrt{2}\sin \frac{\theta}{2} \cos \frac{\theta}{2} \ket{10} + \sin^{2}\frac{\theta}{2} e^{-\omega_{L} t}\ket{1 -1}
+	\end{equation*}
+	
+	\item Next, we consider the possible outcome of the observation of $ L_{z} $. Our wavefunction is a combination of three states $ \ket{11} $, $ \ket{10} $ and $ \ket{1-1} $; the corresponding $ L_{z} $ eigenvalues of these states are $ \hbar $, $ 0 $ and $ -\hbar $, and the corresponding probabilities are the squared absolute values of the corresponding eigenstate's coefficients. Table \ref{qmv:table:larmor-Lz} summarizes the eigenstates, possible outcomes, and corresponding probabilities.
+	\begin{table}
+	\centering 
+	\begin{tabular}{c|c|c}
+		Eigenstate & Outcome & Probability \\
+		\hline {\rule{0pt}{2.6ex}} \hspace{-7pt} 
+		$ \ket{11} $ & $ \hbar $  & $ \abs{\cos^{2}\frac{\theta}{2}e^{-i\omega_{L}t}} = \cos^{4}\frac{\theta}{2} $\\[1mm]
+		$ \ket{10} $ & 0 & $ 2 \cos^{2}\frac{\theta}{2}\sin^{2}\frac{\theta}{2} $\\[1mm]
+		$ \ket{1-1} $ & $ -\hbar $  & $ \abs{\sin^{2}\frac{\theta}{2}e^{-i\omega_{L}t}} = \sin^{4}\frac{\theta}{2} $
+	\end{tabular}
+	\caption{Ingredients to consider in a measurement of an $ l=1 $ Larmor-precessing particle's angular momentum $ L_{z} $. }
+	\label{qmv:table:larmor-Lz}
+	\end{table}
+	
+	\item Because of wavefunction collapse to the measured eigenvalue's corresponding eigenfunction, any measurement of $ L_{z} $ would cause the particle's eigenfunction to stop precessing at a polar angle $ \theta $ about the magnetic field $ \vec{B} = B\uvec{z} $ in agreement with classical Larmor precession.
+	
+	For example, measuring $ L_{z} = \hbar $ would cause the particle to assume the eigenfunction $ \ket{11} $, which directly points in the direction of the magnetic field and $ \uvec{z} $ axis. 
+	
+	The lesson here is that even though the classical and quantum-mechanical results for a particle with magnetic moment $ \mu $ in an external magnetic field both display Larmor precession about the $ \uvec{B} $ direction, any observation of the quantum-mechanical observation of the system breaks this agreement because of wave function collapse.
+	
+\end{itemize}
+
+% This problem introduces spin operators (with spin 1/2 operator)
+% whereas previous problems used orbital angular momentum operators
+% We'll get practice with a wavefunction that exists both in position
+% and spin angular momentum space at onces
+\subsubsection{Rashba Coupling}
+\textit{Consider a particle in the two-dimensional $ x, y $ plane with spin angular momentum $ S = \frac{1}{2} $ and Hamiltonian}
+\begin{equation*}
+	H = \frac{p^{2}}{2m} + \lambda (p_{x}S_{y} - p_{y}S_{x})
+\end{equation*}
+\textit{where $ \vec{p} = (p_{x}, p_{y}) $ and $ \vec{S} = (S_{x}, S_{y}, S_{z}) $ are the momentum and spin operators and $ \lambda $ is a constant. (The term $ \lambda (p_{x}S_{y} - p_{y}S_{x}) $ is called the \textnormal{Rashba coupling term}). Find the Hamiltonian $ H $'s eigenfunctions and eigenvalues.}
+
+\begin{itemize}
+	\item The Hamiltonian $ H $ acts on states in the Hilbert space 
+	$ \H = \H_{p}\otimes \H_{s} $ where $ \H_{p} $ is the momentum Hilbert space and $ \H_{s} $ is the spin Hilbert space. Analogously, the states in $ \H $ are $ \ket{\psi} = \ket{\psi_{p}} \otimes \ket{\psi_{s}}$. 
+	
+	\item Now, since we're working with states with spin $ S = \frac{1}{2} $, the spin wavefunction is the linear combination
+	\begin{equation*}
+		\ket{\psi_{s}} = \alpha \ket{\frac{1}{2}\frac{1}{2}} + \beta \ket{\frac{1}{2}-\frac{1}{2}}
+	\end{equation*}
+	where $ \ket{sm_{s}} $ is the basis of the spin operator $ S^{2} $. $ s $ is the spin quantum number and $ m_{s} $ is the quantum number corresponding to the projection of spin on the $ z $ axis. The spin operator $ S^{2} $ acts on these basis states to produce
+	\begin{align*}
+		&S^{2} \ket{\frac{1}{2}\frac{1}{2}} = \hbar^{2} \frac{1}{2}\left(\frac{1}{2} + 1\right ) \ket{\frac{1}{2}\frac{1}{2}} = \hbar^{2} \frac{3}{4} \ket{\frac{1}{2}\frac{1}{2}}\\
+		& S^{2} \ket{\frac{1}{2}-\frac{1}{2}} = \hbar^{2} \frac{1}{2}\left (\frac{1}{2} + 1\right ) \ket{\frac{1}{2}-\frac{1}{2}} = \hbar^{2} \frac{3}{4} \ket{\frac{1}{2}-\frac{1}{2}}
+	\end{align*}
+	Meanwhile, the operator $ S_{z} $ acts on the basis states to produce
+	\begin{equation*}
+		S_{z} \ket{\frac{1}{2}\frac{1}{2}} = \frac{\hbar}{2} \ket{\frac{1}{2}\frac{1}{2}} \eqtext{and} S_{z} \ket{\frac{1}{2}-\frac{1}{2}} = -\frac{\hbar}{2} \ket{\frac{1}{2}-\frac{1}{2}}
+	\end{equation*}
+	When working with particles with spin $ S = \frac{1}{2} $, we usually denote the states $  \ket{\frac{1}{2}\frac{1}{2}}  $ and $  \ket{\frac{1}{2}-\frac{1}{2}}  $ with $ \ket{\ua} $ and $ \ket{\da} $, respectively. In this notation, the spin wave function is
+	\begin{equation*}
+		\ket{\psi_{s}} = \alpha \ket{\ua} + \beta \ket{\da}
+	\end{equation*}
+	In our case, the spin Hilbert space $ \H_{s} $ is two-dimensional, since it consists of all linear combinations of the two linearly independent states $ \ket{\ua} $ and $ \ket{\da} $. 
+	
+	\item Next, on to the momentum states $ \ket{\psi_{p}} $, which correspond to the kinetic energy operator. The eigenstates of the kinetic energy operator are plane waves of the form $ e^{i\vec{k}\cdot \vec{r}} $. Because the wave vectors $ \vec{k} $ are continuously distributed and $ \vec{k} $ generates a unique set of eigenvalues, the position space $ \H_{p} $ is infinitely dimensional.
+	
+	\item To find the Hamiltonian's eigenfunctions and eigenvalues, we need to solve the stationary \schro equation
+	\begin{equation*}
+		H \ket{\psi} = E \ket{\psi}
+	\end{equation*}
+	First, to make the rest of the problem easier, we will show that $ H $ commutes with the operators $ p_{x} $ and $ p_{y} $. First, we have
+	\begin{equation*}
+		[H, p_{x}] = \left[\frac{p_{x}^{2} + p_{y}^{2}}{2m} + \lambda (p_{x}S_{y} - p_{y}S_{x}), p_{x}\right]
+	\end{equation*}
+	The operators $ p_{x}^{2} $ and $ p_{x} $ commute, as do $ p_{y}^{2} $ and $ p_{x} $, which takes care of the first term. Next, we consider the Rashba coupling term $ (p_{x}S_{y} - p_{y}S_{x}) $. Because the $ S_{y, x} $ operators act on the spin Hilbert space $ \H_{s} $ and $ p_{x} $ acts on the independent momentum Hilbert space $ \H_{p} $, and because $ p_{x} $ commutes with both $ p_{x} $ and $ p_{y}$, the operator $ p_{x} $ also commutes with the Rashba term $ (p_{x}S_{y} - p_{y}S_{x}) $. It follows that
+	\begin{equation*}
+		[H, p_{x}] = 0
+	\end{equation*}
+	We can show $ [H, p_{y}] = 0 $ with an analogous procedure.
+	
+	\item Next, we will make use of the commutators $ [H, p_{x}] = 0  $ and $ [H, p_{y}] = 0  $. Recall that if two operators commute, it is possible to find eigenfunctions that are simultaneously eigenfunctions of both operators (see e.g. the 2D harmonic oscillator problem \ref{qmv:sss:2dqho}). In our case, because $ \vec{p} = (p_{x}, p_{y})$ and $ H $ commute, it is possible to find such functions that are simultaneously eigenfunctions of both operators. 
+	
+	In other words, instead of finding $ H $'s eigenfunctions, we can search for $ \vec{p} $'s eigenfunctions instead. 
+	
+	\item $ \vec{p} $'s eigenfunctions correspond to the momentum states $ \ket{\psi_{p}} $. We want to solve the eigenvalue equation
+	\begin{equation*}
+		\vec{p}\ket{\psi_{p}} = a \ket{\psi_{1}} \qquad \text{where} \vec{p} = -i\hbar \nabla
+	\end{equation*}
+	Recall the momentum eigenfunctions are plane waves of the form $ e^{i\vec{k}\cdot \vec{r}} $, for which the eigenvalue equation, in the coordinate wavefunction representation, reads
+	\begin{equation*}
+		\vec{p} e^{i\vec{k}\cdot \vec{r}} = -i\hbar (i \vec{k}) e^{i\vec{k}\cdot \vec{r}} = \hbar \vec{k}e^{i\vec{k}\cdot \vec{r}}
+	\end{equation*}
+	In Dirac notation, the equation reads
+	\begin{equation*}
+		\vec{p}\ket{\vec{k}} = \hbar \vec{k} \ket{\vec{k}} 
+	\end{equation*}
+	where the state $ \ket{\k} $ corresponds to the wavefunction $ e^{i\vec{k}\cdot \vec{r}} $. 
+	
+	\item Returning the stationary \schro equation and using $ \ket{\psi_{p}} = \ket{\k} $ we have
+	\begin{equation*}
+		H\ket{\psi} = H\big(\ket{\psi_{p}} \otimes \ket{\psi_{s}}\big) = H\big(\ket{\k} \otimes \ket{\psi_{s}}\big) = E \big(\ket{\k}\otimes \ket{\psi_{s}}\big)
+	\end{equation*}
+	Again, the replacement of $ \ket{\psi_{p}}$ with $ \k $ in the \schro equation is possible only because $ H $ and $ \vec{p} $ commute. We have thus reduced our problem to finding spin wavefunctions $ \ket{\psi_{s}} $. 
+	
+	\textit{Notation}: I practice, we drop the tensor product symbol $ \otimes $; in this convention the above stationary \schro reads
+	\begin{equation*}
+		H\big(\ket{\k} \ket{\psi_{s}}\big) = E \big(\ket{\k} \ket{\psi_{s}}\big)
+	\end{equation*}
+	
+	\item Next, substituting the Hamiltonian $ H $ into the equation $ H\big(\ket{\k} \ket{\psi_{s}}\big) = E \big(\ket{\k} \ket{\psi_{s}}\big) $ and noting that each operator in the Hamiltonian acts either only on the momentum function $ \ket{\k} $ or only on the spin function $ \ket{\psi_{s}} $, we have
+	\begin{align*}
+		H\big(\ket{\k} \ket{\psi_{s}}\big) &= \left[\frac{p^{2}}{2m} + \lambda (p_{x}S_{y} - p_{y}S_{x})\right]\big(\ket{\k} \otimes \ket{\psi_{s}}\big) \\
+		& = \left(\frac{p^{2}}{2m}\ket{\k}\right)\ket{\psi_{s}} + \lambda \big(p_{x}\ket{\k} S_{y}\ket{\psi_{s}} - p_{y}\ket{\k} S_{x}\ket{\psi_{s}}\big) \\
+		&=\frac{\hbar^{2}k^{2}}{2m}\ket{\k}\ket{\psi_{s}} + \lambda \hbar k_{x}\ket{\k}S_{y}\ket{\psi_{s}} - \lambda \hbar k_{y}\ket{\k}S_{x}\ket{\psi_{s}}\\
+		&= E\ket{\k}\ket{\psi_{s}}
+	\end{align*}
+	Next, to eliminate $ \ket{\k} $ we multiply the equation from the left by $ \bra{\k} $ to get
+	\begin{equation*}
+		\frac{\hbar^{2}k^{2}}{2m}\ket{\psi_{s}} + \lambda \hbar (k_{x}S_{y} - k_{y}S_{x})\ket{\psi_{s}} = E\ket{\psi_{s}}
+	\end{equation*}
+	We're now left with an equation containing only the spin wavefunction $ \ket{\psi_{s}} $. 
+\end{itemize}
+
+\textbf{Theoretical Interlude}
+\begin{itemize}
+
+	\item Recall that for a particle with spin $ S = \frac{1}{2} $, the function $ \ket{\psi_{s}} $ is an element of the two-dimensional spin Hilbert space $ \H_{s} $ and can thus be written as the linear combination
+	\begin{equation*}
+		\ket{\psi_{s}} = \alpha \ket{\ua} + \beta \ket{\da}
+	\end{equation*}
+
+	\item Just like it is more convenient to the orbital angular momentum components $ L_{x} $ and $ L_{y} $ in terms of the operators $ L_{+} $ and $ L_{-} $, it is best to analyze $ S_{x} $ and $ S_{y} $ in terms of the analogously defined operators $ S_{+} $ and $ S_{-} $, which read
+	\begin{align*}
+		& S_{+} = S_{x} + iS_{y} \eqtext{and} S_{-} = S_{x} - i S_{y}\\
+		& S_{x} = \frac{S_{+}+S_{-}}{2} \eqtext{and} S_{y} = \frac{S_{+}iS_{-}}{2i}
+	\end{align*}
+	The operators $ S_{+} $ and $ S_{-} $ act on the spin basis states $ \ket{sm} $ to produce
+	\begin{align*}
+		& S_{+} \ket{sm} = \hbar \sqrt{s(s+1) - m(m+1)}\ket{s, m+1}\\
+		& S_{-} \ket{sm} = \hbar \sqrt{s(s+1) - m(m-1)}\ket{s, m-1}
+	\end{align*}
+	
+\end{itemize}
+
+\textbf{Back to Our Problem}
+\begin{itemize}
+	\item  First, some useful intermediate results: $ S_{+}\ket{\ua} = S_{+}\ket{\tfrac{1}{2} \tfrac{1}{2}} = 0 $ ($ m $ cannot increase beyond $ s = \frac{1}{2} $), $ S_{+}\ket{\da} = S_{+}\ket{\tfrac{1}{2} -\tfrac{1}{2}} = \hbar \ket{\ua} $, $ S_{-}\ket{\ua} = S_{-}\ket{\tfrac{1}{2} \tfrac{1}{2}} = \hbar \ket{\da} $ and $ S_{-}\ket{\da} = S_{-}\ket{\tfrac{1}{2}- \tfrac{1}{2}} = 0 $ ($ m $ cannot increase below $ -s = -\frac{1}{2} $). 
+
+	\item In terms of $ S_{+} $ and $ S_{-} $ and using the above intermediate results, $ S_{x} $ and $ S_{y} $ act on $ \ket{\psi_{s}} $ to produces
+	\begin{align*}
+		&S_{x}\ket{\psi_{s}} = \frac{S_{+}+S_{-}}{2} \big(\alpha \ket{\ua} + \beta \ket{\da}\big) = \frac{\hbar}{2} \big(\alpha \ket{\da} + \beta \ket{\ua}\big)\\
+		&S_{y}\ket{\psi_{s}} = \frac{S_{+}-S_{-}}{2i} \big(\alpha \ket{\ua} + \beta \ket{\da}\big) = \frac{\hbar}{2i} \big(-\alpha \ket{\da} + \beta \ket{\ua}\big)
+	\end{align*} 
+	
+	\item We can now evaluate the earlier equation 
+	\begin{equation*}
+		\frac{\hbar^{2}k^{2}}{2m}\ket{\psi_{s}} + \lambda \hbar (k_{x}S_{y} - k_{y}S_{x})\ket{\psi_{s}} = E\ket{\psi_{s}}
+	\end{equation*}
+	Using the just-derived action of $ S_{x} $ and $ S_{y} $ act on $ \ket{\psi_{s}} $, we have
+	\begin{equation*}
+		\frac{\hbar^{2}k^{2}}{2m}\big(\alpha \ket{\da} + \beta \ket{\ua}\big)+ \frac{\lambda k_{x} \hbar^{2}}{2i} \big(-\alpha \ket{\da} + \beta \ket{\ua}\big) - \frac{\lambda k_{y} \hbar^{2}}{2} \big(\alpha \ket{\da} + \beta \ket{\ua}\big) = E\big(\alpha \ket{\da} + \beta \ket{\ua}\big)
+	\end{equation*}
+	Note that this equation contains only scalar values and the two linearly independent states $ \ket{\da} $ and $ \ket{\ua} $---all operators are gone from the equation. 
+	
+	\item Multiplying the equation from the left by $ \bra{\ua} $ and applying the orthonormality of $ \ket{\da} $ and $ \ket{\ua} $ produces
+	\begin{equation*}
+		\frac{\hbar^{2}k^{2}}{2m} \alpha + \frac{\lambda \hbar^{2}k_{x}}{2i} \beta - \frac{\lambda \hbar^{2}k_{y}}{2} \beta = E \alpha
+	\end{equation*}
+	while multiplying the equation from the left by $ \bra{\da} $ produces
+	\begin{equation*}
+		\frac{\hbar^{2}k^{2}}{2m} \beta - \frac{\lambda \hbar^{2}k_{x}}{2i} \beta - \frac{\lambda \hbar^{2}k_{y}}{2} \alpha = E \beta
+	\end{equation*}
+	We have a system of two equations for the two unknown coefficients $ \alpha $ and $ \beta $; in matrix form this system reads
+	\begin{equation*}
+		\begin{bmatrix}
+		\frac{\hbar^{2}k^{2}}{2m} & \frac{\lambda \hbar^{2}}{2i}(k_{x}-ik_{y}) \\
+		-\frac{\lambda \hbar^{2}}{2i}(k_{x}+ik_{y}) & \frac{\hbar^{2}k^{2}}{2m}
+		\end{bmatrix}
+		\begin{bmatrix}
+			\alpha\\
+			\beta
+		\end{bmatrix}
+		= E
+		\begin{bmatrix}
+			\alpha\\
+			\beta
+		\end{bmatrix}
+	\end{equation*}
+	which is an ($ 2 \cross 2 $) eigenvalue problem.
+	
+	\item Before tackling the eigenvalue problem, we'll write the 2D wave vector $ \vec{k} = (k_{x}, k_{y}) $ in polar coordinates:
+	\begin{equation*}
+		k_{x} + ik_{y} = ke^{i\phi} \eqtext{and} k_{x} - ik_{y} = ke^{-i\phi}
+	\end{equation*}
+	With $ \k $ written in polar coordinates, the eigenvalue equation reads
+	\begin{equation*}
+		\begin{bmatrix}
+		\frac{\hbar^{2}k^{2}}{2m} & \frac{\lambda \hbar^{2}}{2i}ke^{-i\phi} \\[1mm]
+		-\frac{\lambda \hbar^{2}}{2i}ke^{i\phi} & \frac{\hbar^{2}k^{2}}{2m}
+		\end{bmatrix}
+		\begin{bmatrix}
+			\alpha\\
+			\beta
+		\end{bmatrix}
+		= E
+		\begin{bmatrix}
+			\alpha\\
+			\beta
+		\end{bmatrix}
+	\end{equation*}
+	We find the energy eigenvalues from the zeros of the characteristic polynomial:
+	\begin{equation*}
+		p(E) = \det 
+		\begin{bmatrix}
+		\frac{\hbar^{2}k^{2}}{2m} - E & \frac{\lambda \hbar^{2}}{2i}ke^{-i\phi} \\[1mm]
+		-\frac{\lambda \hbar^{2}}{2i}ke^{i\phi} & \frac{\hbar^{2}k^{2}}{2m} - E
+		\end{bmatrix}
+		= \left( \frac{\hbar^{2}k^{2}}{2m} - E\right)^{2} - \left(\frac{\lambda \hbar^{2}k^{2}}{2}\right)^{2} \equiv 0
+	\end{equation*}	
+	The two solutions are
+	\begin{equation*}
+		E_{+,-} = \frac{\hbar^{2}k^{2}}{2m} \pm \frac{\lambda \hbar^{2}k}{2}
+	\end{equation*}
+	Note that $ \lambda = 0 $, corresponding to zero coupling, recovers the free-particle energy $ E = \frac{\hbar^{2}k^{2}}{2m} $. In this case we have energy degeneracy $ 2 $ for each $ \k $, since both energy eigenvalues $ E_{+,-} $ are equal for a given value of $ k $.
+	
+	For $ \lambda \neq 0 $, in the presence of Rashba coupling, the degeneracy is broken, since both energy eigenvalues $ E_{\pm} $ are different; shifted up or down from the free particle energy by the quantity $ \frac{\lambda \hbar^{2}k}{2} $.
+	
+%	\item To analyze the energy eigenvalues with $ \lambda \neq 0 $ in the presence of Rashba coupling, we first write $ E $ as a complete square:
+%	\begin{equation*}
+%		E_{\pm} = \frac{h^{2}}{2m}\left(k \pm \frac{m\lambda}{2}\right)^{2} - \frac{m\hbar^{2}\lambda^{2}}{8}
+%	\end{equation*}
+%	The nonzero coupling coefficient breaks the twofold degeneracy of a free particle, since both energy eigenvalues $ E_{\pm} $ are different.
+
+	\item Next, we consider the corresponding eigenstates. In the degenerate case $ \lambda = 0 $, we have
+	\begin{equation*}
+		H \ket{\k} \big(\alpha \ket{\ua} + \beta \ket{\da}\big) = \frac{\hbar^{2}k^{2}}{2m}\big(\alpha \ket{\ua} + \beta \ket{\da}\big)
+	\end{equation*}
+	for each $ \alpha $ and $ \beta $. In other words, when $ \lambda = 0 $, any linear combination $ \ket{\psi_{s}} = \big(\alpha \ket{\ua} + \beta \ket{\da}\big) $ is an eigenstate of the Hamiltonian with the same energy eigenvalue $  \frac{\hbar^{2}k^{2}}{2m} $.
+	
+	\item When $ \lambda \neq 0 $, only two unique linear combination of $ \ket{\ua} $ and $ \ket{\da} $ will be eigenstates of the Hamiltonian; we find these states by finding the eigenvectors of the earlier eigenvalue problem
+	\begin{equation*}
+		\begin{bmatrix}
+		\frac{\hbar^{2}k^{2}}{2m} - E & \frac{\lambda \hbar^{2}}{2i}ke^{-i\phi} \\[1mm]
+		-\frac{\lambda \hbar^{2}}{2i}ke^{i\phi} & \frac{\hbar^{2}k^{2}}{2m} - E
+		\end{bmatrix}
+		\begin{bmatrix}
+			\alpha\\
+			\beta
+		\end{bmatrix}
+		= 0
+	\end{equation*}
+	Substituting in the two energy eigenvalues $ E_{\pm} = \frac{\hbar^{2}k^{2}}{2m} \pm \frac{\lambda \hbar^{2}k}{2} $ gives
+	\begin{equation*}
+		\begin{bmatrix}
+		\mp \frac{\lambda \hbar^{2}k}{2}  & \frac{\lambda \hbar^{2}}{2i}ke^{-i\phi} \\[1mm]
+		\frac{\lambda \hbar^{2}}{2i}ke^{i\phi} & \mp \frac{\lambda \hbar^{2}k}{2} 
+		\end{bmatrix}
+		\begin{bmatrix}
+			\alpha\\
+			\beta
+		\end{bmatrix}
+		= 0
+	\end{equation*}
+	Multiplying the matrices leads to the equation
+	\begin{equation*}
+		\mp \frac{\lambda \hbar^{2}k}{2}\alpha + \frac{\lambda \hbar^{2}k}{2i} e^{-i\phi} \beta = 0 \implies \beta = \pm \alpha i e^{i\phi}
+	\end{equation*}
+	The two eigenvectors are thus
+	\begin{equation*}
+		\begin{bmatrix}
+			\alpha\\
+			\beta
+		\end{bmatrix}
+		= 
+		\alpha 
+		\begin{bmatrix}
+			1 \\
+			\pm ie^{i\phi}
+		\end{bmatrix}
+		\eqtext{or, when normalized,}
+		\begin{bmatrix}
+			\alpha\\
+			\beta
+		\end{bmatrix}
+		= 
+		\frac{1}{\sqrt{2}} 
+		\begin{bmatrix}
+			1 \\
+			\pm ie^{i\phi}
+		\end{bmatrix}
+	\end{equation*}
+	The corresponding eigenfunctions for the eigenvalues $ E_{\pm} $ are thus
+	\begin{equation*}
+		\ket{\psi_{+}} = \ket{\k}\frac{\ket{\ua} + ie^{i\phi}\ket{\da}}{\sqrt{2}} \eqtext{and} \ket{\psi_{-}} =  \ket{\k}\frac{\ket{\ua} - ie^{i\phi}\ket{\da}}{\sqrt{2}}
+	\end{equation*}
+	Next, we will analyze the just-derived wavefunctions.
+\end{itemize}
+
+\textbf{Theoretical Interlude}
+\begin{itemize}
+	\item If the projection $ \vec{S} \cdot \uvec{e}$ of a particle's spin $ \vec{S} $ in the direction $ \uvec{e} $ acts on the spin particle's wavefunction $ \ket{\psi_{s}} $ to produce $  \vec{S} \cdot \uvec{e} \ket{\psi_{s}} = \frac{\hbar}{2}\ket{\psi_{s}} $, then we say the particle's spin points in the direction $ \uvec{e} $. 
+	
+	\item If we write $ \uvec{e} $ in spherical coordinates as 
+	\begin{equation*}
+		\uvec{e} = \big(\cos \varphi \sin \theta, \sin \varphi \sin \theta, \cos \theta\big),
+	\end{equation*}
+	then the equation $  \vec{S} \cdot \uvec{e} \ket{\psi_{s}} = \frac{\hbar}{2}\ket{\psi_{s}} $ has the solution 
+	\begin{equation*}
+		\ket{\psi_{s}} = \cos \frac{\theta}{2} \ket{\ua} + \sin \frac{\theta}{2} e^{i\varphi} \ket{\da}
+	\end{equation*}
+	In other words, if we know a particle's spin wavefunction $ \ket{\psi_{s}} $ and can deduce the values of $ \varphi $ and $ \theta $ by comparing the particle's wavefunction to the above equation, we can determine the spatial orientation $ \uvec{e} = \big(\cos \varphi \sin \theta, \sin \varphi \sin \theta, \cos \theta\big) $  of the particle's spin.
+	
+\end{itemize}
+
+\textbf{Back to Our Problem}
+\begin{itemize}
+	\item In our case, the particle has the spin wavefunctions
+	\begin{equation*}
+		\ket{\psi_{s_{\pm}}} = \frac{1}{\sqrt{2}}\ket{\ua} \pm \frac{1}{\sqrt{2}} ie^{i\phi}\ket{\da} =  \frac{1}{\sqrt{2}}\ket{\ua} + \frac{1}{\sqrt{2}} e^{i(\phi \pm \frac{\pi}{2})}\ket{\da}
+	\end{equation*} 
+	By comparing $ \ket{\psi_{s_{\pm}}} $ to the above general expression for a spin wave function
+	\begin{equation*}
+		 \ket{\psi_{s}} = \cos \frac{\theta}{2} \ket{\ua} + \sin \frac{\theta}{2} e^{i\varphi} \ket{\da}
+	\end{equation*}
+	we see that our particle has polar angle $ \theta = \frac{\pi}{2} $ and azimuthal angle $ \varphi = \phi \pm \frac{\pi}{2} $, where $ \phi $ is the angle in the phase term $ e^{i\phi} $ ($ \phi $ was the azimuthal angle in the polar-coordinate representation of the wave vector $ \k = (k, \phi) $). 
+	
+	In both cases, the particle's spin is perpendicular to the direction of the wave vector $ \ket{k} $. 
+\end{itemize}
+
+	
+	
+
 
 \end{document}
 
