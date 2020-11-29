@@ -6,7 +6,7 @@ from scipy.special import ellipk, ellipj
 from scipy.integrate import solve_ivp, odeint
 import os
 import re
-from numerical_methods_odes import *  # includes numpy as np
+from ivp_methods import *  # includes numpy as np
 from newton_states import *  # also includes numpy as np
 
 matplotlib.rcParams['mathtext.fontset'] = 'cm'

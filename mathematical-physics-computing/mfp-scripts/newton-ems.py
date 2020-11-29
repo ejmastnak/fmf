@@ -5,7 +5,7 @@ from matplotlib import rc
 from matplotlib.colors import LinearSegmentedColormap
 from mpl_toolkits.mplot3d import axes3d
 import matplotlib.animation as animation
-from numerical_methods_odes import *
+from ivp_methods import *
 
 matplotlib.rcParams['mathtext.fontset'] = 'cm'
 matplotlib.rcParams['font.family'] = 'STIXGeneral'

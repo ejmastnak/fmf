@@ -4,7 +4,7 @@ from matplotlib import pyplot as plt
 import os
 import re
 import time
-from numerical_methods_odes import *
+from ivp_methods import *
 
 matplotlib.rcParams['mathtext.fontset'] = 'cm'
 matplotlib.rcParams['font.family'] = 'STIXGeneral'

@@ -5,7 +5,7 @@ Collection of differential equations of motion to model the various pendulums an
  encountered in the Newton report.
  
 There are three similar classes of equations:
- f(state, t) used with the numerical_methods_odes.py funcitons
+ f(state, t) used with the ivp_methods.py funcitons
  f(t, state) used with scipy's new solve_ivp API
  f(coordinates) used with symplectic methods
 """

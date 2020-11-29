@@ -1,6 +1,4 @@
-import math
-import numpy as np
-from matplotlib import pyplot as plt
+import numpy
 
 """A variety of methods to solve ODE boundary value problems.
 
@@ -11,11 +9,8 @@ AUTHOR:
     Python version: October-November 2008
 """
 
-import numpy
 
-#-----------------------------------------------------------------------------
-
-def shoot( f, a, b, z1, z2, t, tol ):
+def shoot(f, a, b, z1, z2, t, tol):
     """Implements the shooting method to solve second order BVPs
 
     USAGE:
@@ -44,21 +39,22 @@ def shoot( f, a, b, z1, z2, t, tol ):
         refine the initial values of y' used for the initial value problems.
     """
 
-    from diffeq import rk4
+    from ivp_methods import rk4
 
     max_iter = 25   # Maximum number of shooting iterations
 
-    n = len( t )    # Determine the size of the arrays we will generate
+    n = len(t)    # Determine the size of the arrays we will generate
 
     # Compute solution to first initial value problem (IVP) with y'(a) = z1.
     # Because we are using the secant method to refine our estimates of z =
     # y', we don't really need all the solution of the IVP, just the last
     # point of it -- this is saved in w1.
 
-    y = rk4( f, [a,z1], t )
-    w1 = y[n-1,0]
+    y = rk4(f, [a,z1], t)
+    w1 = y[n-1, 0]
+    w2 = y[n-1, 0]  # just to initialize and avoid compiler warnings
 
-    # print ("%2d: z = %10.3e, error = %10.3e" % ( 0, z1, b - w1 ))
+    # print ("%2d: z = %10.3e, error = %10.3e" % (0, z1, b - w1))
 
     # Begin the main loop.  We will compute the solution of a second IVP and
     # then use the both solutions to refine our estimate of y'(a).  This
@@ -67,21 +63,21 @@ def shoot( f, a, b, z1, z2, t, tol ):
     # within the specified tolerance or we exceed the maximum number of
     # allowable iterations.
 
-    for i in range( max_iter ):
+    for i in range(max_iter):
 
         # Solve second initial value problem, using y'(a) = z2.  We need to
         # retain the entire solution vector y since if y(t(n)) is close enough
         # to b for us to stop then the first column of y becomes our solution
         # vector.
 
-        y = rk4( f, [a,z2], t )
-        w2 = y[n-1,0]
+        y = rk4(f, [a, z2], t)
+        w2 = y[n-1, 0]
 
-        # print ("%2d: z = %10.3e, error = %10.3e" % ( i+1, z2, b - w2 ))
+        # print ("%2d: z = %10.3e, error = %10.3e" % (i+1, z2, b - w2))
 
         # Check to see if we are done...
 
-        if abs( b - w2 ) < tol:
+        if abs(b - w2) < tol:
             break
 
         # Compute the new approximations to the initial value of the first
@@ -90,24 +86,23 @@ def shoot( f, a, b, z1, z2, t, tol ):
         # value problems solved above with y1'(a) = z1 and y2'(a) = z2.  The
         # new value for z1 is the old value of z2.
 
-        #z1, z2 = ( z2, z1 + ( z2 - z1 ) / ( w2 - w1 ) * ( b - w1 ) )
-        z1, z2 = ( z2, z2 + ( z2 - z1 ) / ( w2 - w1 ) * ( b - w2 ) )
+        # z1, z2 = (z2, z1 + (z2 - z1) / (w2 - w1) * (b - w1))
+        z1, z2 = (z2, z2 + (z2 - z1) / (w2 - w1) * (b - w2))
         w1 = w2
 
     # All done.  Check to see if we really solved the problem, and then return
     # the solution.
 
-    if abs( b - w2 ) >= tol:
+    if abs(b - w2) >= tol:
         print ("\a**** ERROR ****")
         print ("Maximum number of iterations (%d) exceeded" % max_iter)
         print ("Returned values may not have desired accuracy")
-        print ("Error estimate of returned solution is %e" % ( b - w2 ))
+        print ("Error estimate of returned solution is %e" % (b - w2))
 
     return y[:,0]
 
-#-----------------------------------------------------------------------------
 
-def fd( u, v, w, t, a, b ):
+def fd(u, v, w, t, a, b):
     """Implements the finite difference  method to solve linear second order BVPs
 
     Compute finite difference solution to the BVP
@@ -138,39 +133,39 @@ def fd( u, v, w, t, a, b ):
 
     # Get the dimension of t and make sure that t is an n-element vector
 
-    if type( t ) != numpy.ndarray:
-        if type( t ) == list:
-            t = numpy.array( t )
+    if type(t) != numpy.ndarray:
+        if type(t) == list:
+            t = numpy.array(t)
         else:
-            t = numpy.array( [ float( t ) ] )
+            t = numpy.array([float(t)])
 
-    n = len( t )
+    n = len(t)
 
     # Make sure that u, v, and w are either scalars or n-element vectors.
     # If they are scalars then we create vectors with the scalar value in
     # each position.
 
-    if type( u ) == int or type( u ) == float:
-        u = numpy.array( [ float( u ) ] * n )
+    if type(u) == int or type(u) == float:
+        u = numpy.array([float(u)] * n)
 
-    if type( v ) == int or type( v ) == float:
-        v = numpy.array( [ float( v ) ] * n )
+    if type(v) == int or type(v) == float:
+        v = numpy.array([float(v)] * n)
 
-    if type( w ) == int or type( w ) == float:
-        w = numpy.array( [ float( w ) ] * n )
+    if type(w) == int or type(w) == float:
+        w = numpy.array([float(w)] * n)
 
     # Compute the stepsize.  It is assumed that all elements in t are
     # equally spaced.
 
-    h = t[1] - t[0];
+    h = t[1] - t[0]
 
     # Construct tridiagonal system; boundary conditions appear as first and
     # last equations in system.
 
-    A = -( 1.0 + w[1:n] * h / 2.0 )
+    A = -(1.0 + w[1:n] * h / 2.0)
     A[-1] = 0.0
 
-    C = -( 1.0 - w[0:n-1] * h / 2.0 )
+    C = -(1.0 - w[0:n-1] * h / 2.0)
     C[0] = 0.0
 
     D = 2.0 + h * h * v
@@ -182,54 +177,16 @@ def fd( u, v, w, t, a, b ):
 
     # Solve tridiagonal system
 
-    for i in range( 1, n ):
+    for i in range(1, n):
         xmult = A[i-1] / D[i-1]
         D[i] = D[i] - xmult * C[i-1]
         B[i] = B[i] - xmult * B[i-1]
 
-    x = numpy.zeros( n )
+    x = numpy.zeros(n)
     x[n-1] = B[n-1] / D[n-1]
 
-    for i in range( n - 2, -1, -1 ):
-        x[i] = ( B[i] - C[i] * x[i+1] ) / D[i]
+    for i in range(n - 2, -1, -1):
+        x[i] = (B[i] - C[i] * x[i+1]) / D[i]
 
     return x
 
-
-def get_d2xdt(y, t):
-    """ 2nd order ODE y'' = y + 4e^t """
-    return y + 4*np.exp(t)
-
-
-def f(y, t):
-    """ Re-written version of above get_d2xdt """
-    return_y = np.zeros(np.shape(y))
-    return_y[0] = y[1]
-    return_y[1] = y[0] + 4*np.exp(t)
-    return return_y
-
-
-def get_y_analytic(t):
-    """ Analytic solution to y'' = y + 4e^t with y(0)=1 and y(1/2) = 2e^(1/2)"""
-    return np.exp(t)*(1 + 2*t)
-
-
-def yes():
-    """ Solves y'' = y + 4exp(t), y(0)=1, y(1/2) = 2exp(1/2) using both the
-         finite difference method and the shooting method. """
-
-    a, b = 0.0, 0.5
-    n_points = 10
-    t1 = np.linspace(a, b, n_points)
-    t2 = np.linspace(a, b, 200)
-    y_analytic = get_y_analytic(t2)
-    y_fd = fd(4*np.exp(t1), 1, 0, t1, 1, 2*np.exp(0.5))
-    y_s = shoot(f, np.exp(a), 2*np.exp(b), 3.0, 4.0, t1, 1e-5)
-    plt.plot(t2, y_analytic, label="analytic solution")
-    plt.plot(t1, y_fd, ls='--', marker='o', label="finite difference method")
-    plt.plot(t1, y_s, ls='--', marker='o', label="shooting method")
-    plt.legend()
-    plt.show()
-
-
-yes()
