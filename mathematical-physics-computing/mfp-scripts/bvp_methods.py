@@ -25,7 +25,7 @@ def shoot(f, a, b, z1, z2, t, tol):
         a     - solution value at the left boundary: a = y(t[0]).
         b     - solution value at the right boundary: b = y(t[n-1]).
         z1    - first initial estimate of y'(t[0]).
-        z1    - second initial estimate of y'(t[0]).
+        z2    - second initial estimate of y'(t[0]).
         t     - array of n time values to determine y at.
         tol   - allowable tolerance on right boundary: | b - y[n-1] | < tol
 
@@ -41,7 +41,7 @@ def shoot(f, a, b, z1, z2, t, tol):
 
     from ivp_methods import rk4
 
-    max_iter = 25   # Maximum number of shooting iterations
+    max_iter = 30   # Maximum number of shooting iterations
 
     n = len(t)    # Determine the size of the arrays we will generate
 
@@ -50,7 +50,7 @@ def shoot(f, a, b, z1, z2, t, tol):
     # y', we don't really need all the solution of the IVP, just the last
     # point of it -- this is saved in w1.
 
-    y = rk4(f, [a,z1], t)
+    y = rk4(f, [a, z1], t)
     w1 = y[n-1, 0]
     w2 = y[n-1, 0]  # just to initialize and avoid compiler warnings
 
@@ -94,15 +94,15 @@ def shoot(f, a, b, z1, z2, t, tol):
     # the solution.
 
     if abs(b - w2) >= tol:
-        print ("\a**** ERROR ****")
-        print ("Maximum number of iterations (%d) exceeded" % max_iter)
-        print ("Returned values may not have desired accuracy")
-        print ("Error estimate of returned solution is %e" % (b - w2))
+        print("\a**** ERROR ****")
+        print("Maximum number of iterations (%d) exceeded" % max_iter)
+        print("Returned values may not have desired accuracy")
+        print("Error estimate of returned solution is %e" % (b - w2))
 
     return y[:,0]
 
 
-def fd(u, v, w, t, a, b):
+def fd_linear(u, v, w, t, a, b):
     """Implements the finite difference  method to solve linear second order BVPs
 
     Compute finite difference solution to the BVP
