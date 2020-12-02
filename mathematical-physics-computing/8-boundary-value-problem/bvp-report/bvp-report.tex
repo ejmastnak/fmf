@@ -1,0 +1,642 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{mwe}
+\usepackage[margin=3.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bm} % for bold vectors in math mode
+\usepackage{physics} % many useful physics commands
+\usepackage[separate-uncertainty=true]{siunitx} % for scientific notation and units
+
+\usepackage{graphicx}
+\graphicspath{{"../figures/"}}
+\usepackage[section]{placeins} % to keep figures in their sections
+\usepackage[export]{adjustbox} % for subcaptionbox figures
+
+
+\usepackage[most, minted]{tcolorbox} % for displaying code
+
+\usepackage{xcolor}  % to color hyperref links
+\usepackage[colorlinks = true, allcolors=blue]{hyperref}
+
+\setlength{\parindent}{0pt} % to stop indenting new paragraphs
+\newcommand{\diff}{\mathop{}\!\mathrm{d}} % differential
+\newcommand{\eqtext}[1]{\qquad \text{#1} \qquad}
+\renewcommand{\O}{\mathcal{O}}  % for order of DE methods
+
+\newcommand{\schro}{Schr\"{o}dinger\xspace}
+\newcommand{\mat}[1]{\mathbf{#1}}
+
+\newtcblisting{python}{%
+	listing engine=minted,
+	minted language=python,
+	listing only,
+	breakable,
+	enhanced,
+	minted options = {
+		linenos, 
+		breaklines=true, 
+		tabsize=2,
+		fontsize=\footnotesize, 
+		numbersep=2mm
+	},
+	overlay={%
+		\begin{tcbclipinterior}
+			\fill[gray!25] (frame.south west) rectangle ([xshift=4mm]frame.north west);
+		\end{tcbclipinterior}
+	}   
+}
+
+
+\begin{document}
+\title{The Second-Order Boundary Eigenvalue Problem}
+\author{Elijan Jakob Mastnak\\[1mm]\small{Student ID: 28181157}}
+\date{December 2020}
+\maketitle
+
+\tableofcontents
+
+\newpage
+\begin{center}
+\textbf{Assignment}
+\begin{enumerate}
+	\item Find the first few eigenfunctions and eigenvalues of an infinite potential well using the finite difference and shooting methods (and optionally other methods of your choice). Repeat the procedure for a finite potential well.
+	
+	\item Investigate the contributions to error in the finite difference model. Error when discretizing the second derivative with a finite difference; error because of the discretization of the $ x $ interval (finite difference matrix dimension). Use the analytic solutions for reference.
+	\iffalse
+	\item \textit{Optional}: Find the first few eigenfunctions and eigenvalues of the equation
+	\begin{equation*}
+		\dv[4]{\psi}{x} = E\psi
+	\end{equation*}
+	on the interval $ x \in [-\frac{a}{2}, \frac{a}{2}] $ with the boundary conditions
+	\begin{equation*}
+		\psi\big(\pm \tfrac{a}{2}\big) = \psi''\big(\pm \tfrac{a}{2}\big) = 0
+	\end{equation*}
+	using the finite difference method and diagonalization. Use the finite difference approximation to the fourth derivative:
+	\begin{equation*}
+		\psi_{i-2} - 4\psi_{i-1} + 6 \psi_{i} - 4\psi_{i+1} + \psi_{i+2} = h^{4}k^{4} \psi_{i} = \lambda \psi_{i}
+	\end{equation*}
+	where $ E = k^{4} $ and $ \lambda = h^{4}k^{4} $. Expect a difference matrix with 5 non-zero diagonals.
+	\fi
+\end{enumerate}
+\end{center}
+
+\vspace{2mm}
+
+\rule{\textwidth}{0.2pt}
+
+\section{Theory} \label{bvp:s:theory}
+\vspace{-2mm}
+\textit{To jump right to the solution, see \hyperref[bvp:s:solution]{Section \ref{bvp:s:solution}}}.
+
+\vspace{2mm}
+
+\iffalse
+We will solve the stationary \schro equation
+\begin{equation*}
+	- \frac{\hbar^{2}}{2m} \dv[2]{\psi}{x} + V(x) \psi = E\psi
+\end{equation*}
+for an infinite potential well:
+\begin{equation*}
+	V(x) = 
+	\begin{cases}
+		0 & -\frac{a}{2} < x < \frac{a}{2}\\
+		\infty & \abs{x} \geq \frac{a}{2}
+	\end{cases}
+\end{equation*}
+and for a finite potential well 
+\begin{equation*}
+	V(x) = 
+	\begin{cases}
+		0 & -\frac{a}{2} < x < \frac{a}{2}\\
+		V_{0} & \abs{x} \geq \frac{a}{2}
+	\end{cases}
+\end{equation*}
+The analytic solutions are: \textbf{TODO}.
+
+\fi
+
+
+A second-order ordinary boundary value problem involves solving a differential equation of the form
+\begin{equation*}
+	y'' = f(x, y, y')
+\end{equation*}
+on the interval $ x \in [a, b] $ such that the solution satisfies boundary conditions at the endpoints $ a $ and $ b $. This boundary conditions can come in a few forms, including:
+\begin{itemize}
+	\item Dirichlet boundary conditions: $ y(a) = \alpha $ and $ y(b) = \beta $
+	\item Von Neumann boundary conditions: $ y'(a) = \alpha $ and $ y'(b) = \beta $
+	\item Robin boundary conditions: $ A_{1}y(a) + A_{2}y'(a) = \alpha $ and $ B_{1}y(b) + B_{2}y'(b) = \beta $
+\end{itemize}
+
+\subsection{Finite Difference Method}
+To use the finite difference method to solve a second-order boundary problem on the interval $ [a, b] $ with Dirichlet boundary conditions, we partition the interval into $ n+1 $ points $ a = x_{0} < x_{1} < \ldots < x_{n} = b $, typically separated by a uniform step size $ h $. We then rewrite the second derivative $ y'' $ with the finite difference approximation
+\begin{equation*}
+	y'' \approx \frac{y_{i-1}-2y_{i}+y_{i+1}}{h^{2}}
+\end{equation*}
+Applied to the stationary \schro equation for a free particle, this reads
+\begin{equation*}
+	\psi_{i-1} - (2-\lambda)\psi_{i} + \psi_{i+1} = 0
+\end{equation*}
+where $ \lambda = Eh^{2} = k^{2}h^{2} $. The resulting set of linear equations generally produces a tridiagonal system of the form
+\begin{equation*}
+	\mat{H} \bm{\psi} = \lambda \bm{\psi}
+\end{equation*}
+which we can solve with diagonalization methods to find the eigenvalues $ \lambda $ and corresponding eigenvectors $ \bm{\psi} = (\psi_{1}, \psi_{2}, \ldots )^{T} $.
+
+\subsection{Shooting Method}
+With the shooting method, we treat the boundary value problem as an initial value problem. With a chosen ODE solver, we integrate the differential equation 
+\begin{equation*}
+	y'' = f(x, y, y') 
+\end{equation*}
+from the starting point $ x = a $ to the endpoint $ x = b $ with a chosen set of initial conditions on $ \psi $ and $ \psi' $. We then check if the solution matches the desired boundary conditions and vary the initial conditions until the initial value problem solution satisfies the boundary value conditions to a desired level of accuracy.
+
+\vspace{2mm}
+
+For an eigenvalue problem involving the free parameter $ \lambda $, we instead fix the initial conditions and, for a choice of the energy $ \lambda $ integrate the differential equation from $ x = a $ to the boundary $ x = b $ and check if the boundary conditions hold. In the likely even they do not, we vary the value of $ \lambda $ and repeat the procedure (e.g. with a root-finding algorithm) until the boundary condition holds to a desired accuracy.
+
+\vspace{2mm}
+
+For \schro-type problems with a symmetric potential on a symmetric interval $ x \in \big[-\frac{a}{2}, \frac{a}{2}\big] $, it is also possible to start the shooting method at the midpoint $ x = 0 $ and use the orthogonal boundary conditions $ \psi(0) = 1, \psi'(0) = 0 $ or $ \psi(0) = 0, \psi'(0) = 1 $, which yield symmetric and asymmetric solutions, respectively.
+
+
+\section{Preliminary Steps}  \label{bvp:s:solution}
+This section presents some nonessential but useful steps that facilitate solving the remainder of the problem.
+
+
+\subsection{Transformation to Dimensionless Units}
+For convenience, I transformed to natural units better suited to numerical computation. I set $ a = 1 $ and $ \frac{m}{\hbar^{2}} = 1 $, so energy is measured in units of $ \frac{\hbar^{2}}{ma^{2}} $. In this set of units, the \schro equation reads
+\begin{equation*}
+	\psi'' = -2(E-V)\psi
+\end{equation*}
+
+
+\subsection{Infinite Potential Well}
+The general solution for the wavefunctions $ \psi_{n} $ and energy eigenvalues $ E_{n} $ of a particle in an infinite potential well (IPW) of width $ a $ centered at $ x = 0 $ is
+\begin{equation*}
+	\psi_{n}(x) = \sqrt{\frac{2}{a}}\sin\left[\frac{n\pi}{a}\left(x + \frac{a}{2}\right)\right] \eqtext{and} E_{n} = \frac{n^{2}\pi^{2}\hbar^{2}}{2ma^{2}}
+\end{equation*}
+where $ a $ is the well's width. Alternatively, we can write the solutions as
+\begin{equation*}
+	\psi_{n}(x) = 
+	\begin{cases}
+		\sqrt{\frac{2}{L}}\sin\left[\frac{n\pi x}{a}\right] & n \text{ even}\\
+		\sqrt{\frac{2}{L}}\cos\left[\frac{n\pi x}{a}\right] & n \text{ odd}
+	\end{cases}
+\end{equation*}
+
+In natural units, the \schro equation and energy eigenvalues read
+\begin{equation}
+	\psi_{n}(x) = \sqrt{2}\sin\left[n\pi\left(x + \tfrac{1}{2}\right)\right] \eqtext{and} E_{n} = \frac{n^{2}\pi^{2}}{2} \label{bvp:eq:ipw-sol}
+\end{equation}
+These are implemented in the following Python functions
+\begin{python}
+import numpy as np
+def ipw_energies(n, l=1.0):
+""" Returns the energy of the infinite potential well's nth state """
+    return (np.pi*n)**2/2
+
+def ipw_wavefunction(x, n, l=1.0):
+""" Returns infinite potential well's nth wavefunction """
+    return np.sqrt(2)*np.sin(n*np.pi * (x + l/2))
+\end{python}
+
+
+\subsection{Finite Potential Well} \label{bvp:ss:fpw}
+To solve the finite potential well (FPW), we split the $ x $ axis into three regions: $ (-\infty, -\frac{a}{2})$, $ (-\frac{a}{2}, \frac{a}{2}) $ and $ (\frac{a}{2}, \infty) $, which I'll call regions 1, 2 and 3, respectively. Regions 1 and 3 are solved with an exponential ansatz which must obey $ \psi(x) \to 0 $ as $ x \to \pm \infty $. Region 2 is solved by an oscillatory ansatz, which can be written either in terms of complex exponents or sines and cosines. 
+\begin{equation*}
+	\psi(x) = 
+	\begin{cases}
+		A e^{\kappa x} & -\infty < x < -\frac{a}{2}\\
+		Be^{-ikx} + Ce^{ikx} & -\frac{a}{2} < \frac{a}{2}\\
+		D e^{-\kappa x} & \frac{a}{2} < x < \infty
+	\end{cases}
+\end{equation*}
+where the constants $ k  $ and $ \kappa $, in both SI units and natural units, are
+\begin{equation*}
+	k = \sqrt{\frac{2mE}{\hbar^{2}}} \to \sqrt{2E} \eqtext{and} \kappa = \sqrt{\frac{2m(V_{0} - E)}{\hbar^{2}}} \to \sqrt{2(V_{0} - E)}
+\end{equation*}
+The wavefunction must be continuous and continuously differentiable at the well boundaries, leading to the requirements
+\begin{align*}
+	&\psi_{1}\big(-\tfrac{L}{2}\big) = \psi_{2}\big(-\tfrac{L}{2}\big) \qquad 	\psi_{2}\big(\tfrac{L}{2}\big) = \psi_{3}\big(\tfrac{L}{2}\big)\\
+	&\psi_{1}'\big(-\tfrac{L}{2}\big) = \psi_{2}'\big(-\tfrac{L}{2}\big) \qquad 	\psi_{2}'\big(\tfrac{L}{2}\big) = \psi_{3}'\big(\tfrac{L}{2}\big)
+\end{align*}
+These boundary conditions generate a system of equations for the coefficients $ A, B, C $ and $ D $. Because the potential $ V(x) $ is symmetric about the origin, the finite potential well has two classes of solutions: symmetric solutions with $ C = 0 $ and $ A = D $; and antisymmetric solutions with $ B = 0 $ and $ A = -D $.
+
+The energies of the symmetric and antisymmetric states, respectively, are found from the $ \kappa(E) $ and $ k(E) $ solving the transcendental equation 
+\begin{equation*}
+	\kappa = k \tan\left(\frac{ka}{2}\right) \eqtext{and} \kappa = -k \cot\left(\frac{ka}{2}\right)
+\end{equation*}
+A Python program for the FPW's energies with a root-finding algorithm might read
+\begin{python}
+from scipy.optimize import root_scalar  # root-finding algorithm
+def get_fpw_analytic_energies(V0=50.0, l=1.0, n_points=100):
+    """Finds bound state energies of a FPW with height V0 and width l"""
+    E_grid = np.linspace(0.0, V0, n_points)  # energy grid spanning 0 to V0
+    E_roots = []  # array to hold energy roots
+    for n in [1, 2]:  # test both even/odd or symmetric/asymmetric states
+        for i in range(n_points - 1):
+            E_root = root_scalar(energy_root_fun_fpw, args=(V0, l, n), x0=E_grid[i], x1=E_grid[i+1])  # returns root_scalar object
+            if E_root.converged:  # uses root_scalar's converged function
+                if E_root not in E_roots:  # reject already-found energies
+                    E_roots.append(E_root)
+    return np.sort(energies)  # sort and return energy solutions
+
+def fpw_energy_roots(E, V0=50, l=1, n=1):
+    """ Auxiliary function for solving the FPW's transcendental equation with root-finding algorithms """
+    k1, k2 = np.sqrt(2*E), np.sqrt(2*(V0 - E))
+    if n % 2 == 1:  # for odd n (symmetric solutions)
+        return k2 - k1*np.tan(k1*l/2)
+    else:  # for even n (asymmetric solutions)
+        return k2 + k1/np.tan(k1*l/2)
+\end{python}
+
+
+\subsection{Normalization} \label{bvp:ss:norm}
+A properly behaving wavefunction should be normalized, and normalization is practically essential when comparing a numerical solution to the analytic solution. Nominally, normalizing a wavefunction $ \psi $ involves finding the constant $ A $ such that
+\begin{equation*}
+	A^{2} \int_{-\infty}^{\infty} \abs{\psi}^{2}  \diff x = 1 
+\end{equation*}
+In discrete position space, assuming the $ x $ range is large enough to approximate the interval $ (-\infty, \infty) $ a discrete normalization implementation might read
+\begin{python}
+""" Normalizes the wavefunction psi defined on the position grid x """
+def normalize(x, psi):
+    probability = psi**2  % probability density
+    norm = 0  # initialize normalization constant
+    for i in range(len(x)-1):
+        dx = x[i+1] - x[i]
+        norm += 0.5*dx*(probability[i] + probability[i+1])  # integration
+    return psi / np.sqrt(norm)  # normalize the wavefunction
+\end{python}
+
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=\linewidth]{ipw-shoot-compared}
+\caption{Numerical solutions for the IPW's first few eigenfunctions, found with the shooting method, compared to the analytic solutions. Both sets of functions are normalized as described in \hyperref[bvp:ss:norm]{Subsection \ref{bvp:ss:norm}}.}
+\label{bvp:fig:ivp-shoot-compared}
+\end{figure}
+
+\section{Infinite Potential Well}
+The infinite potential well involves solving the \schro equation $ \psi'' = -2E \psi $ on the interval $ x \in \big(-\frac{a}{2} , \frac{a}{2} \big) $ with the boundary conditions $ \psi\big(-\frac{a}{2} \big) = \psi \big(\frac{a}{2} \big) = 0$. Figure \ref{bvp:fig:ivp-shoot-compared} shows the IPW's first few eigenfunctions, found with the shooting method, compared to the analytic solution.
+
+
+
+\subsection{Shooting Method}\label{bvp:ss:shooting}
+I implemented the shooting method for the IPW as follows:
+\begin{enumerate}
+	\item Create a finely-spaced grid of energies from $ 0 $ to some arbitrarily chosen energy $ E_{\text{max}} $, corresponding to the highest desired energy eigenvalue, and a grid of position values $ \{x_{i}\}_{0}^{n} $ spanning the well from $ \frac{-a}{2} $ to $ \frac{a}{2} $ on which to integrate the shooting method's initial value problem.\footnote{Alternatively, integrate from $ x = 0 $ to $ x = \frac{a}{2} $ using the orthogonal boundary conditions $ \psi_{0} = 0, \psi'_{0} = 1$ and $ \psi_{0} = 1, \psi'_{0} = 0$ to find the symmetric and asymmetric solutions separately. When testing, I found this method gave slightly more accurate energy eigenvalues, but the difference was small enough that I stayed with the more general scheme $ \frac{-a}{2} $ to $ \frac{a}{2} $ for the rest of the report.}
+	
+	\item For each energy, using the initial condition $ \psi_{0} = 0, \psi'_{0} = 1 $, integrate from the left endpoint $ x_{0} $ to the right endpoint $ x_{n} $. Store each endpoint value $ \psi_{n} $ in an array, to get $ \psi_{n} $ as a function of the energy parameter. Use the $ \psi_{n}(E) $ data to estimate the roots $ E_{n} $ of the function
+	\begin{equation*}
+		f(E) = \psi_{n}(E) - \psi_{\text{BC}} = \psi_{n}
+	\end{equation*}
+	where $ \psi_{\text{BC}} \equiv 0 $ is the boundary condition at the endpoint $ x_{n} $. Figure \ref{bvp:fig:shoot-fpw-roots} (a few pages ahead) demonstrates this process for the finite potential well.
+	
+	\item Refine the guesses for $ E_{n} $ using a root-finding algorithm---I used Newton's method---applied to the function
+	\begin{equation*}
+		f(E) = \psi_{n}(E) - \psi_{\text{BC}} = \psi_{n}(E)
+	\end{equation*}
+	The thus-found roots $ E_{n} $ of the function $ f(E) $ are the energy eigenvalues.
+	
+	\item Find the eigenfunction $ \psi_{n} $ corresponding to the each eigenvalue $ E_{n} $ by solving the \schro equation as an initial value problem using $ E = E_{n} $. 
+\end{enumerate}
+If desired, see the attached \texttt{bvp.py} for the exact Python implementation, which I felt was too long to reasonably include in the report itself.
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=\linewidth]{ipw-fd-plot}
+\caption{The IPW's first few eigenvalues and eigenfunctions found with the finite difference method. Note the theoretically expected energy growth $ E_{n} = n^{2}E_{1} $.}
+\label{bvp:fig:ipw-fd-plot}
+\end{figure}
+
+\subsection{Finite Differences}
+The infinite potential well's simple boundary conditions make a finite difference solution straightforward. I divided the interval $ \big[\frac{a}{2}, \frac{a}{2}\big] $ into $ n + 1 $ evenly spaced points $ x_{0}, x_{1}, \ldots, x_{n}$, on which the finite difference approximation of the \schro equation reads
+\begin{equation*}
+	\frac{\psi_{i-1} - 2\psi_{i} + \psi_{i+1}}{h^{2}} = -2E\psi_{i}
+\end{equation*}
+The boundary conditions $ \psi_{0} \equiv 0 $ and $ \psi_{n} \equiv 0 $ produce
+\begin{equation*}
+	0 -2\psi_{1} + \psi_{2} = -2h^{2}E\psi_{1} \eqtext{and} \psi_{n-2} -2\psi_{n-1} + 0 = -2h^{2}E\psi_{n-1}
+\end{equation*}
+Combining these boundary conditions with the general expression finite difference approximation $ \psi_{i-1} - 2\psi_{i} + \psi_{i+1} = -2h^{2}E\psi_{i} $, reduces the IPW to the eigenvalue problem
+\begin{equation*}
+	\mathbf{H} \bm{\psi} = E \bm{\psi}
+\end{equation*}
+where $ \mathbf{H} $ is the $ (n-1) \cross (n-1) $ tridiagonal matrix
+\begin{equation*}
+	\mathbf{H} = -\frac{1}{2h^{2}}
+	\begin{bmatrix}
+		-2 & 1 & 0 & 0 & \ldots & 0\\
+		1 & -2 & 1 & 0 & \ldots & 0\\
+		& \ddots & \ddots & \ddots & &\\
+		0 & \ldots & 0 & 1 & -2 & 1\\
+		0 & 0 & \ldots & 0 & 1 & -2\\
+	\end{bmatrix}
+\end{equation*}
+I solved the eigenvalue problem $ \mathbf{H} \bm{\psi} = E \bm{\psi} $ with the following Python code
+\begin{python}
+from scipy.linalg import eigh_tridiagonal
+def ipw_fd(n_points=1000, l=1.0):
+""" Finds infinite potential well energy eigenvalues and eigenvectors """
+    x = np.linspace(-l/2, l/2, n_points)  # divide well into n_points
+    h = x[1]-x[0]  # step size
+    d = 1.0*np.ones(n_points-0)/h**2  # main diagonal of form 1/h^2
+    e = -0.5*np.ones(n_points-1)/h**2  # off-diagonals of form -0.5/h^2
+    return eigh_tridiagonal(d, e)  # returns eigenvalues and eigenvectors
+\end{python}
+Figure \ref{bvp:fig:ipw-fd-plot} shows the IPW's first few eigenvalues and eigenfunctions, found with the finite difference method.
+
+\subsection{Accuracy}
+I investigated the accuracy of the shooting and finite difference methods in the following ways:
+\begin{enumerate}
+	\item Analyzing accuracy of the finite difference approximation as a function of the number of points $ N $ used to partition the interval $ \big[-\frac{a}{2}, \frac{a}{2}\big] $, which corresponds to the dimension of the Hamiltonian matrix $ \mathbf{H} $. As expected, accuracy improved with $ N $, as shown in Figure \ref{bvp:fig:ipw-fd-errors}. Note the decrease in error at the interval's boundaries (characteristic for a boundary value problem) and the eigenfunction nodes, which I would not expect for an initial value problem.
+	
+	\item Determining accuracy of the shooting method, shown in Figure \ref{bvp:fig:ipw-shoot-errors}. The absolute error in $ \psi $ is roughly of the order  $ 10^{-10} $---much better than with the finite difference method. Note also the smaller error at the boundaries and wavefunction nodes and the growth in error in the higher excited states.
+	
+	
+	\item Analyzing error in the energy eigenvalues found by both methods, shown in Table \ref{bvp:table:ipw-energy}. The shooting method outperformed the finite difference method. As seems reasonable, the error increase for higher excited states for both methods.
+\end{enumerate}
+
+\begin{figure}[hbt!]
+\centering
+\includegraphics[width=\linewidth]{ipw-fd-errors}
+\caption{The absolute error of the finite difference solution to the IPW's wavefunctions improves with increasing Hamiltonian matrix dimension $ N $. Tested with respect to the analytic solution in Equation \ref{bvp:eq:ipw-sol}. Note the logarithmic scale.}
+\label{bvp:fig:ipw-fd-errors}
+\end{figure}
+
+\begin{figure}[hbt!]
+\centering
+\includegraphics[width=\linewidth]{ipw-shoot-errors}
+\caption{Shooting method errors in the first few wavefunctions $ \psi_{n} $ with respect to the analytic solution. Note the logarithmic scale and considerably smaller error than with the finite difference method.}
+\label{bvp:fig:ipw-shoot-errors}
+\end{figure}
+
+\clearpage % finicky floating table problems...
+
+\begin{table}[H]
+\centering
+
+\begin{tabular}{c|c|c|c}
+     F.D. $ N = 100 $ &   F.D. $ N = 1000 $ &   F.D. $ N = 10000 $ &  Shooting \\
+    \hline
+    1.938852e-01 & 1.970420e-02 & 1.973201e-03 & 2.005447e-07\\
+    7.801268e-01 & 7.886380e-02 & 7.894802e-03 & 1.978213e-07\\
+    1.772479e+00 & 1.776248e-01 & 1.776480e-02 & 1.195098e-06\\
+    3.193854e+00 & 3.162292e-01 & 3.158721e-02 & 3.791285e-06
+\end{tabular}
+\caption{Error in the IPW's first few energy eigenvalues for various solution methods.}
+\end{table}
+
+\begin{table}[H]
+\centering
+
+\begin{tabular}{c|c|c|c|c}
+     Analytic &  F.D. $ N = 100 $ &   F.D. $ N = 1000 $ &   F.D. $ N = 10000 $ &  Shooting \\
+    \hline
+    4.934802 & 4.740917 & 4.915098 & 4.932829 & 4.934802\\
+    19.739209 & 18.959082 & 19.660345 & 19.731314 & 19.739209\\
+    44.413220 & 42.640741 & 44.235595 & 44.395455 & 44.413221\\
+    78.956835 & 75.762981 & 78.640606 & 78.925248 & 78.956839
+\end{tabular}
+\caption{The IPW's first few energy eigenvalues found with various methods. }
+\label{bvp:table:ipw-energy}
+
+\end{table}
+
+
+
+\section{Finite Potential Well}
+
+
+\subsection{Shooting Method}
+The general logic of my shooting method implementation for the FPW is similar to the implementation for the IPW in \hyperref[bvp:ss:shooting]{Subsection \ref{bvp:ss:shooting}}, with the following differences:
+\begin{itemize}
+	\item I test energies only up to the well's depth $ V_{0} $, which correspond to bound states.
+	
+	\item Inspired by \cite{schroeder}, I create a position grid extending far beyond the well boundaries (instead of from $ -\frac{a}{2} $ to $ \frac{a}{2} $ as for the IPW), to where the exponentially decaying wavefunction can be reasonably approximated as zero. 
+	
+	\item Of course, I use a modified \schro equation, including the potential energy term, when integrating the initial value problem.
+\end{itemize}
+Figure \ref{bvp:fig:shoot-fpw-roots} shows the process of finding the energy roots $ E_{n} $ satisfying the boundary condition $ \psi_{n} \to 0 $, while Figure \ref{bvp:fig:fpw-shoot-plot} shows the bound eigenfunctions and eigenvalues of a finite potential well of depth $ V_{0} $. As expected, the wavefunction sinusoidally oscillates inside the well and decays exponentially outside the well, while the energy eigenvalues of a given state are lower than for the IPW.
+
+\begin{figure}[hbt!]
+\centering
+\includegraphics[width=\linewidth]{shoot-fpw-roots}
+\caption{Estimating finite potential well energy eigenvalues with the shooting method.}
+\label{bvp:fig:shoot-fpw-roots}
+\end{figure}
+
+\begin{figure}[hbt!]
+\centering
+\includegraphics[width=\linewidth]{fpw-shoot-plot}
+\caption{Bound states in a FPW of depth $ V_{0} = 50 $ found with the shooting method.}
+\label{bvp:fig:fpw-shoot-plot}
+\end{figure}
+
+
+\subsection{Finite Differences}
+My finite difference attempt at solving the FPW strictly on the interval $ x \in \big[-\frac{a}{2}, \frac{a}{2}\big] $ was unsuccessful and is relegated to \hyperref[bvp:s:fd-fpw-incomplete]{Appendix \ref{bvp:s:fd-fpw-incomplete}}. As a work-around, like for the shooting method, I solved the FPW on the interval $ x \in [-1.5, 1.5] $ where the wavefunction is nearly zero at the endpoints, and proceeded analogously to the finite difference approach for the IPW. The problem reduces to the eigenvalue equation
+\begin{equation*}
+	\mathbf{H} \bm{\psi} = E \bm{\psi}
+\end{equation*}
+where the tridiagonal matrix $ \mathbf{H} $ now includes a potential energy term 
+\begin{equation*}
+	\mathbf{H} = -\frac{1}{2h^{2}}
+	\begin{bmatrix}
+		-2 - 2h^{2}V_{1} & 1 & 0 & 0 & \ldots & 0\\
+		1 & -2 - 2h^{2}V_{2} & 1 & 0 & \ldots & 0\\
+		& \ddots & \ddots & \ddots & &\\
+		0 & \ldots & 0 & 1 & -2 - 2h^{2}V_{n-2} & 1\\
+		0 & 0 & \ldots & 0 & 1 & -2 - 2h^{2}V_{n-1}\\
+	\end{bmatrix}
+\end{equation*}
+where $ V_{i} = V(x_{i}) $. The Python implementation in shown in the code block below. \\
+ 
+\begin{python}
+def fpw_fd(n_points=1000, l=1.0, V0=50.0):
+""" Finds finite potential well energy eigenvalues and eigenvectors """
+    x = np.linspace(-1.5 * l, 1.5 * l, n_points)  # extends beyond well boundaries
+    h = x[1]-x[0]  # time step
+    d = 1.0 * np.ones(n_points) / h**2 + V_fpw(x, V0=V0)  # main diagonal
+    e = -0.5 * np.ones(n_points - 1) / h**2  # off diagonal
+    return eigh_tridiagonal(d, e)  # returns eigenvalues and eigenvectors
+\end{python}
+Figure \ref{bvp:fig:fpw-fd-plot-100} shows the bound states of a finite potential well of depth $ V_{0} = 100 $ found with the above finite difference method.
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=\linewidth]{fpw-fd-plot-100}
+\caption{Bound states of a FPW of depth $ V_{0} = 100 $ found with finite differences.}
+\vspace{-5mm}
+\label{bvp:fig:fpw-fd-plot-100}
+\end{figure}
+
+
+\subsection{SciPy's Built-In \texttt{solve\_bvp}}
+As an extra, I tested the built-in \texttt{solve\_bvp} function from SciPy's \texttt{integrate} package. Figure \ref{bvp:fig:fpw-solve-bvp-plot} shows the results for a FPW of depth $ V_{0} = 50 $---the wavefunctions are macroscopically analogous the those found with the shooting and finite difference methods, although the error in energy eigenvalues, at least for the low-energy states, is multiple orders of magnitude smaller (discussed more in the next subsection). However, \texttt{solve\_bvp}'s improved accuracy came at a price---the function consistently took at least an order of magnitude longer to find a solution than the much-faster shooting and finite difference methods. 
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{fpw-solve-bvp-plot}
+\caption{Bound states of a FPW of depth $ V_{0} = 50 $ found with SciPy's \texttt{solve\_bvp}.}
+\label{bvp:fig:fpw-solve-bvp-plot}
+\end{figure}
+
+
+\subsection{Accuracy}
+Table \ref{bvp:table:fpw-error} shows the error, with respect to the analytic solution in \hyperref[bvp:ss:fpw]{Subsection \ref{bvp:ss:fpw}}, of the bound-state energy eigenvalues of a finite potential well of depth $ V_{0} = 50 $ and width $ a = 1 $ found with the shooting method, \texttt{solve\_bvp}, and the finite difference method for three values of $ N $. Table \ref{bvp:table:fpw-energy} shows the corresponding energy values, with the analytic solution for reference.  Error increases with energy for all methods, although this increase is fastest with \texttt{solve\_bvp}.
+
+\begin{table}[htb!]
+\centering
+
+    \begin{tabular}{c|c|c|c|c}
+         F.D. $ N = 100 $ &   F.D. $ N = 1000 $ &   F.D. $ N = 10000 $ &  Shooting &  \texttt{solve\_bvp} \\
+        \hline
+        1.630150e-01 & 1.690801e-02 & 1.696010e-03 & 5.781010e-03 & 6.601000e-05\\
+        6.164423e-01 & 6.517526e-02 & 6.549260e-03 & 2.255926e-02 & 3.492600e-04\\
+        1.226205e+00 & 1.336164e-01 & 1.348941e-02 & 4.732041e-02 & 2.479410e-03\\
+        1.323991e+00 & 2.302478e-01 & 9.866979e-02 & 6.386779e-02 & 1.174988e-01
+	\end{tabular}
+	\caption{Error with respect to the analytic solution in \hyperref[bvp:ss:fpw]{Subsection \ref{bvp:ss:fpw}} of the bound-state energy eigenvalues of a finite potential well of depth $ V_{0} = 50 $ and width $ a = 1 $ found with various methods.  Note the increase in error for less-bound states.}
+	\label{bvp:table:fpw-error}
+\end{table}
+
+
+\begin{table}
+
+    \begin{tabular}{c|c|c|c|c|c}
+         Analytic &  F.D. $ N = 100 $ &   F.D. $ N = 1000 $ &   F.D. $ N = 10000 $ &  Shooting &  \texttt{solve\_bvp}  \\
+        \hline
+        3.413571 & 3.576586 & 3.430479 & 3.415267 & 3.419352 & 3.413637\\
+        13.475723 & 14.092165 & 13.540898 & 13.482272 & 13.498282 & 13.476072\\
+        29.452308 & 30.678513 & 29.585924 & 29.465797 & 29.499628 & 29.454787\\
+        48.143464 & 49.467455 & 48.373712 & 48.242134 & 48.207332 & 48.260963
+	\end{tabular}
+	\caption{Bound-state energy eigenvalues of a finite potential well of depth $ V_{0} = 50 $ and width $ a = 1 $ found with various methods.}
+	\label{bvp:table:fpw-energy}
+
+\end{table}
+
+
+
+
+
+
+\appendix
+\section{Attempt at a FPW Finite Difference FPW $ [-\frac{a}{2}, \frac{a}{2}] $} \label{bvp:s:fd-fpw-incomplete}
+\textit{Below is my thought process in my unsuccessful attempt at solving the FPW strictly on the interval $ x \in \big[-\frac{a}{2}, \frac{a}{2}\big] $ (and not using an interval beyond the well boundaries as I did above).}
+
+\vspace{2mm}
+
+Inside the well, with sinusoidal solutions, we have
+\begin{equation*}
+	\psi_{\text{in}}'' = -k^{2}\psi_{\text{in}}, \qquad k = \sqrt{2E}
+\end{equation*}
+Outside the well, we wavefunction is exponential and obeys
+\begin{equation*}
+	\psi_{\text{in}}'' = -\kappa^{2}\psi_{\text{in}}, \qquad \kappa = \sqrt{2(V_{0} - E)}
+\end{equation*}
+Continuity and continuous differentiability require
+\begin{equation*}
+	\psi_{\text{out}}(x_{0}) = \psi_{\text{in}}(x_{0}) \eqtext{and} \psi'_{\text{out}}(x_{0}) = \psi'_{\text{in}}(x_{0})
+\end{equation*}
+Outside the well, with the exponential ansatz $ \psi_{\text{out}} \propto e^{\kappa x} $, we have
+\begin{equation*}
+	\psi'_{\text{out}}(x_{0}) = \kappa \psi_{\text{out}}(x_{0})
+\end{equation*}
+The continuous differentiability requirement $ \psi'_{\text{out}}(x_{0}) = \psi'_{\text{in}}(x_{0}) $ leads to
+\begin{equation*}
+	\psi'_{\text{in}}(x_{0}) = \kappa \psi_{\text{out}}(x_{0})
+\end{equation*}
+Combining this equality with the continuity requirement $ \kappa \psi_{\text{in}}(x_{0}) = \kappa \psi_{\text{out}}(x_{0}) $ leads to the mixed (Robin) boundary condition
+\begin{equation*}
+	\psi'_{\text{in}}(x_{0}) - \kappa \psi_{\text{in}}(x_{0}) = 0 \implies  \kappa \psi_{\text{in}}(x_{0}) - \psi'_{\text{in}}(x_{0}) = 0
+\end{equation*}
+An analogous derivation at the right endpoint $ x = x_{n} $ with the ansatz $ \psi_{\text{out}} \propto e^{-\kappa x} $ gives the boundary conditions
+\begin{equation*}
+	\kappa \psi_{\text{in}}(x_{n}) + \psi'_{\text{in}}(x_{n}) = 0
+\end{equation*}
+Using the second-order Taylor expansion
+\begin{equation*}
+	f(x+h) = f(x) + hf'(x) + \frac{h^{2}}{2!}f''(x) + \mathcal{O}(h^{2})
+\end{equation*}
+we can re-write the first derivatives $ \psi'_{0} $ and $ \psi'_{n} $ as
+\begin{equation*}
+	\psi'_{0} \approx \frac{\psi_{1} - \psi_{0}}{h} - \frac{h}{2}\psi''_0 \eqtext{and} \psi'_{n} \approx \frac{\psi_{n} - \psi_{n-1}}{h} + \frac{h}{2}\psi''_{n} 
+\end{equation*}
+Using the \schro equation $ \psi''(x) = -2E\psi(x) $ with $ V(x) = 0 $ inside the well, these conditions become
+\begin{equation*}
+	\psi'_0 \approx \frac{\psi_{1} - \psi_{0}}{h} + hE\psi_0 \eqtext{and} \psi'_{n} \approx \frac{\psi_{n} - \psi_{n-1}}{h} -hE\psi_{n}
+\end{equation*}
+Substituting these expressions for $ \psi'_0 $ and $ \psi'_{n} $ into the mixed boundary conditions $ \kappa \psi_0 - \psi'_0 = 0 $ and $ \kappa \psi_{n} + \psi'_{n} = 0 $ gives
+\begin{align*}
+	&\kappa \psi_{0} - \frac{\psi_{1} - \psi_{0}}{h} - hE\psi_{0} = 0 \eqtext{and} \kappa \psi_{n} + \frac{\psi_{n} - \psi_{n-1}}{h} -hE\psi_{n} = 0
+\end{align*}
+Or, collecting the coefficients in front of the $ \psi $ terms,
+\begin{equation*}
+	\left(\kappa + \frac{1}{h} - hE\right)\psi_{0} - \frac{\psi_{1}}{h} = 0 \eqtext{and} -\frac{\psi_{n-1}}{h} + \left(\kappa + \frac{1}{h} - hE\right)\psi_{n} = 0
+\end{equation*}
+The remaining terms for $ i = 1, 2, \ldots, n-1 $ read
+\begin{equation*}
+	\psi_{i-1} - 2\psi_{i} + \psi_{i+1} = -2h^{2}E\psi_{i} \implies \psi_{i-1} - 2(1 - h^{2}E)\psi_{i} + \psi_{i+1} = 0
+\end{equation*}
+Together, these form a system of $ n + 1 $ equations for the $ n + 1 $ unknowns $ \psi_{0}$, $\psi_{1}$, $\ldots$, $ \psi_{n}$, $ \psi_{n+1} $ for a given value of $ E $.
+\begin{equation*}
+\begin{bmatrix}
+	\left(\kappa + \frac{1}{h} - hE\right) & -\frac{1}{h} & 0 & 0 & \ldots  & 0\\
+	1 & - 2(1 - h^{2}E) & 1 & 0 & \ldots & 0\\
+	& & & & &\\
+	\vdots & & \ddots & & & \vdots \\
+	& & & & &\\
+	0 & 0 & \ldots & 1 & - 2(1 - h^{2}E) & 1\\
+	0 & 0 & 0 & \ldots & -\frac{1}{h} & \left(\kappa + \frac{1}{h} - hE\right)
+\end{bmatrix}
+\bm{\psi}
+= 
+\bm{0}
+\end{equation*}
+This matrix equation naturally produces a trivial solution for the wavefunction vector $ \bm{\psi} $. Evidently, I need at least one non-zero element in the matrix's right-hand vector, which I assume would come from properly implemented boundary conditions. I tried a few modified configurations, which where more tinkering than anything of physical substance, but without great success. Among these was the below equation, roughly motivated by the scattering problem in \cite{king}
+\begin{equation*}
+\begin{bmatrix}
+	\left(\kappa + \frac{1}{h} - hE\right) & -\frac{1}{h} & 0 & 0 & \ldots  & 0\\
+	1 & - 2(1 - h^{2}E) & 1 & 0 & \ldots & 0\\
+	& & & & &\\
+	\vdots & & \ddots & & & \vdots \\
+	& & & & &\\
+	0 & 0 & \ldots & 1 & - 2(1 - h^{2}E) & 1\\
+	0 & 0 & 0 & \ldots & -\frac{1}{h} & \left(\kappa + \frac{1}{h} - hE\right)
+\end{bmatrix}
+\bm{\psi}
+= 
+\begin{bmatrix}
+	2\kappa e^{-\frac{\kappa a}{2}}\\
+	0\\
+	0\\
+	\vdots\\
+	0\\
+	0\\
+	0
+\end{bmatrix}
+\end{equation*}
+This at least produced non-zero, oscillatory solutions for $ \vec{\psi} $ where the number of nodes increased with increasing energy $ E_{n} $, which is a step in the right direction. However, the results did not closely resemble the wavefunctions for a finite potential well, and I did not include them in the report.
+
+
+\begin{thebibliography}{}
+\setlength{\itemsep}{.2\itemsep}\setlength{\parsep}{.5\parsep}
+
+\bibitem{schroeder} Schroeder, D. ``Numerical Solutions of the TISE''. \textit{Notes on Quantum Mechanics}. January 2020. \url{https://physics.weber.edu/schroeder/quantum/Numerical.pdf}.
+
+\bibitem{ertl} Ertl, M. C. ``Solving The Stationary One Dimensional \schro Equation With The Shooting Method''. Bachelor Thesis, TU Wien, Vienna. September 2016. \url{https://www.iue.tuwien.ac.at/uploads/tx_sbdownloader/Bachelor-Arbeit_Marie_ERTL_09-2016.pdf}.
+
+\bibitem{king} King, J; Dhakal, P. ``Finite Difference Schemes and the \schro Equation.'' 2 June 2014. \url{http://www.dartmouth.edu/~pawan/final%20project.pdf}. 
+
+\bibitem{becerril} Becerril, R; et al. ``Solving the time-dependent \schro equation using finite difference methods''. \textit{Revista Mexicana de Fisica} \textbf{54}(2), 120-132. (2008). \url{https://aip.scitation.org/doi/pdf/10.1063/1.4823060}.  % adaptive step size
+
+
+\end{thebibliography}
+
+
+\end{document}
+
+
+
