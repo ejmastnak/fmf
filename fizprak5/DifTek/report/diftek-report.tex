@@ -1,0 +1,270 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage{mwe}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{bm} % for bold vectors in math mode
+\usepackage{physics} % for differential notation, etc...
+\usepackage[separate-uncertainty=true]{siunitx}
+
+\usepackage{graphicx}
+\graphicspath{{"../figures/"}}
+\usepackage[section]{placeins} % to keep figures in their sections
+\usepackage{subcaption} % for subfigures
+\usepackage[export]{adjustbox} % for centered figures larger than text width
+
+\usepackage[margin=3.5cm]{geometry}
+\usepackage{xcolor}  % to color hyperref links
+\usepackage[colorlinks = true, allcolors=blue]{hyperref}
+
+\setlength{\parindent}{0pt} % to stop indenting new paragraphs
+\newcommand{\diff}{\mathop{}\!\mathrm{d}} % differential
+\newcommand{\eqtext}[1]{\qquad \text{#1} \qquad}
+
+
+\begin{document}
+\title{Liquid Diffusion}
+\author{Elijan Mastnak}
+\date{Winter Semester 2020-2021}
+\maketitle
+\tableofcontents
+		
+
+\section{Tasks}
+\begin{enumerate}
+	\item Find the diffusion constant for a mixture of ethanol and water by observing the shape of the projected diffusion curve.
+	
+	\item Measure the area $ S $ under the diffusion curve from your sketches on graph paper and compare it to the theoretically expected value. Discuss the similarity or discrepancy between the two values. 
+
+\end{enumerate}
+
+\section{Equipment, Procedure and Data}
+
+\subsection{Equipment}
+\begin{itemize}
+
+	\item Cuvette to hold a mixture of ethanol and water
+	
+	\item Laser as a source of monochromatic light incident on the cuvette
+	
+	\item Glass rod, used to disperse the laser into a plane wave.
+	
+	\item Screen on which to observe the diffusion curve
+\end{itemize}
+
+\begin{figure}[htb!]
+\includegraphics[width=\linewidth]{schematic}
+\caption{Left: Refraction of a light beam as it passes through a substance with a index of refraction that change linearly with $ z $. Right: Schematic of the measurement setup: light comes in from the left, hits the cuvette, refracts as it passes through, and creates the diffusion curve on the far-right screen.}
+\label{diftek:fig:schematic}
+\end{figure}
+
+\subsection{Procedure}
+Figure \ref{diftek:fig:schematic} shows a schematic of the experiment, which proceeds as follows:
+\begin{itemize}
+	\item Place the laser roughly $ \SI{180}{\centi \meter} $ from the screen. Place the cuvette halfway between the laser and the screen such that the laser beam passes through the center of the cuvette onto the portion of the screen marked with graph paper.
+	
+	Between the laser and cuvette, place a glass rod angled at \ang{45} to the optical axis. The rod serves to disperse the laser beam into a plane wave. 
+	
+	\item Fill the cuvette halfway with ethanol, then use a capillary funnel to fill it the remainder of the way with water from the bottom up. Pour carefully and slowly so that the alcohol and water do not mix. A curve should form on the display screen.
+	
+	\item Sketch the diffusion curve (to scale, on graph paper) and measure the maximum displacement $ y_{\text{max}} $ first at shorter (e.g. a few minute) intervals, then at longer intervals as time increases and the concentration gradient grows more uniform. 
+	
+\end{itemize}
+
+\subsection{Data}
+\textbf{Independent Variable}: Time $ t $, measured on a minute scale.
+
+\vspace{2mm}
+\textbf{Dependent Variable:} Maximum displacement $ y_{\text{max}} $ of the diffusion curve on the graph paper display.
+
+\vspace{2mm}
+\textbf{Parameters:} Cuvette width $ a = \SI{1.5}{\centi \meter} $, distance from cuvette to screen $ b =  \SI{72.0}{\centi \meter} $, distance between light source and cuvette $ c =  \SI{35.5}{\centi \meter} $. Note that $ c $ is the distance between the cuvette and the dispersing glass rod, not the distance between the cuvette and the laser.
+
+
+\section{Analysis}
+
+\subsection{Diffusion Constant from a Linear Fit} 
+\label{diftek:ss:linfit}
+
+\begin{figure}[htb!]
+\includegraphics[width=\linewidth]{ymax-vs-time}
+\caption{The diffusion curve's maximum height falls with time as $ y_{\text{max}} \sim t^{-1/2} $.}
+\label{diftek:fig:ymax}
+\end{figure}
+
+The diffusion curve's maximum height height depends on time as
+\begin{equation*}
+	y_{\text{max}}(t) = \frac{ab\Delta n}{\sqrt{4\pi D t}} = \frac{S}{k\sqrt{4\pi D t}}
+\end{equation*}
+The above relationship implies plotting the quantity $ \mathcal{Q} $, defined as
+\begin{equation*}
+	\mathcal{Q} \equiv \frac{(ab\Delta n)^{2}}{4\pi y_{\text{max}}^{2}} = \frac{1}{4\pi}\left(\frac{S}{ky_{\text{max}}}\right)^{2} = Dt,
+\end{equation*}
+on the ordinate axis as a function of time $ t $ should yield a straight line with slope $ D $. The quantity $ k = \frac{b + c}{c} $ is magnification and $ S $ is area under the diffusion curve, theoretically expected to be 
+\begin{equation*}
+	S = abk \Delta n 
+\end{equation*}
+where $ \Delta n = 0.029 $ is the difference in refractive index between water and ethanol. Figure \ref{diftek:fig:D-linfit} shows a graph of the relationship $ \mathcal{Q} = Dt $ and the corresponding linear fit for the diffusion constant $ D $, which takes the value
+\begin{equation*}
+	D = \SI{2.02e-4}{\minute^{-1}} = \SI{3.37e-6}{\second^{-1}}
+\end{equation*}
+
+
+\begin{figure}
+\includegraphics[width=\linewidth]{diffusion-constant-linfit}
+\caption{Finding the diffusion constant $ D $ with a linear fit of the quantity $ \mathcal{Q} = Dt $.}
+\label{diftek:fig:D-linfit}
+\end{figure}
+
+\subsection{Comparing Values of Area}
+The theoretically predicted area under the diffusion curve (derivation iscussed in Appendix \ref{diftek:ss:diffusion}) is
+\begin{equation*}
+	S = k\int y(z) \diff z = k\int \left(ab \dv{n}{z}\right)\diff z = k ab (n_{1}- n_{0})
+\end{equation*}
+where $ k = \frac{b+c}{c} $ is the magnification of the diffusion curve between the cuvette and the display screen; $ b $ and $ c $ are the distances between the cuvette and display screen and between the light source and the cuvette, respectively. Note that the area under the curve is theoretically independent of time, which, I believe, could be explained by the continuity equation or conservation of mass in the diffusing cuvette. 
+
+\vspace{2mm}
+In any case, the theoretically predicted area under the curve is
+\begin{equation*}
+	S_{\text{theory}} = k a b \Delta n = \frac{\SI{72.0}{\centi \meter} + \SI{35.5}{\centi \meter}}{\SI{35.5}{\centi \meter}} \cdot \SI{1.5}{\centi \meter} \cdot \SI{72.0}{\centi \meter} \cdot 0.029 = \boxed{\SI{9.48}{\centi \meter^{2}}}
+\end{equation*}
+Figure \ref{diftek:fig:area} shows the areas under the simulated diffusion curves, found with numerical integration. 
+ 
+\begin{figure}[htb!]
+\includegraphics[width=\linewidth]{area}
+\caption{Simulated diffusion curves at various times throughout the experiment and the corresponding area under each curve, found with numerical integration.}
+\label{diftek:fig:area}
+\end{figure}
+
+The simulated/measured areas, have an average value and sample standard deviation
+\begin{equation*}
+	\mu_{S} = \SI{4.09}{\centi \meter^{2}} \eqtext{and} \sigma_{S}^{2} = \SI{0.53}{\centi \meter^{2}}
+\end{equation*}
+The measured and theoretically expected values disagree by a factor of roughly two. I assume the discrepancy exists because the simulated diffusion curves were not calibrated to match the experiment's dimensional parameters $ a $, $ b $, $ c $. As such, the theoretically predicted area, which relies directly on the values of $ a $, $ b $, and $ c $, does not match the areas under the simulated curves.
+
+
+
+
+\section{Error Analysis}
+The linearized quantity $ \mathcal{Q} $ from Subsection \ref{diftek:ss:linfit} is found with the formula
+\begin{equation*}
+	\mathcal{Q} \equiv \frac{(ab\Delta n)^{2}}{4\pi y_{\text{max}}^{2}}
+\end{equation*}
+The input quantities are $ a $, $ b $, $ \Delta n $ and $ y_{\text{max}} $. Since the data is simulated and given without measurement error, I assumed the following uncertainties:
+\begin{equation*}
+	a = \SI{1.5 \pm 0.1}{\centi \meter} \qquad b = \SI{72.0 \pm 0.5}{\centi \meter}  \qquad \Delta n = \SI{0.029 \pm 0.001}{}
+\end{equation*}
+and a five percent uncertainty $ u_{y} = 0.05 \cdot y_{\text{max}} $ in the maximum height $ y_{\text{max}} $. The sensitivity coefficients for each quantity are
+\begin{align*}
+	&c_{a} = \pdv{\mathcal{Q}}{a} = \frac{2a(b\Delta n)^{2}}{4\pi y_{\text{max}}^{2}} && c_{b} = \pdv{\mathcal{Q}}{b} = \frac{2b(a\Delta n)^{2}}{4\pi y_{\text{max}}^{2}}\\
+	&c_{n} =\pdv{\mathcal{Q}}{\Delta n} = \frac{2\Delta n(ab)^{2}}{4\pi y_{\text{max}}^{2}} && c_{y} = \pdv{\mathcal{Q}}{y_{\text{max}}} = -\frac{(ab\Delta n)^{2}}{2\pi y_{\text{max}}^{3}}
+\end{align*}
+The corresponding error in $ \mathcal{Q} $ is
+\begin{equation*}
+	u_{\mathcal{Q}} = \sqrt{(c_{a}u_{a})^{2} + (c_{b}u_{b})^{2} + (c_{n}u_{n})^{2} + (c_{y}u_{y})^{2}},
+\end{equation*}
+which is shown in the error bars in Figure \ref{diftek:fig:D-linfit}. I estimated the uncertainty in the diffusion constant $ D $ using the uncertainty in the fitted slope parameter from the linear fit shown in Figure \ref{diftek:fig:D-linfit}, where the dependent variable $ \mathcal{Q} $ is weighted with the error $ u_{\mathcal{Q}} $.
+
+\section{Results}
+The diffusion constant for the ethanol-water mixture in the cuvette was 
+\begin{equation*}
+\boxed{	D = \SI{2.02 \pm 0.17 e-4}{\minute^{-1}} = \SI{3.37 \pm 0.03 e-6}{\second^{-1}}}
+\end{equation*}
+The theoretically predicted area $ S_{\text{theory}} $ under the diffusion curve, mean measured value $ \mu_{\text{S}} $ and standard deviation $ \sigma^{2}_{\text{S}} $ of the measured value were, respectively
+\begin{equation*}
+	S_{\text{theory}} = \SI{9.48}{\centi \meter^{2}}, \qquad \mu_{S} = \SI{4.09}{\centi \meter^{2}}, \qquad \sigma_{S}^{2} = \SI{0.53}{\centi \meter^{2}}
+\end{equation*}
+The results do not agree, likely because of complications when generating the simulated ``measured'' data.
+
+
+\appendix
+\section{Background Theory}
+
+\subsection{Light Ray Path in a Nonhomogeneous Substance}
+\begin{itemize}
+	\item We model our ethanol-water cuvette as a substance consisting of parallel liquid planes, such that the refraction index $ n $ is a function of the single coordinate $ z $ (see Figure \ref{diftek:fig:schematic}). The familiar law of diffraction $ \frac{\cos \phi_{1}}{\cos \phi_{2}} = \frac{n_{2}}{n_{1}} $ then generalizes to
+	\begin{equation*}
+		\cos \phi = \frac{\text{constant}}{n(z)}
+	\end{equation*}
+	
+	\item Again referring to the geometry of Figure \ref{diftek:fig:schematic}, we find how the angle of refraction $ \phi $ changes with the coordinate $ x $ on a light beam's passage through the cuvette. Taking the logarithm of $ \cos \phi = \frac{\text{constant}}{n(z)} $, differentiating to remove the constant, integrating, and dividing through by $ \diff x $ gives
+	\begin{equation*}
+		\diff [\ln \cos \phi] = - \diff [\ln n] \implies \frac{\sin \phi}{\cos \phi}\diff \phi = \frac{1}{n}\diff n \implies \tan \phi \dv{\phi}{x} = \frac{1}{n}\dv{n}{x}
+	\end{equation*}
+	We then apply the chain rule $ \dv{n}{x} = \dv{n}{z}\dv{z}{x} $ to get
+	\begin{align*}
+		\tan \phi \dv{\phi}{x} = \frac{1}{n}\dv{n}{x} = \frac{1}{n}\dv{n}{z}\dv{z}{x} \implies \dv{\phi}{x} = \frac{1}{n}\dv{n}{z}
+	\end{align*}
+	The last line uses the equality $ \dv{z}{x} = \tan \phi $ (see Figure \ref{diftek:fig:schematic}). Separating the variables $ \phi $ and $ x $ and integrating shows the light ray bends by an angle
+	\begin{equation*}
+		\alpha_{1} \equiv \int \diff \phi =\frac{1}{n} \dv{n}{z} \int_{0}^{a}\diff x =   \frac{a}{n} \dv{n}{z}
+	\end{equation*}
+	on is path through the cuvette. 
+	
+	\item As the ray exits the cuvette and passes between the cuvette-air interface, the refraction angle increases to
+	\begin{equation*}
+		\alpha_{2} = n \alpha_{1} = a \dv{n}{z}
+	\end{equation*}
+	where $ n = n(z) $ is the refraction index at the $ z $ coordinate where the light exits the cuvette. For a screen a distance $ b $ away, the ray is thus displaced from the optical axis by a distance 
+	\begin{equation*}
+		y = b \alpha_{Z} = a b \dv{n}{z}
+	\end{equation*}
+	Of course, the above derivation holds only in the regime of the small angle approximation $ \alpha \approx \sin \alpha $ and for $ a \ll b $. 
+	
+%	If we illuminate the cuvette with a plane wave at an incidence angle of $ \ang{45} $, we see a curve on the observation screen. If the material in the cuvette were homogeneous, the screen would show a straight line.
+\end{itemize}
+
+\subsection{Diffusion and Geometry of the Diffusion Curve} \label{diftek:ss:diffusion}
+\begin{itemize}
+	\item The concentration $ \rho $ of a diffusing substance is a function of both position and time and obeys the diffusion equation 
+	\begin{equation*}
+		D \nabla^{2} \rho = \pdv{\rho}{t}
+	\end{equation*}
+	For diffusion in only one dimension, this simplifies to
+	\begin{equation*}
+		D \pdv[2]{f}{z} = \pdv{\rho}{t}
+	\end{equation*}
+	
+	\item The general solution is the Gaussian function 
+	\begin{equation*}
+		\rho(z, t) = \frac{1}{\sqrt{4 \pi D t}}e^{-\frac{x^{2}}{4Dt}}
+	\end{equation*}
+	The solution represents a distribution for the initial condition in which at time $ t = 0 $ the entire mass of the diffusing substance occurs at $ z = 0 $ (think of a delta function density distribution).
+	
+	\item In the experiment, the substance is initially uniformly distributed as
+	\begin{equation*}
+		\rho(z)
+		\begin{cases}
+			\rho_{0} = 1 & z > 0\\
+			0 & z < 0
+		\end{cases}
+	\end{equation*}
+	and the solution is
+	\begin{equation*}
+		\rho(z) = \frac{\rho_{0}}{2}\left[1 + \theta\left(\frac{z}{\sqrt{4Dt}} \right) \right]  \eqtext{where} \theta(\xi) = \frac{2}{\sqrt{\pi}} \int_{0}^{\xi} e^{-\eta^{2}}\diff \eta
+	\end{equation*}
+	
+	\item Assuming the index of refraction is a linear function of concentration, we have
+	\begin{equation*}
+		n(z) = \frac{n_{0} + n_{1}}{2} + \frac{n_{1} - n_{0}}{2} \theta\left(\frac{z}{\sqrt{4Dt}} \right)
+	\end{equation*}
+	Using this expression for $ n(z) $, the height $ y $ of the diffusion curve is thus
+	\begin{equation*}
+		y = ab \dv{n}{z} = ab (n_{1}- n_{0}) \frac{1}{\sqrt{4 \pi D t}}e^{-\frac{z^{2}}{4Dt}}
+	\end{equation*}
+	The maximum height, which occurs at $ z = 0 $, evidently falls as $ y_{\text{max}} \sim t^{-1/2} $
+	\begin{equation*}
+		y_{\text{max}} = ab \frac{n_{1}-n_{0}}{\sqrt{4\pi D t}} = \frac{S}{k\sqrt{4\pi D t}}
+	\end{equation*}
+	
+	\item The area $ S $ under the curve is independent of time:
+	\begin{equation*}
+		S = k\int y(z) \diff z = k\int \left(ab \dv{n}{z}\right)\diff z = k ab (n_{1}- n_{0})
+	\end{equation*}
+	where $ k = \frac{b+c}{c} $ is the magnification of the diffusion curve between the cuvette and the display screen; $ b $ and $ c $ are the distances between the cuvette and display screen and between the light source and the cuvette, respectively. 
+
+
+\end{itemize}
+
+
+\end{document}
