@@ -274,11 +274,11 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 		
 	\item First, assuming the solution is an even function. Reusing results from the earlier treatment of the finite potential well, for region 3 we have
 	\begin{equation*}
-		\psi_{3} = Ge^{-\kappa x} \eqtext{where} \kappa = \frac{2mE_{0}}{\hbar}
+		\psi_{3} = Ge^{-\kappa x} \eqtext{where} \kappa^{2} = \frac{2mE_{0}}{\hbar^{2}}
 	\end{equation*}
 	and for region 2, inside the well, the even wavefunctions take the form
 	\begin{equation*}
-		\psi_{2} = A \cos(kx) \eqtext{where} k = \frac{2m(V_{0} - E_{0})}{\hbar}
+		\psi_{2} = A \cos(kx) \eqtext{where} k^{2} = \frac{2m(V_{0} - E_{0})}{\hbar^{2}}
 	\end{equation*}
 	A few notes: we switched from plane waves to sinusoidal functions, where are better suited to odd/even symmetry. And we dropped the $B\sin(kx)$ term and kept only the cosine because we're solving for an even function a priori.
 	
@@ -317,7 +317,7 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 	
 	\item The solutions of the two equations
 	\begin{equation*}
-		\tan (k\frac{a}{2}) = \frac{\kappa}{k}  \eqtext{and}  \cot (k\frac{a}{2}) = -\frac{\kappa}{k} 
+		\tan (\frac{ka}{2}) = \frac{\kappa}{k}  \eqtext{and}  \cot (\frac{ka}{2}) = -\frac{\kappa}{k} 
 	\end{equation*}
 	will give the energy eigenvalues of the even and odd states, respectively. 
 	
@@ -454,7 +454,7 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 	\end{equation*}
 	where $ \psi'(0_{+}) $ and $ \psi'(0_{-}) $ denote $ \psi $'s derivatives from the right and left, respectively. The appropriate boundary condition $ \psi'(x) $ are thus
 	\begin{equation*}
-		\psi'(0_{+}) - \psi'(0_{-}) = \frac{2m\lambda\psi(0)}{\hbar^{2}}
+		\psi'(0_{+}) - \psi'(0_{-}) = -\frac{2m\lambda\psi(0)}{\hbar^{2}}
 	\end{equation*}
 	
 	
@@ -472,7 +472,7 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 	\end{equation*}
 	Applying the condition on the derivatives (and using $ A = B $) gives
 	\begin{equation*}
-		-\kappa A^{-\kappa \cdot 0} -\kappa A^{\kappa \cdot 0} = \frac{2m\lambda}{\hbar^{2}} \psi(0) = \frac{2m\lambda }{\hbar^{2}} Ae^{\kappa \cdot  0} \implies \kappa = \frac{m\lambda}{\hbar^{2}}
+		-\kappa A^{-\kappa \cdot 0} -\kappa A^{\kappa \cdot 0} = -\frac{2m\lambda}{\hbar^{2}} \psi(0) = - \frac{2m\lambda }{\hbar^{2}} Ae^{\kappa \cdot  0} \implies \kappa = \frac{m\lambda}{\hbar^{2}}
 	\end{equation*}
 	The wave function is thus
 	\begin{equation*}
