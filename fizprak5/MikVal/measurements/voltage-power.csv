@@ -1,0 +1,7 @@
+﻿# Reflection voltage [V] at which we measure a non-zero signal in the waveguide, Corresponding power (measured on the bolometer) [mW]
+-28,0.60
+-53,1.2
+-91,2.4
+-143,4.0
+-223,5.2
+-357,5.6

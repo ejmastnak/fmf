@@ -1,0 +1,8 @@
+﻿Column 1: Voltage [V] corresponding to carriage position
+Column 2: Voltage [V] corresponding to signal along waveguide with short-circuit wall
+Column 3: Voltage [V] corresponding to signal along waveguide for the bolometer
+
+Waveguide width: 2.3 cm
+Carriage path: 5.7 cm
+
+Resonator micrometer screw position at resonance: 380 + 0.2*57 = 408
