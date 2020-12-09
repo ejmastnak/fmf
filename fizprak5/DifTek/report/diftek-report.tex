@@ -47,7 +47,7 @@
 	
 	\item Laser as a source of monochromatic light incident on the cuvette
 	
-	\item Glass rod, used to disperse the laser into a plane wave.
+	\item Glass rod, used to disperse the laser from a beam into a diagonal line.
 	
 	\item Screen on which to observe the diffusion curve
 \end{itemize}
@@ -63,7 +63,7 @@ Figure \ref{diftek:fig:schematic} shows a schematic of the experiment, which pro
 \begin{itemize}
 	\item Place the laser roughly $ \SI{180}{\centi \meter} $ from the screen. Place the cuvette halfway between the laser and the screen such that the laser beam passes through the center of the cuvette onto the portion of the screen marked with graph paper.
 	
-	Between the laser and cuvette, place a glass rod angled at \ang{45} to the optical axis. The rod serves to disperse the laser beam into a plane wave. 
+	Between the laser and cuvette, place a glass rod angled at \ang{45} to the optical axis. The rod serves to disperse the laser beam into a plane wave and change the laser from a beam into a diagonal line with a varying $ z $ coordinate.
 	
 	\item Fill the cuvette halfway with ethanol, then use a capillary funnel to fill it the remainder of the way with water from the bottom up. Pour carefully and slowly so that the alcohol and water do not mix. A curve should form on the display screen.
 	
@@ -227,7 +227,7 @@ The results do not agree, likely because of complications when generating the si
 	
 	\item The general solution is the Gaussian function 
 	\begin{equation*}
-		\rho(z, t) = \frac{1}{\sqrt{4 \pi D t}}e^{-\frac{x^{2}}{4Dt}}
+		\rho(z, t) = \frac{1}{\sqrt{4 \pi D t}}e^{-\frac{z^{2}}{4Dt}}
 	\end{equation*}
 	The solution represents a distribution for the initial condition in which at time $ t = 0 $ the entire mass of the diffusing substance occurs at $ z = 0 $ (think of a delta function density distribution).
 	
