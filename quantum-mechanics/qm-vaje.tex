@@ -2180,7 +2180,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	
 	\item To be an eigenstate of $ L_{z} $, $ \ket{\psi} $ must satisfy the eigenvalue equation $ L_{z}\ket{\psi} = \lambda \ket{\psi}  $. Using our just-derived expression for $ L_{z}\ket{\psi}  $, the eigenvalue equation reads
 	\begin{equation*}
-		L_{z}\ket{\psi} = \lambda \ket{\psi} \implies \frac{\hbar}{i}\big(-\alpha \ket{01} + \beta \ket{10}\big) = \lambda \big(\alpha \ket{10} + \beta \ket{01}\big)
+		L_{z}\ket{\psi} = \lambda \ket{\psi} \implies \frac{\hbar}{i}\big(-\alpha \ket{01} + \beta \ket{10}\big) \equiv \lambda \big(\alpha \ket{10} + \beta \ket{01}\big)
 	\end{equation*}
 	Multiplying (scalar product on the Hilbert space) the equation from the left by $ \bra{10} $ and applying the orthonormality of $ \ket{00} $ and $ \ket{10} $ leaves
 	\begin{equation*}
@@ -3177,7 +3177,299 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	We'll transform between the two basis with Clebsch-Gordon coefficients.
 	
 \end{itemize}
-\fi 
+\fi
+
+\iffalse
+\subsection{Eleventh Exercise Set}
+
+\subsubsection{Scattering on a Spin-Dependent Delta Function (continued)}
+
+\begin{itemize}
+	\item Review from last time: First particle with spin $ 1/2 $ second particle with spin $ 1 $. First particle incident on second particle form the left. Second is fixed at $ x_{1} = 0 $. Hamiltonian is
+	\begin{equation*}
+		H = \frac{p_{1}^{2}}{2m} - \frac{\lambda}{\hbar^{2}}\vec{S}_{1}\vec{S}_{2}\delta (x_{1})
+	\end{equation*}
+	The first particle feels the spin effect of the second particle only at the origin where the $ \delta $ function fires.
+	
+	\item First, recall scattering in a spinless delta potential with 
+	\begin{equation*}
+		H = \frac{p^{2}}{2m} - \lambda \delta (x)
+	\end{equation*}
+	The system has one bonud state with energy
+	\begin{equation*}
+		E_{0} = -\frac{\hbar^{2}\kappa^{2}}{2m}, \quad \kappa = \frac{m\lambda}{\hbar^{2}}
+	\end{equation*}
+	The bound wavefunction was
+	\begin{equation*}
+		\psi_{0} = \sqrt{\kappa}e^{-\kappa \abs{x}}
+	\end{equation*}
+	For positive energies $ E > 0 $ we have free scattering states described by the scattering matrix
+	\begin{equation*}
+		\mat{S} = 
+		\begin{bmatrix}
+			r & t'\\
+			t & r'
+		\end{bmatrix}
+		 = 
+		 \frac{1}{k + i \kappa}
+		 \begin{bmatrix}
+		 	- i\kappa & k\\
+		 	k	& - i\kappa
+		 \end{bmatrix}
+	\end{equation*}
+	If we send a particle in towards the delta function from the left, the particle will be partly reflected and partly transmitted. 
+	\begin{equation*}
+		\psi(x < 0) = e^{ikx} + re^{-ikx} \eqtext{and} \psi(x>0) te^{ikx}
+	\end{equation*}
+	The scattering matrix is unitary and thus obeys $ \mat{S}^{\dagger}\mat{S} = \mat{I} $. The coefficient parameters obey $ \abs{t}^{2} + \abs{r}^{2} = T + R = 1 $. 
+	
+	\item And then from last week: the system's Hilbert space is
+	\begin{equation*}
+		\H = \H_{p} \otimes \H_{1} \otimes \H_{2}
+	\end{equation*}
+	The spin spaces $ \H_{1} $ and $ \H_{2} $ are six-dimensional.
+	
+	We identified two possible bases: a product basis using the commutativity of $ S_{1}^{2} $, $ S_{1_{z}} $, $ S_{2}^{2} $ and $ S_{2_{z}} $. Remember the particle spins $ S_{1} $ and $ S_{2} $ are fixed at $ 1/2 $ and $ 1 $. 
+	
+	The states are written $ \ket{m_{1}}\ket{m_{2}} $. (We don't need to write the $ S $ terms because they're fixed and implicit).
+	
+	\item The second basis is the good spin basis which uses the commutativity of $ S_{2} $, $ S_{z} $, $ S_{1}^{2} $ and $ S_{2}^{2} $. Recall total spin is the vector sum $ \vec{S} = \vec{S}_{1} + \vec{S}_{2} $.  We write the states
+	\begin{equation*}
+		\ket{SS_{1}S_{2}m} \to \ket{Sm}
+	\end{equation*}
+	Again, we don't write the $ S_{1} $ and $ S_{2} $ for shorthand because they're implied and fixed for each particle.
+	
+	We transform between the bases using the Clebsch-Gordon coefficients.
+\end{itemize}
+\textbf{End of Review, Start of Today's Solution}
+\begin{itemize}
+	\item Recall the Hamiltonian is
+	\begin{equation*}
+		H = \frac{p_{1}^{2}}{2m} - \frac{\lambda}{\hbar^{2}}\vec{S}_{1}\vec{S}_{2}\delta (x_{1})
+	\end{equation*}
+	First, we'll write the dot product using the total spin operator. Uses
+	\begin{equation*}
+		S^{2} = S_{1}^{2} + 2\vec{S}_{1}\vec{S}_{2} + S_{2}^{2}
+	\end{equation*}
+	Which implies 
+	\begin{equation*}
+		\vec{S}_{1}\cdot \vec{S}_{2} = \frac{S^{2} -S_{1}^{2} - S_{2}^{2}}{2}
+	\end{equation*}
+	So the Hamiltonian is
+	\begin{equation*}
+		H = \frac{p_{1}^{2}}{2m} -  \frac{\lambda}{2\hbar^{2}}(S^{2} -S_{1}^{2} - S_{2}^{2})\delta(x)
+	\end{equation*}
+	
+	\item Next we confirmed $ H $ commutes with the spin operators:
+	\begin{equation*}
+		[H, S^{2}] = [H, S_{1}^{2}] = [H, S_{2}^{2}] = [H, S_{z}] = 0
+	\end{equation*}
+	Because the Hamiltonian commutes with all of the spin basis operators, we can find eigenfunctions that are eigenfunctions of both $ H $ and all of the spin operators at once.
+	
+	\item We can thus use the Hamiltonian eigenstates to ...? Okay so we solve the stationary \schro equation:
+	\begin{equation*}
+		H \ket{\psi} = E\ket{\psi}
+	\end{equation*}
+	Because of the commutation we can use the ansatz $ \ket{\psi} = \ket{\psi_{1}} \otimes \ket{Sm} $ Then
+	\begin{equation*}
+		H \ket{\psi_{1}} \otimes \ket{Sm} = \left(\frac{p_{1}^{2}}{2m}\ket{\psi_{1}}\right)\otimes \ket{Sm} - \frac{\lambda}{2\hbar^{2}} \delta (x_{1})\ket{\psi_{1}}\otimes (S^{2} -S_{1}^{2} - S_{2}^{2}) \ket{Sm}
+	\end{equation*}
+	Each operator acts on its eigenstates to get:
+	\begin{equation*}
+		H \ket{\psi_{1}} \otimes \ket{Sm} = \left(\frac{p_{1}^{2}}{2m}\ket{\psi_{1}}\right)\otimes \ket{Sm} - \frac{\lambda}{2\hbar^{2}} \delta (x_{1})\ket{\psi_{1}}\otimes \left[\hbar^{2}S(S+1) - \hbar^{2}S_{1}(S_{1} + 1) - \hbar^{2}S_{2}(S_{2} + 1)\right] \ket{Sm} = E \ket{\psi_{1}}\otimes \ket{Sm}
+	\end{equation*}
+	we then cancel $ \ket{Sm} $ from both sides of the equation and get the purely momentum problem
+	\begin{equation*}
+		\left(\frac{p_{1}^{2}}{2m} - \frac{\lambda \delta(x)}{2}\big[S(S+1) - \frac{3}{4} - 2\big]\right)\ket{\psi_{1}} = E \ket{\psi_{1}}
+	\end{equation*}
+	
+	\item Note that this equation depends only on the size $ S $ of the total spin, not on the $ z $ components. There are two possible values for $ S $. For $ S = \frac{3}{2} $ we have
+	\begin{equation*}
+		\left[\frac{p_{1}^{2}}{2m} - \frac{\lambda \delta(x_{1})}{2}\right]\ket{\psi_{1}} = E \ket{\psi_{1}}
+	\end{equation*}
+	For $ S = \frac{1}{2} $ we have
+	\begin{equation*}
+		\left[\frac{p_{1}^{2}}{2m} - \lambda \delta(x_{1})\right]\ket{\psi_{1}} = E \ket{\psi_{1}}
+	\end{equation*}
+	In other words, by applying the commutation of $ H $ and the spin operators, we have transformed our problem to a problem in only the momentum Hilbert space! All spin dependence is gone; the eigenvalues depend only on the delta function parameter $ \lambda $. 
+	
+	\item Recall from earlier, we have a bound state only for a downward-pointing delta function, which occurs if $ \lambda > 0 $. (see the Hamiltonian). Looking at the $ S $ eigenvalue equations, we see we have bound states only if $ S = \frac{3}{2} $ and the $ \delta(x_{1}) $ term has a negative coefficient. $ S = \frac{1}{2} $ has a positive $ \delta $ coefficient. 
+	
+	\item So, for the bound state with $ S = \frac{3}{2} $, lets define 
+	\begin{equation*}
+		\lambda_{3/2} = \frac{\lambda}{2} \eqtext{and} \lambda_{1/2} = - \lambda
+	\end{equation*}
+	THe eigenvalue equations then read
+	\begin{equation*}
+		\frac{p_{1}^{2}}{2m} - \lambda_{3/2}\delta(x_{1}) = H_{3/2} \eqtext{and} \frac{p_{1}^{2}}{2m} - \lambda_{1/2}\delta(x_{1}) = H_{1/2} 
+	\end{equation*}
+	For the $ S = \frac{3}{2} $ problem, we have
+	\begin{equation*}
+		\kappa_{3/2} = \frac{m\lambda_{3/2}}{\hbar^{2}} = \frac{m\lambda}{2\hbar^{2}}
+	\end{equation*}
+	This has the bound eigenfunction
+	\begin{equation*}
+		\ket{\psi_{0}^{M}} = \sqrt{\kappa_{3/2}}e^{-\kappa_{3/2}\abs{x}} \ket{\frac{3}{2}M}
+	\end{equation*}
+	It is four-times degenerate because four linearly independent eigenfunctions for $ \abs{M} \leq \frac{3}{2} $ all have the same energy eigenvalue.
+	
+	Also, note the abuse of notation using a coordinate and Dirac notation in the same wavefunction. So lets say
+	\begin{equation*}
+		\psi(x_{1})\ket{SM} \equiv \big[\int \diff x_{1} \psi(x_{1}) \ket{x_{1}} \big ] \ket{SM}
+	\end{equation*}
+	
+	\item Next, for the scattering states; first for a particle incident from the left: for the region $ x_{1} < 0 $, the wavefunction takes the general form:
+	\begin{equation*}
+		\left(e^{ik x} + r_{S}e^{-i\kappa x}\right)\ket{SM}
+	\end{equation*}
+	and for $ x_{1} > 0 $ we have
+	\begin{equation*}
+		t_{S} e^{ikx}\ket{SM}
+	\end{equation*}
+	Again, this is for particles purely from the left. The scattering matrix is (reusing the known delta function results)
+	\begin{equation*}
+		\mat{S}_{S} = 
+		\begin{bmatrix}
+			r_{S} & t'_{S}\\
+			t_{S} & r'_{S}
+		\end{bmatrix}
+		= 
+		\frac{1}{k + i \kappa_{S}}
+		\begin{bmatrix}
+			-i\kappa_{S} & k\\
+			k & -i \kappa_{S}
+		\end{bmatrix}
+	\end{equation*}
+	Note the dependence of the parameters on the spin $ S $:
+	\begin{equation*}
+		\kappa_{3/2} = \frac{m\lambda_{3/2}}{\hbar^{2}} = \frac{m\lambda}{2\hbar^{2}} \eqtext{and} \kappa_{1/2} = \frac{m\lambda_{1/2}}{\hbar^{2}} = - \frac{m\lambda}{\hbar^{2}}
+	\end{equation*}
+	This set of eigenfunctions, at least for particles incident from the left, forms a complete basis of the momentum Hilbert space for free scattering states. 
+	
+	\item To review, send first particle in state $ \ket{\ua} $ in from the left towards particle in state $ \ket{0} $ at the origin, and we are interested in the scattered spin states of the two particles.
+	
+	The incident part of the wavefunction takes the form
+	\begin{equation*}
+		e^{ikx} \ket{\ua} \ket{0}
+	\end{equation*}
+	Note that this wavefunction is written in the product basis, while the above eigenfunctions are written in the good spin basis.
+	
+	\item We need a unitary transformation between the bases: these are the Clebsch-Grodan coefficients.
+	
+	\item First, find the table with the correct combination of spin numbers for each particles, in our case this is the $ 1 \cross 1/2 $ table, since the starting particles have spins $ 1 $ and $ 1/2 $. 
+	
+	\item So we have the initial, product-basis state $ \ket{\ua}\ket{0} \equiv \ket{1/2}\ket{0} $ (the z comonents of the two spins; recall $ S_{1} $ and $ S_{2} $ are fixed). We then find the combination $ +1/2 $, $ 0 $ in the table from the above bullet. So
+	
+	\begin{equation*}
+		\ket{\ua} \ket{0} \equiv \ket{\frac{1}{2}}\ket{0} \to \sqrt{\frac{2}{3}} \ket{\frac{3}{2}\frac{1}{2}} - \frac{1}{3}\ket{\frac{1}{2}\frac{1}{2}}
+	\end{equation*}
+	So the box to the right contains the coefficients as rows; these are $ 2/3 $ and $ -1/3 $. The box above the coefficient box has the spin quantum numbers as columns; these are $ 3/2, 1/2 $ and $ 1/2, 1/2 $. The first row in this upper box is $ S $, the bottom row is $ M $. 
+	
+	So, in the good basis,
+	\begin{equation*}
+		e^{ikx}\ket{\ua} \ket{0} = e^{ikx}\left(\sqrt{\frac{2}{3}} \ket{\frac{3}{2}\frac{1}{2}} - \frac{1}{3}\ket{\frac{1}{2}\frac{1}{2}}\right)
+	\end{equation*}
+	This first eigenstate at energy $ E $ for $ x_{1} < 0 $  for both possible $ S $ takes the form
+	\begin{equation*}
+		\left(e^{ikx} + r_{3/2}e^{-ikx}\right)\ket{\frac{3}{2}\frac{1}{2}} \eqtext{or} \left(e^{ikx} + r_{1/2}e^{-ikx}\right)\ket{\frac{1}{2}\frac{1}{2}}
+	\end{equation*}
+	The second eigenstate at energy $ E $ for $ x_{1} > 0 $  for both possible $ S $ takes the form
+	\begin{equation*}
+		t_{3/2}e^{ikx}\ket{\frac{3}{2}\frac{1}{2}} \eqtext{or} t_{1/2}e^{ikx}\ket{\frac{1}{2}\frac{1}{2}} 
+	\end{equation*}
+	
+	\item Then on $ x_{1}<0 $ we multiply by the CG coefficients to get
+	\begin{equation*}
+		\sqrt{\frac{3}{2}}\left(e^{ikx} + r_{3/2}e^{-ikx}\right)\ket{\frac{3}{2}\frac{1}{2}} - \sqrt{\frac{1}{3}}\left(e^{ikx} + r_{1/2}e^{-ikx}\right)\ket{\frac{1}{2}\frac{1}{2}}
+	\end{equation*}
+	and for $ x_{1} > 0 $
+	\begin{equation*}
+		\sqrt{\frac{2}{3}}\left(t_{3/2}e^{ikx}\ket{\frac{3}{2}\frac{1}{2}}\right) - \sqrt{\frac{1}{3}}\left(t_{1/2}e^{ikx}\ket{\frac{1}{2}\frac{1}{2}} \right)
+	\end{equation*}
+	\textit{All $ x $ should be $ x \to x_{1} $}.
+	
+	\item In the good basis?, the $ x_{1} < 0 $ state is
+	\begin{equation*}
+		e^{ikx_{1}}\ket{\ua}\ket{0} + e^{-ikx_{1}}\left(\sqrt{\frac{2}{3}}r_{3/2}\ket{\frac{3}{2}\frac{1}{2}} - \sqrt{\frac{1}{3}}r_{1/2}\ket{\frac{1}{2}\frac{1}{2}}\right)
+	\end{equation*}
+	The second $ x_{1} > 0 $ is
+	\begin{equation*}
+		e^{ikx_{1}}\left(\sqrt{\frac{2}{3}}t_{3/2}\ket{\frac{3}{2}\frac{1}{2}} - \sqrt{\frac{1}{3}}t_{1/2}\ket{\frac{1}{2}\frac{1}{2}}\right)
+	\end{equation*}
+	So supposedly $ e^{ikx_{1}}\ket{\ua}\ket{0} $ is written in the product basis and the other terms are in the good basis...?
+	
+	We now want to write the good basis terms back in the product basis.
+	
+	\item So we have the states $ \ket{\frac{3}{2}\frac{1}{2}}  $ and $ \ket{\frac{1}{2}\frac{1}{2}} $ in the good basis.
+	
+	We find these states in the upper right box where the $ 3/2 $ and $ + 1/2 $ are columns. This becomes
+	\begin{equation*}
+		\ket{\frac{3}{2}\frac{1}{2}}  \to \sqrt{\frac{1}{3}}\ket{\da}\ket{1} +  \sqrt{\frac{2}{3}}\ket{\ua}\ket{0} 
+	\end{equation*}
+	and
+	\begin{equation*}
+		\ket{\frac{1}{2}\frac{1}{2}}  \to \sqrt{\frac{2}{3}}\ket{\da}\ket{1} - \sqrt{\frac{1}{3}}\ket{\ua}\ket{0} 
+	\end{equation*}
+	
+	\item Applying this transformation to the mixed good/product gives for $ x_{1} < 0 $
+	\begin{equation*}
+		e^{ikx_{1}}\ket{\ua}\ket{0} + e^{-ikx_{1}}\left(\sqrt{\frac{2}{3}}r_{3/2}\left(\sqrt{\frac{1}{3}}\ket{\da}\ket{1} +  \sqrt{\frac{2}{3}}\ket{\ua}\ket{0}\right) - \sqrt{\frac{1}{3}}r_{1/2}\left(	\ket{\frac{1}{2}\frac{1}{2}}  \to \sqrt{\frac{2}{3}}\ket{\da}\ket{1} - \sqrt{\frac{1}{3}}\ket{\ua}\ket{0} \right)\right)
+	\end{equation*}
+	
+	And then for $ x_{1} > 0 $
+	\begin{equation*}
+		e^{ikx_{1}}\left[\sqrt{\frac{2}{3}}t_{3/2}(\cdots) - \sqrt{\frac{1}{3}}t_{1/2}(\cdots)\right]
+	\end{equation*}
+	
+	\item We can combine like terms to get for $ x_{1}< 0 $
+	\begin{equation*}
+		e^{ikx_{1}}\ket{\ua}\ket{0} + e^{-ikx_{1}}\left[\left(\frac{\sqrt{2}}{3}r_{3/2} - \frac{\sqrt{2}}{3}r_{1/2}\right)\ket{\da}\ket{1} + \left(\frac{2}{3}r_{3/2} + \frac{1}{3}r_{1/2}\right)\ket{\ua}\ket{0}\right]
+	\end{equation*}
+	and for $ x >  0 $
+	\begin{equation*}
+		e^{ikx_{1}}\left[\left(\frac{\sqrt{2}}{3}t_{3/2} - \frac{\sqrt{2}}{3}t_{1/2}\right)\ket{\da}\ket{1} + \left(\frac{2}{3}t_{3/2} + \frac{1}{3}t_{1/2}\right)\ket{\ua}\ket{0}\right]
+	\end{equation*}
+	
+	\item Alternatively, for $ x_{1} < 0 $ in terms of reflection
+	\begin{equation*}
+		e^{ikx_{1}}\ket{\ua}\ket{0} + e^{-ikx_1} \left[r_{\da 1 \leftarrow \ua 0}\ket{\da}\ket{1} + r_{\da 0 \leftarrow \ua 0}\ket{\ua}\ket{0}\right]
+	\end{equation*}
+	and $ x > 0 $:
+	\begin{equation*}
+		e^{ikx_1} \left[t_{\da 1 \leftarrow \ua 0}\ket{\da}\ket{1} + t_{\da 0 \leftarrow \ua 0}\ket{\ua}\ket{0}\right]
+	\end{equation*}
+	
+	I follows that
+	\begin{equation*}
+		r_{\da 1 \leftarrow \ua 0} = \frac{\sqrt{2}}{3}r_{3/2} - \frac{\sqrt{2}}{3}r_{1/2} 
+	\end{equation*}
+	From which we get 
+	\begin{equation*}
+		R_{\da 1 \leftarrow \ua 0} = \abs{\frac{\sqrt{2}}{3}r_{3/2} - \frac{\sqrt{2}}{3}r_{1/2} }^{2}
+	\end{equation*}
+	This is one of four possible outcomes. These are
+	\begin{equation*}
+		R_{\da 1 \leftarrow \ua 0} + R_{\ua 0 \leftarrow \ua 0} + T_{\da 1 \leftarrow \ua 0} + R_{\ua 0 \leftarrow \ua 0}
+	\end{equation*}
+	Reflect and spin flips, particle reflects and spins stays, transmits (...) and transmits (...)
+	
+	\item These are
+	\begin{align*}
+		&\abs{\frac{\sqrt{2}}{3}r_{3/2} - \frac{\sqrt{2}}{3}r_{1/2} }^{2} + \abs{\frac{2}{3}r_{3/2} + \frac{1}{3}r_{1/2}}^{2} + \abs{\frac{\sqrt{2}}{3}t_{3/2} - \frac{\sqrt{2}}{3}t_{1/2} }^{2} + \abs{\frac{2}{3}t_{3/2} + \frac{1}{3}t_{1/2}}^{2}\\
+		& = \frac{2}{9}\abs{r_{3/2}}^{2} + \frac{2}{9}\abs{r_{1/2}}^{2}  - \frac{2}{9} 2 \Re \big[r^{*}_{3/2}r_{1/2}\big] + \frac{4}{9}\abs{r_{3/2}}^{2} + \frac{1}{9}\abs{r_{1/2}}^{2} + \frac{2}{9} 2 \Re \big[r^{*}_{3/2}r_{1/2}\big]  + \cdots \text{t terms} = \\
+		& = \frac{2}{3}\left(\abs{r_{3/2}}^{2} + \abs{t_{3/2}}^{2}\right) + \frac{1}{3}\left(\abs{r_{1/2}}^{2} + \abs{t_{1/2}}^{2}\right) 
+	\end{align*}
+	These are elements of the spin matrix for $ x < 0 $. Using the unitary identity of the spin matrix so $ \left(\abs{r_{3/2}}^{2} + \abs{t_{3/2}}^{2}\right) = 1 $ and $ \left(\abs{r_{1/2}}^{2} + \abs{t_{1/2}}^{2}\right) = 1 $. Which gives
+	\begin{equation*}
+		\frac{2}{3}\cdot 1 + \frac{1}{3}\cdot 1 = 1
+	\end{equation*}
+
+
+	
+\end{itemize}
+
+\fi
+
 
 \end{document}
 
