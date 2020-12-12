@@ -866,7 +866,7 @@ def run():
 
     # compile_error_h_table()
 
-    # compile_fixed_step_times()
+    compile_fixed_step_times()
     # compile_adaptive_step_times()
 
     # generate_step_size_vs_error()
