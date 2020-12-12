@@ -1,0 +1,453 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{mwe}
+\usepackage[margin=3.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bm} % for bold vectors in math mode
+\usepackage{physics} % many useful physics commands
+\usepackage[separate-uncertainty=true]{siunitx} % for scientific notation and units
+
+\usepackage{graphicx}
+\graphicspath{{"../figures/"}}
+\usepackage[section]{placeins} % to keep figures in their sections
+\usepackage[export]{adjustbox} % for subcaptionbox figures
+\usepackage{subcaption}  % for figures with subcaptions
+
+\usepackage[most, minted]{tcolorbox} % for displaying code
+
+\usepackage{xcolor}  % to color hyperref links
+\usepackage[colorlinks = true, allcolors=blue]{hyperref}
+
+\setlength{\parindent}{0pt} % to stop indenting new paragraphs
+\newcommand{\diff}{\mathop{}\!\mathrm{d}} % differential
+\newcommand{\eqtext}[1]{\qquad \text{#1} \qquad}
+\newcommand{\mat}[1]{\mathbf{#1}}
+\newcommand{\dft}{\text{DFT} \,}
+\newcommand{\idft}{\text{IDFT} \,}
+
+\newtcblisting{python}{%
+	listing engine=minted,
+	minted language=python,
+	listing only,
+	breakable,
+	enhanced,
+	minted options = {
+		linenos, 
+		breaklines=true, 
+		tabsize=2,
+		fontsize=\footnotesize, 
+		numbersep=2mm
+	},
+	overlay={%
+		\begin{tcbclipinterior}
+			\fill[gray!25] (frame.south west) rectangle ([xshift=4mm]frame.north west);
+		\end{tcbclipinterior}
+	}   
+}
+
+
+\begin{document}
+\title{Spectral Methods for Partial Differential Equations}
+\author{Elijan Jakob Mastnak\\[1mm]\small{Student ID: 28181157}}
+\date{December 2020}
+\maketitle
+
+\tableofcontents
+
+\newpage
+\begin{center}
+\textbf{Assignment}
+\begin{enumerate}
+	\item Use the Fourier spectral method to solve the heat diffusion equation in one dimension for $ x \in [0, L] $ using the initial temperature distribution
+	\begin{equation*}
+		T(x, 0) \propto \exp\left[-\frac{\big(x - \frac{L}{2}\big)^{2}}{\sigma^{2}}\right]
+	\end{equation*}
+	and each of the following two sets of boundary conditions:
+	\begin{enumerate}
+		\item periodic boundary conditions $ T(0, t) = T(L, t)$
+		\item homogeneous Dirichlet boundary conditions $ T(0, t) = T(L, t) = 0 $
+	\end{enumerate}
+	
+	\item Solve the same problem---with homogeneous boundary---using B-splines and the collocation method. Compare the results with the Fourier spectral method.
+	
+	\item \textit{Optional:} Use both methods to solve the problem with a different initial temperature distribution, for example the sinusoidal distribution
+	\begin{equation*}
+		T(x, 0) = \sin(\frac{\pi x}{L})
+	\end{equation*}
+\end{enumerate}
+\end{center}
+
+\vspace{2mm}
+
+\rule{\textwidth}{0.2pt}
+
+\section{Theory} \label{spec:s:theory}
+\vspace{-2mm}
+\textit{To jump right to the solution, see \hyperref[spec:s:solution]{Section \ref{spec:s:solution}}}.
+
+\vspace{2mm}
+This report involves solving the one-dimensional heat diffusion equation
+\begin{equation*}
+	\pdv{T}{t} = D \pdv[2]{T}{x}, \quad x \in [0, a]
+\end{equation*}
+where $ D $ is the heat diffusion coefficient.
+
+\subsection{Fourier Series Solution} \label{spec:ss:fourier-theory}
+To solve the heat equation with the Fourier method, we write the temperature $ T(x, t) $ at a given position and time $ (x, t) $ using the Fourier series ansatz
+\begin{equation*}
+	T(x, t) = \sum_{k=0}^{N-1}c_{k}(t)e^{-2\pi i f_{k} x}
+\end{equation*}
+where $ f_{k} = \frac{k}{L} $. Inserting this expression into the heat equation produces
+\begin{equation*}
+	\sum_{k}\dot{c}_{k}(t)e^{-2\pi i f_{k}x} = D \sum_{k}(-4\pi^{2}f_{k}^{2}) c_{k}(t)e^{-2\pi i f_{k} x}
+\end{equation*}
+from which we get an expression for the coefficients $ c_{k}(t) $:
+\begin{equation*}
+	\dot{c}_{k}(t) = -4\pi^{2}Df_{k}^{2}c_{k}(t)
+\end{equation*}
+The problem thus reduces to finding the coefficients $ c_{k}(t) $. Because of our convenient choice of a Fourier series ansatz, the initial coefficients $ C_{k} \equiv c_{k}(t=0) $ are a Fourier transform of the initial condition $ T(x, 0) $. We can find $ c_{k}(t) $ with the analytic solution
+\begin{equation}
+	c_{k}(t) = C_{k}e^{-4\pi^{2}f_{k}^{2}Dt}  \label{spec:eq:coefficients-analytic}
+\end{equation}
+where $ C_{k} $ are the initial coefficients at $ t = 0 $. More generally, we could find the $ c_{k}(t) $ with an an integration scheme, e.g. Euler's method
+\begin{equation}
+	c_{k}(t+h) = c_{k}(t) -4\pi^{2}Df_{k}^{2}c_{k}(t) \cdot h \label{spec:eq:coefficients-euler}
+\end{equation}
+When solving for the coefficients $ c_{k}(t) $ numerically, the step size must satisfy
+\begin{equation*}
+	\abs{\frac{c_{k}(t+h)}{c_{k}(t)}} = \abs{1 - 4\pi^{2}Df_{k}^{2}\cdot h} < 1
+\end{equation*}
+
+
+\subsection{Collocation Method using Cubic B-Splines} \label{spec:ss:collocation}
+To solve the heat equation with the collocation method, we use the ansatz
+\begin{equation*}
+	T(x, t) = \sum_{k=-1}^{N+1}c_{k}(t)B_{k}(x)
+\end{equation*}
+where $ B_{k}(x) $ is a cubic B-spline centered at $ x = x_{k} $ (see \hyperref[spec:s:b-splines]{Appendix \ref{spec:s:b-splines}}). We split the $ x $ interval $ [0, L] $ into $ N $ collocation points $ \{x_{j}\} $ separated by the uniform step size $ h $, so that 
+\begin{equation*}
+	x_{j} = \frac{j}{N}L = jh, \qquad j = 0, 1, \ldots, N
+\end{equation*}
+Substituting the spline ansatz into the heat equation and evaluating the result at $ x = x_{j} $ produces
+\begin{equation*}
+	\sum_{k=-1}^{N+1} \dot{c}_{k}(t)B_{k}(x_{j}) = D \sum_{k=-1}^{N+1}c_{k}(t)\pdv[2]{B_{k}(x_{j})}{x}, \qquad j = 0, 1, \ldots N
+\end{equation*}
+which, using a finite difference approximation of the second position derivative, leads to the system of equations
+\begin{equation*}
+	\dot{c}_{j-1}(t) + 4\dot{c}_{j}(t) + \dot{c}_{j+1}(t) = \frac{6D}{h^{2}}\big[c_{j-1}(t) - 2c_{j}(t) + c_{j+1}(t)\big], \qquad j = 0, 1, \ldots, N
+\end{equation*}
+The homogeneous boundary condition $ T(0, t) = 0 $ gives $ c_{-1} = -4c_{0} - c_{1} $. Using the $ B $-splines with the natural spline condition, which requires
+\begin{equation*}
+	\sum_{k=-1}^{n+1}c_{k}(t)B_{k}''(x)\big |_{x = 0, L} = 0,
+\end{equation*}
+we get the equality $ c_{0} = c_{n} = 0 $ and thus $ c_{-1} = -c_{1} $ at the left endpoint. Analogously, the natural spline condition applied to the right endpoint produces $ c_{n+1} = -c_{n-1} $. Solving the spline ansatz for $ T(x, t) $ reduces to solving the matrix equation
+\begin{equation*}
+	\mat{A} \dot{\bm{c}} = \mat{B}\bm{c}
+\end{equation*}
+where
+\begin{equation}
+	\mat{A} = 
+	\begin{bmatrix}
+		4 & 1 &   &   &   &   & \\
+		1 & 4 & 1 &   &   &   & \\
+		  & 1 & 4 & 1 &   &   & \\
+		  &   &  &\ddots &  & \\
+		  &   &   & 1 & 4 & 1 & \\
+ 		  &   &   &   & 1 & 4 & 1 \\
+		  &   &   &   &   & 1 & 4
+		  
+	\end{bmatrix}, \qquad 
+	\mat{B} = \frac{6D}{h^{2}}
+	\begin{bmatrix}
+		-2 & 1 &   &   &   &   & \\
+		1 & -2 & 1 &   &   &   & \\
+		  & 1 & -2 & 1 &   &   & \\
+		  &   &  &\ddots &  & \\
+		  &   &   & 1 & -2 & 1 & \\
+ 		  &   &   &   & 1 & -2 & 1 \\
+		  &   &   &   &   & 1 & -2
+		  
+	\end{bmatrix}
+	\label{spec:eq:A-B}
+\end{equation}
+and $ \bm{c} = \bm{c}(t) = \big[c_{1}(t), \ldots c_{n-1}(t)\big]^{T} $. The initial condition $ T(x_{j}, 0) = f(x_{j}) $ reads
+\begin{equation*}
+	\mat{A} \bm{c}^{(0)} = \bm{f}
+\end{equation*}
+where $ \bm{f} = \big[f(x_{1}), \ldots, f(x_{n-1}) \big]^{T} $. We find the coefficients $ \bm{c} $ at times $ t_{i} = i h_{t} $ with
+\begin{equation}
+	\bm{c}^{(i+1)} = \bm{c}^{(i)} + h_{t}\mat{A}^{-1}\mat{B}\bm{c}^{(i)} = (\mat{I} + h_{t}\mat{A}^{-1}\mat{B})\bm{c}^{(n)} \label{spec:eq:collocation-explicit}
+\end{equation}
+This is essentially an explicit Euler scheme, and is potentially unstable. We are better off with the implicit, Crank-Nicholson-style scheme
+\begin{equation}
+	\left(\mat{A} - \frac{h_{t}}{2}\mat{B}\right)\bm{c}^{(i+1)} = \left(\mat{A} + \frac{h_{t}}{2}\mat{B}\right)\bm{c}^{(i)} \label{spec:eq:collocation-implicit}
+\end{equation}
+We then find $ T(x_{j}, t_{i}) $ with the known $ \bm{c}^{(i)} $ using 
+\begin{equation}
+	\bm{T} = \mat{A}\bm{c}(t_{i})  \label{spec:eq:collocation-temp}
+\end{equation}
+where $ \bm{T} = \big[T(x_{1}, t_{i}), \ldots, T(x_{n-1}, t_{i}) \big]^{T} $
+
+
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=0.49\linewidth]{2d-fourier-homog-gauss} \hfill
+\includegraphics[width=0.49\linewidth]{2d-fourier-homog-sine}
+\caption{Heat diffusion in a one-dimensional rod with homogeneous boundary conditions and a Gaussian and sinusoidal initial temperature distribution. Found with the Fourier method.}
+\label{spec:fig:2d-fourier-homog}
+\end{figure}
+
+\section{Fourier Solution}  \label{spec:s:solution}
+
+
+\subsection{Initialization Steps}
+For the Fourier method, I first define the simulation parameters $ L $, $ D $, $ T_{0} $ and $ \sigma $, which are the rod length; diffusion constant; and amplitude and standard deviation of the initial Gaussian temperature distribution, respectively. Next, I define a discrete grid of position and time values on which to find the solution and generate the initial temperature distribution---note the vertical translation of the initial Gaussian distribution to $ T = 0 $ to satisfy the homogeneous boundary conditions.
+
+The following Python code shows the initialization procedure with some representative values of $ L $, $ D $, $ T_{0} $ and $ \sigma $.
+\begin{python}
+""" Initialization steps for the Fourier method """
+import numpy as np
+# peak temperature, rod length, diffusion constant, gaussian std. dev.
+T0, L, D, sigma = 10, 1.0, 0.1, 0.25
+N_x = 2**10  # power of two for use with fft
+x = np.linspace(0, L, N_x)
+T = gauss(x, T0, L/2, sigma)   # local utility function returning gauss curve
+T -= gauss(0, T0, L/2, sigma)  # for agreement of IC and homogeneous BC
+\end{python}
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{initial-gauss}
+\caption{Modifications to the initial temperature distribution (left), needed to satisfy the homogeneous (middle) and periodic (right) boundary conditions used with the Fourier method.}
+\label{spec:fig:initial}
+\end{figure}
+
+
+\subsection{Homogeneous Boundary Conditions}
+I implemented the Fourier method with homogeneous boundary conditions as follows:
+\begin{itemize}
+	\item Create an asymmetric (odd) expansion of initial distribution about the origin, shown in the middle graph of Figure \ref{spec:fig:initial}. This step, which creates a ``periodic'' initial distribution with both endpoints at zero, means the later use of the discrete Fourier transform will preserve the homogeneous boundary conditions.
+	
+\begin{figure}
+\centering
+\includegraphics[height=0.4\linewidth]{3d-fourier-homog-gauss} \hfill
+\includegraphics[height=0.4\linewidth]{3d-fourier-homog-absval}
+\caption{Heat diffusion in a 1D rod with homogeneous conditions and a Gaussian and absolute-value initial temperature distribution. Found with the Fourier method.}
+\label{spec:fig:3d-fourier-homog}
+\end{figure}	
+	
+	\item Find the initial Fourier coefficients with a Fourier transform of the initial temperature distribution, as described in \hyperref[spec:ss:fourier-theory]{Subsection \ref{spec:ss:fourier-theory}}. 
+	
+	\item Propagate the initial coefficients through time. After experimenting with both the analytic solution in Equation \ref{spec:eq:coefficients-analytic} and the Euler scheme in Equation \ref{spec:eq:coefficients-euler}, I opted for the simpler analytic solution for the remainder of the report. Note that the coefficients $ c_{k} $ are in general complex numbers, which requires the use of complex math.
+	
+	\item Find the temperature distribution $ T(x, t) $ with an inverse Fourier transform of the time-dependent coefficients. Since the original distribution was artificially doubled in length in the asymmetric expansion, the desired solution is only the first half of the inverse transform, as shown in the following code block.
+
+\end{itemize}
+
+\begin{python}
+from numpy.fft import fft, ifft, fftshift, ifftshift
+c0 = fft(T)  # coefficients are DFT of initial temperature distribution
+T_solutions = np.zeros((N_x, N_t))       # matrix of T(x) at each time t
+for i, t in enumerate(times): 
+    c = get_ck_homogeneous(t, c0, L, D)  # find coefficients c_k(t)
+    T = np.real(ifft(c))[:N_x]           # keep only first N_x points
+    T_grid[:, i] = T                     # save solution T(x, t)
+\end{python}
+The coefficient-finding function \texttt{get\_ck\_homogeneous}, a straightforward implementation of Equation \ref{spec:eq:coefficients-analytic}, is below. Note the use of ``frequencies'' $ f_{k} $ within the Nyquist range $ \big[-\frac{1}{2}\cdot\frac{N_{x}}{2L}, \frac{1}{2}\cdot\frac{N_{x}}{2L}\big] $---the extra $ \frac{1}{2}$ factor accounts for doubling the initial temperature distribution in the asymmetric expansion.
+\begin{python}
+def get_ck_homogeneous(t, c0, L, D):
+    """ Returns Fourier coefficients c_k(t) at time t for homogeneous BC """
+    fc = 0.5*len(c0)/(2*L)  # analog of a Nyquist frequency for x
+    f_k = np.linspace(0, len(c0)-1, len(c0))/(2*L) - fc
+    c_k = c0 * np.exp(-4*(np.pi**2)*(f_k**2)*D*t)  # uses analytic solution
+    return c_k
+\end{python}
+Figures \ref{spec:fig:2d-fourier-homog} and  \ref{spec:fig:3d-fourier-homog} show two and three-dimensional representations, respectively, of the changing temperature distribution in a one-dimensional rod for various initial temperature distributions and homogeneous boundary conditions. 
+
+
+
+\begin{figure} [htb!]
+\centering
+\includegraphics[width=0.49\linewidth]{2d-fourier-periodic-gauss} \hfill
+\includegraphics[width=0.49\linewidth]{2d-fourier-periodic-sine}
+\caption{Heat diffusion in a 1D rod with periodic conditions and a Gaussian and sinusoidal initial temperature distribution. Found with the Fourier method. Note that the initial curves are closer spaced in time than the later ones to more uniformly sample the initially rapid exponential temperature decay.}
+\label{spec:fig:2d-fourier-periodic}
+\end{figure}
+
+
+\subsection{Periodic Boundary Conditions}
+The Fourier method solution with periodic boundary condition requires two changes from the homogeneous solution, first when modifying the initial solution and second when calculating the coefficients $ c_{k}(t) $. These are:
+\begin{enumerate}
+	\item Shift the initial temperature distribution with e.g. Numpy's \texttt{fftshift} or a similar function, as shown in the third graph of Figure \ref{spec:fig:initial}. This step, just like in the \textit{Discrete Fourier Transform} report, makes the initial condition ``periodic'', which is necessary for successful subsequent application of the DFT.
+	
+	The earlier line \texttt{T = np.concatenate((T, -T[::-1]))} would be replaced by 
+\begin{python}
+T = np.fftshift(T)  # make distribution periodic for use with DFT
+\end{python}
+
+\item Use only positive frequencies $ f_{k} $ when propagating the coefficients $ c_{k} $ through time. I discovered the need for positive frequencies through experiment rather than an \textit{a priori} theoretical prediction---I found using both negative and positive frequencies results in homogeneous boundary conditions.
+\end{enumerate}
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=0.49\linewidth]{3d-fourier-periodic-sine2} \hfill
+\includegraphics[width=0.49\linewidth]{3d-fourier-periodic-box}
+\caption{Heat diffusion in a 1D rod with periodic boundary conditions and a sinusoidal and rectangular initial distribution. Found with the Fourier method.  Note the decay to the average value $ T = 5 $, which preserves the area under the temperature distribution curve in agreement with energy conservation.}
+\label{spec:fig:3d-fourier-periodic}
+\end{figure}
+
+
+
+The Fourier coefficients $ c_{k}(t) $ for periodic boundary condition are found as follows:
+\begin{python}
+def get_ck_periodic(t, c0, L, D):
+    """ Returns Fourier coefficients c_k(t) at time t for periodic BC """
+    f_k = np.linspace(0, len(c0)-1, len(c0))/(L)  # only positive frequencies
+    c_k = c0 * np.exp(-4*(np.pi**2)*(f_k**2)*D*t)
+    return c_k
+\end{python}
+Figures \ref{spec:fig:2d-fourier-periodic} and  \ref{spec:fig:3d-fourier-periodic} show two and three-dimensional representations, respectively, of the changing temperature distribution in a one-dimensional rod for various initial temperature distributions periodic boundary conditions. Note that the area under the temperature distribution curve is constant throughout the simulations, corresponding to conservation of energy. This is best seen in the 3D representations in Figure \ref{spec:fig:3d-fourier-periodic}, where the initial temperature falls between $ T = 0 $ and $ T = 10 $ and decays over time to the average value $ T = 5 $.
+
+
+
+
+\section{Collocation Method with Cubic B-Splines}
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=0.49\linewidth]{2d-collocation-sine} \hfill
+\includegraphics[width=0.49\linewidth]{2d-collocation-absval}
+\caption{Heat diffusion in a 1D rod with periodic boundary conditions and a sinusoidal and absolute-value initial distribution. Found with the collocation method.}
+\label{spec:fig:2d-c-periodic}
+\end{figure}
+
+
+I tested the collocation method using both the explicit and implicit schemes in Equations \ref{spec:eq:collocation-explicit} and \ref{spec:eq:collocation-implicit}, respectively. I found the methods performed similarly, both giving reasonable results for time steps smaller than $ 10^{-3} $, and progressively ``choppier'' results for larger time steps, as shown in Figure \ref{spec:fig:time-step}. Since both methods, at least on a macroscopic scale, produce visually identical results, I have not differentiated between the two in the titles of this section's  figures.
+
+\begin{figure}[hbt!]
+	\centering
+	\subcaptionbox{$ h_{t} = 0.1 $}{\includegraphics[width=.33 \textwidth]{{time-step-0.1}.png}}\hfill 
+	\subcaptionbox{$ h_{t} = 0.05 $}{\includegraphics[width=.33 \textwidth]{{time-step-0.05}.png}}\hfill 
+	\subcaptionbox{$ h_{t} = 0.01 $}{\includegraphics[width=.33 \textwidth]{{time-step-0.01}.png}}\hfill 
+	\caption{Progressively ``choppier'' collocation method solution for large time steps $ h_{t} $ with implicit coefficient calculation. Explicit calculation behaves analogously.}
+	\label{spec:fig:time-step}
+\end{figure}
+
+
+
+\subsection{Initialization Steps}
+I define the simulation parameters and position and time grids analogously to the Fourier method, as shown for the sake of completeness in the code block below.
+\begin{python}
+""" Initialization steps for the collocation methods """
+T0, L, D, sigma = 10, 1.0, 0.1, 0.25
+N_x = 500  # number of points in the x partition
+x = np.linspace(0, L, N_x)       # N_x points spanning rod length
+dx = x[1] - x[0]                 # position step size
+tmin, tmax, dt = 0.0, 1.0, 1e-4  # min time, max tie, time step
+N_t = (tmax - tmin) / dt         # points in time grid
+N_solutions = 50  # number of times to sample solution T(x, t)
+t_indices = np.linspace(1, N_t, N_solutions)  # indices of solution samples
+t = t_indices * dt                            # convert indices to times
+\end{python}
+Initializing the matrices and vectors discussed in \hyperref[spec:ss:collocation]{Subsection \ref{spec:ss:collocation}} requires some attention to detail regarding matrix dimensions. For example, for a position grid of $ N_{x} $ points, the matrices $ \mat{A} $ and $ \mat{B} $ have dimensions $ (N_{x}-2)\cross(N_{x}-2) $, not $ N_{x} \cross N_{x} $. I initialized the matrices $ \mat{A} $ and $ \mat{B} $ with a direct implementation of Equation \ref{spec:eq:A-B}.
+\begin{python}
+A = np.diag(4.0*np.ones(N_x-2), k=0) + np.diag(np.ones(N_x-3), k=1) + np.diag(np.ones(N_x-3), k=-1)  # Nx-2 by Nx-2
+A_inv = np.linalg.inv(A)  # inverse of A
+B = 6.0 * D/(dx**2) * np.diag(-2.0*np.ones(N_x-2), k=0) + np.diag(np.ones(N_x-3), k=1) + np.diag(np.ones(N_x-3), k=-1)
+\end{python}
+
+
+\begin{figure}
+\centering
+\includegraphics[width=0.49\linewidth]{3d-collocation-gauss} \hfill
+\includegraphics[width=0.49\linewidth]{3d-collocation-absval}
+\caption{Heat diffusion in a 1D rod with homogeneous conditions and a Gaussian and absolute-value initial temperature distribution. Found with the collocation method. Note the similarity to the Fourier method results in Figure \ref{spec:fig:3d-fourier-homog}.}
+\label{spec:fig:3d-collocation}
+\end{figure}
+
+
+\subsection{Explicit Calculation of Coefficients}
+For the explicit method, I first calculate the ``step'' matrix for numerical integration with a direct implementation of Equation \ref{spec:eq:collocation-explicit}. Numpy's vector algebra function \texttt{np.dot} then allows for an elegant one-line solution for the initial coefficients.
+\begin{python}
+step = np.eye(N_x-2, N_x-2) + dt*np.dot(A_inv, B)  # I + dt*A^{-1}*B
+c0 = np.dot(A_inv, T[1:N_x-1])  # initial coefficients; note length N_x - 2
+\end{python}
+To find the rod's temperature distribution at later times, I first calculate the time-dependent coefficients $ \bm{c}(t) $ according to Equation \ref{spec:eq:collocation-explicit}. Numpy's convenient \texttt{np.power} function performs the necessary matrix multiplications in a single line of code. 
+
+With $ \bm{c}(t) $ known, I find the corresponding temperature distribution with $ \bm{T} = \mat{A}\bm{c}(t) $ (Eqn. \ref{spec:eq:collocation-temp}). Note that $ \bm{c} $ is of length $ N_{x} -2 $, so we must manually add the homogeneous boundary points with \texttt{np.concatenate}. The following code illustrates the procedure:
+\begin{python}
+T_solutions = np.zeros((N_x, N_solutions))    # holds T(x) at each time t
+for i, n in enumerate(time_indeces):
+    c = np.dot(np.power(step, int(n)), c0)    # find coefficients c(t)
+    T = np.concatenate(([0], A.dot(c), [0]))  # T = Ac, plus endpoints
+    T_solutions[:, i] = T
+\end{python}
+
+
+
+
+\subsection{Implicit Calculation of Coefficients}
+The implicit method is a straightforward implementation of Equation \ref{spec:eq:collocation-implicit}---the ``step'' matrix for numerical integration is now a product of two matrices, and the coefficients are found according to
+\begin{equation*}
+	\bm{c}^{(i+1)} = 	\left[\mat{A} - \frac{h_{t}}{2}\mat{B}\right]^{-1}\left[\mat{A} + \frac{h_{t}}{2}\mat{B}\right]\bm{c}^{(i)}
+\end{equation*}
+The corresponding Python code reads
+\begin{python}
+dt, A, A_inv, B  # same time step and matrices as in explicit method
+step_plus = A + 0.5*dt*B   # first ``step matrix''
+step_minus = A - 0.5*dt*B  # second ``step matrix''
+step = np.dot(np.linalg.inv(step_minus), step_plus)
+# ... remaining code analogous to explicit method
+\end{python}
+As mentioned in the introduction to this section, I did not notice any significant differences between the explicit and implicit methods for coefficient calculation. I assume this similarity is due to the relatively ``well-behaved'' nature of the exponentially-solved differential equation defining the coefficients $ \bm{c}(t) $. For a more chaotic/oscillating/unstable differential equation, the stability of the implicit method would be more important, although this is just a guess.
+
+
+\subsection{Timing Comparison of Fourier and Collocation Methods}
+Finally, to compare the Fourier and collocation methods' performance, I tested the computation time required by each method to solve the 1D rod's heat diffusion problem as a function of the number of points $ N_{x} $ used to partition the rod's length. Some notes:
+\begin{itemize}
+	\item As simulation parameters, I used a Gaussian initial distribution, homogeneous boundary conditions, and calculated the temperature distribution at fifty equally spaced times from $ t = 0 $ to the point of decay to a near-zero distribution at $ t = 3.0 $, using a time step of $ 10^{-4} $ for the collocation method.
+	
+	\item Figure \ref{spec:fig:timing} shows the results. As expected, the Fourier method, based on the $ \mathcal{O}(N\log N) $ FFT, performs considerably better than the collocation methods, which use $ \mathcal{O}(N^{2}) $ matrix multiplication. 
+	
+	\item I intentionally tested $ N_{x} $ that both were and were not powers of two, hypothesizing that the Fourier method's FFT would perform better at the powers of two. Although I would need more data for a conclusive result, the guess seems reasonable---note for example the better performance at $ N_{x} = 2048 $ compared to the non-power-of-two $ N_{x} \approx 1650 $, even though the latter uses fewer points.
+	
+\end{itemize}
+
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{timing}
+\caption{Time required by each method to solve the 1D heat equation---note the logarithmic scale. The $ \mathcal{O}(N\log N) $ FFT-based Fourier method performs best.  }
+\label{spec:fig:timing}
+\end{figure}
+
+
+\appendix
+
+\section{Definition of the Cubic B-Splines} \label{spec:s:b-splines}
+\begin{equation*}
+	B_{k}(x) = 
+	\begin{cases}
+		0 & x \leq x_{k-1}\\[2mm]
+		\dfrac{1}{h^{3}}(x-x_{k-2})^{3} & x_{k-2} < x \leq x_{k-1}\\[3mm]
+		\dfrac{1}{h^{3}}(x-x_{k-2})^{3} - \dfrac{4}{h^{3}}(x - x_{k-1})^{3} & x_{k-1} < x \leq x_{k}\\[3mm]
+		\dfrac{1}{h^{3}}(x_{k+2}-x)^{3} - \dfrac{4}{h^{3}}(x_{k+1} - x)^{3} & x_{k} < x \leq x_{k+1}\\[3mm]
+		\dfrac{1}{h^{3}}(x_{k+2}-x)^{3} & x_{k+1} < x \leq x_{k+2}\\[2mm]
+		0 & x > x_{k+2}
+	\end{cases}
+\end{equation*}
+
+\begin{thebibliography}{}
+\setlength{\itemsep}{.2\itemsep}\setlength{\parsep}{.5\parsep}
+
+\bibitem{hancock} Matthew J. Hancock. ``The 1-D Heat Equation''. Lecture 1 In \textit{Linear Partial Differential Equations}---\textit{MIT Course No. 18.303}. Cambridge MA, 2006.
+\url{https://ocw.mit.edu/courses/mathematics/18-303-linear-partial-differential-equations-fall-2006/lecture-notes/heateqni.pdf}
+
+\end{thebibliography}
+
+
+\end{document}
+
+
+
