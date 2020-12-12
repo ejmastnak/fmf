@@ -1855,7 +1855,7 @@ In our case (for a harmonic oscillator), the theorem reads
  	\end{equation*}
  	The Hamiltonian $ \tilde{H} $ then reads
  	\begin{equation*}
- 		\tilde{H} = \frac{\tilde{p}^{2}}{2m} = \frac{1}{2}k\tilde{x}^{2} - \frac{1}{2}kx_{1}^{2}
+ 		\tilde{H} = \frac{\tilde{p}^{2}}{2m} + \frac{1}{2}k\tilde{x}^{2} - \frac{1}{2}kx_{1}^{2}
  	\end{equation*}
  	
  	\item The Hamiltonian's shifted annihilation operator is
@@ -1942,7 +1942,6 @@ In our case (for a harmonic oscillator), the theorem reads
 	\begin{equation*}
 		H\ket{n_{x}n_{y}} = \left[\hbar \omega_{x} \big(n_{x} + \tfrac{1}{2}\big) + \hbar \omega_{y} \big(n_{y} + \tfrac{1}{2}\big)\right] \ket{n_{x}n_{y}}
 	\end{equation*}
-	This concludes the introduction of Dirac notation for the 2D harmonic oscillator. 
 \end{itemize}	
 	\textbf{A Few Special Cases}
 \begin{itemize}
@@ -1954,7 +1953,7 @@ In our case (for a harmonic oscillator), the theorem reads
 	\begin{equation*}
 		H_{y}e^{i\kappa_{y}y} = \frac{\hbar^{2}\kappa_{y}^{2}}{2m}e^{i\kappa_{y}y} \eqtext{or} H_{y}\ket{\kappa_{y}} = \frac{\hbar^{2}\kappa_{y}^{2}}{2m}\ket{\kappa_{y}}
 	\end{equation*}
-	We would then solve the eigenvalue equation (in Dirac notation)
+	We would then solve the eigenvalue equation
 	\begin{equation*}
 		H\ket{n_{x}\kappa_{y}} = \left[\hbar \omega_{2}\big(n_{x} + \tfrac{1}{2}\big) + \frac{\hbar^{2}\kappa_{y}^{2}}{2m}\right]\ket{n_{x}\kappa_{y}}
 	\end{equation*}
@@ -1985,7 +1984,7 @@ In our case (for a harmonic oscillator), the theorem reads
 	\begin{equation*}
 		H\ket{10} = \hbar \omega \ket{10} \eqtext{and} H\ket{01} = \hbar \omega \ket{01}
 	\end{equation*}
-	Note that the first excited states are doubly degenerate---both states have the same energy. In general, the $ n $th excited state of a 2D isotropic harmonic oscillator has degeneracy $ n +1 $. 
+	Note that the first excited states is doubly degenerate---two linearly independent eigenfunctions $ \ket{10} $ and $ \ket{01} $ have the same energy. In general, the $ n $th excited state of a 2D isotropic harmonic oscillator has degeneracy $ n +1 $. 
 \end{itemize}
 
 \textbf{Theory: The $ z $ Component of Angular Momentum}
@@ -2160,9 +2159,9 @@ These are the two linearly independent states spanning the isotropic harmonic os
 		L_{z} &= \frac{x_{0}}{\sqrt{2}}\big(a_{x} + a_{x}^{\dagger}\big)\cdot \frac{p_{0}}{\sqrt{2}i}\big(a_{y} - a_{y}^{\dagger}\big) - \frac{x_{0}}{\sqrt{2}}\big(a_{y} + a_{y}^{\dagger}\big)\cdot \frac{p_{0}}{\sqrt{2}i}\big(a_{x} - a_{x}^{\dagger}\big)\\
 		&=\frac{x_{0}p_{0}}{2i}\left[\big(a_{x}+a_{x}^{\dagger}\big)\big(a_{y}-a_{y}^{\dagger}\big) - \big(a_{y}+a_{y}^{\dagger}\big)\big(a_{x}-a_{x}^{\dagger}\big)\right]
 	\end{align*}
-	Applying $ x_{0}p_{0} = \hbar $ and multiplying out the terms in parentheses and combining like terms (recall $ a_{x} $, $ a_{y} $ and $ a_{x}^{\dagger} $, $ a_{y}^{\dagger} $ commute) simplifies the expression for $ L_{z} $  to
+	Applying $ x_{0}p_{0} = \hbar $ and multiplying out the terms in parentheses and combining like terms (recall $ \big[a_{x}, a_{y}\big] = \big[a_{x}^{\dagger}, a_{y}^{\dagger}\big] =  \big[a_{x}^{\dagger}, a_{y}\big] = 0$) simplifies the expression for $ L_{z} $  to
 	\begin{equation*}
-		L_{z} = \frac{\hbar}{2i}\big(2a_{x}^{\dagger}a_{y} - 2a_{x}a_{y}^{\dagger}\big) = \frac{\hbar}{i}\big(a_{x}^{\dagger}a_{y} - a_{x}a_{y}^{\dagger}\big)
+		L_{z} = \frac{\hbar}{2i}\big(2a_{x}^{\dagger}a_{y} - 2a_{y}^{\dagger}a_{x}\big) = \frac{\hbar}{i}\big(a_{x}^{\dagger}a_{y} - a_{y}^{\dagger}a_{x}\big)
 	\end{equation*}
 	
 	\item Next, using the just-derived expression for $ L_{z} $ in terms of $ a_{x,y} $ and $ a_{x,y}^{\dagger} $, we investigate the action of $ L_{z} $ on our desired state $ \ket{\psi} $; we have
@@ -2387,17 +2386,17 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\end{align*}
 	Notice that this equation now involves only scalar values; all operators are gone.
 	
-	\item Next, we find the constants $ a, b $ and $ c $. Multiplying the above equation by $ \bar{11} $ and applying orthonormality of the states $ \ket{11} $, $ \ket{10} $, $ \ket{1-1} $, we have
+	\item Next, we find the constants $ a, b $ and $ c $. First, divide through by $ \hbar $, which cancels out from each equation. Next, multiplying the above equations by $ \bra{11} $ and applying orthonormality of the states $ \ket{11} $, $ \ket{10} $, $ \ket{1-1} $, we have
 	\begin{equation*}
-		a \hbar \cos \theta - a \hbar + \frac{b}{\sqrt{2}}\hbar \sin \theta = 0
+		a  \cos \theta - a  + \frac{b}{\sqrt{2}} \sin \theta = 0
 	\end{equation*}
 	Next, multiplying the equation by $ \ket{10} $ gives
 	\begin{equation*}
-		\frac{a\hbar}{\sqrt{2}}\sin \theta - b \hbar + \frac{c\hbar}{\sqrt{2}}\sin \theta = 0
+		\frac{a}{\sqrt{2}}\sin \theta - b  + \frac{c}{\sqrt{2}}\sin \theta = 0
 	\end{equation*}
 	Finally, multiplying the equation by $ \ket{1-1} $ gives
 	\begin{equation*}
-		\frac{b\hbar}{\sqrt{2}} \sin \theta - c\hbar \cos \theta - c\hbar = 0
+		\frac{b}{\sqrt{2}} \sin \theta - c \cos \theta - c = 0
 	\end{equation*}
 	
 	\item We've found a system of three equations for the three unknowns $ a $, $ b $ and $ c $. Recall from e.g. introductory linear algebra that because the system of equations is homogeneous (the right side of each equation is zero), the system has a solution only up to a free parameter. 
