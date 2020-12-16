@@ -1,0 +1,385 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage{mwe}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{bm} % for bold vectors in math mode
+\usepackage{physics} % for differential notation, etc...
+\usepackage[separate-uncertainty=true]{siunitx}
+
+\usepackage{graphicx}
+\graphicspath{{"../figures/"}}
+\usepackage[section]{placeins} % to keep figures in their sections
+\usepackage{subcaption} % for subfigures
+\usepackage[export]{adjustbox} % for centered figures larger than text width
+
+\usepackage[margin=3.5cm]{geometry}
+\usepackage{xcolor}  % to color hyperref links
+\usepackage[colorlinks = true, allcolors=blue]{hyperref}
+
+\setlength{\parindent}{0pt} % to stop indenting new paragraphs
+\newcommand{\diff}{\mathop{}\!\mathrm{d}} % differential
+\newcommand{\eqtext}[1]{\qquad \text{#1} \qquad}
+
+
+\begin{document}
+\title{The Hall Effect}
+\author{Elijan Mastnak}
+\date{Winter Semester 2020-2021}
+\maketitle
+\tableofcontents
+	
+\section{Tasks}
+\begin{enumerate}
+	\item Measure the dependence of Hall voltage on temperature in a germanium n-type semiconductor in the temperature range \SIrange{20}{80}{\degreeCelsius}. 
+	
+	\item Plot the semiconductor's Ohmic resistance $ R $ and Hall coefficient $ R_{H} $ as a function of temperature $ T $.
+	
+	\item Use the dependence of charge carrier concentration on temperature to determine which charge carriers dominate in which temperatures. Experimentally verify the validity of theoretical semiconductor charge-carrier equations. 
+
+\end{enumerate}
+
+\section{Equipment, Procedure and Data}
+
+\subsection{Equipment}
+\begin{itemize}
+
+	\item Hall probe containing an n-type germanium semiconductor sample.
+	
+	\item Enclosure for the probe containing a known magnetic field
+		
+	\item \SI{1.5}{\volt} battery serving as a voltage source for the Hall probe
+	
+	\item Temperature regulation mechanism for the Hall probe, in our case a water cooler/heater.
+	
+	\item Voltmeter and ammeter for measuring Hall voltage and current through sample
+\end{itemize}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{schematic.png}
+	\caption{Schematic of the measurement set-up used in the experiment.}
+	\label{halpoj:fig:schematic}
+\end{figure}
+
+
+\subsection{Procedure}
+\begin{enumerate}
+	\item Set up the electrical connections as shown in Figure \ref{halpoj:fig:schematic} and place the Hall probe inside its enclosure containing the magnetic field.
+	
+	\item  Vary the sample's temperature from  \SIrange{20}{80}{\degreeCelsius} in increments of \SI{5}{\degreeCelsius} using a boiler, and wait about $ \SI{5}{\minute} $ between increments for the temperature of the sample to stabilize. 
+	
+	At each temperature, measure the resulting current $ I $ and Hall potential $ U_{H} $ on the Hall probe for both orientations of the Hall probe in the magnetic field.
+	
+\end{enumerate}
+
+\subsection{Data}
+\textbf{Independent Variable}: Temperature, measured in the range range \SIrange{20}{80}{\degreeCelsius} and varied with uniform spacing \SI{5}{\degreeCelsius} using a water-based heater.
+
+Orientation of the Hall probe relative to the magnetic field
+
+\vspace{2mm}
+\textbf{Dependent Variable:} Hall voltage and current through the Hall probe.
+
+\vspace{2mm}
+\textbf{Parameters:} Semiconductor thickness $ c = \SI{0.95}{\milli \meter} $ with band gap $ E_{g} \approx \SI{0.66}{\electronvolt} $ and donor energy gap $ E_{d} \approx \SI{0.01}{\electronvolt} $, exposed to a magnetic field of magnitude $ B = \SI{0.173}{\tesla} $.
+
+
+
+\section{Analysis}
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{hall-voltage}
+\caption{Experimental dependence of Hall voltage on the probe temperature $ T $.}
+\label{hall:fig:hall-voltage}
+\end{figure}
+\subsection{Calculating Hall Voltage}
+Because of contact asymmetries, the measured potential difference across the sample (along the $ y $ axis) is the sum of the Hall potential $ U_{H} $ and an asymmetry term $ U_{0} $. To solve for $ U_{H} $, note that the sign of the Hall potential flips when the sample is flipped by $ \ang{180} $ in the magnetic field. By measuring the potential difference with the sample facing up and facing down (flipping the orientation of the $ ab $ plane), we get the expressions
+\begin{equation*}
+	U_{1} = U_{0} + U_{H}  \eqtext{and} U_{2} = U_{0} - U_{H} 
+\end{equation*}
+from which we get the Hall voltage
+\begin{equation*}
+	U_{H} = \frac{1}{2}(U_{1} - U_{2})
+\end{equation*}
+Figure \ref{hall:fig:hall-voltage} shows the dependence of Hall voltage on temperature---note that the voltage decreases in magnitude with increasing temperature. The fact that the Hall voltage is negative indicates the majority charge carriers through semiconductor are negative electrons.
+
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{resistance}
+\caption{The dependence of the semiconducting probe's Ohmic resistance on temperature $ T $. Note the decrease in resistance with temperature, which would not occur in a standard resistor circuit element.}
+\label{hall:fig:resistance}
+\end{figure}
+
+\subsection{Ohmic Resistance}
+From Ohm's law, the semiconductor's Ohmic resistance is
+\begin{equation*}
+	 R = \frac{U_{\text{source}}}{I} 
+\end{equation*}
+where $ U_{\text{source}} = \SI{1.5}{\volt} $ is the voltage of the battery powering the Hall probe and $ I $ is the current through the semiconductor. Figure \ref{hall:fig:resistance} shows the dependence of the semiconducting probe's Ohmic resistance on temperature. The resistance increases with temperature because exponentially more charge carriers are excited into the conduction band with increasing temperature, facilitating the flow of current.
+
+\subsection{Hall Coefficient}
+We calculate the Hall coefficient $ R_{H} $ with
+\begin{equation*}
+	R_{H} =  \frac{U_{H}c}{IB}
+\end{equation*}
+Figure \ref{hall:fig:coefficient} show the Hall coefficient's dependence on temperature.  The fact that the Hall coefficient is negative indicates the majority charge carriers are electrons, meaning the probe uses an n-type semiconductor. Although the extact value of $ R_{H} $ varies with temperature, the order of magnitude agrees with that given in \cite{kuck} and the references therein.
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{hall-coefficient}
+\caption{Dependence of the Hall coefficient on temerature..}
+\label{hall:fig:coefficient}
+\end{figure}
+
+
+\subsection{Carrier Concentration}
+We calculate the number density $ n $ of charge carriers in the semiconductor with
+\begin{equation*}
+	n = -\frac{IB}{ce_{0}U_{H}}
+\end{equation*}	
+
+\subsection{High Temperatures}	
+In the high temperature limit $ k_{B}T \gtrsim E_{g} $, both donor and valance electrons are thermally excited to the conduction band. Because there are so many more valence electrons than donor electrons for typical dopant concentrations, the contributions of the donor electrons is negligible, and we have the intrinsic dependence
+\begin{equation*}
+	n_{e}(T) = \frac{1}{4}\left(\frac{2m_{e}k_{B}T}{\pi \hbar^{2}}\right)^{3/2}\exp(-\frac{E_{g}}{2k_{B}T})
+\end{equation*}
+where $ E_{g} $ is the energy band gap between the valence and conduction bands. The slope of the graph of $ \ln n $	versus $ \frac{1}{k_{B}T} $, shown in Figure \ref{hall:fig:n-highT}, gives an estimate of the silicon band gap.
+		
+		
+\begin{figure}
+	\centering
+	\includegraphics[width=0.93\linewidth]{carrier-density-high}
+	\caption{The bold data points show the high-temperature dependence of carrier concentration $ \ln n $ on inverse thermal energy $ \frac{1}{k_{B}T} $. The fitted line's slope gives an estimate of the germanium band gap $ E_{g} $.}
+	\label{hall:fig:n-highT}
+\end{figure}
+
+
+\subsection{Moderate Temperatures}	
+At temperatures $ k_{B}T \gtrsim E_{d} $, essentially all donor electrons are excited to the conduction band, but the thermal energy is still negligible compared to the band gap $ E_{g} $, so valence electrons remain frozen out. The carrier concentration is approximately
+\begin{equation*}
+	n(T) \approx N_{d}
+\end{equation*}
+where $ N_{d} $ is the number density of donor impurities. A plot of the charge carrier concentration at medium temperatures is shown in Figure \ref{hall:fig:n-midT}
+
+\begin{figure}[htb!]
+	\centering
+	\includegraphics[width=0.93\linewidth]{carrier-density-mid}
+	\caption{The bold data points show the mid-temperature dependence of carrier concentration $ n $ on temperature $ T $, and give an estimate of donor concentration $ N_{d} $.}
+	\label{hall:fig:n-midT}
+\end{figure}
+
+		
+\section{Error Analysis}
+\subsection{Hall Voltage}
+Hall voltage is found with
+\begin{equation*}
+	U_{H} = \frac{U_{1} - U_{2}}{2}
+\end{equation*}
+The input quantities are the voltages $ U_{1} $ and $ U_{2} $ with the probe's normal parallel and anti-parallel to the magnetic field. Both quantities carry a one percent uncertainty. Sensitivity coefficients are
+\begin{equation*}
+	c_{1} = \pdv{U_{H}}{U_{1}}  = \frac{1}{2} \eqtext{and} c_{2} = \pdv{U_{H}}{U_{2}} = -\frac{1}{2} 
+\end{equation*}
+The corresponding uncertainty in Hall voltage $ U_{H} $ is
+\begin{equation*}
+	\delta_{H} = \sqrt{(\delta_{1}c_{1})^{2} + (\delta_{2}c_{2})^{2}}
+\end{equation*}
+
+\subsection{Ohmic Resistance}
+The semiconducting probe's Ohmic resistance $ R $ is found according to
+\begin{equation*}
+	R = \frac{U_{\text{source}}}{I} 
+\end{equation*}
+$ U_{\text{source}} = \SI{1.50 \pm 0.05}{\volt} $ is the battery voltage applied to the probe; $ I $ is the current through the probe and carries a one percent uncertainty. The sensitivity coefficients are
+\begin{equation*}
+	c_{U} = \pdv{R}{U_{\text{source}}} = \frac{1}{I} \eqtext{and} c_{I} = \pdv{R}{I} = -\frac{U_{\text{source}}}{I^{2}}
+\end{equation*}
+The corresponding uncertainty in the probe resistance $ R $ is
+\begin{equation*}
+	\delta_{R} = \sqrt{(\delta_{U}c_{U})^{2} + (\delta_{I}c_{I})^{2}}
+\end{equation*}
+
+\subsection{Hall Coefficient}
+We calculate the Hall coefficient $ R_{H} $ using
+\begin{equation*}
+	R_{H} =  \frac{U_{H}c}{IB}
+\end{equation*}
+Constant input quantities are semiconductor width $ c = \SI{0.95 \pm 0.05}{\milli \meter} $ and $ B = \SI{0.173\pm 0.002}{\tesla} $. The current carries a one percent uncertainty, and the uncertainty in the Hall voltage is calculated above. Sensitivity coefficients are
+\begin{align*}
+	& c_{U} = \pdv{R_{H}}{U_{H}} = \frac{c}{IB} \qquad  \qquad c_{c} = \pdv{R_{H}}{c} = \frac{U_{H}}{IB}\\
+	& c_{I} = \pdv{R_{H}}{I} = -\frac{U_{H}c}{I^{2}B} \qquad \quad c_{B} = \pdv{R_{H}}{B} = -\frac{U_{H}c}{IB^{2}}
+\end{align*}
+The corresponding uncertainty in the Hall coefficient $ R_{H} $ is
+\begin{equation*}
+	\delta_{R_{H}} = \sqrt{(\delta_{U}c_{U})^{2} + (\delta_{c}c_{c})^{2} + (\delta_{I}c_{I})^{2} + (\delta_{B}c_{B})^{2}}
+\end{equation*}
+		
+		
+\subsection{Carrier Concentration}
+We calculate the number density $ n $ of charge carriers in the semiconductor with
+\begin{equation*}
+	n = -\frac{IB}{ce_{0}U_{H}}
+\end{equation*}	
+where the argument is a positive quantity because $ U_{H} $ is negative. Constant input quantities are semiconductor width $ c = \SI{0.95 \pm 0.05}{\milli \meter} $ and $ B = \SI{0.173\pm 0.002}{\tesla} $. The current carries a one percent uncertainty, and the uncertainty in the Hall voltage is calculated above. I assume uncertainty in the elementary charge $ e_{0} $ is negligible.
+
+\vspace{2mm}
+The sensitivity coefficients for $ n $ are
+\begin{align*}
+	&c_{U} = \pdv{n}{U_{H}} = \frac{IB}{ce_{0}U_{H}^{2}} \qquad \qquad c_{c} = \pdv{n}{c} = \frac{IB}{c^{2}e_{0}U_{H}}\\
+	&c_{I} = \pdv{n}{I} = -\frac{B}{ce_{0}U_{H}} \qquad \qquad \ c_{B} = \pdv{n}{B} = -\frac{I}{ce_{0}U_{H}}
+\end{align*}
+
+
+\vspace{2mm}
+\textbf{High-Temperature Limit} \\
+When working with the quantity $ \ln n $ in the high-temperature limit, sensitivity coefficients are
+\begin{align*}
+	&c_{U} = \pdv{\ln n}{U_{H}} = -\frac{1}{U_{H}} \qquad \qquad \ c_{c} = \pdv{\ln n}{c} = -\frac{1}{c}\\
+	&c_{I} = \pdv{\ln n}{I} = \frac{1}{I} \qquad \qquad \qquad \quad c_{B} = \pdv{\ln n}{B} = \frac{1}{B}
+\end{align*}
+The uncertainties in $ n $ and $ \ln n $ are
+\begin{equation*}
+	\delta n, \delta \big[\ln n\big] = \sqrt{(\delta_{U}c_{U})^{2} + (\delta_{c}c_{c})^{2} + (\delta_{I}c_{I})^{2} + (\delta_{B}c_{B})^{2}}
+\end{equation*}
+Figure \ref{hall:fig:n-highT} and \ref{hall:fig:n-midT} are equipped with error bars showing the corresponding uncertainties. The error in the band gap $ E_{g} $ estimate in Figure \ref{hall:fig:n-highT} comes from the covariance matrix of the linear fit, where the ordinate data are weight with the error bars shown in the Figure.
+		
+\section{Results}
+\textbf{Ohmic Resistance}\\
+The semiconductor's Ohmic resistance $ R $ ranged from
+\begin{equation*}
+	R \approx \SI{160}{\ohm} \ \text{at} \ \SI{20}{\degreeCelsius} \quad \text{to} \quad R \approx \SI{80}{\ohm} \ \text{at} \ \SI{80}{\degreeCelsius}
+\end{equation*}
+Note that the resistance falls with increasing temperature, characteristic of a doped semiconductor at thermal energies near the donor energy gap.
+
+\vspace{2mm}
+\textbf{Hall Coefficient}\\
+The Hall coefficient for the germanium semiconductor ranged from 
+\begin{equation*}
+	R_{H} \approx \SI{-2.45e-2}{\meter^{3}\, \coulomb^{-1}} \ \text{at} \ \SI{20}{\degreeCelsius} \quad \text{to} \quad R_{H} \approx \SI{-0.77e-2}{\meter^{3}\, \coulomb^{-1}} \ \text{at} \ \SI{80}{\degreeCelsius}
+\end{equation*}
+The fact that the Hall coefficient is negative indicates the semiconductor's majority charge carriers are negative electrons, meaning the semiconductor is n-type.
+
+\vspace{2mm}
+\textbf{Band Gap Estimate}\\
+The estimate for the semiconductor's band gap $ E_{g} $ is
+\begin{equation*}
+	\boxed{E_{g} \approx \SI{0.64 \pm 0.07}{\electronvolt}}
+\end{equation*}
+
+\vspace{2mm}
+\textbf{Donor Impurity Concentration}\\
+The estimate for the semiconductor's concentration of donor impurities $ N_{d} $ is
+\begin{equation*}
+	\boxed{N_{d} \approx \SI{2.57 \pm 0.15 e20}{\meter^{-3}}}
+\end{equation*}
+		
+\appendix
+
+\section{Background Theory}
+\subsection{Hall Effect}
+\begin{itemize}
+	\item The Hall effect involves a metal conductor placed in an external magnetic field perpendicular to the motion of electrons through the conductor.
+	
+	\item In our experiment the conductor is a thin, rectangular metal strip with side of length $ a, b $ and $ c $ in the $ x, y $ and $ z $ directions. Current $ I $ flows in the positive $ x $ direction and the magnetic field $ B $ points in the positive $ z $ direction. The $ z $ dimension is much smaller than the other two dimensions, i.e. $ c \ll a, b $. 
+	
+	
+	\begin{figure}[htb!]
+		\centering
+		\includegraphics[width=\linewidth]{hall-effect.png}
+		\caption{Coordinate system and relevant physical quantities for understanding the Hall effect in this experiment.}
+		\label{halpoj:fig:hall-effect}
+	\end{figure}
+	
+	
+	We assume change carriers are electrons with charge $ -e_{0} $. Current density is
+	\begin{equation*}
+		j = \frac{I}{bc} = - n e_{0} v
+	\end{equation*}
+	where $ n $ and $ v $ are the electron number density and drift velocity, respectively. 
+	
+	\item The negatively charged electrons experience a magnetic force of magnitude $ F_{m} = - e_{0} v B$  in the negative $ y $ direction and begin to accumulate at the edge of the metal strip. The accumulation of negative charge leads to an electric field $ -E_{y} $ in the negative $ y $ direction and a corresponding electric force
+	\begin{equation*}
+		F_{e} = qE = (-e_{0})(-E_{y}) = e_{0}E_{y}
+	\end{equation*}
+	in the positive $ y $ direction. In the stationary state (which occurs quickly, in times of order $ \SI{10e-12}{\second} $), the electric force balances the magnetic force:
+	\begin{equation*}
+		e_{0}E_{y} = e_{0}v B \implies E_{y} = vB = -\frac{jB}{ne_{0}}
+	\end{equation*}
+	
+	\item The Hall voltage $ U_{H} $ is the voltage between the edges of the conductor resulting from the electric field $ E_{y} $:
+	\begin{equation*}
+		U_{H} = E_{y} b = - \frac{jBb}{ne_{0}} = -\frac{IB}{ne_{0}c}
+	\end{equation*}
+	The quotient $ \frac{E_{y}}{jB} $ is called the Hall coefficient and is denoted by $ R_{H} $.
+	\begin{equation*}
+		R_{H} =  \frac{E_{y}}{jB} = -\frac{1}{ne_{0}} = \frac{U_{H}c}{IB}
+	\end{equation*}
+	The coefficient is characteristic of the material from which the conductor is made.
+	
+	\item We can rearrange the Hall voltage equation to measure magnetic field. In a Hall probe, a conducting strip is placed in an unknown magnetic field. We send a known current through the conductor and measure the Hall voltage, which is proportional to the magnetic field.
+	\begin{equation*}
+		B = - ne_{0}c \frac{U_{H}}{I}
+	\end{equation*}
+	The constant factor $ ne_{0}c $ is a property of the conductor and need be measured only once. We can also use the Hall coefficient to determine the sign and density of charge carriers in different materials. In this experiment, we will investigate the charge carriers in a germanium semiconductor.
+\end{itemize}
+
+
+
+\subsection{Hall Effect in Semiconductors}
+
+\begin{itemize}
+	\item For an \textit{intrinsic} semiconductor, the number density of charge carriers $ n $ excited from the valence to the conduction band is
+	\begin{equation*}
+		n_{e}(T) = \frac{1}{4}\left(\frac{2m_{e}k_{B}T}{\pi \hbar^{2}}\right)^{3/2}\exp(-\frac{E_{g}}{2k_{B}T})
+	\end{equation*}
+	where $ E_{g} $ is the energy band gap between the valence and conduction bands.
+	
+	\item Hall effect in n-type semiconductor: add a dopant with five valence electrons. Creates small energy gap $ E_{d} $ between donor level and conduction band. For a donor level just below the conduction band, primary charge carriers are electrons, hence n-type semiconductor.
+\end{itemize}
+
+
+Three regimes for a \textit{doped n-type} semiconductor:
+\begin{enumerate}
+	\item Low temperatures, $ k_{B}T \ll E_{d} $
+	\begin{equation*}
+		n(T) = \sqrt{N_{d}} \left(\frac{m_{e}k_{B}T}{2\pi \hbar^{2}}\right)^{3/4}e^{-\frac{E_{D}}{2k_{B}T}}
+	\end{equation*}
+	where $ N_{d} $ is the density of donor impurities and $ m_{e} $ is the effective electron mass in the semiconductor. 
+	
+	Only the donor electrons contribute appreciably to conduction because thermal energy is negligible compared to the band gap $ E_{g} $. All valence electrons are completely frozen out.
+	
+	\item At medium temperatures $ k_{B}T \gtrsim E_{d} $, essentially all donor electrons are excited to the conduction band, but the thermal energy is still negligible to the band gap $ E_{g} $, so valence electrons remain frozen out.
+	\begin{equation*}
+		n(T) = N_{d}
+	\end{equation*}
+	
+	\item High temperatures $ k_{B}T \gtrsim E_{g} $, both donor and valance electrons are thermally excited to the conduction band. Because there are so many more valence electrons than donor electrons for typical dopant concentrations, the contributions of the donor electrons is negligible, and we have the intrinsic dependence
+	\begin{equation*}
+		n(T) = \frac{1}{4}\left(\frac{2m_{e}k_{B}T}{\pi \hbar^{2}}\right)^{3/2}\exp(-\frac{E_{g}}{2k_{B}T})
+	\end{equation*}
+	where $ E_{g} $ is the energy band gap between the valence and conduction bands.
+\end{enumerate}
+
+$ k_{B} = \SI{8.617e-5}{\electronvolt \kelvin^{-1}} $. The temperatures range from $ T_{\text{low}} = \SI{20}{\degreeCelsius} = \SI{293}{\kelvin}$ to $ T_{\text{high}} = \SI{80}{\degreeCelsius} = \SI{353}{\kelvin}$. The corresponding $ k_{B}T $ are
+\begin{equation*}
+	k_{B}T_{\text{low}} \approx \SI{0.025}{\electronvolt} \eqtext{and} k_{B}T_{\text{high}} \approx \SI{0.030}{\electronvolt}
+\end{equation*}
+
+\begin{thebibliography}{}
+\setlength{\itemsep}{.2\itemsep}\setlength{\parsep}{.5\parsep}
+
+\bibitem{kuck} Kuck, Andrew. ``Measurement of the Hall Coefficient in a Germanium Crystal''. Physics Department, The College of Wooster, Wooster, Ohio 44691. April 1998. \url{http://physics.wooster.edu/JrIS/Files/Kuck.pdf}
+ 
+\end{thebibliography}
+
+\end{document}
+
+% Room temperature k_{B}T is of order 0.025eV
+
+% valence electron density is $ \SI{10e25}{\meter^{-3}} $
+
+% Donor density is typically $ \SI{10e16}{\meter^{-3}} $ to $ \SI{10e22}{\meter^{-3}} $.
+
+% For our germanium semiconductor E_{g} \approx \SI{0.66}{\electronvolt} and E_{d} \sim \SI{0.01}{\electronvolt}.

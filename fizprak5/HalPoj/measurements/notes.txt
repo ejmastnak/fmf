@@ -1,0 +1,2 @@
+All measurements carry a relative error 0.5%
+Current through semiconductor is supplied with a 1.5V battery
