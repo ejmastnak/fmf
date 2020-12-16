@@ -1,0 +1,502 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage{mwe}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{bm} % for bold vectors in math mode
+\usepackage{physics} % for differential notation, etc...
+\usepackage[separate-uncertainty=true]{siunitx}
+
+\usepackage{graphicx}
+\graphicspath{{"../figures/"}}
+\usepackage[section]{placeins} % to keep figures in their sections
+\usepackage{subcaption} % for subfigures
+\usepackage[export]{adjustbox} % for centered figures larger than text width
+\usepackage{wrapfig}  % for wrapping figures
+
+
+\usepackage[margin=3.5cm]{geometry}
+\usepackage{xcolor}  % to color hyperref links
+\usepackage[colorlinks = true, allcolors=blue]{hyperref}
+
+\setlength{\parindent}{0pt} % to stop indenting new paragraphs
+\newcommand{\diff}{\mathop{}\!\mathrm{d}} % differential
+\newcommand{\eqtext}[1]{\qquad \text{#1} \qquad}
+\renewcommand{\vec}[1]{\bm{#1}}
+\newcommand{\uvec}[1]{\hat{\bm{#1}}}
+\newcommand{\m}{\vec{\mu}}  % vector magnetic moment
+\renewcommand{\S}{\vec{S}}  % vector spin
+\newcommand{\B}{\vec{B}}  % vector magnetic field
+\newcommand{\M}{\vec{M}}  % vector magnetization
+
+\begin{document}
+\title{Nuclear Magnetic Resonance}
+\author{Elijan Mastnak}
+\date{Winter Semester 2020-2021}
+\maketitle
+%\tableofcontents
+	
+\section{Tasks}
+\begin{enumerate}
+	\item Find the free precession signal of a sample of water containing paramagnetic ions following a pulses of length $ \pi/2 $.
+	
+	\item Find the spin echo signal of the paramagnetic water sample following a sequence of pulses of length $ \pi/2 $ and $ \pi $, respectively.
+	
+	\item Use the widths of the free precession and spin echo signals for the paramagnetic water sample to find the probe position at which the magnetic field in the sample is most homogeneous. Use the two signal widths to measure $ T_{2}^{*} $ and estimate the magnetic field's un-homogeneity.
+	
+	\item Use the free precession signal between two pulses of length $ \pi/2 $ to find the relaxation time $ T_{1} $ of both the paramagnetic and distilled water.
+	
+	\item Use the dependence of the spin echo signal's height on the time separation $ \tau $ between two pulses of length $ \pi/2 $ and $ \pi $ to determine the paramagnetic water's spin-spin relaxation time $ T_{2} $.
+
+\end{enumerate}
+
+\section{Equipment, Procedure and Data}
+
+\subsection{Equipment}
+\begin{itemize}
+	\item Samples of distilled water and water with a mixture of paramagnetic ions (in sealed glass containers)
+	
+	\item Electromagnet with a water-based cooling system and mount to hold the water samples.
+	
+	\item Nuclear magnetic resonance spectrometer, oscilloscope and power supply
+
+\end{itemize}
+
+\subsection{Procedure}
+\begin{enumerate}
+	\item Adjust the current through the electromagnet until the free precession signal appears on the oscilloscope. Once you have a strong free precession signal, change the NMR spectrometer to diode mode and set the pulse type to $ \pi/2 $.
+		
+	\item Adjust the probe position inside the electromagnet to maximize the free precession signal's duration. Use the width of the free precession signal to estimate the time $ T_{2}^{*} $.
+		
+	\item \textbf{Part 2: Spin Echo}
+	
+	Change spectrometer setting to \texttt{SE} mode. Set the first pulse to $ \pi/2 $ and the second pulse to $ \pi $. Adjust the duration of the second pulse to maximize the spin echo signal. Vary the separation between the first and second pulses using spectrometer time dial and measure the dependence of the spin echo signal amplitude on pulse separation.
+		
+	\item \textbf{Part 3:} Set the NMR spectrometer to use to $ \pi/2 $ pulses---set the spectrometer trigger so that the oscilloscope displays the free precession signal after the second $ \pi/2 $ pulse.
+	
+	Measure the dependence of the free spin precession signal amplitude on the separation $ \tau $ between the first and second pulses. Use this data to measure the spin-lattice relaxation time. Expect a roughly millisecond-order value.
+	
+	\item \textbf{Part 4: } Measuring spin-lattice relaxation time with distilled water. 
+	
+	Set spectrometer \texttt{REPETITION TIME} dial to 10 seconds. (previously was set to \SI{0.3}{\second}). Set the amplification of pulse separation time to $ 100 $. 
+	
+	Repeat the measurement from part 3, using the dependence of the free spin precession signal on the separation between the first and second pulses to find the distilled water's  spin-lattice relaxation time. 
+	Roughly second-order value is expected. 
+\end{enumerate}
+
+\subsection{Data}
+\textbf{Independent Variable}: Time separation between $ \pi/2 $ and $ \pi $ pulses (when using the spin echo signal to determine $ T_{2} $) or time separation between $ \pi/2 $ and $ \pi/2 $ pulses (when using the free precession signal to determine $ T_{1} $).
+
+\vspace{2mm}
+\textbf{Dependent Variable:} Amplitude of spin-echo signal (when finding $ T_{2} $) or amplitude of the free precession signal (when finding $ T_{1} $).
+
+\section{Analysis}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.49\linewidth]{calibration-1x} \hfill
+\includegraphics[width=0.49\linewidth]{calibration-100x}
+\caption{Converting \texttt{TAU} dial position to pulse length at 1x and 100x amplification.}
+\label{nmr:fig:calibration}
+\end{figure}
+
+\subsection{Calibrating Dial Position to Time}
+First, I calibrated the NMR spectrometer's \texttt{TAU} dial position to time for both 1x and 100x amplification. The relationship is linear and shown in Figure \ref{nmr:fig:calibration}; the equations of the best-fit lines are approximately
+\begin{equation*}
+	t_{\text{1x}}(\tau) = \big(- 0.039 \cdot \tau + 1.003 \big) \si{\milli \second} \eqtext{and} 	t_{\text{100x}}(\tau) = \big(- 4.88 \cdot \tau + 90.47 \big) \si{\milli \second}
+\end{equation*}
+
+
+
+
+\subsection{Estimating Magnetic Field Non-Homogeneity}
+Figure \ref{nmr:fig:free-precession} show the free precession signal $ U_{\text{fp}} $ for paramagnetic water at the probe position maximizing magnetic field homogeneity. The signal's full width at half maximum gives an estimate of the non-homogeneous spin-spin decay time $ T_{2}^{*} $; in our case $ T_{2}^{*} $ is approximately
+\begin{equation*}
+	T_{2}^{*} \approx \text{FWHM}\, \big[U_{\text{fp}}\big] \approx \SI{160}{\micro \second}
+\end{equation*}
+An estimate for the corresponding magnetic field non-homogeneity $ \Delta B_{z} $ is
+\begin{equation*}
+	\Delta B_{z} \approx \frac{\pi}{2\gamma T_{2}^{*}} = \frac{\pi}{2\cdot \SI{2.675e8}{\hertz\, \tesla^{-1}}\cdot \SI{160e-6}{\second}} \approx \SI{4}{\micro \tesla}
+\end{equation*}
+where $ \gamma = \SI{2.675e8}{\hertz\, \tesla^{-1}} $ or is the nuclear gyromagnetic ratio.
+
+\begin{wrapfigure}{R}{0.4\textwidth}
+\centering
+\includegraphics[width=0.35\textwidth]{free-precession}
+
+\caption{Free precession signal.}
+\label{nmr:fig:free-precession}
+\end{wrapfigure}
+
+
+\subsection{Determining Spin-Latice Relaxation Time $ T_{1} $}
+We determine the samples; spin-lattice relaxation times $ T_{1} $ from the dependence of free-precession signal amplitude $ U_{\text{fp}} $ on the separation $ \tau $ between the $ \pi/2 $ pulses applied to the sample. The amplitude should decay with $ \tau $ as
+\begin{equation*}
+	U_{\text{fp}} = U_{0}\left(1 - e^{-\frac{\tau}{T_{1}}}\right) 
+\end{equation*}
+where $ U_{0} $ is the asymptotic value $ U_{\text{fp}} $ approaches for $ \tau \gg T_{1} $. The above relationship implies plotting the quantity
+\begin{equation*}
+	\mathcal{Q}_{\text{fp}}(\tau) \equiv -\ln\left(1 - \frac{U_{\text{fp}}}{U_{0}}\right) = \frac{\tau}{T_{1}}
+\end{equation*}
+on the ordinate axes and pulse separation $ \tau $ on the abscissa should yield a line whose slope is $ \frac{1}{T_{1}} $. Figures \ref{nmr:fig:T1-ion-fit} and \ref{nmr:fig:T1-distilled-fit} show the plot of $ \mathcal{Q}_{\text{fp}} $ versus $ \tau $ and the corresponding linear fit used to find $ T_{1} $ for the paramagnetic and distilled water samples, respectively. I approximate $ U_{0} $ with the value of $ U_{\text{fp}} $ at the largest available value of $ \tau $.
+
+
+%Why using signal amplitude and not $ M_{z} $ works: the height of the free precession signal increases with $ \tau $ proportionally to the increase in $ M_{z} $. Idea: Apply an initial $ \pi/2 $ pulse. After time $ \tau $ some magnetization will have relaxed into alignment with the $ z' $ axis at $ \theta = 0 $. This portion of magnetization is returned to a polar angle $ \pi/2 $ relative to the $ z' $ axis. 
+%The other portion of the magnetization, which has already precessed at an angle $ \theta = \frac{\pi}{2} $ is rotated further by $ \pi/2 $ to a polar angle $ \theta = \pi $, and points along the $ -z' $ axis. This portion of the magnetization cannot contribute to the free precession signal.
+%\textit{Note}: The $ \pi/2 $ pulses should repeat periodically. The period must be much longer than $ T_{1} $, to allow the sample to relax to the equilibrium state between pulses.
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{T1-ion-fit}
+\caption{Finding the paramagnetic water's spin-lattice relaxation time $ T_{1} $ from the linearized free-precession amplitude.}
+\label{nmr:fig:T1-ion-fit}
+\end{figure}
+
+
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{T1-distilled-fit}
+\caption{Finding the distilled water's spin-lattice relaxation time $ T_{1} $ from the linearized free-precession amplitude. Note the distilled water's $ T_{1} $ is of second order, while the paramagnetic water's $ T_{1} $ is of millisecond order.}
+\label{nmr:fig:T1-distilled-fit}
+\end{figure}
+
+
+
+\subsection{Spin-Spin Relaxation Time $ T_{2} $}
+We determine the paramagnetic water's spin-spin relaxation time $ T_{2} $ using the dependence of spin-echo amplitude $ U_{\text{se}} $ on the separation $ \tau $ between the $ \pi/2 $ and $ \pi $ pulses applied to the water sample. $ U_{\text{se}} $, $ \tau $ and $ T_{2} $ are related by
+\begin{equation*}
+	U_{\text{se}} = U_{0}e^{-\frac{2\tau}{T_{2}}}
+\end{equation*}
+where $ U_{0} $ is a constant. The above relationship implies plotting the quantity
+\begin{equation*}
+	\mathcal{Q}_{\text{se}}(\tau) \equiv -\frac{1}{2}\ln U_{\text{se}} = \frac{\tau}{T_{2}}
+\end{equation*}
+on the ordinate axes and pulse separation $ \tau $ on the abscissa should yield a line whose slope is $ \frac{1}{T_{2}} $. Figure \ref{nmr:fig:T2-fit} shows the plot of $ \mathcal{Q}_{\text{se}} $ versus $ \tau $ and the corresponding linear fit used to find $ T_{2} $.
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=\linewidth]{T2-fit}
+\caption{Finding the paramagnetic water's spin-spin time $ T_{2} $ from the linearized spin-echo amplitude.}
+\label{nmr:fig:T2-fit}
+\end{figure}
+
+
+% Note that the spin-echo signal appears at time $ 2 \tau $ (see Figure \ref{nmr:fig:spin-echo-schematic} and theory section) after the initial $ \pi/2 $ pulse.		
+	
+%\textit{Theory}: This only works for slow diffusion. Diffusion occurs at large $ \tau $, so for small $ T_{2} $ we can neglect diffusion.
+
+\section{Error Analysis}
+\subsection{Time Calibration}
+Pulse time $ t $ is found from \texttt{TAU} dial position $ \tau $ via
+\begin{equation*}
+	t_{\text{1x}}(\tau) = \big(- 0.039 \cdot \tau + 1.003 \big) \si{\milli \second} \eqtext{and} 	t_{\text{100x}}(\tau) = \big(- 4.88 \cdot \tau + 90.47 \big) \si{\milli \second}
+\end{equation*}
+Input data is dial position $ \tau $; I assume an uncertainty of one percent for $ \tau $. A first-order Taylor approximation gives an estimate for the corresponding uncertainty $ \delta t $ in time:
+\begin{equation*}
+	t(\tau + \delta \tau) \approx t(\tau)  + \delta \tau \cdot t'(\tau) \implies \delta t \approx \abs{\delta u \cdot t(\tau)}
+\end{equation*}
+
+\subsection{Spin-Lattice Relaxation Time $ T_{1} $}
+Spin-lattice relaxation time $ T_{1} $ is found by plotting the quantity
+\begin{equation*}
+	\mathcal{Q}_{\text{fp}}= -\ln\left(1 - \frac{U_{\text{fp}}}{U_{0}}\right)
+\end{equation*}
+versus pulse duration $ \tau $. The input quantities are the free precession signal amplitude $ U_{\text{fp}} $ and the value of asymptotic approach $ U_{0} $. Since uncertainties are not given with the simulated data, I assumed both quantities carry an uncertainty of one percent. The sensitivity coefficients are
+\begin{equation*}
+	c_{\text{fp}} = \pdv{\mathcal{Q}}{U_{\text{fp}}} = \frac{U_{0}-1}{U_{0} - U_{\text{fp}}} \eqtext{and} c_{0} = \pdv{\mathcal{Q}}{U_{0}} = \frac{U_{0}^{2}-U_{\text{fp}}}{U_{0}(U_{0} - U_{\text{fp}})}
+\end{equation*}
+and the corresponding error in $ \mathcal{Q}_{\text{fp}} $ is
+\begin{equation*}
+	\delta_{\text{Q}} = \sqrt{(c_{\text{fp}}\delta_{\text{fp}})^{2} + (c_{0}\delta_{0})^{2}}
+\end{equation*}
+I use the error in $ \mathcal{Q} $, together with linear regression software, to find the error $ \delta \mathcal{S} $ in the slopes $ \mathcal{S} $ of the best-fit lines in Figures \ref{nmr:fig:T1-ion-fit} and \ref{nmr:fig:T1-distilled-fit}.  I calculate $ T_{1} $ using
+\begin{equation*}
+	T_{1} = \frac{1}{\mathcal{S}},
+\end{equation*}
+from which I use a first order Taylor approximation to estimate the error in $ T_{1} $ via
+\begin{equation*}
+	\delta T_{1} \approx \abs{\delta S \cdot T_{1}'(\mathcal{S})} =  \frac{\delta \mathcal{S}}{\mathcal{S}^{2}}
+\end{equation*}
+
+
+
+\subsection{Spin-Lattice Relaxation Time $ T_{1} $}
+Spin-spin relaxation time $ T_{2} $ is found by plotting the quantity
+\begin{equation*}
+	\mathcal{Q}_{\text{se}}= -\frac{1}{2}\ln U_{\text{se}}
+\end{equation*}
+versus pulse duration $ \tau $. The input quantity is the spin echo signal amplitude $ U_{\text{se}} $. Since no uncertainty is given with the simulated data, I assumed $ U_{\text{se}} $ carries an uncertainty of one percent. A first-order Taylor approximation of the error in $ \mathcal{Q}_{\text{se}} $ is
+\begin{equation*}
+	\delta_{\text{Q}} \approx \delta U_{\text{se}}\cdot \mathcal{Q}_{\text{se}}'(U_{\text{se}})  = \frac{\delta U_{\text{se}}}{2U_{\text{se}}}
+\end{equation*}
+I use the error in $ \mathcal{Q} $, together with linear regression software, to find the error $ \delta \mathcal{S} $ in the slopes $ \mathcal{S} $ of the best-fit line in Figure \ref{nmr:fig:T2-fit}.  I calculate spin-spin relaxation time $ T_{2} $ using
+\begin{equation*}
+	T_{2} = \frac{1}{\mathcal{S}},
+\end{equation*}
+from which I use a first order Taylor approximation to estimate the error in $ T_{2} $ via
+\begin{equation*}
+	\delta T_{2} \approx \abs{\delta S \cdot T_{2}'(\mathcal{S})} =  \frac{\delta \mathcal{S}}{\mathcal{S}^{2}}
+\end{equation*}
+
+
+\section{Results}
+I estimated paramagnetic water's non-homogeneous spin-spin relaxation time $ T_{2}^{*} $ as
+\begin{equation*}
+	\boxed{T_{2}^{*} \approx \SI{160}{\micro \second}} 
+\end{equation*}
+I estimated the magnetic field's non-homogeneity $ \Delta B_{z} $ inside the paramagnetic water sample as
+\begin{equation*}
+	\boxed{\Delta B_{z} \approx \SI{4}{\micro \tesla}} 
+\end{equation*}
+The spin-lattice relaxation times of the paramagnetic and distilled water samples, respectively, were
+\begin{equation*}
+	\boxed{T_{1_{\text{p}}} = \SI{3.8 \pm 0.2}{\milli \second}} \eqtext{and} \boxed{T_{1_{\text{d}}} = \SI{4.0 \pm 0.2}{\second}}
+\end{equation*}
+Note the difference of three orders of magnitude between the two quantities. 
+
+Finally, the paramagnetic water's spin-spin relaxation time $ T_{2} $ was
+\begin{equation*}
+	\boxed{T_{2} = \SI{2.0 \pm 0.2}{\milli \second}}
+\end{equation*}
+		
+		
+\appendix
+
+\section{Plots of Spin Echo Data and Free Precession Data}
+For the sake of completeness, Figures \ref{nmr:fig:T2_data} and \ref{nmr:fig:T1_data} shows the raw (non-linearized) dependence of the water samples' spin echo and free precession signal amplitude on the separation $ \tau $ between pulse application.
+
+\begin{figure}[htb!]
+\centering
+
+\includegraphics[width=0.8\linewidth]{T2-data}
+
+\caption{Raw dependence of the paramagnetic water's spin-echo signal amplitude on separation $ \tau $ between application of $ \pi/2 $ and $ \pi $ pulses. This data is linearized and used in Figure \ref{nmr:fig:T2-fit} to find the sample's spin-spin relaxation time $ T_{2} $.}
+\label{nmr:fig:T2_data}
+\end{figure}
+
+
+\begin{figure}[htb!]
+\centering
+
+\includegraphics[width=0.8\linewidth]{T1-ion-data} \vfill
+
+\includegraphics[width=0.8\linewidth]{T1-distilled-data} \vfill
+
+\caption{The paramagnetic (top) and distilled water (bottom) samples' free precession signal amplitude on the separation $ \tau $ between application of $ \pi/2 $ pulses. This data is linearized and used in Figures \ref{nmr:fig:T1-ion-fit} and \ref{nmr:fig:T1-distilled-fit} to find the sample's spin-lattice relaxation time $ T_{1} $.}
+\label{nmr:fig:T1_data}
+\end{figure}
+
+
+
+\section{Background Theory}
+
+\textbf{Numerical Value}
+\begin{itemize}
+	\item The proportionality between nuclear angular momentum and magnetic moment is $ \gamma = \SI{2.675e8}{\hertz\, \tesla^{-1}} $ or $ \frac{\gamma}{2\pi} = \SI{42.576}{\mega \hertz\, \tesla^{-1}} $
+\end{itemize}
+
+\begin{itemize}
+	\item Nucleus with spin $ \vec{S} $ and magnetic moment $ \vec{\mu} $ related by
+	\begin{equation*}
+		\m = \gamma \S
+	\end{equation*}
+	where $ \gamma $ is the gyromagnetic ratio.
+	
+	\item In an external magnetic field $ \B_{0} $ we have  the torque
+	\begin{equation*}
+		\vec{\tau} = \m \cross \B_{0} = \gamma \S \cross \B_{0}
+	\end{equation*}
+	from which we get
+	\begin{equation*}
+		\dv{\S}{t} \equiv \vec{\tau} = \gamma \S \cross \B_{0}
+	\end{equation*}	
+	The change in angular momentum is perpendicular to both the angular velocity and magnetic field, so the nuclear spin (and thus the parallel magnetic moment) precesses about the magnetic field. The precession frequency is the \textit{Larmor frequency}
+	\begin{equation*}
+		\omega_{L} = \gamma B_{0}
+	\end{equation*}
+	
+	\item Place a substance with nonzero nuclear spins and magnetic moments in a field $ \B_{0} = (0, 0, B_{0}) $. The magnetic moment per unit volume is called volume magnetization $ \vec{M} $
+	\begin{equation*}
+		\M = \frac{1}{V}\sum_{i}\m_{i}  \implies \dv{\M}{t} = \gamma \M \cross \B_{0}
+	\end{equation*}
+	Lesson: magnetization also precesses about the external magnetic field with the Larmor frequency as long as $ \M $ and $ \B_{0} $ are not parallel. At equilibrium, though, $ \M $ and $ \B_{0} $ are parallel.
+	
+\end{itemize}
+
+\subsection{Effect of a Pulsed Second Field}
+\begin{itemize}
+	\item For a short time $ T $ we turn on a second magnetic field $ \B_{1} $, which points in the $ x $ direction, perpendicular to the static external field $ \B_{0} $ and oscillates at the Larmor frequency $ \omega_{L} = \gamma B_{0} $.
+	
+	\item Introduce angle $ \theta $ between magnetization $ \M $ and static external field $ \B_{0} $. When $ \B_{1} $ is turned on, $ \theta $ increases, $ \M $ and $ \B_{0} $ are no longer parallel, and $ \M $ begins to precess about $ \B_{0} $.
+	
+	\begin{figure}
+	\centering
+	\includegraphics[width=0.8\linewidth]{fields}
+	\caption{Sketch of the static magnetic field $ \B_{0} $ and pulsed magnetic field $ \B_{1} $ in the lab coordinate system $ xyz $.}
+	\label{nmr:fig:schematic-fields}
+	\end{figure}
+	
+	
+	\item The size of $ \theta $ depends amplitude and duration of $ \B_{1} $. We consider such combinations of amplitude $ B_{1} $ and duration $ T $ such that $ \theta $ changes by $ \pi $ or $ \pi/2 $.
+	
+	\item Transition from laboratory coordinate system to a system rotating about the magnetic field at the Larmor frequency; the $ z' $ axis of the rotating system points in the direction of $ \B_{0} $ and $ \uvec{z} $. The new coordinates are
+	\begin{align*}
+		& x' = x\cos \omega_{L}t + y \sin \omega_{L}t\\
+		& y' = y \cos \omega_{L} t - x \sin \omega_{L}t\\
+		& z' = z
+	\end{align*}
+	
+	\item In the lab system write linearly polarized radio-frequency magnetic field is a sum of two circularly polarized components. We write the oscillating field $ \B_{1} $ as
+	\begin{align*}
+		\B_{1} = B_{1}(\cos \omega_{L}t, 0, 0) = \frac{B_{1}}{2}\big(\cos \omega_{L}t, \sin \omega_{L}t, 0\big) + \frac{B_{1}}{2}\big(\cos \omega_{L}t, -\sin \omega_{L}t, 0\big)
+	\end{align*}
+	The first component rotates with the rotating system, and appears as a static field pointing in the $ x' $ axis in the rotating system. In the rotating system, the second component rotates about the $ z' $ axis at frequency $ 2 \omega_{L} $. 
+	
+	The second component does not contribute appreciably to the direction of $ \M $ because of its large frequency $ 2 \omega_{L} $. The first component causes precession of $ \M $ about the $ x' $ axis. 
+	
+	
+	In the rotating system, magnetization makes an angle $ \theta $ with the $ z' $ axis but does not precess about $ \uvec{z}' $, since the system itself rotates at the Larmor frequency. In effect, the original external static field $ \B_{0} $ does not contribute in the rotating coordinate system---it is ``built in'' to the rotating system because of the system's rotation at the Larmor frequency.
+	
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.8\linewidth]{rotating-cs}
+		\caption{The rotating coordinate system best suited to analyzing the NMR experiment.}
+		\label{nmr:fig:schematic-rotating-cs}
+	\end{figure}
+	
+	\item The $ \pi/2 $ pulse shifts the magnetization direction from $ z' $ (equilibrium position) to $ y' $, after which the rotating system's magnetic moment does not experience an external field.
+	
+	\item Introduce a spherical coordinate system. Write the direction of $ \m $ with the azimuthal angle $ \phi_{i} $ and polar angle $ \theta_{i} $.
+	
+	After a $ \pi/2 $ pulse, the magnetic moments of individual nuclei spread across the azimuthal angle $ \phi_{i} $ faster than $ \theta_{i} $ returns to zero (corresponding to $ \m_{i} $ aligning with $ \uvec{z}' $). 
+	
+	Because of the faster spread of $ \m_{i} $ about the azimuthal angle, the projection of the substance's magnetization $ \M $ onto the $ x'y' $ plane exponentially decays with decay constant $ T_{2} $, called the \textit{spin-spin relaxation time}.
+	
+	Meanwhile, the projection of $ \m_{i} $ onto $ \uvec{z}' $ after a disturbance grows with characteristic time $ T_{1} $, called the \textit{spin-lattice relaxation time}. We have
+	\begin{equation*}
+		M_{z'} = M\left(1 - e^{-t/T_{1}}\right)
+	\end{equation*}
+\end{itemize}
+
+
+\subsection{Spin System in a Non-Homogeneous Magnetic Field}
+\begin{itemize}
+	\item Assume the external field $ \B_{0} $ is non-homogeneous and takes the form
+	\begin{equation*}
+		\B_{0}(\vec{r}) = \big(0, 0, B_{z}(\vec{r})\big)
+	\end{equation*}
+	Define the generalized Larmor frequency $ \omega_{L} = \gamma \ev{B_{z}} $.
+	
+	Remain in the coordinate system rotating about the $ \uvec{z} $ axis. A given nuclear magnetic moment now feels two interactions: the usual internal magnetic interactions and an additional interaction due to the difference between the magnetic field at the nucleus's position and the average magnetic field $ \ev{B_{z}} $. The average magnetic field $ \ev{B_{z}} $ is ``built in'' to the rotating system and doesn't affect the magnetic moments, just like for the previously homogeneous $ B_{0} $. 
+	
+	\item The difference in magnetic field at at the $ i $th nucleus is
+	\begin{equation*}
+		\Delta B_{z}(\vec{r}_{i}) = B_{z}(\vec{r}_{i}) - \ev{B_{z}} 
+	\end{equation*}
+	These difference at each nucleon cause the individual nuclear magnetic moments to precess the $ z' $ axis with different frequencies and in different directions.
+	
+	Because of this additional precession of the individual magnetic moments, the total magnetization is even more randomly distributed in the $ x'y' $ plane about the azimuthal angle than for a homogeneous field. 
+	
+	\item In a non-homogeneous external field, the projection of magnetization onto the $ x'y' $ plane no longer falls exponentially with characteristic time $ T_{2} $, but with a more complicated characteristic that depends on $ T_{2} $, the magnetic field's non-homogeneity, and the shape of the sample. We denote the new characteristic decay time by $ T_{2}^{*} $.
+	
+	In practice, non-homogeneity makes it impossible to directly measure $ T_{2} $ from the time dependence of the free precession signal, which is proportional to the projection of magnetization onto the $ x'y' $ plane.
+	
+	\item Let $ \Delta B_{z} $ be the average of $ \Delta B_{z}(\vec{r}_{i}) $ over all nuclei in the sample. Assume $ T_{2} \gg T_{2}^{*} $, meaning magnetization scatters about $ \phi $ largely because of magnetic field non-homogeneity.
+	
+	Magnetization in the $ x'y' $ plane disappears when the average $ \m_{i} $ is perpendicular to the $ y' $ direction (recall $ y' $ is the direction of $ \M $ just after a $ \pi/2 $ pulse). Magnetic moment $ \m $ is perpendicular to $ y' $ when $ \m $ rotates through an angle $ \approx \frac{\pi}{2} $ in the $ x'y' $ plane about the $ z' $ axis. We have:
+	\begin{equation*}
+		\omega_{z} T_{2}^{*} = \gamma \Delta B_{z} T_{2}^{*} \approx \frac{\pi}{2} \implies T_{2}^{*} \sim \frac{1}{\gamma \Delta B_{z}}
+	\end{equation*}
+	
+	\item To find $ T_{2} $, we want to eliminate the spread of $ \M $ about the angle $ \phi $. 
+	
+	Consider an individual magnetic moment $ \m_{i} $ in a non-homogeneous external field. Just after a $ \pi/2 $ pulse, $ \m_{i} $ points along $ y' $ and then precesses about $ z' $ with frequency $ \omega_{i} = \gamma \Delta B_{z}(\vec{r}_{i}) $. The $ \m_{i} $ rotates by $ \phi_{i}(\tau) = \omega_{i}\tau $ in the time $ \tau $.
+	
+	A $ \pi $ pulse turns the sample's magnetic moments by an angle $ \pi $ about the $ x' $ axis. This rotation about the $ x' $ axis by $ \pi $ maps $ \phi_{i}(\tau)  $ to $ \pi - \phi_{i}(\tau) $. 
+	
+	Process: Apply a $ \pi/2 $ pulse. After time $ \tau $, after which a given $ \m_{i} $ rotates by $ \phi_{i}(\tau) $, apply a $ \pi $ pulse. At time $ \tau $ after the $ \pi $ pulse (a time $ 2\tau $ after the initial $ \pi/2 $ pulse) the magnetic moments point in the direction $ -y' $.
+	
+	This rotation of nuclear magnetic moments to $ -y' $ generates the so-called \textit{spin-echo signal}.
+	
+	\begin{figure}
+	\centering
+	\includegraphics[width=0.8\linewidth]{spin-echo}
+	\caption{Signals used to measure the relaxation time $ T_{2} $. The leftmost signal is a $ \pi/2 $ pulse followed immediately by the free precession signal, the middle signal is a $ \pi $ pulse, and the rightmost signal is the spin echo signal.}
+	\label{nmr:fig:spin-echo-schematic}
+	\end{figure}
+	
+	
+	\item The application of the $ \pi $ pulse after the initial $ \pi/2 $ eliminates the spread of magnetization in the $ x'y' $ plane due to the non-homogeneity of the external field.
+	
+	It does not eliminate the spread of $ \M $ due to internal field interactions, which exist even in a homogeneous magnetic field. This spread causes the spin-echo signal to fall as $ e^{-t/T_{2}} $
+	
+	\item The width of the spin-echo signal depends on how quickly the individual nuclear magnetic moments align in the $ -y' $ direction after a $ \pi $ pulse, which in turn depends on the non-homogeneity of the external magnetic field---the less homogeneous the magnetic field, the faster the $ \m_{i} $ rotate in the $ x'y' $ plane, and the faster the $ \m_{i} $ return to $ -y' $.
+	
+	\item A $ \pi $ pulse effectively reverses the direction of nuclear magnetic moment precession. This means the alignment of nuclear magnetic moments in the $ y' $ direction corresponds to a time-reversed scattering of magnetic moments in the $ x'y' $ plane. To construct the spin echo signal, combine two free precession signals, where the first is reverse in time via $ t \to -t $. 
+	
+	Assuming $ T_{2} \gg T_{2}^{*} $, the width of the spin-echo signal is then $ 2T_{2}^{*} $.
+	
+\end{itemize}
+
+\section{My Notes}
+\textbf{Summary of What Happens}
+\begin{itemize}
+
+	\item Nuclear angular momentum, nuclear magnetic moment and a substance's magnetization precess about the static external magnetic field $ \B_{0} $. Angle between $ \M $ and $ \B_{0} $ is $ \theta $; $ \M $ points along $ \B_{0} $ in equilibrium.
+	
+	\item Turn on a pulsed field $ \B_{1} $ in the $ x $ direction and oscillating at the Larmor frequency. Increase angle $ \theta $ between $ \M $ and $ \B_{0} $ to some nonzero value, and $ \M $ begins precessing about $ \B_{0} $. 
+	
+	We choose pulses so that $ \theta $ changes to $ \pi/2 $ or $ \pi $. 
+	
+	\item Transition to coordinate system rotating about $ \uvec{z} $ at Larmor frequency; remain in this system for the rest of the report.
+	
+	\item A $ \pi/2 $ pulse shifts $ \M $ from $ \uvec{z}' $ to $ \uvec{y}' $. After a $ \pi/2 $ pulse, the magnetic moments of individual nuclei spread across the azimuthal angle $ \phi_{i} $ faster than $ \theta_{i} $ returns to zero (corresponding to $ \m_{i} $ aligning with $ \uvec{z}' $). 
+\end{itemize}
+
+
+\textbf{Non-Homogeneous Field}
+\begin{itemize}
+	\item Remain in rotating coordinate system. Each $ \m_{i} $ now feels an interaction because of difference between local and average magnetic field. This causes additional distribution of the $ \m_{i} $ about the $ x'y' $ plane.
+	
+	\item Assume $ T_{2} \gg T_{2}^{*}$, meaning scattering of $ \m_{i} $ about $ \phi $ is largely due to magnetic field non-homogeneity. 
+	
+	\item Process: Apply a $ \pi/2 $ pulse, causing the $ \m_{i} $ to point along $ y' $. After time $ \tau $, after which a given $ \m_{i} $ rotates by $ \phi_{i}(\tau) $ in the $ x'y' $ plane, apply a $ \pi $ pulse, shifting $ \m_{i} $ from $ \phi_{i}(\tau) $ to $ \pi - \phi_{i}(\tau) $. At time $ \tau $ after the $ \pi $ pulse (a time $ 2\tau $ after the initial $ \pi/2 $ pulse), $ \m_{i} $ has rotated by another $ \phi_{i}(\tau) $, makes an angle $ \pi $ with $ y' $, and thus points in the direction $ -y' $.
+\end{itemize}
+
+\newpage
+\textbf{Glossary}
+\begin{itemize}	
+	\item \textit{Spin-lattice relaxation time}  $ T_{1} $: characterizes the increasing projection of magnetization $ \M $ onto the $ z' $ axis after a disturbance as $ \theta $ approaches zero, which obeys
+	\begin{equation*}
+		M_{z'} = M\left(1-e^{-\frac{t}{T_{1}}}\right)
+	\end{equation*}
+	
+	\item \textit{Free precession signal}: proportional to the projection of magnetization $ \M $ onto the $ x'y' $ plane, which (in a homogeneous magnetic field only) falls exponentially with characteristic time $ T_{2} $.
+
+	
+	
+	\item \textit{Spin-spin relaxation time} $ T_{2} $: characterizes the exponentially decaying projection of $ \M $ onto the $ x'y' $ plane after a $ \pi/2 $ pulse as $ \theta $ approaches zero. Result of spreading $ \m_{i} $ about the $ x'y' $ plane.
+	
+	\item \textit{Spin-spin relaxation time} $ T_{2}^{*} $: Generalization of $ T_{2} $ in a non-homogeneous field, where decay is no longer exponential. We assume $ T_{2}^{*} \ll T_{2} $.
+	
+
+	\item \textit{Spin echo signal}: Corresponds to rotation of nuclear magnetic moments to $ -y' $ for a $ \pi/2 $ pulse followed by a $ \pi $ pulse. Spin-echo signal decreases with time as
+	\begin{equation*}
+		S \sim S_{0}e^{-\frac{2\tau}{T_{2}}}
+	\end{equation*}
+	where $ \tau $ is the time interval between the $ \pi/2 $ and $ \pi $ pulses.
+	
+	
+
+	\item A $ \pi $ pulse effectively reverses the direction of nuclear magnetic moment precession. This means the alignment of nuclear magnetic moments in the $ y' $ and $ -y' $ directions corresponds to a time-reversed scattering of magnetic moments in the $ x'y' $ plane. To construct the spin echo signal, we combine combine two free precession signals, where the first signal is reversed in time via $ t \to -t $. 
+		
+\end{itemize}
+
+
+
+
+\end{document}
+
+%	\item Electromagnet, not superconducting magnet.
+		
+%	\item \SI{9}{\mega \hertz} frequency, which is relatively large, so we need at relatively small, roughly \SI{0.2}{\tesla} field. 

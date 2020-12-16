@@ -1,0 +1,9 @@
+TAU calibration at x1 amplification
+# TAU (x1)       t (ms)
+     0         1.12
+    50         2.76
+   100         4.87
+   150         6.83
+   200         8.80
+   250        10.59
+   300        12.62
