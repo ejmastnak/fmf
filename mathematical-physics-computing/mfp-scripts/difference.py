@@ -1,10 +1,11 @@
 import numpy as np
-from numpy.fft import fft, ifft, fftshift, ifftshift
 import matplotlib.pyplot as plt
 from matplotlib.collections import LineCollection
-import matplotlib.animation as animation
-from matplotlib import cm
-import time
+from matplotlib.colors import LinearSegmentedColormap
+from mpl_toolkits.axes_grid1.inset_locator import inset_axes
+from mpl_toolkits.axes_grid1.inset_locator import mark_inset
+# import matplotlib.animation as animation
+# import time
 
 plt.rcParams['mathtext.fontset'] = 'cm'
 plt.rcParams['font.family'] = 'STIXGeneral'
@@ -28,7 +29,6 @@ save_figures = True
 # usetex = True  # turn on to use Latex to render text
 usetex = False  # turn off to plot faster
 
-r_max = 11
 M_max = 8
 
 
@@ -68,7 +68,7 @@ def get_zM(M):
     elif M == 6:
         c = [1, 42, 840, 10080, 75600, 332640, 665280]
     elif M == 7:
-        c = [1, 56, 1512, 25200, 277200, 1995840, 864640, 17297280]
+        c = [1, 56, 1512, 25200, 277200, 1995840, 8648640, 17297280]
     elif M == 8:
         c = [1, 72, 2520, 55440, 831600, 8648640, 60540480, 259459200, 518918400]
     else:  # return M == 1 as base case
@@ -146,10 +146,14 @@ def get_cr(r):
     return cr
 
 
-def get_cr2(r):
+def get_cr_static(r):
     """
-    Returns c_k, an length (r+1) 1D array of real numbers holding the coefficients in a
-     (2r + 1)-point finite difference approximation of the second derivative
+    Uses as static look-up table to return c_k, an length (r+1) 1D array of real numbers holding the
+     coefficients in a (2r + 1)-point finite difference approximation of the second derivative
+     up to r = 11
+
+     See get_cr for an arbitrary r algorithm
+
     Used for higher-order position differentiation of the wavefunction in the generalized CN scheme
     :param r: positive integer currently defined from 1 to 11
     """
@@ -187,11 +191,11 @@ def get_ckr(k, r):
     :param r: currently defined from 1 to 11
     """
     k, r = int(k), int(r)
-    if k < 0:
+    if k < 0 or k > r:
         print("Warning in get_c: k out or range: k = {}".format(k))
         if k == 0: return -2.0
         else: return 1.0
-    if r < 1 or r > 11:
+    if r < 1:
         print("Warning in get_c: r out range: r = {}".format(r))
         if k == 0: return -2.0
         else: return 1.0
@@ -227,8 +231,6 @@ def get_d(x0, dx, dt, J, r, s, M, V, Vargs):
     :return (J+1)-element complex numpy array holding main diagonal of evolution matrix
     """
     x = np.linspace(x0, x0 + (J*dx), J+1)
-    # a_r = get_a(dt, dx, 0, r, s, M)
-    # z_sM = get_zsM(s, M)
 
     a_r = get_a(dt, dx, 0, r, s, M)
     z_sM = get_zsM(s, M)
@@ -236,8 +238,6 @@ def get_d(x0, dx, dt, J, r, s, M, V, Vargs):
     d = np.zeros(J+1, dtype=complex)
     for j in range(J+1):
         d[j] = 1 + a_r - (0.0 + 1.0j)*dt*V(x[j], *Vargs)/z_sM  # forces V(x) to unpack as a J+1-element array
-
-    # d[0: J+1] = 1 + a_r - (0.0 + 1.0j)*dt*V(x)/z_sM  # forces V(x) to unpack as a J+1-element array
     return d
 
 
@@ -300,18 +300,20 @@ def get_probability(x, psi):
     return probability
 
 
-def get_error(x, psi_numeric, psi_exact):
+def get_error(x, psi_numeric, psi_analytic):
     """
     Returns a estimate of the error between the inputted numerically calculated and analytic wavefunctions
-    Uses error^2 = integral |psi_numeric - psi_exact|^2 dx  (from the van Dijk paper)
+    Uses error = integral |psi_numeric - psi_exact|^2 dx  (from the van Dijk paper)
     """
-    psi = psi_numeric - psi_exact  # calculate difference
-    psi_squared = np.abs(psi)**2  # probability density of difference
+    psi_numeric2 = np.abs(psi_numeric)**2
+    psi_analytic2 = np.abs(psi_analytic)**2
+
+    difference = np.abs(psi_analytic2 - psi_numeric2)
     error = 0
     for i in range(len(x)-1):
         dx = x[i+1] - x[i]
-        error += 0.5*dx*(psi_squared[i] + psi_squared[i+1])  # midpoint rule
-    return error**0.5
+        error += dx * 0.5*(difference[i+1] + difference[i])  # midpoint rule
+    return error
 
 
 def test_run():
@@ -322,7 +324,7 @@ def test_run():
     s, M = 1.0, 2.0
     print("z(s, M) = {}".format(get_zsM(s, M)))
 
-    A = get_A(x0, dx, dt, J, r, s, M, V_free)
+    A = get_A(x0, dx, dt, J, r, s, M, V_free, Vargs=[])
     print(A)
 # -----------------------------------------------------------------------------
 # END AUXILIARY ANALYSIS FUNCTIONS
@@ -337,12 +339,11 @@ def get_qho_initial(x, alpha, a):
     return (np.sqrt(alpha)/np.power(np.pi, 0.25))*np.exp(-0.5 * alpha ** 2 * (x - a) ** 2)
 
 
-def get_qho(x, t, alpha, a, w):
+def get_qho_analytic(x, t, alpha, a, w):
     """ Analytic solution for the time evolution of the QHO coherent state """
     xi, xi0 = alpha * x, alpha * a  # for shorthand
     amp = (1.0 + 0.0j)*np.sqrt(alpha)/np.power(np.pi, 0.25)
     argreal = -0.5*(xi - xi0*np.cos(w*t))**2
-    # argim = -0.5j - 1.0j*xi*xi0*np.sin(w*t) - 0.25j*(xi0**2)*np.sin(2*w*t)  # van Dijk version, 0.5 vs 0.5*w*t
     argim = -0.5j*w*t - 1.0j*xi*xi0*np.sin(w*t) + 0.25j*(xi0**2)*np.sin(2*w*t)
     return amp * np.exp(argreal + argim)
 
@@ -355,7 +356,7 @@ def get_free_initial(x, sigma0, k0, a):
     return amp*exp1*exp2
 
 
-def get_free(x, t, sigma0, k0, a):
+def get_free_analytic(x, t, sigma0, k0, a):
     """ Analytic solution for the time evolution of the free wave packet"""
     c0 = 1 + 0.5j*t/sigma0**2  # calculate once, use twice
     amp = (1.0 + 0.0j)*np.power(2*np.pi*sigma0**2, -0.25)/np.sqrt(c0)
@@ -368,62 +369,20 @@ def get_free(x, t, sigma0, k0, a):
 # -----------------------------------------------------------------------------
 # START SOLUTION GENERATION FUNCTIONS
 # -----------------------------------------------------------------------------
-def test_qho_analytic():
-    """
-    Just a test run for the analytic solution to the QHO problem
-    :return:
-    """
-    w = 0.2
-    k = w**2
-    alpha = np.sqrt(w)
-    a = 10
-    T = 2*np.pi/w  # oscillatory period
-
-    x0, xJ = -40, 40
-    J = 300
-    dx = (xJ - x0)/J  # position step
-    x = np.linspace(x0, xJ, J)
-
-    t0, tN = 0, 10*T
-    dt = np.pi  # time step
-    times = np.arange(t0, tN, dt)
-
-    psi0 = get_qho_initial(x, alpha, a)
-    psi02 = np.abs(psi0)**2  # probability density
-
-    # for i in np.arange(0, 1, 0.1):
-    for i in np.linspace(0, 0.5, 5, endpoint=False):
-        t = i*T
-        psi = get_qho(x, t, alpha, a, w)
-        psi2 = np.abs(psi)**2
-
-        plt.plot(x, psi2, label="{:.2f} T".format(i))
-    plt.legend()
-    plt.show()
-
-
-def test_qho():
-    """ Test run for numeric solution to the QHO problem """
-    w = 0.2
+def get_qho_solution(r, M, solution_times, w=0.2, a=10.0, x0=-40.0, xJ=40.0, J=600, t0=0.0, n_periods=10, dt=0.2*np.pi):
     k = w**2
     Vargs = [k]  # argument to pass to potenial energy function
     alpha = np.sqrt(w)
-    a = 10
     T = 2*np.pi/w  # oscillatory period
 
-    x0, xJ = -40, 40
-    J = 600
     dx = (xJ - x0)/J  # position step
     x = np.linspace(x0, xJ, J+1)
 
-    t0, tN = 0, 7*T
-    N = 1000
-    dt = (tN - t0)/N
-    # dt = np.pi  # time step
-    times = np.arange(t0, tN, dt)
+    tN = n_periods*T  # run simulation for n_periods oscillation periods
+    N = int((tN - t0)//dt)
+    times = np.linspace(t0, tN, N+1, endpoint=True)  # finely spaced time grid for time evolution of wavefunction
+    solution_time_indices = (solution_times - t0)//dt  # indices of the times at which to sample the solution
 
-    M = M_max  # order of time approximation
-    r = r_max  # order of position approximation
     # construct matrix A
     A = np.eye(J+1, dtype=complex)  # preallocate
     for s in range(1, M+1, 1):  # s = 1, 2, ..., M
@@ -433,48 +392,173 @@ def test_qho():
         As_product = np.dot(As_inv, As_conj)
         A = np.dot(A, As_product)
 
-    n_plots = 3
     psi = get_qho_initial(x, alpha, a)
-    for n, t in enumerate(times):
-        psi = np.dot(A, psi)
-        if n % int(N/n_plots) == 0:
-            psi2 = np.abs(psi)**2
-            plt.plot(x, psi2, c='C0', label="t = {:.2f}".format(t))
-    plt.legend()
+    psi_solutions = np.zeros((J+1, len(solution_times)), dtype=complex)  # columns are psi(x) at a given time t.
 
-    # for i in np.arange(0, 1, 0.1):
-    for n, t in enumerate(times):
-        if n % int(N/n_plots) == 0:
-            psi = get_qho(x, t, alpha, a, w)
-            psi2 = np.abs(psi)**2
-            plt.plot(x, psi2, c='C1', label="t = {:.2f}".format(t))
+    # alternate format including time in table
+    # psi_solutions = np.zeros((J+2, N+1), dtype=complex)  # columns are psi(x) at a given time t. First row holds times
+    # psi_solutions[0] = solution_times + dt  # first row holds time of each solution. Note the +dt, since numerical solution at a given t is found at t+dt
+    # header = "Columns are psi(x) at a fixed time. First row holds time of each column."
+    # psi_solutions[1:, n_sample] = psi  # store the solution psi at the sample time
 
-    plt.legend()
-    plt.show()
+    n_sample = 0  # indexes of solution sampling times
+    for n, t in enumerate(times):  # loop through time grid and time evolve wave function
+        psi = np.dot(A, psi)  # calculate wavefunciton
+        if n in solution_time_indices:  # a time at which to sample the solution
+            psi_solutions[:, n_sample] = psi  # store the solution psi at the sample time
+            n_sample += 1
+
+    return x, solution_times, psi_solutions
 
 
-def test_free_analytic():
+def qho_solution_wrapper(r=5, M=5):
+    """ Just a wrapper method to initialize QHO parameters and generate QHO solution data """
+    w = 0.2  # oscillation frequency
+
+    T = 2*np.pi/w  # oscillatory period
+    a = 10.0  # initial wavepacket center
+
+    x0, xJ = -40.0, 40.0
+    J = 600
+
+    t0 = 0.0
+    n_periods = 10  # number of periods over which to calculate the solution
+    dt = 0.2*np.pi  # time step for time evolution
+
+    t_solution0 = t0  # time start sampling solutions
+    n_solution_periods = 1  # number of QHO periods to sample the solution for
+    t_solutionN = n_solution_periods * T  # time to stop sampling solutions
+    dt_solution = 0.1*T  # time step for sampling solutions
+    N_solution = int((t_solutionN-t_solution0)//dt_solution)  # number of solution samples to take
+    solution_times = np.linspace(t_solution0, t_solutionN, N_solution+1, endpoint=True)  # times at which to sample solution
+
+    return get_qho_solution(r, M, solution_times, w=w, a=a, x0=x0, xJ=xJ, J=J, t0=t0, n_periods=n_periods, dt=dt)
+
+
+def get_free_solution(r, M, solution_times, sigma0=0.05, k0=50*np.pi, a=0.25, x0=-0.5, xJ=1.5, J=500, t0=0, tN=2e-3, N=300):
     """ Test run for numeric solution to the free particle problem """
+
+    Vargs = []  # arguments for potential energy function; for a free particle there are none
+
+    dx = (xJ - x0)/J  # position step
+    x = np.linspace(x0, xJ, J+1)
+
+    dt = (tN - t0)/N
+    times = np.linspace(t0, tN, N+1, endpoint=True)  # finely spaced time grid for time evolution of wavefunction
+    solution_time_indices = (solution_times - t0)//dt  # indices of the times at which to sample the solution
+
+    # construct matrix A
+    A = np.eye(J+1, dtype=complex)  # preallocate
+    for s in range(1, M+1, 1):  # s = 1, 2, ..., M
+        As = get_A(x0, dx, dt, J, r, s, M, V_free, Vargs)
+        As_inv = np.linalg.inv(As)
+        As_conj = np.conjugate(As)
+        As_product = np.dot(As_inv, As_conj)
+        A = np.dot(A, As_product)
+
+    psi = get_free_initial(x, sigma0, k0, a)  # initial wavefunction at t=0
+    psi_solutions = np.zeros((J+1, len(solution_times)), dtype=complex)  # columns are psi(x) at a given time t.
+
+    n_sample = 0  # indexes of solution sampling times
+    for n, t in enumerate(times):  # loop through time grid and time evolve wave function
+        psi = np.dot(A, psi)  # calculate wavefunciton
+        if n in solution_time_indices:  # a time at which to sample the solution
+            psi_solutions[:, n_sample] = psi  # store the solution psi at the sample time
+            n_sample += 1
+
+    return x, solution_times, psi_solutions
+
+
+def free_solution_wrapper():
+    """ Just a wrapper method to initialize free particle parameters and generate free particle solution data """
+    r = 10
+    M = 8
+
     sigma0 = 0.05
     k0 = 50*np.pi
-    a = 0.25
+    a = 0.25  # center of the original wavepacket
 
-    x0, xJ = -0.5, 1.5
-    J = 300
-    dx = (xJ - x0)/J  # position step
-    x = np.linspace(x0, xJ, J)
+    x0 = -0.5
+    xJ = 5.0
+    J = 500
 
-    t0, tN = 0, 4e-3
-    dt = 0.1*tN  # time step
-    times = np.arange(t0, tN, dt)
+    t0 = 0
+    tN = 2e-2
+    N = 500
+    #  (5e3, 1) (3e3, 0.72) (1e2, 1.82)
 
-    for t in times:
-        psi = get_free(x, t, sigma0, k0, a)
-        psi2 = np.abs(psi)**2
+    t_solution0 = t0  # time start sampling solutions
+    t_solutionN = tN  # time to stop sampling solutions
+    N_solution = 10  # number of solution samples to take
+    solution_times = np.linspace(t_solution0, t_solutionN, N_solution+1, endpoint=True)  # times at which to sample solution
+    get_free_solution(r, M, solution_times, sigma0=sigma0, k0=k0, a=a, x0=x0, xJ=xJ, J=J, t0=t0, tN=tN, N=N)
 
-        plt.plot(x, psi2, label="t = {:.2e}".format(t))
-    plt.legend()
-    plt.show()
+
+def generate_qho_errors():
+    # START PARAMETER INITIALIZATION
+    w = 0.2  # oscillation frequency
+    alpha = w**0.5
+    T = 2*np.pi/w  # oscillatory period
+    a = 10.0  # initial wavepacket center
+
+    x0, xJ = -40.0, 40.0
+    J = 600
+
+    t0 = 0.0
+    n_periods = 10  # number of periods over which to calculate the solution
+    dt = 0.2*np.pi  # time step for time evolution
+
+    solution_times = np.array([n_periods*T])  # sample only the last point
+    # END PARAMETER INITIALIZATION
+
+    x = np.linspace(x0, xJ, J+1)
+    psi_analytic = get_qho_analytic(x, 10*T + dt, alpha, a, w)  # analytic solution for comparison
+
+    max_M = 8
+    max_r = 8
+    errors = np.zeros((max_M, max_r))
+    header = "Rows run from M = 1 to {}, Columns run from r = 1 to {}".format(max_M, max_r)
+    for M in range(1, max_M+1, 1):
+        for r in range(1, max_r+1, 1):
+            print("(M, r): ({}, {})".format(M, r))
+            x, t, psi = get_qho_solution(r, M, solution_times, w=w, a=a, x0=x0, xJ=xJ, J=J, t0=t0, n_periods=n_periods, dt=dt)
+            errors[M-1][r-1] = get_error(x, psi[:, 0], psi_analytic)
+
+    np.savetxt(data_dir + "qho-errors_.csv", errors, delimiter=',', header=header)
+
+
+def generate_free_errors():
+    # START PARAMETER INITIALIZATION
+    sigma0 = 0.05
+    k0 = 50*np.pi
+    a = 0.25  # center of the original wavepacket
+
+    x0 = -0.5
+    xJ = 1.5
+    J = 500
+
+    t0 = 0
+    tN = 5e-3
+    N = 500
+    solution_times = np.array([tN])  # sample only the last point
+    # END PARAMETER INITIALIZATION
+
+    x = np.linspace(x0, xJ, J+1)
+    psi_analytic = get_free_analytic(x, tN, sigma0, k0, a)  # analytic solution
+
+    max_M = 8
+    max_r = 12
+    errors = np.zeros((max_M, max_r))
+    header = "Rows run from M = 1 to {}, Columns run from r = 1 to {}".format(max_M, max_r)
+    for M in range(1, max_M+1, 1):
+        for r in range(1, max_r+1, 1):
+            print("(M, r): ({}, {})".format(M, r))
+            x, t, psi = get_free_solution(r, M, solution_times, sigma0=sigma0, k0=k0, a=a, x0=x0, xJ=xJ, J=J, t0=t0, tN=tN, N=N)
+            errors[M-1][r-1] = get_error(x, psi[:, 0], psi_analytic)
+
+    np.savetxt(data_dir + "free-errors_.csv", errors, delimiter=',', header=header)
+
+
 # -----------------------------------------------------------------------------
 # END SOLUTION GENERATION FUNCTIONS
 # -----------------------------------------------------------------------------
@@ -491,6 +575,343 @@ def test_free_analytic():
 # -----------------------------------------------------------------------------
 # START PLOTTING FUNCTIONS
 # -----------------------------------------------------------------------------
+def remove_spines(ax):
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.get_xaxis().tick_bottom()
+    ax.get_yaxis().tick_left()
+
+
+def plot_qho_one_period():
+    """
+    Plots probability density versus position with time as a parameter.
+    Time curves are mapped to a colormap showing progression of time
+    """
+    # START PARAMETER INITIALIZATION
+    r = 5
+    M = 5
+    w = 0.2  # oscillation frequency
+    T = 2*np.pi/w  # oscillatory period
+    a = 10.0  # initial wavepacket center
+
+    x0, xJ = -40.0, 40.0
+    J = 600
+
+    t0 = 0.0
+    n_periods = 10  # number of periods over which to calculate the solution
+    dt = 0.2*np.pi  # time step for time evolution
+
+    t_solution0 = t0  # time start sampling solutions
+    n_solution_periods = 1  # number of QHO periods to sample the solution for
+    t_solutionN = n_solution_periods * T  # time to stop sampling solutions
+    dt_solution = 0.1*T  # time step for sampling solutions
+    N_solution = int((t_solutionN-t_solution0)//dt_solution)  # number of solution samples to take
+    solution_times = np.linspace(t_solution0, t_solutionN, N_solution+1, endpoint=True)  # times at which to sample solution
+    # END PARAMETER INITIALIZATION
+
+    x, t, psi_solutions = get_qho_solution(r, M, solution_times, w=w, a=a, x0=x0, xJ=xJ, J=J, t0=t0, n_periods=n_periods, dt=dt)
+    psi2_solutions = np.abs(psi_solutions)**2  # probability density
+
+    print(np.shape(x))
+    print(np.shape(psi2_solutions))
+
+    line_segments = LineCollection([np.column_stack([x, psi2]) for psi2 in psi2_solutions.T], cmap="Blues")
+    line_segments.set_array(t/T)
+
+    fig, ax = plt.subplots(figsize=(7, 3.5))
+    remove_spines(ax)
+    ax.set_xlabel("Position $x$")
+    ax.set_ylabel(r"Probability Density |$\psi^2$|")
+    ax.set_title("QHO Probability Density Over One Period $r={}$, $M={}$".format(r, M))
+    ax.add_collection(line_segments)
+    ax.autoscale()  # need to manually call autoscale if using add_collection
+    ax.set_xlim((-20, 20))  # zoom in on wavefunction
+
+    axcb = fig.colorbar(line_segments)
+    axcb.set_label('Time [$T_0$]')
+
+    plt.tight_layout()
+    if save_figures: plt.savefig(figure_dir + "qho-period-{}-{}_.png".format(r, M), dpi=200)
+    plt.show()
+
+
+def plot_qho_end():
+    """
+    Plots probability density versus position after a simulation of 10T
+    for various r and M, together with analytic solution, to compare accuracy of methods
+    """
+    # START PARAMETER INITIALIZATION
+    w = 0.2  # oscillation frequency
+    alpha = w**0.5
+    T = 2*np.pi/w  # oscillatory period
+    a = 10.0  # initial wavepacket center
+
+    x0, xJ = -40.0, 40.0
+    J = 600
+
+    t0 = 0.0
+    n_periods = 10  # number of periods over which to calculate the solution
+    dt = 0.2*np.pi  # time step for time evolution
+
+    solution_times = np.array([n_periods*T])  # sample only the last point
+    # END PARAMETER INITIALIZATION
+
+    fig, ax = plt.subplots(figsize=(7, 3.5))
+    remove_spines(ax)
+    ax.set_xlabel("Position $x$")
+    ax.set_xlim((-20, 20))  # zoom in on wavefunction
+    ax.set_ylabel(r"Probability Density |$\psi^2$|")
+
+    rM_pairs = ((5, 1), (1, 5), (5, 5))
+    colors = ("#f86519", "#1494c0", "#31414d", "#a1b8b6")
+    linestyles = (":", ":", "-")
+    linewidth = (2, 1.5, 1.5)
+
+    for i, rM_pair in enumerate(rM_pairs):
+        r, M = rM_pair
+        x, t, psi = get_qho_solution(r, M, solution_times, w=w, a=a, x0=x0, xJ=xJ, J=J, t0=t0, n_periods=n_periods, dt=dt)
+        psi2 = np.abs(psi[:, 0])**2  # note psi is returned as a one-column matrix with shape (J, 1)
+        plt.plot(x, psi2, c=colors[i], ls=linestyles[i], lw=linewidth[i], label="M={}, r={}".format(M, r))
+
+    x = np.linspace(x0, xJ, J+1)
+    psi = get_qho_analytic(x, 10*T + dt, alpha, a, w)  # analytic solution for comparison
+    psi2 = np.abs(psi)**2
+    plt.plot(x, psi2, marker="o", c=colors[3], label="analytic", zorder=-1)
+
+    ax.set_title("QHO Probability Density at $t=10T_0$")
+    ax.legend()
+
+    plt.tight_layout()
+    if save_figures: plt.savefig(figure_dir + "qho-endpoint-{}T_.png".format(n_periods), dpi=200)
+    plt.show()
+
+
+def plot_qho_error():
+    """ Plots error in QHO approximation as a function of r and M on a 2D grid """
+    errors = np.loadtxt(data_dir + "qho-errors.csv", delimiter=',', skiprows=1)
+    log_err = np.log10(errors)
+    shift = abs(np.min(log_err))
+    log_err += shift
+
+    max_M, max_r = np.shape(errors)  # has M rows and r columns
+    M = range(1, max_M + 1, 1)
+    r = range(1, max_r + 1, 1)
+    M_grid, r_grid = np.meshgrid(M, r)  # create 2D grids for plotting
+
+    fig = plt.figure()
+    ax = fig.gca(projection='3d')
+
+    ax.plot_surface(M_grid, r_grid, log_err.T, cmap="Blues")
+    ax.set_xlabel("Time Order $M$")
+    ax.set_ylabel("Position Order $r$")
+    ax.set_zlabel("Error")
+
+    fig.canvas.draw()
+
+    z_ticks = ax.get_zticks()
+    z_ticks = z_ticks[:-1]  # drop last item
+    z_labels = []
+    for z in z_ticks:
+        z_true = np.power(10, z - shift)
+        string = r"{:.0e}".format(z_true)
+        z_labels.append(string)
+
+    # print(z_ticks)
+    # ax.set_zticks(z_ticks[:-1])
+
+    ax.set_zticks(z_ticks)
+    ax.set_zticklabels(z_labels)
+
+    ax.view_init(20, 60)  # set view angle (elevation angle, azimuth angle)
+
+    plt.suptitle("QHO Error versus $M$ and $r$ at $t = 10T_0$", fontsize=18)
+    plt.subplots_adjust(top=1.06)
+    if save_figures: plt.savefig(figure_dir + "qho-error_.png", dpi=200)
+    plt.show()
+
+
+def plot_free_time():
+    """
+    Plots probability density versus position with time as a parameter.
+    Time curves are mapped to a colormap showing progression of time
+    """
+    # START PARAMETER INITIALIZATION
+    r = 10
+    M = 8
+
+    sigma0 = 0.05
+    k0 = 50*np.pi
+    a = 0.25  # center of the original wavepacket
+
+    x0 = -0.5
+    xJ = 4.5
+    J = 500
+
+    t0 = 0
+    tN = 2e-2
+    N = 500
+    # Some (tN, a_final) pairs  (5e3, 1) (3e3, 0.72) (1e2, 1.82)
+    # Use tN = 2e-2 for xJ = 5.0
+    # END PARAMETER INITIALIZATION
+
+    t_solution0 = t0  # time start sampling solutions
+    t_solutionN = tN  # time to stop sampling solutions
+    N_solution = 10  # number of solution samples to take
+    solution_times = np.linspace(t_solution0, t_solutionN, N_solution+1, endpoint=True)  # times at which to sample solution
+    # END PARAMETER INITIALIZATION
+
+    x, t, psi_solutions = get_free_solution(r, M, solution_times, sigma0=sigma0, k0=k0, a=a, x0=x0, xJ=xJ, J=J, t0=t0, tN=tN, N=N)
+    psi2_solutions = np.abs(psi_solutions)**2  # probability density
+
+    color_light = "#f9b22f"
+    color_dark = "#801f5d"
+    colors = [color_light, color_dark]
+    cm = LinearSegmentedColormap.from_list('custom-cm', colors)
+
+    line_segments = LineCollection([np.column_stack([x, psi2]) for psi2 in psi2_solutions.T], cmap=cm)
+    time_scale = 100
+    line_segments.set_array(time_scale*t)
+
+    fig, ax = plt.subplots(figsize=(7, 3.5))
+    remove_spines(ax)
+    ax.set_xlabel("Position $x$")
+    ax.set_ylabel(r"Probability Density |$\psi^2$|")
+    ax.set_title("Free Wave Packet Probability Density $r={}$, $M={}$".format(r, M))
+    ax.add_collection(line_segments)
+    ax.autoscale()  # need to manually call autoscale if using add_collection
+
+    axcb = fig.colorbar(line_segments)
+    axcb.set_label('Scaled Time')
+
+    plt.tight_layout()
+    if save_figures: plt.savefig(figure_dir + "free-time-{}-{}_.png".format(r, M), dpi=200)
+    plt.show()
+
+
+def plot_free_endpoint():
+    """
+    Plots probability density versus position after a simulation from t = 0 to t = 5e-3
+     for which the wavepacket center travels from 0.25 to about 1.00
+    Plots for various r and M, together with analytic solution, to compare accuracy of methods
+    """
+    # START PARAMETER INITIALIZATION
+    r = 10
+    M = 8
+
+    sigma0 = 0.05
+    k0 = 50*np.pi
+    a = 0.25  # center of the original wavepacket
+
+    x0 = -0.5
+    xJ = 1.5
+    J = 500
+
+    t0 = 0
+    tN = 5e-3
+    N = 500
+    dt = (tN - t0)/N  # time step
+
+    solution_times = np.array([tN])  # sample only the last point
+    # END PARAMETER INITIALIZATION
+
+    fig, ax = plt.subplots(figsize=(7, 3.9))
+    remove_spines(ax)
+    ax.set_xlabel("Position $x$")
+    ax.set_xlim((0.5, 1.5))
+    ax.set_ylabel(r"Probability Density |$\psi^2$|")
+
+    rM_pairs = ((1, 1), (2, 2), (5, 5))
+    orange_dark = "#91331f"
+    colors = (orange_dark, "black", "#31414d", "#CCCCCC")
+    linestyles = ("--", ":", "-")
+    linewidths = (2, 2, 1.5)
+    markers = ("", "1", "")
+
+    x = np.linspace(x0, xJ, J+1)
+    psi_analytic = get_free_analytic(x, tN, sigma0, k0, a)  # analytic solution for comparison
+    psi2_analytic = np.abs(psi_analytic)**2
+    ax.plot(x, psi2_analytic, marker="o", c=colors[3], label="analytic", zorder=-1)
+
+    # Configuring x and y range of zoomed region
+    max_index = np.argmax(psi2_analytic)  # max of analytic solution
+    x_mid = x[max_index]
+    x_window = 0.028
+    xmin, xmax = x_mid - x_window, x_mid + 0.6*x_window
+    y_mid = psi2_analytic[max_index]
+    y_window = 0.085
+    ymin, ymax = y_mid - y_window, y_mid + y_window
+
+    xmin_index = np.argmin(np.abs(x - xmin))
+    xmax_index = np.argmin(np.abs(x - xmax))
+    x_zoomed = x[xmin_index:xmax_index]
+
+    axins = inset_axes(ax, width='33%', height="60%", loc="upper left", bbox_to_anchor=(0, 0, 1, 1), bbox_transform=ax.transAxes)
+    axins.set_xlim(xmin, xmax)
+    axins.set_ylim(ymin, ymax)
+    axins.tick_params(axis='both', which='both', left=False, bottom=False, labelleft=False, labelbottom=False)  # disable ticks on inset axis
+
+    psi2_zoomed = psi2_analytic[xmin_index:xmax_index]
+    axins.plot(x_zoomed, psi2_zoomed, marker="o", c=colors[3], zorder=-1)
+
+    for i, rM_pair in enumerate(rM_pairs):
+        r, M = rM_pair
+        x, t, psi = get_free_solution(r, M, solution_times, sigma0=sigma0, k0=k0, a=a, x0=x0, xJ=xJ, J=J, t0=t0, tN=tN, N=N)
+        psi2 = np.abs(psi[:, 0])**2  # note psi is returned as a one-column matrix with shape (J, 1)
+        ax.plot(x, psi2, c=colors[i], ls=linestyles[i], marker=markers[i], markersize=9, lw=linewidths[i], label="M={}, r={}".format(M, r))
+
+        psi2_zoomed = psi2[xmin_index:xmax_index]
+        axins.plot(x_zoomed, psi2_zoomed, c=colors[i], ls=linestyles[i], marker=markers[i], lw=linewidths[i])
+
+    mark_inset(ax, axins, loc1=2, loc2=4, linewidth=2)
+
+    ax.set_title("Free Wave Packet Probability Density at $t={:.0e}$".format(tN))
+    ax.legend()
+
+    if save_figures: plt.savefig(figure_dir + "free-endpoint_.png", dpi=200)
+    plt.show()
+
+
+def plot_free_error():
+    """ Plots error in QHO approximation as a function of r and M on a 2D grid """
+    errors = np.loadtxt(data_dir + "free-errors.csv", delimiter=',', skiprows=1)
+    log_err = np.log10(errors)
+    shift = abs(np.min(log_err))
+    log_err += shift
+
+    max_M, max_r = np.shape(errors)  # has M rows and r columns
+    M = range(1, max_M + 1, 1)
+    r = range(1, max_r + 1, 1)
+    M_grid, r_grid = np.meshgrid(M, r)  # create 2D grids for plotting
+
+    fig = plt.figure()
+    ax = fig.gca(projection='3d')
+
+    ax.plot_surface(M_grid, r_grid, log_err.T, cmap="Reds")
+    ax.set_xlabel("Time Order $M$")
+    ax.set_ylabel("Position Order $r$")
+    ax.set_zlabel("Error")
+
+    fig.canvas.draw()
+
+    z_ticks = ax.get_zticks()
+    z_ticks = z_ticks[:-1]  # drop last item
+    z_labels = []
+    for z in z_ticks:
+        z_true = np.power(10, z - shift)
+        string = r"{:.0e}".format(z_true)
+        z_labels.append(string)
+
+    ax.set_zticks(z_ticks)
+    ax.set_zticklabels(z_labels)
+
+    ax.view_init(20, 60)  # set view angle (elevation angle, azimuth angle)
+
+    plt.suptitle("Free Wave Packet Error versus $M$ and $r$", fontsize=18)
+    plt.subplots_adjust(top=1.06)
+    if save_figures: plt.savefig(figure_dir + "free-error_.png", dpi=200)
+    plt.show()
+
+
 # -----------------------------------------------------------------------------
 # END PLOTTING FUNCTIONS
 # -----------------------------------------------------------------------------
@@ -507,24 +928,29 @@ def testf(x):
 
 
 def practice():
-    N = 5
-    x = np.arange(0, N, 1)
-    # args = [0, 2]
-    args = []
-    for n in range(N):
-        print(testf(x[n], *args))
-    # x0 = 0
-    # J = 5
-    # dx = 1
-    # x1 = np.arange(x0, x0+(J+1)*dx, dx)
-    # x2 = np.linspace(x0, x0 + (J*dx), J+1)
-    # print(x2)
+    N = 10
+    a = np.zeros((N, 1))
+    b = a[:, 0]
+    print(b)
 
 
 if __name__ == "__main__":
     # practice()
     # test_run()
-    test_qho()
     # test_qho_analytic()
+    # test_qho()
+    # qho_solution_wrapper()
+    # free_solution_wrapper()
+    # test_free_numeric()
     # test_free()
     # try_roots()
+    # generate_qho_errors()
+    # generate_free_errors()
+
+    # plot_qho_one_period()
+    # plot_qho_end()
+    # plot_qho_error()
+
+    plot_free_time()
+    plot_free_endpoint()
+    plot_free_error()
