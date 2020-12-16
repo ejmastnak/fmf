@@ -16,14 +16,14 @@ color_orange_dark = "#91331f"  # dark orange
 color_orange_mid = "#e1692e"  # mid orange
 color_orange_light = "#f5c450"  # light orange
 
-# data_dir = "../5-dft/data/"
-data_dir = "/Users/ejmastnak/Documents/Media/academics/fmf-media-winter-3/mafiprak/fft/"
+data_dir = "../5-dft/data/"
+# data_dir = "/Users/ejmastnak/Documents/Media/academics/fmf-media-winter-3/mafiprak/fft/"
 image_dir = data_dir + "images/"
 data_txt_dir = data_dir + "txt/"
 data_wav_dir = data_dir + "wav/"
 time_dir = "../5-fft/data/times/"
 figure_dir = "../5-fft/figures/"
-save_figures = True
+save_figures = False
 
 f_bubo1 = 380  # fundamental frequency of first owl
 f_bubo2 = 334.5  # fundamental frequency of first owl
@@ -980,9 +980,10 @@ def run():
     # plot_autocor_noisy_signal()
     # plot_crosscor_test()
     # practice()
-    plot_2d_crosscor()
+    # plot_2d_crosscor()
     # plot_probe_spectrum()
     # do_autocor()
+    plot_autcor("mix.wav")
 
     # do_compared_spectra()
     # confirm_cyclic()

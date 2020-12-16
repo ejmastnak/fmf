@@ -652,7 +652,7 @@ def plot_2d_colorbar(x, t, T_grid, cmap='Reds_r', time_scale=1.0, method="Fourie
     axcb.set_label('Scaled Time')
 
     plt.tight_layout()
-    if save_figures: plt.savefig(figure_dir + "2d-{}-{}_.png".format(method.lower(), distribution, dpi=200))
+    if save_figures: plt.savefig(figure_dir + "2d-{}-{}_.png".format(method.lower(), distribution), dpi=200)
     plt.show()
 
 
@@ -687,7 +687,7 @@ def plot_3d_surface(x, t, T_grid, cmap='coolwarm', time_scale=1.0, method="Fouri
     else: plt.suptitle("{} Method, {} IC, {} BC".format(method, get_title_string(distribution), bc), fontsize=18)
     plt.tight_layout()
     plt.subplots_adjust(top=1.01)
-    if save_figures: plt.savefig(figure_dir + "3d-{}-{}_.png".format(method.lower(), distribution, dpi=200))
+    if save_figures: plt.savefig(figure_dir + "3d-{}-{}_.png".format(method.lower(), distribution), dpi=200)
     plt.show()
 
 
@@ -874,7 +874,7 @@ def run():
     # plot_2d_colorbar(*spectral_periodic(initial_distribution=distribution), time_scale=1e2, distribution=distribution, bc="Periodic")
     # plot_2d_colorbar(*collocation_explicit(initial_distribution=distribution), time_scale=1e1, method="Collocation", distribution=distribution)
 
-    # plot_3d_surface(*spectral_homogeneous(initial_distribution=distribution), time_scale=1e2, method='Fourier', distribution=distribution)
+    plot_3d_surface(*spectral_homogeneous(initial_distribution=distribution), time_scale=1e2, method='Fourier', distribution=distribution)
     # plot_3d_surface(*spectral_periodic(initial_distribution=distribution), time_scale=1e0, distribution=distribution, bc="Periodic")
 
     # plot_3d_surface(*collocation_explicit(initial_distribution=distribution), time_scale=1e1, method='Collocation', distribution=distribution)

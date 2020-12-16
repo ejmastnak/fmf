@@ -403,7 +403,7 @@ def practice():
 # create_ems_animation()
 # plot_ems_orbits()
 # plot_em_orbits()
-plot_nodal_precession()
-# create_ems_animation()
+# plot_nodal_precession()
+create_ems_animation()
 # create_em_animation()
 
