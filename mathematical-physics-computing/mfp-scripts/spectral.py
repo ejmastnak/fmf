@@ -21,8 +21,8 @@ color_orange_light = "#f5c450"  # light orange
 
 color_gray_ref = "#AAAAAA"  # light gray for reference quantities
 
-data_dir = "/Users/ejmastnak/Documents/Dropbox/academics/fmf-local/fmf-winter-3/mafiprak/9-spectral/data/"
-figure_dir = "/Users/ejmastnak/Documents/Dropbox/academics/fmf-local/fmf-winter-3/mafiprak/9-spectral/figures/"
+data_dir = "../9-spectral/data/"
+figure_dir = "../9-spectral/figures/"
 
 save_figures = True
 usetex = True  # turn on to use Latex to render text

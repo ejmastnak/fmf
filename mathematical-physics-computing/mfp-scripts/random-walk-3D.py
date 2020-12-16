@@ -1,12 +1,11 @@
 from matplotlib import pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
-from scipy import stats
-from scipy.optimize import curve_fit
 import numpy as np
 
 # Start global constants
-figure_directory = "/Users/ejmastnak/Documents/Dropbox/education/fmf-winter-3/mafiprak/2-random-walk/figures/"
-file_directory = "/Users/ejmastnak/Documents/Dropbox/academics/fmf-winter-3/mafiprak/2-random-walk/data/"
+figure_directory = "../2-random-walks/figures/"
+data_directory = "../2-random-walks/data/"
+
 log_to_console = True      # controls whether to log outputs of series calculations
 save_figures = False      # controls whether to save figures to avoid accidental overwrites
 save_files = True      # controls whether to save figures to avoid accidental overwrites
@@ -135,7 +134,7 @@ def get_levy_walk_history(walk_steps):
         z_list[i] = z
         t_list[i] = t
 
-    if save_files: np.savetxt(file_directory + "walk3d-mu-{:.1f}-steps-{}.txt".format(mu, walk_steps),
+    if save_files: np.savetxt(data_directory + "walk3d-mu-{:.1f}-steps-{}.txt".format(mu, walk_steps),
                               np.column_stack((t_list, x_list, y_list, z_list)),
                               header="t, x, y, z for {}-step 3D Levy walk with mu = {:.1f}".format(walk_steps, mu))
     return x_list, y_list, z_list, t_list, n
@@ -158,7 +157,7 @@ def get_levy_flight_history(flight_steps):
         z_list[i] = z
         t_list[i] = t
 
-    if save_files: np.savetxt(file_directory + "flight3d-mu-{:.1f}-steps-{}.txt".format(mu, flight_steps),
+    if save_files: np.savetxt(data_directory + "flight3d-mu-{:.1f}-steps-{}.txt".format(mu, flight_steps),
                               np.column_stack((t_list, x_list, y_list, z_list)),
                               header="t, x, y, z for {}-step 3D Levy flight with mu = {:.1f}".format(flight_steps, mu))
     return x_list, y_list, z_list, t_list

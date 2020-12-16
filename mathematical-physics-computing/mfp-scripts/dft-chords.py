@@ -7,11 +7,12 @@ f_A4 = 440
 fig_dir = "../4-dft/figures/"
 chord_fig_dir = fig_dir + "chords-{}/".format(f_A4)
 note_fig_dir = fig_dir + "first-note/"
-data_dir = "/Users/ejmastnak/Documents/Media/academics/fmf-media-winter-3/mafiprak/dft/"
+data_dir = "../4-dft/data/"
 save_figures = True
 
 color_signal = "#16697a"
 color_spectrum = "#ff165d"
+
 
 def get_notes_plucked_chord(chord):
     """

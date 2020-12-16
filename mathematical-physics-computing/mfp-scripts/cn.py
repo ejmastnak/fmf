@@ -4,14 +4,11 @@ from matplotlib.collections import LineCollection
 from matplotlib.colors import LinearSegmentedColormap
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 from mpl_toolkits.axes_grid1.inset_locator import mark_inset
-# import matplotlib.animation as animation
-# import time
 
 plt.rcParams['mathtext.fontset'] = 'cm'
 plt.rcParams['font.family'] = 'STIXGeneral'
 plt.rc('axes', labelsize=12)    # fontsize of the x and y labels
-plt.rc('axes', titlesize=16)    # fontsize of the x and y labels
-
+plt.rc('axes', titlesize=16)    # fontsize of titles
 
 color_blue = "#244d90"  # darker teal / blue
 color_teal = "#3997bf"  # lighter teal/blue

@@ -5,7 +5,6 @@ from statistics import mean
 from itertools import groupby
 
 
-
 # Start global constants
 figure_directory = "../3-eigenvalues/figures/"
 data_dir = "../3-eigenvalues/data/"

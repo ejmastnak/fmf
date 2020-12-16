@@ -4,7 +4,7 @@ from matplotlib import pyplot as plt
 import numpy as np
 
 # Start global constants
-figure_directory = "/Users/ejmastnak/Documents/Dropbox/education/fmf-winter-3/mafiprak/1-airy/figures/"
+figure_directory = "../1-airy-functions/figures/"
 log_series = False      # controls whether to log outputs of series calculations
 save_figures = True      # controls whether to save figures to avoid accidental overwrites
 
@@ -38,8 +38,9 @@ marker3 = 's'   # square
 # End global constants
 
 
-
-
+# -----------------------------------------------------------------------------
+# START ANALYSIS FUNCTIONS
+# -----------------------------------------------------------------------------
 def plot_true_airy():
 
     x = np.linspace(x_min, x_max, num_points)
@@ -304,195 +305,14 @@ def my_airybi(x):
     elif x >= power_to_asym_B:     # asymptotic
         xi = 2/3 * math.pow(abs(x), 1.5)
         return L(xi, x) * math.exp(xi) / (math.sqrt(math.pi) * math.pow(x, 0.25))
+# -----------------------------------------------------------------------------
+# END ANALYSIS FUNCTIONS
+# -----------------------------------------------------------------------------
 
 
-def plot_asym_term_optimization():
-    """
-    Plots the absolute (and relative) error of ai and bi as a function of number of terms
-    in the asymptotic expansion for large positive values of x
-    :param x:
-    :return:
-    """
-
-    max_terms = max_iterations_asym
-    term_range = range(1, max_terms)
-    fig, ax = plt.subplots(figsize=(8, 5))
-
-    counter = 1     # counts loop interations to control which marker to use. Probably there's a better way...
-    marker = marker1
-    for x in [5, 7, 9]:
-        xi = 2 / 3 * math.pow(abs(x), 1.5)
-        mp_bi = mpmath.airybi(x)
-
-        abs_errors_bi = []
-        rel_errors_bi = []
-
-        for i in term_range:
-            next_term = 1  # Next term in the series. Initial value is 1 at first iteration
-            current_sum = 1  # cumulative sum. Initial value is 1 at first iteration
-
-            for n in range(1, i):
-                next_term *= (6 * n - 1) * (6 * n - 3) * (6 * n - 5) / (216 * n * (2 * n - 1) * xi)
-                current_sum += next_term
-
-            my_bi = current_sum * math.exp(xi) / (math.sqrt(math.pi) * math.pow(x, 0.25))
-
-            abs_errors_bi.append(abs(mp_bi - my_bi))
-            rel_errors_bi.append(abs(mp_bi - my_bi) / abs(mp_bi))
-
-        plt.subplot(211)
-
-        if counter == 1: marker = marker1
-        elif counter == 2: marker = marker2
-        elif counter == 3: marker = marker3
-        else: marker = '.' # use a dot as default
-
-        plt.ylabel("Absolute Error")
-        plt.yscale("log")
-        plt.plot(term_range, abs_errors_bi, linestyle='--', marker=marker, label="Bi({:.2f})".format(x))
-        plt.legend()
-
-        plt.subplot(212)
-        plt.ylabel("Relative Error")
-        plt.xlabel("Terms in asymptotic expansion")
-        plt.yscale("log")
-        plt.plot(term_range, rel_errors_bi, linestyle='--', marker=marker, label="Bi({:.2f})".format(x))
-        plt.legend()
-
-        counter += 1
-
-    plt.tight_layout()
-    if save_figures: plt.savefig(figure_directory + "asymptotic-term-optimization1.png", dpi=250)
-    plt.show()
-
-
-def get_A_mp():
-    return 1/(mpmath.power(3, mpmath.fdiv(2,3)) * mpmath.gamma(mpmath.fdiv(2, 3)))
-
-def get_B_mp():
-    return -1/(mpmath.power(3, mpmath.fdiv(1,3)) * mpmath.gamma(mpmath.fdiv(1,3)))    # B = -ai'(0), used in Maclaurin series
-
-def get_A_sys():
-    return 1/(math.pow(3, 2/3) * math.gamma(2/3))
-
-def get_B_sys():
-    return -1/(math.pow(3, 1/3) * math.gamma(1/3))
-
-
-def test_A_and_B_precision():
-    """
-    Compares system (finite precision) and mpmath (arbitrary precision) values
-    of the coefficiens A and B from the Maclaurin series for ai and bi
-    :return:
-    """
-    print("System A: {:.18f}".format(1/(math.pow(3, 2/3) * math.gamma(2/3))))
-    print("mpmath A: " + mpmath.nstr(1/(mpmath.power(3, mpmath.fdiv(2,3)) * mpmath.gamma(mpmath.fdiv(2, 3))), mpmath.mp.dps))
-
-    print("System B: {:.18f}".format(-1/(math.pow(3, 1/3) * math.gamma(1/3))))
-    print("mpmath B: " + mpmath.nstr(-1/(mpmath.power(3, mpmath.fdiv(1,3)) * mpmath.gamma(mpmath.fdiv(1,3))), mpmath.mp.dps))
-
-
-def plot_my_airy(X, my_ai, my_bi):
-
-    plt.xlabel("x")
-    plt.plot(X, my_ai, label="My ai(x)")
-    plt.plot(X, my_bi, label="My bi(x)")
-
-    plt.legend()
-    plt.show()
-
-
-def plot_error_both(X, my_ai, my_bi, mp_ai, mp_bi):
-    """
-    Plots both absolute and relative error of my Airy implementation
-    with respect to the arbitrary precision Airy function in the mpmath package
-
-    :param X
-    :param my_ai:
-    :param my_bi:
-    :param mp_ai:
-    :param mp_bi:
-    :return:
-    """
-
-    ai_abs_error = []
-    bi_abs_error = []
-
-    for i in range(num_points):
-        # Calculate abs error of my implementation with respect to mpmath.airy
-        ai_abs_error.append(abs(my_ai[i] - mp_ai[i]))
-        bi_abs_error.append(abs(my_bi[i] - mp_bi[i]))
-
-    ai_rel_error = []
-    bi_rel_error = []
-
-    for i in range(num_points):
-        # Calculate rel error of my implementation with respect to mpmath.airy
-        ai_rel_error.append(abs((my_ai[i] - mp_ai[i])/mp_ai[i]))
-        bi_rel_error.append(abs((my_bi[i] - mp_bi[i])/mp_bi[i]))
-
-    fig, ax = plt.subplots(figsize=(10, 7))
-
-    plt.subplot(211)
-    plt.ylabel("Absolute Error")
-    plt.yscale("log")
-    plt.plot(X, ai_abs_error, color=ai_color, label="Ai(x) absolute error")
-    plt.plot(X, bi_abs_error, color=bi_color, label="Bi(x) absolute error")
-    plt.grid()
-    plt.tight_layout()
-    plt.legend()
-
-    plt.subplot(212) # relative error
-    plt.xlabel("x")
-    plt.ylabel("Relative Error")
-    plt.yscale("log")
-    plt.plot(X, ai_rel_error, color=ai_color, label="Ai(x) relative error")
-    plt.plot(X, bi_rel_error, color=bi_color, label="Bi(x) relative error")
-    plt.legend()
-    plt.tight_layout()
-    plt.grid()
-
-    if save_figures: plt.savefig(figure_directory + "rel-abs-errors1.png", dpi=250)
-    plt.show()
-
-
-def plot_compared_airys(X, my_ai, my_bi):
-    """
-    Plots a comparison of the graphs of my Airy implementation and the arbitrary precision Airy function
-    in the mpmath package
-
-    :param X
-    :param my_ai:
-    :param my_bi:
-    :return:
-    """
-
-    mp_X = np.linspace(x_min, x_max, num_points) # 10 times for points than my implementation for better resolution
-    mp_ai = []
-    mp_bi = []
-
-    for i in range(len(mp_X)):
-        mp_ai.append(mpmath.airyai(mp_X[i]))
-        mp_bi.append(mpmath.airybi(mp_X[i]))
-
-
-    ai_color = "#100975"  # override global value
-    bi_color = "#379ec3"  # override global value
-
-    plt.figure(figsize=(7.5, 4))
-    plt.ylabel("Ai(x) and Bi(x)")
-    plt.xlabel("x")
-    plt.plot(X, my_ai, color=ai_color, label="my Ai(x) implementation", zorder=2)
-    plt.plot(X, my_bi, color=bi_color, label="my Bi(x) implementation", zorder=1)
-    plt.plot(mp_X, mp_ai, linestyle='none', marker='o', color=light_color1, markersize=6, label="mpmath.airyai", zorder=0)
-    plt.plot(mp_X, mp_bi, linestyle='none', marker='s', color=light_color2, markersize=6, label="mpmath.airybi", zorder=0)
-    plt.legend()
-    plt.tight_layout()
-    plt.grid()
-    if save_figures: plt.savefig(figure_directory + "Ai-Bi-graphs1.png", dpi=250)
-    plt.show()
-
-
+# -----------------------------------------------------------------------------
+# START ZERO FUNCTIONS
+# -----------------------------------------------------------------------------
 def asym_airyaizero(n):
     """
     Returns the kth zero of ai calculated using the asymptotic series in the assignment instructions
@@ -617,6 +437,208 @@ def bisection(f, a, b, eps):
         if counter > max_iterations: break
 
     return a + (b - a)/2
+# -----------------------------------------------------------------------------
+# END ZERO FUNCTIONS
+# -----------------------------------------------------------------------------
+
+
+# -----------------------------------------------------------------------------
+# START COEFFICIENT A AND B PRECISION TESTING
+# -----------------------------------------------------------------------------
+def get_A_mp():
+    return 1/(mpmath.power(3, mpmath.fdiv(2,3)) * mpmath.gamma(mpmath.fdiv(2, 3)))
+
+
+def get_B_mp():
+    return -1/(mpmath.power(3, mpmath.fdiv(1,3)) * mpmath.gamma(mpmath.fdiv(1,3)))    # B = -ai'(0), used in Maclaurin series
+
+
+def get_A_sys():
+    return 1/(math.pow(3, 2/3) * math.gamma(2/3))
+
+
+def get_B_sys():
+    return -1/(math.pow(3, 1/3) * math.gamma(1/3))
+
+
+def test_A_and_B_precision():
+    """
+    Compares system (finite precision) and mpmath (arbitrary precision) values
+    of the coefficiens A and B from the Maclaurin series for ai and bi
+    :return:
+    """
+    print("System A: {:.18f}".format(1/(math.pow(3, 2/3) * math.gamma(2/3))))
+    print("mpmath A: " + mpmath.nstr(1/(mpmath.power(3, mpmath.fdiv(2,3)) * mpmath.gamma(mpmath.fdiv(2, 3))), mpmath.mp.dps))
+
+    print("System B: {:.18f}".format(-1/(math.pow(3, 1/3) * math.gamma(1/3))))
+    print("mpmath B: " + mpmath.nstr(-1/(mpmath.power(3, mpmath.fdiv(1,3)) * mpmath.gamma(mpmath.fdiv(1,3))), mpmath.mp.dps))
+# -----------------------------------------------------------------------------
+# END COEFFICIENT A AND B PRECISION TESTING
+# -----------------------------------------------------------------------------
+
+
+# -----------------------------------------------------------------------------
+# START PLOTTING FUNCTIONS
+# -----------------------------------------------------------------------------
+def plot_asym_term_optimization():
+    """
+    Plots the absolute (and relative) error of ai and bi as a function of number of terms
+    in the asymptotic expansion for large positive values of x
+    :param x:
+    :return:
+    """
+
+    max_terms = max_iterations_asym
+    term_range = range(1, max_terms)
+    fig, ax = plt.subplots(figsize=(8, 5))
+
+    counter = 1     # counts loop interations to control which marker to use. Probably there's a better way...
+    marker = marker1
+    for x in [5, 7, 9]:
+        xi = 2 / 3 * math.pow(abs(x), 1.5)
+        mp_bi = mpmath.airybi(x)
+
+        abs_errors_bi = []
+        rel_errors_bi = []
+
+        for i in term_range:
+            next_term = 1  # Next term in the series. Initial value is 1 at first iteration
+            current_sum = 1  # cumulative sum. Initial value is 1 at first iteration
+
+            for n in range(1, i):
+                next_term *= (6 * n - 1) * (6 * n - 3) * (6 * n - 5) / (216 * n * (2 * n - 1) * xi)
+                current_sum += next_term
+
+            my_bi = current_sum * math.exp(xi) / (math.sqrt(math.pi) * math.pow(x, 0.25))
+
+            abs_errors_bi.append(abs(mp_bi - my_bi))
+            rel_errors_bi.append(abs(mp_bi - my_bi) / abs(mp_bi))
+
+        plt.subplot(211)
+
+        if counter == 1: marker = marker1
+        elif counter == 2: marker = marker2
+        elif counter == 3: marker = marker3
+        else: marker = '.' # use a dot as default
+
+        plt.ylabel("Absolute Error")
+        plt.yscale("log")
+        plt.plot(term_range, abs_errors_bi, linestyle='--', marker=marker, label="Bi({:.2f})".format(x))
+        plt.legend()
+
+        plt.subplot(212)
+        plt.ylabel("Relative Error")
+        plt.xlabel("Terms in asymptotic expansion")
+        plt.yscale("log")
+        plt.plot(term_range, rel_errors_bi, linestyle='--', marker=marker, label="Bi({:.2f})".format(x))
+        plt.legend()
+
+        counter += 1
+
+    plt.tight_layout()
+    if save_figures: plt.savefig(figure_directory + "asymptotic-term-optimization1.png", dpi=250)
+    plt.show()
+
+
+def plot_my_airy(X, my_ai, my_bi):
+
+    plt.xlabel("x")
+    plt.plot(X, my_ai, label="My ai(x)")
+    plt.plot(X, my_bi, label="My bi(x)")
+
+    plt.legend()
+    plt.show()
+
+
+def plot_error_both(X, my_ai, my_bi, mp_ai, mp_bi):
+    """
+    Plots both absolute and relative error of my Airy implementation
+    with respect to the arbitrary precision Airy function in the mpmath package
+
+    :param X
+    :param my_ai:
+    :param my_bi:
+    :param mp_ai:
+    :param mp_bi:
+    :return:
+    """
+
+    ai_abs_error = []
+    bi_abs_error = []
+
+    for i in range(num_points):
+        # Calculate abs error of my implementation with respect to mpmath.airy
+        ai_abs_error.append(abs(my_ai[i] - mp_ai[i]))
+        bi_abs_error.append(abs(my_bi[i] - mp_bi[i]))
+
+    ai_rel_error = []
+    bi_rel_error = []
+
+    for i in range(num_points):
+        # Calculate rel error of my implementation with respect to mpmath.airy
+        ai_rel_error.append(abs((my_ai[i] - mp_ai[i])/mp_ai[i]))
+        bi_rel_error.append(abs((my_bi[i] - mp_bi[i])/mp_bi[i]))
+
+    fig, ax = plt.subplots(figsize=(10, 7))
+
+    plt.subplot(211)
+    plt.ylabel("Absolute Error")
+    plt.yscale("log")
+    plt.plot(X, ai_abs_error, color=ai_color, label="Ai(x) absolute error")
+    plt.plot(X, bi_abs_error, color=bi_color, label="Bi(x) absolute error")
+    plt.grid()
+    plt.tight_layout()
+    plt.legend()
+
+    plt.subplot(212) # relative error
+    plt.xlabel("x")
+    plt.ylabel("Relative Error")
+    plt.yscale("log")
+    plt.plot(X, ai_rel_error, color=ai_color, label="Ai(x) relative error")
+    plt.plot(X, bi_rel_error, color=bi_color, label="Bi(x) relative error")
+    plt.legend()
+    plt.tight_layout()
+    plt.grid()
+
+    if save_figures: plt.savefig(figure_directory + "rel-abs-errors1.png", dpi=250)
+    plt.show()
+
+
+def plot_compared_airys(X, my_ai, my_bi):
+    """
+    Plots a comparison of the graphs of my Airy implementation and the arbitrary precision Airy function
+    in the mpmath package
+
+    :param X
+    :param my_ai:
+    :param my_bi:
+    :return:
+    """
+
+    mp_X = np.linspace(x_min, x_max, num_points) # 10 times for points than my implementation for better resolution
+    mp_ai = []
+    mp_bi = []
+
+    for i in range(len(mp_X)):
+        mp_ai.append(mpmath.airyai(mp_X[i]))
+        mp_bi.append(mpmath.airybi(mp_X[i]))
+
+
+    ai_color = "#100975"  # override global value
+    bi_color = "#379ec3"  # override global value
+
+    plt.figure(figsize=(7.5, 4))
+    plt.ylabel("Ai(x) and Bi(x)")
+    plt.xlabel("x")
+    plt.plot(X, my_ai, color=ai_color, label="my Ai(x) implementation", zorder=2)
+    plt.plot(X, my_bi, color=bi_color, label="my Bi(x) implementation", zorder=1)
+    plt.plot(mp_X, mp_ai, linestyle='none', marker='o', color=light_color1, markersize=6, label="mpmath.airyai", zorder=0)
+    plt.plot(mp_X, mp_bi, linestyle='none', marker='s', color=light_color2, markersize=6, label="mpmath.airybi", zorder=0)
+    plt.legend()
+    plt.tight_layout()
+    plt.grid()
+    if save_figures: plt.savefig(figure_directory + "Ai-Bi-graphs1.png", dpi=250)
+    plt.show()
 
 
 def plot_airy_zeros(max_zeros):
@@ -861,9 +883,12 @@ def plot_zero_opt():
 
     plt.tight_layout()
     plt.show()
+# -----------------------------------------------------------------------------
+# END PLOTTING FUNCTIONS
+# -----------------------------------------------------------------------------
 
 
-def run():
+if __name__ == "__main__":
     X = np.linspace(x_min, x_max, num_points)
     my_ai = []
     my_bi = []
@@ -881,15 +906,14 @@ def run():
     # plot_error_both(X, my_ai, my_bi, mp_ai, mp_bi)
     plot_compared_airys(X, my_ai, my_bi)
 
+    # run_zeros()
+    # plot_asym_opt()
+    # test_A_and_B_precision()
+    # print(mpmath.mp)
+
 
 def run_zeros():
     max_zeros = 100
     # plot_airy_zeros(max_zeros)
     plot_airy_zero_error(max_zeros)
     # plot_zero_opt()
-
-# run()
-run_zeros()
-# plot_asym_opt()
-# test_A_and_B_precision()
-# print(mpmath.mp)

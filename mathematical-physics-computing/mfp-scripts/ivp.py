@@ -19,7 +19,7 @@ color_orange_light = "#f5c450"  # light orange
 color_gray_ref = "#AAAAAA"  # light gray for reference quantities
 
 # data_dir = "data/"
-data_dir = "/Users/ejmastnak/Documents/Media/academics/fmf-media-winter-3/mafiprak/ivp/"
+data_dir = "../6-initial-value-problem/data/"
 error_dir = data_dir + "error-step/"
 time_dir = data_dir + "times/"
 step_global_error_dir = data_dir + "stepsize-vs-global-error/"

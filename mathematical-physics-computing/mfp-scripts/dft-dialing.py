@@ -10,6 +10,7 @@ tones_low = np.array([697, 770, 852, 941])
 tones_high = np.array([1209, 1336, 1477, 1633])
 characters = ("1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "*", "#")
 
+
 def get_char_tones(character):
     """
     Maps keypad characters to their tones
@@ -229,7 +230,6 @@ def run():
     play_np_array(signal, fs)
 
     # print(time.time() - t)
-
 
 
 # play_sound_test(*get_samples())  # the asterisk * unpacks the output of get_samples into signal, fs

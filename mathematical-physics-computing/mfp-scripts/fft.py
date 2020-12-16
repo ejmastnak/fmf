@@ -16,8 +16,7 @@ color_orange_dark = "#91331f"  # dark orange
 color_orange_mid = "#e1692e"  # mid orange
 color_orange_light = "#f5c450"  # light orange
 
-data_dir = "../5-dft/data/"
-# data_dir = "/Users/ejmastnak/Documents/Media/academics/fmf-media-winter-3/mafiprak/fft/"
+data_dir = "../5-fft-correlation/data/"
 image_dir = data_dir + "images/"
 data_txt_dir = data_dir + "txt/"
 data_wav_dir = data_dir + "wav/"
@@ -28,8 +27,8 @@ save_figures = False
 f_bubo1 = 380  # fundamental frequency of first owl
 f_bubo2 = 334.5  # fundamental frequency of first owl
 
-# START CORRELATION FUNCTIONS
 
+# START CORRELATION FUNCTIONS
 def autocov_sum_biased(signal):
     """
     Direct implementation of basic 1D autocovariance using the sum definition

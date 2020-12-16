@@ -17,8 +17,8 @@ color_orange_light = "#f5c450"  # light orange
 
 color_gray_ref = "#AAAAAA"  # light gray for reference quantities
 
-data_dir = "/Users/ejmastnak/Documents/Dropbox/academics/fmf-local/fmf-winter-3/mafiprak/8-boundary-value-problem/data/"
-figure_dir = "/Users/ejmastnak/Documents/Dropbox/academics/fmf-local/fmf-winter-3/mafiprak/8-boundary-value-problem/figures/"
+data_dir = "../8-boundary-value-problem/data/"
+figure_dir = "../8-boundary-value-problem/figures/"
 
 error_dir = data_dir + "error-step/"
 time_dir = data_dir + "times/"

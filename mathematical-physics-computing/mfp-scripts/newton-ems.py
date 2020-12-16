@@ -29,7 +29,7 @@ blue_cmap = LinearSegmentedColormap.from_list("blues", [blue_light, blue_dark], 
 gray_light, gray_dark = "#BBBBBB", "#333333"
 gray_cmap = LinearSegmentedColormap.from_list("grays", [gray_light, gray_dark], N=100)
 
-figure_dir = "/Users/ejmastnak/Documents/Dropbox/academics/fmf-local/fmf-winter-3/mafiprak/7-newton/figures/"
+figure_dir = "../7-newton/figures/"
 save_figures = True
 # -----------------------------------------------------------------------------
 # END GLOBAL CONSTANTS AND PARAMETERS

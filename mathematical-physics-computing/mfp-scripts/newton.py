@@ -21,12 +21,11 @@ color_orange_light = "#f5c450"  # light orange
 
 color_gray_ref = "#AAAAAA"  # light gray for reference quantities
 
-# data_dir = "data/"
-data_dir = "/Users/ejmastnak/Documents/Media/academics/fmf-media-winter-3/mafiprak/newton/"
+data_dir = "../7-newton/data/"
 solutions_dir = data_dir + "solutions/"
 error_dir = data_dir + "errors/"
 resonance_dir = data_dir + "resonance/"
-figure_dir = "/Users/ejmastnak/Documents/Dropbox/academics/fmf-local/fmf-winter-3/mafiprak/7-newton/figures/"
+figure_dir = "../7-newton/figures/"
 
 save_figures = True
 

@@ -8,6 +8,7 @@ color_above = "#f86519"  # orange
 color_below = "#1494c0"  # blue
 color_V = "#888888"  # grey
 
+
 def get_norm(n):  # normalization constant of nth wavefunction
     return 1. / np.sqrt(np.sqrt(np.pi) * 2 ** n * factorial(n))
 

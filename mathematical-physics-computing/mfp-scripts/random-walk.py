@@ -6,8 +6,8 @@ import numpy as np
 import os
 
 # Start global constants
-figure_directory = "/Users/ejmastnak/Documents/Dropbox/academics/fmf-winter-3/mafiprak/2-random-walk/figures/"
-file_directory = "/Users/ejmastnak/Documents/Dropbox/academics/fmf-winter-3/mafiprak/2-random-walk/data/"
+figure_directory = "../2-random-walks/figures/"
+data_directory = "../2-random-walks/data/"
 
 log_to_console = False      # controls whether to log outputs of series calculations
 save_figures = True      # controls whether to save figures to avoid accidental overwrites
@@ -216,7 +216,7 @@ def get_levy_walk_history_step_input(walk_steps):
         t_list[i] = t
 
     if save_files:
-        np.savetxt(file_directory + "walk-mu-{:.1f}-steps-{}.txt".format(mu, walk_steps),
+        np.savetxt(data_directory + "walk-mu-{:.1f}-steps-{}.txt".format(mu, walk_steps),
                    np.column_stack((t_list, x_list, y_list)),
                    header="t, x, y for {}-step Levy walk with mu = {:.1f}".format(walk_steps, mu))
 
@@ -242,7 +242,7 @@ def get_levy_flight_history(flight_time):
         t_list[i] = t
         i += 1
 
-    if save_files: np.savetxt(file_directory + "flight-mu-{:.1f}-steps-{}.txt".format(mu, flight_steps),
+    if save_files: np.savetxt(data_directory + "flight-mu-{:.1f}-steps-{}.txt".format(mu, flight_steps),
                               np.column_stack((t_list, x_list, y_list)),
                               header="t, x, y for {}-step Levy flight with mu = {:.1f}".format(flight_steps, mu))
 
@@ -345,7 +345,7 @@ def get_walk_simulation(n_walks, walk_time):
     print("Mu: {:.2f}\t Walk time{:2e}\t Steps: {}".format(mu, walk_time, n_median))
 
     if save_files:
-        np.savetxt(file_directory + "walk-MADr-mu-{:.1f}.txt".format(mu), np.column_stack((t_median, r_mad)), header="Time, MAD(r) for {} flights; {} steps per flight; seed: {}; mu: {:.2f}".format(n_walks, n_median, random_seed, mu))
+        np.savetxt(data_directory + "walk-MADr-mu-{:.1f}.txt".format(mu), np.column_stack((t_median, r_mad)), header="Time, MAD(r) for {} flights; {} steps per flight; seed: {}; mu: {:.2f}".format(n_walks, n_median, random_seed, mu))
 
     return t_median, r_mad
 
@@ -377,7 +377,7 @@ def get_flight_simulation(n_walks, flight_time):
     r_mad = stats.median_abs_deviation(r_matrix, axis=1)  # takes MAD of each row, i.e. MAD of r at a fixed time t
 
     if save_files:
-        np.savetxt(file_directory + "flight-MADr-mu-{:.1f}.txt".format(mu), np.column_stack((t, r_mad)), header="Time, MAD(r) for {} flights; {} steps per flight; seed: {}; mu: {:.2f}".format(n_walks, flight_steps, random_seed, mu))
+        np.savetxt(data_directory + "flight-MADr-mu-{:.1f}.txt".format(mu), np.column_stack((t, r_mad)), header="Time, MAD(r) for {} flights; {} steps per flight; seed: {}; mu: {:.2f}".format(n_walks, flight_steps, random_seed, mu))
     return t, r_mad
 
 
@@ -404,10 +404,10 @@ def generate_flight_error_samples(n_samples, n_walks, flight_time):
 
         r_mad = stats.median_abs_deviation(r_matrix, axis=1)  # takes MAD of each row, i.e. MAD of r at a fixed time t
         mad_log = 2 * np.log(r_mad)  # the quantity that's actually plotted to determine gamma parameter
-        np.savetxt(file_directory + "flight-error-mu-{:.2f}-sample-{}.txt".format(mu, i+1), mad_log.T, header="2*np.log[MAD(r)] for {} flights; {} steps per flight; run {} of {}; mu: {:.2f}; seed: {}".format(n_walks, flight_steps, i+1, n_samples, mu, i))
+        np.savetxt(data_directory + "flight-error-mu-{:.2f}-sample-{}.txt".format(mu, i + 1), mad_log.T, header="2*np.log[MAD(r)] for {} flights; {} steps per flight; run {} of {}; mu: {:.2f}; seed: {}".format(n_walks, flight_steps, i + 1, n_samples, mu, i))
 
     _, _, _, t = get_levy_flight_history(flight_time)  # list of x, y, r, time for each walk. Only r is used
-    np.savetxt(file_directory + "flight-error-mu-{:.2f}-times.txt".format(mu), np.log(t).T, header="Logarithm of times for {} flights; {} steps per flight; {} samples; mu: {:.2f}".format(n_walks, flight_steps, n_samples, mu))
+    np.savetxt(data_directory + "flight-error-mu-{:.2f}-times.txt".format(mu), np.log(t).T, header="Logarithm of times for {} flights; {} steps per flight; {} samples; mu: {:.2f}".format(n_walks, flight_steps, n_samples, mu))
 
 
 def calc_flight_MAD_error():
@@ -422,7 +422,7 @@ def calc_flight_MAD_error():
 
     for local_mu in (1.5, 2.0, 2.2, 2.5, 3.0, 3.5):
         i = 0
-        local_file_directory = file_directory + "flight-mu-{:.1f}/".format(local_mu)
+        local_file_directory = data_directory + "flight-mu-{:.1f}/".format(local_mu)
         for filename in sorted(os.listdir(local_file_directory)):
             if "sample" in filename:
                 this_mad_r = np.loadtxt(local_file_directory + filename)
@@ -433,14 +433,14 @@ def calc_flight_MAD_error():
 
         mad_r_std = np.std(mad_r_matrix, axis=1)  # takes std of MAD at each row, i.e. std of MAD at a fixed time t
 
-        np.savetxt(file_directory + "flight-std/flight-std-mu-{:.2f}.txt".format(local_mu), mad_r_std.T, header="Standard deviation of 2*ln[MAD(r)] for mu value of {:.2f}".format(mu))
+        np.savetxt(data_directory + "flight-std/flight-std-mu-{:.2f}.txt".format(local_mu), mad_r_std.T, header="Standard deviation of 2*ln[MAD(r)] for mu value of {:.2f}".format(mu))
 
 
 def plot_flight_error_samples():
     plt.xlabel("$\ln(t)$")
     plt.ylabel("Standard Deviation of $2\ln[$MAD$(r)]$")
 
-    local_file_directory = file_directory + "flight-std/"
+    local_file_directory = data_directory + "flight-std/"
 
     t = np.loadtxt(local_file_directory+"flight-times.txt")
 
@@ -500,7 +500,7 @@ def generate_2dflight_graphs():
     Color changes from light to dark with increasing time
     :return:
     """
-    local_file_directory = file_directory + "flight-graph-data-2d/"
+    local_file_directory = data_directory + "flight-graph-data-2d/"
     titles = ("Levy Flight Ballistic Diffusion: $\mu=2$", "Levy Flight Super-Diffusion: $\mu=2.5$", "Levy Flight Normal Diffusion: $\mu=3.5$" )
     title_counter = 0
     for local_mu in (2.0, 2.5, 3.5):
@@ -543,7 +543,7 @@ def generate_3dflight_graphs():
     Color changes from light to dark with increasing time
     :return:
     """
-    local_file_directory = file_directory + "flight-graph-data-3d/"
+    local_file_directory = data_directory + "flight-graph-data-3d/"
 
     title_counter = 0
     titles = ("Levy Flight Ballistic Diffusion: $\mu=2$", "Levy Flight Super-Diffusion: $\mu=2.5$", "Levy Flight Normal Diffusion: $\mu=3.5$" )
@@ -582,7 +582,7 @@ def generate_2dwalk_graphs():
     Color changes from light to dark with increasing time
     :return:
     """
-    local_file_directory = file_directory + "walk-graph-data-2d/"
+    local_file_directory = data_directory + "walk-graph-data-2d/"
     title_counter = 0
     titles = ("Levy Walk Ballistic Diffusion: $\mu=1.5$", "Levy Walk Super-Diffusion: $\mu=2.5$", "Levy Walk Normal Diffusion: $\mu=3.5$" )
     for local_mu in (1.5, 2.5, 3.5):
@@ -623,7 +623,7 @@ def generate_3dwalk_graphs():
     Color changes from light to dark with increasing time
     :return:
     """
-    local_file_directory = file_directory + "walk-graph-data-3d/"
+    local_file_directory = data_directory + "walk-graph-data-3d/"
 
     title_counter = 0
     titles = ("Levy Walk Ballistic Diffusion: $\mu=1.5$", "Levy Walk Super-Diffusion: $\mu=2.5$", "Levy Walk Normal Diffusion: $\mu=3.5$" )
@@ -664,7 +664,7 @@ def plot_walk_simulation():
     """
     local_mu = mu
 
-    local_file_directory = file_directory + "walk-data/"
+    local_file_directory = data_directory + "walk-data/"
     filename = "walk-MADr-mu-{:.1f}.txt".format(local_mu)
     # data = np.loadtxt(local_file_directory + filename)
     # t, r_mad = data[:, 0], data[:, 1]  # unpack time and MADr
@@ -702,13 +702,13 @@ def plot_flight_simulation():
     """
     # t, r_mad = get_flight_simulation(N_walks, flight_time)
 
-    data = np.loadtxt(file_directory + "flight-data/flight-MADr-mu-{:.1f}.txt".format(mu))
+    data = np.loadtxt(data_directory + "flight-data/flight-MADr-mu-{:.1f}.txt".format(mu))
     t, mad_r = data[:, 0], data[:, 1]  # unpack time and MADr
     t_log = np.log(t)
     mad_log = 2*np.log(mad_r)
 
     # scale error by sqrt(N), noting error was performed with N_walks = 100
-    errors = np.loadtxt(file_directory + "flight-std/flight-std-mu-{:.2f}.txt".format(mu), skiprows=1) / (np.sqrt(N_walks/100))
+    errors = np.loadtxt(data_directory + "flight-std/flight-std-mu-{:.2f}.txt".format(mu), skiprows=1) / (np.sqrt(N_walks / 100))
     guess = (mu, -25)  # guess for slope and y intercept
     opt, cov = curve_fit(linear_model_int_cf, t_log, mad_log, guess, sigma=errors, absolute_sigma=True)
     gamma_fit, b = opt  # unpack slope and y intercept
@@ -730,7 +730,7 @@ def plot_flight_simulation():
 
 
 def generate_flight_fits():
-    local_file_directory = file_directory + "flight-data/"
+    local_file_directory = data_directory + "flight-data/"
     N_walks = 10000
 
     fig = plt.figure(figsize=(7, 4))
@@ -747,7 +747,7 @@ def generate_flight_fits():
 
 
             # scale error by sqrt(10000/100) = 10, noting error was performed with N_walks = 100
-            errors = np.loadtxt(file_directory + "flight-std/flight-std-mu-{:.2f}.txt".format(mu), skiprows=1)
+            errors = np.loadtxt(data_directory + "flight-std/flight-std-mu-{:.2f}.txt".format(mu), skiprows=1)
             guess = (mu, -25)  # guess for slope and y intercept
             opt, cov = curve_fit(linear_model_int_cf, t_log, mad_log, guess, sigma=errors, absolute_sigma=True)
             gamma_fit, b = opt  # unpack slope and y intercept
@@ -775,7 +775,7 @@ def generate_flight_fits():
 
 
 def generate_walk_fits():
-    local_file_directory = file_directory + "walk-data/"
+    local_file_directory = data_directory + "walk-data/"
 
     fig = plt.figure(figsize=(7, 4))
 
@@ -794,7 +794,7 @@ def generate_walk_fits():
             mad_log -= 20 + mu + mad_log[0]  # shift mad to roughly same positions
 
             # scale error by sqrt(10000/100) = 10, noting error was performed with N_walks = 100
-            errors = np.loadtxt(file_directory + "flight-std/flight-std-mu-{:.2f}.txt".format(mu), skiprows=1)/10
+            errors = np.loadtxt(data_directory + "flight-std/flight-std-mu-{:.2f}.txt".format(mu), skiprows=1) / 10
             guess = (mu, -25)  # guess for slope and y intercept
             opt, cov = curve_fit(linear_model_int_cf, t_log, mad_log, guess, sigma=0.08*mad_log, absolute_sigma=True)
             gamma_fit, b = opt  # unpack slope and y intercept
