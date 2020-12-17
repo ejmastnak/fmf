@@ -1,0 +1,477 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{mwe}
+\usepackage[margin=3.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bm} % for bold vectors in math mode
+\usepackage{physics} % many useful physics commands
+\usepackage[separate-uncertainty=true]{siunitx} % for scientific notation and units
+
+\usepackage{graphicx}
+\graphicspath{{"../figures/"}}
+\usepackage[section]{placeins} % to keep figures in their sections
+\usepackage[export]{adjustbox} % for subcaptionbox figures
+\usepackage{subcaption}  % for figures with subcaptions
+
+\usepackage[most, minted]{tcolorbox} % for displaying code
+
+\usepackage{xcolor}  % to color hyperref links
+\usepackage[colorlinks = true, allcolors=blue]{hyperref}
+
+\setlength{\parindent}{0pt} % to stop indenting new paragraphs
+\newcommand{\diff}{\mathop{}\!\mathrm{d}} % differential
+\newcommand{\eqtext}[1]{\qquad \text{#1} \qquad}
+\newcommand{\mat}[1]{\mathbf{#1}}
+
+\newcommand{\schro}{Schr\"{o}dinger\xspace}
+
+\newtcblisting{python}{%
+	listing engine=minted,
+	minted language=python,
+	listing only,
+	breakable,
+	enhanced,
+	minted options = {
+		linenos, 
+		breaklines=true, 
+		tabsize=2,
+		fontsize=\footnotesize, 
+		numbersep=2mm
+	},
+	overlay={%
+		\begin{tcbclipinterior}
+			\fill[gray!25] (frame.south west) rectangle ([xshift=4mm]frame.north west);
+		\end{tcbclipinterior}
+	}   
+}
+
+
+\begin{document}
+\title{Differential Methods for Partial Differential Equations}
+\author{Elijan Jakob Mastnak\\[1mm]\small{Student ID: 28181157}}
+\date{December 2020}
+\maketitle
+
+\tableofcontents
+
+\newpage
+\begin{center}
+\textbf{Assignment}
+\begin{enumerate}
+	\item Analyze the time evolution of the initial state
+	\begin{equation*}
+		\psi(x, 0) = \frac{\alpha^{1/2}}{\pi^{1/4}}e^{-\frac{\alpha^{2}}{2}(x - a)^{2}}
+	\end{equation*}
+	in the harmonic potential $ V(x) = \frac{kx^{2}}{2} $, where $ k = \omega^{2} $ and $ \alpha = k^{1/4} $ and .
+	
+	Use the parameters $ \omega = 0.2 $ and $ a = 10 $. Use a position grid $ x \in [a, b] = [-40, 40] $ with $ N = 300 $ points. Choose a time step $ \Delta t $ suited to the oscillatory period $ T = \frac{2\pi}{\omega} $. Observe the time evolution over ten oscillatory periods.
+	
+	\item Analyze the time evolution of the initial Gaussian wave packet
+	\begin{equation*}
+		\psi(x, 0) = (2\pi \sigma_{0}^{2})^{-1/4}e^{ik_{0}(x - a)}e^{-(x - a)^{2}/(2\sigma_{0})^{2}}
+	\end{equation*}
+	in free space with $ V = 0 $. Use the parameters $ \sigma_{0} = \frac{1}{20} $, $ k_{0} = 50 \pi $, $ a = 0.25 $. 
+	
+	Use the position values $ x \in  [-0.5, 1.5] $ and a time step $ \Delta t = 2 \Delta x^{2} $. Observe the time evolution until the wave packet's center reaches $ x \approx 0.75 $. 
+	
+	
+	\item \textit{Optional}: Solve the same problems with a higher-order approximation of the position and time derivatives.
+\end{enumerate}
+\end{center}
+
+\rule{\textwidth}{0.2pt} 
+\vspace{3mm}
+
+Before flooding you with 9 pages of theory, here is a friendly, colorful picture:
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=\linewidth]{free-time-10-8}
+\caption{A free wave packet's probability density traveling along the $ x $ axis.}
+\label{diff:fig:intro}
+\end{figure}
+
+
+\newpage
+
+
+\section{Theory} \label{diff:s:theory}
+\vspace{-2mm}
+\textit{To skip the introductory theory, see \hyperref[diff:s:solution]{Section \ref{diff:s:solution}}. To skip all theory completely and jump right to the results, see \hyperref[diff:s:coherent]{Section \ref{diff:s:coherent}}}.
+
+\vspace{2mm}
+
+This report involves solving the time-dependent \schro equation
+\begin{equation*}
+	\left(i \hbar \pdv{t} - H\right) \psi(x, t) = 0
+\end{equation*}
+with a time-independent Hamiltonian operator of the form
+\begin{equation*}
+	H = - \frac{\hbar}{2m}\pdv[2]{}{x} + V(x)
+\end{equation*}
+For numerical computation, it is more convenient to work in natural units. To do so, we introduce the change of variables
+\begin{equation*}
+	\frac{H}{\hbar} \to H, \qquad x \sqrt{\frac{m}{\hbar}} \to x, \qquad \frac{1}{h}V\left(x\sqrt{\frac{m}{\hbar}}\right) \to V(x)
+\end{equation*}
+This change of variables effectively sets $ \hbar = m = 1 $ and produces the Hamiltonian
+\begin{equation}
+	H = - \frac{1}{2}\pdv[2]{}{x} + V(x) \label{diff:eqn:H-dimensionless}
+\end{equation}
+
+\subsection{Basic Crank-Nicolson Solution}  \label{diff:ss:CN-basic}
+We approximate the time evolution of the state $ \psi(x, t) $ to $ \psi(x, t + \Delta t) $ with a Taylor approximation of the time evolution operator $ e^{-H \Delta t} $
+\begin{equation}
+	\psi(x, t + \Delta t) = e^{-iH\Delta t}\psi(x, t) \approx \frac{1 - \tfrac{1}{2}iH\Delta t}{1 + \tfrac{1}{2}iH\Delta t}\psi(x, t) \label{diff:eq:schro-approx}
+\end{equation}
+This approximation is unitary, with an error of order $ \mathcal{O}(\Delta t^{3}) $. 
+
+
+
+First, we partition the $ x $ interval $ [x_{0}, x_{J}] $ into a grid of $ J + 1 $ points $ \{x_{j}\}_{0}^{J} $ separated by the uniform step size
+\begin{equation*}
+	\Delta x = \frac{x_{j} - x_{0}}{J-1} \implies x_{j} = x_{0} + j\Delta x, \quad j = 0, 1, \ldots, J - 1
+\end{equation*}
+We solve the \schro equation for $ t \in [t_{0}, t_{N}] $, and find the discrete time points with $ t_{n} = t_{0} + n \Delta t $ for $ n = 0, 1, \ldots, N $. We approximate the second position derivative $ \pdv[2]{}{x} $ with a finite difference approximation
+\begin{equation*}
+	\pdv[2]{\psi}{x} \approx \frac{\psi(x + \Delta x, t) - 2\psi(x, t) + \psi(x - \Delta x, t)}{\Delta x^{2}} \equiv \frac{\psi_{j+1}^{n} - 2\psi_{j}^{n} + \psi_{j-1}^{n}}{\Delta x^{2}}
+\end{equation*}
+where $ V(x_{j}) = V_{j} $ and $ \psi(x_{j}, t_{n}) \equiv \psi_{j}^{n} $. Substituting this expression into the approximate \schro equation  (Eq. \ref{diff:eq:schro-approx}) and writing the Hamiltonian in the dimensionless form of Equation \ref{diff:eqn:H-dimensionless} produces the system of equations
+\begin{align*}
+	\psi_{j}^{n+1} &- i \frac{\Delta t}{4 \Delta x^{2}}\left[\psi_{j+1}^{n+1} - 2\psi_{j}^{n+1} + \psi_{j-1}^{n+1}\right] + i \frac{\Delta t}{2}V_{j}\psi_{j}^{n+1} \\
+	&=
+	\psi_{j}^{n} + i \frac{\Delta t}{4\Delta x^{2}}\left[\psi_{j+1}^{n} - 2\psi_{j}^{n} + \psi_{j-1}^{n}\right] - i\frac{\Delta}{2}V_{j}\psi_{j}^{n}
+\end{align*}
+We assume homogeneous boundary conditions and set $ \psi_{j}^{n} = 0 $ for $ j < 0 $ and $ j > N $. 
+
+We then introduce the vector
+\begin{equation*}
+	\bm{\psi}^{n} = \big[\psi_{0}^{n}, \psi_{1}^{n}, \ldots, \psi_{J}^{n}\big]^{T} \in \mathbb{C}^{J+1},
+\end{equation*}
+and write the system of equations as a matrix:
+\begin{equation*}
+	\mat{A}\bm{\psi}^{n+1} = \mat{A}^{*}\bm{\psi}^{n}, \quad \text{where} \quad \mat{A} = 
+	\begin{pmatrix}
+		d_{0} & a & & & & \\
+		a & d_{1} & a & & &\\
+		  & a & d_{2} & a & &\\
+		  &   &  \ddots & \ddots & \ddots &\\
+		  & & & a & d_{J-1} & a\\
+		  & & &  & a & d_{J}
+	\end{pmatrix}
+	\in \mathbb{C}^{J+1 \cross J+1}
+\end{equation*}
+where
+\begin{equation*}
+	b = i\frac{\Delta t}{2 \Delta x^{2}}, \qquad a = -\frac{b}{2}, \qquad d_{j} = 1 + b + i\frac{\Delta t}{2}V_{j}
+\end{equation*}
+Finding $ \psi(x, t) $ thus reduces to repeatedly solving the matrix equation 
+\begin{equation*}
+	\mat{A}\bm{\psi}^{n+1} = \mat{A}^{*}\bm{\psi}^{n}
+\end{equation*}
+
+
+
+\subsection{Higher-Order Position Approximation} \label{diff:ss:CN-position}
+Note that the following comes directly from \cite{vandijk}. I have retyped it only to solidify my own understanding, but the work is wholly unoriginal. For a higher-order position approximation, we discretize the second spatial derivative according to
+\begin{equation*}
+	y''(x) = \frac{1}{h^{2}}\sum_{k=-r}^{r}c_{k}^{(r)}y(x + kh) + \mathcal{O}(h^{2r})
+\end{equation*}
+The $ c_{k}^{(r)} $ are real constants coming from the Taylor expansions of $ y(x + kh) $ and $ y(x - kh) $ and satisfy $ c_{-k}^{(r)} = c_{k}^{(r)} $ for $ k = 1, 2, \ldots, r $. See e.g. Equations 2.6 to 2.8 of \cite{vandijk} for a thorough discussion. Table \ref{diff:table:ck} shows the constants $ c_{k}^{(r)} $ for $ r = 1, \ldots, 7 $; see \cite{fornberg} for an algorithm to calculate the coefficients for arbitrarily large $ n $.
+
+\begin{table}[htb!]
+\centering 
+\begin{tabular}{c | c c c c c c c c}
+\hline \hline
+$ r $ & $ k=0 $ & 1 & 2 & 3 & 4 & 5 & 6 & 7 \\
+\hline
+1 & -2 & 1 & & & & & & \\
+2 & $ -\frac{5}{2} $ & $ \frac{4}{3} $ & $ -\frac{1}{12} $ & & & & & \\
+3 & $ -\frac{49}{18} $ & $ \frac{3}{2} $ & $ -\frac{3}{20} $ & $ \frac{1}{90} $ & & & &\\
+4 & $ -\frac{205}{72} $ & $ \frac{8}{5} $ & $ -\frac{1}{5} $ & $ \frac{8}{315} $ & $ -\frac{1}{560} $& & &\\
+5 & $ -\frac{5269}{1800} $ & $ \frac{5}{3} $ & $ -\frac{5}{21} $ & $ \frac{5}{126} $ & $ -\frac{5}{1008} $& $ \frac{1}{3150} $ & &\\
+6 & $ -\frac{5369}{1800} $ & $ \frac{12}{7} $ & $ -\frac{15}{56} $ & $ \frac{10}{189} $ & $ -\frac{1}{112} $& $ \frac{2}{1925} $ &$ -\frac{1}{16632} $ &\\
+7 & $ -\frac{266681}{88200} $ & $ \frac{7}{4} $ & $ -\frac{7}{24} $ & $ \frac{7}{108} $ & $ -\frac{7}{528} $& $ \frac{7}{3300} $ &$ -\frac{7}{30888} $ & $ \frac{1}{84084} $
+\end{tabular}
+\caption{Coefficients $ c_{k}^{(r)} $ for $ r = 1, \ldots, 7 $.}
+\label{diff:table:ck}
+\end{table}
+As in the basic CN scheme, partition the time and position values according to
+\begin{align*}
+	&x_{j} = x_{0} + j\Delta x, \qquad j = 0, 1, \ldots, J\\
+	&t_{n} = t_{0} + n\Delta t, \qquad n = 0, 1, \ldots, N
+\end{align*}
+Next, we insert the generalized finite difference approximation for $ y''(x) $ into approximate unitary \schro equation to get the system of equations
+\begin{align*}
+	\psi_{j, n+1} &- \frac{i\hbar \Delta t}{4m(\Delta x)^{2}} \left[\sum_{k=-r}^{r}c_{k}^{(r)}\psi(j+k, n+1)\right] + \frac{i\Delta t}{2\hbar}V_{j}\psi_{j, n+1}\\
+	& = \psi_{j, n} + \frac{i\hbar \Delta t}{4m(\Delta x)^{2}} \left[\sum_{k=-r}^{r}c_{k}^{(r)}\psi(j+k, n)\right] - \frac{i\Delta t}{2\hbar}V_{j}\psi_{j, n}
+\end{align*}
+for $ j = 0, 1, \ldots J $. For homogeneous boundaries, we set $ \psi_{j, n} = 0 $ for $ j < 0 $ and $ j > J $. To simplify the system of equations, we define the auxiliary quantities
+\begin{equation}
+	b \equiv \frac{i\hbar \Delta t}{2m(\Delta x)^{2}}, \quad z_{1}^{(1)} \equiv -2, \quad a_{k}^{(r)} \equiv \frac{b}{z_{1}^{(1)}}c_{k}^{(r)} \label{diff:eq:abz}
+\end{equation}
+where the $ c_{k}(r) $ are defined in Table \ref{diff:table:ck}. In terms of $ a_{k}^{(r)} $, $ b $ and $ z_{1}^{(1)} $, we define $ d_{j} $  as
+\begin{equation}
+	d_{j} = 1 + a_{0}^{(r)} - \frac{i\Delta t}{\hbar}\frac{V_{j}}{z_{1}^{(1)}}, \quad j = 0, 1, \ldots, J \label{diff:eq:d}
+\end{equation}
+The solution for the wavefunction $ \psi_{j, n+1} $ comes from solving
+\begin{equation}
+	\mat{A} \bm{\psi}_{n+1} = \mat{A}^{*} \bm{\psi}_{n}, \quad n = 0, 1, \ldots N-1 \label{diff:eq:psi-sys-eq}
+\end{equation}
+where $ \bm{\psi}_{n} = \big[\psi_{0, n}, \psi_{1, n}, \ldots, \psi_{J, n}\big]^{T} \in \mathbb{C}^{J+1} $ is the system's wavefunction at time $ t_{n} $ and $ \bm{\psi}_{0} = \big[\phi_{0}, \phi_{1}, \ldots, \phi_{J}\big]^{T} $ is the initial wavefunction $ \phi(x) $ evaluated at $ x = x_{j} $. The matrix $ \mat{A} $ generalizes to a $ (2r + 1) $-diagonal matrix of the form
+\begin{equation}
+	\mat{A} = 
+	\begin{pmatrix}
+		d_{0} & a_{1} & a_{2} & \cdots & a_{r} & & & & \\
+		a_{1} & d_{1} & a_{1} & \cdots & a_{r-1} & a_{r} & & &\\
+ 		a_{2} & a_{1} & d_{2} & \cdots & a_{r-2} & a_{r-1} & & &\\
+ 		\vdots & \vdots & \vdots & \vdots & \vdots & & & &\\
+ 		a_{r} & a_{r-1} & a_{r-2} & \cdots & d_{r} & a_{1} & & &\\
+ 		0 & a_{r} & a_{r-1} & \cdots & a_{1} & d_{r+1} & & &\\
+ 		  &       &         &        &       &         & \ddots & &\\
+   		& & & & & &  & d_{J-1} & a_{1}\\
+   		& & & & & & & a_{1} & d_{J}
+	\end{pmatrix}
+	\in \mathbb{C}^{J+1 \cross J+1} \label{diff:eq:A}
+\end{equation}
+where the superscript $ a^{(r)} $ is left implicit for compactness.
+
+
+
+
+\subsection{Higher-Order Time Evolution}\label{diff:ss:CN-time}
+For a higher-order solution in time, we approximate the time advance operator $ e^{-iH\Delta t} $ using the Pad\'{e} approximation
+\begin{equation}
+	e^{z} = \frac{a_{0} + a_{1} + \cdots + a_{M}z^{M}}{b_{0} + b_{1} + \cdots + b_{M}z^{M}} = \frac{\sum_{m=0}^{M}a_{m}z^{m}}{\sum_{m'=0}^{M}b_{m'}z^{m'}} \label{diff:eq:pade}
+\end{equation}
+By convention, we set $ b_{0} = 1 $, from which the identity $ e^{0} = 1 $ implies $ a_{0} = 1 $. We solve for $ a_{m} $ and $ b_{m'} $ by multiplying Equation \ref{diff:eq:pade}  by the denominator to get
+\begin{equation*}
+	\left(\sum_{m'=0}^{M}b_{m'}z^{m'}\right)\left(\sum_{i=0}^{\infty}c_{i}z^{i}\right) = \left(\sum_{m=0}^{M}a_{m}z^{m}\right)
+\end{equation*}
+where we've inserted the Taylor series for $ e^{z} $. We then multiply the sums on the left side of the equation and equate the coefficients of $ z $ to $ z^{2M} $, giving a system of $ 2M $ equations for $ 2M $ unknowns $ a_{m} $ and $ b_{m'} $. See \cite{oes-exp} for a list of the numerator coefficients $ a_{m} $ up to $ M = 7 $. Once the $ a_{m} $ and $ b_{m'} $ are known, it is possible to write the diagonal approximation of the exponential function in the form
+\begin{equation*}
+	e^{z} = \prod_{s=1}^{M}\left(\frac{1 - z/z_{s}^{(M)}}{1 + z/\bar{z}_{s}^{(M)}}\right)
+\end{equation*}
+where $ z_{s}^{(M)} $ are the roots of the numerator in Equation \ref{diff:eq:pade}, found with the known coefficients $ a_{m} $. The terms $ \bar{z}_{s}^{(M)} $ are the complex conjugates of $ z_{s}^{(M)} $, although only $ z_{s}^{(M)} $ are needed for this problem. With the $ z_{s}^{M} $ known, we define the operator $ K_{s}^{(M)} $,
+\begin{equation*}
+	K_{s}^{(M)} \equiv \frac{1 - \frac{iH\Delta t/\hbar}{z_{s}^{(M)}}}{1 + \frac{iH\Delta t/\hbar}{\bar{z}_{s}^{(M)}}}
+\end{equation*}
+which, using the Pad\'{e} approximant of $ e^{z} $, allows use to write the time evolution operator as
+\begin{equation*}
+	e^{-iH\Delta t / \hbar} \approx \prod_{s=1}^{M}K_{s}^{(M)}
+\end{equation*}
+The higher-order time evolution of $ \bm{\psi} $ from $ \bm{\psi}_{n} $ to $ \bm{\psi}_{n+1} $ now takes $ s = 1, 2, \ldots, M $ intermediate steps of the form
+\begin{equation}
+	\bm{\psi}_{n+1} = e^{-iH\Delta t / \hbar}\bm{\psi}_{n} = \prod_{s=1}^{M}K_{s}^{(M)} \bm{\psi}_{n} \label{diff:eq:psi-higher-M}
+\end{equation}
+If we define the intermediate wavefunction
+\begin{equation*}
+	\bm{\psi}_{n+\frac{s}{M}} \equiv K_{s}^{(M)}\bm{\psi}_{n+\frac{s-1}{M}},
+\end{equation*}
+we can solve recursively for $ \bm{\psi}_{n+1} $, starting with
+\begin{equation*}
+	\bm{\psi}_{n+\frac{1}{M}} = K_{1}^{(M)} \bm{\psi}_{n}
+\end{equation*}
+
+
+
+\section{Initial Solution Steps} \label{diff:s:solution}
+I must confess that I skipped ahead when solving the problem---I neglected an explicit implementation of the basic $ r = 1 $,  $ M = 1 $ Crank-Nicolson (CN) solution in \hyperref[diff:ss:CN-basic]{Subsection \ref{diff:ss:CN-basic}} and jumped directly to a generalized implementation that could solve for arbitrary $ r $ and $ M $, as long as the coefficients $ c_{k}^{(r)} $ and $ z_{s}^{(M)} $ are known. I could then retrospectively investigate the basic CN solution by setting $ r = M = 1 $. I proceeded as outlined in the following sections.
+
+\subsection{Finding Complex Roots $ z_{s}^{(M)} $}
+I found the complex roots $ z_{z}^{(M)} $ needed for higher-order approximation of the time derivative by constructing a look-up table as shown in the Python code below. The polynomial coefficients, denoted by \texttt{c} in the code below, are taken from \cite{oes-exp}, and the corresponding roots are found with Numpy's \texttt{np.roots} function.
+\begin{python}
+import numpy as np
+def get_zsM_example(s, M):
+    """ Returns the s-th complex roots of the numerator of the M-th order 
+         diagonal Pade approximation to the exponential function """
+    if M == 1:
+        c = [1, 2]  # c is the coefficients of the numerator polynomial
+    elif M == 2:
+        c = [1, 6, 12]  # x^2 + 6x + 12
+    # and so on for higher M...
+    z_M = np.sort(np.roots(c))  # length-M vector
+    return z_M[s-1]  # return s-th element z_sM (using 1-based indexing) 
+\end{python}
+I implemented the table up to $ M = 8 $, but only show up to $ M = 2 $  for conciseness.
+
+\subsection{Finding Coefficients $ c_{k}^{(r)} $}
+Fornberg \cite{fornberg} gives a powerful algorithm for the coefficients of an arbitrary finite difference scheme, which I implemented in Python to find $ c_{k}^{(r)} $ for arbitrary $ r $.
+
+In our case, $ c_{k}^{(r)} $ are the coefficients of a second-order finite difference approximation containing $ 2r + 1 $ points centered at the middle point. For example, in the basic $ r = 1 $ finite difference scheme, the coefficients are $ 1, -2, 1 $. Since the coefficients are symmetric about the central point, we only consider the $ c_{k}^{(r)} $ for non-negative $ k $. Table \ref{diff:table:ck} shows the $ c_{k}^{(r)} $ up to $ r = 7 $. The code for finding the $ c_{k}^{(r)} $ is long, so I'm leaving it out for conciseness. See the functions \texttt{get\_cr(r)} and \texttt{get\_ckr(k, r)} in the accompanying \texttt{cn.py} file for the implementation.
+
+\subsection{Constructing the Matrix $ \mat{A} $}
+To find the matrix $ \mat{A} $ in Equation \ref{diff:eq:A}, I first implemented functions to find the auxiliary quantity $ b $, the off-diagonal elements $ a_{k}^{(r)} $, and the diagonal elements $ d_{j} $. These functions are straightforward implementations of Equations \ref{diff:eq:abz} and \ref{diff:eq:d} using the known $ c_{k}^{(r)} $ and $ z_{s}^{(M)} $ from the previous step---I'm leaving the code out for brevity. 
+
+Using the known  $ b $, $ a_{k}^{(r)} $, and $ d_{j} $, I constructed $ \mat{A} $ according to Equation \ref{diff:eq:A}:
+\begin{python}
+def get_A(x0, dx, dt, J, r, s, M, V, Vargs):
+    """ Returns (J+1) by (J+1) complex matrix A for use with a CN scheme """
+    d = get_d(x0, dx, dt, J, r, s, M, V, Vargs)  # returns d_j
+    A = np.diag(d, k=0)  # initial diagonal
+    for k in range(1, r+1, 1):  # off diagonals for k = 1,..., r
+        a = np.zeros(J+1-k, dtype=complex)  # preallocate
+        a[0:J+1-k] = get_a(dt, dx, k, r, s, M)  # returns a_kr
+        A += np.diag(a, k=k) + np.diag(a, k=-k)  # add off-diagonal
+    return A
+\end{python}
+I've left out docstring documentation for conciseness---the notation for \texttt{x0} through \texttt{M} is the same as used in the rest of the report; \texttt{V} and \texttt{Vargs} are the potential energy function and its extra parameters (e.g. $ k $ for the harmonic potential).
+
+
+
+\subsection{Solving for the Wavefunction}
+To keep this section somewhat concise, I assume the reader is familiar with the contents of \hyperref[diff:ss:CN-basic]{Subsections \ref{diff:ss:CN-basic}} through \ref{diff:ss:CN-time} (or the equivalent content in van Dijk \cite{vandijk}).
+
+\vspace{1mm}
+With the matrix $ \mat{A} $ known, I solved for the wavefunction $ \psi(x, t) $ by solving the system of equations
+\begin{equation*}
+	\mat{A}\bm{\psi}_{n+1} = \mat{A}^{*}\bm{\psi}_{n}
+\end{equation*}
+(as in Eq. \ref{diff:eq:psi-sys-eq}). For a single time step, i.e. $ M = 1 $ we have simply
+\begin{equation*}
+	\bm{\psi}_{n+1} = \mat{A}^{-1}\mat{A}^{*}\bm{\psi}_{n} \implies \bm{\psi}_{n} = \big(\mat{A}^{-1}\mat{A}^{*}\big)^{n} \bm{\phi}
+\end{equation*}
+Alternatively, for $ n = 1, 2, \ldots, N $, repeatedly solve the system
+\begin{equation*}
+ \mat{A}\bm{\psi}_{n+1} = \mat{A}^{*}\bm{\psi}_{n}
+\end{equation*}
+using a banded matrix solving scheme, e.g. SciPy's \texttt{solve\_banded}. In this report I used the simpler multiplication by the inverse $ \mat{A}^{-1} $ given above.
+
+\vspace{2mm}
+For multiple time steps $ M = 2, 3, \ldots $ we have (see Eq. \ref{diff:eq:psi-higher-M})
+\begin{equation*}
+	\bm{\psi}_{n+1} = \big(\mat{A}_{M}^{-1}\mat{A}_{M}^{*}\big)\big(\mat{A}_{M-1}^{-1}\mat{A}_{M-1}^{*}\big)\cdots \big(\mat{A}_{1}^{-1}\mat{A}_{1}^{*}\big)\bm{\psi}_{n} = \prod_{s=1}^{M}\big(\mat{A}_{s}^{-1}\mat{A}_{s}^{*}\big) \bm{\psi}_{n}
+\end{equation*}
+where $ \mat{A}_{s} $ is analogous to $ \mat{A} $ as defined in Equation \ref{diff:eq:A}, but with $ z_{1}^{(1)} $ replaced by $ z_{s}^{(M)} $. The matrices $ \big(\mat{A}_{s}^{-1}\mat{A}_{s}^{*}\big) $ commute and can be applied in any order. Conveniently, the product of the $ \big(\mat{A}_{s}^{-1}\mat{A}_{s}^{*}\big) $ can be computed once and reused for all $ n $. This leads to the expression
+\begin{equation*}
+	\bm{\psi}_{n} = \left[\prod_{s=1}^{M}\big(\mat{A}_{s}^{-1}\mat{A}_{s}^{*}\big)\right]^{n} \bm{\phi}
+\end{equation*}
+where $ \bm{\phi} $ holds the initial wavefunction $ \phi(x) $.
+
+\section{The Problem's Relevant Quantum Mechanics}
+\subsection{Particle in a Harmonic Potential}
+For the harmonic potential, the \schro equation in natural units reads
+\begin{equation*}
+	\left(i \pdv{t} + \frac{1}{2}\pdv[2]{}{x} - \frac{1}{2}kx^{2} \right) \psi(x, t) = 0
+\end{equation*}
+I use the initial wavefunction
+\begin{equation*}
+	\psi(x, 0) = \frac{\alpha^{1/2}}{\pi^{1/4}}e^{-\frac{\alpha^{2}}{2}(x - a)^{2}}
+\end{equation*}
+where $ \alpha^{4} = \frac{mk}{\hbar^{2}} \to k $, $ \omega = \sqrt{\frac{k}{m}} \to \sqrt{k} $ and $ a $ is the initial displacement from the origin. The analytic solution for this problem is the coherent state
+\begin{equation*}
+	\psi(x, t) = \frac{\alpha^{1/2}}{\pi^{1/4}}\exp \left[-\frac{1}{2}\big(\xi - \xi_{0}\cos \omega t \big)^{2} - i\left(\frac{\omega t}{2} + \xi \xi_{0} \sin \omega t - \frac{1}{4}\xi_{0}^{2}\sin 2\omega t\right)\right]
+\end{equation*}
+where $ \xi = \alpha x $ and $ \xi_{0} = \alpha a $. Use $ \omega = 0.2 $, $ a = 10 $ and $ x \in [x_{0}, x_{J}] = [-40, 40] $. The oscillatory period is thus $ T = \frac{2\pi}{\omega} = 10\pi $.
+
+
+\subsection{Free Gaussian Wave Packet}
+The \schro equation in natural units for the free particle reads
+\begin{equation*}
+	\left(i \pdv{t} + \frac{1}{2}\pdv[2]{}{x}\right) \psi(x, t) = 0
+\end{equation*}
+I use the initial wavefunction
+\begin{equation*}
+	\psi(x, 0) = (2\pi \sigma_{0}^{2})^{-1/4}e^{ik_{0}(x - a)}\exp(-\frac{(x - a)^{2}}{(2\sigma_{0})^{2}})
+\end{equation*}
+The analytic solution is
+\begin{equation*}
+	\psi(x, t) = \frac{(2\pi \sigma_{0}^{2})^{-1/4}}{\sqrt{1 + \frac{it}{2\sigma_{0}^{2}}}} \exp \left[\frac{-\frac{(x-a)^{2}}{(2\sigma_{0})^{2}} + ik_{0}(x-a) - \tfrac{i}{2}k_{0}^{2}t}{1 + \frac{it}{2\sigma_{0}^{2}}}\right]
+\end{equation*}
+I use the parameters $ \sigma_{0} = \frac{1}{20} $, $ k_{0} = 50 \pi $ and $ a = 0.25 $. I used the position grid $ x \in [x_{0}, x_{J}] $ with $ x_{0} = -0.5 $ and $ x_{J} $ varying from 1.5 to 4.5. 
+
+
+
+\begin{figure}[b!]
+\centering
+\includegraphics[width=\linewidth]{qho-period-5-5}
+\caption{The coherent state's probability density over one period $ T_{0} $---the color gradient shows progression through time. Found with $ r = M = 5 $ and $ \Delta t = 0.1 \pi $.}
+\label{diff:fig:qho-period}
+\end{figure}
+
+\section{Coherent State in a Harmonic Potential}  \label{diff:s:coherent}
+After a mountain of theory, I will try to let the graphics do the talking for the remaining sections. Figure \ref{diff:fig:qho-period} (above) shows the quantum harmonic oscillator's (QHO) coherent state probability density over one period. As expected, the probability oscillates with amplitude $ a = 10 $ about the equilibrium position $ x = 0 $. 
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=\linewidth]{qho-endpoint-10T}
+\caption{The coherent state's probability density after ten-period simulation for various $ r $ and $ M $ with $ \Delta t = 0.2 \pi $. The analytic solution is plotted with gray circles for reference. Note that the first-order-in-time $ M=1 $ solution fails completely.}
+\label{diff:fig:qho-endpoint}
+\end{figure}
+
+Figure \ref{diff:fig:qho-endpoint} shows the QHO's coherent state after a ten-period simulation time for various $ r $ and $ M $ using a time step $ \Delta t = 0.2 \pi $. The $ r = M = 5 $ solution show excellent agreement with the analytic solution; the $ M = 5, r = 1 $ solution roughly preserves the initial shape of a Gaussian wave packet; the $ M = 1, r = 5 $ solution fails completely. The results suggests that a higher-order time approximation (higher $ M $) improves the solution more than a higher-order position approximation (higher $ r $). Interestingly, I found this trend was reversed for the free wave packet.
+
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=\linewidth]{qho-error}
+\caption{Error in the coherent state solution after a ten-period simulation as a function of $ r $ and $ M $---note the logarithmic scale. High $ M $ improves the solution more than high $ r $ (compare the curves at $ r \equiv 1$ and $ M \equiv 1 $. Found with $ \Delta t = 0.2\pi $; error is calculated according to Equation \ref{diff:eq:error}.}
+\label{diff:fig:qho-error}
+\end{figure}
+
+\subsection{Accuracy}
+I chose to quantify the accuracy of the numerical solution with the error
+\begin{equation}
+	\mathcal{E} = \int_{x_{0}}^{x_{j}} \abs{\psi(x, t_{N}) - \psi_{\text{analytic}}(x, t_{N})}^{2} \diff x \label{diff:eq:error}
+\end{equation}
+where $ \psi $ and $ \psi_{\text{analytic}} $ give the numerical and analytic wavefunction solutions, respectively, at the simulation end time $ t_{N} $. Figure \ref{diff:fig:qho-error} show a three-dimensional visualization of error $ \mathcal{E} $ versus $ M $ and $ r $ for a ten-period simulation with $ t_{N} = 10 T_{0} $ and a time step $ \Delta t = 0.2 \pi $. I found the enormous decrease in error (over 10 orders of magnitude) from $ r = M = 1 $ to the higher-order $ r = M = 8 $ quite impressive.
+
+
+
+
+
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=\linewidth]{free-time-10-8}
+\caption{The free wave packet's probability density traveling along the $ x $ axis for $ [t_{0}, t_{N}] = [0, 0.02] $---the color gradient shows progression through time. Found with $ r = 10, M = 8 $ and $ N = 500 $.}
+\label{diff:fig:free-time}
+\end{figure}
+
+\section{Gaussian Wave Packet in Free Space}
+Figure \ref{diff:fig:free-time} (retaken from the introductory Figure \ref{diff:fig:intro}) shows the free wave packet's probability density as the packet travels from $ a = 0.25 $ to $ a \approx 3.5 $, corresponding to $ [t_{0}, t_{N}] = [0, 0.02] $ with $ N = 500 $. I found such a large range in $ x $ is only possible with higher-order methods---assuming a reasonable $ N $ and $ J $, the basic $ r = M = 1 $ CN method produces incorrect results for $ x \gtrsim 1 $. As expected from the theory, the wave packet slowly spreads out as it travels along the $ x $ axis.
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=\linewidth]{free-endpoint}
+\caption{The free wave packet's probability density at $ x \approx 1 $ for various $ r $ and $ M $, using $ N = 500 $. The analytic solution is plotted with gray circles for reference. Although the $ r = M = 2 $ and $ r = M = 5 $ solutions appear macroscopically similar, the zoomed inset shows $ r = M = 5 $ is superior.}
+\label{diff:fig:free-endpoint}
+\end{figure}
+
+
+Figure \ref{diff:fig:free-endpoint} show the free wave packet's probability density at $ x \approx 1 $ for various $ r $ and $ M $ using $ N = 500 $. The free wave packet is less demanding than the QHO---even the $ r = M = 1 $ solution preserves the wave packet's general shape, while the $ r = M = 2 $ solution shows good agreement with the analytic solution, although a closer look at the zoomed inset reveals the $ r = M = 5 $ solution is decidedly superior. 
+
+
+\subsection{Accuracy}
+I quantified the numerical solution's accuracy using the same definition of error (Eq. \ref{diff:eq:error}) as for the QHO coherent state. Figure \ref{diff:fig:free-error} show a three-dimensional visualization of error versus $ M $ and $ r $ after the wave packet's journey from $ a = 0.25 $ to $ a \approx 1.0 $ (corresponding to times in the range $ [t_{0}, t_{N}] = [0, 5\cdot 10^{-3}] $) using $ N = 500 $. As before, the enormous decrease in error with increasing approximation order is quite impressive. Interestingly, the results in Figure \ref{diff:fig:free-error} show that for the free wave packet, a better approximation of the position derivative (large $ r $) improves the solution more than a higher-order approximation in time (higher $ M $), which is the opposite of the trend seen with the QHO coherent state.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{free-error}
+\caption{Error in the numerical solution for the wave packet at $ a \approx 1.0 $ as a function of $ r $ and $ M $---note the logarithmic scale. Higher $ r $ improves the solution more than high $ M $ (compare the curves at $ r \equiv 1$ and $ M \equiv 1 $. Found with $ N = 500 $.}
+\label{diff:fig:free-error}
+\end{figure}
+
+
+\subsection{A Note on Efficiency and Computation Time}
+A complete analysis of the Crank-Nicolson method would consider the computation time needed to find a solution of a given accuracy for various values of $ r $, $ M $, $ J $ and $ N $. I ran out of time to present such a study in my report, although I certainly experimented with efficiency informally. I found that increasing $ r $ and $ M $ lowered computation dramatically when searching for a solution at a given error. This improvement in efficiency, like the improvement in accuracy in Figures \ref{diff:fig:qho-error} and \ref{diff:fig:free-error}, spanned many orders of magnitude. For lack of an original option, I would direct the reader to Tables III and IV on pages 7 and 8, respectively, of \cite{vandijk} for a formal study of efficiency.
+
+
+
+
+\begin{thebibliography}{}
+\setlength{\itemsep}{.2\itemsep}\setlength{\parsep}{.5\parsep}
+
+\bibitem{vandijk} W. van Dijk and F. M. Toyama. ``Accurate numerical solutions of the time-dependent \schro equation.'' Phys. Rev. E \textbf{75}, 036707 (2007). \url{https://arxiv.org/pdf/physics/0701150.pdf}
+
+\bibitem{fornberg}
+Bengt Fornberg, ``Generation of finite difference formulas on arbitrarily spaced grids'', In Mathematics of Computation \textbf{51}, 184, pp. 699-706, 1988. \url{https://web.njit.edu/~jiang/math712/fornberg.pdf}
+
+\bibitem{oes-exp} Barry, Paul. ``A119274 Triangle of coefficients of numerators in Pad\'{e} approximation to exp(x)''. \textit{The On-Line Encyclopedia of Integer Sequences}. 12 May 2006. \url{https://oeis.org/A119274}
+
+\end{thebibliography}
+
+
+\end{document}
+
+
+
