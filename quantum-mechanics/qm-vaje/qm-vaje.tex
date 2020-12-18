@@ -4,6 +4,7 @@
 \usepackage{amssymb}
 \usepackage{mathtools}
 \usepackage{graphicx}
+\graphicspath{{"figures/"}}
 \usepackage{xcolor}
 \usepackage{bm} % for bold vectors in math mode
 \usepackage{physics} % for differential notation, etc...
@@ -41,6 +42,8 @@
 
 \newcommand{\T}{\mathcal{T}}  % time reversal operator
 \newcommand{\evb}[1]{\big \langle {#1} \big \rangle}  % for expectation values of fixed size
+\newcommand{\bket}[1]{\big | {#1} \big \rangle}  % for big ket
+\newcommand{\bbra}[1]{\big \langle {#1} \big |}  % for big bra
 \newcommand{\bbraket}[2]{\big \langle {#1} \big | {#2} \big \rangle}  % for brakets of fixed size
 
 \begin{document}
@@ -3187,7 +3190,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 \subsubsection{Scattering on a Spin-Dependent Delta Function in 1D}
 \textit{Consider a spin-dependent scattering problem with two particles: particle 1 with spin $ S_{1} = \frac{1}{2} $ in the state $ \ket{\ua} $ and particle $ 2 $ with spin $ S_{2} = 1 $ in the state $ \ket{10} $. The particles have the Hamiltonian}
 \begin{equation*}
-	H = \frac{p_{1}^{2}}{2m} - \frac{\lambda}{\hbar^{2}}\delta(x)\vec{S}_{1}\cdot \vec{S}_{2}
+	H = \frac{p_{1}^{2}}{2m} - \frac{\lambda}{\hbar^{2}}\vec{S}_{1}\cdot \vec{S}_{2}\delta(x)
 \end{equation*}
 \textit{Particle $ 2 $ is fixed at the origin at $ x = 0 $ and particle $ 1 $ approaches and hits particle $ 2 $ from the region $ x \to -\infty $. Determine the particle's spins after the collision.}
 
@@ -3223,31 +3226,25 @@ These are the two linearly independent states spanning the isotropic harmonic os
 \end{itemize}
 
 
-\iffalse
+
 \subsection{Eleventh Exercise Set}
 
 \subsubsection{Scattering on a Spin-Dependent Delta Function (continued)}
+\textit{Consider a spin-dependent scattering problem with two particles: particle 1 with spin $ S_{1} = 1/2 $ in the state $ \ket{\ua} $ and particle $ 2 $ with spin $ S_{2} = 1 $ in the state $ \ket{10} $. The particles have the Hamiltonian}
+\begin{equation*}
+	H = \frac{p_{1}^{2}}{2m} - \frac{\lambda}{\hbar^{2}}\vec{S}_{1}\cdot \vec{S}_{2}\delta(x)
+\end{equation*}
+\textit{Particle $ 2 $ is fixed at the origin at $ x = 0 $ and particle $ 1 $ approaches and hits particle $ 2 $ from the region $ x \to -\infty $. Determine the particle's spins after the collision.}
+
 
 \begin{itemize}
-	\item Review from last time: First particle with spin $ 1/2 $ second particle with spin $ 1 $. First particle incident on second particle form the left. Second is fixed at $ x_{1} = 0 $. Hamiltonian is
-	\begin{equation*}
-		H = \frac{p_{1}^{2}}{2m} - \frac{\lambda}{\hbar^{2}}\vec{S}_{1}\vec{S}_{2}\delta (x_{1})
-	\end{equation*}
-	The first particle feels the spin effect of the second particle only at the origin where the $ \delta $ function fires.
+	\item Review from the last exercise set: we had just begun the problem, and established the two possible bases to describe the problem---the product basis and the good quantum number basis.
 	
-	\item First, recall scattering in a spinless delta potential with 
+	\item Next we'll review the problem of scattering in a spinless delta potential (from the second exercise set) where the Hamiltonian is
 	\begin{equation*}
-		H = \frac{p^{2}}{2m} - \lambda \delta (x)
+		H = \frac{p^{2}}{2m} + \lambda \delta (x)
 	\end{equation*}
-	The system has one bonud state with energy
-	\begin{equation*}
-		E_{0} = -\frac{\hbar^{2}\kappa^{2}}{2m}, \quad \kappa = \frac{m\lambda}{\hbar^{2}}
-	\end{equation*}
-	The bound wavefunction was
-	\begin{equation*}
-		\psi_{0} = \sqrt{\kappa}e^{-\kappa \abs{x}}
-	\end{equation*}
-	For positive energies $ E > 0 $ we have free scattering states described by the scattering matrix
+	We describe free scattering states with energy $ E > 0 $ with the scattering matrix
 	\begin{equation*}
 		\mat{S} = 
 		\begin{bmatrix}
@@ -3261,116 +3258,136 @@ These are the two linearly independent states spanning the isotropic harmonic os
 		 	k	& - i\kappa
 		 \end{bmatrix}
 	\end{equation*}
-	If we send a particle in towards the delta function from the left, the particle will be partly reflected and partly transmitted. 
+	If we send a particle in towards the delta potential from the left, the particle is partly reflected and partly transmitted, according to
 	\begin{equation*}
 		\psi(x < 0) = e^{ikx} + re^{-ikx} \eqtext{and} \psi(x>0) te^{ikx}
 	\end{equation*}
-	The scattering matrix is unitary and thus obeys $ \mat{S}^{\dagger}\mat{S} = \mat{I} $. The coefficient parameters obey $ \abs{t}^{2} + \abs{r}^{2} = T + R = 1 $. 
+	Recall that the scattering matrix $ \mat{S} $ is unitary and thus obeys $ \mat{S}^{\dagger}\mat{S} = \mat{I} $. Finally, recall the coefficient parameters obey $ \abs{t}^{2} + \abs{r}^{2} = T + R = 1 $, where $ T $ and $ R $ are the probability of transmission and reflection, respectively.
 	
-	\item And then from last week: the system's Hilbert space is
+	\item From the last exercise set, recall the system's Hilbert space is
 	\begin{equation*}
 		\H = \H_{p} \otimes \H_{1} \otimes \H_{2}
 	\end{equation*}
-	The spin spaces $ \H_{1} $ and $ \H_{2} $ are six-dimensional.
+	where the combined spin Hilbert space $ \H_{1} \otimes \H_{2} $ is six-dimensional.
 	
-	We identified two possible bases: a product basis using the commutativity of $ S_{1}^{2} $, $ S_{1_{z}} $, $ S_{2}^{2} $ and $ S_{2_{z}} $. Remember the particle spins $ S_{1} $ and $ S_{2} $ are fixed at $ 1/2 $ and $ 1 $. 
+	We identified two possible bases for use with our problem: The first is a product basis using the commutativity of $ S_{1}^{2} $, $ S_{z_{1}} $, $ S_{2}^{2} $ and $ S_{z_{2}} $. 
 	
-	The states are written $ \ket{m_{1}}\ket{m_{2}} $. (We don't need to write the $ S $ terms because they're fixed and implicit).
+	Nominally, the states in this basis are written $ \ket{S_{1}m_{1}S_{2}m_{2}} $, but because the particle spins $ S_{1} $ and $ S_{2} $ are fixed at $ 1/2 $ and $ 1 $, respectively, we adopt a shorthand convention and write the states simply as $ \ket{m_{1}m_{2}} $, with $ S_{1} = 1/2 $ and $ S_{2} = 1 $ implicit.
 	
-	\item The second basis is the good spin basis which uses the commutativity of $ S_{2} $, $ S_{z} $, $ S_{1}^{2} $ and $ S_{2}^{2} $. Recall total spin is the vector sum $ \vec{S} = \vec{S}_{1} + \vec{S}_{2} $.  We write the states
+	\item The second basis, called the good quantum number basis, uses the commutativity of $ S_{2} $, $ S_{z} $, $ S_{1}^{2} $ and $ S_{2}^{2} $. Recall total spin is the vector sum $ \vec{S} = \vec{S}_{1} + \vec{S}_{2} $.  We write the states in this basis as
 	\begin{equation*}
-		\ket{SS_{1}S_{2}m} \to \ket{Sm}
+		\ket{SS_{1}S_{2}m} \eqtext{or, in shorthand,} \ket{Sm}
 	\end{equation*}
-	Again, we don't write the $ S_{1} $ and $ S_{2} $ for shorthand because they're implied and fixed for each particle.
+	Again, by convention, we leave out the $ S_{1} $ and $ S_{2} $ for conciseness because their values are fixed at $ S_{1} = 1/2 $ and $ S_{2} = 1 $, respectively.
 	
-	We transform between the bases using the Clebsch-Gordon coefficients.
+	We transform between the bases using the \textit{Clebsch-Gordan coefficients}.
 \end{itemize}
 \textbf{End of Review, Start of Today's Solution}
 \begin{itemize}
-	\item Recall the Hamiltonian is
+	\item Recall the Hamiltonian for our spin-dependent scattering problem is
 	\begin{equation*}
-		H = \frac{p_{1}^{2}}{2m} - \frac{\lambda}{\hbar^{2}}\vec{S}_{1}\vec{S}_{2}\delta (x_{1})
+		H = \frac{p_{1}^{2}}{2m} - \frac{\lambda}{\hbar^{2}}\vec{S}_{1} \cdot \vec{S}_{2}\delta (x_{1})
 	\end{equation*}
-	First, we'll write the dot product using the total spin operator. Uses
+	First, we'll rewrite the dot product using the total spin operator identity
 	\begin{equation*}
-		S^{2} = S_{1}^{2} + 2\vec{S}_{1}\vec{S}_{2} + S_{2}^{2}
+		\vec{S} = \vec{S}_{1} + \vec{S}_{2} \implies S^{2} = S_{1}^{2} + 2\vec{S}_{1}\vec{S}_{2} + S_{2}^{2},
 	\end{equation*}
-	Which implies 
+	which implies 
 	\begin{equation*}
 		\vec{S}_{1}\cdot \vec{S}_{2} = \frac{S^{2} -S_{1}^{2} - S_{2}^{2}}{2}
 	\end{equation*}
-	So the Hamiltonian is
+	Substituting this expression for $ \vec{S}_{1}\cdot \vec{S}_{2} $ into the Hamiltonian gives
 	\begin{equation*}
 		H = \frac{p_{1}^{2}}{2m} -  \frac{\lambda}{2\hbar^{2}}(S^{2} -S_{1}^{2} - S_{2}^{2})\delta(x)
 	\end{equation*}
 	
-	\item Next we confirmed $ H $ commutes with the spin operators:
+	\item Next note that the \Ham $ H $ commutes with the spin operators:
 	\begin{equation*}
 		[H, S^{2}] = [H, S_{1}^{2}] = [H, S_{2}^{2}] = [H, S_{z}] = 0
 	\end{equation*}
-	Because the Hamiltonian commutes with all of the spin basis operators, we can find eigenfunctions that are eigenfunctions of both $ H $ and all of the spin operators at once.
+	Because $ H $ commutes with all of the spin basis operators, we can find eigenfunctions that are eigenfunctions of both $ H $ and all of the spin operators simultaneously.
 	
-	\item We can thus use the Hamiltonian eigenstates to ...? Okay so we solve the stationary \schro equation:
+	\item Next, we solve the stationary \schro equation:
 	\begin{equation*}
 		H \ket{\psi} = E\ket{\psi}
 	\end{equation*}
-	Because of the commutation we can use the ansatz $ \ket{\psi} = \ket{\psi_{1}} \otimes \ket{Sm} $ Then
-	\begin{equation*}
-		H \ket{\psi_{1}} \otimes \ket{Sm} = \left(\frac{p_{1}^{2}}{2m}\ket{\psi_{1}}\right)\otimes \ket{Sm} - \frac{\lambda}{2\hbar^{2}} \delta (x_{1})\ket{\psi_{1}}\otimes (S^{2} -S_{1}^{2} - S_{2}^{2}) \ket{Sm}
-	\end{equation*}
-	Each operator acts on its eigenstates to get:
-	\begin{equation*}
-		H \ket{\psi_{1}} \otimes \ket{Sm} = \left(\frac{p_{1}^{2}}{2m}\ket{\psi_{1}}\right)\otimes \ket{Sm} - \frac{\lambda}{2\hbar^{2}} \delta (x_{1})\ket{\psi_{1}}\otimes \left[\hbar^{2}S(S+1) - \hbar^{2}S_{1}(S_{1} + 1) - \hbar^{2}S_{2}(S_{2} + 1)\right] \ket{Sm} = E \ket{\psi_{1}}\otimes \ket{Sm}
-	\end{equation*}
-	we then cancel $ \ket{Sm} $ from both sides of the equation and get the purely momentum problem
+	Because $ H $ and the spin operators commute, we can factor the system's wavefunction into a momentum and spin portion of the form $ \ket{\psi} = \ket{\psi_{1}} \otimes \ket{Sm} $. This factorization gives
+	\begin{align*}
+		H \ket{\psi_{1}} \otimes \ket{Sm} &= \left(\frac{p_{1}^{2}}{2m}\ket{\psi_{1}}\right)\otimes \ket{Sm} - \frac{\lambda}{2\hbar^{2}} \delta (x_{1})\ket{\psi_{1}}\otimes (S^{2} -S_{1}^{2} - S_{2}^{2}) \ket{Sm}\\
+		&= E \ket{\psi_{1}}\otimes \ket{Sm}
+	\end{align*}
+	We stress that the factorization $ \ket{\psi} = \ket{\psi_{1}} \otimes \ket{Sm} $ is possible only because $ H $ commutes with each spin operator.
+	
+	\item The spin operators $ S $, $ S_{1} $ and $ S_{2} $ then act on their corresponding eigenstates to give
+	\begin{align*}
+		H \ket{\psi_{1}} \otimes \ket{Sm} &= \left(\frac{p_{1}^{2}}{2m}\ket{\psi_{1}}\right)\otimes \ket{Sm} - \frac{\lambda}{2\hbar^{2}} \delta (x_{1})\ket{\psi_{1}}\otimes \big[\hbar^{2}S(S+1) \\
+		&{} \qquad  - \hbar^{2}S_{1}(S_{1} + 1) - \hbar^{2}S_{2}(S_{2} + 1)\big] \ket{Sm} \\
+		&= E \ket{\psi_{1}}\otimes \ket{Sm}
+	\end{align*}
+	Conveniently, $ \ket{Sm} $ cancels from both sides of the equation. Substituting in $ S_{1} = 1/2 $ and $ S_{2} = 1 $ produces the purely momentum problem
 	\begin{equation*}
 		\left(\frac{p_{1}^{2}}{2m} - \frac{\lambda \delta(x)}{2}\big[S(S+1) - \frac{3}{4} - 2\big]\right)\ket{\psi_{1}} = E \ket{\psi_{1}}
 	\end{equation*}
+	where $ \ket{\psi_{1}} $ is the first particle's momentum wavefunction. Note that this equation depends only on the size $ S $ of the total spin, not on the $ z $ components. For our problem with $ S_{1} = 1/2 $ and $ S_{2} = 1 $, the identity $ \abs{S_{1} - S_{2}} \leq S \leq S_{1} + S_{2} $ means there are only two possible values for $ S $; these are $ S = 1/2 $ and $ S = 3/2 $. 
 	
-	\item Note that this equation depends only on the size $ S $ of the total spin, not on the $ z $ components. There are two possible values for $ S $. For $ S = \frac{3}{2} $ we have
+	\item For $ S = 3/2 $ we have
 	\begin{equation*}
-		\left[\frac{p_{1}^{2}}{2m} - \frac{\lambda \delta(x_{1})}{2}\right]\ket{\psi_{1}} = E \ket{\psi_{1}}
+		\left[\frac{p_{1}^{2}}{2m} - \frac{\lambda \delta(x)}{2}\right]\ket{\psi_{1}} = E \ket{\psi_{1}}
 	\end{equation*}
-	For $ S = \frac{1}{2} $ we have
+	For $ S = 1/2 $ we have
 	\begin{equation*}
-		\left[\frac{p_{1}^{2}}{2m} - \lambda \delta(x_{1})\right]\ket{\psi_{1}} = E \ket{\psi_{1}}
+		\left[\frac{p_{1}^{2}}{2m} + \lambda \delta(x)\right]\ket{\psi_{1}} = E \ket{\psi_{1}}
 	\end{equation*}
-	In other words, by applying the commutation of $ H $ and the spin operators, we have transformed our problem to a problem in only the momentum Hilbert space! All spin dependence is gone; the eigenvalues depend only on the delta function parameter $ \lambda $. 
+	In other words, using the commutation of $ H $ and the spin operators, we have transformed our problem to a problem in only the momentum Hilbert space. All spin dependence is gone; the eigenvalues depend only on the delta function parameter $ \lambda $. 
 	
-	\item Recall from earlier, we have a bound state only for a downward-pointing delta function, which occurs if $ \lambda > 0 $. (see the Hamiltonian). Looking at the $ S $ eigenvalue equations, we see we have bound states only if $ S = \frac{3}{2} $ and the $ \delta(x_{1}) $ term has a negative coefficient. $ S = \frac{1}{2} $ has a positive $ \delta $ coefficient. 
+	\item A delta function potential has a bound state only for a downward-pointing delta function, which occurs if the delta function's coefficient is negative. Looking at the above equations for $ S = 1/2$ and $ S = 3/2 $, we see we have a bound state only for $ S = 3/2 $, where the $ \delta(x) $ term has a negative coefficient. For $ S = 1/2 $, the $ \delta $ function has a positive coefficient, and their is no bound state.
 	
-	\item So, for the bound state with $ S = \frac{3}{2} $, lets define 
+	\item For conciseness, we define the constants 
 	\begin{equation*}
 		\lambda_{3/2} = \frac{\lambda}{2} \eqtext{and} \lambda_{1/2} = - \lambda
 	\end{equation*}
-	THe eigenvalue equations then read
+	The $ S = 3/2 $ and $ S = 1/2 $ eigenvalue equations involving $ \ket{\psi_{1}} $ then read
+		\begin{equation*}
+			\frac{p_{1}^{2}}{2m} - \lambda_{3/2}\delta(x) = H_{3/2} \eqtext{and} \frac{p_{1}^{2}}{2m} - \lambda_{1/2}\delta(x) = H_{1/2} 
+		\end{equation*}
+		
+	\item Recall (e.g. from the second exercise set) that a bound state in a delta potential $ V(x) = - \lambda \delta(x) $ has the wavefunction
 	\begin{equation*}
-		\frac{p_{1}^{2}}{2m} - \lambda_{3/2}\delta(x_{1}) = H_{3/2} \eqtext{and} \frac{p_{1}^{2}}{2m} - \lambda_{1/2}\delta(x_{1}) = H_{1/2} 
+		 \psi_{0}(x) = \sqrt{\kappa} e^{-\kappa \abs{x}}, \qquad \text{where } \kappa = \frac{m\lambda}{\hbar^{2}}
 	\end{equation*}
-	For the $ S = \frac{3}{2} $ problem, we have
-	\begin{equation*}
-		\kappa_{3/2} = \frac{m\lambda_{3/2}}{\hbar^{2}} = \frac{m\lambda}{2\hbar^{2}}
-	\end{equation*}
-	This has the bound eigenfunction
-	\begin{equation*}
-		\ket{\psi_{0}^{M}} = \sqrt{\kappa_{3/2}}e^{-\kappa_{3/2}\abs{x}} \ket{\frac{3}{2}M}
-	\end{equation*}
-	It is four-times degenerate because four linearly independent eigenfunctions for $ \abs{M} \leq \frac{3}{2} $ all have the same energy eigenvalue.
+	and corresponding energy eigenvalue $  E_{0} = \frac{m\lambda^{2}}{2\hbar^{2}} $.
 	
-	Also, note the abuse of notation using a coordinate and Dirac notation in the same wavefunction. So lets say
+	
+	\item For the $ S = 3/2 $ problem, which has a bound state, the quantity $ \kappa $ is
 	\begin{equation*}
-		\psi(x_{1})\ket{SM} \equiv \big[\int \diff x_{1} \psi(x_{1}) \ket{x_{1}} \big ] \ket{SM}
+		\kappa_{3/2} = \frac{M\lambda_{3/2}}{\hbar^{2}} = \frac{M\lambda}{2\hbar^{2}},
+	\end{equation*}
+	and the corresponding bound eigenfunction is
+	\begin{equation*}
+		\ket{\psi_{0}^{M}} = \sqrt{\kappa_{3/2}}e^{-\kappa_{3/2}\abs{x}} \ket{\tfrac{3}{2}M}
+	\end{equation*}
+	This state is four-times degenerate because four linearly independent eigenfunctions (one each for $ M \in \big[-\frac{3}{2}, -\frac{1}{2}, \frac{1}{2}, \frac{3}{2}\big] $) all have the same energy eigenvalue $ E_{0} = \frac{M\lambda_{3/2}^{2}}{2\hbar^{2}} $.
+	
+	\item \textit{Side Note}: Technically, we are guilty of a slight abuse of notation. Namely, we've used both coordinate and Dirac notation when writing the wavefunction
+	\begin{equation*}
+		\ket{\psi_{0}^{M}} = \sqrt{\kappa_{3/2}}e^{-\kappa_{3/2}\abs{x}} \ket{\tfrac{3}{2}M}
+	\end{equation*}
+	To resolve this, for the rest of the problem we define 
+	\begin{equation*}
+		\psi(x)\ket{SM} \equiv \left[\int \psi(x) \ket{x} \diff x \right] \ket{SM}
 	\end{equation*}
 	
-	\item Next, for the scattering states; first for a particle incident from the left: for the region $ x_{1} < 0 $, the wavefunction takes the general form:
+	\item Having discussed the single bound state for $ S = 3/2 $, we now consider the free scattering states. Recall that for a particle incident on the origin from the left (i.e. from the the region $ x < 0 $), the reflected wavefunction takes the general form:
 	\begin{equation*}
-		\left(e^{ik x} + r_{S}e^{-i\kappa x}\right)\ket{SM}
+		\ket{\psi_{r}} = \left(e^{ik x} + re^{-i\kappa x}\right)\ket{SM},
 	\end{equation*}
-	and for $ x_{1} > 0 $ we have
+	while the transmitted wavefunction takes the general form
 	\begin{equation*}
-		t_{S} e^{ikx}\ket{SM}
+		\ket{\psi_{\text{t}}} = t e^{ikx}\ket{SM}
 	\end{equation*}
-	Again, this is for particles purely from the left. The scattering matrix is (reusing the known delta function results)
+	where $ r $ and $ t $ parameterize the scattering matrix.
+	
+	\item For our problem (reusing the results from the delta function scattering problem in the second exercise set), the scattering matrix is
 	\begin{equation*}
 		\mat{S}_{S} = 
 		\begin{bmatrix}
@@ -3384,23 +3401,40 @@ These are the two linearly independent states spanning the isotropic harmonic os
 			k & -i \kappa_{S}
 		\end{bmatrix}
 	\end{equation*}
-	Note the dependence of the parameters on the spin $ S $:
+	where we have introduced a subscript $ S $ to make the dependence of $ r $ and $ t $ on the value of the total spin $ S $ explicit. The possible values of $ \kappa_{S} $ for $ S \in \{1/2, 3/2\} $ are
 	\begin{equation*}
-		\kappa_{3/2} = \frac{m\lambda_{3/2}}{\hbar^{2}} = \frac{m\lambda}{2\hbar^{2}} \eqtext{and} \kappa_{1/2} = \frac{m\lambda_{1/2}}{\hbar^{2}} = - \frac{m\lambda}{\hbar^{2}}
+		\kappa_{3/2} \equiv \frac{m\lambda_{3/2}}{\hbar^{2}} = \frac{m\lambda}{2\hbar^{2}} \eqtext{and} \kappa_{1/2} \equiv \frac{m\lambda_{1/2}}{\hbar^{2}} = - \frac{m\lambda}{\hbar^{2}}
 	\end{equation*}
-	This set of eigenfunctions, at least for particles incident from the left, forms a complete basis of the momentum Hilbert space for free scattering states. 
 	
-	\item To review, send first particle in state $ \ket{\ua} $ in from the left towards particle in state $ \ket{0} $ at the origin, and we are interested in the scattered spin states of the two particles.
+	\item For our scattering problem---involving a particle incident from the left---the reflected and transmitted eigenfunctions for $ S \in \{1/2, 3/2\} $, namely
+	\begin{align*}
+		&\ket{\psi^{(1/2)}_{\text{r}}} = \left(e^{ik_{1/2} x} + r_{1/2}e^{-i\kappa x}\right)\ket{\tfrac{1}{2}M} \quad \ket{\psi^{(1/2)}_{\text{t}}} = t_{1/2} e^{ik_{1/2}x}\ket{\tfrac{1}{2}M}\\
+		&\ket{\psi^{(3/2)}_{\text{r}}} = \left(e^{ik_{3/2} x} + r_{3/2}e^{-i\kappa x}\right)\ket{\tfrac{3}{2}M} \quad \ket{\psi^{(3/2)}_{\text{t}}} = t_{3/2} e^{ik_{3/2}x}\ket{\tfrac{3}{2}M}
+	\end{align*}
+	form a complete basis of the momentum Hilbert space of free scattering states. 
+	
+	\item Just to review the problem: particle 1, in state $ \ket{\ua} $, is incident from the left on particle 2, which is fixed at the origin and in state $ \ket{0} $, and we are interested in the scattered spin states of the two particles.
 	
 	The incident part of the wavefunction takes the form
 	\begin{equation*}
-		e^{ikx} \ket{\ua} \ket{0}
+		\ket{\psi_{\text{in}}} = e^{ikx} \ket{\ua} \ket{0}
 	\end{equation*}
-	Note that this wavefunction is written in the product basis, while the above eigenfunctions are written in the good spin basis.
+	Note that this wavefunction is written in the product basis---it is the product of the first particle's spin state $ \ket{\ua} $ and the second particle's spin state $ \ket{0} $. However, the above eigenfunctions $ \ket{\psi^{(S)}_{\text{r}}} $ and $ \ket{\psi^{(S)}_{\text{t}}} $ spanning the Hilbert space of free scattering are written in the good quantum number basis, since they involve $ \ket{SM} $. 
 	
-	\item We need a unitary transformation between the bases: these are the Clebsch-Grodan coefficients.
+	Evidently, we need a way to transform between the product basis and the good quantum number basis---we make the transformation using the Clebsch-Gordan (CG) coefficients.
+\end{itemize}	
+
+\begin{figure}[hbtb!]
+\centering
+\includegraphics[width=\linewidth]{cg-coefficients}
+\caption{The Clebsch-Gordan coefficients for two particles with spins $ S_{1} = 1/2 $ and $ S_{2} = 1 $.}
+\label{fig:cg}
+\end{figure}
 	
-	\item First, find the table with the correct combination of spin numbers for each particles, in our case this is the $ 1 \cross 1/2 $ table, since the starting particles have spins $ 1 $ and $ 1/2 $. 
+	
+\textbf{Using the Clebsch-Gordan Coefficients}	
+\begin{itemize}
+	\item First, using a table of CG coefficients, find the sub-table whose heading has the correct combination $ S_{1} \cross S_{2} $ of spin numbers for each particle. In our case, our particles have spins $ S_{1} = 1/2 $ and $ S_{2} = 1 $, so we use the $ 1 \cross 1/2 $ table, shown in Figure \ref{fig:cg} (note that the order of $ S_{1} $ and $ S_{2} $ is not important in this step.
 	
 	\item So we have the initial, product-basis state $ \ket{\ua}\ket{0} \equiv \ket{1/2}\ket{0} $ (the z comonents of the two spins; recall $ S_{1} $ and $ S_{2} $ are fixed). We then find the combination $ +1/2 $, $ 0 $ in the table from the above bullet. So
 	
@@ -3511,8 +3545,6 @@ These are the two linearly independent states spanning the isotropic harmonic os
 
 	
 \end{itemize}
-
-\fi
 
 
 \iffalse
@@ -3718,7 +3750,6 @@ These are the two linearly independent states spanning the isotropic harmonic os
 
 
 \end{document}
-
 
 
 
