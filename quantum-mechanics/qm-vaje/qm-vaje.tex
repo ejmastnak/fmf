@@ -3208,7 +3208,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 		\end{equation*}
 		This set is just all possible combinations of the products of the basis functions of the individual spin spaces $ \H_{1} $ and $ \H_{2} $.
 		
-		\item The other possible basis is the good quantum number basis, which works in terms of the total spin operator $ \vec{S} = \vec{S}_{1} + \vec{S}_{2} $. This basis uses commutativity of $ S^{2} $, $ S_{z} $, $ S_{1}^{2} $, and $ S_{2}^{2} $.
+		\item The other possible basis is the total angular momentum basis, which works in terms of the total spin operator $ \vec{S} = \vec{S}_{1} + \vec{S}_{2} $. This basis uses commutativity of $ S^{2} $, $ S_{z} $, $ S_{1}^{2} $, and $ S_{2}^{2} $.
 			
 		In general, the total spin operator obeys $ \abs{S_{1} - S_{2}} \leq S \leq S_{1} + S_{2} $. In our case with $ S_{1} = \frac{1}{2} $  and $ S_{2} = 1 $, the above relationship implies $ S \in \big\{ \frac{1}{2}, \frac{3}{2} \big\} $.
 			
@@ -3238,7 +3238,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 
 
 \begin{itemize}
-	\item Review from the last exercise set: we had just begun the problem, and established the two possible bases to describe the problem---the product basis and the good quantum number basis.
+	\item Review from the last exercise set: we had just begun the problem, and established the two possible bases to describe the problem---the product basis and the total angular momentum basis.
 	
 	\item Next we'll review the problem of scattering in a spinless delta potential (from the second exercise set) where the Hamiltonian is
 	\begin{equation*}
@@ -3274,7 +3274,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	
 	Nominally, the states in this basis are written $ \ket{S_{1}m_{1}S_{2}m_{2}} $, but because the particle spins $ S_{1} $ and $ S_{2} $ are fixed at $ 1/2 $ and $ 1 $, respectively, we adopt a shorthand convention and write the states simply as $ \ket{m_{1}m_{2}} $, with $ S_{1} = 1/2 $ and $ S_{2} = 1 $ implicit.
 	
-	\item The second basis, called the good quantum number basis, uses the commutativity of $ S_{2} $, $ S_{z} $, $ S_{1}^{2} $ and $ S_{2}^{2} $. Recall total spin is the vector sum $ \vec{S} = \vec{S}_{1} + \vec{S}_{2} $.  We write the states in this basis as
+	\item The second basis, called the total angular momentum basis, uses the commutativity of $ S_{2} $, $ S_{z} $, $ S_{1}^{2} $ and $ S_{2}^{2} $. Recall total spin is the vector sum $ \vec{S} = \vec{S}_{1} + \vec{S}_{2} $.  We write the states in this basis as
 	\begin{equation*}
 		\ket{SS_{1}S_{2}m} \eqtext{or, in shorthand,} \ket{Sm}
 	\end{equation*}
@@ -3282,7 +3282,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	
 	We transform between the bases using the \textit{Clebsch-Gordan coefficients}.
 \end{itemize}
-\textbf{End of Review, Start of Today's Solution}
+\textbf{End of Review, Start of New Material}
 \begin{itemize}
 	\item Recall the Hamiltonian for our spin-dependent scattering problem is
 	\begin{equation*}
@@ -3364,35 +3364,39 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\end{equation*}
 	and the corresponding bound eigenfunction is
 	\begin{equation*}
-		\ket{\psi_{0}^{M}} = \sqrt{\kappa_{3/2}}e^{-\kappa_{3/2}\abs{x}} \ket{\tfrac{3}{2}M}
+		\ket{\psi_{0}^{M}} = \sqrt{\kappa_{3/2}}e^{-\kappa_{3/2}\abs{x}} \ket{\tfrac{3}{2}\tfrac{1}{2}}
 	\end{equation*}
-	This state is four-times degenerate because four linearly independent eigenfunctions (one each for $ M \in \big[-\frac{3}{2}, -\frac{1}{2}, \frac{1}{2}, \frac{3}{2}\big] $) all have the same energy eigenvalue $ E_{0} = \frac{M\lambda_{3/2}^{2}}{2\hbar^{2}} $.
+	where we have substituted in $ M = \frac{1}{2} $, which comes from $ M = m_{1} + m_{2} = \frac{1}{2} + 0 = \frac{1}{2} $.
+	
+	This state is four-times degenerate because four linearly independent eigenfunctions (one each for $ M \in \big[-\frac{3}{2}, -\frac{1}{2}, \frac{1}{2}, \frac{3}{2}\big] $) all have the same energy eigenvalue $ E_{0} = \frac{M\lambda_{3/2}^{2}}{2\hbar^{2}} $. 
 	
 	\item \textit{Side Note}: Technically, we are guilty of a slight abuse of notation. Namely, we've used both coordinate and Dirac notation when writing the wavefunction
 	\begin{equation*}
-		\ket{\psi_{0}^{M}} = \sqrt{\kappa_{3/2}}e^{-\kappa_{3/2}\abs{x}} \ket{\tfrac{3}{2}M}
+		\ket{\psi_{0}^{M}} = \sqrt{\kappa_{3/2}}e^{-\kappa_{3/2}\abs{x}} \ket{\tfrac{3}{2}\tfrac{1}{2}}
 	\end{equation*}
 	To resolve this, for the rest of the problem we define 
 	\begin{equation*}
 		\psi(x)\ket{SM} \equiv \left[\int \psi(x) \ket{x} \diff x \right] \ket{SM}
 	\end{equation*}
 	
-	\item Having discussed the single bound state for $ S = 3/2 $, we now consider the free scattering states. Recall that for a particle incident on the origin from the left (i.e. from the the region $ x < 0 $), the reflected wavefunction takes the general form:
+	\item Having discussed the single bound state for $ S = 3/2 $, we now consider the free scattering states. Recall that for a particle incident on the origin from the left, after scattering, the wavefunction on $ x \in (-\infty, 0) $ (to the left of the delta potential) takes the general form:
 	\begin{equation*}
-		\ket{\psi_{r}} = \left(e^{ik x} + re^{-i\kappa x}\right)\ket{SM},
+		\ket{\psi_{-}} = \left(e^{ik x} + re^{-i\kappa x}\right)\ket{SM},
 	\end{equation*}
-	while the transmitted wavefunction takes the general form
+	This ansatz contains the incident wave $ e^{ikx} $ and the reflected wave $ re^{-ikx} $. 
+	
+	The wavefunction on $ x \in (0, \infty)  $ (to the right of the delta potential) takes the form
 	\begin{equation*}
-		\ket{\psi_{\text{t}}} = t e^{ikx}\ket{SM}
+		\ket{\psi_{+}} = t e^{ikx}\ket{SM}
 	\end{equation*}
-	where $ r $ and $ t $ parameterize the scattering matrix.
+	where $ te^{ikx} $ is the transmitted wave.
 	
 	\item For our problem (reusing the results from the delta function scattering problem in the second exercise set), the scattering matrix is
 	\begin{equation*}
 		\mat{S}_{S} = 
 		\begin{bmatrix}
-			r_{S} & t'_{S}\\
-			t_{S} & r'_{S}
+			r_{S} & t_{S}\\
+			t_{S} & r_{S}
 		\end{bmatrix}
 		= 
 		\frac{1}{k + i \kappa_{S}}
@@ -3401,32 +3405,37 @@ These are the two linearly independent states spanning the isotropic harmonic os
 			k & -i \kappa_{S}
 		\end{bmatrix}
 	\end{equation*}
-	where we have introduced a subscript $ S $ to make the dependence of $ r $ and $ t $ on the value of the total spin $ S $ explicit. The possible values of $ \kappa_{S} $ for $ S \in \{1/2, 3/2\} $ are
+	where we have introduced a subscript $ _{S} $ to make the dependence of $ r $ and $ t $ on the value of the total spin $ S $ explicit. The possible values of $ \kappa_{S} $ for $ S \in \{1/2, 3/2\} $ are
 	\begin{equation*}
 		\kappa_{3/2} \equiv \frac{m\lambda_{3/2}}{\hbar^{2}} = \frac{m\lambda}{2\hbar^{2}} \eqtext{and} \kappa_{1/2} \equiv \frac{m\lambda_{1/2}}{\hbar^{2}} = - \frac{m\lambda}{\hbar^{2}}
 	\end{equation*}
 	
 	\item For our scattering problem---involving a particle incident from the left---the reflected and transmitted eigenfunctions for $ S \in \{1/2, 3/2\} $, namely
 	\begin{align*}
-		&\ket{\psi^{(1/2)}_{\text{r}}} = \left(e^{ik_{1/2} x} + r_{1/2}e^{-i\kappa x}\right)\ket{\tfrac{1}{2}M} \quad \ket{\psi^{(1/2)}_{\text{t}}} = t_{1/2} e^{ik_{1/2}x}\ket{\tfrac{1}{2}M}\\
-		&\ket{\psi^{(3/2)}_{\text{r}}} = \left(e^{ik_{3/2} x} + r_{3/2}e^{-i\kappa x}\right)\ket{\tfrac{3}{2}M} \quad \ket{\psi^{(3/2)}_{\text{t}}} = t_{3/2} e^{ik_{3/2}x}\ket{\tfrac{3}{2}M}
+		&\ket{\psi^{(1/2)}_{-}} = \left(e^{ik x} + r_{1/2}e^{-i\kappa x}\right)\ket{\tfrac{1}{2}\tfrac{1}{2}} \quad \ket{\psi^{(1/2)}_{+}} = t_{1/2} e^{ikx}\ket{\tfrac{1}{2}\tfrac{1}{2}}\\
+		&\ket{\psi^{(3/2)}_{-}} = \left(e^{ik x} + r_{3/2}e^{-i\kappa x}\right)\ket{\tfrac{3}{2}\tfrac{1}{2}} \quad \ket{\psi^{(3/2)}_{+}} = t_{3/2} e^{ikx}\ket{\tfrac{3}{2}\tfrac{1}{2}}
 	\end{align*}
-	form a complete basis of the momentum Hilbert space of free scattering states. 
+% Why isn't k dependent on S?	
+%	\begin{align*}
+%		&\ket{\psi^{(1/2)}_{-}} = \left(e^{ik_{1/2} x} + r_{1/2}e^{-i\kappa x}\right)\ket{\tfrac{1}{2}\tfrac{1}{2}} \quad \ket{\psi^{(1/2)}_{+}} = t_{1/2} e^{ik_{1/2}x}\ket{\tfrac{1}{2}\tfrac{1}{2}}\\
+%		&\ket{\psi^{(3/2)}_{-}} = \left(e^{ik_{3/2} x} + r_{3/2}e^{-i\kappa x}\right)\ket{\tfrac{3}{2}\tfrac{1}{2}} \quad \ket{\psi^{(3/2)}_{+}} = t_{3/2} e^{ik_{3/2}x}\ket{\tfrac{3}{2}\tfrac{1}{2}}
+%	\end{align*}
+	form a complete basis of the momentum Hilbert space of free scattering states. In the remainder of the problem, we will use these basis states to construct the initial and final scattering states in our specific problem. Again, recall that each basis state contains $ M = 1/2 $, since the total $ z $-component of spin is $ M = m_{1} + m_{2} = \frac{1}{2} + 0  = \frac{1}{2}$.
 	
-	\item Just to review the problem: particle 1, in state $ \ket{\ua} $, is incident from the left on particle 2, which is fixed at the origin and in state $ \ket{0} $, and we are interested in the scattered spin states of the two particles.
+	\item Just to review what the problem asks for: particle 1, in state $ \ket{\ua} $, is incident from the left on particle 2, which is fixed at the origin and in state $ \ket{0} $, and we are interested in the scattered spin states of the two particles.
 	
 	The incident part of the wavefunction takes the form
 	\begin{equation*}
 		\ket{\psi_{\text{in}}} = e^{ikx} \ket{\ua} \ket{0}
 	\end{equation*}
-	Note that this wavefunction is written in the product basis---it is the product of the first particle's spin state $ \ket{\ua} $ and the second particle's spin state $ \ket{0} $. However, the above eigenfunctions $ \ket{\psi^{(S)}_{\text{r}}} $ and $ \ket{\psi^{(S)}_{\text{t}}} $ spanning the Hilbert space of free scattering are written in the good quantum number basis, since they involve $ \ket{SM} $. 
+	Note that this wavefunction is written in the product basis---it is the product of the first particle's spin state $ \ket{\ua} $ and the second particle's spin state $ \ket{0} $. However, the above eigenfunctions $ \bket{\psi^{(S)}_{-}} $ and $ \bket{\psi^{(S)}_{+}} $ spanning the Hilbert space of free scattering are written in the total angular momentum basis.
 	
-	Evidently, we need a way to transform between the product basis and the good quantum number basis---we make the transformation using the Clebsch-Gordan (CG) coefficients.
+	At this point, we need a way to transform the initial state from the product basis to the total angular momentum basis---we make the transformation using the Clebsch-Gordan (CG) coefficients.
 \end{itemize}	
 
 \begin{figure}[hbtb!]
 \centering
-\includegraphics[width=\linewidth]{cg-coefficients}
+\includegraphics[width=0.75\linewidth]{cg-coefficients}
 \caption{The Clebsch-Gordan coefficients for two particles with spins $ S_{1} = 1/2 $ and $ S_{2} = 1 $.}
 \label{fig:cg}
 \end{figure}
@@ -3436,111 +3445,127 @@ These are the two linearly independent states spanning the isotropic harmonic os
 \begin{itemize}
 	\item First, using a table of CG coefficients, find the sub-table whose heading has the correct combination $ S_{1} \cross S_{2} $ of spin numbers for each particle. In our case, our particles have spins $ S_{1} = 1/2 $ and $ S_{2} = 1 $, so we use the $ 1 \cross 1/2 $ table, shown in Figure \ref{fig:cg} (note that the order of $ S_{1} $ and $ S_{2} $ is not important in this step.
 	
-	\item So we have the initial, product-basis state $ \ket{\ua}\ket{0} \equiv \ket{1/2}\ket{0} $ (the z comonents of the two spins; recall $ S_{1} $ and $ S_{2} $ are fixed). We then find the combination $ +1/2 $, $ 0 $ in the table from the above bullet. So
+	\item We start with the initial state $ \ket{\ua}\ket{0} \equiv \ket{1/2}\ket{0} $, which is written in the product basis. In the CG table, we find the row containing $ 0 $ and $ +1/2 $. The row immediately to the right contains the numbers $ 2/3 $ and $ -1/3 $---these are coefficients. Each coefficient has an implicit square root---for example $ -1/3 $ means $ -\sqrt{1/3} $---but the square roots are not written for conciseness. 
 	
+	For each coefficient, in this case $ 2/3 $ and $ -1/3 $, we find the column in the box immediately above. For $ 2/3 $, the column above is $ 3/2, +1/2 $, and for the coefficient $ -1/3 $, the column above is $ 1/2, +1/2 $. The columns represent states in the total angular momentum basis---the top row, in this case $ 3/2 $ and $ 1/2 $, represents values of $ S $, and the bottom row, in this case $ +1/2 $ and $ +1/2 $, represents values of $ M $. Put together, each column is a basis state $ \ket{SM} $.
+
+	We assemble the transformation between the product and total angular momentum basis as follows:
 	\begin{equation*}
-		\ket{\ua} \ket{0} \equiv \ket{\frac{1}{2}}\ket{0} \to \sqrt{\frac{2}{3}} \ket{\frac{3}{2}\frac{1}{2}} - \frac{1}{3}\ket{\frac{1}{2}\frac{1}{2}}
+		\ket{\ua} \ket{0} \equiv \ket{\tfrac{1}{2}}\ket{0} \to \sqrt{\tfrac{2}{3}} \ket{\tfrac{3}{2}\tfrac{1}{2}} - \tfrac{1}{\sqrt{3}}\ket{\tfrac{1}{2}\tfrac{1}{2}}
 	\end{equation*}
-	So the box to the right contains the coefficients as rows; these are $ 2/3 $ and $ -1/3 $. The box above the coefficient box has the spin quantum numbers as columns; these are $ 3/2, 1/2 $ and $ 1/2, 1/2 $. The first row in this upper box is $ S $, the bottom row is $ M $. 
-	
-	So, in the good basis,
+	Using the above transformation of $ \ket{\ua}\ket{0} $, the initial incident wavefunction is written in the total angular momentum basis as
 	\begin{equation*}
-		e^{ikx}\ket{\ua} \ket{0} = e^{ikx}\left(\sqrt{\frac{2}{3}} \ket{\frac{3}{2}\frac{1}{2}} - \frac{1}{3}\ket{\frac{1}{2}\frac{1}{2}}\right)
-	\end{equation*}
-	This first eigenstate at energy $ E $ for $ x_{1} < 0 $  for both possible $ S $ takes the form
-	\begin{equation*}
-		\left(e^{ikx} + r_{3/2}e^{-ikx}\right)\ket{\frac{3}{2}\frac{1}{2}} \eqtext{or} \left(e^{ikx} + r_{1/2}e^{-ikx}\right)\ket{\frac{1}{2}\frac{1}{2}}
-	\end{equation*}
-	The second eigenstate at energy $ E $ for $ x_{1} > 0 $  for both possible $ S $ takes the form
-	\begin{equation*}
-		t_{3/2}e^{ikx}\ket{\frac{3}{2}\frac{1}{2}} \eqtext{or} t_{1/2}e^{ikx}\ket{\frac{1}{2}\frac{1}{2}} 
+		\ket{\psi_{\text{in}}} = e^{ikx}\ket{\ua} \ket{0} = e^{ikx}\left(\sqrt{\tfrac{2}{3}} \ket{\tfrac{3}{2}\tfrac{1}{2}} - \sqrt{\tfrac{1}{3}}\ket{\tfrac{1}{2}\tfrac{1}{2}}\right)
 	\end{equation*}
 	
-	\item Then on $ x_{1}<0 $ we multiply by the CG coefficients to get
-	\begin{equation*}
-		\sqrt{\frac{3}{2}}\left(e^{ikx} + r_{3/2}e^{-ikx}\right)\ket{\frac{3}{2}\frac{1}{2}} - \sqrt{\frac{1}{3}}\left(e^{ikx} + r_{1/2}e^{-ikx}\right)\ket{\frac{1}{2}\frac{1}{2}}
-	\end{equation*}
-	and for $ x_{1} > 0 $
-	\begin{equation*}
-		\sqrt{\frac{2}{3}}\left(t_{3/2}e^{ikx}\ket{\frac{3}{2}\frac{1}{2}}\right) - \sqrt{\frac{1}{3}}\left(t_{1/2}e^{ikx}\ket{\frac{1}{2}\frac{1}{2}} \right)
-	\end{equation*}
-	\textit{All $ x $ should be $ x \to x_{1} $}.
+	\item Recall the basis states on the region $ x < 0 $ are
+	\begin{align*}
+		&\ket{\psi_{-}^{(1/2)}} = \left(e^{ikx} + r_{1/2}e^{-ikx}\right)\ket{\frac{1}{2}\frac{1}{2}}\\
+		& \ket{\psi_{-}^{(3/2)}} = \left(e^{ikx} + r_{3/2}e^{-ikx}\right)\ket{\frac{3}{2}\frac{1}{2}},
+	\end{align*}
+	while the second set of basis states, for the region $ x > 0 $, are
+	\begin{align*}
+		&\ket{\psi_{+}^{(1/2)}} =  t_{1/2}e^{ikx}\ket{\frac{1}{2}\frac{1}{2}} \eqtext{and}\ket{\psi_{+}^{(3/2)}} = t_{3/2}e^{ikx}\ket{\frac{3}{2}\frac{1}{2}}
+	\end{align*}
 	
-	\item In the good basis?, the $ x_{1} < 0 $ state is
+	\item Our next step is to construct our specific scattering problem's wavefunctions on the regions $ x < 0 $ and $ x > 0 $ using the using the above basis functions. 
+	
+	To do this, we first note that the incident state $ \ket{\psi_{\text{in}}} $ contains the state $ \ket{\tfrac{3}{2}\tfrac{1}{2}} $ with coefficient $ \sqrt{\tfrac{2}{3}} $, and the state $ \ket{\tfrac{1}{2}\tfrac{1}{2}} $ with coefficient $ -\sqrt{\tfrac{1}{3}} $. We thus construct the wavefunction $ \ket{\psi_{-}} $, which describes the particle on the region $ x < 0 $, from a linear combination of the basis state $ \bket{\psi_{-}^{(3/2)}} $ (which contains $ \ket{\tfrac{3}{2}\tfrac{1}{2}} $) weighted by $  \sqrt{\tfrac{2}{3}}  $, and the basis state $ \bket{\psi_{-}^{(1/2)}} $ (which contains $ \ket{\tfrac{1}{2}\tfrac{1}{2}}  $ ) weighted by $ -\sqrt{\tfrac{1}{3}}  $. The result is 
 	\begin{equation*}
-		e^{ikx_{1}}\ket{\ua}\ket{0} + e^{-ikx_{1}}\left(\sqrt{\frac{2}{3}}r_{3/2}\ket{\frac{3}{2}\frac{1}{2}} - \sqrt{\frac{1}{3}}r_{1/2}\ket{\frac{1}{2}\frac{1}{2}}\right)
+		\ket{\psi_{-}} = \sqrt{\frac{2}{3}}\left(e^{ikx} + r_{3/2}e^{-ikx}\right)\ket{\frac{3}{2}\frac{1}{2}} - \sqrt{\frac{1}{3}}\left(e^{ikx} + r_{1/2}e^{-ikx}\right)\ket{\frac{1}{2}\frac{1}{2}}
 	\end{equation*}
-	The second $ x_{1} > 0 $ is
+	Similarly, we construct $ \ket{\psi_{\text{+}}} $, which describes our scattering problem on the region $ x > 0 $, via
 	\begin{equation*}
-		e^{ikx_{1}}\left(\sqrt{\frac{2}{3}}t_{3/2}\ket{\frac{3}{2}\frac{1}{2}} - \sqrt{\frac{1}{3}}t_{1/2}\ket{\frac{1}{2}\frac{1}{2}}\right)
+		\ket{\psi_{+}} = \sqrt{\frac{2}{3}}\left(t_{3/2}e^{ikx}\ket{\frac{3}{2}\frac{1}{2}}\right) - \sqrt{\frac{1}{3}}\left(t_{1/2}e^{ikx}\ket{\frac{1}{2}\frac{1}{2}} \right)
 	\end{equation*}
-	So supposedly $ e^{ikx_{1}}\ket{\ua}\ket{0} $ is written in the product basis and the other terms are in the good basis...?
+	Recognizing the expression for $ \ket{\psi_{\text{in}}} $ with $ \ket{\psi_{i}} $ and factoring out the common exponential factors gives
+	\begin{align*}
+		&\ket{\psi_{-}}= e^{ikx}\ket{\ua}\ket{0} + e^{-ikx}\left( \sqrt{\frac{2}{3}} r_{3/2}\ket{\frac{3}{2}\frac{1}{2}} - \sqrt{\frac{1}{3}} r_{1/2}\ket{\frac{1}{2}\frac{1}{2}} \right)\\
+		&\ket{\psi_{+}} = 	e^{ikx}\left(\sqrt{\frac{2}{3}}t_{3/2}\ket{\frac{3}{2}\frac{1}{2}} - \sqrt{\frac{1}{3}}t_{1/2}\ket{\frac{1}{2}\frac{1}{2}}\right)
+	\end{align*}
+	Technically, these two wavefunctions complete describe our scattering problem. The $ e^{ikx}\ket{\ua}\ket{0} $ term in $ \ket{\psi_{-}} $ encodes the incident wave $ \ket{\psi_{\text{in}}} $, the remaining terms in $ \ket{\psi_{-}} $ encode the reflected scattered states, and the terms in $ \ket{\psi_{+}} $ encode the transmitted scattered states.
 	
-	We now want to write the good basis terms back in the product basis.
+	\item However, $ e^{ikx}\ket{\ua}\ket{0} $ is written in the product basis and the other terms are written in the total angular momentum basis. For consistency, we will now transform the total angular momentum terms $ \ket{\frac{3}{2}\frac{1}{2}}  $ and $ \ket{\frac{1}{2}\frac{1}{2}} $ from the total angular momentum basis to the product bases. Again, we make the transformation with the CG coefficients.
 	
-	\item So we have the states $ \ket{\frac{3}{2}\frac{1}{2}}  $ and $ \ket{\frac{1}{2}\frac{1}{2}} $ in the good basis.
-	
-	We find these states in the upper right box where the $ 3/2 $ and $ + 1/2 $ are columns. This becomes
+	We start with the state $ \ket{\frac{3}{2}\frac{1}{2}} $. In the CG table, we find the column containing $ 3/2 $ and $ +1/2 $, which correspond to $ S $ and $ M $ in the total angular momentum picture. The column below, in this case $ 1/3 $ and $ 2/3 $, contains the coefficients needed for the transformation to the product basis. The row to the left of each coefficient ($ +1 $, $ -1/2 $ for the coefficient $ 1/3 $ and $ 0 $, $ +1/2 $ for the coefficient $ 2/3 $) represents the corresponding states in the product basis; each coefficient applies to its corresponding state. The transformation of $ \ket{\frac{3}{2}\frac{1}{2}} $ to the product basis reads
 	\begin{equation*}
 		\ket{\frac{3}{2}\frac{1}{2}}  \to \sqrt{\frac{1}{3}}\ket{\da}\ket{1} +  \sqrt{\frac{2}{3}}\ket{\ua}\ket{0} 
 	\end{equation*}
-	and
+	Analogously, the transformation of $ \ket{\frac{1}{2}\frac{1}{2}} $ to the product basis reads
 	\begin{equation*}
 		\ket{\frac{1}{2}\frac{1}{2}}  \to \sqrt{\frac{2}{3}}\ket{\da}\ket{1} - \sqrt{\frac{1}{3}}\ket{\ua}\ket{0} 
 	\end{equation*}
 	
-	\item Applying this transformation to the mixed good/product gives for $ x_{1} < 0 $
-	\begin{equation*}
-		e^{ikx_{1}}\ket{\ua}\ket{0} + e^{-ikx_{1}}\left(\sqrt{\frac{2}{3}}r_{3/2}\left(\sqrt{\frac{1}{3}}\ket{\da}\ket{1} +  \sqrt{\frac{2}{3}}\ket{\ua}\ket{0}\right) - \sqrt{\frac{1}{3}}r_{1/2}\left(	\ket{\frac{1}{2}\frac{1}{2}}  \to \sqrt{\frac{2}{3}}\ket{\da}\ket{1} - \sqrt{\frac{1}{3}}\ket{\ua}\ket{0} \right)\right)
-	\end{equation*}
-	
-	And then for $ x_{1} > 0 $
-	\begin{equation*}
-		e^{ikx_{1}}\left[\sqrt{\frac{2}{3}}t_{3/2}(\cdots) - \sqrt{\frac{1}{3}}t_{1/2}(\cdots)\right]
-	\end{equation*}
-	
-	\item We can combine like terms to get for $ x_{1}< 0 $
-	\begin{equation*}
-		e^{ikx_{1}}\ket{\ua}\ket{0} + e^{-ikx_{1}}\left[\left(\frac{\sqrt{2}}{3}r_{3/2} - \frac{\sqrt{2}}{3}r_{1/2}\right)\ket{\da}\ket{1} + \left(\frac{2}{3}r_{3/2} + \frac{1}{3}r_{1/2}\right)\ket{\ua}\ket{0}\right]
-	\end{equation*}
-	and for $ x >  0 $
-	\begin{equation*}
-		e^{ikx_{1}}\left[\left(\frac{\sqrt{2}}{3}t_{3/2} - \frac{\sqrt{2}}{3}t_{1/2}\right)\ket{\da}\ket{1} + \left(\frac{2}{3}t_{3/2} + \frac{1}{3}t_{1/2}\right)\ket{\ua}\ket{0}\right]
-	\end{equation*}
-	
-	\item Alternatively, for $ x_{1} < 0 $ in terms of reflection
-	\begin{equation*}
-		e^{ikx_{1}}\ket{\ua}\ket{0} + e^{-ikx_1} \left[r_{\da 1 \leftarrow \ua 0}\ket{\da}\ket{1} + r_{\da 0 \leftarrow \ua 0}\ket{\ua}\ket{0}\right]
-	\end{equation*}
-	and $ x > 0 $:
-	\begin{equation*}
-		e^{ikx_1} \left[t_{\da 1 \leftarrow \ua 0}\ket{\da}\ket{1} + t_{\da 0 \leftarrow \ua 0}\ket{\ua}\ket{0}\right]
-	\end{equation*}
-	
-	I follows that
-	\begin{equation*}
-		r_{\da 1 \leftarrow \ua 0} = \frac{\sqrt{2}}{3}r_{3/2} - \frac{\sqrt{2}}{3}r_{1/2} 
-	\end{equation*}
-	From which we get 
-	\begin{equation*}
-		R_{\da 1 \leftarrow \ua 0} = \abs{\frac{\sqrt{2}}{3}r_{3/2} - \frac{\sqrt{2}}{3}r_{1/2} }^{2}
-	\end{equation*}
-	This is one of four possible outcomes. These are
-	\begin{equation*}
-		R_{\da 1 \leftarrow \ua 0} + R_{\ua 0 \leftarrow \ua 0} + T_{\da 1 \leftarrow \ua 0} + R_{\ua 0 \leftarrow \ua 0}
-	\end{equation*}
-	Reflect and spin flips, particle reflects and spins stays, transmits (...) and transmits (...)
-	
-	\item These are
+	\item Substituting in the product basis representations of $ \ket{\frac{3}{2}\frac{1}{2}} $ and $ \ket{\frac{1}{2}\frac{1}{2}} $ into the state $ \ket{\psi_{-}} $ gives
 	\begin{align*}
-		&\abs{\frac{\sqrt{2}}{3}r_{3/2} - \frac{\sqrt{2}}{3}r_{1/2} }^{2} + \abs{\frac{2}{3}r_{3/2} + \frac{1}{3}r_{1/2}}^{2} + \abs{\frac{\sqrt{2}}{3}t_{3/2} - \frac{\sqrt{2}}{3}t_{1/2} }^{2} + \abs{\frac{2}{3}t_{3/2} + \frac{1}{3}t_{1/2}}^{2}\\
-		& = \frac{2}{9}\abs{r_{3/2}}^{2} + \frac{2}{9}\abs{r_{1/2}}^{2}  - \frac{2}{9} 2 \Re \big[r^{*}_{3/2}r_{1/2}\big] + \frac{4}{9}\abs{r_{3/2}}^{2} + \frac{1}{9}\abs{r_{1/2}}^{2} + \frac{2}{9} 2 \Re \big[r^{*}_{3/2}r_{1/2}\big]  + \cdots \text{t terms} = \\
+		\ket{\psi_{-}} = e^{ikx}\ket{\ua}\ket{0} + e^{-ikx} & \Bigg[\sqrt{\frac{2}{3}}r_{3/2}\left(\sqrt{\frac{1}{3}}\ket{\da}\ket{1} +  \sqrt{\frac{2}{3}}\ket{\ua}\ket{0}\right) \\
+		& - \sqrt{\frac{1}{3}}r_{1/2}\left( \sqrt{\frac{2}{3}}\ket{\da}\ket{1} - \sqrt{\frac{1}{3}}\ket{\ua}\ket{0} \right)\Bigg]
+	\end{align*}
+	The state $ \ket{\psi_{-}}  $ is now fully transformed back to the product basis. 
+	
+	Similarly, the product basis representation of $ \ket{\psi_{+}} $ is
+	\begin{align*}
+		\ket{\psi_{+}} =  e^{ikx}& \Bigg[\sqrt{\frac{2}{3}}t_{3/2}\left(\sqrt{\frac{1}{3}}\ket{\da}\ket{1} +  \sqrt{\frac{2}{3}}\ket{\ua}\ket{0}\right) \\
+		&- \sqrt{\frac{1}{3}}t_{1/2}\left( \sqrt{\frac{2}{3}}\ket{\da}\ket{1} - \sqrt{\frac{1}{3}}\ket{\ua}\ket{0} \right)\Bigg]
+	\end{align*}
+	
+	\item Next, we combine like terms in $ \ket{\psi_{-}} $ to get
+	\begin{align*}
+		\ket{\psi_{-}} &= e^{ikx}\ket{\ua}\ket{0} + e^{-ikx}\left[\left(\frac{\sqrt{2}}{3}r_{3/2} - \frac{\sqrt{2}}{3}r_{1/2}\right)\ket{\da}\ket{1} + \left(\frac{2}{3}r_{3/2} + \frac{1}{3}r_{1/2}\right)\ket{\ua}\ket{0}\right]\\
+		&\equiv e^{ikx}\ket{\ua}\ket{0} + e^{-ikx}\big(r_{\da 1}\ket{\da}\ket{1} + r_{\ua 0}\ket{\ua}\ket{0}\big)
+	\end{align*}
+	where we have defined the probability amplitudes $ r_{\da 1} $ and $ r_{\ua 0} $, which represent, respectively, the probability of the first particle reflecting in the state $ \ket{\da} $ and the second particle reflecting in the state $ \ket{1} $; and the probability of the first particle reflecting in the state $ \ket{\ua} $ and the second particle reflecting in the state $ \ket{0} $. 
+	
+	
+	Similarly, combining like terms in $ \ket{\psi_{+}} $ gives 
+	\begin{align*}
+		\ket{\psi_{+}} &= e^{ikx}\left[\left(\frac{\sqrt{2}}{3}t_{3/2} - \frac{\sqrt{2}}{3}t_{1/2}\right)\ket{\da}\ket{1} + \left(\frac{2}{3}t_{3/2} + \frac{1}{3}t_{1/2}\right)\ket{\ua}\ket{0}\right]\\
+		& \equiv e^{ikx} \big( t_{\da 1}\ket{\da}\ket{1} + t_{\ua 0}\ket{\ua}\ket{0} \big)
+	\end{align*}
+	Here $ t_{\da 1} $ and $ t_{\ua 0} $ represent, respectively, the probability of the first particle transmitting in the state $ \ket{\da} $ and the second particle transmitting in the state $ \ket{1} $; and the probability of the first particle transmitting in the state $ \ket{\ua} $ and the second particle transmitting in the state $ \ket{0} $.
+	
+	\item Evidently, their are four possible outcomes: the incident particle can either reflect or transmit; and the system's spin configuration can either flip (from $ \ket{\ua}\ket{0} $ to $ \ket{\da}\ket{1} $) or remain the same. The probability for a given process comes from the squared amplitude of the corresponding $ r $ or $ t $ coefficient.
+	
+	For example, the probability for reflection with a flipped spin configuration
+	\begin{equation*}
+		R_{\da 1 } = \abs{r_{\da 1}}^{2} = \abs{\frac{\sqrt{2}}{3}r_{3/2} - \frac{\sqrt{2}}{3}r_{1/2} }^{2}
+	\end{equation*}
+	
+	\item Finally, we will show the problem obeys conservation of total probability, i.e.
+	\begin{equation*}
+		P_{\text{tot}} \equiv R_{\da 1} + R_{\ua 0} + T_{\da 1} + R_{\ua 0} = 1
+	\end{equation*}
+	We substitute in the values of the probability amplitudes to get
+	\begin{align*}
+		P_{\text{tot}} &= \abs{\frac{\sqrt{2}}{3}r_{3/2} - \frac{\sqrt{2}}{3}r_{1/2} }^{2} + \abs{\frac{2}{3}r_{3/2} + \frac{1}{3}r_{1/2}}^{2} + \abs{\frac{\sqrt{2}}{3}t_{3/2} - \frac{\sqrt{2}}{3}t_{1/2} }^{2} + \abs{\frac{2}{3}t_{3/2} + \frac{1}{3}t_{1/2}}^{2}\\
+		& = \frac{2}{9}\abs{r_{3/2}}^{2} + \frac{2}{9}\abs{r_{1/2}}^{2}  - \frac{2}{9} 2 \Re \big[r^{*}_{3/2}r_{1/2}\big] + \frac{4}{9}\abs{r_{3/2}}^{2} + \frac{1}{9}\abs{r_{1/2}}^{2} + \frac{2}{9} 2 \Re \big[r^{*}_{3/2}r_{1/2}\big]  \\ 
+		& {}\quad + \frac{2}{9}\abs{t_{3/2}}^{2} + \frac{2}{9}\abs{t_{1/2}}^{2}  - \frac{2}{9} 2 \Re \big[t^{*}_{3/2}t_{1/2}\big] + \frac{4}{9}\abs{t_{3/2}}^{2} + \frac{1}{9}\abs{t_{1/2}}^{2} + \frac{2}{9} 2 \Re \big[t^{*}_{3/2}t_{1/2}\big] \\
 		& = \frac{2}{3}\left(\abs{r_{3/2}}^{2} + \abs{t_{3/2}}^{2}\right) + \frac{1}{3}\left(\abs{r_{1/2}}^{2} + \abs{t_{1/2}}^{2}\right) 
 	\end{align*}
-	These are elements of the spin matrix for $ x < 0 $. Using the unitary identity of the spin matrix so $ \left(\abs{r_{3/2}}^{2} + \abs{t_{3/2}}^{2}\right) = 1 $ and $ \left(\abs{r_{1/2}}^{2} + \abs{t_{1/2}}^{2}\right) = 1 $. Which gives
+	Next, note that the $ r $ and $ t $ terms are precisely the elements of the scattering matrices
 	\begin{equation*}
-		\frac{2}{3}\cdot 1 + \frac{1}{3}\cdot 1 = 1
+		\mat{S}_{1/2} = 
+		\begin{bmatrix}
+			r_{1/2} & t_{1/2}\\
+			t_{1/2} & r_{1/2}
+		\end{bmatrix}
+		\eqtext{and}
+		\mat{S}_{3/2} = 
+			\begin{bmatrix}
+				r_{3/2} & t_{3/2}\\
+				t_{3/2} & r_{3/2}
+			\end{bmatrix}
 	\end{equation*}
+	Since every scattering matrix is unitary, i.e. $ \mat{S}^{\dagger}\mat{S} = \mat{I} $, it follows that 
+	\begin{equation*}
+		 \left(\abs{r_{3/2}}^{2} + \abs{t_{3/2}}^{2}\right) = 1  \eqtext{and}
+		 \left(\abs{r_{1/2}}^{2} + \abs{t_{1/2}}^{2}\right) = 1
+	\end{equation*}
+ 	Substituting these results into the expression for $ P_{\text{tot}} $ gives
+	\begin{equation*}
+		P_{\text{tot}} = \frac{2}{3}\left(\abs{r_{3/2}}^{2} + \abs{t_{3/2}}^{2}\right) + \frac{1}{3}\left(\abs{r_{1/2}}^{2} + \abs{t_{1/2}}^{2}\right) = \frac{2}{3}\cdot 1 +  \frac{1}{3}\cdot 1 = 1
+	\end{equation*}
+	In other words, because $ P_{\text{tot}} = 1 $, our scattering problem obeys conservation of probability, as it must.
 
 
 	
@@ -3548,7 +3573,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 
 
 \iffalse
-\subsection{Today}
+\subsection{Twelfth Exercise Set}
 
 \subsubsection{Theory: Non-Degenerate Perturbation Theory}
 
