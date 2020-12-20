@@ -28,7 +28,8 @@
 \newcommand{\E}{\vec{E}} % for electric field; it's used alot!
 \newcommand{\B}{\vec{B}} % for magnetic field; it's used alot!
 \newcommand{\A}{\vec{A}} % for magnetic vector potential
-\newcommand{\e}{\epsilon_{0}} % vacuum permittivity
+\newcommand{\e}{\epsilon_{0}}  % vacuum permittivity
+\newcommand{\mm}{\mu_{0}}  % vacuum permeability (\m used for magnetic dipole moment)
 \newcommand{\pe}{\vec{p}_{e}} % electric dipole moment
 \newcommand{\m}{\vec{m}} % magnetic dipole moment
 
@@ -54,10 +55,10 @@ These are my notes are from the Exercises portion of the class \textit{Elektroma
 
 \vspace{2mm}
 \textit{On Authorship:} 
-The exercises are led by Asst. Prof. Martin Klanj\v{s}ek, who has curated the problem sets and guides us through the solutions. Accordingly, credit for the problems in these notes goes to Prof. Klanj\v{s}ek. I have merely typeset the problems and provided additional explanations where I saw fit. The original exercise in Slovene (without solutions) can be found on \href{https://www-f5.ijs.si/emp-2020-2021.html}{the course website}. 
+The exercises are led by Asst. Prof. Martin Klanj\v{s}ek, who has curated the problem sets and guides us through the solutions. Accordingly, credit for the problems in these notes goes to Prof. Klanj\v{s}ek. I have merely typeset the problems and provided additional explanations where I saw fit. The original exercise in Slovene (without solutions) can be found on the \href{https://www-f5.ijs.si/emp-2020-2021.html}{\underline{course website}}. 
 
 \vspace{2mm}
-\textit{Disclaimer:} Mistakes---both trivial typos and legitimate errors---are likely. Keep in mind that these are the notes of an undergraduate student in the process of learning the material himself---take what you read with a grain of salt. If you find mistakes and feel like telling me, by \href{https://github.com/ejmastnak/fmf}{Github} pull request, \href{mailto:ejmastnak@gmail.com}{email} or some other means, I'll be happy to hear from you, even for the most trivial of errors.
+\textit{Disclaimer:} Mistakes---both trivial typos and legitimate errors---are likely. Keep in mind that these are the notes of an undergraduate student in the process of learning the material himself---take what you read with a grain of salt. If you find mistakes and feel like telling me, by \href{https://github.com/ejmastnak/fmf}{\underline{GitHub}} pull request, \href{mailto:ejmastnak@gmail.com}{\underline{email}} or some other means, I'll be happy to hear from you, even for the most trivial of errors.
 
 
 
@@ -1446,6 +1447,213 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	\end{equation*}
 \end{itemize}
 
+\subsection{Ninth Exercise Set}
+
+\subsubsection{Induction in a Square Frame}
+\textit{Two parallel wires separated by a distance $ d $. Place a square frame diagonally between the wires, like at a 45 degree angle. Wires are length $ l \gg d $ and width $ a \ll d $. Assume wires are connected at infinity. Find the mutual inductivity $ L_{12} $ of the wires and frame. Next, we place an alternating current source $ I_{1} = I_{1_{0}}\sin \omega t $ in the frame. Find the induced current in the wires. Assume Ohmic losses are negligible compared to inductive losses.}
+
+\textbf{Theory: Inductance}
+\begin{itemize}
+	\item Inductance is the proportionality constant between magnetic flux $ \Phi $ and current $ I $. For a single object
+	\begin{equation*}
+		\Phi_{1} = L_{11} I_{1}
+	\end{equation*}
+	This refers to a single object and is called self-inductance. 
+	
+	\item Alternatively, have two current-carrying objections. Then we have mutual inductance.
+	\begin{equation*}
+		\Phi_{1} = L_{12}I_{2}
+	\end{equation*}
+	Send current through 2, interested in magnetic flux through 1. It turns out that $ L_{12} = L_{21} $.
+	
+\end{itemize}
+
+\textbf{First Part of Problem}
+\begin{itemize}
+	\item Suppose wires are body two and frame is object 1. Send current $ I_{2} $ through wires. Suppose wires are coupled at infinity, so the same current runs through the top and bottom wires.
+	
+	Goal: find $ \Phi_{1} $. 
+	
+	\item To find $ \Phi_{1} $ we need $ \B $. Introduce coordinate $ y $ in the direction of $ d $ separating the wires. Note fields from each wire point in the same direction, so the fields add.
+	
+	Measure distance from the top wire with $ d - y $. 
+	\begin{equation*}
+		B = \frac{\mm I_{2}}{2\pi} \left(\frac{1}{y} + \frac{1}{d-y}\right) =  \frac{\mm I}{2\pi}  \frac{d}{y(d-y)}
+	\end{equation*}
+	
+	\item Find magnetic flux with $ \Phi = \int \B \cdot \diff \vec{S} $; the dot product drops because $ \B $ is parallel to the frame's cross section.
+	
+	The surface element is $ \diff \vec{S} = 2y\diff y $ (the frame's width is 2y). Flux is
+	\begin{align*}
+		\Phi &= \int B \diff S = 2\int_{0}^{d/2} \frac{\mm I_{2}d}{2\pi}  \frac{2y\diff y}{y(d-y)} = -\frac{2\mm I_{2}d}{\pi} \ln(d-y)\big |_{0}^{d/2}\\
+		& =  \frac{2\mm I_{2}d}{\pi} \left[\ln d - \ln\frac{d}{2}\right] =  \frac{2\mm d \ln 2}{\pi}  I_{2}
+	\end{align*}
+	Note the use of symmetry---integrate only to $ d/2 $ and multiply by two.
+	
+	The mutual inductance---the proportionality between $ \Phi $ and $ I_{2} $ is 
+	\begin{equation*}
+		L_{12} = \frac{2\ln 2}{\pi} \mm d
+	\end{equation*}
+	Note that $ L_{12} $ depends only on the separation $ d $ (and not e.g. current through the wires). Evidently $ L_{12} $ is a purely geometric property. 
+\end{itemize}
+
+\textbf{Second Part of Problem}
+\begin{itemize}
+	\item We will find the ratio $ I_{2_{0}} / I_{1_{0}} $, i.e. the ratio of current amplitudes. 
+	
+	We need an elegant way to find $ \Phi_{2} $ with $ I_{1} $ known---we will use mutual inductance and the symmetric relation $ L_{12} = L_{21} $. We have
+	\begin{equation*}
+		\Phi_{2} = L_{21}I_{1} = L_{12} I_{1}
+	\end{equation*}
+	and we know $ L_{12} $ from the first part of the problem. Plan: Use $ I_{1} $ to find $ \Phi_{2} $. Use $ \Phi_{2} $ to find induced voltage $ U_{2} $ in loop 2. Use the induced voltage $ U_{2} $ to find current $ I_{2} $ in the outer loop.
+	
+	\item First, we find
+	\begin{equation*}
+		\Phi_{2} = L_{12} I_{1}
+	\end{equation*}
+	We then find $ U_{2} $ with
+	\begin{equation*}
+		U_{12} = - \dot{\Phi}_{2} = - L_{12}\dot{I}_{1}
+	\end{equation*}
+	
+	\item We then find $ I_{2} $ from $ U_{2} $ with a generalized Ohm's law that accounts for inductance. 
+	\begin{equation*}
+		U = RI + L\dot{I} 
+	\end{equation*}
+	More generally, with capacitive loads, we have
+	\begin{equation*}
+		\dot{U}_{g} + R\dot{I} + L \ddot{I} + \frac{I}{C}
+	\end{equation*}
+	In our case, assuming resistance is negligible compared to inductive effects, we have
+	\begin{equation*}
+		U_{12} = L_{22} \dot{I}_{2}
+	\end{equation*}
+	where $ L_{22} $ is the outer loop's mutual inductance. Substituting into $ U_{12} $ above gives
+	\begin{equation*}
+		-L_{12} \dot{I}_{1} = L_{22}\dot{I}_{2}
+	\end{equation*}
+	Both currents are evidently sinusoidal; we can ``cancel'' the sine from both sides of the equation to get
+	\begin{equation*}
+		\frac{I_{2_{0}}}{I_{1_{0}}} = \frac{L_{12}}{L_{22}}
+	\end{equation*}
+	
+	\item It remains to find the self-inductance $ L_{22} $ of the parallel wires separated by a distance $ d $. Send current $ I $ through parallel wires. Find resulting magnetic flux through wires. The magnetic field is, as before,
+	\begin{equation*}
+		B = \frac{\mm I}{2\pi} \frac{d}{y(d-y)}
+	\end{equation*}
+	The field and surface are parallel---the magnetic flux is
+	\begin{equation*}
+		\Phi = \int B \diff S = \frac{\mm I l d}{2 \pi}\int_{a}^{d-a} \frac{\diff y}{y(d-y)}
+	\end{equation*}
+	where $ a $ is the wire's radius. The integral is 
+	\begin{equation*}
+		\Phi = \frac{\mm I l d}{2 \pi}\int_{a}^{d-a} \frac{\diff y}{y(d-y)} =  \frac{\mm I l}{2 \pi} \int \left(\frac{\diff y}{y} + \frac{\diff y}{d-y}\right)
+	\end{equation*}
+	\textbf{TODO} write field in original form to start! The integral is 
+	\begin{equation*}
+		\Phi = \frac{\mm I l}{2 \pi}\left[\ln \frac{d-a}{a} - \ln \frac{a}{d-a}\right] = \frac{\mm I l}{\pi} \ln \frac{d-a}{a}
+	\end{equation*}
+	Applying $ d \gg a $ we have
+	\begin{equation*}
+		\Phi = \frac{\mm I l}{\pi} \ln \frac{d}{a}
+	\end{equation*}
+	The self-inductance---the proportionality constant between $ \Phi $ and $ I $ is thus
+	\begin{equation*}
+		L_{22} = \frac{\mm l}{\pi}\ln \frac{d}{a}
+	\end{equation*}
+	
+	\item With $ L_{22} $ known, we return to the current amplitude ratio to get
+	\begin{equation*}
+		\frac{I_{2_{0}}}{I_{1_{0}}} = \frac{\frac{2\ln 2}{\pi} \mm d}{\frac{\mm l}{\pi}\ln \frac{d}{a}} = \frac{2\ln 2}{\frac{l}{d} \ln \frac{d}{a}}
+	\end{equation*}
+	For a feel of the result, if we assume $ l/d = d/a = 10 $, we have 
+	\begin{equation*}
+		\frac{I_{2_{0}}}{I_{1_{0}}} \approx 0.06
+	\end{equation*}
+\end{itemize}
+
+\subsubsection{Cabrera Experiment---Magnetic Monopoles}
+\textit{Consider a superconducting current loop with non-zero inductance $ L$, radius $ a $ and a built-in ammeter. Assume a magnetic monopole passes through the loop along the axis of symmetry. Find the resulting current pulse in the loop.}
+\begin{itemize}
+	\item First, magnetic field of a monopole:
+	\begin{equation*}
+		\B(\r) = \frac{\mm}{4\pi} \frac{g}{r^{2}}
+	\end{equation*}
+	where $ g $ is the ``magnetic charge'', with units $ \si{\ampere \meter} $.
+	
+	
+	Plan: find magnetic flux through the loop, use this to find induced voltage $ U $, use that to find current.
+	
+	\item Assume the monopole is a distance $ d(t) $ from the loop's center. Assign a radial distance $ \rho $ within the current loop. 
+	
+	We want only the perpendicular component of $ \B $ through the loop. Generally we have
+	\begin{equation*}
+		B = \frac{\mm g}{4\pi}\frac{1}{d^{2} + \rho^{2}}
+	\end{equation*}
+	We find $ B_{\perp} $ with similar triangles:
+	\begin{equation*}
+		B_{\perp} = \frac{d}{\sqrt{d^{2} + \rho^{2}}} B = \frac{\mm g d}{4\pi}\frac{1}{(\rho^{2} + d^{2})^{3/2}}
+	\end{equation*}
+	
+	\item We find magnetic flux $ \Phi $ through the loop, using $  \diff S = 2\pi \rho \diff \rho $, with
+	\begin{align*}
+		\Phi &= \int B_{\perp} \diff S = \frac{\mm g d}{2} \int_{0}^{a} \frac{\rho \diff \rho}{(\rho^{2} + d^{2})^{3/2}} = \frac{\mm g d}{4}(-2)\frac{1}{\sqrt{\rho^{2} + d^{2}}}\bigg |_{0}^{a}\\
+		& = \frac{\mm g}{2}\left(1 - \frac{d}{\sqrt{a^{2} + d^{2}}}\right)
+	\end{align*}
+	Of course, $ d = d(t) $ is time dependent. Assume $ t = 0 $ when the monopole is at $ d = 0 $, in the center of the loop. If the monopole moves with constant speed $ v $, then on the left of the loop (and thus for negative time) we have
+	\begin{equation*}
+		d = - vt
+	\end{equation*}
+	The time-dependent flux on the left of the loop is
+	\begin{equation*}
+		\Phi(t) = \frac{\mm g}{2}\left(1 + \frac{vt}{\sqrt{a^{2} +v^{2}t^{2}}}\right)
+	\end{equation*}
+	On the right of loop, we have $ d = vt $, and thus $ \Phi $ is
+	\begin{equation*}
+		\Phi(t) = -\frac{\mm g}{2}\left(1 - \frac{vt}{\sqrt{a^{2} +v^{2}t^{2}}}\right)
+	\end{equation*}
+	Note the additional minus sign, since on the right of the loop, the magnetic flux points in the opposite direction.
+	
+	Note that $ \Phi(t) $ goes from $ 0 $ at $ t = -\infty $ to a maximum value of $ \frac{\mm g}{2} $ as $ t \to 0 $ from the left. $ \Phi $ then jumps to $ - \frac{\mm g}{2}  $ at $ t  $ from the right, and then decreases back to 0 at $ t \to \infty $. Note the discontinuity at $ t = 0 $ when the monopole travels through the center of the loop.
+	
+	\item Next, we find the induced voltage in the loop. We start with a modified Maxwell equation:
+	\begin{equation*}
+		\curl \E = - \pdv{\B}{t} - \mm \vec{j}_{m}
+	\end{equation*}
+	where $ \vec{j}_{m} $ is magnetic current density and accounts for the possible existence of magnetic monopoles. 
+	
+	Starting with the modified Maxwell equation, we derive the modified law of induction. 
+	\begin{equation*}
+		\int (\curl \E)\diff \vec{S} = - \pdv{t}\int \B \cdot \diff \vec{S} - \mm \int \vec{j}_{m}\diff S 
+	\end{equation*}
+	This becomes
+	\begin{equation*}
+		\oint \E \cdot \diff \vec{l} = U_{i} = - \dot{\Phi} - \mm I_{m}
+	\end{equation*}
+	where $ I_{m} $ is magnetic current through the loop's cross section and $ U_{i} $ is induced voltage. 
+	
+	The magnetic current $ I_{m} $ is nonzero only at the singular instant when the magnetic monopole passes through the loop, like a delta function. We have $ I_{m} = g \delta (t) $ where $ \delta(t) $ has units $ \si{\second^{-1}} $. 
+	
+	\item Using the loop equation $ U_{i} = L \dot{I} $ with $ R = 0 $ for a superconducting loop we have
+	\begin{equation*}
+		U_{i} = - \dot{\Phi} - \mm g \delta (t) = L \dot{I}
+	\end{equation*}
+	We integrate over time from $ -\infty $ to $ t $ to get
+	\begin{equation*}
+		LI\big |_{-\infty}^{t} = - \Phi |_{-\infty}^{t} - \mm g H(t)
+	\end{equation*}
+	where $ H(t) $ is the Heaviside step function. The equation becomes
+	\begin{equation*}
+		LI(t) = - \Phi(t)  - \mm gH(t)
+	\end{equation*}
+	where we've used $ I(-\infty) = 0 $ and $ \Phi(t) = 0$. Remember that $ \Phi $ changes as $ t $ crosses $ 0 $! Meanwhile, the Heaviside step function moves the $ t > 0 $ portion of $ \Phi(t) $ down by $ \mm g $ from $ \frac{\mm g}{2} $ to $ -\frac{\mm g}{2} $ which ends up exactly continuous with $ \Phi(t) $ on $ t < 0 $, the current $ LI(t) $ ends up as a continuous, measurable quantity.
+	
+	\item If we use the Dirac quantization 
+	\begin{equation*}
+		\frac{\mm g e_{0}}{2} = h \implies \mm g = \frac{2h}{e_{0}}
+	\end{equation*}
+	we get an expected numerical result for the quantity $ \mm g $, and can theoretically predict the value of $ LI(t) $.
+\end{itemize}
 
 \end{document}
 
