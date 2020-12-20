@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.special import beta
 
 plt.rcParams['mathtext.fontset'] = 'cm'
 plt.rcParams['font.family'] = 'STIXGeneral'
@@ -26,7 +27,29 @@ usetex = False  # turn off to plot faster
 # -----------------------------------------------------------------------------
 # START ANALYSIS FUNCTIONS
 # -----------------------------------------------------------------------------
+def get_Aij(m1, n1, m2, n2):
+    """
+    Returns the matrix elements A_{ij} = A_{(m'n')(mn)} (see report for more on notatation and indexing)
+    Uses the beta function
+    :param m1: equivalent to m'
+    :param n1: equivalent to n'
+    :param m2: equivalent to m
+    :param n2: equivalent to n
+    """
+    if m1 != m2:
+        return 0  # elements are orthogonal with respect to m
+    else:  # if m1 == m2
+        return -0.5*np.pi*beta(n1 + n2 - 1, 3 + 4*m1)*(n1*n2*(3 + 4*m1))/(2 + 4*m1 + n1 + n2)
 
+
+def get_bi(m, n):
+    """
+    Returns the vector components b_{i} = b_{m'n'} (see report for more on notatation and indexing)
+    Uses the beta function
+    :param m: equivalent to m'
+    :param n: equivalent to n'
+    """
+    return - 2 * beta(2*m + 3, n + 1)/(2*m + 1)
 # -----------------------------------------------------------------------------
 # END ANALYSIS FUNCTIONS
 # -----------------------------------------------------------------------------
