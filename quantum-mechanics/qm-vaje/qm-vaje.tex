@@ -17,7 +17,7 @@
 \setlength{\parindent}{0pt} % to stop indenting new paragraphs
 \newcommand{\diff}{\mathop{}\!\mathrm{d}} % differential
 \newcommand{\eqtext}[1]{\qquad \text{#1} \qquad}
-\newcommand{\schro}{Schr\"{o}dinger\xspace}
+\newcommand{\Schro}{Schr\"{o}dinger\xspace}
 \newcommand{\pert}{perturbation\xspace}
 \newcommand{\Ham}{Hamiltonian\xspace}
 
@@ -44,7 +44,10 @@
 \newcommand{\evb}[1]{\big \langle {#1} \big \rangle}  % for expectation values of fixed size
 \newcommand{\bket}[1]{\big | {#1} \big \rangle}  % for big ket
 \newcommand{\bbra}[1]{\big \langle {#1} \big |}  % for big bra
-\newcommand{\bbraket}[2]{\big \langle {#1} \big | {#2} \big \rangle}  % for brakets of fixed size
+\newcommand{\bbraket}[2]{\big \langle {#1} \big | {#2} \big \rangle}  % for \big brakets
+
+\newcommand{\threebraket}[3]{\left \langle {#1} \left | {#2} \right | {#3} \right \rangle}  % braket with three terms, variable size
+\newcommand{\bthreebraket}[3]{\big \langle {#1} \big | {#2} \big | {#3} \big \rangle}  % braket with three terms, fixed \big size
 
 \begin{document}
 \title{Quantum Mechanics Exercises Notes}
@@ -93,13 +96,13 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 	\end{equation*}
 	\textbf{Notation:} By convention, we usually write operators without the hat symbol and distinguish between operators and scalar quantities based on context.
 	
-	\item We will often solve the stationary \schro equation, which reads
+	\item We will often solve the stationary \Schro equation, which reads
 	\begin{equation*}
 		H\psi_{n}(x) = E_{n}\psi_{n}(x)
 	\end{equation*}
 	Note that there is no time dependence of $ \psi $ here, and that this is an eigenvalue equation, where $ E_{n} $ are the eigenvalues of the Hamiltonian operator and $ \psi_{n} $ are the corresponding eigenfunctions.
 	
-	We then use the solutions $ \psi_{n}(x) $ of the stationary \schro equation to get the time-dependent wave function $ \psi(x, t) $. This process is called \textit{time evolution}. 
+	We then use the solutions $ \psi_{n}(x) $ of the stationary \Schro equation to get the time-dependent wave function $ \psi(x, t) $. This process is called \textit{time evolution}. 
 	
 	\item The time evolution procedure goes as follows: Start with an initial wavefunction $ \psi(x, 0) $ at time $ t = 0 $. Expand $ \psi(x, 0) $ over a basis of the eigenfunctions $ \psi_{n}(x) $.
 	\begin{equation*}
@@ -151,7 +154,7 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 		\end{cases}
 	\end{equation*}
 	
-	\item The \schro equation for region 1 is
+	\item The \Schro equation for region 1 is
 	\begin{equation*}
 		- \frac{\hbar^{2}}{2m}\pdv[2]{\psi}{x} + 0 \cdot \psi = E \psi 
 	\end{equation*}
@@ -159,13 +162,13 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 	\begin{equation*}
 		\psi_{1}(x) = A e^{\kappa x} + B e^{- \kappa x}
 	\end{equation*}
-	To find $ \kappa $, insert $ \psi_{1} $ into the \schro equation for region 1. Differentiating, canceling the wave function terms from both sides, and rearranging gives
+	To find $ \kappa $, insert $ \psi_{1} $ into the \Schro equation for region 1. Differentiating, canceling the wave function terms from both sides, and rearranging gives
 	\begin{equation*}
 		-\frac{\hbar^{2}}{2m} \kappa^{2}\left(Ae^{i\kappa x} + B e^{- i\kappa x}\right) = E \left(A e^{i\kappa x} + B e^{- i\kappa x}\right) \implies \kappa^{2} = \frac{2mE_{0}}{\hbar^{2}}
 	\end{equation*}
 	where $ E_{0} = - E $ is a positive quantity.
 	
-	\item The \schro equation for region 2 is
+	\item The \Schro equation for region 2 is
 	\begin{equation*}
 		- \frac{\hbar^{2}}{2m}\pdv[2]{\psi}{x} - V_{0} \cdot \psi = E \psi
 	\end{equation*}
@@ -173,13 +176,13 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 	\begin{equation*}
 		\psi_{2}(x) = Ce^{ikx} + De^{-ikx}
 	\end{equation*}
-	To find $ k $, insert $ \psi_{2} $ into the \schro equation for region 2. The result after differentiation is
+	To find $ k $, insert $ \psi_{2} $ into the \Schro equation for region 2. The result after differentiation is
 	\begin{equation*}
 		+\frac{\hbar^{2}}{2m} k^{2}\left(Ce^{ik x} + D e^{- ik x}\right) - V_{0}\left(C e^{ik x} + D e^{- ik x}\right)  = E \left(C e^{ik x} + D e^{- ik x}\right) 
 	\end{equation*}
 	The wave functions terms in parentheses cancel, leading to $ k^{2} = \frac{2m(V_{0}-E_{0})}{\hbar^{2}} $ where $ E_{0} = - E $ is a positive quantity.
 	
-	\item The \schro equation for region 3 is analogous to the equation for region 1. Following a similar procedure, we would get
+	\item The \Schro equation for region 3 is analogous to the equation for region 1. Following a similar procedure, we would get
 	\begin{equation*}
 		\psi_{3} = Fe^{\kappa x} + Ge^{-\kappa x} \eqtext{where} \kappa^{2} = \frac{2mE_{0}}{\hbar^{2}}
 	\end{equation*}
@@ -231,7 +234,7 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 	
 \end{itemize}
 
-\subsubsection{Theory: Wavefunctions of a Particle in an Even Potential}
+\subsubsection{Theory: Wavefunctions of a Particle in an Even Potential} \label{qmv:sss:even-odd}
  \textbf{Theorem:} The eigenfunctions of a particle in an even potential are either even or odd.
  
 \begin{itemize}
@@ -241,11 +244,11 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 	\end{equation*}
 	We'll use the superposition principle later in the proof when considering degenerate states.
 
-	\item To prove the even/odd theorem for particles in an even potential $ V(x) = V(-x) $, we start with the stationary \schro equation
+	\item To prove the even/odd theorem for particles in an even potential $ V(x) = V(-x) $, we start with the stationary \Schro equation
 	\begin{equation*}
 		H\psi(x) = E \psi(x)
 	\end{equation*}
-	We make the parity transformation $ x \to -x $ and note the Hamiltonian is invariant under parity transformation if $ V $ is even, since $ \pdv{}{(-x)} = - \pdv{}{x} $, and $ \pdv[2]{}{(-x)} = \pdv[2]{}{x} $. Under the transformation $ x \to -x $, the \schro equation reads
+	We make the parity transformation $ x \to -x $ and note the Hamiltonian is invariant under parity transformation if $ V $ is even, since $ \pdv{}{(-x)} = - \pdv{}{x} $, and $ \pdv[2]{}{(-x)} = \pdv[2]{}{x} $. Under the transformation $ x \to -x $, the \Schro equation reads
 	\begin{equation*}
 		H\psi(-x) = E\psi(-x)
 	\end{equation*}
@@ -448,11 +451,11 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 \subsubsection{Bound States in a Delta Potential Take 2}
 \textit{Find the energies and wave functions of the bound states of a quantum particle of mass $ m $ in a delta function potential well using a plane wave ansatz and appropriate boundary conditions}. 
 \begin{itemize}
-	\item Write the potential well in the form $ V(x) = - \lambda \delta (x) $. The stationary \schro equation for the potential reads
+	\item Write the potential well in the form $ V(x) = - \lambda \delta (x) $. The stationary \Schro equation for the potential reads
 	\begin{equation*}
 		- \frac{\hbar^{2}}{2m}\pdv[2]{\psi}{x} - \lambda \delta(x) \psi = E\psi
 	\end{equation*}
-	We find the boundary condition on the derivative $ \psi' $ by integrating the \schro equation over a small region $ [-\epsilon, \epsilon] $. 
+	We find the boundary condition on the derivative $ \psi' $ by integrating the \Schro equation over a small region $ [-\epsilon, \epsilon] $. 
 	\begin{equation*}
 		-\frac{\hbar^{2}}{2m} \eval{\pdv{\psi}{x}}_{-\epsilon}^{\epsilon} - \lambda \int_{-\epsilon}^{\epsilon} \delta(x) \psi(x)\diff x = E \int_{-\epsilon}^{\epsilon}\psi(x) \diff x
 	\end{equation*}
@@ -516,11 +519,11 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 	\end{equation*}
 	The terms with $ A $ coefficients represent movement toward the potential barrier 
 	
-	\item In region 2, we don't know $ V(x) $, so we have to be more general. Because $ \psi_{2} $ comes from a second-order linear differential equation (i.e. the \schro equation), its general form is a linear combination of two linearly independent functions, e.g.
+	\item In region 2, we don't know $ V(x) $, so we have to be more general. Because $ \psi_{2} $ comes from a second-order linear differential equation (i.e. the \Schro equation), its general form is a linear combination of two linearly independent functions, e.g.
 	\begin{equation*}
 		\psi_{2} = C f(x) + D g(x)
 	\end{equation*}
-	where $ f $ and $ g $ are linearly independent solutions of the \schro equation in region $ 2 $. 
+	where $ f $ and $ g $ are linearly independent solutions of the \Schro equation in region $ 2 $. 
 	
 	\item Because $ E > V_{1}, V_{3} $, the states in regions 1 and 3 are free, meaning the particle's Hamiltonian has a continuous spectrum of energy eigenvalues. As a result, energy eigenvalues aren't particularly useful for characterizing the problem. 
 	
@@ -700,11 +703,11 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 \end{itemize}
 \textbf{On the Problem's Symmetry:} A few notes on why the scattering matrix for the delta potential has only two independent parameters, i.e. why $ \tilde{t} = t $ and $ \tilde{r} = r $.
 \begin{itemize}
-	\item  Start by noting that the wave functions $ \psi_{1,3} $ in regions 1 and 3 solve the stationary \schro equation
+	\item  Start by noting that the wave functions $ \psi_{1,3} $ in regions 1 and 3 solve the stationary \Schro equation
 	\begin{equation*}
 		H \psi = E \psi \eqtext{where} H = -\frac{\hbar^{2}}{m}\pdv[2]{}{x} + V(x)
 	\end{equation*}
-	We then take the \schro equation's complex conjugate to get
+	We then take the \Schro equation's complex conjugate to get
 	\begin{equation*}
 		H \psi^{*} = E\psi^{*}
 	\end{equation*}
@@ -742,7 +745,7 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 	\end{equation*}
 	meaning that $ \mat{S} $ is symmetric for scattering off a delta potential. This symmetry is the reason why $ t = \tilde{t} $ in the delta function scattering matrix. Formally, this is a consequence of the problem's Hamiltonian being invariant under time reversal. 
 
-	\item Next, why $ r = \tilde{r} $. This is a consequence of the problem's reflection symmetry. Start again with the \schro equation:
+	\item Next, why $ r = \tilde{r} $. This is a consequence of the problem's reflection symmetry. Start again with the \Schro equation:
 	\begin{equation*}
 		H \psi(x) = E \psi(x)
 	\end{equation*}
@@ -1033,15 +1036,15 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 
 \subsubsection{Theory: Time Evolution of a Wave Function}
 \begin{itemize}
-	\item We find the time evolution of a wave function by solving the \schro equation
+	\item We find the time evolution of a wave function by solving the \Schro equation
 	\begin{equation*}
 		H\psi(x, t) = i\hbar \pdv{t}\psi(x, t)
 	\end{equation*}
-	One option is to solve the stationary \schro equation
+	One option is to solve the stationary \Schro equation
 	\begin{equation*}
 		H \psi_{n}(x) = E_{n}\psi_{n}(x)
 	\end{equation*}
-	and expand the initial state $ \psi(x, 0) $ in terms of the basis functions $ \psi_{n} $ solving the stationary \schro equation, i.e. writing $ \psi(x, 0) $ as
+	and expand the initial state $ \psi(x, 0) $ in terms of the basis functions $ \psi_{n} $ solving the stationary \Schro equation, i.e. writing $ \psi(x, 0) $ as
 	\begin{equation*}
 		\psi(x, 0) = \sum_{n}c_{n}\psi_{n}(x)
 	\end{equation*}
@@ -1049,7 +1052,7 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 	\begin{equation*}
 		\psi(x, t) = \sum_{n}c_{n}\psi_{n}(x)e^{-i\frac{E_{n}}{\hbar}t}
 	\end{equation*}
-	In Dirac bra-ket notation, the stationary \schro equation and eigenfunction expansion of the initial state read
+	In Dirac bra-ket notation, the stationary \Schro equation and eigenfunction expansion of the initial state read
 	\begin{equation*}
 		H\ket{n} = E_{n}\ket{n} \eqtext{and} \ket{\psi, 0} = \sum_{n}c_{n}\ket{n} 
 	\end{equation*}
@@ -1132,7 +1135,7 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 	\begin{equation*}
 		\ev{A, t} = \bra{\psi, t} A \ket{\psi, t}
 	\end{equation*}
-	is called the \textit{\schro approach}. Finding $ \ket{A, t} $ via time evolution of the $ A $ operator, i.e. 
+	is called the \textit{\Schro approach}. Finding $ \ket{A, t} $ via time evolution of the $ A $ operator, i.e. 
 	\begin{equation*}
 		\ev{A, t} = \bra{\psi, 0}\tevp A \tev \ket{\psi, 0} = \bra{\psi, 0} A(t) \ket{\psi, 0}
 	\end{equation*}
@@ -1574,7 +1577,7 @@ In our case (for a harmonic oscillator), the theorem reads
 		\ev{x, t} &= \sqrt{2}x_{0} \Re \left[e^{-i\omega t} \bra{\psi, 0}a \ket{\psi, 0}\right] = \sqrt{2}x_{0} \Re \left[\frac{1}{2} e^{-i\omega t}\right]\\
 		&=\frac{x_{0}}{\sqrt{2}}\cos \omega t
 	\end{align*}
-	which matches the result from the earlier \schro approach. 
+	which matches the result from the earlier \Schro approach. 
 \end{itemize}
 
 \subsection{Sixth Exercise Set}
@@ -1700,7 +1703,7 @@ In our case (for a harmonic oscillator), the theorem reads
 	\begin{equation*}
 		\ket{z, t} = e^{-\frac{\abs{z}^{2}}{2}}  e^{ze^{-i\omega t}a^{\dagger}} e^{-i\frac{\omega}{2}t}\ket{0} =  e^{-i\frac{\omega}{2}t} e^{-\frac{\abs{ze^{-i\omega t}}^{2}}{2}} e^{ze^{-i\omega t}a^{\dagger}}\ket{0}
 	\end{equation*}
-	Recall that, like before in the \schro approach, the equality $ \abs{z}^{2} = \abs{ze^{-i\omega t}}^{2}$ allows us to introduce the phase factor $ e^{-i\omega t} $ into the exponent of $ e^{-\frac{\abs{z}^{2}}{2}} $. Note the similarity between this last result for $ \ket{z, t} $ to the initial expression 
+	Recall that, like before in the \Schro approach, the equality $ \abs{z}^{2} = \abs{ze^{-i\omega t}}^{2}$ allows us to introduce the phase factor $ e^{-i\omega t} $ into the exponent of $ e^{-\frac{\abs{z}^{2}}{2}} $. Note the similarity between this last result for $ \ket{z, t} $ to the initial expression 
 	\begin{equation*}
 		\ket{z, t} = \tev e^{-\frac{\abs{z}^{2}}{2}}e^{za^{\dagger}}\ket{0}
 	\end{equation*}
@@ -1708,7 +1711,7 @@ In our case (for a harmonic oscillator), the theorem reads
 	\begin{equation*}
 		\ket{z, t} =  e^{-i\frac{\omega}{2}t} e^{-\frac{\abs{ze^{-i\omega t}}^{2}}{2}} e^{ze^{-i\omega t}a^{\dagger}}\ket{0} = e^{-i\frac{\omega}{2}t}\ket{ze^{-i\omega t}}
 	\end{equation*}
-	in agreement with the earlier result using the \schro approach. 
+	in agreement with the earlier result using the \Schro approach. 
 	
 	\item Next, we want to get a better sense for the behavior of the wave function $ \ket{z, t} $. From the last exercise set, we know the following expressions for any state of quantum harmonic oscillator:
 	\begin{align*}
@@ -1915,7 +1918,7 @@ In our case (for a harmonic oscillator), the theorem reads
 	\end{equation*}
 	In other words, we can write the two-dimensional Hamiltonian as the sum of two one-dimensional Hamiltonians corresponding to motion in the $ x $ and $ y $ directions. 
 	
-	\item We want to solve the stationary \schro equation
+	\item We want to solve the stationary \Schro equation
 	\begin{equation*}
 		H \psi(x, y) = E\psi(x, y)
 	\end{equation*} 
@@ -1982,11 +1985,11 @@ In our case (for a harmonic oscillator), the theorem reads
 	\end{equation*}
 	Note that the potential depends only on the distance $ r $ from the origin; such an oscillator is called \textit{isotropic}. 
 	
-	Because $ k_{x} = k_{y} \equiv k $ we have $ \omega_{x} = \omega_{y} \equiv \omega = \sqrt{\frac{k}{m}}$. The stationary \schro then reads
+	Because $ k_{x} = k_{y} \equiv k $ we have $ \omega_{x} = \omega_{y} \equiv \omega = \sqrt{\frac{k}{m}}$. The stationary \Schro then reads
 	\begin{equation*}
 		H\ket{n_{x}n_{y}} = \hbar \omega (n_{x} + n_{y} + 1)\ket{n_{x}n_{y}}
 	\end{equation*}
-	The system's lowest possible energy occurs for $ n_{x} = n_{y} = 0 $, where the stationary \schro equation reads $ H\ket{00} = \hbar \omega \ket{00} $. This is the ground state, and the energy $ E_{00} = \hbar \omega $ is called the zero-point energy. 
+	The system's lowest possible energy occurs for $ n_{x} = n_{y} = 0 $, where the stationary \Schro equation reads $ H\ket{00} = \hbar \omega \ket{00} $. This is the ground state, and the energy $ E_{00} = \hbar \omega $ is called the zero-point energy. 
 	
 	The first two excited states are
 	\begin{equation*}
@@ -2447,9 +2450,9 @@ These are the two linearly independent states spanning the isotropic harmonic os
 
 \textbf{Time Evolution of the Initial State}
 \begin{itemize}
-	\item With the initial state $ \ket{\psi, 0} $ known, the next step is to find the time-dependent wave function $ \ket{\psi, t} $ for a particle with magnetic moment $ \m $ in an external magnetic field. We'll find the time evolution in the \schro picture using the particle's Hamiltonian $ H = -\gamma BL_{z}  $. 
+	\item With the initial state $ \ket{\psi, 0} $ known, the next step is to find the time-dependent wave function $ \ket{\psi, t} $ for a particle with magnetic moment $ \m $ in an external magnetic field. We'll find the time evolution in the \Schro picture using the particle's Hamiltonian $ H = -\gamma BL_{z}  $. 
 	
-	\item We'll first solve the stationary \schro equation $ H \ket{\psi} = E \ket{\psi} $ for the basis functions $ \ket{11} $, $ \ket{10} $ and $ \ket{1-1} $; this gives
+	\item We'll first solve the stationary \Schro equation $ H \ket{\psi} = E \ket{\psi} $ for the basis functions $ \ket{11} $, $ \ket{10} $ and $ \ket{1-1} $; this gives
 	\begin{align*}
 		&H \ket{11} = - \gamma BL_{z}\ket{11} = -\gamma B (1\cdot \hbar) \ket{11} = -\gamma B \hbar \ket{11}\\
 		&H\ket{10} = - \gamma BL_{z}\ket{10} = -\gamma B (0\cdot \hbar) \ket{10} = 0 \ket{10}\\
@@ -2617,7 +2620,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 \textbf{Finding Eigenfunctions and and Eigenvalues}
 \begin{itemize}
 	
-	\item To find the Hamiltonian's eigenfunctions and eigenvalues, we need to solve the stationary \schro equation
+	\item To find the Hamiltonian's eigenfunctions and eigenvalues, we need to solve the stationary \Schro equation
 	\begin{equation*}
 		H \ket{\psi} = E \ket{\psi}
 	\end{equation*}
@@ -2647,13 +2650,13 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\end{equation*}
 	where the eigenstate $ \ket{\k} $ corresponds to the wavefunction $ e^{i\vec{k}\cdot \vec{r}} $ and the eigenvalue is $ \hbar \vec{k} = \hbar(k_{x}, k_{y}) $.
 	
-	\item Returning the stationary \schro equation and using $ \ket{\psi_{p}} = \ket{\k} $ we have
+	\item Returning the stationary \Schro equation and using $ \ket{\psi_{p}} = \ket{\k} $ we have
 	\begin{equation*}
 		H\ket{\psi} = H\big(\ket{\psi_{p}} \otimes \ket{\psi_{s}}\big) = H\big(\ket{\k} \otimes \ket{\psi_{s}}\big) = E \big(\ket{\k}\otimes \ket{\psi_{s}}\big)
 	\end{equation*}
-	Again, the replacement of $ \ket{\psi_{p}}$ with $ \k $ in the \schro equation is possible only because $ H $ and $ \vec{p} $ commute. We have thus reduced our problem to finding spin wavefunctions $ \ket{\psi_{s}} $. 
+	Again, the replacement of $ \ket{\psi_{p}}$ with $ \k $ in the \Schro equation is possible only because $ H $ and $ \vec{p} $ commute. We have thus reduced our problem to finding spin wavefunctions $ \ket{\psi_{s}} $. 
 	
-	\textit{Notation}: I practice, we drop the tensor product symbol $ \otimes $; in this convention the above stationary \schro reads
+	\textit{Notation}: I practice, we drop the tensor product symbol $ \otimes $; in this convention the above stationary \Schro reads
 	\begin{equation*}
 		H\big(\ket{\k} \ket{\psi_{s}}\big) = E \big(\ket{\k} \ket{\psi_{s}}\big)
 	\end{equation*}
@@ -2901,7 +2904,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\begin{equation*}
 		\ket{\psi} = \ket{\vec{k}}\ket{\psi_{s}}
 	\end{equation*}
-	We substituted this factorization in the \schro equation $ H \ket{\psi} = E \ket{\psi} $ and ended up with the ($ 2 \cross 2 $) eigenvalue problem
+	We substituted this factorization in the \Schro equation $ H \ket{\psi} = E \ket{\psi} $ and ended up with the ($ 2 \cross 2 $) eigenvalue problem
 	\begin{equation*}
 		\begin{bmatrix}
 		\frac{\hbar^{2}k^{2}}{2m} & \frac{\lambda \hbar^{2}}{2i}(k_{x}-ik_{y}) \\
@@ -2960,7 +2963,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 		\beta
 		\end{bmatrix}
 	\end{equation*}
-	The stationary \schro equation $ H \psi = E \psi $ reads
+	The stationary \Schro equation $ H \psi = E \psi $ reads
 	\begin{equation*}
 		H \psi = \frac{\hbar^{2}k^{2}}{2m} e^{i\k \cdot \vec{r}}
 		\begin{bmatrix}
@@ -3100,7 +3103,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\end{align*}
 	Because $ \T H\T^{-1} = \T$, $ H $ is invariant under time reversal.
 	
-	\item We will know make use of our Hamiltonian $ H $'s time invariance. We start with the stationary \schro equation $ H \ket{\psi} = E \ket{\psi} $, apply $ \T $ to $ \ket{\psi} $ on both sides to get  $ H \T\ket{\psi} = E \T\ket{\psi} $, and use the commutativity of $ H $ and $ \T $ to get
+	\item We will know make use of our Hamiltonian $ H $'s time invariance. We start with the stationary \Schro equation $ H \ket{\psi} = E \ket{\psi} $, apply $ \T $ to $ \ket{\psi} $ on both sides to get  $ H \T\ket{\psi} = E \T\ket{\psi} $, and use the commutativity of $ H $ and $ \T $ to get
 	\begin{equation*}
 		H \T \ket{\psi} = \T H \ket{\psi} = \T E \ket{\psi} = E \T \ket{\psi}
 	\end{equation*}
@@ -3121,11 +3124,11 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	which implies $ \braket{\psi}{\T\psi} = 0 $. In other words, the projection  $ \ket{\psi} $ onto $ \ket{\T \psi} $ is zero, meaning $ \ket{\psi} $ and $ \ket{\psi} $ are orthogonal and thus linearly independent.
 	
 	
-	\item To summarize: For a spin $ 1/2 $ particle (which has $ \T^{2} = -I $) whose Hamiltonian is invariant under time reversal, if $ \ket{\psi} $ is a solution of the stationary \schro equation
+	\item To summarize: For a spin $ 1/2 $ particle (which has $ \T^{2} = -I $) whose Hamiltonian is invariant under time reversal, if $ \ket{\psi} $ is a solution of the stationary \Schro equation
 	\begin{equation*}
 		H \ket{\psi} = E\ket{\psi}
 	\end{equation*}
-	then the wavefunction $ \T\ket{\psi} $ also solves the stationary \schro equation with the same energy eigenvalue, and $ \ket{\psi} $ is orthogonal to $ \T \ket{\psi} $. 
+	then the wavefunction $ \T\ket{\psi} $ also solves the stationary \Schro equation with the same energy eigenvalue, and $ \ket{\psi} $ is orthogonal to $ \T \ket{\psi} $. 
 	
 	This means every eigenstate of a $ \T $-invariant spin $ 1/2 $ Hamiltonian has degeneracy of at least two, since we have two linearly independent solutions $ \ket{\psi} $ and $ \T \ket{\psi} $ for each energy eigenvalue. This result is called \textit{Kramers degeneracy}, and $ (\ket{\psi}, \T\ket{\psi}) $ are called a \textit{Kramers pair. }
 
@@ -3307,7 +3310,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\end{equation*}
 	Because $ H $ commutes with all of the spin basis operators, we can find eigenfunctions that are eigenfunctions of both $ H $ and all of the spin operators simultaneously.
 	
-	\item Next, we solve the stationary \schro equation:
+	\item Next, we solve the stationary \Schro equation:
 	\begin{equation*}
 		H \ket{\psi} = E\ket{\psi}
 	\end{equation*}
@@ -3572,84 +3575,81 @@ These are the two linearly independent states spanning the isotropic harmonic os
 \end{itemize}
 
 
-\iffalse
 \subsection{Twelfth Exercise Set}
 
 \subsubsection{Theory: Non-Degenerate Perturbation Theory}
 
 \begin{itemize}
-	\item Hamiltonian; eigenfunctions and energies known:
+	\item Consider a \Ham $ H $ with known eigenfunctions $ \psi_{n} $ and energy non-degenerate eigenvalues $ E_{n} $ satisfying the stationary \Schro
 	\begin{equation*}
 		H \ket{n} = E_{n} \ket{n}
 	\end{equation*}
-	Assume the energies $ E_{n} $ are non-degenerate.
-	
-	\item Next have a Hamiltonian
+	We then add a small perturbation term $ H' $ to the $ H $ to get the perturbed \Ham
 	\begin{equation*}
 		\t{H} = H + H'
 	\end{equation*}
-	where $ H' $ is the perturbation
 	
-	\item The corrected energy of the perturbed Hamiltonian is
+	\item In this case, to second order in perturbation theory, the energy eigenvalues of the perturbed Hamiltonian are
 	\begin{equation*}
-		\t{E}_{n} = E_{n} + \bra{n}H'\ket{n} + \sum_{m\neq n}\frac{\abs{\bra{m}H'\ket{n}}^{2}}{E_{n}-E_{m}}
+		\t{E}_{n} = E_{n} + \bra{n}H'\ket{n} + \sum_{m\neq n}\frac{\abs{\bra{m}H'\ket{n}}^{2}}{E_{n}-E_{m}},
 	\end{equation*}
-	
-	\item The corrected state is
+	while the corrected eigenfunction $ \ket{n} $ are
 	\begin{equation*}
 		\ket{\t{n}} = \ket{n} + \sum_{m\neq n}\frac{\abs{\bra{m}H'\ket{n}}^{2}}{E_{n}-E_{m}} \ket{m}
 	\end{equation*}
-	we generally take the first nonzero (non-trivial) term in the expansion.
+	For both eigenvalues and eigenfunctions, we generally take only the first nonzero (non-trivial) term in the perturbation expansion (e.g. if the first-order correction is non-zero, we would stop there, without finding the second-order correction).
 
 \end{itemize}
 
 \subsubsection{QHO with a Quartic Perturbation}
 \textit{Use perturbation theory to estimate the energy eigenvalues of the perturbed Hamiltonian}
 \begin{equation*}
-	\t{H} = \frac{p^{2}}{2m} + \frac{1}{2}kx^{2} + \lambda x^{4}, \qquad \lambda > 0
+	\t{H} = \frac{p^{2}}{2m} + \frac{1}{2}kx^{2} + \lambda x^{4}, \qquad \lambda > 0,
 \end{equation*}
+\textit{which contains the quartic perturbation term $ \lambda x^{4} $.}
 
 \begin{itemize}
 	
-	\item The unperturbed Hamiltonian is the familiar quantum harmonic oscillator
+	\item First, we identify the unperturbed Hamiltonian: the familiar harmonic oscillator
+	\begin{equation*}
+		H = \frac{p^{2}}{2m} + \frac{1}{2}kx^{2},
+	\end{equation*}
+	with eigenstates $ \ket{n} $ and eigenvalues $ E_{n} $ obeying
 	\begin{equation*}
 		H \ket{n} = E_{n} \ket{n}, \qquad E_{n} = \hbar \omega \big(n + \tfrac{1}{2}\big)
 	\end{equation*}
-	The perturbing Hamiltonian is $ H' = \lambda x^{4} $ and the corrected energy is
-	\begin{equation*}
-		\t{E}_{n} = E_{n} + \braket{n}{\lambda x^{4} n} = E_{n} + \lambda \braket{n}{x^{4}n}
-	\end{equation*}
 	
-	\item Next, we evaluate the expectation value matrix element. We will work in terms of the annihilation and creation operators. Nominally, $ x^{4} $ takes the form
+	\item The perturbation term is $ H' = \lambda x^{4} $. To first order, the corrected energy of the perturbed \Ham $ \t{H} $ is
+	\begin{equation*}
+		\t{E}_{n} = E_{n} + \threebraket{n}{\lambda x^{4}}{n} = E_{n} + \lambda \threebraket{n}{x^{4}}{n}
+	\end{equation*}
+	Next, we evaluate the expectation value matrix element $ \threebraket{n}{x^{4}}{n} $. We will work in terms of the annihilation and creation operators. Nominally, $ x^{4} $ takes the form
 	\begin{equation*}
 		x^{4} = \frac{x_{0}^{4}}{4}(a+a^{\dagger})^{4} 
 	\end{equation*}
-	However, this term would have 16 terms if multiplied out, since $ a $ and $ a^{\dagger} $ don't commute. To avoid dealing with 16 terms, we make two $ x $ act on the $ \bra{n} $ term and two on the $ \ket{n} $ term as follows:
+	However, since $ a $ and $ a^{\dagger} $ don't commute, $ (a+a^{\dagger})^{4} $ would have 16 terms if multiplied out.  To avoid dealing with 16 terms, we make two $ x $ act on the $ \bra{n} $ term and two on the $ \ket{n} $ term as follows:
 	\begin{equation*}
-		\braket{n}{x^{4}n} = \braket{x^{2}n}{x^{2}n}
+		\threebraket{n}{x^{4}}{n} = \threebraket{x^{2}n}{x^{2}}{n}
 	\end{equation*}
 	We can factor $ x^{4} $ and move it between $ \bra{n} $ and $ \ket{n} $ because $ x $ is Hermitian.
 	
-	\item We now write $ x^{2} $ in terms of $ a $ and $ a^{\dagger} $:
+	\item In terms of $ a $ and $ a^{\dagger} $, the operator $ x^{2} $ reads
 	\begin{equation*}
 		x^{2} = \frac{x_{0}^{2}}{2}(a+a^{\dagger})^{2} = \frac{x_{0}^{2}}{2}(a^{2} + 2a^{\dagger}a + a^{2} + 1)
 	\end{equation*}
-	where we have used the commutator identity $ \big[a, a^{\dagger}\big] = 1 $.
-	
-	\item We now assemble the matrix element $ \braket{x^{2}n}{x^{2}n} $ in pieces. First, we have
+	where we have used the commutator identity $ \big[a, a^{\dagger}\big] = 1 $. Using this expression for $ x^{2} $, we now assemble the matrix element $ \threebraket{x^{2}n}{x^{2}}{n} $ in pieces. First, we have
 	\begin{align*}
-		x^{2} \ket{n} &= \frac{x_{0}^{2}}{2}(a^{2} + 2a^{\dagger}a + a^{2} + 1)\ket{n} \\
+		 x^{2} \ket{n} &= \frac{x_{0}^{2}}{2}(a^{2} + 2a^{\dagger}a + a^{2} + 1)\ket{n} \\
 		&= \frac{x_{0}^{2}}{2}\big[\sqrt{n}\sqrt{n-1}\ket{n-2} + 2\sqrt{n}\sqrt{n}\ket{n} + \sqrt{n+1}\sqrt{n+2}\ket{n+2} + \ket{n}\big]\\
 		& = \frac{x_{0}^{2}}{2}\big[\sqrt{n(n-1)}\ket{n-2}+(2n+1)\ket{n}+\sqrt{(n+1)(n+2)}\ket{n+2}\big]
 	\end{align*}
-	The entire matrix element is then
+	Since the coefficients in $ x^{2} \ket{n} $ are real, making complex conjugation redundant, we have $ \bra{x^{2}n} = x^{2} \ket{n} $. Using orthonormality of the states $ \ket{n} $ produces
 	\begin{align*}
-		\braket{x^{2}n}{x^{2}n} &= \frac{x_{0}^{4}}{4}\big[n(n-1) + (2n+1)^{2} + (n+1)(n+2)\big]\\
+		\threebraket{x^{2}n}{x^{2}}{n} &= \frac{x_{0}^{4}}{4}\big[n(n-1) + (2n+1)^{2} + (n+1)(n+2)\big]\\
 		&= \frac{x_{0}^{4}}{4}\big[6n^{2} + 6n + 3\big]
 	\end{align*}
-	where we have used the orthonormality of the states $ \ket{n} $, and the fact that the coefficients are all real.
 	
-	\item Using the just-calculated matrix element $ \braket{x^{2}n}{x^{2}n} = \braket{n}{x^{4}n} $, the corrected energy in the first order in perturbation correction is
+	\item Using the just-calculated matrix element $ \threebraket{x^{2}n}{x^{2}}{n} = \threebraket{n}{x^{4}}{n} $, the perturbed \Ham's energy to first order in perturbation theory is
 	\begin{equation*}
 		\t{E}_{n} = E_{n} + \lambda \frac{3x_{0}^{4}}{4}(2n^{2} + 2n + 1)
 	\end{equation*}
@@ -3659,119 +3659,136 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\begin{equation*}
 		\t{E}_{n} = \hbar \omega\big(n + \tfrac{1}{2}\big) + \lambda \frac{3x_{0}^{4}}{4}(2n^{2} + 2n + 1)
 	\end{equation*}
-	Note that the energies $ \t{E}_{n} $ are no longer equally spaced.
+	Note that, unlike $ E_{n} $, the energies $ \t{E}_{n} $ are no longer equally spaced by $ \hbar \omega $.
 \end{itemize}
 
 \subsubsection{QHO with a Cubic Perturbation}
+\textit{Use perturbation theory to estimate the energy eigenvalues of the perturbed Hamiltonian}
+\begin{equation*}
+	\t{H} = \frac{p^{2}}{2m} + \frac{1}{2}kx^{2} + \lambda x^{3}, \qquad \lambda > 0,
+\end{equation*}
+\textit{which contains the cubic perturbation term $ \lambda x^{3} $.}
 \begin{itemize}
-	\item Consider the modified harmonic \Ham 
+	\item As in the previous problem, the unperturbed Hamiltonian $ H $ is the familiar quantum harmonic oscillator
 	\begin{equation*}
-		\t{H} = \frac{p^{2}}{2m} + \frac{1}{2}kx^{2} + \lambda x^{3}
+		H = \frac{p^{2}}{2m} + \frac{1}{2}kx^{2}
 	\end{equation*}
-	The perturbing \Ham is $ H' $. Let's also define
+	with the eigenvalue relation
 	\begin{equation*}
-		\t{V}(x) = \frac{1}{2}kx^{2} + \lambda x^{3}
-	\end{equation*}
-	
-	\item As per the recipe, we write the energies:
-	\begin{equation*}
-		\t{E}_{n} = E_{n} + \braket{n}{\lambda x^{3}n}
+		H\ket{n} = E_{n} \ket{n}, \qquad E_{n} = \hbar \omega \left(n + \tfrac{1}{2}\right)
 	\end{equation*}
 	
-	\item In the coordinate wavefunction representation we have
+	\item The perturbation term is $ H' = \lambda x^{3} $. We also define the perturbed potential
 	\begin{equation*}
-		\braket{n}{\lambda x^{3}n} = \int_{-\infty}^{\infty}\psi_{n}^{*}\lambda x^{3}\psi_{n}\diff x
-	\end{equation*}
-	Note that $ V(x) = \frac{1}{2}kx^{2} $ is an even potential, meaning the \Ham $ H $'s eigenfunction's are either symmetric or asymmetric (because no degeneracy).
-	
-	If $ \psi_{n}(x) $ is even, the integral is the product of an $ E-O-E $ function, ($ x^{3} $ is odd) and the integrand is odd.
-	
-	If $ \psi_{n}(x) $ is odd, the integral is the product of three odd functions, and the entire integrand is still odd. 
-	
-	In both cases, we integrate an odd function over $ -\infty $ to $ \infty $, and the result is zero. 
-	
-	Evidently, the first order \pert approximation gives a trivial result.
-	
-	\item On to the second order \pert approximation. We write
-	\begin{equation*}
-		\t{E}_{n} = E_{n} + \sum_{m \neq n} \frac{\abs{\braket{m}{H'n}}^{2}}{E_{n} - E_{m}}
+		\t{V}(x) \equiv \frac{1}{2}kx^{2} + \lambda x^{3}
 	\end{equation*}
 	
-	Let's write out the matrix element:
+	\item To first order, the perturbed \Ham's energy eigenvalues are
 	\begin{equation*}
-		\braket{m}{H'n} = \braket{m}{\lambda x^{3}n} = \lambda \braket{xm}{x^{2}n}
+		\t{E}_{n} = E_{n} + \threebraket{n}{\lambda x^{3}}{n}
 	\end{equation*}
-	Piece by piece, we have (from earlier with the $ x^{2} $) term
+	In the coordinate wavefunction representation the expectation value reads
 	\begin{equation*}
-		x^{2}\ket{n} = \frac{x_{0}^{2}}{2}\big[\sqrt{n(n-1)}\ket{n-2}+(2n+1)\ket{n}+\sqrt{(n+1)(n+2)}\ket{n+2}\big]
+		\threebraket{n}{\lambda x^{3}}{n} = \int_{-\infty}^{\infty}\psi_{n}^{*}\lambda x^{3}\psi_{n}\diff x = 0
 	\end{equation*}
-	and 
-	\begin{equation*}
-		x \ket{m} = \frac{x_{0}}{\sqrt{2}}(a + a^{\dagger})\ket{m} = \frac{x_{0}}{\sqrt{2}}\big[\sqrt{m}\ket{m-1} + \sqrt{m+1}\ket{m+1}\big]
-	\end{equation*}
-	Their product is
-	\begin{equation*}
-		\braket{xm}{x^{2}n} = \frac{x_{0}^{3}}{\sqrt{8}}\big[\sqrt{m}\sqrt{n(n-1)}\braket{m-1}{n-2} + \sqrt{m}(2n+1)\braket{m-1}{n} + \sqrt{m}\sqrt{(n-1)(n+1)(n+2)}\braket{m-1}{n+2} + \sqrt{m+1}\sqrt{n(n-1)}\braket{m+1}{n-2} + \sqrt{m+1}\sqrt{2n+1}\braket{m+1}{n} + \sqrt{m+1}\sqrt{(n+1)(n+2)}\braket{m+1}{n+2} \big]
-	\end{equation*}
-	Or with the Kronecker delta:
-	\begin{equation*}
-		\braket{xm}{x^{2}n} = \frac{x_{0}^{3}}{\sqrt{8}}\big[\sqrt{m}\sqrt{n(n-1)} \delta_{m-1,n+2} + \sqrt{m}(2n+1)\delta_{m-1,n} + \sqrt{m}\sqrt{(n-1)(n+1)(n+2)}\delta_{m-1,n+2}+ \sqrt{m+1}\sqrt{n(n-1)}\delta_{m+1,n-2} + \sqrt{m+1}\sqrt{2n+1}\delta_{m+1,n} + \sqrt{m+1}\sqrt{(n+1)(n+2)}\delta_{m+1,n+2} \big]
-	\end{equation*}
-	and the requirement from the delta gives 
-	\begin{equation*}
-		\braket{xm}{x^{2}n} = \textbf{TODO}
-	\end{equation*}
+	The expectation value is zero; a short explanation follows. Note that $ V(x) = \frac{1}{2}kx^{2} $ is an even potential, the \Ham $ H $'s eigenfunctions are either symmetric or asymmetric (see e.g. \hyperref[qmv:sss:even-odd]{Subsubsection \ref{qmv:sss:even-odd}}).
 	
-	\item Next: note that we only sum over $ m \neq n $. At a given n, there are only four $ m $ that are not equal to $ n $ because of the Kronecker delta in the matrix elements. Replacing $ m $ with $ n $ we have
-	\begin{equation*}
-		\braket{xm}{x^{2}n} = \frac{x_{0}^{3}}{\sqrt{8}} \left[ \sqrt{n}(n-1) \delta_{m, n-1} + \sqrt{n+1}(2n+1)\delta_{m, n+1} + \sqrt{(n+1)(n+2)(n+3)}\delta_{m, n+3}  + \sqrt{n(n-1)(n-2)}\delta_{m, n-3} + \sqrt{n}(2n+1)\delta_{m, n-1} + (n+2)\sqrt{n+1}\delta_{m, n+1}\right]
-	\end{equation*}
-	Next, we combing like $ \delta_{mn} $ terms
-	\begin{equation*}
-		\braket{xm}{x^{2}n}  = \frac{x_{0}^{3}}{\sqrt{8}} \left[\sqrt{n(n-1)(n-2)}\delta_{m, n-3} + 3n\sqrt{n}\delta_{m, n-1} + 3(n+1)\sqrt{n+1}\delta_{m, n+1} + \sqrt{(n+1)(n+2)(n+3)}\delta_{m, n+3}\right]
-	\end{equation*}
+	If $ \psi_{n}(x) $ is even, the integrand $ \psi_{n}^{*}\lambda x^{3}\psi_{n} $, being the product of an even, odd, and even function, is odd. Similarly, if $ \psi_{n}(x) $ is odd, the integrand is a product of three odd functions, and is thus still odd. In both cases we take the integral of an odd function over $ -\infty $ to $ \infty $---result is zero. 
 	
-	\item The corrected energy is thus
+	\item Because the first-order correction to $ \t{E}_{n} $ gives a trivial result, we move on to the second order \pert approximation
+	\begin{equation*}
+		\t{E}_{n} = E_{n} + \sum_{m \neq n} \frac{\abs{\threebraket{m}{H'}{n}}^{2}}{E_{n} - E_{m}}
+	\end{equation*}
+	The expectation value can be simplified to
+	\begin{equation*}
+		\threebraket{m}{H'}{n} = \threebraket{m}{\lambda x^{3}}{n} = \lambda \threebraket{xm}{x^{2}}{n}
+	\end{equation*}
+	As in the previous problem, we assemble the expectation value piece by piece. Reusing the previous problem's result of $ x^{2}\ket{n} $, the ket term is
+	\begin{equation*}
+		x^{2}\ket{n} = \frac{x_{0}^{2}}{2}\Big[\sqrt{n(n-1)}\ket{n-2}+(2n+1)\ket{n}+\sqrt{(n+1)(n+2)}\ket{n+2}\Big]
+	\end{equation*}
+	Meanwhile, we find the bra term with 
 	\begin{align*}
-		\t{E}_{n} &= E_{n} + \sum_{m \neq n} \frac{\abs{\braket{m}{H'n}}^{2}}{E_{n} - E_{m}} = E_{n} + \frac{\lambda^{2} x_{0}^{6}}{8}\left(\frac{n(n-1)(n-2)}{E_{n}-E_{n-3}} + \frac{9n^{3}}{E_{n}-E_{n-1}} + \frac{9(n+1)^{3}}{E_{n} - E_{n+1}} + \frac{(n+1)(n+2)(n+3)}{E_{n} - E_{n+3}} \right)
+		&x \ket{m} = \frac{x_{0}}{\sqrt{2}}(a + a^{\dagger})\ket{m} = \frac{x_{0}}{\sqrt{2}}\big[\sqrt{m}\ket{m-1} + \sqrt{m+1}\ket{m+1}\big] \implies \\
+		&\bra{xm} = \frac{x_{0}}{\sqrt{2}}\big[\sqrt{m}\bra{m-1} + \sqrt{m+1}\bra{m+1}\big],
 	\end{align*}
-	We then substitute in the energies in the denominators, which are known from the unperturbed QHO, where the energies are equally spaced by $ \hbar \omega $
+	where the real coefficients make complex conjugation redundant. Applying the orthonormality of the states $ \ket{n} $, the braket is thus
 	\begin{align*}
-		\t{E}_{n} &= E_{n} + \frac{\lambda^{2} x_{0}^{6}}{24 \hbar \omega}\left(n(n-1)(n-2) + 27n^{3} - 27(n+1)^{3} - (n+1)(n+2)(n+3) \right)\\
+		\threebraket{xm}{x^{2}}{n} = \frac{x_{0}^{3}}{\sqrt{8}}\Big[&\sqrt{m}\sqrt{n(n-1)} \delta_{m-1,n-2} + \sqrt{m}(2n+1)\delta_{m-1,n}\\
+		& + \sqrt{m}\sqrt{(n+1)(n+2)}\delta_{m-1,n+2} + \sqrt{m+1}\sqrt{n(n-1)}\delta_{m+1,n-2}\\
+		& + \sqrt{m+1}(2n+1)\delta_{m+1,n} + \sqrt{m+1}\sqrt{(n+1)(n+2)}\delta_{m+1,n+2} \Big]
+	\end{align*}
+	Re-shifting indexes on the Kronecker deltas (just for clarity, e.g. $ \delta_{m-1,n-2} \equiv \delta_{m, n-1} $ or $ \delta_{m+1, n-2} \equiv \delta_{m, n-3} $) gives
+	\begin{align*}
+		\threebraket{xm}{x^{2}}{n} = \frac{x_{0}^{3}}{\sqrt{8}}\Big[&\sqrt{m}\sqrt{n(n-1)} \delta_{m,n-1} + \sqrt{m}(2n+1)\delta_{m,n+1}\\
+		& + \sqrt{m}\sqrt{(n+1)(n+2)}\delta_{m,n+3} + \sqrt{m+1}\sqrt{n(n-1)}\delta_{m,n-3}\\
+		& + \sqrt{m+1}(2n+1)\delta_{m,n-1} + \sqrt{m+1}\sqrt{(n+1)(n+2)}\delta_{m,n+1} \Big]
+	\end{align*}	
+	Writing $ m $ in terms of $ n $ with reference to the $ \delta_{mn} $ (e.g. $ m \to n -1 $ for $ \delta_{m, n-1} $) gives
+	\begin{align*}
+			\threebraket{xm}{x^{2}}{n} = \frac{x_{0}^{3}}{\sqrt{8}} \Big[& \sqrt{n}(n-1) \delta_{m, n-1} + \sqrt{n+1}(2n+1)\delta_{m, n+1} \\
+			& + \sqrt{(n+1)(n+2)(n+3)}\delta_{m, n+3}  + \sqrt{n(n-1)(n-2)}\delta_{m, n-3} \\
+			& + \sqrt{n}(2n+1)\delta_{m, n-1} + (n+2)\sqrt{n+1}\delta_{m, n+1}\Big]
+	\end{align*}
+	Finally, combining like terms and putting the $ \delta_{mn} $ in order produces
+	\begin{align*}
+		\threebraket{xm}{x^{2}}{n} = \frac{x_{0}^{3}}{\sqrt{8}} \Big[&\sqrt{n(n-1)(n-2)}\delta_{m, n-3} + 3n\sqrt{n}\delta_{m, n-1}\\
+		& + 3(n+1)\sqrt{n+1}\delta_{m, n+1} + \sqrt{(n+1)(n+2)(n+3)}\delta_{m, n+3}\Big]
+	\end{align*}
+	With $ \threebraket{xm}{x^{2}}{n} $ known, we just multiply by $ \lambda $ to find matrix element
+	\begin{equation*}
+		\threebraket{m}{H'}{n} = \lambda \threebraket{xm}{x^{2}}{n},
+	\end{equation*}
+ 	needed to find the perturbed energy $ \t{E}_{n} $.
+	
+	\item Using the just-derived $ \threebraket{m}{H'}{n} $, the perturbed \Ham's energy $ \t{E}_{n} $ is thus
+	\begin{align*}
+		\t{E}_{n} = E_{n} + \sum_{m \neq n} \frac{\abs{\braket{m}{H'n}}^{2}}{E_{n} - E_{m}} = E_{n} &+ \frac{\lambda^{2} x_{0}^{6}}{8}\bigg(\frac{n(n-1)(n-2)}{E_{n}-E_{n-3}} + \frac{9n^{3}}{E_{n}-E_{n-1}} \\
+		&+ \frac{9(n+1)^{3}}{E_{n} - E_{n+1}} + \frac{(n+1)(n+2)(n+3)}{E_{n} - E_{n+3}} \bigg)
+	\end{align*}
+	Note that, nominally, we must sum over all $ m \neq n $ to find $ \t{E}_{n} $. However, because of the Kronecker deltas in the matrix element $ \threebraket{m}{H'}{n} $, there are only four $ m $ that are not equal to $ n $ at a given value of $ n $. 
+	
+	Next, we substitute in the energy differences (e.g. $ E_{n} - E_{n-3} $) in the denominators, which are known from the unperturbed \Ham $ H $, where the energies are equally spaced by $ \hbar \omega $. Substituting in energies and factoring out $ \hbar \omega $ gives
+	\begin{align*}
+		\t{E}_{n} &= E_{n} + \frac{\lambda^{2} x_{0}^{6}}{24 \hbar \omega}\left[n(n-1)(n-2) + 27n^{3} - 27(n+1)^{3} - (n+1)(n+2)(n+3) \right]\\
 		& = E_{n} + \frac{\lambda^{2} x_{0}^{6}}{24 \hbar \omega} \left(n^{3}-3n^{2} + 2n + 27n^{3} - 27n^{3} - 81n^{2} - 81n - 27 - n^{3} - 6n^{2} - 11n - 6\right)\\
 		&=E_{n} - \frac{\lambda^{2} x_{0}^{6}}{24 \hbar \omega} \left(90n^{2} + 90n + 33\right)\\
 		&=E_{n} - \frac{\lambda^{2} x_{0}^{6}}{8 \hbar \omega} \left(30n^{2} + 30n + 11\right)
 	\end{align*}
 	Note that the energy correction is negative---the perturbed energies $ \t{E}_{n} $ are lower than for the standard QHO energies $ E_{n} $.
 	
-	\item Next, correction of the eigenfunctions
+	\item Next, we find the perturbed eigenfunctions $ \ket{\t{n}} $. From the theory section, the $ \ket{\t{n}} $ are defined as
 	\begin{equation*}
-		\ket{\t{n}} = \ket{n} + \frac{\lambda x_{0}^{3}}{\sqrt{8}}\left[\frac{\sqrt{n(n_1)(n-2)}}{3\hbar \omega}\ket{n-3} + \frac{3n\sqrt{n}}{\hbar \omega}\ket{n-1} - \frac{3(n+1)\sqrt{n+1}}{\hbar \omega}\ket{n+1} - \frac{\sqrt{(n+1)(n+2)(n+3)}}{3\hbar \omega}\ket{n+3}\right]
+		\ket{\t{n}} = \ket{n} + \sum_{m\neq n}\frac{\abs{\bra{m}H'\ket{n}}^{2}}{E_{n}-E_{m}} \ket{m}
 	\end{equation*}
-	For the ground state, the corrected wavefunction is
+	which in our case, using the matrix element $ \threebraket{m}{H'}{n}  $, is
+	\begin{align*}
+		\ket{\t{n}} =
+		\ket{n} &+ \frac{\lambda x_{0}^{3}}{\sqrt{8}}\Bigg[\frac{\sqrt{n(n_1)(n-2)}}{3\hbar \omega}\ket{n-3} + \frac{3n\sqrt{n}}{\hbar \omega}\ket{n-1} \\
+		&- \frac{3(n+1)\sqrt{n+1}}{\hbar \omega}\ket{n+1} - \frac{\sqrt{(n+1)(n+2)(n+3)}}{3\hbar \omega}\ket{n+3}\Bigg]
+	\end{align*}
+	The perturbed ground state wavefunction $ \ket{\t{0}} $ is
 	\begin{equation*}
-		\ket{\t{0}} = \ket{0} + \frac{\lambda x_{0}^{3}}{3\sqrt{8}\hbar\omega}\left[-9(n+1)\sqrt{n+1}\ket{1} - \sqrt{(n+1)(n+2)(n+3)}\ket{3}\right]
+		\ket{\t{0}} = \ket{0} + \frac{\lambda x_{0}^{3}}{3\sqrt{8}\hbar\omega}\left[-9\ket{1} - \sqrt{6}\ket{3}\right]
 	\end{equation*}
 	Note that we drop the $ \ket{n-3} $ and $ \ket{n-1} $ terms, since $ \ket{-3} $ and $ \ket{-1} $ don't exist.
 	
-	\item Next, an estimate for the expectation value of position in the corrected ground state. Note that $ \braket{0}{x0} = 0 $ (the product of an even, odd and even function is odd, and the integral of an odd function from $ -\infty $ to $ \infty $ is zero). 
-	
-	By pieces:
+	\item Finally, we find $ \threebraket{\t{0}}{x}{\t{0}} $, the expected value of position in the perturbed ground state. First, writing $ x $ in terms of the annihilation and creation operators, the ket term is
+	\begin{align*}
+		x\ket{\t{0}} &= \frac{x_{0}}{\sqrt{2}}(a + a^{\dagger})\left[ \ket{0} + \frac{\lambda x_{0}^{3}}{3\sqrt{8}\hbar\omega}\left(-9\ket{1} - \sqrt{6}\ket{3}\right)\right]\\
+		&= \frac{x_{0}}{\sqrt{2}}\ket{1} + \frac{\lambda x_{0}^{4}}{12\hbar \omega} \left[-9 \ket{0} - \sqrt{6} \sqrt{3}\ket{2} + \ket{1} - 9 \sqrt{2}\ket{2} - \sqrt{6}\sqrt{4}\ket{4}\right]
+	\end{align*}
+	Next, using the orthonormality of the $ \ket{n} $ states, the full expectation value is
 	\begin{equation*}
-		x\ket{\t{0}} = \frac{x_{0}}{\sqrt{2}}(a + a^{\dagger})\ket{\t{0}} + \frac{x_{0}}{\sqrt{2}} \left[0 - \frac{\lambda x_{0}^{3}}{3 \sqrt{8}\hbar \omega} 9 \ket{0} - \frac{\lambda x_{0}^{3}}{3 \sqrt{8}\hbar \omega} \sqrt{6} \sqrt{3}\ket{2} + \ket{1} - \frac{\lambda x_{0}^{3}}{3 \sqrt{8}\hbar \omega}9 \sqrt{2}\ket{2} - \frac{\lambda x_{0}^{3}}{3 \sqrt{8}\hbar \omega}\sqrt{6}\sqrt{4}\ket{4}\right]
+		\threebraket{\t{0}}{x}{\t{0}} = -\frac{\lambda x_{0}^{4}}{12 \hbar \omega}(9 + 9) = -\frac{3\lambda x_{0}^{4}}{2 \hbar \omega}
 	\end{equation*}
-	Next, using the orthonormality of the $ \ket{n} $ states, we find the product of $ \bra{\t{0}} $ and the just-derived $ x\ket{\t{0}} $.
-	\begin{equation*}
-		\braket{\t{0}}{x\t{0}} = -\frac{\lambda x_{0}^{4}}{12 \hbar \omega}(9 + 9) = -\frac{3\lambda x_{0}^{4}}{2 \hbar \omega}
-	\end{equation*}
-	In other words, according to perturbation theory, the position expectation value shifts left from the origin to the region of negative $ x $.
+	In other words, according to perturbation theory, the position expectation value in the state $ \ket{\t{0}} $ shifts left from the origin to the region of negative $ x $. 
 	
 %	Note that the wavefunction is not physically correct---we would expect the particle to fall to the infinite potential well which occurs at x \to -infinity (assuming lambda is positive) because of the cubic potential. That said, the particle is still in a local minimum at the origin, and it may not have enough energy to escape this minimum and reach x \to -\infty
 
 % The perturbation approxation to the ground state is good assuming lambda is small, the local minimum is thus deep, and the chance for the particle to tunnel to x \to -\infty is very small.
 	
 \end{itemize}
-\fi
 
 
 \end{document}
