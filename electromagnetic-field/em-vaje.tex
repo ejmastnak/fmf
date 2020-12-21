@@ -25,14 +25,19 @@
 \renewcommand{\t}[1]{\tilde{#1}} % shorthand for tilde
 
 \renewcommand{\r}{\vec{r}}
-\newcommand{\E}{\vec{E}} % for electric field; it's used alot!
-\newcommand{\B}{\vec{B}} % for magnetic field; it's used alot!
-\newcommand{\A}{\vec{A}} % for magnetic vector potential
+\newcommand{\E}{\vec{E}}  % for electric field
+\newcommand{\D}{\vec{D}}  % for electric D-field
+\newcommand{\B}{\vec{B}}  % for magnetic field
+\renewcommand{\H}{\vec{H}}  % for magnetic H-field
+\newcommand{\A}{\vec{A}}  % for magnetic vector potential
+\renewcommand{\S}{\mathbf{S}}  % Poynting vector
+\renewcommand{\SS}{\mathrm{S}}  % Poynting vector
 \newcommand{\e}{\epsilon_{0}}  % vacuum permittivity
 \newcommand{\mm}{\mu_{0}}  % vacuum permeability (\m used for magnetic dipole moment)
-\newcommand{\pe}{\vec{p}_{e}} % electric dipole moment
-\newcommand{\m}{\vec{m}} % magnetic dipole moment
+\newcommand{\pe}{\vec{p}_{e}}  % electric dipole moment
+\newcommand{\m}{\vec{m}}  % magnetic dipole moment
 
+\newcommand{\Poy}{Poynting\xspace}
 
 \renewcommand{\div}{\nabla \cdot}
 \renewcommand{\curl}{\nabla \cross}
@@ -1447,7 +1452,7 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	\end{equation*}
 \end{itemize}
 
-\subsection{Ninth Exercise Set}
+\subsection{Ninth Exercise Set (raw notes)}
 
 \subsubsection{Induction in a Square Frame}
 \textit{Two parallel wires separated by a distance $ d $. Place a square frame diagonally between the wires, like at a 45 degree angle. Wires are length $ l \gg d $ and width $ a \ll d $. Assume wires are connected at infinity. Find the mutual inductivity $ L_{12} $ of the wires and frame. Next, we place an alternating current source $ I_{1} = I_{1_{0}}\sin \omega t $ in the frame. Find the induced current in the wires. Assume Ohmic losses are negligible compared to inductive losses.}
@@ -1654,6 +1659,296 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	\end{equation*}
 	we get an expected numerical result for the quantity $ \mm g $, and can theoretically predict the value of $ LI(t) $.
 \end{itemize}
+
+
+\subsection{Tenth Exercise Set (raw notes)}
+
+\subsubsection{Skin Effect in a Ribbon-Like Conductor}
+\textit{Long ribbon with width $ a $. Put an electrode at each end of the ribbon, connect the electrodes to an alternating voltage source with frequency $ \omega $. The conductor has resistivity $ \sigma $. Find the dependence of the conductor's impedance on frequency, i.e. $ Z(\omega) $. Find the Ohmic resistance $ R $. Investigate the high and low-frequency limits.}
+
+\begin{itemize}
+	\item Start with the relevant Maxwell equations. 
+	\begin{equation*}
+		\curl \E = - \pdv{\B}{t} \eqtext{and} \curl \B = \mm \vec{j} + \e\mm \pdv{\E}{t}
+	\end{equation*}
+	and
+	\begin{equation*}
+		\div \B = 0 \eqtext{and} \div \E = 0
+	\end{equation*}
+	We have $ \div \E = 0 $ because the conductor is neutral---no electric field escapes.
+	
+	\item We make a quasi-static approximation to simplify the equations. We will neglect the displacement current to get
+	\begin{equation*}
+		 \curl \B \approx \mm \vec{j}
+	\end{equation*}
+	
+	\item Apply rotor to the first equation to get 
+	\begin{equation*}
+		\curl (\curl \E) = - \pdv{t} \curl \B
+	\end{equation*}
+	Then get
+	\begin{equation*}
+		\grad (\div \E) - \laplacian \E = - \pdv{t} \mm \sigma \E
+	\end{equation*}
+	Apply $ \div \E = 0 $. Since electric field oscillates we write
+	\begin{equation*}
+		\E = \E_{0} e^{i\omega t}
+	\end{equation*}
+	We then get
+	\begin{equation*}
+		\pdv{t}\E = i \omega \E
+	\end{equation*}
+	Putting things together gives
+	\begin{equation*}
+		\laplacian \E - i \omega \mm \sigma \E = 0
+	\end{equation*}
+	This is a so-called ``amplitude equation'' for $ \E $? We define the amplitude
+	\begin{equation*}
+		k^{2} = i \omega \mm \sigma
+	\end{equation*}
+	and get
+	\begin{equation*}
+		k = \sqrt{i \omega \mm \sigma} = \frac{1 + i}{\sqrt{2}}\sqrt{\omega \mm \sigma}
+	\end{equation*}
+	We will use $ \E $ to find $ U $ and use $ U $ to find resistance.
+	
+	\item Define coordinate system so width $ a $ is along $ x $ axis and $ y $ axis along conductor's height. The center occurs at $ x = 0 $. 
+	
+	With respect to our coordinate system, we can simplify the Laplacian---the derivatives with respect to $ y $ and $ z $ are negligible with respect to $ x $ because $ y $ and $ z $ exist on a much large scale than $ x $. 
+	
+	Assume we apply the voltage in the $ z $ direction, so we have only $ \E = E_{z}(x) \uvec{z} $. Plugging all of these simplifications into the amplitude equation gives
+	\begin{equation*}
+		E_{z}'' - k^{2}E_{z} = 0
+	\end{equation*}
+	where we differentiate only with respect to $ x $ and have neglected the other derivatives in the Laplacian. 
+	
+	\item The solutions to the equation 
+	\begin{equation*}
+		E_{z}'' - k^{2}E_{z} = 0
+	\end{equation*}
+	are either exponents or hyperbolic functions. The problem's reflection symmetry about the $ y $ axis is best suited to using hyperbolic functions. If we use those we will have only an even component: $ \cosh $. Our solution ansatz is then
+	\begin{equation*}
+		E_{z}(x) = A\cosh kx
+	\end{equation*}
+	
+	\item To find $ A $ we need boundary conditions. Assume $ E_{z}(\pm a/2) = E_{0} $. 
+	\begin{equation*}
+		A \cosh \frac{ka}{2} = E_{0} \implies A = \frac{E_{0}}{\cosh \frac{ka}{2}}
+	\end{equation*} 
+	Note the use of the even property of $ \cosh $. The result for $ A $ gives
+	\begin{equation*}
+		E_{z}(x) = E_{0}\frac{\cosh kx}{\cosh \frac{ka}{2}}
+	\end{equation*}
+	Drawing $ E(x) $ with $ k $ as a parameter shows the $ E $ is larger at the boundaries $ \pm a/2 $ for large $ k $ and thus large $ \omega $. 
+	
+	\item Next, find electric potential along the conductor's with
+	\begin{equation*}
+		U = E_{z} l
+	\end{equation*}
+	where $ l $ is the conductor length. We find current with
+	\begin{equation*}
+		I = \int j \diff S = \int (\sigma E_{z}) \diff S = \sigma E_{0}\frac{1}{\cosh \frac{ka}{2}} \int_{-a/2}^{a/2} \cosh(kx) (b \diff x)
+	\end{equation*}
+	where $ b $ is the conductor's height. 
+	\begin{align*}
+		I &= \frac{\sigma E_{0} b}{\cosh \frac{ka}{2}} \int_{-a/2}^{a/2} \cosh(kx) \diff x =  \frac{\sigma E_{0} b}{\cosh \frac{ka}{2}}  \cdot \frac{2}{k} \cdot \sinh kx \bigg |_{0}^{a/2} \\
+		& =  \frac{2\sigma E_{0} b}{k} \tanh \frac{ka}{2}
+	\end{align*} 
+	We then use the dimensionless quantity $ \kappa = \frac{ka}{2} $ and substitute in $ U_{0} = E_{0} l$ to get
+	\begin{equation*}
+		I = \frac{\sigma U_{0} b a}{l} \frac{2}{ka}\tanh \frac{ka}{2} = \frac{\sigma U_{0} b a}{l} \frac{\tanh \kappa}{\kappa} = \frac{U_{0}}{R_{0}} \frac{\tanh \kappa}{\kappa}
+	\end{equation*}
+	where we've used $ R_{0} = \frac{l}{\sigma S} $ to define static resistance. The conductor's impedance is
+	\begin{equation*}
+		Z \equiv \frac{U_{0}}{I} = R_{0}\frac{\kappa}{\tanh \kappa}
+	\end{equation*}
+	
+	\item Next, low frequency limit. This means $ k $ and thus $ \kappa $ is small ( $ \kappa \ll 1 $) and we expand the $ \tanh x \approx  $ function to get
+	\begin{equation*}
+		Z \approx R_{0} \frac{\kappa}{\kappa} = R_{0}
+	\end{equation*}
+	For large frequencies and $ \kappa \gg 1 $, we use the asymptotic expansion $ \tanh x \approx 1 $ to get
+	\begin{equation*}
+		Z \approx R_{0}\kappa = \frac{R_{0}a}{2}k = \frac{R_{0}a}{2} \sqrt{\frac{\sigma \mm \omega}{2}}(1 + i)
+	\end{equation*}
+	The real component of $ Z $ corresponds to resistance. The imaginary component corresponds to reactance, and is out of phase with $ R $ by $ \pi/2 $. At high frequencies, the resistance is
+	\begin{equation*}
+		R = \frac{r_{0}a}{2}\sqrt{\frac{\sigma \mm \omega}{2}}
+	\end{equation*}
+	Note the relationship $ R \propto \sqrt{\omega} $---$ R $ increases with frequency, since the electric field is more concentrated at the conductor edges (the ``skin'') and the current has a smaller effective cross section and thus larger resistance.
+	
+	
+\end{itemize}
+
+\subsubsection{Energy Flow in a Coaxial and Cylindrical Conductor}
+\textit{Find the energy flow (power) through the cross section, and through the outer surface, of the following conductors:}
+\begin{enumerate}
+	\item \textit{A coaxial cable carrying current $ I $, of length $ l $, with potential difference $ U $ between the inner and outer conductor. Neglect resistive losses.}
+	
+	\item \textit{A long straight conductor with cross-section $ S $ and length $ l $ and resistivity $ \sigma $ carrying current $ I $. Place potential difference $ U $ between the cylinder ends. Write the result in terms of total resistance $ R = \frac{l}{\sigma S} $.}
+\end{enumerate}
+
+
+\textbf{Theory}
+\begin{itemize}
+	\item The energy equation reads
+	\begin{equation*}
+		\pdv{w}{t} + \div \S + \vec{j}\cdot \E = 0
+	\end{equation*}
+	where the energy density is
+	\begin{equation*}
+		w = \frac{1}{2}\e E_{U2} + \frac{1}{2\mm}B^{2}
+	\end{equation*}
+	and $ \S $ is the \Poy vector, defined as
+	\begin{equation*}
+		\S = \frac{1}{\m}\E \cross \B
+	\end{equation*}
+	and encodes intensity. 
+	
+	The term $ \vec{j}\cdot \vec{E} $ is a Ohmic term and corresponds to resistive energy loss.
+	
+	\item In integral form the energy equation reads (integrate over volume)
+	\begin{equation*}
+		\pdv{W}{t} + \int \div \S \diff V + \int \vec{j}\cdot \E \diff V = 0
+	\end{equation*}
+	The term $ \int \div \S \diff V $ is power!
+\end{itemize}
+
+\textbf{Lossless Coaxial Conductor}
+\begin{itemize}
+	\item Note that $ \B $ points tangent to the conductor (perpendicular to the radial direction.) The field $ \E $ points radially outward. Positive charge on the inner conductor, negative charge on the outer conductor.
+	
+	\item We find $ \B $ with Ampere's law around the inner conductor to get
+	\begin{equation*}
+		\mm I = B \cdot 2\pi r \implies B = \frac{\mm I}{2\pi r}
+	\end{equation*}
+	We find electric field with Gauss's law with a cylinder around the inner conductor:
+	\begin{equation*}
+		Q = \e E \cdot 2\pi r l \implies E = \frac{Q}{2\pi \e l r}
+	\end{equation*}
+	We find induced charge $ Q $ from potential via
+	\begin{equation*}
+		U = \int_{a}^{b} E \diff r = \frac{Q}{2\pi \e l}\ln \frac{b}{a}
+	\end{equation*}
+	The electric field is thus
+	\begin{equation*}
+		E = \frac{U}{r \ln \frac{b}{a}}
+	\end{equation*}
+	
+	\item The \Poy vector points along the conductor's longitudinal axis. In our case we have $ \E \perp \B $ which gives
+	\begin{equation*}
+		\SS = \frac{1}{\mm}EB = \frac{1}{\mm} \left (\frac{\mm I}{2\pi r}\right )\left(\frac{U}{r \ln \frac{b}{a}}\right) = \frac{UI}{2 \pi \ln \frac{b}{a}r^{2}}
+	\end{equation*}
+	
+	\item We find power with (since $ \S $ is parallel to conductor cross section) 
+	\begin{align*}
+		P &= \int \S \cdot \diff \vec{S} = \int \SS \diff S = \int_{a}^{b}\left(\frac{UI}{2 \pi \ln \frac{b}{a}r^{2}}\right)(2\pi r \diff r)\\
+		& = \frac{UI}{\ln \frac{b}{a}} \int_{a}^{b} \frac{\diff r}{r} =	\frac{UI}{\ln \frac{b}{a}}\ln \frac{b}{a} = UI
+	\end{align*}
+	
+%	\item Note the power entering one endpoint exits the other, and energy is conserved. 
+\end{itemize}
+
+\textbf{Cylindrical Conductor with Resistance}
+\begin{itemize}
+	\item As for the coaxial cable, the magnetic field is tangent to the conductor's circular cross section. 
+	
+	The electric field points in the direction of the potential difference---in this case this is along the conductor's longitudinal axis. This implies the \Poy vector points along the radial direction. We choose $ I $ to flow so that $ \S $ points in towards the conductor's center.
+	
+	\item We find electric field with $ E = U/l $.
+	
+	\item We find magnetic field with Ampere's law using a circular loop centered along the conductor's longitudinal axis. Assuming current is uniformly distributed across the cross section, we have 
+	\begin{equation*}
+		B \cdot (2\pi r) = \mm I \left(\frac{r}{a}\right)^{2} \implies B =  \frac{\mm I}{2\pi a^{2}}r
+	\end{equation*}
+	
+	\item The \Poy vector is thus (note $ \E \perp \B $) 
+	\begin{equation*}
+		\SS = \frac{1}{\mm}E B = \frac{1}{\mm} \left(\frac{U}{L}\right)\left( \frac{\mm I}{2\pi a^{2}}r\right) = \frac{UI}{2\pi a^{2}l}r
+	\end{equation*}
+	Note that $ \SS $ increases linearly with $ r $. 
+	
+	\item We find intensity by integrating $ \SS $ over the cylinder's surface---not the cross section! For a surface at radius $ r $ we have
+	\begin{equation*}
+		P = \int \S \cdot \diff \vec{S} = \int \SS \diff S =  \left(\frac{UI}{2\pi a^{2}l}r\right) (2\pi r l) = \frac{UIr^{2}}{a^{2}}
+	\end{equation*}
+	For the entire conductor we set $ r = a $ and get $ P = UI $.
+	
+	\item Next, turn to the energy equation
+	\begin{equation*}
+		\pdv{w}{t} + P + \int \vec{j} \cdot \E \diff V = 0
+	\end{equation*}
+	Because the situation is stationary we have $ \pdv{w}{t} = 0$, and thus
+	\begin{equation*}
+		P + \int \vec{j} \cdot \E \diff V = 0
+	\end{equation*}
+	Note that Ohmic losses (standard high school equation) also amount to $ P_{\text{loss}} = -UI $. The result for the energy equation is
+	\begin{equation*}
+		P + \int \vec{j} \cdot \E \diff V =  P + P_{\text{loss}} = UI - UI = 0
+	\end{equation*}
+	and energy is conserved, at it must be. 
+	
+	\item We can find the conductor's resistance with $ P_{\text{loss}} = -UI = -RI^{2}$. 
+\end{itemize}
+
+\subsubsection{An Interrupted Conductor}
+\textit{Cylindrical conductor, cut at its center. Ends are separated by a distance $ d $. Send a current $ I $ through the conductor. Cross section $ S $. Assume $ d \ll r$. Find the energy flow in space between the cut-off ends.}
+
+\begin{itemize}
+	\item Positive charge accumulates on one end of the cut; negative charge on the other. Treat the ends as a parallel-plate capacitor. 
+	
+	\item We need to find $ \E $ and $ \B $. The accumulated charge is
+	\begin{equation*}
+		q(t) = It
+	\end{equation*}
+	The electric field is 
+	\begin{equation*}
+		E = \frac{\sigma}{\e} = \frac{q}{\e S} = \frac{I}{\e S}t
+	\end{equation*}
+	
+	\item Next, we need magnetic field. Note that the electric field changes with time in the slit. This creates displacement current. From Maxwell's law inside the slit we have
+	\begin{equation*}
+		\curl \B + \e\mm \pdv{E}{t}
+	\end{equation*}
+	Note that $ \mm \vec{j} = 0 $ inside the slit; there's no current. Change to integral form with $ \int \diff S $ to get
+	\begin{equation*}
+		\oint \B \cdot \diff \vec{l}  = \e \mm \pdv{\E}{t} \cdot (\pi r^{2})
+	\end{equation*}
+	Evaluate left-hand integral and substitute in electric field to get
+	\begin{equation*}
+		B \cdot (2\pi r) = \e \mm \frac{I}{\e S} \pi r^{2} \implies B = \frac{\mm I}{2S} r
+	\end{equation*}
+	The magnetic field points tangent to the circular cross section---as for the magnetic field of a conductor, except that current is replaced by displacement current. But current and displacement current have the same direction, so $ B $ still points tangent.
+	
+	\item $ \E $ and $ \B $ have same directions as for a cylindrical conductor and so $ \S $ points along the radial direction. Because $ \B \perp \S$, power is simply
+	\begin{equation*}
+		P = \int \S \cdot \diff \vec{S} = \int \SS \diff S = \frac{1}{\mm}\int EB \diff S = \frac{1}{\mm} \int  \left(\frac{I}{\e S}t\right)\left(\frac{\mm I}{2S} r\right) \diff S
+	\end{equation*}
+	The surface of integration is the outer surface of the cylindrical slit---recall $ S $ points in the radial direction. We set $ r = a $ and get
+	\begin{equation*}
+		P = \frac{I^{2}a}{2\e S^{2}}t (2\pi a d) = \frac{I^{2}d}{\e S} t
+	\end{equation*}
+	Note that the cross sectional area is $ S = \pi a^{2} $. 
+	
+	\item  Finally we observe the energy equation. If we assume no Ohmic losses we have
+	\begin{equation*}
+		\pdv{W}{t} + \int \S \cdot \diff S = 0
+	\end{equation*}
+	The total energy is the sum of magnetic and electric energy: $ W = W_{\text{E}} + W_{\text{B}} $. Note that magnetic energy $ W_{\text{B}} $ is independent of time, because so is $ B $. It follows that
+	\begin{equation*}
+		\pdv{W}{t} = \pdv{W_{\text{E}}}{t} + 0
+	\end{equation*}
+	The electric field energy is 
+	\begin{equation*}
+		W_{\text{E}} = w_{\text{E}}V = \left(\frac{1}{2}\e E^{2}\right) \cdot \left(Sd\right) = \frac{\e}{2}\frac{I^{2}}{\e^{2}S^{2}}Sdt^{2} = \frac{I^{2}d}{2\e S}t^{2}
+	\end{equation*}
+	We then have
+	\begin{equation*}
+		\pdv{W}{t} = \pdv{W_{\text{E}}}{t} = \frac{I^{2}d}{\e S} t
+	\end{equation*}
+	Which is equal to the power flowing in the slit (opposite sign was not written). Energy is conserved, as it must be.
+\end{itemize}
+
 
 \end{document}
 
