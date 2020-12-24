@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.colors import LogNorm
-from matplotlib.colors import SymLogNorm
+import time
 from scipy.special import beta
 
 plt.rcParams['mathtext.fontset'] = 'cm'
@@ -76,8 +75,8 @@ def get_b(M, N):
 def get_A(M, N):
     """
     Returns the matrix A, used with the Galerkin method in the report's laminar water flow problem
-    :param M: max value of index m = 0, 1, ..., M
-    :param N: max value of index n = 1, 2, ..., N
+    :param M: Maximum ``m'' index of basis functions Psi_{mn}
+    :param N: Maximum ``n'' index of basis functions Psi_{mn}
     :return:
     """
     D = N*(M+1)  # dimension of the matrix, i.e. A is a DxD matrix
@@ -101,11 +100,104 @@ def get_A(M, N):
     # plt.show()
 
 
-def find_C(M, N):
+def get_Psi_mn(m, n, xi, phi):
+    """
+    Returns the basis function Psi_mn evaluated at the radius xi and angle phi
+    :param m: 0, 1, ..., M
+    :param n: 1, 2, ..., N
+    :param xi: scaled radius of semicircular pipe in range [0, 1]
+    :param phi: angle in planar polar coordinates of semicircular pipe in range [0, pi]
+    """
+    return (xi**(2*m+1)) * ((1-xi)**n) * np.sin((2*m + 1)*phi)
+
+
+def find_u(K, L, M, N):
+    """
+    Find velocity profile u(xi, phi) for laminar flow in a pipe with a semicircular cross section
+    Uses a planar polar coordinate system with scaled radius xi in [0, 1] and phi in [0, pi]
+
+    Radius discretized as xi_k = xi_0 + k* dxi
+    Angle discretized as phi_l = phi_0 + l* dphi
+    :param K: number of points in radius grid k = 0, 1, ..., K
+    :param L: number of points in angle grid l = 0, 1, ..., L
+    :param M: Maximum ``m'' index of basis functions Psi_{mn}
+    :param N: Maximum ``n'' index of basis functions Psi_{mn}
+    """
     b = get_b(M, N)
     A = get_A(M, N)
     a = np.linalg.solve(A, b)
+
+    xi0, xiK = 0.0, 1.0  # maximum and minimium scaled radius in pipe
+    dxi = (xiK - xi0)/K  # step size
+    xi = np.linspace(xi0, xiK, K+1)
+
+    phi0, phiL = 0.0, np.pi  # maximum and minimum angle (planar polar coordinate)
+    dphi = (phiL - phi0)/L  # step size
+    phi = np.linspace(phi0, phiL, L+1)
+
+    psi = np.zeros(N*(M+1))  # N*(M-1)-element vector holding Psi_{mn} at a single point (xi_k, phi_l)
+    Psi = np.zeros((K+1, L+1, N*(M+1)))  # (K+1)x(L+1)x(N*(M+1)) 3D array holding psi at every (xi_k, phi_l)
+
+    for k, xi_k in enumerate(xi):  # loop over all xi
+        for l, phi_l in enumerate(phi):  # loop over all phi
+            i = 0  # combined index of m and n used to index Psi
+            for m in range(0, M+1, 1):
+                for n in range(1, N+1, 1):
+                    psi[i] = get_Psi_mn(m, n, xi_k, phi_l)
+                    i += 1  # increment index
+            Psi[k][l] = psi  # set the psi vector in the 3D Psi array at the point (xi_k, phi_l)
+
+    U = np.zeros((K+1, L+1))  # holds velocity u at each point in the (xi, phi) grid
+    for k in range(K+1):  # k = 0, 1, ..., K
+        for l in range(L+1):  # l = 0, 1, ..., L
+            U[k][l] = np.dot(a, Psi[k][l])
+
+    u_min, u_max = np.min(U), np.max(U)
+    n_contours = 10  # number of contour lines to draw
+    levels = np.linspace(u_min, u_max, n_contours)
+
+    Xi, Phi = np.meshgrid(xi, phi)  # create meshgrids for polar plotting
+
+    # fig, ax = plt.subplots(subplot_kw=dict(projection='polar'))
+    # cp = ax.contourf(Phi, Xi, U.T, levels, cmap="Blues")
+    # plt.colorbar(cp)
+    # plt.show()
+
+    fig, ax = plt.subplots()
+    X, Y = Xi*np.cos(Phi), Xi*np.sin(Phi)
+    ax.contourf(X, Y, U.T, levels, cmap="Blues")
+    ax.contour(X, Y, U.T, levels, colors="black", linewidths=1)  # plot contour lines on top of filled contours
+    plt.show()
+
+
+def find_C(M, N):
+    """
+    Calculates the Poiseulle constant C for laminar flow in a pipe with a semi-circular cross section
+    :param M: Maximum ``m'' index of basis functions Psi_{mn}
+    :param N: Maximum ``n'' index of basis functions Psi_{mn}
+    """
+    # TODO make into a time trial; find times for various M and N e.g. for (M, N) in NM_pairs ((N1,M1), (N2,M2)) etc...
+    # save a, b and C along with times to a local file
+    t = time.time()
+    b = get_b(M, N)
+    t_b = time.time() - t
+    print("Found b: {:.3e}".format(t_b))
+
+    t = time.time()
+    A = get_A(M, N)
+    t_A = time.time() - t
+    print("Found A: {:.3e}".format(t_A))
+
+    t = time.time()
+    a = np.linalg.solve(A, b)
+    t_a = time.time() - t
+    print("Solved for a: {:.3e}".format(t_a))
+
+    t = time.time()
     C = - (32/np.pi)*np.dot(b, a)
+    t_C = time.time() - t
+    print("Found C: {:.3e}".format(t_C))
+
     print(C)
 # -----------------------------------------------------------------------------
 # END ANALYSIS FUNCTIONS
@@ -121,8 +213,13 @@ def practice():
 
 if __name__ == "__main__":
     # practice()
-    M = 2
-    N = 5
+    M = 1
+    N = 1
+
+    K = 101
+    L = 100
     # get_b(M, N)
     # get_A(M, N)
-    find_C(M, N)
+    # find_C(M, N)
+    find_u(K, L, M, N)
+
