@@ -32,10 +32,13 @@
 \newcommand{\A}{\vec{A}}  % for magnetic vector potential
 \renewcommand{\S}{\mathbf{S}}  % Poynting vector
 \renewcommand{\SS}{\mathrm{S}}  % Poynting vector
-\newcommand{\e}{\epsilon_{0}}  % vacuum permittivity
+\newcommand{\e}{\epsilon}
+\newcommand{\ee}{\epsilon_{0}}  % vacuum permittivity
+\newcommand{\eee}{\bm{\chi}}  % permittivity tensor
 \newcommand{\mm}{\mu_{0}}  % vacuum permeability (\m used for magnetic dipole moment)
 \newcommand{\pe}{\vec{p}_{e}}  % electric dipole moment
 \newcommand{\m}{\vec{m}}  % magnetic dipole moment
+\renewcommand{\P}{\vec{P}}  % electric polarization
 
 \newcommand{\Poy}{Poynting\xspace}
 
@@ -78,7 +81,7 @@ The exercises are led by Asst. Prof. Martin Klanj\v{s}ek, who has curated the pr
 \subsubsection{Background Theory: Electric Field of a Charge Distribution}
 The electric field of a spatial charge distribution with volume charge density $ \rho(\r) $ is
 \begin{equation*}
-	\vec{E}(\vec{r}) = \frac{1}{4\pi \epsilon_{0}}\int \frac{\rho(\tvec{r}) \diff^{3}\tvec{r} }{\abs{\vec{r} - \tvec{r}}^{2}} \frac{\vec{r} - \tvec{r}}{\abs{\vec{r} - \tvec{r}}}
+	\vec{E}(\vec{r}) = \frac{1}{4\pi \ee}\int \frac{\rho(\tvec{r}) \diff^{3}\tvec{r} }{\abs{\vec{r} - \tvec{r}}^{2}} \frac{\vec{r} - \tvec{r}}{\abs{\vec{r} - \tvec{r}}}
 \end{equation*}
 where $ \tvec{r} $ is a dummy variable for integration. Think of $ \rho(\tvec{r}) \diff^{3}\tvec{r} $ as an infinitesimal element of charge at the position $ \tvec{r} $, while $ \vec{r} - \tvec{r} $ represents the position of each charge. The term $ \frac{\vec{r} - \tvec{r}}{\abs{\vec{r} - \tvec{r}}} $ just gives the direction of each charge element.
 
@@ -89,38 +92,38 @@ where $ \tvec{r} $ is a dummy variable for integration. Think of $ \rho(\tvec{r}
 	
 	First break each ring into infinitesimal segments with area $ r \diff \phi \diff r $. Along the perpendicular $ z $ axis through the disk's center each, segment contributes
 	\begin{equation*}
-		\diff E_{1} = \frac{1}{4\pi \epsilon_{0}} \frac{\sigma r\diff \phi \diff r }{z^{2} + r^{2}}
+		\diff E_{1} = \frac{1}{4\pi \ee} \frac{\sigma r\diff \phi \diff r }{z^{2} + r^{2}}
 	\end{equation*}
 	Notice the term $ r\diff \phi \diff r $ must have units of area to produce a charge when multiplied by the surface charge density $ \sigma $. The term $ z^{2} + r^{2} $ is just the square of the distance $ \sqrt{z^{2} + r^{2}} $ from the charge element to the $ z $ axis.
 	
 	\item Recognize the circular symmetry of each ring: both the $ x $ and $ y $ components of the electric field symmetrically cancel along the $ z $ axis, so the electric field only has a $ z $ component. Relate the magnitudes of $ \diff E $ and $ \diff E_{1} $ along the $ z $ axis with similar triangles to get the contribution $ \diff E $ of a ring of radius $ r $ at the point $ (0, 0, z) $:
 	\begin{equation*}
-		\frac{\diff E}{\diff E_{1}} = \frac{z}{\sqrt{z^{2} + r^{2}}} \implies  \diff E = \frac{z}{(z^{2} + r^{2})^{3/2}} \frac{\sigma r\diff \phi \diff r }{4\pi \epsilon_{0}} 
+		\frac{\diff E}{\diff E_{1}} = \frac{z}{\sqrt{z^{2} + r^{2}}} \implies  \diff E = \frac{z}{(z^{2} + r^{2})^{3/2}} \frac{\sigma r\diff \phi \diff r }{4\pi \ee} 
 	\end{equation*}
 	
 	\item Integrate over the contributions $ \diff E $ to find $ E(z) $:
 	\begin{equation*}
-		E(z) = \int \diff E = \int_{0}^{2\pi}\int_{0}^{a}\diff \phi \diff r \frac{\sigma z r}{4\pi \epsilon_{0} (z^{2} + r^{2})^{3/2}} = \frac{\sigma z}{2\epsilon_{0}} \int_{0}^{a}\frac{r \diff r}{(z^{2} + r^{2})^{3/2}}
+		E(z) = \int \diff E = \int_{0}^{2\pi}\int_{0}^{a}\diff \phi \diff r \frac{\sigma z r}{4\pi \ee (z^{2} + r^{2})^{3/2}} = \frac{\sigma z}{2\ee} \int_{0}^{a}\frac{r \diff r}{(z^{2} + r^{2})^{3/2}}
 	\end{equation*}
 	Solve the integral with the substitution $ u = z^{2} + r^{2} $, $\diff u = 2r \diff r $:
 	\begin{align*}
-		E(z) &= \int_{z^{2}}^{z^{2} + a^{2}} \frac{\diff u}{u^{3/2}} = -\frac{\sigma z}{2 \epsilon_{0}} \left(\frac{1}{\sqrt{z^{2} + a^{2}}} - \frac{1}{\sqrt{z^{2}}}\right)\\
-		&=\frac{\sigma}{2\epsilon_{0}} \left(1 - \frac{z}{\sqrt{z^{2} + a^{2}}}\right) = \frac{\sigma}{2\epsilon_{0}} \left(1 - \frac{1}{1 + \frac{a^{2}}{z^{2}}}\right)
+		E(z) &= \int_{z^{2}}^{z^{2} + a^{2}} \frac{\diff u}{u^{3/2}} = -\frac{\sigma z}{2 \ee} \left(\frac{1}{\sqrt{z^{2} + a^{2}}} - \frac{1}{\sqrt{z^{2}}}\right)\\
+		&=\frac{\sigma}{2\ee} \left(1 - \frac{z}{\sqrt{z^{2} + a^{2}}}\right) = \frac{\sigma}{2\ee} \left(1 - \frac{1}{1 + \frac{a^{2}}{z^{2}}}\right)
 	\end{align*}
 	
 	\item For $ z \ll a $ (very close to the disk), $ 1 + \frac{a^{2}}{z^{2}} \to \infty $ and $ \frac{1}{1 + \frac{a^{2}}{z^{2}}} \to 0$, leaving \vspace{-2mm}
 	\begin{equation*}
-		E(z) \to \frac{\sigma}{2\epsilon_{0}} \qquad (z \ll a)
+		E(z) \to \frac{\sigma}{2\ee} \qquad (z \ll a)
 	\end{equation*}
 	which is the electric field of an infinite charged plane.
 	
 	\item For $ z \gg a $ (very far from the disk), $ \frac{a^{2}}{z^{2}} \ll 1 $, and we use the Taylor approximation $ (1 + x)^{p} \approx 1 + px $ for $ x \ll 1 $:
 	\begin{equation*}
-		E(z) = \frac{\sigma}{2\epsilon_{0}} \left[1 -  \left (1 + \frac{a^{2}}{z^{2}}\right )^{-1/2}\right] \approx \frac{\sigma}{2\epsilon_{0}}\left[ 1 - \left(1 - \frac{a^{2}}{2z^{2}}\right) \right] = \frac{\sigma a^{2}}{4\epsilon_{0}z^{2}}
+		E(z) = \frac{\sigma}{2\ee} \left[1 -  \left (1 + \frac{a^{2}}{z^{2}}\right )^{-1/2}\right] \approx \frac{\sigma}{2\ee}\left[ 1 - \left(1 - \frac{a^{2}}{2z^{2}}\right) \right] = \frac{\sigma a^{2}}{4\ee z^{2}}
 	\end{equation*}
 	Multiply above and below by $ \pi $ to match this to the expression for a point charge:
 	\begin{equation*}
-		E(z) = \frac{\pi a^{2} \sigma}{4\pi \epsilon_{0} z^{2}} = \frac{\sigma S}{4\pi \epsilon_{0}z^{2}} = \frac{q}{4\pi \epsilon_{0}z^{2}}  \qquad (z \gg a) 
+		E(z) = \frac{\pi a^{2} \sigma}{4\pi \ee z^{2}} = \frac{\sigma S}{4\pi \ee z^{2}} = \frac{q}{4\pi \ee z^{2}}  \qquad (z \gg a) 
 	\end{equation*}
 	where $ q = \sigma S $ is the disk's charge. 
 
@@ -134,33 +137,33 @@ where $ \tvec{r} $ is a dummy variable for integration. Think of $ \rho(\tvec{r}
 	
 	\item Find the electric field of a ribbon a distance $ r $ from the slit along the $ z $ axis using Gauss's law with a cylindrical surface. For a cylinder of radius $ R $ and length $ l $, Gauss's law reads
 	\begin{equation*}
-		\oint \vec{E} \cdot \diff \vec{S} = 2\pi R l E = \frac{q_{\text{enc}}}{\epsilon_{0}} \implies E(R) = \frac{q_{\text{enc}}}{2\pi \epsilon_{0} l R}
+		\oint \vec{E} \cdot \diff \vec{S} = 2\pi R l E = \frac{q_{\text{enc}}}{\ee} \implies E(R) = \frac{q_{\text{enc}}}{2\pi \ee l R}
 	\end{equation*}
 	Applied to the ribbon, the enclosed charged $ q_{\text{enc}} $ is the ribbon's infinitesimal charge $ \diff q_{1} = \sigma \diff S_{1} = \sigma l \diff r $, while the cylinder's radius $ R $ is the distance from the ribbon to the $ z $ axis: $ R = \sqrt{z^{2} + r^{2}} $, so the contribution $ \diff E_{1} $ of one ribbon is
 	\begin{equation*}
-		\diff E_{1} = \frac{\diff q_{1}}{2\pi \epsilon_{0} l \sqrt{z^{2} + r^{2}}} = \frac{\sigma l \diff r}{2\pi \epsilon_{0} l\sqrt{z^{2} + r^{2}} } = \frac{\sigma \diff r}{2\pi \epsilon_{0} \sqrt{z^{2} + r^{2}} }
+		\diff E_{1} = \frac{\diff q_{1}}{2\pi \ee l \sqrt{z^{2} + r^{2}}} = \frac{\sigma l \diff r}{2\pi \ee l\sqrt{z^{2} + r^{2}} } = \frac{\sigma \diff r}{2\pi \ee \sqrt{z^{2} + r^{2}} }
 	\end{equation*}
 	
 	\item Because of mirror-image symmetry, both the $ x $ and $ y $ components of the electric field cancel, leaving only the $ z $ component $ \diff E_{z} $. Relate $ \diff E_{z} $ and $ \diff E_{1} $ using similar triangles
 	\begin{equation*}
-		\frac{\diff E_{z}}{\diff E_{1}} = \frac{z}{\sqrt{z^{2} + r^{2}}} \implies  \diff E_{z} = \frac{\sigma z \diff r}{2\pi \epsilon_{0} (z^{2} + r^{2})}
+		\frac{\diff E_{z}}{\diff E_{1}} = \frac{z}{\sqrt{z^{2} + r^{2}}} \implies  \diff E_{z} = \frac{\sigma z \diff r}{2\pi \ee (z^{2} + r^{2})}
 	\end{equation*}
 	
 	\item Find the total electric field along the $ z $ axis by integrating over the contributions $ \diff E_{z} $ of all the ribbons. Because of mirror symmetry, you can calculate only the contribution of e.g. the right plane and multiple the result by two.
 	\begin{align*}
-		E(z) &= \int \diff E_{z} = 2 \int_{a/2}^{\infty} \left(\frac{\sigma z \diff r}{2\pi \epsilon_{0} (z^{2} + r^{2})}\right) = \frac{\sigma z}{\pi \epsilon_{0}} \int_{a/2}^{\infty} \frac{\diff r}{z^{2} + r^{2}}\\
-		&= \frac{\sigma z}{\pi \epsilon_{0}} \left[\frac{1}{z}\arctan \frac{r}{z}\right]_{a/2}^{\infty} = \frac{\sigma}{\pi \epsilon_{0}} \left[\frac{\pi}{2} - \arctan(\frac{a}{2z})\right]
+		E(z) &= \int \diff E_{z} = 2 \int_{a/2}^{\infty} \left(\frac{\sigma z \diff r}{2\pi \ee (z^{2} + r^{2})}\right) = \frac{\sigma z}{\pi \ee} \int_{a/2}^{\infty} \frac{\diff r}{z^{2} + r^{2}}\\
+		&= \frac{\sigma z}{\pi \ee} \left[\frac{1}{z}\arctan \frac{r}{z}\right]_{a/2}^{\infty} = \frac{\sigma}{\pi \ee} \left[\frac{\pi}{2} - \arctan(\frac{a}{2z})\right]
 	\end{align*}
 	
 	\item In the limit $ z \gg a $ (very far from the slit), $ \arctan\frac{a}{2z} \to 0 $ and the electric field along the $ z $ axis is 
 	\begin{equation*}
-		E(z) = \frac{\sigma}{2 \epsilon_{0}} \qquad (z \gg a)
+		E(z) = \frac{\sigma}{2 \ee} \qquad (z \gg a)
 	\end{equation*}
 	which is the field of an infinite sheet of charge.
 	
 	\item In the limit $ z \ll a $ (very close to the slit), we have $ \frac{a}{2z} \to \infty $. Use the asymptotic expansion $ \arctan x \approx \frac{\pi}{2} - \frac{1}{x} $ for large $ x $ to get
 	\begin{equation*}
-		E(z) \approx \frac{\sigma}{\pi \epsilon_{0}} \left[\frac{\pi}{2} - \left(\frac{\pi}{2} - \frac{2z}{a}\right)\right] = \frac{2\sigma}{\pi \epsilon_{0}} \frac{z}{a}
+		E(z) \approx \frac{\sigma}{\pi \ee} \left[\frac{\pi}{2} - \left(\frac{\pi}{2} - \frac{2z}{a}\right)\right] = \frac{2\sigma}{\pi \ee} \frac{z}{a}
 	\end{equation*}
 	In this case the electric field scales linearly as $ E \sim z $. 
 \end{itemize} 
@@ -172,17 +175,17 @@ where $ \tvec{r} $ is a dummy variable for integration. Think of $ \rho(\tvec{r}
 \begin{itemize}
 	\item Start with Gauss's law in differential form and the relationship between $ \E $ and $ U $
 	\begin{equation*}
-		\div \vec{E} = \frac{\rho}{\epsilon_{0}} \eqtext{and} \vec{E} = - \grad U
+		\div \vec{E} = \frac{\rho}{\ee} \eqtext{and} \vec{E} = - \grad U
 	\end{equation*}
 	Substitute $ \E = - \grad U $ into Gauss's law to get
 	\begin{equation*}
-		\div \big[-\grad U\big] = \frac{\rho}{\epsilon_{0}} \implies \nabla^{2}U = -\frac{\rho}{\epsilon_{0}}
+		\div \big[-\grad U\big] = \frac{\rho}{\ee} \implies \nabla^{2}U = -\frac{\rho}{\ee}
 	\end{equation*}
 	The last equality takes the form of a \textit{Poisson equation}.\footnote{In general any equation of the form $ \nabla^{2}f(\r) = g(\r) $ is called a Poisson equation.} It relates charge density $ \rho $ to electric potential $ U $. In other words, if we know a spatial charge distribution $ \rho $, we can find the electric field potential $ U $ thus the electric field $ \vec{E} $ with $ \E = - \grad U $.
 	
 	\item As a simple example we start with a point charge. The charge distribution is
 	\begin{equation*}
-		\rho(\vec{r}) = q \delta(\vec{r}) \implies \nabla^{2}U = -\frac{\rho}{\epsilon_{0}} = - \frac{q}{\epsilon_{0}}\delta(\r)
+		\rho(\vec{r}) = q \delta(\vec{r}) \implies \nabla^{2}U = -\frac{\rho}{\ee} = - \frac{q}{\ee}\delta(\r)
 	\end{equation*}
 	This the Poisson equation for a point charge. We will solve the equation with a Fourier transform.
 	
@@ -244,7 +247,7 @@ where $ \tvec{r} $ is a dummy variable for integration. Think of $ \rho(\tvec{r}
 \subsubsection{Poisson Equation for a Point Particle}
 \textit{The Poisson equation for a point particle is}
 \begin{equation*}
-	\nabla^{2}U(\r) = - \frac{q}{\epsilon_{0}} \delta (\r)
+	\nabla^{2}U(\r) = - \frac{q}{\ee} \delta (\r)
 \end{equation*}
 \textit{Solve the equation for $ U(\r) $.}
 \begin{itemize}
@@ -253,25 +256,25 @@ where $ \tvec{r} $ is a dummy variable for integration. Think of $ \rho(\tvec{r}
 	
 	First, take the Fourier transform of both sides---use the Fourier transform identities $ \nabla^{2} \to -k^{2} $ and $ \delta(\r) \to \frac{1}{(2\pi)^{3}} $ from the theory section.
 	\begin{equation*}
-		- k^{2}U(\vec{k}) = - \frac{q}{\epsilon_{0}} \frac{1}{(2\pi)^{3}} \implies U(\vec{k}) = \frac{q}{(2\pi)^{3} \epsilon_{0} k^{2}}
+		- k^{2}U(\vec{k}) = - \frac{q}{\ee} \frac{1}{(2\pi)^{3}} \implies U(\vec{k}) = \frac{q}{(2\pi)^{3} \ee k^{2}}
 	\end{equation*}
 	
 	\item Next, find $ U(\r) $ using a second Fourier transform
 	\begin{equation*}
-		U(\r) = \int \diff^{3} k \frac{q e^{i\vec{k}\cdot \r}}{k^{2}\epsilon_{0}(2\pi)^{3}} = \frac{q}{(2\pi)^{3}\epsilon_{0}} \int \frac{e^{i\vec{k}\cdot \r}}{k^{2}} \diff^{3}k
+		U(\r) = \int \diff^{3} k \frac{q e^{i\vec{k}\cdot \r}}{k^{2}\ee(2\pi)^{3}} = \frac{q}{(2\pi)^{3}\ee} \int \frac{e^{i\vec{k}\cdot \r}}{k^{2}} \diff^{3}k
 	\end{equation*}
 	
 	\item Now, how to solve the integral? Suppose $ \theta $ is the angle between $ \r $ and $ \vec{k} $. To simplify the dot product. And then integrate in spherical coordinates:
 	\begin{equation*}
-		U(\r) =  \frac{q}{(2\pi)^{3}\epsilon_{0}} \int_{0}^{2\pi}\diff \phi \int_{-1}^{1} \diff [\cos \theta] \int_{0}^{\infty} \diff k k^{2} \frac{e^{ik r\cos \theta}}{k^{2}} 
+		U(\r) =  \frac{q}{(2\pi)^{3}\ee} \int_{0}^{2\pi}\diff \phi \int_{-1}^{1} \diff [\cos \theta] \int_{0}^{\infty} \diff k k^{2} \frac{e^{ik r\cos \theta}}{k^{2}} 
 	\end{equation*}
 	So integrate over $ \phi $, which is simple and gives $ 2\pi $:
 	\begin{equation*}
-		U(\r) = \frac{q}{(2\pi)^{2}\epsilon_{0}} \int_{-1}^{1}\int_{0}^{\infty} e^{i \cos \theta k r} \diff[\cos \theta] \diff k
+		U(\r) = \frac{q}{(2\pi)^{2}\ee} \int_{-1}^{1}\int_{0}^{\infty} e^{i \cos \theta k r} \diff[\cos \theta] \diff k
 	\end{equation*}
 	Integrate first over $ \theta $, (to avoid $ e^{i \cos \theta \cdot \infty} $ from the upper $ k $ limit). Recognize the sine function the difference of exponents!
 	\begin{equation*}
-		U(\r) = \frac{q}{(2\pi)^{2}\epsilon_{0}} \int_{0}^{\infty} \eval{\frac{e^{i \cos \theta k r}}{i k r}}_{\theta = -1}^{1} \diff k = \frac{q}{(2\pi)^{2}\epsilon_{0}} \int_{0}^{\infty}\frac{e^{ikr}-e^{-ikr}}{ikr} \diff k = \frac{q}{(2\pi)^{2}\epsilon_{0}} \int_{0}^{\infty}\frac{2\sin (kr)}{kr} \diff k
+		U(\r) = \frac{q}{(2\pi)^{2}\ee} \int_{0}^{\infty} \eval{\frac{e^{i \cos \theta k r}}{i k r}}_{\theta = -1}^{1} \diff k = \frac{q}{(2\pi)^{2}\ee} \int_{0}^{\infty}\frac{e^{ikr}-e^{-ikr}}{ikr} \diff k = \frac{q}{(2\pi)^{2}\ee} \int_{0}^{\infty}\frac{2\sin (kr)}{kr} \diff k
 	\end{equation*}
 	The integral of the $ \operatorname{sinc} $ function is
 	\begin{equation*}
@@ -279,13 +282,13 @@ where $ \tvec{r} $ is a dummy variable for integration. Think of $ \rho(\tvec{r}
 	\end{equation*}
 	And applying this integral gives
 	\begin{equation*}
-		U(\r) = \frac{2q}{(2\pi)^{2}\epsilon_{0}}\frac{\pi}{2r} = \frac{q}{4\pi \epsilon_{0}r}
+		U(\r) = \frac{2q}{(2\pi)^{2}\ee}\frac{\pi}{2r} = \frac{q}{4\pi \ee r}
 	\end{equation*}
 	which is the electric potential of a point charge. Cool! We derived it directly from Maxwell's equations.
 	
 	\item Finally, substitute our result for $ U(\r) $ into the Poisson equation for a point charge. The result is
 	\begin{equation*}
-		\laplacian \frac{q}{4\pi \epsilon_{0}r} = -\frac{q}{\e}\delta (\r) \implies \nabla^{2}\frac{1}{r} = - 4\pi \delta(\r),
+		\laplacian \frac{q}{4\pi \ee r} = -\frac{q}{\ee}\delta (\r) \implies \nabla^{2}\frac{1}{r} = - 4\pi \delta(\r),
 	\end{equation*}
 	which will be useful in the next problems. 
 	
@@ -299,11 +302,11 @@ where $ \tvec{r} $ is a dummy variable for integration. Think of $ \rho(\tvec{r}
 	\end{equation*}
 	In this case, the solution of $ U(\r) $ to the Poisson equation is
 	\begin{equation*}
-		U(\r) = \int \diff^{3}\tilde{r}\rho(\tvec{r}) \frac{1}{4\pi \epsilon_{0}\abs{\r - \tvec{r}}} = \frac{1}{4\pi \epsilon_{0}} \int\frac{\diff^{3}\tilde{r}\rho(\tvec{r})}{\abs{\r - \tvec{r}}}
+		U(\r) = \int \diff^{3}\tilde{r}\rho(\tvec{r}) \frac{1}{4\pi \ee\abs{\r - \tvec{r}}} = \frac{1}{4\pi \ee} \int\frac{\diff^{3}\tilde{r}\rho(\tvec{r})}{\abs{\r - \tvec{r}}}
 	\end{equation*}
 	Well that's cool. By solving the Poisson equation for a delta function and then expanding an arbitrary $ \rho(\r) $ in terms of the delta function, we got the equation to the Poisson equation for any $ \rho(\r) $. And we can then get electric field using
 	\begin{equation*}
-		\vec{E} = - \grad U = \frac{1}{4\pi \epsilon_{0}} \int\frac{\diff^{3}\tilde{r}\rho(\tvec{r})}{\abs{\r - \tvec{r}}^{2}} \frac{\r - \tvec{r}}{\abs{r - \tvec{r}}}
+		\vec{E} = - \grad U = \frac{1}{4\pi \ee} \int\frac{\diff^{3}\tilde{r}\rho(\tvec{r})}{\abs{\r - \tvec{r}}^{2}} \frac{\r - \tvec{r}}{\abs{r - \tvec{r}}}
 	\end{equation*}
 	which agrees with the equation quoted in the previous exercise set.
 \end{itemize}
@@ -311,13 +314,13 @@ where $ \tvec{r} $ is a dummy variable for integration. Think of $ \rho(\tvec{r}
 \subsubsection{Electric Field of a Hydrogen Atom}
 \textit{The hydrogen atom has the electric potential}
 \begin{equation*}
-	U(\r) = \frac{q}{4\pi \epsilon_{0}} \frac{e^{-\alpha r}}{r}\left(1 + \frac{\alpha r}{2}\right), \qquad \alpha = \frac{2}{r_{B}}
+	U(\r) = \frac{q}{4\pi \ee} \frac{e^{-\alpha r}}{r}\left(1 + \frac{\alpha r}{2}\right), \qquad \alpha = \frac{2}{r_{B}}
 \end{equation*}
 \textit{Find the charge density $ \rho(\r) $ that generates this potential.}
 \begin{itemize}
 	\item Use the Poisson equation, which connects $ U $ and $ \rho $
 	\begin{equation*}
-		\nabla^{2}U(\r) = - \frac{\rho(\r)}{\epsilon_{0}}
+		\nabla^{2}U(\r) = - \frac{\rho(\r)}{\ee}
 	\end{equation*}
 	Calculate the Laplacian of our $ U(\r) $ and work in spherical coordinates, since the potential is spherically symmetric (depends only on $ r $). As a review, when acting on a function that depends only on $ r $, $ \nabla^{2} $ in spherical coordinates reads
 	\begin{equation*}
@@ -326,7 +329,7 @@ where $ \tvec{r} $ is a dummy variable for integration. Think of $ \rho(\tvec{r}
 	
 	\item Applying $ \nabla^{2} $ to $ U(r) $, after some straightforward but rather tedious differentiation, leads to
 	\begin{equation*}
-		\nabla^{2}U(\r) = \frac{q\alpha^{3}}{8 \pi \epsilon_{0}}e^{-\alpha r}
+		\nabla^{2}U(\r) = \frac{q\alpha^{3}}{8 \pi \ee}e^{-\alpha r}
 	\end{equation*}
 	Rearranging the Poisson equation then gives
 	\begin{equation*}
@@ -344,7 +347,7 @@ where $ \tvec{r} $ is a dummy variable for integration. Think of $ \rho(\tvec{r}
 	
 	We can resolve this problem with a special case from the limit
 	\begin{equation*}
-		\lim_{r\to 0}U(\r) = \frac{q}{4\pi \epsilon_{0} r}
+		\lim_{r\to 0}U(\r) = \frac{q}{4\pi \ee r}
 	\end{equation*}
 	We would then have to solve the Poisson equation for this potential. But we already know this potential: it is the potential for a point charge and corresponds to a charge density
 	\begin{equation*}
@@ -364,7 +367,7 @@ where $ \tvec{r} $ is a dummy variable for integration. Think of $ \rho(\tvec{r}
 \subsubsection{Theory: Laplace Equation}
 Just a quick review from the last exercise set: the Poisson equation used to solve for the electric field potential generated by a charge density $ \rho $ is
 \begin{equation*}
-	\nabla^{2}U(\r) = - \frac{\rho(\r)}{\e} \eqtext{where} \laplacian = \pdv[2]{}{x} + \pdv[2]{}{y} + \pdv[2]{}{z}
+	\nabla^{2}U(\r) = - \frac{\rho(\r)}{\ee} \eqtext{where} \laplacian = \pdv[2]{}{x} + \pdv[2]{}{y} + \pdv[2]{}{z}
 \end{equation*}
 Often $ \rho(\r) = 0 $ in places we're solving for the electric potential. In this case $ \laplacian U(\r) = 0 $. This equation is called a \textit{Laplace equation}.
 
@@ -719,11 +722,11 @@ Often $ \rho(\r) = 0 $ in places we're solving for the electric potential. In th
 	
 	We write Gauss's law for the small surface element, which is simple because the electric field is perpendicular to the surface
 	\begin{equation*}
-		E_{\perp} \diff S = \frac{\diff q}{\e} \implies \dv{e}{S} = \sigma = \e E_{\perp}
+		E_{\perp} \diff S = \frac{\diff q}{\ee} \implies \dv{e}{S} = \sigma = \ee E_{\perp}
 	\end{equation*}
 	This equality gives us an expression for $ \sigma $ in terms of the electric field $ E_{\perp} $ perpendicular to the surface. We can find $ E_{\perp} $ from the potential:
 	\begin{equation*}
-		E_{\perp} = -\pdv{U}{r}\bigg |_{r = a} = E_{0}\cos \theta + 2E_{0}\cos \theta \implies \sigma = 3\e E_{0} \cos \theta
+		E_{\perp} = -\pdv{U}{r}\bigg |_{r = a} = E_{0}\cos \theta + 2E_{0}\cos \theta \implies \sigma = 3\ee E_{0} \cos \theta
 	\end{equation*}
 	The charge density's dependence on $ \theta $ quantitatively demonstrates the sphere's dipole-like charge distribution. 
 	
@@ -733,12 +736,12 @@ Often $ \rho(\r) = 0 $ in places we're solving for the electric potential. In th
 	\end{equation*}
 	We qualitatively expect $ \vec{p}_{e} $ to point upward (from the negative to the positively charged hemisphere), and confirm this analytically. By spherical symmetry, only the $ z $ component of $ \vec{p}_{e} $ is non-zero; this is
 	\begin{equation*}
-		p_{e_{z}} = \int \tilde{z} \diff q = \int (a \cos \theta) \cdot (\sigma \diff S) = \int( a \cos \theta) \cdot (3 \e E_{0} \cos \theta) \cdot \diff S
+		p_{e_{z}} = \int \tilde{z} \diff q = \int (a \cos \theta) \cdot (\sigma \diff S) = \int( a \cos \theta) \cdot (3 \ee E_{0} \cos \theta) \cdot \diff S
 	\end{equation*}
 	To find $ \diff S $, we find the area of a small band of width $ \diff a $ around the sphere's surface. The band's area is $ 2\pi r \diff a = 2\pi (a \sin \theta ) (a \diff \theta) $. The dipole moment $ p_{e_{z}} $ is then
 	\begin{align*}
-		p_{e_{z}} &= \int_{0}^{\pi}(3\e E_{0}a\cos^{2}\theta) \cdot 2\pi (a \sin \theta ) (a \diff \theta) = 6a^{3}\pi \e E_{0} \int_{-1}^{1}\cos^{2}\theta \diff [\cos \theta]\\
-		& = 6a^{3}\pi \e E_{0} \left[\frac{1}{3}\cos^{3}\theta \right]_{-1}^{1} = 4\pi \e E_{0} a^{3}
+		p_{e_{z}} &= \int_{0}^{\pi}(3\ee E_{0}a\cos^{2}\theta) \cdot 2\pi (a \sin \theta ) (a \diff \theta) = 6a^{3}\pi \ee E_{0} \int_{-1}^{1}\cos^{2}\theta \diff [\cos \theta]\\
+		& = 6a^{3}\pi \ee E_{0} \left[\frac{1}{3}\cos^{3}\theta \right]_{-1}^{1} = 4\pi \ee E_{0} a^{3}
 	\end{align*}
 \end{itemize}
 
@@ -758,56 +761,56 @@ Often $ \rho(\r) = 0 $ in places we're solving for the electric potential. In th
 	
 	\item We then apply boundary conditions to find a solution specific to our problem. First, the potential on the shell's surface is constant, since the shell is a conductor. For convenience, we'll set $ U(a, \theta) = 0 $. The second boundary condition concerns the dipole at the sphere's center. Namely, the potential approaches the potential of an electric dipole near the sphere's center. Quantitatively, this condition reads
 	\begin{equation*}
-		U(r \to 0, \theta) = \frac{p_{e}\cos \theta}{4\pi \e r^{2}}
+		U(r \to 0, \theta) = \frac{p_{e}\cos \theta}{4\pi \ee r^{2}}
 	\end{equation*}
 	
 	\item We start with the simpler second boundary condition, (the boundary $ r \to 0 $ eliminates the $ r^{l} $-dependent term). Inserted into the general solution, the second condition reads
 	\begin{equation*}
-		U(r\to 0, \theta) = \sum_{l = 0}^{\infty} B_{l}r^{-(l+1)}P_{l}(\cos \theta) = \frac{p_{e}\cos \theta}{4\pi \e }r^{-2}
+		U(r\to 0, \theta) = \sum_{l = 0}^{\infty} B_{l}r^{-(l+1)}P_{l}(\cos \theta) = \frac{p_{e}\cos \theta}{4\pi \ee }r^{-2}
 	\end{equation*}
 	Note that the entire series sums to only a single term; for this to work, only the $ l = 1 $ term in the series can be non-zero, leaving
 	\begin{equation*}
-		B_{1}r^{-2}\cos \theta = \frac{p_{e}\cos \theta}{4\pi \e }r^{-2} \implies B_{1} = \frac{p_{e}}{4\pi \e} \eqtext{and} B_{l\neq 1} = 0
+		B_{1}r^{-2}\cos \theta = \frac{p_{e}\cos \theta}{4\pi \ee }r^{-2} \implies B_{1} = \frac{p_{e}}{4\pi \ee} \eqtext{and} B_{l\neq 1} = 0
 	\end{equation*}
 	Note the use of $ P_{1}(\cos \theta) = \cos \theta $. The intermediate solution at this stage is
 	\begin{equation*}
-		U(r, \theta) = \sum_{l = 0}^{\infty} A_{l} r^{l} P_{l}(\cos \theta) + \frac{p_{e}}{4\pi \e}r^{-2} \cos \theta
+		U(r, \theta) = \sum_{l = 0}^{\infty} A_{l} r^{l} P_{l}(\cos \theta) + \frac{p_{e}}{4\pi \ee}r^{-2} \cos \theta
 	\end{equation*}
 	We apply the second boundary condition $ U(a, \theta) = 0 $ to get
 	\begin{equation*}
-		\sum_{l = 0}^{\infty} A_{l} a^{l} P_{l}(\cos \theta) = - \frac{p_{e}}{4\pi \e}a^{-2} \cos \theta
+		\sum_{l = 0}^{\infty} A_{l} a^{l} P_{l}(\cos \theta) = - \frac{p_{e}}{4\pi \ee}a^{-2} \cos \theta
 	\end{equation*}
 	As before, only the $ l = 1 $ term can be non-zero to satisfy the equality. The result is
 	\begin{equation*}
-		A_{1}a\cos \theta = - \frac{p_{e}}{4\pi \e}a^{-2} \cos \theta \implies A_{1} = -\frac{p_{e}}{4\pi \e a^{3}} \eqtext{and} A_{l\neq 1} = 0
+		A_{1}a\cos \theta = - \frac{p_{e}}{4\pi \ee}a^{-2} \cos \theta \implies A_{1} = -\frac{p_{e}}{4\pi \ee a^{3}} \eqtext{and} A_{l\neq 1} = 0
 	\end{equation*}
 	With the coefficients $ A_{l} $ and $ B_{l} $ known, the solution for $ U(r, \theta) $ is
 	\begin{equation*}
-		U(r, \theta) = \left[\frac{p_{e}}{4\pi \e r^{2}} -\frac{p_{e}}{4\pi \e a^{3}}r\right]\cos \theta = \frac{p_{e}\cos \theta}{4\pi \e}\left[\frac{1}{r^{2}} - \frac{r}{a^{3}}\right]
+		U(r, \theta) = \left[\frac{p_{e}}{4\pi \ee r^{2}} -\frac{p_{e}}{4\pi \ee a^{3}}r\right]\cos \theta = \frac{p_{e}\cos \theta}{4\pi \ee}\left[\frac{1}{r^{2}} - \frac{r}{a^{3}}\right]
 	\end{equation*}
 	The $ \frac{1}{r^{2}} $ term is the dipole's contribution. The $ \frac{r}{a^{3}} $ comes from the charge induced on the conducting shell. 
 	
 	\item The induced term is worth a closer look, noting that $ r\cos \theta = z $. 
 	\begin{equation*}
-		U_{\text{induced}} = -\frac{p_{e}}{4\pi \e a^{3}}r\cos \theta = -\frac{p_{e}}{4\pi \e a^{3}}z
+		U_{\text{induced}} = -\frac{p_{e}}{4\pi \ee a^{3}}r\cos \theta = -\frac{p_{e}}{4\pi \ee a^{3}}z
 	\end{equation*}
 	In particular, the associated electric field is
 	\begin{equation*}
-		E_{\text{induced}} = -\pdv{z}U_{\text{induced}} = \frac{p_{e}}{4\pi \e a^{3}}
+		E_{\text{induced}} = -\pdv{z}U_{\text{induced}} = \frac{p_{e}}{4\pi \ee a^{3}}
 	\end{equation*}
 	In other words, the electric field generated by the induced charge is constant! The uniform field also tells us about the charge distribution on the sphere's surface: to create a uniform field in the $ z $ direction, the shell must have a dipole-like charge distribution, with positive charge on the lower hemisphere and negative charge on the upper hemisphere. 
 	
 	\item Next, we're interested in the analytic expression for the surface charge density $ \sigma $. We consider a small surface element $ \diff S $, and consider the total electric field at that surface. The electric field must be perpendicular to the surface, since the shell is a conductor. Gauss's law applied to the surface element reads
 	\begin{equation*}
-		- E_{\perp} \diff S = \frac{\diff q}{\e} \implies \sigma \equiv \dv{q}{S} = -\e E_{\perp}
+		- E_{\perp} \diff S = \frac{\diff q}{\ee} \implies \sigma \equiv \dv{q}{S} = -\ee E_{\perp}
 	\end{equation*}
 	Note the minus sign, indicating the field's electric flux leaving the surface element from inside the shell. We find an expression for $ E_{\perp} $ from $ U $:
 	\begin{equation*}
-		E_{\perp} = -\pdv{U}{r}\bigg|_{r = a} = + \frac{p_{e}\cos \theta}{4\pi \e}\left[\frac{2}{r^{3}} + \frac{1}{a^{3}}\right]_{r = a} = \frac{3p_{e}}{4\pi \e a^{3}} \cos \theta
+		E_{\perp} = -\pdv{U}{r}\bigg|_{r = a} = + \frac{p_{e}\cos \theta}{4\pi \ee}\left[\frac{2}{r^{3}} + \frac{1}{a^{3}}\right]_{r = a} = \frac{3p_{e}}{4\pi \ee a^{3}} \cos \theta
 	\end{equation*}
 	The associated surface charge density is
 	\begin{equation*}
-		\sigma = -\e E_{\perp} = -\frac{3p_{e}}{4\pi a^{3}} \cos \theta
+		\sigma = -\ee E_{\perp} = -\frac{3p_{e}}{4\pi a^{3}} \cos \theta
 	\end{equation*}
 	
 	
@@ -824,7 +827,7 @@ Often $ \rho(\r) = 0 $ in places we're solving for the electric potential. In th
 	
 	\item Considering both points, the potential at an arbitrary position $ \r $ from the origin is
 	\begin{equation*}
-		U(\r) = \frac{q}{4\pi \e}\frac{1}{\abs{\r - \vec{d}}} - \frac{q}{4\pi \e}\frac{1}{\abs{\r + \vec{d}}} 
+		U(\r) = \frac{q}{4\pi \ee}\frac{1}{\abs{\r - \vec{d}}} - \frac{q}{4\pi \ee}\frac{1}{\abs{\r + \vec{d}}} 
 	\end{equation*}
 	where the vector $ \vec{d} $ points perpendicularly up from the plane toward the positive charge. Introducing an angle $ \theta $ between $ \vec{d} $ and $ \r $, we have
 	\begin{equation*}
@@ -832,7 +835,7 @@ Often $ \rho(\r) = 0 $ in places we're solving for the electric potential. In th
 	\end{equation*}
 	The expression for $ U(\r) $ for the two charges is then simply
 	\begin{equation*}
-		U_{2}(\r) = \frac{q}{4\pi \e}\left[\frac{1}{\sqrt{r^{2}+d^{2} \pm 2rd\cos \theta}} - \frac{1}{\sqrt{r^{2}+d^{2} \pm 2rd\cos \theta}}\right]
+		U_{2}(\r) = \frac{q}{4\pi \ee}\left[\frac{1}{\sqrt{r^{2}+d^{2} \pm 2rd\cos \theta}} - \frac{1}{\sqrt{r^{2}+d^{2} \pm 2rd\cos \theta}}\right]
 	\end{equation*}
 	For the original configuration of a single positive charge a distance $ d $ above the plane, the potential above the plane agrees with $ U_{2} $, while the potential below the plane, where there is in reality no charge, is zero. The correct expression for the single charge $ +q $ is then
 	\begin{equation*}
@@ -845,7 +848,7 @@ Often $ \rho(\r) = 0 $ in places we're solving for the electric potential. In th
 	
 	\item Next, we're interested in the surface charge density $ \sigma(\rho) $ on the plane where $ \rho $ is the radial distance in the plane from the origin. As usual, we start with Gauss's law for a small surface element of the plane: 
 	\begin{equation*}
-		-E_{\perp}\diff S = \frac{\diff q}{\e} \implies \sigma \equiv \frac{\diff q}{\diff S} =  -\sigma E_{\perp}
+		-E_{\perp}\diff S = \frac{\diff q}{\ee} \implies \sigma \equiv \frac{\diff q}{\diff S} =  -\sigma E_{\perp}
 	\end{equation*}
 	To find $ E_{\perp} $, we differentiate $ U $ with respect to the vertical coordinate $ z $. First, we introduce $ z $ into the expression $ \abs{\r \pm \vec{d}} $
 	\begin{equation*}
@@ -853,11 +856,11 @@ Often $ \rho(\r) = 0 $ in places we're solving for the electric potential. In th
 	\end{equation*}
 	We then have
 	\begin{equation*}
-		U(\rho, z) = \frac{q}{4\pi \e}\left[\frac{1}{\sqrt{\rho^{2} + z^{2} + d^{2} - 2dz}} - \frac{1}{\sqrt{\rho^{2} + z^{2} + d^{2} + 2dz}}\right]
+		U(\rho, z) = \frac{q}{4\pi \ee}\left[\frac{1}{\sqrt{\rho^{2} + z^{2} + d^{2} - 2dz}} - \frac{1}{\sqrt{\rho^{2} + z^{2} + d^{2} + 2dz}}\right]
 	\end{equation*}
 	We then find $ E_{\perp} $ and then $ \sigma $ with
 	\begin{align*}
-		\sigma &= - \e E_{\perp} = -\e \pdv{U}{z}\bigg|_{z=0} = -\frac{q}{4\pi}\left[\frac{d}{(\rho^{2}+d^{2})^{3/2}} +  \frac{d}{(\rho^{2}+d^{2})^{3/2}} \right]\\
+		\sigma &= - \ee E_{\perp} = -\ee \pdv{U}{z}\bigg|_{z=0} = -\frac{q}{4\pi}\left[\frac{d}{(\rho^{2}+d^{2})^{3/2}} +  \frac{d}{(\rho^{2}+d^{2})^{3/2}} \right]\\
 		& = -\frac{q}{2\pi} \frac{d}{(\rho^{2}+d^{2})^{3/2}}
 	\end{align*}
 	
@@ -877,27 +880,27 @@ Often $ \rho(\r) = 0 $ in places we're solving for the electric potential. In th
 \textbf{Theory: Electrostatic Force}\\[2mm]
 The total electrostatic force $ \vec{F} $ acting on the charges enclosed in a region of space $ V $ permeated with an electric field $ \E $ is
 \begin{equation*}
-	\vec{F} = \e \oint_{\partial V} \left[\E(\E \cdot \uvec{n}) - \frac{1}{2}E^{2}\uvec{n}\right]\diff S
+	\vec{F} = \ee \oint_{\partial V} \left[\E(\E \cdot \uvec{n}) - \frac{1}{2}E^{2}\uvec{n}\right]\diff S
 \end{equation*}
 where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the charges. Like with Gauss's law, a good choice of the boundary surface, usually taking advantage of the problem's symmetries, tends to simplify the problem. Alternatively, if the electric field vanishes at infinity, we choose a surface that closes at infinity. 
 
 \begin{itemize}
 	\item Back to our problem: we choose an infinite surface whose base runs along the plane, then turns upward and closes at infinity to enclose the upper half of space above the plane. The field in this case is the same $ E_{\perp} $ calculated above:
 	\begin{equation*}
-		E_{\perp} = \frac{q}{2\pi \e}\frac{d}{(\rho^{2}+d^{2})^{3/2}}
+		E_{\perp} = \frac{q}{2\pi \ee}\frac{d}{(\rho^{2}+d^{2})^{3/2}}
 	\end{equation*}
 	For the part of the surface running parallel to the plane, the normal to the surface $ \uvec{n} $ points perpendicularly into the plane, parallel to the electric field. The force equation for the bottom half of the surface reads 
 	\begin{equation*}
-		\vec{F}_{e} = \e \oint \left[E^{2}\uvec{n}- \frac{1}{2}E^{2}\uvec{n}\right]\diff S = \frac{\e}{2}\uvec{n}\int E_{\perp}^{2}\diff S
+		\vec{F}_{e} = \ee \oint \left[E^{2}\uvec{n}- \frac{1}{2}E^{2}\uvec{n}\right]\diff S = \frac{\ee}{2}\uvec{n}\int E_{\perp}^{2}\diff S
 	\end{equation*}
 	In fact, the contribution from the upper half of the surface is zero---the upper half extends to infinity, where the electric field vanishes. We only need to integrate over the bottom of the surface, running parallel to the plane. Writing $ \diff S = 2\pi \rho \diff \rho $ and substituting in the expression for $ E_{\perp} $, the force reads
 	\begin{align*}
-		\vec{F}_{e} &= \uvec{n}\frac{\e}{2}\int_{0}^{\infty} \frac{q^{2}}{4\pi^{2}\e^{2}}\frac{d^{2}}{(\rho^{2} + d^{2})^{3}} 2\pi \rho \diff \rho = \frac{q^{2}d^{2}}{4\pi \e}\uvec{n}\int_{0}^{\infty}\frac{\rho}{(\rho^{2} + d^{2})^{3}} \diff \rho\\
-		&=  \frac{q^{2}d^{2}}{8\pi \e}\uvec{n}\int_{d^{2}}^{\infty}\frac{\diff u}{u^{3}} = - \frac{q^{2}d^{2}}{16\pi \e}\uvec{n} \left[\frac{1}{u^{2}}\right]_{d^{2}}^{\infty} = \frac{q^{2}}{16\pi \e d^{2}}\uvec{n}
+		\vec{F}_{e} &= \uvec{n}\frac{\ee}{2}\int_{0}^{\infty} \frac{q^{2}}{4\pi^{2}\ee^{2}}\frac{d^{2}}{(\rho^{2} + d^{2})^{3}} 2\pi \rho \diff \rho = \frac{q^{2}d^{2}}{4\pi \ee}\uvec{n}\int_{0}^{\infty}\frac{\rho}{(\rho^{2} + d^{2})^{3}} \diff \rho\\
+		&=  \frac{q^{2}d^{2}}{8\pi \ee}\uvec{n}\int_{d^{2}}^{\infty}\frac{\diff u}{u^{3}} = - \frac{q^{2}d^{2}}{16\pi \ee}\uvec{n} \left[\frac{1}{u^{2}}\right]_{d^{2}}^{\infty} = \frac{q^{2}}{16\pi \ee d^{2}}\uvec{n}
 	\end{align*}
 	The force points in the direction of $ \uvec{n} $---downward into the plane. A final note: if we write
 	\begin{equation*}
-		\vec{F}_{e} = \frac{q^{2}}{4\pi \e (2d)^{2}}\uvec{n}
+		\vec{F}_{e} = \frac{q^{2}}{4\pi \ee (2d)^{2}}\uvec{n}
 	\end{equation*}
 	the force takes the form of the electric force between a positive and negative charge separated by a distance $ 2d $---the same situation we used in the method of images above. 
 	
@@ -908,7 +911,7 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 \subsubsection{Theory: Electrostatic Force}
 Recall the total electrostatic force $ \vec{F} $ acting on the charges enclosed in a region of space $ V $ permeated with an electric field $ \E $ is
 \begin{equation*}
-	\vec{F}_{e} = \e \oint_{\partial V}\left[\E(\E\cdot \uvec{n}) - \frac{1}{2}E^{2} \uvec{n}\right] \diff S
+	\vec{F}_{e} = \ee \oint_{\partial V}\left[\E(\E\cdot \uvec{n}) - \frac{1}{2}E^{2} \uvec{n}\right] \diff S
 \end{equation*}
 where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the charges.
 
@@ -929,7 +932,7 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 	
 	\item We then have $ \E \cdot \uvec{n} = E $ and $ \E( \E \cdot \uvec{n}) = E^{2}\uvec{n} $. The contribution to the force on along the sphere's outside surface is
 	\begin{equation*}
-		\vec{F}_{e} = \e \int \frac{1}{2} E^{2} \uvec{n} \diff S
+		\vec{F}_{e} = \ee \int \frac{1}{2} E^{2} \uvec{n} \diff S
 	\end{equation*}
 	The contribution from the hemisphere plane through the sphere zero, since $ \E = 0 $ inside the sphere. 
 	
@@ -939,11 +942,11 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 	\end{equation*}
 	Inserting $ E $ into the force equation gives
 	\begin{equation*}
-		\vec{F}_{e} = \e \int \frac{1}{2}\big(3E_{0} \cos \theta\big)^{2} \uvec{n} \diff S
+		\vec{F}_{e} = \ee \int \frac{1}{2}\big(3E_{0} \cos \theta\big)^{2} \uvec{n} \diff S
 	\end{equation*}
 	In spherical coordinates, the unit normal $ \uvec{n} $ to the sphere's surface is $ \uvec{n} = (\sin \theta \cos \phi, \sin \theta \sin \phi, \cos \theta) $. The surface element $ \diff S $ at the surface $ r = a $ is (just like in the previous exercise sets) $ \diff S = a^{2} \diff \phi \sin \theta \diff \theta $. The force on the sphere's upper half is then
 	\begin{equation*}
-		\vec{F}_{e} = \frac{9\e E_{0}^{2}}{2} \int_{\theta = 0}^{\pi/2}\int_{\phi = 0}^{2\pi} \cos^{2} \theta 
+		\vec{F}_{e} = \frac{9\ee E_{0}^{2}}{2} \int_{\theta = 0}^{\pi/2}\int_{\phi = 0}^{2\pi} \cos^{2} \theta 
 		\begin{bmatrix}
 			\sin \theta \cos \phi\\
 			\sin \theta \sin \phi\\
@@ -953,7 +956,7 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 	\end{equation*}
 	Both the $ x $ and $ y $ components will be zero---integrating $ \cos \phi $ and $ \sin \phi $ over a full period $ 2 \pi $ give zero, while the $ \phi $ contribution to the $ z $ component is $ 2\pi $.  We make this explicit with
 	\begin{equation*}
-		\vec{F}_{e} = \frac{9\e E_{0}^{2}}{2} \int_{\theta = 0}^{\pi/2}\cos^{2} \theta 
+		\vec{F}_{e} = \frac{9\ee E_{0}^{2}}{2} \int_{\theta = 0}^{\pi/2}\cos^{2} \theta 
 		\begin{bmatrix}
 			0\\
 			0\\
@@ -963,12 +966,12 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 	\end{equation*}
 	The non-zero $ z $ component $ F_{z} $ is 
 	\begin{align*}
-		F_{z} &= \frac{9\e E_{0}^{2}}{2} \int_{\theta = 0}^{\pi/2}2\pi \cos^{3} \theta (a^{2} \sin \theta \diff \theta) = 9\pi\e E_{0}^{2}a^{2} \int_{\theta = 0}^{\pi/2} \cos^{3} \theta (\sin \theta \diff \theta)\\
-		& =  9\pi\e E_{0}^{2}a^{2} \int_{0}^{1} \cos^{3} \theta \diff [\cos \theta] = \frac{9\pi\e a^{2} E_{0}^{2}}{4}
+		F_{z} &= \frac{9\ee E_{0}^{2}}{2} \int_{\theta = 0}^{\pi/2}2\pi \cos^{3} \theta (a^{2} \sin \theta \diff \theta) = 9\pi\ee E_{0}^{2}a^{2} \int_{\theta = 0}^{\pi/2} \cos^{3} \theta (\sin \theta \diff \theta)\\
+		& =  9\pi\ee E_{0}^{2}a^{2} \int_{0}^{1} \cos^{3} \theta \diff [\cos \theta] = \frac{9\pi\ee a^{2} E_{0}^{2}}{4}
 	\end{align*}
 	The vector force can be written simply as
 	\begin{equation*}
-		\vec{F} = \frac{9\pi\e a^{2} E_{0}^{2}}{4} \uvec{z}
+		\vec{F} = \frac{9\pi\ee a^{2} E_{0}^{2}}{4} \uvec{z}
 	\end{equation*}
 	In other words, the force on the upper half points upward in the positive $ z $ direction.	
 	
@@ -985,7 +988,7 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 
 	\item The multipole expansion of $ U $ to quadrupole order, using the Einstein summation convention, is
 	\begin{equation*}
-		U(r) = \frac{1}{4\pi \e} \left[\frac{q}{r} + \frac{p_{i}r_{i}}{r^{3}} + \frac{\mathrm{Q}_{ij}r_{i}r_{j}}{r^{5}} \right]
+		U(r) = \frac{1}{4\pi \ee} \left[\frac{q}{r} + \frac{p_{i}r_{i}}{r^{3}} + \frac{\mathrm{Q}_{ij}r_{i}r_{j}}{r^{5}} \right]
 	\end{equation*}
 	where $ \vec{p} $ is the electric dipole moment and $ \mat{Q} $ is the quadrupole moment tensor. \textit{Note}: we could think of the charge $ q $ is a scalar monopole moment, creating a logical progression from scalar monopole moment to vector dipole moment to tensor quadrupole moment. 
 	
@@ -1039,12 +1042,12 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 	
 	\item Recall the quadrupole expansion of $ U(r) $:
 	\begin{equation*}
-		U(r) = \frac{1}{4\pi \e} \left[\frac{q}{r} + \frac{p_{i}r_{i}}{r^{3}} + \frac{\mathrm{Q}_{ij}r_{i}r_{j}}{r^{5}} \right]
+		U(r) = \frac{1}{4\pi \ee} \left[\frac{q}{r} + \frac{p_{i}r_{i}}{r^{3}} + \frac{\mathrm{Q}_{ij}r_{i}r_{j}}{r^{5}} \right]
 	\end{equation*}
 	In our case, with $ q = 0 $ and $ \vec{p} = 0 $, we have
 	\begin{align*}
-		U(r) &= \frac{1}{4\pi \e} \left[\frac{12qa^{2}xy}{r^{5}} + \frac{12qa^{2}yx}{r^{5}} + 0 + \cdots + 0\right] = \frac{6qa^{2}}{\pi \e} \frac{xy}{r^{5}}\\
-		&=\frac{6qa^{2}}{\pi \e} \frac{\cos \phi \sin \phi \sin^{2}\theta}{r^{3}}
+		U(r) &= \frac{1}{4\pi \ee} \left[\frac{12qa^{2}xy}{r^{5}} + \frac{12qa^{2}yx}{r^{5}} + 0 + \cdots + 0\right] = \frac{6qa^{2}}{\pi \ee} \frac{xy}{r^{5}}\\
+		&=\frac{6qa^{2}}{\pi \ee} \frac{\cos \phi \sin \phi \sin^{2}\theta}{r^{3}}
 	\end{align*}
 	The second line uses the spherical coordinates $ x = r\cos \phi \sin \theta $ and $ y = r\sin \phi \sin \theta $. In fact, the expression for $ U(r) $ takes the exact same form as the wave function of a $ d $ electron orbital (angular momentum quantum number $ l = 2 $) in a hydrogen atom. The equipotential surfaces of $ U(r) $ have the same spatial distribution as the $ d_{xy} $  orbitals for a hydrogen wave function. 
 	
@@ -1068,7 +1071,7 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 	\end{equation*}
 	The second Maxwell equation is 
 	\begin{equation*}
-		\curl \B = \mu_{0}\left(\vec{j} + \e \pdv{\E}{t}\right)
+		\curl \B = \mu_{0}\left(\vec{j} + \ee \pdv{\E}{t}\right)
 	\end{equation*}
 	For static situations with a constant electric field this simplifies to
 	\begin{equation*}
@@ -1083,9 +1086,9 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 	\begin{equation*}
 		\laplacian \A = - \mu_{0}\vec{j}
 	\end{equation*}
-	where $ \vec{j} $ is the current density vector. This equation is a vector analog of the Poisson equation $ \laplacian U = - \frac{\rho}{\e} $ from electrostatics. Similarly to how the electrostatic potential $ U $ at a point $ \r $ in region of space with charge density $ \rho $ is found with
+	where $ \vec{j} $ is the current density vector. This equation is a vector analog of the Poisson equation $ \laplacian U = - \frac{\rho}{\ee} $ from electrostatics. Similarly to how the electrostatic potential $ U $ at a point $ \r $ in region of space with charge density $ \rho $ is found with
 	\begin{equation*}
-		U = \frac{1}{4 \pi \e} \int \frac{\rho(\tvec{r})\diff^{3}\tilde{r}}{\abs{\r - \tvec{r}}}
+		U = \frac{1}{4 \pi \ee} \int \frac{\rho(\tvec{r})\diff^{3}\tilde{r}}{\abs{\r - \tvec{r}}}
 	\end{equation*}
 	The magnetic potential at a point $ \r $ in region of space with current density $ \vec{j} $ is
 	\begin{equation*}
@@ -1669,7 +1672,7 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 \begin{itemize}
 	\item Start with the relevant Maxwell equations. 
 	\begin{equation*}
-		\curl \E = - \pdv{\B}{t} \eqtext{and} \curl \B = \mm \vec{j} + \e\mm \pdv{\E}{t}
+		\curl \E = - \pdv{\B}{t} \eqtext{and} \curl \B = \mm \vec{j} + \ee\mm \pdv{\E}{t}
 	\end{equation*}
 	and
 	\begin{equation*}
@@ -1797,7 +1800,7 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	\end{equation*}
 	where the energy density is
 	\begin{equation*}
-		w = \frac{1}{2}\e E_{U2} + \frac{1}{2\mm}B^{2}
+		w = \frac{1}{2}\ee E_{U2} + \frac{1}{2\mm}B^{2}
 	\end{equation*}
 	and $ \S $ is the \Poy vector, defined as
 	\begin{equation*}
@@ -1824,11 +1827,11 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	\end{equation*}
 	We find electric field with Gauss's law with a cylinder around the inner conductor:
 	\begin{equation*}
-		Q = \e E \cdot 2\pi r l \implies E = \frac{Q}{2\pi \e l r}
+		Q = \ee E \cdot 2\pi r l \implies E = \frac{Q}{2\pi \ee l r}
 	\end{equation*}
 	We find induced charge $ Q $ from potential via
 	\begin{equation*}
-		U = \int_{a}^{b} E \diff r = \frac{Q}{2\pi \e l}\ln \frac{b}{a}
+		U = \int_{a}^{b} E \diff r = \frac{Q}{2\pi \ee l}\ln \frac{b}{a}
 	\end{equation*}
 	The electric field is thus
 	\begin{equation*}
@@ -1903,30 +1906,30 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	\end{equation*}
 	The electric field is 
 	\begin{equation*}
-		E = \frac{\sigma}{\e} = \frac{q}{\e S} = \frac{I}{\e S}t
+		E = \frac{\sigma}{\ee} = \frac{q}{\ee S} = \frac{I}{\ee S}t
 	\end{equation*}
 	
 	\item Next, we need magnetic field. Note that the electric field changes with time in the slit. This creates displacement current. From Maxwell's law inside the slit we have
 	\begin{equation*}
-		\curl \B + \e\mm \pdv{E}{t}
+		\curl \B + \ee\mm \pdv{E}{t}
 	\end{equation*}
 	Note that $ \mm \vec{j} = 0 $ inside the slit; there's no current. Change to integral form with $ \int \diff S $ to get
 	\begin{equation*}
-		\oint \B \cdot \diff \vec{l}  = \e \mm \pdv{\E}{t} \cdot (\pi r^{2})
+		\oint \B \cdot \diff \vec{l}  = \ee \mm \pdv{\E}{t} \cdot (\pi r^{2})
 	\end{equation*}
 	Evaluate left-hand integral and substitute in electric field to get
 	\begin{equation*}
-		B \cdot (2\pi r) = \e \mm \frac{I}{\e S} \pi r^{2} \implies B = \frac{\mm I}{2S} r
+		B \cdot (2\pi r) = \ee \mm \frac{I}{\ee S} \pi r^{2} \implies B = \frac{\mm I}{2S} r
 	\end{equation*}
 	The magnetic field points tangent to the circular cross section---as for the magnetic field of a conductor, except that current is replaced by displacement current. But current and displacement current have the same direction, so $ B $ still points tangent.
 	
 	\item $ \E $ and $ \B $ have same directions as for a cylindrical conductor and so $ \S $ points along the radial direction. Because $ \B \perp \S$, power is simply
 	\begin{equation*}
-		P = \int \S \cdot \diff \vec{S} = \int \SS \diff S = \frac{1}{\mm}\int EB \diff S = \frac{1}{\mm} \int  \left(\frac{I}{\e S}t\right)\left(\frac{\mm I}{2S} r\right) \diff S
+		P = \int \S \cdot \diff \vec{S} = \int \SS \diff S = \frac{1}{\mm}\int EB \diff S = \frac{1}{\mm} \int  \left(\frac{I}{\ee S}t\right)\left(\frac{\mm I}{2S} r\right) \diff S
 	\end{equation*}
 	The surface of integration is the outer surface of the cylindrical slit---recall $ S $ points in the radial direction. We set $ r = a $ and get
 	\begin{equation*}
-		P = \frac{I^{2}a}{2\e S^{2}}t (2\pi a d) = \frac{I^{2}d}{\e S} t
+		P = \frac{I^{2}a}{2\ee S^{2}}t (2\pi a d) = \frac{I^{2}d}{\ee S} t
 	\end{equation*}
 	Note that the cross sectional area is $ S = \pi a^{2} $. 
 	
@@ -1940,13 +1943,300 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	\end{equation*}
 	The electric field energy is 
 	\begin{equation*}
-		W_{\text{E}} = w_{\text{E}}V = \left(\frac{1}{2}\e E^{2}\right) \cdot \left(Sd\right) = \frac{\e}{2}\frac{I^{2}}{\e^{2}S^{2}}Sdt^{2} = \frac{I^{2}d}{2\e S}t^{2}
+		W_{\text{E}} = w_{\text{E}}V = \left(\frac{1}{2} \ee E^{2}\right) \cdot \left(Sd\right) = \frac{\ee}{2}\frac{I^{2}}{\ee^{2}S^{2}}Sdt^{2} = \frac{I^{2}d}{2\ee S}t^{2}
 	\end{equation*}
 	We then have
 	\begin{equation*}
-		\pdv{W}{t} = \pdv{W_{\text{E}}}{t} = \frac{I^{2}d}{\e S} t
+		\pdv{W}{t} = \pdv{W_{\text{E}}}{t} = \frac{I^{2}d}{\ee S} t
 	\end{equation*}
 	Which is equal to the power flowing in the slit (opposite sign was not written). Energy is conserved, as it must be.
+\end{itemize}
+
+\subsection{Eleventh Exercise Set (rough draft)}
+
+\subsubsection{A Radially Polarized Sphere}
+\textit{Consider a radially polarized sphere---polarization points in the radial direction and grows with radius as $ \P = k \r $ where $ k $ is a known constant. Find volume density of bound charges, surface density of bound charges, and the total bound charge.}
+
+\begin{itemize}
+	\item We relate polarization and volume charge density as
+	\begin{equation*}
+		\rho_{\text{b}} = - \div \P
+	\end{equation*}
+	We also know Gauss's law
+	\begin{equation*}
+		\rho = \ee \div \E
+	\end{equation*}
+	which accounts for all charges, including both bound and external charges. 
+	
+	\item We now relate $ \rho $ and $ \sigma $. Consider a surface element of the sphere. With normal $ \uvec{n} $. We use the polarization in integral form.
+	\begin{equation*}
+		\int \diff V \rho_{\text{b}} = - \int \div \P \diff V \implies q_{\text{b}} = - \int \P \cdot \diff \vec{S} = - \P \cdot \diff \vec{S} \big |_{\text{in}}^{\text{out}} = - 0 - (- \P \cdot \uvec{n}S)
+	\end{equation*}
+	We then get surface charge density as 
+	\begin{equation*}
+		\sigma_{\text{b}} = \P \cdot \uvec{n}
+	\end{equation*}
+	
+	\item Start with $ \rho_{\text{b}} $, with known form of $ \P $:
+	\begin{equation*}
+		\rho_{\text{b}} = - \div \P = - k \div \r = - k \cdot 3 = - 3k
+	\end{equation*}
+	Note $ \div \r = 3 $. Note the volume charge density is negative; $ \rho_{\text{b}} $ is negative because all dipoles in the sphere have their negative pole towards the sphere's center and the positive poles radially outward. The middle dipoles cancel, and we're schematically left with negative charges in the center. 
+	
+	\item Next: surface charge density
+	\begin{equation*}
+		\sigma_{\text{b}} = \P \cdot \uvec{n} = k \r \cdot \uvec{n} = k r \big |_{r = a}  = k a
+	\end{equation*}
+	This is positive, which makes sense---the dipoles point outwards (see above bullet point).
+	
+	\item Next, we find total charge. We expect this to be zero; all dipoles should cancel out. We have (integrate both volume and surface)
+	\begin{equation*}
+		q_{\text{b}} = \int \rho_{\text{b}} \diff V + \int \sigma_{\text{b}} \diff S = - 3k \frac{4}{3}\pi a^{3} + ka 4\pi a^{2} = 0
+	\end{equation*} 
+	
+	\item Next we consider electric field. Note use of spherical symmetry---Gauss's law:
+	\begin{equation*}
+		\ee E 4\pi r^{2} = \rho_{\text{b}} V = \rho_{\text{b}} \frac{4}{3}\pi r^{3} \implies E(r) = \frac{\rho_{\text{b}}}{3 \ee} r
+	\end{equation*} 
+	The electric field points radially outwards:
+	\begin{equation*}
+		\E(r) = \frac{\rho_{\text{b}}}{3 \ee} \r
+	\end{equation*}
+	Plug in value of $ \rho_{\text{b}} = -3k $ to get
+	\begin{equation*}
+		\E = \frac{-k}{\ee}\r \implies \E = - \frac{\P}{\ee}
+	\end{equation*}
+	Note the linear relationship between electric field and polarization. Comes from the relationship $ \rho_{\text{b}} = - \div \P $ and Gauss's law $ \rho = \div (\ee \E) $. Because there are no external charge $ \rho = \rho_{\text{b}} $, which is the reason for $ \E = - \frac{\P}{\ee} $
+
+\end{itemize}
+
+\subsubsection{A Polarized Halved Sphere}
+\textit{Consider a sphere of radius $ a $ with homogeneous (uniform) polarization $ \P $ pointing in the e.g. $ z $ direction. Find the electric field inside and outside the sphere. }
+
+\textit{We then cut the sphere in half in a plane perpendicular to the direction of polarization and slightly separate the halves to form a capacitor. Find the electric field in the slit between the halves.}
+
+\begin{itemize}
+	\item First, find the typical quantities related to polarization. First, volume density of bound charges:
+	\begin{equation*}
+		\rho_{\text{b}} = - \div \P = 0,
+	\end{equation*}
+	since the divergence of the homogeneous field $ \P $ is zero. In other words, there are no bound charges in the sphere's volume. 
+	
+	\item Next, $ \sigma_{\text{b}} = \P \cdot \uvec{n} $ we have
+	\begin{equation*}
+		\sigma_{\text{b}} = \P \cdot \uvec{n} = P \cos \theta
+	\end{equation*}
+	where $ \theta $ is the angle between the normal $ \uvec{n} $ and polarization $ \P $. Note that the surface charge density is nonzero.
+	
+	\item We proceed with the Poisson equation, which simplifies to the Laplace equation where $ \rho_{\text{b}} = 0 $, which is everywhere but the surface:
+	\begin{equation*}
+		\laplacian U(\r) = 0
+	\end{equation*}
+	We account for the surface with boundary conditions. 
+	
+	The general solution for $ U(\r) $ is 
+	\begin{equation*}
+		U(r) = \sum_{l = 0}^{\infty}(A_{l}r^{l} + B_{l}r^{-(l+1)})P_{l}(\cos \theta)
+	\end{equation*}
+	Note that our charge distribution depends only on $ \cos \theta $. So our solution can include only $ \cos \theta $-dependent terms, which is only $ l = 1 $. Our general solution is
+	\begin{equation*}
+		U(\r) = (A_{1}r + B_{1}r^{-2})\cos \theta
+	\end{equation*}
+	Inside and outside we have
+	\begin{equation*}
+		U(\r) = 
+		\begin{cases}
+			A_{1}r \cos \theta & r < a\\
+			B_{1}r^{-2} \cos \theta & r > a
+		\end{cases}
+	\end{equation*}
+	to avoid divergence at $ r \to 0 $ and $ r \to \infty $. 
+	
+	We need to find $ A_{1} $ and $ B_{1} $ with the boundary conditions. 
+	
+	\item First boundary condition: the electric potential must be continuous at the boundary (discontinuous potential would imply infinite charge, which is nonphysical). This continuity condition at $ r = a $ requires
+	\begin{equation*}
+		A_{1}a = \frac{B_{1}}{a^{2}} \implies A_{1}a^{2} = B_{1}
+	\end{equation*}
+	Next, we consider the electric field, which we can related to surface charge density, for the second boundary condition. Electric field is perpendicular to the surface. From Gauss's law we have
+	\begin{equation*}
+		q = \ee S (E_{\text{out}}^{\perp} - E_{\text{in}}^{\perp})  \implies \sigma_{\text{b}} = \ee (E_{\text{out}}^{\perp} - E_{\text{in}}^{\perp})
+	\end{equation*}
+	We know $ \sigma_{\text{b}} $ and use $ E_{\text{in}}^{\perp} = - \pdv{U}{r}\big |_{r = a} = \frac{2B_{1}}{a^{3}}\cos \theta $
+	\begin{equation*}
+		\sigma_{\text{b}} = P\cos \theta = \ee \left[  \frac{2B_{1}}{a^{3}} + A_{1}\right]\cos \theta 
+	\end{equation*}
+	We insert the first boundary condition into the second to get
+	\begin{equation*}
+		P \cos \theta = \ee \left(2A_{1} + A_{1}\right)\cos \theta \implies P = 3 \ee A_{1} 
+	\end{equation*}
+	and thus
+	\begin{equation*}
+		A_{1} = \frac{P}{3\ee} \eqtext{and} B_{1} = \frac{Pa^{e}}{3\ee}
+	\end{equation*}
+	The electric potential is then
+	\begin{equation*}
+		U(\r) = 
+		\begin{cases}
+			\dfrac{P}{3\ee} r \cos \theta & r < a\\[2mm]
+			\dfrac{Pa^{3}}{3\ee}\dfrac{1}{r^{2}}\cos \theta & r > a
+		\end{cases}
+	\end{equation*}
+	
+	\item We now discuss the solution. The 3 is called the depolarization factor (it was 1 in the previous solution where we had $ U = \frac{P}{\ee}\cdots $). Next, note that $ r \cos \theta = z $. 
+	
+	$ r \cos \theta = z $ means the field inside the sphere is homogeneous:
+	\begin{equation*}
+		E_{z} = - \pdv{U}{z} = -\frac{P}{3\ee} \implies \E = - \frac{\P}{3\ee}
+	\end{equation*}
+	where we note that $ \P $ points in the $ z $ direction. The field is negative because with our choice of polarization, positive charges are in the positive $ z $ direction and negative charges in the negative z direction. 
+	
+	\item For the field outside the sphere we have the field of an electric dipole, which is expected; the sphere is polarized like an electric dipole. Think of the cosine term as from the dot product of $ \pe $ and $ \r $. 
+	
+\end{itemize}
+
+\textbf{Halved Sphere; Electric Field in the Slit}
+\begin{itemize}
+	\item Cut the sphere in half perpendicular to the polarization. We know have bound charges on the cut surfaces as well. The bound charges on the top half's bottom surface are negative, and vice-versa. Note the relationship $ \sigma_{\text{b}} = \P \cdot \uvec{n} $ is preserved. 
+	
+	\item Think of the slit as a parallel-plate capacitor. We know the field of a parallel plate capacitor:
+	\begin{equation*}
+		\t{\E} = \frac{\t{\sigma}}{\ee} = \frac{\P}{\ee}
+	\end{equation*}
+	where tilde accounts for the flat surface. 
+	
+	\item But we must also consider the hemispherical surfaces. These have
+	\begin{equation*}
+		\E_{\text{in}} = - \frac{\P}{3\ee}
+	\end{equation*}
+	And the total field in the slit is
+	\begin{equation*}
+		\E = \frac{\P}{\ee} - \frac{\P}{3\ee} = \frac{2\P}{3\ee}
+	\end{equation*}
+\end{itemize}
+
+
+\subsubsection{Theory: Dielectric and Displacement Field}
+\begin{itemize}
+		\item Stress that the previous two problems involved ferro-electric materials---the polarization was built in to the material. We now consider a dielectric material; the polarization occurs only in the presence of an external field. 
+		
+		\item We recall the equations $ \rho_{\text{b}} = - \div \P $ and Gauss's law $ \rho = \ee \div \E $. We subtract the equations to get
+		\begin{equation*}
+			\rho_{\text{f}} = \rho - \rho_{\text{b}} = \div (\ee \E + \P) \equiv \div \D
+		\end{equation*}
+		Where the free charge density $ \rho_{\text{f}} $ is the sum of total charge density and the bound charge density. The electric displacement field is $ \D = \ee \E + \P $. $ \D $ is useful because it depends only on free charge. 
+		
+		\item For small fields, we make the approximation $ \D \propto \E $ where $ \D $ and $ \E $ are linearly dependent. We have the approximate relationship 
+		\begin{equation*}
+			\D = \ee \eee \E
+		\end{equation*}
+		where $ \eee $ is the permittivity tensor.
+\end{itemize}
+
+\subsubsection{Dielectric Plate in a Parallel-Plate Capacitor}
+\textit{Consider a parallel-plate capacitor with plate separation $ d $, plate surface area $ S $ and a dielectric insulator. The dielectric tensor has components $ \e_{1} $ and $ \e_{2} $, and $ \e_{2} $ is angled from the $ y $ axis by an angle $ \phi $. Find the capacitance. 2D coordinate system.}
+
+\begin{itemize}
+	\item Capacitance is defined as
+	\begin{equation*}
+		C = \frac{q}{U}
+	\end{equation*}
+	Assume we put a potential difference between the plates, and determine the accumulated charge $ q $ on the plates. 
+	
+	\item Because $ \eee $ is angled, $ \E $ and $ \D $ are not parallel. However, $ \E $ is perpendicular to the plates. We now consider why.
+	
+	We use the following Maxwell equation:
+	\begin{equation*}
+		\curl \E = - \pdv{\B}{t} 
+	\end{equation*}
+	In our static case we have $ \curl \E = 0 $. In integral form we have
+	\begin{equation*}
+		\oint \E \cdot \diff \vec{l} = 0
+	\end{equation*}
+	where we make a rectangular path thinly hugging one capacitor plate. Because the path thinly hugs the plate, the integration registers only the component of $ \E $ parallel to the plates:
+	\begin{equation*}
+		E_{\text{out}}^{(\parallel)}\cdot l = E_{\text{int}}^{(\parallel)} \cdot l = 0 \implies E_{\text{out}}^{(\parallel)} = E_{\text{in}}^{(\parallel)}
+	\end{equation*}
+	Now, the field outside the capacitor is zero; we have
+	\begin{equation*}
+		E_{\text{out}}^{(\parallel)} = 0 \implies E_{\text{in}}^{(\parallel)} = 0
+	\end{equation*}
+	And $ E_{\text{in}}^{(\parallel)} = 0 $ implies the electric field has only a component perpendicular to the capacitor plates. 
+	
+	\item We now need to write the tensor in the principle axis system
+	\begin{equation*}
+		\t{\eee} = 
+		\begin{pmatrix}
+			\e_{1} & 0\\
+			0 & \e_{2}
+		\end{pmatrix}
+	\end{equation*}
+	In our system, rotated by $ \phi $ relative to the principle axis system, we have rotate the principle axes tensor by rotation matrices:
+	\begin{align*}
+		\eee &= \mat{R} \t{\eee} \mat{R} = 
+		\begin{pmatrix}
+			\cos \phi & \sin \phi\\
+			- \sin \phi & \cos \phi
+		\end{pmatrix}
+		\begin{pmatrix}
+			\e_{1} & 0\\
+			0 & \e_{2}
+		\end{pmatrix}
+		\begin{pmatrix}
+			\cos \phi & - \sin \phi\\
+			\sin \phi & \cos \phi
+		\end{pmatrix}\\
+		& = 
+		\begin{pmatrix}
+			\e_{1} \cos^{2}\phi + \e_{2} \sin^{2}\phi & (\e_{2} - \e_{1})\sin \phi \cos \phi \\
+			(\e_{2} - \e_{1})\sin \phi \cos \phi & \e_{1} \sin^{2}\phi + \e_{2} \cos^{2}\phi &
+		\end{pmatrix}
+	\end{align*}
+	Note that $ \eee $ is symmetric, as it must be. 
+	
+	\item Note that $ \E $ has only a $ y $ (perpendicular) component. Take advantage of this to write (from $ \D = \ee \eee \E $). 
+	\begin{equation*}
+		\begin{pmatrix}
+			D_{x}\\
+			D_{y}
+		\end{pmatrix}
+		 = 
+		 \ee 
+ 		\begin{pmatrix}
+ 			\e_{1} \cos^{2}\phi + \e_{2} \sin^{2}\phi & (\e_{2} - \e_{1})\sin \phi \cos \phi \\
+ 			(\e_{2} - \e_{1})\sin \phi \cos \phi & \e_{1} \sin^{2}\phi + \e_{2} \cos^{2}\phi &
+ 		\end{pmatrix}
+		\begin{pmatrix}
+			0\\
+			E
+		\end{pmatrix}
+	\end{equation*}
+	where we have $ E_{y} = E $. 
+	
+	\item Now onto $ C = \frac{q}{U} $. We get $ U $ from $ E $. We get $ q $ from the $ y $ component of $ D_{y} $, which points perpendicular to the capacitor plates. We would use Gauss's law with $ \D $, enclosing a capacitor plate, to get (recall $ \rho - \rho_{\text{b}} = \div \D $). So Gauss in terms of $ \D $ reads
+	\begin{equation*}
+		q_{\text{f}} = \int \rho_{\text{f}} \diff V = \int \D \cdot \diff \vec{S}
+	\end{equation*}
+	which we use for our capacitor plate to get (note the $ D_{y} $ is parallel to $ \diff \vec{S} $)
+	\begin{equation*}
+		q_{\text{f}} = D_{y} S
+	\end{equation*}
+	
+	\item We turn to the matrix equation to get
+	\begin{equation*}
+		D_{y} = \ee \left( \e_{1} \sin^{2}\phi + \e_{2} \cos^{2}\phi \right) E
+	\end{equation*}
+	We then have from Gauss that $ D_{y} = \frac{q_{\text{f}}}{S} $ so 
+	\begin{equation*}
+		\frac{q_{\text{f}}}{S} =  \ee \left( \e_{1} \sin^{2}\phi + \e_{2} \cos^{2}\phi \right) \frac{U}{d} 
+	\end{equation*}
+	where we wrote $ E $ in terms of $ U $ as $ E = \frac{U}{d} $.
+	
+	\item The capacitance is then
+	\begin{equation*}
+		C = \frac{q_{\text{f}}}{U} = \frac{\ee S}{d}\left(\e_{1} \sin^{2}\phi + \e_{2} \cos^{2}\phi\right) = C_{0}\left(\e_{1} \sin^{2}\phi + \e_{2} \cos^{2}\phi\right)
+	\end{equation*}
+	where $ C_{0} =  \frac{\ee S}{d} $ is the capacitance of an empty capacitor. Note that $ \phi = 0 $ (a nicely aligned permittivity tensor) implies $ C = C_{0}\e_{2} $. 
 \end{itemize}
 
 
