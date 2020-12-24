@@ -1,4 +1,6 @@
 import numpy as np
+from math import factorial
+from fractions import Fraction
 import matplotlib.pyplot as plt
 from matplotlib.collections import LineCollection
 from matplotlib.colors import LinearSegmentedColormap
@@ -51,6 +53,24 @@ def get_zM(M):
     :param M: integer of value 1, 2, 3... corresponding to order of time approximation in CN method
     :return: sorted roots of the numerator of the Mth order Pade approximation of the exponential function
     """
+    c = np.zeros(M+1)
+    c[0] = 1  # initialize first term
+    for m in range(1, M+1, 1):  # m = 1, ..., M
+        c[m] = c[m-1]*(M-m+1)/(m*(2*M - m + 1))
+    c = c[::-1]  # reverse order from largest-power coefficient to smallest
+    return np.sort(np.roots(c))
+
+
+def get_zM_static(M):
+    """
+    Returns sorted complex roots of the numerator of the diagonal Pade approximation to the exponential function
+    These are used to generate s = 1, 2, ..., M points z_s^(M) used for the time evolution operator
+    Uses a look-up table defined for M up to M = 8
+    See also the arbitrary-M formula get_zM(M)
+
+    :param M: integer of value 1, 2, 3... corresponding to order of time approximation in CN method
+    :return: sorted roots of the numerator of the Mth order Pade approximation of the exponential function
+    """
     M = int(M)
     if M == 1:
         c = [1, 2]  # c is the coefficients of the numerator polynomial, i.e for M = 1 the numerator is x + 2
@@ -83,10 +103,10 @@ def get_zsM(s, M):
     :param M: Positive integer giving order of Pade approximation M = 1, 2, ...
     """
     s, M = int(s), int(M)
-    if s > M_max or s < 1:
+    if s > M or s < 1:
         print("Warning in get_z: s out or range: s = {} \t M = {}".format(s, M))
         return -2.0 + 0.0j  # return M = s = 1 base case
-    if M < 1 or M > 8:  # out of range
+    if M < 1:  # out of range
         print("Warning in get_z: M out of range: s = {} \t M = {}".format(s, M))
         return -2.0 + 0.0j  # return M = s = 1 base case
     zM = get_zM(M)  # 1D vector of length M
@@ -311,18 +331,6 @@ def get_error(x, psi_numeric, psi_analytic):
         dx = x[i+1] - x[i]
         error += dx * 0.5*(difference[i+1] + difference[i])  # midpoint rule
     return error
-
-
-def test_run():
-    x0 = 0
-    dx, dt = 1.0, 1.0
-    J = 5
-    r = 2
-    s, M = 1.0, 2.0
-    print("z(s, M) = {}".format(get_zsM(s, M)))
-
-    A = get_A(x0, dx, dt, J, r, s, M, V_free, Vargs=[])
-    print(A)
 # -----------------------------------------------------------------------------
 # END AUXILIARY ANALYSIS FUNCTIONS
 # -----------------------------------------------------------------------------
@@ -491,7 +499,7 @@ def free_solution_wrapper():
     get_free_solution(r, M, solution_times, sigma0=sigma0, k0=k0, a=a, x0=x0, xJ=xJ, J=J, t0=t0, tN=tN, N=N)
 
 
-def generate_qho_errors():
+def generate_qho_errors(max_M, max_r):
     # START PARAMETER INITIALIZATION
     w = 0.2  # oscillation frequency
     alpha = w**0.5
@@ -511,8 +519,6 @@ def generate_qho_errors():
     x = np.linspace(x0, xJ, J+1)
     psi_analytic = get_qho_analytic(x, 10*T + dt, alpha, a, w)  # analytic solution for comparison
 
-    max_M = 8
-    max_r = 8
     errors = np.zeros((max_M, max_r))
     header = "Rows run from M = 1 to {}, Columns run from r = 1 to {}".format(max_M, max_r)
     for M in range(1, max_M+1, 1):
@@ -521,10 +527,10 @@ def generate_qho_errors():
             x, t, psi = get_qho_solution(r, M, solution_times, w=w, a=a, x0=x0, xJ=xJ, J=J, t0=t0, n_periods=n_periods, dt=dt)
             errors[M-1][r-1] = get_error(x, psi[:, 0], psi_analytic)
 
-    np.savetxt(data_dir + "qho-errors_.csv", errors, delimiter=',', header=header)
+    np.savetxt(data_dir + "qho-errors-M{}-r{}_.csv".format(max_M, max_r), errors, delimiter=',', header=header)
 
 
-def generate_free_errors():
+def generate_free_errors(max_M, max_r):
     # START PARAMETER INITIALIZATION
     sigma0 = 0.05
     k0 = 50*np.pi
@@ -543,8 +549,6 @@ def generate_free_errors():
     x = np.linspace(x0, xJ, J+1)
     psi_analytic = get_free_analytic(x, tN, sigma0, k0, a)  # analytic solution
 
-    max_M = 8
-    max_r = 12
     errors = np.zeros((max_M, max_r))
     header = "Rows run from M = 1 to {}, Columns run from r = 1 to {}".format(max_M, max_r)
     for M in range(1, max_M+1, 1):
@@ -553,7 +557,7 @@ def generate_free_errors():
             x, t, psi = get_free_solution(r, M, solution_times, sigma0=sigma0, k0=k0, a=a, x0=x0, xJ=xJ, J=J, t0=t0, tN=tN, N=N)
             errors[M-1][r-1] = get_error(x, psi[:, 0], psi_analytic)
 
-    np.savetxt(data_dir + "free-errors_.csv", errors, delimiter=',', header=header)
+    np.savetxt(data_dir + "free-errors-M{}-r{}_.csv".format(max_M, max_r), errors, delimiter=',', header=header)
 
 
 # -----------------------------------------------------------------------------
@@ -685,7 +689,8 @@ def plot_qho_end():
 
 def plot_qho_error():
     """ Plots error in QHO approximation as a function of r and M on a 2D grid """
-    errors = np.loadtxt(data_dir + "qho-errors.csv", delimiter=',', skiprows=1)
+    filename = "qho-errors-M15-r15.csv"
+    errors = np.loadtxt(data_dir + filename, delimiter=',', skiprows=1)
     log_err = np.log10(errors)
     shift = abs(np.min(log_err))
     log_err += shift
@@ -698,7 +703,12 @@ def plot_qho_error():
     fig = plt.figure()
     ax = fig.gca(projection='3d')
 
-    ax.plot_surface(M_grid, r_grid, log_err.T, cmap="Blues")
+    color_light = "#BDD5EB"  # light blue
+    color_dark = "#07336A"  # dark blue
+    colors = [color_light, color_dark]
+    cm = LinearSegmentedColormap.from_list('my_blues', colors)
+
+    ax.plot_surface(M_grid, r_grid, log_err.T, cmap=cm)
     ax.set_xlabel("Time Order $M$")
     ax.set_ylabel("Position Order $r$")
     ax.set_zlabel("Error")
@@ -870,7 +880,8 @@ def plot_free_endpoint():
 
 def plot_free_error():
     """ Plots error in QHO approximation as a function of r and M on a 2D grid """
-    errors = np.loadtxt(data_dir + "free-errors.csv", delimiter=',', skiprows=1)
+    filename = "free-errors-M15-r15.csv"
+    errors = np.loadtxt(data_dir + filename, delimiter=',', skiprows=1)
     log_err = np.log10(errors)
     shift = abs(np.min(log_err))
     log_err += shift
@@ -883,7 +894,12 @@ def plot_free_error():
     fig = plt.figure()
     ax = fig.gca(projection='3d')
 
-    ax.plot_surface(M_grid, r_grid, log_err.T, cmap="Reds")
+    color_light = "#FABCA6"  # light red
+    color_dark = "#7B0015"  # dark red
+    colors = [color_light, color_dark]
+    cm = LinearSegmentedColormap.from_list('my_reds', colors)
+
+    ax.plot_surface(M_grid, r_grid, log_err.T, cmap=cm)
     ax.set_xlabel("Time Order $M$")
     ax.set_ylabel("Position Order $r$")
     ax.set_zlabel("Error")
@@ -941,13 +957,14 @@ if __name__ == "__main__":
     # test_free_numeric()
     # test_free()
     # try_roots()
-    # generate_qho_errors()
-    # generate_free_errors()
+    # generate_qho_errors(15, 15)
+    # generate_free_errors(15, 15)
 
     # plot_qho_one_period()
     # plot_qho_end()
-    # plot_qho_error()
+    plot_qho_error()
 
-    plot_free_time()
-    plot_free_endpoint()
+    # plot_free_time()
+    # plot_free_endpoint()
     plot_free_error()
+    # get_zM(5)
