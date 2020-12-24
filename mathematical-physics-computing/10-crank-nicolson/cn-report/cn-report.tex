@@ -247,7 +247,24 @@ By convention, we set $ b_{0} = 1 $, from which the identity $ e^{0} = 1 $ impli
 \begin{equation*}
 	\left(\sum_{m'=0}^{M}b_{m'}z^{m'}\right)\left(\sum_{i=0}^{\infty}c_{i}z^{i}\right) = \left(\sum_{m=0}^{M}a_{m}z^{m}\right)
 \end{equation*}
-where we've inserted the Taylor series for $ e^{z} $. We then multiply the sums on the left side of the equation and equate the coefficients of $ z $ to $ z^{2M} $, giving a system of $ 2M $ equations for $ 2M $ unknowns $ a_{m} $ and $ b_{m'} $. See \cite{oes-exp} for a list of the numerator coefficients $ a_{m} $ up to $ M = 7 $. Once the $ a_{m} $ and $ b_{m'} $ are known, it is possible to write the diagonal approximation of the exponential function in the form
+where we've inserted the Taylor series for $ e^{z} $. We then multiply the sums on the left side of the equation and equate the coefficients of $ z $ to $ z^{2M} $, giving a system of $ 2M $ equations for $ 2M $ unknowns $ a_{m} $ and $ b_{m'} $. See \cite{oes-exp} for a list of the numerator coefficients $ a_{m} $ up to $ M = 7 $. 
+
+\iffalse
+More generally (see \cite{exp-pade} for a thorough treatment beyond the scope fo this report), we can write the numerator $ P^{(M)}(z) $ in the form 
+\begin{equation*}
+	P^{(M)}(z) = \sum_{m = 0}^{M} \frac{(2M-m)!M!}{(2M)!(M-m)!m!}z^{m}
+\end{equation*}
+which implies the coefficients $ c_{m}^{(M)} $ read
+\begin{equation*}
+	c_{m}^{(M)} =  \frac{(2M-m)!M!}{(2M)!(M-m)!m!} = \frac{1}{m!} \frac{\prod_{k=0}^{m-1}(M-k)}{\prod_{l=0}^{m-1}(2M-k)}, \qquad m = 0, 1, 2, \ldots, M
+\end{equation*}
+This is most efficient to implement recursively via
+\begin{equation*}
+	c_{0} = 1, \qquad c_{m} = \frac{(M - m + 1)}{m(2M - m + 1)}c_{m-1}, \quad m = 1, 2, \ldots, M
+\end{equation*}
+\fi
+
+Once the $ a_{m} $ and $ b_{m'} $ are known, it is possible to write the diagonal approximation of the exponential function in the form
 \begin{equation*}
 	e^{z} = \prod_{s=1}^{M}\left(\frac{1 - z/z_{s}^{(M)}}{1 + z/\bar{z}_{s}^{(M)}}\right)
 \end{equation*}
@@ -381,7 +398,7 @@ I use the parameters $ \sigma_{0} = \frac{1}{20} $, $ k_{0} = 50 \pi $ and $ a =
 
 
 
-\begin{figure}[b!]
+\begin{figure}[htb!]
 \centering
 \includegraphics[width=\linewidth]{qho-period-5-5}
 \caption{The coherent state's probability density over one period $ T_{0} $---the color gradient shows progression through time. Found with $ r = M = 5 $ and $ \Delta t = 0.1 \pi $.}
@@ -417,9 +434,6 @@ where $ \psi $ and $ \psi_{\text{analytic}} $ give the numerical and analytic wa
 
 
 
-
-
-
 \begin{figure}[htb!]
 \centering
 \includegraphics[width=\linewidth]{free-time-10-8}
@@ -444,7 +458,7 @@ Figure \ref{diff:fig:free-endpoint} show the free wave packet's probability dens
 \subsection{Accuracy}
 I quantified the numerical solution's accuracy using the same definition of error (Eq. \ref{diff:eq:error}) as for the QHO coherent state. Figure \ref{diff:fig:free-error} show a three-dimensional visualization of error versus $ M $ and $ r $ after the wave packet's journey from $ a = 0.25 $ to $ a \approx 1.0 $ (corresponding to times in the range $ [t_{0}, t_{N}] = [0, 5\cdot 10^{-3}] $) using $ N = 500 $. As before, the enormous decrease in error with increasing approximation order is quite impressive. Interestingly, the results in Figure \ref{diff:fig:free-error} show that for the free wave packet, a better approximation of the position derivative (large $ r $) improves the solution more than a higher-order approximation in time (higher $ M $), which is the opposite of the trend seen with the QHO coherent state.
 
-\begin{figure}[H]
+\begin{figure}[htb!]
 \centering
 \includegraphics[width=\linewidth]{free-error}
 \caption{Error in the numerical solution for the wave packet at $ a \approx 1.0 $ as a function of $ r $ and $ M $---note the logarithmic scale. Higher $ r $ improves the solution more than high $ M $ (compare the curves at $ r \equiv 1$ and $ M \equiv 1 $. Found with $ N = 500 $.}
@@ -455,11 +469,8 @@ I quantified the numerical solution's accuracy using the same definition of erro
 \subsection{A Note on Efficiency and Computation Time}
 A complete analysis of the Crank-Nicolson method would consider the computation time needed to find a solution of a given accuracy for various values of $ r $, $ M $, $ J $ and $ N $. I ran out of time to present such a study in my report, although I certainly experimented with efficiency informally. I found that increasing $ r $ and $ M $ lowered computation dramatically when searching for a solution at a given error. This improvement in efficiency, like the improvement in accuracy in Figures \ref{diff:fig:qho-error} and \ref{diff:fig:free-error}, spanned many orders of magnitude. For lack of an original option, I would direct the reader to Tables III and IV on pages 7 and 8, respectively, of \cite{vandijk} for a formal study of efficiency.
 
-
-
-
 \begin{thebibliography}{}
-\setlength{\itemsep}{.2\itemsep}\setlength{\parsep}{.5\parsep}
+\setlength{\itemsep}{.2\itemsep} \setlength{\parsep}{.5\parsep}
 
 \bibitem{vandijk} W. van Dijk and F. M. Toyama. ``Accurate numerical solutions of the time-dependent \schro equation.'' Phys. Rev. E \textbf{75}, 036707 (2007). \url{https://arxiv.org/pdf/physics/0701150.pdf}
 
@@ -467,6 +478,9 @@ A complete analysis of the Crank-Nicolson method would consider the computation 
 Bengt Fornberg, ``Generation of finite difference formulas on arbitrarily spaced grids'', In Mathematics of Computation \textbf{51}, 184, pp. 699-706, 1988. \url{https://web.njit.edu/~jiang/math712/fornberg.pdf}
 
 \bibitem{oes-exp} Barry, Paul. ``A119274 Triangle of coefficients of numerators in Pad\'{e} approximation to exp(x)''. \textit{The On-Line Encyclopedia of Integer Sequences}. 12 May 2006. \url{https://oeis.org/A119274}
+
+%\bibitem{exp-pade}
+%L. Baratchart, E. B. Saff, and F. Wielonsky. ``Rational Interpolation of the Exponential Function'' in Canadian Journal of Mathematics Vol. \textbf{47}(6), 1995 pp. 1121-1147. \url{https://www.cambridge.org/core/journals/canadian-journal-of-mathematics/article/rational-interpolation-of-the-exponential-function/006E400F87323B04928CE75B2B01CFF6}.
 
 \end{thebibliography}
 
