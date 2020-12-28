@@ -688,7 +688,7 @@ def plot_qho_end():
 
 
 def plot_qho_error():
-    """ Plots error in QHO approximation as a function of r and M on a 2D grid """
+    """ Plots error in QHO approximation as a function of r and M on a 3D grid """
     filename = "qho-errors-M15-r15.csv"
     errors = np.loadtxt(data_dir + filename, delimiter=',', skiprows=1)
     log_err = np.log10(errors)
@@ -713,8 +713,8 @@ def plot_qho_error():
     ax.set_ylabel("Position Order $r$")
     ax.set_zlabel("Error")
 
+    # rescale ticks to match log error scale
     fig.canvas.draw()
-
     z_ticks = ax.get_zticks()
     z_ticks = z_ticks[:-1]  # drop last item
     z_labels = []
@@ -722,9 +722,6 @@ def plot_qho_error():
         z_true = np.power(10, z - shift)
         string = r"{:.0e}".format(z_true)
         z_labels.append(string)
-
-    # print(z_ticks)
-    # ax.set_zticks(z_ticks[:-1])
 
     ax.set_zticks(z_ticks)
     ax.set_zticklabels(z_labels)

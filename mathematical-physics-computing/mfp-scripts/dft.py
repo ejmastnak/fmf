@@ -849,9 +849,9 @@ def run():
     # do_aliasing()
     # do_spectral_leakage()
     # do_zero_padding()
-    plot_times()
-    plot_first_note()
-    # plot_partita()
+    # plot_times()
+    # plot_first_note()
+    plot_partita()
     # dft_times()
     # run_times()
 

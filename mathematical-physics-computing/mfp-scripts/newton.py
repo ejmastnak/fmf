@@ -1080,10 +1080,10 @@ def run():
     # plot_adaptive_step_energy_error()
     # plot_long_period()
 
-    # plot_simple_phase_space()
+    plot_simple_phase_space()
     # plot_damped_phase_space()
     # plot_damped_driven_phase_space()
-    plot_van_der_pol_phase_space()
+    # plot_van_der_pol_phase_space()
     # plot_van_der_pol_driven_phase_space()
 
     plot_resonance_curve()
