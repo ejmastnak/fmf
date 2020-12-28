@@ -278,6 +278,7 @@ def animate_graph(x, t, U, description=""):
     # labels = [r"0", r"$\frac{\pi}{2}$", r"$\pi$", r"$\frac{3\pi}{2}$", r"$2\pi$"]
     labels = [r"0", r"$\pi/2$", r"$\pi$", r"$3\pi/2$", r"$2\pi$"]
     ax.set_xticklabels(labels, fontsize="13")
+    ax.set_title(r"1st Order Wave Equation Solution for $t \in [{:.0f}, {:.0f}\pi]$".format(t[0]/np.pi, t[-1]/np.pi))
 
     time_label_template = r"Time: {:.2f}$\pi$"
     time_label = ax.text(0.05, 0.85, '', va='center', ha='left', transform=ax.transAxes,
@@ -326,10 +327,10 @@ def practice():
 if __name__ == "__main__":
     print("Hi, you're awesome!")
     # practice()
-    # do_animation(150, 100)
     # get_u_numeric(50)
 
     # plot_initial_condition()
     # plot_A(30, 50)
-    plot_solution_2d()
+    # plot_solution_2d()
     # plot_solution_3d()
+    do_animation(150, 100)
