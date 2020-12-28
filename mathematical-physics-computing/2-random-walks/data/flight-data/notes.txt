@@ -1,2 +1,0 @@
-MAD of r for Levy flight simulations with varying values of the parameter mu.
-Simulations in this folder were run with 10000 flights, 1000 steps per flight

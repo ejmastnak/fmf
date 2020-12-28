@@ -1,1 +1,0 @@
-Simulations of a single Levy walk, used just to draw representative graphs.
