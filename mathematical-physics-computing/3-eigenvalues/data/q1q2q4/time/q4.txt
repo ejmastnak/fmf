@@ -1,4 +1,0 @@
-# Time to find eigenvalues and vectors with eig for [0.1 0.4 0.7, 1.0] for various N
-# N, t
-1000,1.373,1.371,1.333,1.428
-2000,13.21,12.93,12.99,12.91
