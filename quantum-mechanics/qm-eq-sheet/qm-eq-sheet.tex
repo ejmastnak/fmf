@@ -39,19 +39,43 @@
 \newcommand{\tvec}[1]{\tilde{\vec{#1}}} % for tilde vector quantities
 \newcommand{\uvec}[1]{\hat{\vec{#1}}} % for unit vectors
 
-\newcommand{\tev}{e^{-i\frac{H}{\hbar}t}}  % time evolution operator
-\newcommand{\tevp}{e^{i\frac{H}{\hbar}t}}  % time evolution operator with positive exponent
 
-\renewcommand{\O}{\mathcal{O}}  % a genertic operator
+
 
 \let\spaceyiff\iff
 \renewcommand{\iff}{\hspace{-1mm}\spaceyiff\hspace{-1mm}}
 \let\spaceyimplies\implies
 \renewcommand{\implies}{\hspace{-1mm}\spaceyimplies\hspace{-1mm}}
 
-\newcommand{\evb}[1]{\big \langle {#1} \big \rangle}  % for expectation values of fixed size
+% quantum mechancs symbols
+\renewcommand{\O}{\mathcal{O}}  % a generic operator
+\newcommand{\tev}{e^{-i\frac{H}{\hbar}t}}  % time evolution operator
+\newcommand{\tevp}{e^{i\frac{H}{\hbar}t}}  % time evolution operator with positive exponent
+
+\newcommand{\ua}{\uparrow}  % for spin up states
+\newcommand{\da}{\downarrow}  % for spin down states
+% end
+
+% \big braket-style commands
+\newcommand{\evb}[1]{\big \langle {#1} \big \rangle}  % for big expectation values
+\newcommand{\bket}[1]{\big | {#1} \big \rangle }
+\newcommand{\bbra}[1]{ \big \langle {#1} \big |  }
+\newcommand{\bbraket}[2]{\big \langle {#1} \big | {#2} \big \rangle}  % for brakets of fixed size
+\newcommand{\bmel}[3]{\big \langle {#1} \big | {#2} \big | {#3} \big \rangle}  % for matrix elements of fixed size
+% end
+
+% shorthand bra and ket
+\renewcommand{\b}[1]{\bra{#1}}
+\newcommand{\bb}[1]{\bbra{#1}}
+\renewcommand{\k}[1]{\ket{#1}}
+\newcommand{\bk}[1]{\bket{#1}}
+
+
+
 
 % \newcommand{\tmax}[1]{\raisebox{0.5ex}{\scalebox{0.8}{$\displaystyle \max_{#1}\,$}}} % for typesetting max in inline display
+ \newcommand{\tsum}[1]{\raisebox{0.5ex}{\scalebox{0.8}{$\displaystyle \sum_{#1}\,$}}} % for typesetting sum in inline display
+
 
 \begin{document}
 \begin{multicols}{2}
@@ -101,10 +125,17 @@ $ \psi(x, 0) = \int  c(k)\frac{e^{ikx}}{\sqrt{2\pi}} \diff k \implies c(k) = \in
 Given orthonormal basis $\braket{\psi_n}{\psi_m} = \delta_{nm}$: \\
 $\psi= \sum_n c_n \psi_n$ \qquad $c_n = \int \psi_n^* \psi \diff x \equiv \braket{\psi_n(x)}{\psi(x, 0)}$ 
 
+
+\newsec{Observation}
+Expand $ \ket{\psi} $ in basis of operator being observed\\
+Possible outcomes are eigenvalues of each basis state\\
+Probability is square of eigenstate coefficient\\
+$ \psi $ then collapses to eigenfunction of observed eigenvalue
+
+
 \newsec{Free Particle}
 $ \psi_{k}(x) = \frac{e^{ikx}}{\sqrt{2\pi}} $ \qquad $ E_{k} = \frac{\hbar^{2}k^{2}}{2m} $\\
 $ \frac{1}{2\pi} \int e^{i(\tilde{k}-k)x}\diff x \equiv \delta(\tilde{k} - k) $
-
 
 \newsec{Infinite Potential Well}
 $ V(\abs{x} < \frac{a}{2}) = 0 $ \qquad $ V(\abs{x} > \frac{a}{2}) \to \infty $\\
@@ -123,12 +154,28 @@ Sym: $ \kappa = k \tan \big(\frac{ka}{2}\big) $ \qquad Asym: $ \kappa = -k \cot 
 $ u = ka $ \qquad $ u_{0}^{2} = \frac{2mV_{0}a^{2}}{\hbar^{2}} $ \qquad $ \kappa^{2} = \frac{u_{0}^{2} - u^{2}}{a^{2}} $\\
 $ \tan(\frac{u}{2}) = \sqrt{\frac{u_{0}^{2}}{u^{2}} - 1} $ \qquad $ \cot(\frac{u}{2}) = -\sqrt{\frac{u_{0}^{2}}{u^{2}} - 1} $
 
+
+
 \newsec{Delta Function Well}
 $ V(x) = -\lambda \delta (x) $\\
 Boundary Condition: $ \psi'(0_{+}) - \psi'(0_{-}) = -\frac{2m\lambda\psi(0)}{\hbar^{2}} $\\
 $ \psi(x) = \sqrt{\kappa} e^{-\kappa \abs{x}} $, \quad $ E_{0} = \frac{m\lambda^{2}}{2\hbar^{2}} $, \quad $ \kappa = \frac{m\lambda}{\hbar^{2}} $
 
 
+\newsec{Delta Function Scattering}
+ $ \mat{S} = 
+\begin{bmatrix}
+	r & t\\
+	t & r
+\end{bmatrix}
+= 
+\frac{1}{k + i \kappa}
+\begin{bmatrix}
+	-i\kappa & k\\
+	k & -i \kappa
+\end{bmatrix} $
+
+\textbf{TODO Scattering}
 
 \newsec{Harmonic Oscillator}
 $ H = \frac{p^{2}}{2m} + \frac{kx^{2}}{2} = \frac{p^{2}}{2m} + \frac{m\omega}{2}x^{2}, \qquad \omega = \sqrt{\frac{k}{m}} $\\
@@ -199,19 +246,87 @@ $ L_{+}\ket{lm} = \hbar \sqrt{l (l+1) - m(m+1)} \ket{l, m+1} $ \\
 $ L_{-}\ket{lm} = \hbar \sqrt{l (l+1) - m(m-1)} \ket{l, m-1}  $\\
 $ L_{x} = \frac{L_{+} + L_{-}}{2} $ \qquad \qquad \quad  $ L_{y} = \frac{L_{+} - L_{-}}{2i} $\\
 $ \ev{L_{x}, t} = \Re \ev{L_{+}, t} $ \qquad $ \ev{L_{y}, t}= \Im \ev{L_{+}, t} $
-
 $ \bm{\mu} = \gamma \bm{L} $
 
-\newsec{Observation}
-Expand $ \ket{\psi} $ in basis of operator being observed\\
-Possible outcomes are eigenvalues of each basis state\\
-Probability is square of eigenstate coefficient\\
-$ \psi $ then collapses to eigenfunction of observed eigenvalue
 
-% Spin Matrices
-% $ \{\sigma_{a}, \sigma_{b}\} = 2\delta_{ab}I $. 
+\newsec{Spin}
+$ S^{2} = \k{sm_{s}} = \hbar^{2}s(s+1)\k{sm_{s}} $ \\
+$ S_{z}\k{sm_{s}} = \hbar m_{s}\k{sm_{s}} $ \\
+$  \ket{\frac{1}{2}\frac{1}{2}}  \equiv \k{\ua} $ and $ \ket{\frac{1}{2}-\frac{1}{2}}  \equiv \ket{\da} $\\
 
-%		[H, S^{2}] = [H, S_{1}^{2}] = [H, S_{2}^{2}] = [H, S_{z}] = 0
+$ S_{+} = S_{x} + iS_{y} $ \qquad $ S_{-} = S_{x} - i S_{y} $\\
+$ S_{x} = \frac{S_{+}+S_{-}}{2} $ \qquad \quad $ S_{y} = \frac{S_{+}-S_{-}}{2i} $
+
+$ S_{+} \ket{sm_{s}} = \hbar \sqrt{s(s+1) - m_{s}(m_{s}+1)}\ket{s, m_{s}+1} $\\
+$ S_{-} \ket{sm_{s}} = \hbar \sqrt{s(s+1) - m_{s}(m_{s}-1)}\ket{s, m_{s}-1} $
+
+
+
+$ \vec{S} \cdot \uvec{e} \ket{\psi_{s}} = \frac{\hbar}{2}\ket{\psi_{s}} $ implies\\
+\null \quad $  \vec{S} \parallel \uvec{e} = (\cos \varphi \sin \theta, \sin \varphi \sin \theta, \cos \theta) $  \\
+\null \quad $ \ket{\psi_{s}} = \cos \frac{\theta}{2} \ket{\ua} + \sin \frac{\theta}{2} e^{i\varphi} \ket{\da} $
+
+
+\newsec{Spin Matrices}
+$ \vec{S} = \frac{\hbar}{2}\vec{\sigma} $ \qquad  $  \vec{\sigma} = (\sigma_{x}, \sigma_{y}, \sigma_{z}) $\\
+$ \sigma_{x} = 
+\begin{bmatrix}
+	0 & 1\\
+	1 & 0
+\end{bmatrix} $
+\quad 
+$ \sigma_{y} = 
+\begin{bmatrix}
+	0 & -i\\
+	i & 0
+\end{bmatrix} $
+\quad 
+$ \sigma_{z} = 
+\begin{bmatrix}
+	1 & 0\\
+	0 & -i
+\end{bmatrix} $\\
+$ \{\sigma_{a}, \sigma_{b}\} = 2\delta_{ab}I $
+
+
+\newsec{Two-Particle Spin System}
+Product basis: $ \ket{s_{1}m_{1}s_{2}m_{2}} $.
+
+Total angular momentum basis: $ \k{sm_{s}s_{1}s_{2}} $
+
+$ \abs{s_{1} - s_{2}} \leq s \leq s_{1} + s_{2}  $ \qquad $ m_{s} = -s, -s+1, \ldots, s-1, s $.
+
+
+
+\newsec{Time Reversal}
+\textbf{TODO}\\
+For spin $ s = 1/2  $ particles $ T = i\sigma_{y}K $; $ K: \psi \mapsto \psi^{*} $
+
+
+
+\newsec{Nondegenerate Perturbations}
+$ H = H_{0} + H' $ \qquad $ H_{0} \ket{n_{0}} = E^{(0)}_{n} \ket{n_{0}} $ \\
+$ E_{n} = E^{(0)}_{n} + \mel{n_{0}}{H'}{n_{0}} + \tsum{m\neq n}\frac{\abs{\mel{m_{0}}{H'}{n_{0}}}^{2}}{E^{(0)}_{n}-E^{(0)}_{m}}, $\\
+$ \ket{n} = \ket{n_{0}} + \tsum{m\neq n}\frac{\abs{\bra{m_{0}}H'\ket{n_{0}}}^{2}}{E^{(0)}_{n}-E^{(0)}_{m}} \ket{m_{0}} $
+
+
+\newsec{Degenerate Perturbations}
+
+\subsection{Theory: Degenerate Perturbation Theory}
+$ H = H_{0} + H' $ \qquad $ H_{0} \ket{\psi}  = E^{(0)} \ket{\psi} $\\
+$ E^{(0)} $ is $ N $-times degenerate...\\[0.2em]
+\null \quad ... and $ \ket{\psi} = \sum_{i}^{N}c_{i}\ket{i} $ \qquad $ H\ket{i} = E^{(0)} \ket{i} \ \forall \ i $\\
+Create matrix
+$ \mat{P} = 
+\begin{pmatrix}
+	\mel{1}{H'}{1} &  \cdots & \mel{1}{H'}{N} \\
+	\mel{2}{H'}{1} & \cdots & \mel{2}{H'}{N} \\
+	\vdots & \ddots & \vdots\\
+	\mel{N}{H'}{1} &  \cdots & \mel{N}{H'}{N} 
+\end{pmatrix} $\\
+Diagonalize $ \mat{P} $; find eigenvalues $ \lambda_{j} $ and eigenvectors $ \vec{u}_{j} $.\\
+$ E_{j} = E^{(0)} + \lambda_{j}  $ \qquad and \qquad $ \ket{\psi_{j}} = \sum_{k=1}^{N}u_{j_{k}} \ket{k} $
+
 
 \end{multicols}
 
