@@ -1,5 +1,5 @@
 # fmf
-Collection of my math and physics related notes, reports and study guides from the physics program at the Faculty of Math and Physics at the University of Ljubljana in Ljubljana, Slovenia. 
+Collection of my math and physics-related notes, reports and study guides from the physics program at the Faculty of Math and Physics (*Fakulteta za matematiko in fiziko* (FMF) in Slovene, hence the repository name *fmf*) at the University of Ljubljana in Ljubljana, Slovenia. 
 
 I am continuously updating the content over my course of study and am making the material publicly available in the hope it might help others. Although the exact course material is specific to the University of Ljubljana, the content in this repository is fairly standard for an undergraduate physics program and might be useful to others learning similar material.
 
