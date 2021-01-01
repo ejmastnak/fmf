@@ -50,6 +50,8 @@
 \newcommand{\bket}[1]{\big | {#1} \big \rangle}  % for big ket
 \newcommand{\bbra}[1]{\big \langle {#1} \big |}  % for big bra
 \newcommand{\bbraket}[2]{\big \langle {#1} \big | {#2} \big \rangle}  % for \big brakets
+\newcommand{\bmel}[3]{\big \langle {#1} \big | {#2} \big | {#3} \big \rangle}  % for matrix elements of fixed size
+
 
 \newcommand{\threebraket}[3]{\left \langle {#1} \left | {#2} \right | {#3} \right \rangle}  % braket with three terms, variable size
 \newcommand{\bthreebraket}[3]{\big \langle {#1} \big | {#2} \big | {#3} \big \rangle}  % braket with three terms, fixed \big size
@@ -76,18 +78,17 @@ These are my notes from the Exercises portion of the class \textit{Kvanta Mehani
 The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the problem sets and guides us through the solutions. Accordingly, credit for the problems in these notes goes to Prof. Rejec. I have merely typeset the problems and provided additional explanations where I saw fit.
 
 \vspace{2mm}
-\textit{Disclaimer:} Mistakes---both trivial typos and legitimate errors---are likely. Keep in mind that these are the notes of an undergraduate student in the process of learning the material himself---take what you read with a grain of salt. If you find mistakes and feel like telling me, by \href{https://github.com/ejmastnak/fmf}{Github} pull request, \href{mailto:ejmastnak@gmail.com}{email} or some other means, I'll be happy to hear from you, even for the most trivial of errors.
+\textit{Disclaimer:} Mistakes---both trivial typos and legitimate errors---are likely. Keep in mind that these are the notes of an undergraduate student in the process of learning the material himself---take what you read with a grain of salt. If you find mistakes and feel like telling me, by \href{https://github.com/ejmastnak/fmf}{\underline{Github}} pull request, \href{mailto:ejmastnak@gmail.com}{\underline{email}} or some other means, I'll be happy to hear from you, even for the most trivial of errors.
 
+\newpage
 
 \tableofcontents
 
 \newpage
 
-\section{First Section}
+\section{First Exercise Set}
 
-\subsection{First Exercise Set}
-
-\subsubsection{Theory: Basic Concepts in Quantum Mechanics}
+\subsection{Theory: Basic Concepts in Quantum Mechanics}
 \begin{itemize}
 	\item The fundamental quantity in quantum mechanics is the wave function. In one dimension, this is $ \psi(x, t) $. Any measurable quantity can be derived from the wave function, e.g. probability density
 	\begin{equation*}
@@ -146,7 +147,7 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 	However, e.g. $ \tilde{\psi}_{n}(x) = i \sqrt{\frac{2}{a}} \sin \frac{n\pi x}{a}, n \in \mathbb{N}^{+} $ represents the same physical information as $ \psi_{n} $. 
 \end{itemize}
 
-\subsubsection{Bound States in a Finite Potential Well}
+\subsection{Bound States in a Finite Potential Well}
 \textit{Find the energy eigenvalues of the bound states of a particle with energy $ E $ in a finite potential well of depth $ V_{0} > 0 $ and width $ a $. Assume $ \abs{E} < V_{0} $; note that bound states have negative energies.}
 \begin{itemize}
 	\item Split the $ x $ axis into three regions: to the left of the well, inside the well, and to the right of the well, e.g. regions 1, 2 and 3, respectively. The potential energy is
@@ -239,7 +240,7 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 	
 \end{itemize}
 
-\subsubsection{Theory: Wavefunctions of a Particle in an Even Potential} \label{qmv:sss:even-odd}
+\subsection{Theory: Wavefunctions of a Particle in an Even Potential} \label{qmv:ss:even-odd}
  \textbf{Theorem:} The eigenfunctions of a particle in an even potential are either even or odd.
  
 \begin{itemize}
@@ -277,7 +278,7 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 \end{itemize}
 
 
-\subsubsection{Finite Potential Well Take 2}
+\subsection{Finite Potential Well Take 2}
 \textit{Continued from the previous problem: find the energy eigenvalues of the bound states of a particle with energy $ E $ in a finite potential well of depth $ V_{0} > 0 $ and width $ a $.}
 \begin{itemize}
 	\item Here's how to proceed: First, note the problem has reflection symmetry if we place the center of the well at the origin. The well then spans from $ x = -\frac{a}{2} $ to $ x = \frac{a}{2} $. In this case $ V(x) = V(-x) $, i.e. the potential is an even function of $ x $. 
@@ -368,9 +369,9 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 
 
 
-\subsection{Second Exercise Set}
+\section{Second Exercise Set}
 
-\subsubsection{Bound States in a Delta Potential Well Version 1}
+\subsection{Bound States in a Delta Potential Well Version 1}
 \textit{Find the energies and wave functions of the bound states of a quantum particle of mass $ m $ in a delta function potential well by reusing the results from a finite potential well}. 
 \begin{itemize}
 	\item We will reuse our results from the previous problem set by interpreting a delta potential as a finite potential well in the limit 
@@ -453,7 +454,7 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 	
 \end{itemize}
 
-\subsubsection{Bound States in a Delta Potential Take 2}
+\subsection{Bound States in a Delta Potential Take 2}
 \textit{Find the energies and wave functions of the bound states of a quantum particle of mass $ m $ in a delta function potential well using a plane wave ansatz and appropriate boundary conditions}. 
 \begin{itemize}
 	\item Write the potential well in the form $ V(x) = - \lambda \delta (x) $. The stationary \Schro equation for the potential reads
@@ -512,7 +513,7 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 	 
 \end{itemize}
 
-\subsubsection{Theory: Scattering}
+\subsection{Theory: Scattering}
 \begin{itemize}
 	\item The basic scattering problem involves a particle with energy $ E $ and two regions of the $ x $ axis with potentials $ V_{1} $ and $ V_{3} $ respectively,  where $ E > V_{1}, V_{3} $. Both energies and potentials are positive quantities. Because $ E > V_{1}, V_{3} $, the particle is free in the regions of $ V_{1} $ and $ V_{2} $.
 	
@@ -627,7 +628,7 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 	In other words, the scattering matrix $ \mat{S} $ must be unitary to conserve probability in scattering problems
 \end{itemize}
 
-\subsubsection{Scattering Off a Delta Potential}
+\subsection{Scattering Off a Delta Potential}
 \textit{Analyze a quantum particle scattering off of a delta function potential.}
 \begin{itemize}	
  	\item We consider a particle of energy $ E $ scattering off the potential $ V(x) = \lambda \delta(x) $. We'll divide the problem into two separate cases. First, we'll assume the particle is incident on the potential barrier only from the left, so the incident amplitude vector reads $ \vec{A} = (1, 0) $. In this case, the scattering matrix equation reads
@@ -827,9 +828,9 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 	
 \end{itemize}
 
-\subsection{Third Exercise Set} 
+\section{Third Exercise Set} 
 
-\subsubsection{Theory: Uncertainty Product of Observable Quantities}
+\subsection{Theory: Uncertainty Product of Observable Quantities}
 \begin{itemize}
 	\item We are interested in finding an expression for the uncertainty in the product $ \Delta A \Delta B $ of two arbitrary observable quantities $ A $ and $ B $. We start by assigning both $ A $ and $ B $ a corresponding Hermitian operator (Hermitian because $ A $ and $ B $ are observable). The operators are
 	\begin{equation*}
@@ -933,7 +934,7 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 
 \end{itemize}
 
-\subsubsection{Wave Function Minimizing the Uncertainty Product}
+\subsection{Wave Function Minimizing the Uncertainty Product}
 \textit{Find all wave functions with the minimum position-momentum uncertainty product allowed by the Heisenberg uncertainty principle, i.e. find all wave functions for which $ \Delta x \Delta p = \frac{\hbar}{2} $}.
 \begin{itemize}
 	\item To solve this problem, we need a wavefunction for which both inequalities in the above theory section are strict equalities. First, the Cauchy-Schwartz inequality is an equality for two linearly dependent vectors.
@@ -979,9 +980,9 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 \end{itemize}
 
 
-\subsection{Fourth Exercise Set}
+\section{Fourth Exercise Set}
 
-\subsubsection{Wave Function Minimizing the Uncertainty Product (continued)}
+\subsection{Wave Function Minimizing the Uncertainty Product (continued)}
 \textit{Continued from the previous exercise set...}
 \begin{itemize}
 	\item \textit{Review of last exercise set}: We started with two Hermitian operators $ A  $ and $ B $ and showed
@@ -1039,7 +1040,7 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 \end{itemize}
 
 
-\subsubsection{Theory: Time Evolution of a Wave Function}
+\subsection{Theory: Time Evolution of a Wave Function}
 \begin{itemize}
 	\item We find the time evolution of a wave function by solving the \Schro equation
 	\begin{equation*}
@@ -1068,7 +1069,7 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 	The time evolution depends on the potential $ V(x) $ we're working in.
 \end{itemize}
 
-\subsubsection{Theory: Time-Dependent Expectation Values and Operators}
+\subsection{Theory: Time-Dependent Expectation Values and Operators}
 
 \begin{itemize}
 	\item Consider an operator $ A $. A function of the operator is defined in terms of the function's Taylor series:
@@ -1170,7 +1171,7 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 \end{itemize}
 
 
-\subsubsection{Time Evolution of the Gaussian Wave Packet}
+\subsection{Time Evolution of the Gaussian Wave Packet}
 \textit{Given a Gaussian wave function $ \psi(x, 0) $ and the time-independent Hamiltonian $ H = \frac{p^{2}}{2m} + V(x) $, find the initial wavefunction's time evolution $ \psi(x, t) $.}
 
 \begin{itemize}
@@ -1335,9 +1336,9 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 \end{itemize}
 
 
-\subsection{Fifth Exercise Set}
+\section{Fifth Exercise Set}
 
-\subsubsection{Time Evolution of a Gaussian Wave Packet (continued)}
+\subsection{Time Evolution of a Gaussian Wave Packet (continued)}
 \begin{itemize}
 	\item In the last exercise set, we wanted to find the uncertainties
 	\begin{equation*}
@@ -1390,7 +1391,7 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 	Note that the product in uncertainties starts at the initial value $ \frac{\hbar}{2} $ and increases with time. This immediately implies that the time evolution $ \psi(x, t > 0) $ of the initial Gaussian wave packet $ \psi(x, 0) $ is no longer a Gaussian wave packet. It couldn't be---it has an uncertainty product greater $ \Delta x \Delta p > \frac{\hbar}{2} $, while Gaussian wave packets are by definition constructed to have $ \Delta x \Delta p = \frac{\hbar}{2} $. 
 \end{itemize}
 
-\subsubsection{Theory: Quantum Harmonic Oscillator}
+\subsection{Theory: Quantum Harmonic Oscillator}
 \begin{itemize}
 	\item The Hamiltonian of a particle of mass $ m $ in a harmonic oscillator reads
 	\begin{equation*}
@@ -1435,7 +1436,7 @@ In our case (for a harmonic oscillator), the theorem reads
 \end{equation*}
 
 
-\subsubsection{Time Evolution of a Particle in a Harmonic Oscillator}
+\subsection{Time Evolution of a Particle in a Harmonic Oscillator}
 \textit{Consider a particle in a harmonic potential with the initial eigenfunction}
 \begin{equation*}
 	\ket{\psi, 0} = \frac{1}{\sqrt{2}}\ket{0} + \frac{1}{\sqrt{2}}\ket{1}
@@ -1585,9 +1586,9 @@ In our case (for a harmonic oscillator), the theorem reads
 	which matches the result from the earlier \Schro approach. 
 \end{itemize}
 
-\subsection{Sixth Exercise Set}
+\section{Sixth Exercise Set}
 
-\subsubsection{Theory: Coherent States of the Quantum Harmonic Oscillator}
+\subsection{Theory: Coherent States of the Quantum Harmonic Oscillator}
 \begin{itemize}
 	\item The annihilation operator's eigenstates are called \textit{coherent states} of the quantum harmonic oscillator's Hamiltonian. Coherent states  $ \ket{\psi} $ of a QHO satisfy the eigenvalue equation
 	\begin{equation*}
@@ -1827,7 +1828,7 @@ In our case (for a harmonic oscillator), the theorem reads
 	
 \end{itemize}
 
-\subsubsection{Harmonic Oscillator in an Electric Field}
+\subsection{Harmonic Oscillator in an Electric Field}
 \textit{Consider a particle of mass $ m $ and charge $ q $ at the equilibrium position $ x_{0} $ of a spring with spring constant $ k $ constrained to oscillate along the $ x $ axis. At time $ t = 0 $, we turn on an external electric field $ \mathcal{E} $ in the positive $ x $ direction. Solve for the particle's motion using quantum mechanics. }
 
 \begin{itemize}
@@ -1909,9 +1910,9 @@ In our case (for a harmonic oscillator), the theorem reads
 \end{itemize}
 
 
-\subsection{Seventh Exercise Set}
+\section{Seventh Exercise Set}
 
-\subsubsection{Theory: Two-Dimensional Harmonic Oscillator}
+\subsection{Theory: Two-Dimensional Harmonic Oscillator}
 \begin{itemize}
 	\item We generalize the harmonic oscillator to two dimensions by introducing the vector operators
 	\begin{equation*}
@@ -2043,7 +2044,7 @@ In our case (for a harmonic oscillator), the theorem reads
 	
 \end{itemize}
 
-\subsubsection{Two-Dimensional Isotropic Harmonic Oscillator} \label{qmv:sss:2dqho}
+\subsection{Two-Dimensional Isotropic Harmonic Oscillator} \label{qmv:ss:2dqho}
 \textit{Consider a two-dimensional isotropic harmonic oscillator. Within the subspace of energy eigenstates with energy $ E = 2\hbar \omega $, find those states that are also eigenstates of the $ z $-component of angular momentum $ L_{z} $.}
 \begin{itemize}
 	\item The energy $ E = 2\hbar \omega $ corresponds to the isotropic oscillator's first two excited states $ \ket{10} $ and $ \ket{01} $. These states have degeneracy two, meaning the subspace is spanned by two linearly independent states. The subspace is formed of all normalized linear combinations of $ \ket{01} $ and $ \ket{10} $, i.e. all $ \ket{\psi} $ for which
@@ -2115,9 +2116,9 @@ In our case (for a harmonic oscillator), the theorem reads
 	
 \end{itemize}
 
-\subsection{Eight Exercise Set}
+\section{Eight Exercise Set}
 
-\subsubsection{Two-Dimensional Isotropic Harmonic Oscillator (continued)}
+\subsection{Two-Dimensional Isotropic Harmonic Oscillator (continued)}
 We left off in the previous exercise set having found the harmonic oscillator's states $ \psi_{10}(x,y) $ and $ \psi_{01}(x, y) $; these were
 \begin{equation*}
 	\psi_{10}(x, y) = \frac{\sqrt{2}r \cos \phi}{x_{0}\sqrt{\pi x_{0}^{2}}}e^{-\frac{r^{2}}{2x_{0}^{2}}} \eqtext{and} \psi_{01}(x, y) = \frac{\sqrt{2}r \sin \phi}{x_{0}\sqrt{\pi x_{0}^{2}}}e^{-\frac{r^{2}}{2x_{0}^{2}}}
@@ -2305,7 +2306,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 \end{itemize}
 
 
-\subsubsection{Larmor Precession}
+\subsection{Larmor Precession}
 \textit{Analyze the motion of a quantum-mechanical particle with magnetic moment $ \vec{\mu} $ and angular momentum quantum number $ l = 1 $ in an external magnetic field $ \vec{B} = B\uvec{z} $, where $ \vec{\mu} $ forms an initial angle $ \theta $ with $ \vec{B} $ at $ t = 0 $.}
 
 \begin{itemize}
@@ -2497,8 +2498,8 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	
 \end{itemize}
 
-\subsection{Ninth Exercise Set}
-\subsubsection{Larmor Precession (continued)}
+\section{Ninth Exercise Set}
+\subsection{Larmor Precession (continued)}
 \textit{Analyze the motion of a quantum-mechanical particle with magnetic moment $ \mu $ and angular momentum quantum number $ l = 1 $ in an external magnetic field $ \vec{B} = B\uvec{z} $, where $ \mu $ forms an initial angle $ \theta $ with $ \vec{B} $ at $ t = 0 $.}
 \begin{itemize}
 	\item In the last exercise set we found the particle's time-dependent wave function
@@ -2587,12 +2588,12 @@ These are the two linearly independent states spanning the isotropic harmonic os
 % whereas previous problems used orbital angular momentum operators
 % We'll get practice with a wavefunction that exists both in position
 % and spin angular momentum space at onces
-\subsubsection{Rashba Coupling}
-\textit{Consider a particle in the two-dimensional $ x, y $ plane with magnitude of spin $ S = \frac{1}{2} $ and Hamiltonian}
+\subsection{Rashba Coupling}
+\textit{Consider a particle in the two-dimensional $ x, y $ plane with magnitude of spin $ s = 1/2 $ and Hamiltonian}
 \begin{equation*}
 	H = \frac{p^{2}}{2m} + \lambda (p_{x}S_{y} - p_{y}S_{x})
 \end{equation*}
-\textit{where $ \vec{p} = (p_{x}, p_{y}) $ and $ \vec{S} = (S_{x}, S_{y}, S_{z}) $ are the momentum and spin operators and $ \lambda $ is a constant.\footnote{The term $ \lambda (p_{x}S_{y} - p_{y}S_{x}) $ is called the \textit{Rashba coupling term}, which gives this problem its name.} Find the Hamiltonian $ H $'s eigenfunctions and eigenvalues.}
+\textit{where $ \vec{p} = (p_{x}, p_{y}, 0) $ and $ \vec{S} = (S_{x}, S_{y}, S_{z}) $ are the momentum and spin operators and $ \lambda $ is a constant.\footnote{The term $ \lambda (p_{x}S_{y} - p_{y}S_{x}) $ is called the \textit{Rashba coupling term}, which gives this problem its name.} Find the Hamiltonian $ H $'s eigenfunctions and eigenvalues.}
 
 \vspace{2mm}
 \textbf{Spin and Momentum States}
@@ -2600,20 +2601,21 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\item The Hamiltonian $ H $ acts on states in the combined Hilbert space 
 	$ \H = \H_{p}\otimes \H_{s} $ where $ \H_{p} $ is the momentum Hilbert space and $ \H_{s} $ is the spin Hilbert space. Analogously, the states in $ \H $ are $ \ket{\psi} = \ket{\psi_{p}} \otimes \ket{\psi_{s}}$. 
 	
-	\item Since we're working with states with spin magnitude $ S = \frac{1}{2} $ and thus $ M \in  \big\{-\tfrac{1}{2}, \tfrac{1}{2}\big\} $, the spin wavefunction $ \psi_{s} $ is the linear combination
+	\item Since we're working with states with spin magnitude $ s = \frac{1}{2} $ and thus $ z $ component $ m_{s} \in  \big\{-\tfrac{1}{2}, \tfrac{1}{2}\big\} $, the spin wavefunction $ \psi_{s} $ is the linear combination
 	\begin{equation*}
 		\ket{\psi_{s}} = \alpha \ket{\frac{1}{2}\frac{1}{2}} + \beta \ket{\frac{1}{2}-\frac{1}{2}}
 	\end{equation*}
-	where $ \ket{SN_{s}} $ is the basis of the spin operator $ S^{2} $---$ S $ is the spin quantum number and $ M_{s} $ is the quantum number corresponding to the projection of spin on the $ z $ axis. The spin operator $ S^{2} $ acts on these basis states to produce
+	where $ \ket{sm_{s}} $ is the basis of the spin operator $ S^{2} $---$ s $ is the spin quantum number and $ m_{s} $ is the quantum number corresponding to the projection of spin on the $ z $ axis. The spin operator $ S^{2} $ acts on the spin basis states to produce
 	\begin{align*}
 		&S^{2} \ket{\frac{1}{2}\frac{1}{2}} = \hbar^{2} \frac{1}{2}\left(\frac{1}{2} + 1\right ) \ket{\frac{1}{2}\frac{1}{2}} = \hbar^{2} \frac{3}{4} \ket{\frac{1}{2}\frac{1}{2}}\\
 		& S^{2} \ket{\frac{1}{2}-\frac{1}{2}} = \hbar^{2} \frac{1}{2}\left (\frac{1}{2} + 1\right ) \ket{\frac{1}{2}-\frac{1}{2}} = \hbar^{2} \frac{3}{4} \ket{\frac{1}{2}-\frac{1}{2}}
 	\end{align*}
-	Meanwhile, the operator $ S_{z} $ acts on the basis states to produce
+	
+	\item Meanwhile, the operator $ S_{z} $ acts on the basis states to produce
 	\begin{equation*}
 		S_{z} \ket{\frac{1}{2}\frac{1}{2}} = \frac{\hbar}{2} \ket{\frac{1}{2}\frac{1}{2}} \eqtext{and} S_{z} \ket{\frac{1}{2}-\frac{1}{2}} = -\frac{\hbar}{2} \ket{\frac{1}{2}-\frac{1}{2}}
 	\end{equation*}
-	When working with particles with spin $ S = \frac{1}{2} $, we usually denote the states $  \ket{\frac{1}{2}\frac{1}{2}}  $ and $  \ket{\frac{1}{2}-\frac{1}{2}}  $ with $ \ket{\ua} $ and $ \ket{\da} $, respectively. In this notation, the spin wavefunction is
+	When working with particles with spin $ s = 1/2 $, we usually denote the states $  \ket{\frac{1}{2}\frac{1}{2}}  $ and $  \ket{\frac{1}{2}-\frac{1}{2}}  $ with $ \ket{\ua} $ and $ \ket{\da} $, respectively. In this notation, our spin wavefunction is
 	\begin{equation*}
 		\ket{\psi_{s}} = \alpha \ket{\ua} + \beta \ket{\da}
 	\end{equation*}
@@ -2629,7 +2631,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\begin{equation*}
 		H \ket{\psi} = E \ket{\psi}
 	\end{equation*}
-	First, to make the rest of the problem easier, we will show that $ H $ commutes with the operators $ p_{x} $ and $ p_{y} $. First, we have
+	First, to make the rest of the problem easier, we will show that $ H $ commutes with the operator $ \vec{p} $, which reduces to showing $ H $ commutes with $ p_{x}$, $ p_{y} $ and $ p_{z} $. First:
 	\begin{equation*}
 		[H, p_{x}] = \left[\frac{p_{x}^{2} + p_{y}^{2}}{2m} + \lambda (p_{x}S_{y} - p_{y}S_{x}), p_{x}\right]
 	\end{equation*}
@@ -2637,15 +2639,15 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\begin{equation*}
 		[H, p_{x}] = 0
 	\end{equation*}
-	We can show $ [H, p_{y}] = 0 $ with an analogous procedure.
+	We can show $ [H, p_{y}] = 0 $ with an analogous procedure. Finally, since $ p_{z} = 0 $, the identity $ [H, p_{z}] = 0 $ is trivial---it's even strictly necessary, since our particle's momentum is confined to the $ xy $ plane.
 	
-	\item Next, we will make use of the commutators $ [H, p_{x}] = 0  $ and $ [H, p_{y}] = 0  $. Recall that if two operators commute, it is possible to find eigenfunctions that are simultaneously eigenfunctions of both operators (see e.g. the 2D harmonic oscillator problem \ref{qmv:sss:2dqho}). In our case, because $ \vec{p} = (p_{x}, p_{y})$ and $ H $ commute, it is possible to find such functions that are simultaneously eigenfunctions of both operators. In other words, instead of finding $ H $'s eigenfunctions, we can search for $ \vec{p} $'s eigenfunctions instead. 
+	\item Next, recall that if two operators commute, it is possible to find eigenfunctions that are simultaneously eigenfunctions of both operators (see e.g. the 2D harmonic oscillator problem in Subsection \ref{qmv:ss:2dqho}). In our case, because $ \vec{p} = (p_{x}, p_{y}, 0)$ and $ H $ commute, it is possible to find such functions that are simultaneously eigenfunctions of both operators. Instead of finding $ H $'s eigenfunctions, we can search for $ \vec{p} $'s eigenfunctions instead. 
 	
-	\item $ \vec{p} $'s eigenfunctions correspond to the momentum states $ \ket{\psi_{p}} $. We want to solve the eigenvalue equation
+	\item The momentum operator $ \vec{p} $'s eigenfunctions correspond to the particle's momentum states $ \ket{\psi_{p}} $. We want to solve the eigenvalue equation
 	\begin{equation*}
 		\vec{p}\ket{\psi_{p}} = a \ket{\psi_{p}} \qquad \text{where } \vec{p} = -i\hbar \nabla
 	\end{equation*}
-	I've used $ a $ instead of $ \lambda $ to denote the eigenvalue to avoid confusion with the Rashba coupling parameter $ \lambda $. Recall the momentum eigenfunctions are plane waves of the form $ e^{i\vec{k}\cdot \vec{r}} $, for which the eigenvalue equation, in the coordinate wavefunction representation, reads
+	I've used $ a $ instead of the conventional $ \lambda $ to denote the eigenvalue to avoid confusion with the Rashba coupling parameter $ \lambda $. Recall the momentum eigenfunctions are plane waves of the form $ e^{i\vec{k}\cdot \vec{r}} $, for which the eigenvalue equation in the coordinate wavefunction representation reads
 	\begin{equation*}
 		\vec{p} e^{i\vec{k}\cdot \vec{r}} = -i\hbar (i \vec{k}) e^{i\vec{k}\cdot \vec{r}} = \hbar \vec{k}e^{i\vec{k}\cdot \vec{r}}
 	\end{equation*}
@@ -2655,7 +2657,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\end{equation*}
 	where the eigenstate $ \ket{\k} $ corresponds to the wavefunction $ e^{i\vec{k}\cdot \vec{r}} $ and the eigenvalue is $ \hbar \vec{k} = \hbar(k_{x}, k_{y}) $.
 	
-	\item Returning the stationary \Schro equation and using $ \ket{\psi_{p}} = \ket{\k} $ we have
+	\item Returning to the stationary \Schro equation and using $ \ket{\psi_{p}} = \ket{\k} $ we have
 	\begin{equation*}
 		H\ket{\psi} = H\big(\ket{\psi_{p}} \otimes \ket{\psi_{s}}\big) = H\big(\ket{\k} \otimes \ket{\psi_{s}}\big) = E \big(\ket{\k}\otimes \ket{\psi_{s}}\big)
 	\end{equation*}
@@ -2666,7 +2668,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 		H\big(\ket{\k} \ket{\psi_{s}}\big) = E \big(\ket{\k} \ket{\psi_{s}}\big)
 	\end{equation*}
 	
-	\item Next, substituting the Hamiltonian $ H $ into the equation $ H\big(\ket{\k} \ket{\psi_{s}}\big) = E \big(\ket{\k} \ket{\psi_{s}}\big) $ and noting that each operator in the Hamiltonian acts either only on the momentum function $ \ket{\k} $ or only on the spin function $ \ket{\psi_{s}} $, we have
+	\item Next, substituting the Rashba-coupled Hamiltonian $ H $ into the equation $ H\big(\ket{\k} \ket{\psi_{s}}\big) = E \big(\ket{\k} \ket{\psi_{s}}\big) $ and noting that each operator in the Hamiltonian acts either only on the momentum function $ \ket{\k} $ or only on the spin function $ \ket{\psi_{s}} $, we have
 	\begin{align*}
 		H\big(\ket{\k} \ket{\psi_{s}}\big) &= \left[\frac{p^{2}}{2m} + \lambda (p_{x}S_{y} - p_{y}S_{x})\right]\big(\ket{\k} \ket{\psi_{s}}\big) \\
 		& = \left(\frac{p^{2}}{2m}\ket{\k}\right)\ket{\psi_{s}} + \lambda \big(p_{x}\ket{\k} S_{y}\ket{\psi_{s}} - p_{y}\ket{\k} S_{x}\ket{\psi_{s}}\big) \\
@@ -2680,15 +2682,15 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	We're now left with an equation containing only the spin wavefunction $ \ket{\psi_{s}} $. 
 \end{itemize}
 
-\textbf{Theoretical Interlude}
+\textbf{Theoretical Interlude: Spin Ladder Operators}
 \begin{itemize}
 
-	\item Recall that for a particle with spin $ S = \frac{1}{2} $, the function $ \ket{\psi_{s}} $ is an element of the two-dimensional spin Hilbert space $ \H_{s} $ and can thus be written as the linear combination
+	\item Recall that for a particle with spin $ s = 1/2 $, the function $ \ket{\psi_{s}} $ is an element of the two-dimensional spin Hilbert space $ \H_{s} $ and is written as the linear combination
 	\begin{equation*}
 		\ket{\psi_{s}} = \alpha \ket{\ua} + \beta \ket{\da}
 	\end{equation*}
 
-	\item Just like it is more convenient to the orbital angular momentum components $ L_{x} $ and $ L_{y} $ in terms of the operators $ L_{+} $ and $ L_{-} $, it is best to analyze $ S_{x} $ and $ S_{y} $ in terms of the analogously defined operators $ S_{+} $ and $ S_{-} $, which read
+	\item Just like it is more convenient to write the orbital angular momentum components $ L_{x} $ and $ L_{y} $ in terms of the ladder operators $ L_{+} $ and $ L_{-} $, it is best to analyze $ S_{x} $ and $ S_{y} $ in terms of the analogously defined operators $ S_{+} $ and $ S_{-} $, which read
 	\begin{align*}
 		& S_{+} = S_{x} + iS_{y} \eqtext{and} S_{-} = S_{x} - i S_{y}\\
 		& S_{x} = \frac{S_{+}+S_{-}}{2} \eqtext{and} S_{y} = \frac{S_{+}-S_{-}}{2i}
@@ -2703,7 +2705,16 @@ These are the two linearly independent states spanning the isotropic harmonic os
 
 \textbf{Back to Our Problem}
 \begin{itemize}
-	\item  First, some useful intermediate results: $ S_{+}\ket{\ua} = S_{+}\ket{\tfrac{1}{2} \tfrac{1}{2}} = 0 $ ($ m $ cannot increase beyond $ s = \frac{1}{2} $), $ S_{+}\ket{\da} = S_{+}\ket{\tfrac{1}{2} -\tfrac{1}{2}} = \hbar \ket{\ua} $, $ S_{-}\ket{\ua} = S_{-}\ket{\tfrac{1}{2} \tfrac{1}{2}} = \hbar \ket{\da} $ and $ S_{-}\ket{\da} = S_{-}\ket{\tfrac{1}{2}- \tfrac{1}{2}} = 0 $ ($ m $ cannot increase below $ -s = -\frac{1}{2} $). 
+	\item  First, some useful intermediate results:
+	\[
+	\begin{array}{cclcc}
+		 S_{+}\ket{\ua} & \equiv & S_{+}\ket{\tfrac{1}{2} \tfrac{1}{2}} & = & 0\\[0.2em]
+		 S_{+}\ket{\da} & \equiv &S_{+}\ket{\tfrac{1}{2} -\tfrac{1}{2}} & = & \hbar \ket{\ua}\\[0.2em]
+		 S_{-}\ket{\ua} & \equiv & S_{-}\ket{\tfrac{1}{2} \tfrac{1}{2}} & = & \hbar \ket{\da}\\[0.2em]
+		 S_{-}\ket{\da} & \equiv & S_{-}\ket{\tfrac{1}{2}- \tfrac{1}{2}} & = & 0
+	\end{array}
+	\]
+	The first and last identities hold since $ m $ cannot increase beyond $ s = 1/2 $ or decrease below $ s = -1/2$, respectively.
 
 	\item In terms of $ S_{+} $ and $ S_{-} $ and using the above intermediate results, $ S_{x} $ and $ S_{y} $ act on $ \ket{\psi_{s}} $ to produce
 	\begin{align*}
@@ -2711,7 +2722,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 		&S_{y}\ket{\psi_{s}} = \frac{S_{+}-S_{-}}{2i} \big(\alpha \ket{\ua} + \beta \ket{\da}\big) = \frac{\hbar}{2i} \big(-\alpha \ket{\da} + \beta \ket{\ua}\big)
 	\end{align*} 
 	
-	\item We can now evaluate the earlier equation 
+	\item We can now evaluate the earlier eigenvalue equation for $ \ket{\p_{s}} $, i.e.
 	\begin{equation*}
 		\frac{\hbar^{2}k^{2}}{2m}\ket{\psi_{s}} + \lambda \hbar (k_{x}S_{y} - k_{y}S_{x})\ket{\psi_{s}} = E\ket{\psi_{s}}
 	\end{equation*}
@@ -2778,18 +2789,12 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\end{equation*}	
 	The polynomial's two zeros are
 	\begin{equation*}
-		E_{+,-} = \frac{\hbar^{2}k^{2}}{2m} \pm \frac{\lambda \hbar^{2}k}{2}
+		E_{\pm} = \frac{\hbar^{2}k^{2}}{2m} \pm \frac{\lambda \hbar^{2}k}{2}
 	\end{equation*}
-	Note that the case $ \lambda = 0 $, which corresponds to zero coupling, recovers the free-particle energy $ E = \frac{\hbar^{2}k^{2}}{2m} $. In this case we have energy degeneracy $ 2 $ for each $ \k $, since both energy eigenvalues $ E_{+,-} $ are equal for a given value of $ k $.
+	Note that the case $ \lambda = 0 $, which corresponds to zero coupling, recovers the free-particle energy $ E = \frac{\hbar^{2}k^{2}}{2m} $. In this case we have energy degeneracy $ 2 $ for each $ \k $, since the two linearly independent eigenfunctions corresponding $ \pm k $ have the same energy eigenvalue $ E = \frac{\hbar^{2}k^{2}}{2m} $.
 	
-	For $ \lambda \neq 0 $, in the presence of Rashba coupling, the degeneracy is broken, since both energy eigenvalues $ E_{\pm} $ are different; shifted up or down from the free particle energy by the quantity $ \frac{\lambda \hbar^{2}k}{2} $.
+	For $ \lambda \neq 0 $, in the presence of Rashba coupling, the degeneracy is broken, since the states with $ \pm k $ have different energies $ E_{\pm} $, shifted up or down from the free particle energy by the quantity $ \frac{\lambda \hbar^{2}k}{2} $.
 	
-%	\item To analyze the energy eigenvalues with $ \lambda \neq 0 $ in the presence of Rashba coupling, we first write $ E $ as a complete square:
-%	\begin{equation*}
-%		E_{\pm} = \frac{h^{2}}{2m}\left(k \pm \frac{m\lambda}{2}\right)^{2} - \frac{m\hbar^{2}\lambda^{2}}{8}
-%	\end{equation*}
-%	The nonzero coupling coefficient breaks the twofold degeneracy of a free particle, since both energy eigenvalues $ E_{\pm} $ are different.
-
 	\item Next, we consider the eigenstates. In the degenerate case $ \lambda = 0 $, we have
 	\begin{equation*}
 		H \ket{\k} \big(\alpha \ket{\ua} + \beta \ket{\da}\big) = \frac{\hbar^{2}k^{2}}{2m}\big(\alpha \ket{\ua} + \beta \ket{\da}\big)
@@ -2855,7 +2860,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	Next, we will analyze the just-derived wavefunctions.
 \end{itemize}
 
-\textbf{Theoretical Interlude}
+\textbf{Theoretical Interlude: Orientation of Spin in Space}
 \begin{itemize}
 	\item If the projection $ \vec{S} \cdot \uvec{e}$ of a particle's spin $ \vec{S} $ in the direction $ \uvec{e} $ acts on the spin particle's wavefunction $ \ket{\psi_{s}} $ to produce $  \vec{S} \cdot \uvec{e} \ket{\psi_{s}} = \frac{\hbar}{2}\ket{\psi_{s}} $, then we say the particle's spin points in the direction $ \uvec{e} $. 
 	
@@ -2887,10 +2892,10 @@ These are the two linearly independent states spanning the isotropic harmonic os
 \end{itemize}
 
 
-\subsection{Tenth Exercise Set}
+\section{Tenth Exercise Set}
 
-\subsubsection{Rashba Coupling with Pauli Spin Matrices}
-\textit{Use the Pauli spin matrices to find the energy eigenvalues and eigenfunctions of a particle in the two-dimensional $ x, y $ plane with magnitude of spin $ S = \frac{1}{2} $ and Hamiltonian}
+\subsection{Rashba Coupling with Pauli Spin Matrices}
+\textit{Use the Pauli spin matrices to find the energy eigenvalues and eigenfunctions of a particle in the two-dimensional $ x, y $ plane with magnitude of spin $ s = 1/2 $ and Hamiltonian}
 \begin{equation*}
 	H = \frac{p^{2}}{2m} + \lambda (p_{x}S_{y} - p_{y}S_{x})
 \end{equation*}
@@ -2900,7 +2905,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 \vspace{2mm}
 \textbf{Quick Review of Previous Solution}
 \begin{itemize}
-	\item In the ninth exercise set, we solved this same problem without using spin matrices. For a particle with spin $ S = \frac{1}{2} $, the spin wavefunctions occur in a 2D spin Hilbert space and take the general form
+	\item In the ninth exercise set, we solved this same problem without using spin matrices. For a particle with spin $ s = 1/2 $, the spin wavefunctions occur in a 2D spin Hilbert space and take the general form
 	\begin{equation*}
 		\ket{\psi_{s}} = \alpha \ket{\ua} + \beta \ket{\da}
 	\end{equation*}
@@ -2928,13 +2933,13 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	which we solved for the Hamiltonian's energy eigenvalues and eigenfunctions.
 \end{itemize}
 
-\textbf{Solution Using Spin Matrices}
+\textbf{Theory: The Pauli Spin Matrices}
 \begin{itemize}
 	\item  Today we will use the Pauli matrix representation of the spin operator, which is
 	\begin{equation*}
 		\vec{S} = \frac{\hbar}{2}\vec{\sigma}
 	\end{equation*}
-	where $ \vec{\sigma} = (\sigma_{x}, \sigma_{y}, \sigma_{z})$; $ \sigma_{x}$, $\sigma_{y}$, and $ \sigma_{z} $ are called the \textit{Pauli spin matrices}. In the standard $ \ket{\ua}$ $\ket{\da} $ basis, spin matrices are
+	where $ \vec{\sigma} = (\sigma_{x}, \sigma_{y}, \sigma_{z})$; $ \sigma_{x}$, $\sigma_{y}$, and $ \sigma_{z} $ are called the \textit{Pauli spin matrices}. In the standard $ \ket{\ua}$ $\ket{\da} $ basis for particles with spin $ s = 1/2 $, the spin matrices are
 	\begin{equation*}
 		\sigma_{x} = 
 		\begin{bmatrix}
@@ -2955,8 +2960,11 @@ These are the two linearly independent states spanning the isotropic harmonic os
 		\end{bmatrix}
 	\end{equation*}
 	Recall our problem's spin wavefunctions took the general form $ \ket{\psi_{s}} = \alpha \ket{\ua} + \beta \ket{\da} $. When working with Pauli matrices, we represent the wavefunction with the vector $ [\alpha, \beta]^{T} $, which we call a \textit{spinor}.
-	
-	\item In terms of the spin matrices, the Hamiltonian reads
+\end{itemize}
+
+\textbf{Solution Using Spin Matrices}
+\begin{itemize}
+	\item In terms of the spin matrices, our problem's Rashba-coupled Hamiltonian reads
 	\begin{equation*}
 		H = \frac{p^{2}}{2m} + \lambda \frac{\hbar}{2}(p_{x}\sigma_{x} - p_{y}\sigma_{x})
 	\end{equation*} 
@@ -3029,7 +3037,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	The lesson is that when working with particles with $ S = \frac{1}{2} $, we are able to use the Pauli spin matrix representation of the spin operator to derive the same eigenvalue problem as in the previous Hilbert space approach.
 \end{itemize}
 
-\subsubsection{Theory: Time Reversal Symmetry}
+\subsection{Theory: Time Reversal Symmetry}
 \begin{itemize}
 	\item A problem is symmetric under time reversal if the problem's Hamiltonian $ H $ obeys $ [H, \T] = 0 $ where $ \T $ is time reversal operator. The time reversal operator is anti-unitary, i.e.
 	\begin{equation*}
@@ -3037,7 +3045,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\end{equation*}
 	where $ * $ denotes complex conjugation.
 	
-	\item From linear algebra, recall that a unitary operator $ U $ preserves the inner product, i.e.
+	\item From linear algebra, recall that unitary operators preserve the inner product, i.e.
 	\begin{equation*}
 		\braket{U\psi_{1}}{U\psi_{2}} = \braket{\psi_{1}}{\psi_{2}} 
 	\end{equation*}
@@ -3047,13 +3055,13 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\end{equation*}
 	which implies a unitary operator must satisfy $ U^{\dagger}U = I $.
 	
-	\item We now introduce the complex conjugation operator $ K: \psi \mapsto \psi^{*} $. We will now show that if $ \T $ is written as the product of a unitary operator $ U $ and the conjugation operator $ K $, then $ \T $ is anti-unitary:
+	\item Next, we introduce the complex conjugation operator $ K: \psi \mapsto \psi^{*} $. We will now show that if $ \T $ is written as the product of a unitary operator $ U $ and the conjugation operator $ K $, then $ \T $ is anti-unitary:
 	\begin{align*}
 		\braket{\T\psi_{1}}{\T\psi_{2}} &= \braket{UK\psi_{1}}{UK\psi_{2}} = \bbraket{UU^{\dagger}K\psi_{1}}{K\psi_{2}}\\
 		&= \braket{K\psi_{1}}{K\psi_{2}} = \int (K\psi_{1})^{*} (K\psi_{2})\diff V = \int (\psi_{1}^{*})^{*}\psi_{2}^{*}\diff V\\
 		&= \int \psi_{2}^{*}\psi_{1}\diff V = \braket{\psi_{2}}{\psi_{1}} = \braket{\psi_{1}}{\psi_{2}}^{*}
 	\end{align*}
-	where results in the anti-unitary identity 
+	which results in the anti-unitary identity 
 	\begin{equation*}
 		\braket{\T\psi_{1}}{\T\psi_{2}} = \braket{\psi_{1}}{\psi_{2}}^{*}
 	\end{equation*}
@@ -3072,12 +3080,12 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	
 	
 	
-\subsubsection{Tine-Reversal Symmetry and Rashba Coupling}
+\subsection{Tine-Reversal Symmetry and Rashba Coupling}
 \textit{Analyze the Rashba-coupled Hamiltonian from the previous two problems,}
 \begin{equation*}
 	H = \frac{p^{2}}{2m} + \frac{\lambda\hbar}{2} (p_{x}\sigma_{y} - p_{y}\sigma_{x}),
 \end{equation*}
-\textit{using the formalism of time-reversal symmetry for a particle with spin $ S = \frac{1}{2} $}.
+\textit{using the formalism of time-reversal symmetry for a particle with spin $ s = 1/2 $}.
 
 \begin{itemize}	
 	\item First, we will show the problem's Hamiltonian is invariant under time reversal, i.e. $ [H, \T] = 0 $. We can rewrite the commutation condition in the form $ H\T = \T H $ and multiply by $ \T^{-1} $ from the left to get
@@ -3086,7 +3094,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\end{equation*}
 	We will show $ H $ and $ \T $ commute by proving $ H = \T H \T^{-1} $.
 	
-	\item Recall from the theory section that for particles with spin $ S = \frac{1}{2} $, the time reversal operator is $ \T = i \sigma_{y} K $, where $ \sigma_{y} $ is the second Pauli spin matrix and $ K $ is the complex conjugation operator. Substituting $ \T = i \sigma_{y} K $ into the commutation condition gives
+	\item Recall from the theory section that for particles with spin $ s = 1/2 $, the time reversal operator is $ \T = i \sigma_{y} K $, where $ \sigma_{y} $ is the second Pauli spin matrix and $ K $ is the complex conjugation operator. Substituting $ \T = i \sigma_{y} K $ into the commutation condition gives
 	\begin{equation*}
 		\T H \T^{-1} = (i\sigma_{y}K)H(K^{-1}\sigma_{y}^{-1}i^{-1})
 	\end{equation*}
@@ -3195,8 +3203,8 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	where the second line uses the identity $ -i = ie^{i\pi} $. Recall the original eigenstate $ \ket{\psi_{+}} $ has a phase angle $ \phi $, corresponding to the direction of $ \k $ and spin up. It's Kramer pair $ \T\ket{\psi_{+}} $ has phase angle $ \phi + \pi $, corresponding to the direction $ -\k $ and spin down. 
 \end{itemize}
 	
-\subsubsection{Scattering on a Spin-Dependent Delta Function in 1D}
-\textit{Consider a spin-dependent scattering problem with two particles: particle 1 with spin $ S_{1} = \frac{1}{2} $ in the state $ \ket{\ua} $ and particle $ 2 $ with spin $ S_{2} = 1 $ in the state $ \ket{10} $. The particles have the Hamiltonian}
+\subsection{Scattering on a Spin-Dependent Delta Function in 1D}
+\textit{Consider a spin-dependent scattering problem with two particles: particle 1 with spin $ s_{1} = \frac{1}{2} $ in the state $ \ket{\ua} $ and particle $ 2 $ with spin $ s_{2} = 1 $ in the state $ \ket{10} $. The particles have the Hamiltonian}
 \begin{equation*}
 	H = \frac{p_{1}^{2}}{2m} - \frac{\lambda}{\hbar^{2}}\vec{S}_{1}\cdot \vec{S}_{2}\delta(x)
 \end{equation*}
@@ -3206,9 +3214,9 @@ These are the two linearly independent states spanning the isotropic harmonic os
 \begin{itemize}
 	\item First, we'll establish the problem's Hilbert space and choose an appropriate basis. The total Hilbert space is $ \H = \H_{p} \otimes \H_{1} \otimes \H_{2} $. $ \H_{p} $ is the momentum space of the first particle and $ \H_{1,2} $  are the spin spaces of the first and second particles, respectively. Note that the second particle's Hilbert space doesn't have a momentum component because particle 2 is fixed at the origin and doesn't move.
 	
-	The first particle has spin $ S = \frac{1}{2} $, so its spin Hilbert space $ \H_{1} $ is two-dimensional, and we will use the standard basis $ \ket{\ua} $ and $ \ket{\da} $. The second particle has spin $ S = 1 $ and thus a three-dimensional space; we'll use the basis functions$ \ket{11} $, $ \ket{10} $ and $ \ket{1-1} $.
+	The first particle has spin $ s = 1/2 $, so its spin Hilbert space $ \H_{1} $ is two-dimensional, and we will use the standard basis $ \ket{\ua} $ and $ \ket{\da} $. The second particle has spin $ s = 1 $ and thus a three-dimensional space; we'll use the basis functions $ \ket{11} $, $ \ket{10} $ and $ \ket{1-1} $.
 	
-	\item Next, we determine a basis for the combined spin space $ \H_{1} \otimes \H_{2} $. There are two good options:
+	\item Next, we determine a basis for the combined spin space $ \H_{1} \otimes \H_{2} $. There are two standard options:
 	\begin{enumerate}
 		\item A product basis, which uses commutativity of $ S_{1}^{2} $, $ S_{1z} $, $ S_{2}^{2} $, and $ S_{2z} $, which implies the existence of eigenfunctions that are simultaneously eigenfunctions of all four operators. The product basis consists of the states 
 		\begin{equation*}
@@ -3218,13 +3226,13 @@ These are the two linearly independent states spanning the isotropic harmonic os
 		
 		\item The other possible basis is the total angular momentum basis, which works in terms of the total spin operator $ \vec{S} = \vec{S}_{1} + \vec{S}_{2} $. This basis uses commutativity of $ S^{2} $, $ S_{z} $, $ S_{1}^{2} $, and $ S_{2}^{2} $.
 			
-		In general, the total spin operator obeys $ \abs{S_{1} - S_{2}} \leq S \leq S_{1} + S_{2} $. In our case with $ S_{1} = \frac{1}{2} $  and $ S_{2} = 1 $, the above relationship implies $ S \in \big\{ \frac{1}{2}, \frac{3}{2} \big\} $.
+		In general, the total spin operator obeys $ \abs{s_{1} - s_{2}} \leq s \leq s_{1} + s_{2} $. In our case with $ s_{1} = 1/2 $  and $ s_{2} = 1 $, the above relationship implies $ s \in \big\{ \frac{1}{2}, \frac{3}{2} \big\} $.
 			
 		In our case the good spin basis would be
 		\begin{equation*}
 			\left\{ \ket{\tfrac{3}{2}, \tfrac{3}{2} \tfrac{1}{2} 1},\  \ket{\tfrac{3}{2}, \tfrac{1}{2} \tfrac{1}{2} 1},\  \ket{\tfrac{3}{2}, -\tfrac{1}{2} \tfrac{1}{2} 1} \, \ket{\tfrac{3}{2}, -\tfrac{3}{2} \tfrac{1}{2} 1},\ \ket{\tfrac{1}{2}, \tfrac{1}{2} \tfrac{1}{2} 1},\  \ket{\tfrac{1}{2}, -\tfrac{1}{2} \tfrac{1}{2} 1}  \right\}
 		\end{equation*}
-		By convention, because $ S_{1} = \frac{1}{2} $ and $ S_{2} = 1 $ remain fixed throughout the problem, we drop the last two terms $ \tfrac{1}{2} 1 $ of each basis state and write the basis functions as
+		By convention, because $ s_{1} = 1/2 $ and $ s_{2} = 1 $ remain fixed throughout the problem, we drop the last two terms $ 1/2 $ and $ 1 $ from each basis state and write the basis functions as
 		\begin{equation*}
 			\left\{ \ket{\tfrac{3}{2}, \tfrac{3}{2} },\  \ket{\tfrac{3}{2}, \tfrac{1}{2} },\  \ket{\tfrac{3}{2}, -\tfrac{1}{2} } \, \ket{\tfrac{3}{2}, -\tfrac{3}{2} },\ \ket{\tfrac{1}{2}, \tfrac{1}{2} },\  \ket{\tfrac{1}{2}, -\tfrac{1}{2}}  \right\}
 		\end{equation*}
@@ -3235,10 +3243,10 @@ These are the two linearly independent states spanning the isotropic harmonic os
 
 
 
-\subsection{Eleventh Exercise Set}
+\section{Eleventh Exercise Set}
 
-\subsubsection{Scattering on a Spin-Dependent Delta Function (continued)}
-\textit{Consider a spin-dependent scattering problem with two particles: particle 1 with spin $ S_{1} = 1/2 $ in the state $ \ket{\ua} $ and particle $ 2 $ with spin $ S_{2} = 1 $ in the state $ \ket{10} $. The particles have the Hamiltonian}
+\subsection{Scattering on a Spin-Dependent Delta Function (continued)}
+\textit{Consider a spin-dependent scattering problem with two particles: particle 1 with spin $ s_{1} = 1/2 $ in the state $ \ket{\ua} \equiv \ket{\tfrac{1}{2}, \tfrac{1}{2}} $ and particle $ 2 $ with spin $ s_{2} = 1 $ in the state $ \ket{10} $. The particles have the Hamiltonian}
 \begin{equation*}
 	H = \frac{p_{1}^{2}}{2m} - \frac{\lambda}{\hbar^{2}}\vec{S}_{1}\cdot \vec{S}_{2}\delta(x)
 \end{equation*}
@@ -3280,13 +3288,13 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	
 	We identified two possible bases for use with our problem: The first is a product basis using the commutativity of $ S_{1}^{2} $, $ S_{z_{1}} $, $ S_{2}^{2} $ and $ S_{z_{2}} $. 
 	
-	Nominally, the states in this basis are written $ \ket{S_{1}m_{1}S_{2}m_{2}} $, but because the particle spins $ S_{1} $ and $ S_{2} $ are fixed at $ 1/2 $ and $ 1 $, respectively, we adopt a shorthand convention and write the states simply as $ \ket{m_{1}m_{2}} $, with $ S_{1} = 1/2 $ and $ S_{2} = 1 $ implicit.
+	Nominally, the states in this basis are written $ \ket{s_{1}m_{1}s_{2}m_{2}} $, but because the particle spins $ s_{1} $ and $ s_{2} $ are fixed at $ 1/2 $ and $ 1 $, respectively, we adopt a shorthand convention and write the states simply as $ \ket{m_{1}m_{2}} $, with $ s_{1} = 1/2 $ and $ s_{2} = 1 $ implicit.
 	
 	\item The second basis, called the total angular momentum basis, uses the commutativity of $ S_{2} $, $ S_{z} $, $ S_{1}^{2} $ and $ S_{2}^{2} $. Recall total spin is the vector sum $ \vec{S} = \vec{S}_{1} + \vec{S}_{2} $.  We write the states in this basis as
 	\begin{equation*}
-		\ket{SS_{1}S_{2}m} \eqtext{or, in shorthand,} \ket{Sm}
+		\ket{ss_{1}s_{2}m} \eqtext{or, in shorthand,} \ket{sm}
 	\end{equation*}
-	Again, by convention, we leave out the $ S_{1} $ and $ S_{2} $ for conciseness because their values are fixed at $ S_{1} = 1/2 $ and $ S_{2} = 1 $, respectively.
+	Again, by convention, we leave out the $ s_{1} $ and $ s_{2} $ for conciseness because in this problem their values are fixed at $ s_{1} = 1/2 $ and $ s_{2} = 1 $, respectively.
 	
 	We transform between the bases using the \textit{Clebsch-Gordan coefficients}.
 \end{itemize}
@@ -3319,42 +3327,45 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\begin{equation*}
 		H \ket{\psi} = E\ket{\psi}
 	\end{equation*}
-	Because $ H $ and the spin operators commute, we can factor the system's wavefunction into a momentum and spin portion of the form $ \ket{\psi} = \ket{\psi_{1}} \otimes \ket{Sm} $. This factorization gives
+	Because $ H $ and the spin operators commute, we can factor the system's wavefunction into a momentum and spin portion of the form $ \ket{\psi} = \ket{\psi_{1}} \otimes \ket{sm} $. This factorization gives
 	\begin{align*}
-		H \ket{\psi_{1}} \otimes \ket{Sm} &= \left(\frac{p_{1}^{2}}{2m}\ket{\psi_{1}}\right)\otimes \ket{Sm} - \frac{\lambda}{2\hbar^{2}} \delta (x_{1})\ket{\psi_{1}}\otimes (S^{2} -S_{1}^{2} - S_{2}^{2}) \ket{Sm}\\
-		&= E \ket{\psi_{1}}\otimes \ket{Sm}
+		H \ket{\psi_{1}} \otimes \ket{sm_{s}} &= \left(\frac{p_{1}^{2}}{2m}\ket{\psi_{1}}\right)\otimes \ket{sm_{s}} - \frac{\lambda}{2\hbar^{2}} \delta (x_{1})\ket{\psi_{1}}\otimes (S^{2} -S_{1}^{2} - S_{2}^{2}) \ket{sm_{s}}\\
+		&= E \ket{\psi_{1}}\otimes \ket{sm_{s}}
 	\end{align*}
-	We stress that the factorization $ \ket{\psi} = \ket{\psi_{1}} \otimes \ket{Sm} $ is possible only because $ H $ commutes with each spin operator.
+	We stress that the factorization $ \ket{\psi} = \ket{\psi_{1}} \otimes \ket{sm_{s}} $ is possible only because $ H $ commutes with each spin operator.
 	
 	\item The spin operators $ S $, $ S_{1} $ and $ S_{2} $ then act on their corresponding eigenstates to give
 	\begin{align*}
-		H \ket{\psi_{1}} \otimes \ket{Sm} &= \left(\frac{p_{1}^{2}}{2m}\ket{\psi_{1}}\right)\otimes \ket{Sm} - \frac{\lambda}{2\hbar^{2}} \delta (x_{1})\ket{\psi_{1}}\otimes \big[\hbar^{2}S(S+1) \\
-		&{} \qquad  - \hbar^{2}S_{1}(S_{1} + 1) - \hbar^{2}S_{2}(S_{2} + 1)\big] \ket{Sm} \\
-		&= E \ket{\psi_{1}}\otimes \ket{Sm}
+		H \ket{\psi_{1}} \otimes \ket{sm_{s}} &= \left(\frac{p_{1}^{2}}{2m}\ket{\psi_{1}}\right)\otimes \ket{sm_{s}} - \frac{\lambda}{2\hbar^{2}} \delta (x_{1})\ket{\psi_{1}}\otimes \Big[\hbar^{2}s(s+1) \\
+		&{} \qquad  - \hbar^{2}s_{1}(s_{1} + 1) - \hbar^{2}s_{2}(s_{2} + 1)\Big] \ket{sm_{s}} \\
+		&= E \ket{\psi_{1}}\otimes \ket{sm_{s}}
 	\end{align*}
-	Conveniently, $ \ket{Sm} $ cancels from both sides of the equation. Substituting in $ S_{1} = 1/2 $ and $ S_{2} = 1 $ produces the purely momentum problem
+	Conveniently, $ \ket{sm_{s}} $ cancels from both sides of the equation. Substituting in $ s_{1} = 1/2 $ and $ s_{2} = 1 $ produces the purely momentum problem
 	\begin{equation*}
-		\left(\frac{p_{1}^{2}}{2m} - \frac{\lambda \delta(x)}{2}\big[S(S+1) - \frac{3}{4} - 2\big]\right)\ket{\psi_{1}} = E \ket{\psi_{1}}
+		\left(\frac{p_{1}^{2}}{2m} - \frac{\lambda \delta(x)}{2}\left[s(s+1) - \frac{3}{4} - 2\right]\right)\ket{\psi_{1}} = E \ket{\psi_{1}}
 	\end{equation*}
-	where $ \ket{\psi_{1}} $ is the first particle's momentum wavefunction. Note that this equation depends only on the size $ S $ of the total spin, not on the $ z $ components. For our problem with $ S_{1} = 1/2 $ and $ S_{2} = 1 $, the identity $ \abs{S_{1} - S_{2}} \leq S \leq S_{1} + S_{2} $ means there are only two possible values for $ S $; these are $ S = 1/2 $ and $ S = 3/2 $. 
+	where $ \ket{\psi_{1}} $ is the first particle's momentum wavefunction. Note that this equation depends only on the size $ s $ of the total spin, not on the $ z $ components $ m_{s} $. For our problem with $ s_{1} = 1/2 $ and $ s_{2} = 1 $, the identity $ \abs{s_{1} - s_{2}} \leq s \leq s_{1} + s_{2} $ means there are only two possible values for $ s $; these are $ s = 1/2 $ and $ s = 3/2 $. 
 	
-	\item For $ S = 3/2 $ we have
+	\item For $ s = 3/2 $ we have
 	\begin{equation*}
 		\left[\frac{p_{1}^{2}}{2m} - \frac{\lambda \delta(x)}{2}\right]\ket{\psi_{1}} = E \ket{\psi_{1}}
 	\end{equation*}
-	For $ S = 1/2 $ we have
+	For $ s = 1/2 $ we have
 	\begin{equation*}
 		\left[\frac{p_{1}^{2}}{2m} + \lambda \delta(x)\right]\ket{\psi_{1}} = E \ket{\psi_{1}}
 	\end{equation*}
-	In other words, using the commutation of $ H $ and the spin operators, we have transformed our problem to a problem in only the momentum Hilbert space. All spin dependence is gone; the eigenvalues depend only on the delta function parameter $ \lambda $. 
-	
-	\item A delta function potential has a bound state only for a downward-pointing delta function, which occurs if the delta function's coefficient is negative. Looking at the above equations for $ S = 1/2$ and $ S = 3/2 $, we see we have a bound state only for $ S = 3/2 $, where the $ \delta(x) $ term has a negative coefficient. For $ S = 1/2 $, the $ \delta $ function has a positive coefficient, and their is no bound state.
+	To review: using the commutation of $ H $ and the spin operators, we have transformed our problem to a problem in only the momentum Hilbert space. All spin dependence is gone; the eigenvalues depend only on the delta function parameter $ \lambda $. 	
+\end{itemize}
+
+\textbf{Bound States}
+\begin{itemize}	
+	\item A delta function potential has a bound state only for a downward-pointing delta function, which occurs if the delta function's coefficient is negative. Looking at the above equations for $ s = 1/2$ and $ s = 3/2 $, we see we have a bound state only for $ s = 3/2 $, where the $ \delta(x) $ term has a negative coefficient. For $ s = 1/2 $, the $ \delta $ function has a positive coefficient, and there is no bound state.
 	
 	\item For conciseness, we define the constants 
 	\begin{equation*}
 		\lambda_{3/2} = \frac{\lambda}{2} \eqtext{and} \lambda_{1/2} = - \lambda
 	\end{equation*}
-	The $ S = 3/2 $ and $ S = 1/2 $ eigenvalue equations involving $ \ket{\psi_{1}} $ then read
+	The $ s = 3/2 $ and $ s = 1/2 $ eigenvalue equations involving $ \ket{\psi_{1}} $ then read
 		\begin{equation*}
 			\frac{p_{1}^{2}}{2m} - \lambda_{3/2}\delta(x) = H_{3/2} \eqtext{and} \frac{p_{1}^{2}}{2m} - \lambda_{1/2}\delta(x) = H_{1/2} 
 		\end{equation*}
@@ -3366,119 +3377,108 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	and corresponding energy eigenvalue $  E_{0} = \frac{m\lambda^{2}}{2\hbar^{2}} $.
 	
 	
-	\item For the $ S = 3/2 $ problem, which has a bound state, the quantity $ \kappa $ is
+	\item For the $ s = 3/2 $ problem, which has a bound state, the quantity $ \kappa $ is
 	\begin{equation*}
-		\kappa_{3/2} = \frac{M\lambda_{3/2}}{\hbar^{2}} = \frac{M\lambda}{2\hbar^{2}},
+		\kappa_{3/2} = \frac{m\lambda_{3/2}}{\hbar^{2}} = \frac{m\lambda}{2\hbar^{2}},
 	\end{equation*}
-	and the corresponding bound eigenfunction is
+	and the corresponding bound eigenfunctions are
 	\begin{equation*}
-		\ket{\psi_{0}^{M}} = \sqrt{\kappa_{3/2}}e^{-\kappa_{3/2}\abs{x}} \ket{\tfrac{3}{2}\tfrac{1}{2}}
-	\end{equation*}
-	where we have substituted in $ M = \frac{1}{2} $, which comes from $ M = m_{1} + m_{2} = \frac{1}{2} + 0 = \frac{1}{2} $.
-	
-	This state is four-times degenerate because four linearly independent eigenfunctions (one each for $ M \in \big[-\frac{3}{2}, -\frac{1}{2}, \frac{1}{2}, \frac{3}{2}\big] $) all have the same energy eigenvalue $ E_{0} = \frac{M\lambda_{3/2}^{2}}{2\hbar^{2}} $. 
+		\ket{\psi_{0}^{m_{s}}} = \sqrt{\kappa_{3/2}}e^{-\kappa_{3/2}\abs{x}} \ket{\tfrac{3}{2}m_{s}}
+	\end{equation*}	
+	This energy eigenvalue $ E_{0} $ is four-times degenerate because four linearly independent eigenfunctions $ \ket{\psi_{0}^{m_{s}}} $ (one each for $ m_{s} \in \big[-\frac{3}{2}, -\frac{1}{2}, \frac{1}{2}, \frac{3}{2}\big] $) all have the same energy eigenvalue $ E_{0} = \frac{m\lambda_{3/2}^{2}}{2\hbar^{2}} $. 
 	
 	\item \textit{Side Note}: Technically, we are guilty of a slight abuse of notation. Namely, we've used both coordinate and Dirac notation when writing the wavefunction
 	\begin{equation*}
-		\ket{\psi_{0}^{M}} = \sqrt{\kappa_{3/2}}e^{-\kappa_{3/2}\abs{x}} \ket{\tfrac{3}{2}\tfrac{1}{2}}
+		\ket{\psi_{0}^{m_{s}}} = \sqrt{\kappa_{3/2}}e^{-\kappa_{3/2}\abs{x}} \ket{\tfrac{3}{2}m_{s}}
 	\end{equation*}
 	To resolve this, for the rest of the problem we define 
 	\begin{equation*}
-		\psi(x)\ket{SM} \equiv \left[\int \psi(x) \ket{x} \diff x \right] \ket{SM}
+		\psi(x)\ket{sm_{s}} \equiv \left[\int \psi(x) \ket{x} \diff x \right] \ket{sm_{s}}
 	\end{equation*}
-	
-	\item Having discussed the single bound state for $ S = 3/2 $, we now consider the free scattering states. Recall that for a particle incident on the origin from the left, after scattering, the wavefunction on $ x \in (-\infty, 0) $ (to the left of the delta potential) takes the general form:
+\end{itemize}
+
+\textbf{Free Scattering States}
+\begin{itemize}	
+	\item Having discussed the single bound state for $ s = 3/2 $, we now consider the free scattering states. For our problem (reusing the results from the delta function scattering problem in the second exercise set), the scattering matrix is
 	\begin{equation*}
-		\ket{\psi_{-}} = \left(e^{ik x} + re^{-i\kappa x}\right)\ket{SM},
-	\end{equation*}
-	This ansatz contains the incident wave $ e^{ikx} $ and the reflected wave $ re^{-ikx} $. 
-	
-	The wavefunction on $ x \in (0, \infty)  $ (to the right of the delta potential) takes the form
-	\begin{equation*}
-		\ket{\psi_{+}} = t e^{ikx}\ket{SM}
-	\end{equation*}
-	where $ te^{ikx} $ is the transmitted wave.
-	
-	\item For our problem (reusing the results from the delta function scattering problem in the second exercise set), the scattering matrix is
-	\begin{equation*}
-		\mat{S}_{S} = 
+		\mat{S}_{s} = 
 		\begin{bmatrix}
-			r_{S} & t_{S}\\
-			t_{S} & r_{S}
+			r_{s} & t_{s}\\
+			t_{s} & r_{s}
 		\end{bmatrix}
 		= 
-		\frac{1}{k + i \kappa_{S}}
+		\frac{1}{k + i \kappa_{s}}
 		\begin{bmatrix}
-			-i\kappa_{S} & k\\
-			k & -i \kappa_{S}
+			-i\kappa_{s} & k\\
+			k & -i \kappa_{s}
 		\end{bmatrix}
 	\end{equation*}
-	where we have introduced a subscript $ _{S} $ to make the dependence of $ r $ and $ t $ on the value of the total spin $ S $ explicit. The possible values of $ \kappa_{S} $ for $ S \in \{1/2, 3/2\} $ are
+	where we have introduced a subscript $ _{s} $ to make the dependence of $ r $ and $ t $ on the value of the total spin $ s $ explicit. The possible values of $ \kappa_{s} $ for $ s \in \{1/2, 3/2\} $ are
 	\begin{equation*}
 		\kappa_{3/2} \equiv \frac{m\lambda_{3/2}}{\hbar^{2}} = \frac{m\lambda}{2\hbar^{2}} \eqtext{and} \kappa_{1/2} \equiv \frac{m\lambda_{1/2}}{\hbar^{2}} = - \frac{m\lambda}{\hbar^{2}}
 	\end{equation*}
 	
-	\item For our scattering problem---involving a particle incident from the left---the reflected and transmitted eigenfunctions for $ S \in \{1/2, 3/2\} $, namely
-	\begin{align*}
-		&\ket{\psi^{(1/2)}_{-}} = \left(e^{ik x} + r_{1/2}e^{-i\kappa x}\right)\ket{\tfrac{1}{2}\tfrac{1}{2}} \quad \ket{\psi^{(1/2)}_{+}} = t_{1/2} e^{ikx}\ket{\tfrac{1}{2}\tfrac{1}{2}}\\
-		&\ket{\psi^{(3/2)}_{-}} = \left(e^{ik x} + r_{3/2}e^{-i\kappa x}\right)\ket{\tfrac{3}{2}\tfrac{1}{2}} \quad \ket{\psi^{(3/2)}_{+}} = t_{3/2} e^{ikx}\ket{\tfrac{3}{2}\tfrac{1}{2}}
-	\end{align*}
-% Why isn't k dependent on S?	
-%	\begin{align*}
-%		&\ket{\psi^{(1/2)}_{-}} = \left(e^{ik_{1/2} x} + r_{1/2}e^{-i\kappa x}\right)\ket{\tfrac{1}{2}\tfrac{1}{2}} \quad \ket{\psi^{(1/2)}_{+}} = t_{1/2} e^{ik_{1/2}x}\ket{\tfrac{1}{2}\tfrac{1}{2}}\\
-%		&\ket{\psi^{(3/2)}_{-}} = \left(e^{ik_{3/2} x} + r_{3/2}e^{-i\kappa x}\right)\ket{\tfrac{3}{2}\tfrac{1}{2}} \quad \ket{\psi^{(3/2)}_{+}} = t_{3/2} e^{ik_{3/2}x}\ket{\tfrac{3}{2}\tfrac{1}{2}}
-%	\end{align*}
-	form a complete basis of the momentum Hilbert space of free scattering states. In the remainder of the problem, we will use these basis states to construct the initial and final scattering states in our specific problem. Again, recall that each basis state contains $ M = 1/2 $, since the total $ z $-component of spin is $ M = m_{1} + m_{2} = \frac{1}{2} + 0  = \frac{1}{2}$.
+	\item  For a particle incident on the origin from the left, the scattering wavefunction on $ x \in (-\infty, 0) $ (to the left of the delta potential) takes the general form:
+	\begin{equation*}
+		\ket{\psi_{-}} = \left(e^{ik x} + r_{s}e^{-ik x}\right)\ket{sm_{s}},
+	\end{equation*}
+	This ansatz contains the incident wave $ e^{ikx} $ and the reflected wave $ re^{-ikx} $. Meanwhile, the wavefunction on $ x \in (0, \infty)  $ (to the right of the delta potential) is
+	\begin{equation*}
+		\ket{\psi_{+}} = t_{s} e^{ikx}\ket{sm_{s}}
+	\end{equation*}
+	where $ t_{s}e^{ikx} $ is the transmitted wave. Note the explicit dependence of $ t $ and $ r $ on the particle's spin $ s $. The above two wavefunctions, which are written in the total angular momentum basis $ \ket{sm_{s}} $, form a complete basis of the Hilbert space of free scattering states. In the remainder of the problem, we will use these basis states to construct the initial and final scattering states in our specific problem. 
 	
+
+			
 	\item Just to review what the problem asks for: particle 1, in state $ \ket{\ua} $, is incident from the left on particle 2, which is fixed at the origin and in state $ \ket{0} $, and we are interested in the scattered spin states of the two particles.
 	
 	The incident part of the wavefunction takes the form
 	\begin{equation*}
 		\ket{\psi_{\text{in}}} = e^{ikx} \ket{\ua} \ket{0}
 	\end{equation*}
-	Note that this wavefunction is written in the product basis---it is the product of the first particle's spin state $ \ket{\ua} $ and the second particle's spin state $ \ket{0} $. However, the above eigenfunctions $ \bket{\psi^{(S)}_{-}} $ and $ \bket{\psi^{(S)}_{+}} $ spanning the Hilbert space of free scattering are written in the total angular momentum basis.
+	Note that this wavefunction is written in the product basis---it is the product of the first particle's spin state $ \ket{\ua} $ and the second particle's spin state $ \ket{0} $. However, the above eigenfunctions $ \bket{\psi^{(s)}_{-}} $ and $ \bket{\psi^{(s)}_{+}} $ spanning the Hilbert space of free scattering are written in the total angular momentum basis.
 	
 	At this point, we need a way to transform the initial state from the product basis to the total angular momentum basis---we make the transformation using the Clebsch-Gordan (CG) coefficients.
 \end{itemize}	
 
 \begin{figure}[hbtb!]
 \centering
-\includegraphics[width=0.75\linewidth]{cg-coefficients}
-\caption{The Clebsch-Gordan coefficients for two particles with spins $ S_{1} = 1/2 $ and $ S_{2} = 1 $.}
+\includegraphics[width=0.75\linewidth]{cg-annotated}
+\caption{The Clebsch-Gordan coefficients for two particles with spins $ s_{1} = 1/2 $ and $ s_{2} = 1 $.}
 \label{fig:cg}
 \end{figure}
 	
 	
 \textbf{Using the Clebsch-Gordan Coefficients}	
 \begin{itemize}
-	\item First, using a table of CG coefficients, find the sub-table whose heading has the correct combination $ S_{1} \cross S_{2} $ of spin numbers for each particle. In our case, our particles have spins $ S_{1} = 1/2 $ and $ S_{2} = 1 $, so we use the $ 1 \cross 1/2 $ table, shown in Figure \ref{fig:cg} (note that the order of $ S_{1} $ and $ S_{2} $ is not important in this step.
+	\item First, using a table of CG coefficients, find the sub-table whose heading has the correct combination $ s_{1} \cross s_{2} $ of spin numbers for each particle. In our case, our particles have spins $ s_{1} = 1/2 $ and $ s_{2} = 1 $, so we use the $ 1 \cross 1/2 $ table, shown in Figure \ref{fig:cg} (note that the order of $ s_{1} $ and $ s_{2} $ is not important in this step.
 	
-	\item We start with the initial state $ \ket{\ua}\ket{0} \equiv \ket{1/2}\ket{0} $, which is written in the product basis. In the CG table, we find the row containing $ 0 $ and $ +1/2 $. The row immediately to the right contains the numbers $ 2/3 $ and $ -1/3 $---these are coefficients. Each coefficient has an implicit square root---for example $ -1/3 $ means $ -\sqrt{1/3} $---but the square roots are not written for conciseness. 
+	\item We start with the initial incident spin state $ \ket{\ua}\ket{0} \equiv \ket{1/2}\ket{0} $, which is written in the product basis $ \ket{m_{1}m_{2}} $. In the CG table, we find the row containing $ 0 $ and $ +1/2 $. The row immediately to the right contains the numbers $ 2/3 $ and $ -1/3 $---these are coefficients. Each coefficient has an implicit square root---for example $ -1/3 $ means $ -\sqrt{1/3} $---but the square roots are not written for conciseness. 
 	
-	For each coefficient, in this case $ 2/3 $ and $ -1/3 $, we find the column in the box immediately above. For $ 2/3 $, the column above is $ 3/2, +1/2 $, and for the coefficient $ -1/3 $, the column above is $ 1/2, +1/2 $. The columns represent states in the total angular momentum basis---the top row, in this case $ 3/2 $ and $ 1/2 $, represents values of $ S $, and the bottom row, in this case $ +1/2 $ and $ +1/2 $, represents values of $ M $. Put together, each column is a basis state $ \ket{SM} $.
+	For each coefficient, in our case $ 2/3 $ and $ -1/3 $, we find the column in the box immediately above. For the coefficient $ 2/3 $, the column above is $ 3/2, +1/2 $, and for the coefficient $ -1/3 $, the column above is $ 1/2, +1/2 $. The columns represent states in the total angular momentum basis---the top row, in this case $ 3/2 $ and $ 1/2 $, represents values of $ s $, and the bottom row, in this case $ +1/2 $ and $ +1/2 $, represents values of $ m_{s} $. Put together, each column is a basis state $ \ket{sm_{s}} $.
 
 	We assemble the transformation between the product and total angular momentum basis as follows:
 	\begin{equation*}
-		\ket{\ua} \ket{0} \equiv \ket{\tfrac{1}{2}}\ket{0} \to \sqrt{\tfrac{2}{3}} \ket{\tfrac{3}{2}\tfrac{1}{2}} - \tfrac{1}{\sqrt{3}}\ket{\tfrac{1}{2}\tfrac{1}{2}}
+		\ket{\ua} \ket{0} \equiv \ket{\tfrac{1}{2}}\ket{0} \to \sqrt{\tfrac{2}{3}} \ket{\tfrac{3}{2}\tfrac{1}{2}} - \sqrt{\tfrac{1}{3}}\ket{\tfrac{1}{2}\tfrac{1}{2}}
 	\end{equation*}
-	Using the above transformation of $ \ket{\ua}\ket{0} $, the initial incident wavefunction is written in the total angular momentum basis as
+	The transformation of the initial state $ \ket{\ua}\ket{0} $ from the product to the total angular momentum basis is then written
 	\begin{equation*}
 		\ket{\psi_{\text{in}}} = e^{ikx}\ket{\ua} \ket{0} = e^{ikx}\left(\sqrt{\tfrac{2}{3}} \ket{\tfrac{3}{2}\tfrac{1}{2}} - \sqrt{\tfrac{1}{3}}\ket{\tfrac{1}{2}\tfrac{1}{2}}\right)
 	\end{equation*}
 	
-	\item Recall the basis states on the region $ x < 0 $ are
-	\begin{align*}
-		&\ket{\psi_{-}^{(1/2)}} = \left(e^{ikx} + r_{1/2}e^{-ikx}\right)\ket{\frac{1}{2}\frac{1}{2}}\\
-		& \ket{\psi_{-}^{(3/2)}} = \left(e^{ikx} + r_{3/2}e^{-ikx}\right)\ket{\frac{3}{2}\frac{1}{2}},
-	\end{align*}
+	\item Recall the basis scattering states on the region $ x < 0 $ are
+	\begin{equation*}
+		\ket{\psi_{-}} = \left(e^{ik x} + r_{s}e^{-ik x}\right)\ket{sm_{s}},
+	\end{equation*}
 	while the second set of basis states, for the region $ x > 0 $, are
-	\begin{align*}
-		&\ket{\psi_{+}^{(1/2)}} =  t_{1/2}e^{ikx}\ket{\frac{1}{2}\frac{1}{2}} \eqtext{and}\ket{\psi_{+}^{(3/2)}} = t_{3/2}e^{ikx}\ket{\frac{3}{2}\frac{1}{2}}
-	\end{align*}
+	\begin{equation*}
+		\ket{\psi_{+}} = t_{s} e^{ikx}\ket{sm_{s}}
+	\end{equation*}
+	Both scattering state basis functions are written the basis $ \ket{sm_{s}} $.
 	
 	\item Our next step is to construct our specific scattering problem's wavefunctions on the regions $ x < 0 $ and $ x > 0 $ using the using the above basis functions. 
 	
-	To do this, we first note that the incident state $ \ket{\psi_{\text{in}}} $ contains the state $ \ket{\tfrac{3}{2}\tfrac{1}{2}} $ with coefficient $ \sqrt{\tfrac{2}{3}} $, and the state $ \ket{\tfrac{1}{2}\tfrac{1}{2}} $ with coefficient $ -\sqrt{\tfrac{1}{3}} $. We thus construct the wavefunction $ \ket{\psi_{-}} $, which describes the particle on the region $ x < 0 $, from a linear combination of the basis state $ \bket{\psi_{-}^{(3/2)}} $ (which contains $ \ket{\tfrac{3}{2}\tfrac{1}{2}} $) weighted by $  \sqrt{\tfrac{2}{3}}  $, and the basis state $ \bket{\psi_{-}^{(1/2)}} $ (which contains $ \ket{\tfrac{1}{2}\tfrac{1}{2}}  $ ) weighted by $ -\sqrt{\tfrac{1}{3}}  $. The result is 
+	To do this, we first note that the incident state $ \ket{\psi_{\text{in}}} $ contains the state $ \ket{\tfrac{3}{2}\tfrac{1}{2}} $ with coefficient $ \sqrt{\tfrac{2}{3}} $, and the state $ \ket{\tfrac{1}{2}\tfrac{1}{2}} $ with coefficient $ -\sqrt{\tfrac{1}{3}} $. We thus construct the wavefunction $ \ket{\psi_{-}} $, which describes the particle on the region $ x < 0 $, from a linear combination of the basis state $ \bket{\psi_{-}} $ with $ \ket{sm_{s}} = \ket{\tfrac{3}{2}\tfrac{1}{2}} $ weighted by $  \sqrt{\tfrac{2}{3}}  $, and the basis state $ \bket{\psi_{-}} $ with $ \ket{sm_{s}} = \ket{\tfrac{1}{2}\tfrac{1}{2}}  $ weighted by $ -\sqrt{\tfrac{1}{3}}  $. The result is 
 	\begin{equation*}
 		\ket{\psi_{-}} = \sqrt{\frac{2}{3}}\left(e^{ikx} + r_{3/2}e^{-ikx}\right)\ket{\frac{3}{2}\frac{1}{2}} - \sqrt{\frac{1}{3}}\left(e^{ikx} + r_{1/2}e^{-ikx}\right)\ket{\frac{1}{2}\frac{1}{2}}
 	\end{equation*}
@@ -3486,16 +3486,18 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\begin{equation*}
 		\ket{\psi_{+}} = \sqrt{\frac{2}{3}}\left(t_{3/2}e^{ikx}\ket{\frac{3}{2}\frac{1}{2}}\right) - \sqrt{\frac{1}{3}}\left(t_{1/2}e^{ikx}\ket{\frac{1}{2}\frac{1}{2}} \right)
 	\end{equation*}
-	Recognizing the expression for $ \ket{\psi_{\text{in}}} $ with $ \ket{\psi_{i}} $ and factoring out the common exponential factors gives
+	Recognizing the expression for $ \ket{\psi_{\text{in}}} $ within $ \ket{\psi_{-}} $ and factoring out the common exponential factors gives
 	\begin{align*}
-		&\ket{\psi_{-}}= e^{ikx}\ket{\ua}\ket{0} + e^{-ikx}\left( \sqrt{\frac{2}{3}} r_{3/2}\ket{\frac{3}{2}\frac{1}{2}} - \sqrt{\frac{1}{3}} r_{1/2}\ket{\frac{1}{2}\frac{1}{2}} \right)\\
+		&\ket{\psi_{-}}= \ket{\psi_{\text{in}}} + e^{-ikx}\left( \sqrt{\frac{2}{3}} r_{3/2}\ket{\frac{3}{2}\frac{1}{2}} - \sqrt{\frac{1}{3}} r_{1/2}\ket{\frac{1}{2}\frac{1}{2}} \right)\\
 		&\ket{\psi_{+}} = 	e^{ikx}\left(\sqrt{\frac{2}{3}}t_{3/2}\ket{\frac{3}{2}\frac{1}{2}} - \sqrt{\frac{1}{3}}t_{1/2}\ket{\frac{1}{2}\frac{1}{2}}\right)
 	\end{align*}
-	Technically, these two wavefunctions complete describe our scattering problem. The $ e^{ikx}\ket{\ua}\ket{0} $ term in $ \ket{\psi_{-}} $ encodes the incident wave $ \ket{\psi_{\text{in}}} $, the remaining terms in $ \ket{\psi_{-}} $ encode the reflected scattered states, and the terms in $ \ket{\psi_{+}} $ encode the transmitted scattered states.
+%	Technically, these two wavefunctions complete describe our scattering problem. The $ \ket{\p_{\text{in}}}$  term in $ \ket{\psi_{-}} $ encodes the incident wave, the remaining terms in $ \ket{\psi_{-}} $ encode the reflected scattered states, and the terms in $ \ket{\psi_{+}} $ encode the transmitted scattered states. However, we will first
 	
-	\item However, $ e^{ikx}\ket{\ua}\ket{0} $ is written in the product basis and the other terms are written in the total angular momentum basis. For consistency, we will now transform the total angular momentum terms $ \ket{\frac{3}{2}\frac{1}{2}}  $ and $ \ket{\frac{1}{2}\frac{1}{2}} $ from the total angular momentum basis to the product bases. Again, we make the transformation with the CG coefficients.
-	
-	We start with the state $ \ket{\frac{3}{2}\frac{1}{2}} $. In the CG table, we find the column containing $ 3/2 $ and $ +1/2 $, which correspond to $ S $ and $ M $ in the total angular momentum picture. The column below, in this case $ 1/3 $ and $ 2/3 $, contains the coefficients needed for the transformation to the product basis. The row to the left of each coefficient ($ +1 $, $ -1/2 $ for the coefficient $ 1/3 $ and $ 0 $, $ +1/2 $ for the coefficient $ 2/3 $) represents the corresponding states in the product basis; each coefficient applies to its corresponding state. The transformation of $ \ket{\frac{3}{2}\frac{1}{2}} $ to the product basis reads
+	\item Next, now that we have properly constructed the basis states $ \ket{\p_{-}} $ and $ \ket{\p_{+}} $, we will transform them from the total angular momentum basis back into the product basis $ \ket{m_{1}m_{2}} $. Again, we make the transformation with the CG coefficients. The transformation of $ \ket{\p_{\text{in}}} $ within $ \ket{\p_{-}} $ is already known, i.e.
+	\begin{equation*}
+		\ket{\p_{\text{in}}} = e^{ikx}\ket{\ua}\ket{0}
+	\end{equation*}
+	Next, we transform the state $ \ket{\frac{3}{2}\frac{1}{2}} $ to the product basis. In the CG table, we find the column containing $ 3/2 $ and $ +1/2 $, which correspond to $ s $ and $ m_{s} $. The column below, in this case $ 1/3 $ and $ 2/3 $, contains the coefficients needed for the transformation to the product basis. The row to the left of each coefficient ($ +1 $, $ -1/2 $ for the coefficient $ 1/3 $ and $ 0 $, $ +1/2 $ for the coefficient $ 2/3 $) represents the corresponding states in the product basis $ \ket{m_{1}m_{2}} $; each coefficient applies to the $ \ket{m_{1}m_{2}} $ state in the corresponding row. The transformation of $ \ket{\frac{3}{2}\frac{1}{2}} $ to the product basis reads
 	\begin{equation*}
 		\ket{\frac{3}{2}\frac{1}{2}}  \to \sqrt{\frac{1}{3}}\ket{\da}\ket{1} +  \sqrt{\frac{2}{3}}\ket{\ua}\ket{0} 
 	\end{equation*}
@@ -3504,14 +3506,14 @@ These are the two linearly independent states spanning the isotropic harmonic os
 		\ket{\frac{1}{2}\frac{1}{2}}  \to \sqrt{\frac{2}{3}}\ket{\da}\ket{1} - \sqrt{\frac{1}{3}}\ket{\ua}\ket{0} 
 	\end{equation*}
 	
-	\item Substituting in the product basis representations of $ \ket{\frac{3}{2}\frac{1}{2}} $ and $ \ket{\frac{1}{2}\frac{1}{2}} $ into the state $ \ket{\psi_{-}} $ gives
+	\item Substituting in the product basis representations of $ \ket{\psi_{\text{in}}} $, $ \ket{\frac{3}{2}\frac{1}{2}} $, and $ \ket{\frac{1}{2}\frac{1}{2}} $ into the state $ \ket{\psi_{-}} $ gives
 	\begin{align*}
 		\ket{\psi_{-}} = e^{ikx}\ket{\ua}\ket{0} + e^{-ikx} & \Bigg[\sqrt{\frac{2}{3}}r_{3/2}\left(\sqrt{\frac{1}{3}}\ket{\da}\ket{1} +  \sqrt{\frac{2}{3}}\ket{\ua}\ket{0}\right) \\
 		& - \sqrt{\frac{1}{3}}r_{1/2}\left( \sqrt{\frac{2}{3}}\ket{\da}\ket{1} - \sqrt{\frac{1}{3}}\ket{\ua}\ket{0} \right)\Bigg]
 	\end{align*}
 	The state $ \ket{\psi_{-}}  $ is now fully transformed back to the product basis. 
 	
-	Similarly, the product basis representation of $ \ket{\psi_{+}} $ is
+	\item Following an analogous transformation procedure, the product basis representation of $ \ket{\psi_{+}} $ is
 	\begin{align*}
 		\ket{\psi_{+}} =  e^{ikx}& \Bigg[\sqrt{\frac{2}{3}}t_{3/2}\left(\sqrt{\frac{1}{3}}\ket{\da}\ket{1} +  \sqrt{\frac{2}{3}}\ket{\ua}\ket{0}\right) \\
 		&- \sqrt{\frac{1}{3}}t_{1/2}\left( \sqrt{\frac{2}{3}}\ket{\da}\ket{1} - \sqrt{\frac{1}{3}}\ket{\ua}\ket{0} \right)\Bigg]
@@ -3532,7 +3534,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\end{align*}
 	Here $ t_{\da 1} $ and $ t_{\ua 0} $ represent, respectively, the probability of the first particle transmitting in the state $ \ket{\da} $ and the second particle transmitting in the state $ \ket{1} $; and the probability of the first particle transmitting in the state $ \ket{\ua} $ and the second particle transmitting in the state $ \ket{0} $.
 	
-	\item Evidently, their are four possible outcomes: the incident particle can either reflect or transmit; and the system's spin configuration can either flip (from $ \ket{\ua}\ket{0} $ to $ \ket{\da}\ket{1} $) or remain the same. The probability for a given process comes from the squared amplitude of the corresponding $ r $ or $ t $ coefficient.
+	\item Evidently, there are four possible outcomes: the incident particle can either reflect or transmit; and the system's spin configuration can either flip (from $ \ket{\ua}\ket{0} $ to $ \ket{\da}\ket{1} $) or remain the same. The probability for a given process comes from the squared amplitude of the corresponding $ r $ or $ t $ coefficient.
 	
 	For example, the probability for reflection with a flipped spin configuration
 	\begin{equation*}
@@ -3580,36 +3582,36 @@ These are the two linearly independent states spanning the isotropic harmonic os
 \end{itemize}
 
 
-\subsection{Twelfth Exercise Set}
+\section{Twelfth Exercise Set}
 
-\subsubsection{Theory: Non-Degenerate Perturbation Theory}
+\subsection{Theory: Non-Degenerate Perturbation Theory}
 
 \begin{itemize}
-	\item Consider a \Ham $ H $ with known eigenfunctions $ \psi_{n} $ and energy non-degenerate eigenvalues $ E_{n} $ satisfying the stationary \Schro
+	\item Consider a \Ham $ H_{0} $ with known eigenfunctions $ \ket{n_{0}} $ and non-degenerate energy eigenvalues $ E^{(0)}_{n} $ satisfying the stationary \Schro equation
 	\begin{equation*}
-		H \ket{n} = E_{n} \ket{n}
+		H_{0} \ket{n_{0}} = E^{(0)}_{n} \ket{n_{0}} 
 	\end{equation*}
-	We then add a small perturbation term $ H' $ to the $ H $ to get the perturbed \Ham
+	We then add a small perturbation term $ H' $ to the original \Ham to get the perturbed \Ham
 	\begin{equation*}
-		\t{H} = H + H'
+		H = H_{0} + H'
 	\end{equation*}
 	
 	\item In this case, to second order in perturbation theory, the energy eigenvalues of the perturbed Hamiltonian are
 	\begin{equation*}
-		\t{E}_{n} = E_{n} + \bra{n}H'\ket{n} + \sum_{m\neq n}\frac{\abs{\bra{m}H'\ket{n}}^{2}}{E_{n}-E_{m}},
+		E_{n} = E^{(0)}_{n} + \mel{n_{0}}{H'}{n_{0}} + \sum_{m\neq n}\frac{\abs{\mel{m_{0}}{H'}{n_{0}}}^{2}}{E^{(0)}_{n}-E^{(0)}_{m}}, 
 	\end{equation*}
 	while the corrected eigenfunction $ \ket{n} $ are
 	\begin{equation*}
-		\ket{\t{n}} = \ket{n} + \sum_{m\neq n}\frac{\abs{\bra{m}H'\ket{n}}^{2}}{E_{n}-E_{m}} \ket{m}
+		\ket{n} = \ket{n_{0}} + \sum_{m\neq n}\frac{\abs{\bra{m_{0}}H'\ket{n_{0}}}^{2}}{E^{(0)}_{n}-E^{(0)}_{m}} \ket{m_{0}}
 	\end{equation*}
 	For both eigenvalues and eigenfunctions, we generally take only the first nonzero (non-trivial) term in the perturbation expansion (e.g. if the first-order correction is non-zero, we would stop there, without finding the second-order correction).
 
 \end{itemize}
 
-\subsubsection{QHO with a Quartic Perturbation}
+\subsection{QHO with a Quartic Perturbation}
 \textit{Use perturbation theory to estimate the energy eigenvalues of the perturbed Hamiltonian}
 \begin{equation*}
-	\t{H} = \frac{p^{2}}{2m} + \frac{1}{2}kx^{2} + \lambda x^{4}, \qquad \lambda > 0,
+	H = \frac{p^{2}}{2m} + \frac{1}{2}kx^{2} + \lambda x^{4}, \qquad \lambda > 0,
 \end{equation*}
 \textit{which contains the quartic perturbation term $ \lambda x^{4} $.}
 
@@ -3617,32 +3619,32 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	
 	\item First, we identify the unperturbed Hamiltonian: the familiar harmonic oscillator
 	\begin{equation*}
-		H = \frac{p^{2}}{2m} + \frac{1}{2}kx^{2},
+		H_{0} = \frac{p^{2}}{2m} + \frac{1}{2}kx^{2},
 	\end{equation*}
-	with eigenstates $ \ket{n} $ and eigenvalues $ E_{n} $ obeying
+	with eigenstates $ \ket{n_{0}} $ and eigenvalues $ E^{(0)}_{n} $ obeying
 	\begin{equation*}
-		H \ket{n} = E_{n} \ket{n}, \qquad E_{n} = \hbar \omega \big(n + \tfrac{1}{2}\big)
+		H_{0} \ket{n_{0}} = E^{(0)}_{n} \ket{n_{0}}, \qquad E^{(0)}_{n} = \hbar \omega \big(n + \tfrac{1}{2}\big)
 	\end{equation*}
 	
-	\item The perturbation term is $ H' = \lambda x^{4} $. To first order, the corrected energy of the perturbed \Ham $ \t{H} $ is
+	\item The perturbation term is $ H' = \lambda x^{4} $. To first order, the corrected energy of the perturbed \Ham $ H $ is
 	\begin{equation*}
-		\t{E}_{n} = E_{n} + \threebraket{n}{\lambda x^{4}}{n} = E_{n} + \lambda \threebraket{n}{x^{4}}{n}
+		E_{n} = E^{(0)}_{n} + \mel{n_{0}}{\lambda x^{4}}{n_{0}} = E^{(0)}_{n} + \lambda \mel{n_{0}}{x^{4}}{n_{0}}
 	\end{equation*}
-	Next, we evaluate the expectation value matrix element $ \threebraket{n}{x^{4}}{n} $. We will work in terms of the annihilation and creation operators. Nominally, $ x^{4} $ takes the form
+	Next, we evaluate the expectation value matrix element $ \bmel{n_{0}}{x^{4}}{n0} $. We will work in terms of the annihilation and creation operators. Nominally, $ x^{4} $ takes the form
 	\begin{equation*}
 		x^{4} = \frac{x_{0}^{4}}{4}(a+a^{\dagger})^{4} 
 	\end{equation*}
 	However, since $ a $ and $ a^{\dagger} $ don't commute, $ (a+a^{\dagger})^{4} $ would have 16 terms if multiplied out.  To avoid dealing with 16 terms, we make two $ x $ act on the $ \bra{n} $ term and two on the $ \ket{n} $ term as follows:
 	\begin{equation*}
-		\threebraket{n}{x^{4}}{n} = \threebraket{x^{2}n}{x^{2}}{n}
+		\mel{n_{0}}{x^{4}}{n_{0}} = \mel{x^{2}n_{0}}{x^{2}}{n_{0}}
 	\end{equation*}
-	We can factor $ x^{4} $ and move it between $ \bra{n} $ and $ \ket{n} $ because $ x $ is Hermitian.
+	We can factor $ x^{4} $ and move it unchanged between $ \bra{n_{0}} $ and $ \ket{n_{0}} $ because $ x $ is Hermitian.
 	
 	\item In terms of $ a $ and $ a^{\dagger} $, the operator $ x^{2} $ reads
 	\begin{equation*}
 		x^{2} = \frac{x_{0}^{2}}{2}(a+a^{\dagger})^{2} = \frac{x_{0}^{2}}{2}(a^{2} + 2a^{\dagger}a + a^{2} + 1)
 	\end{equation*}
-	where we have used the commutator identity $ \big[a, a^{\dagger}\big] = 1 $. Using this expression for $ x^{2} $, we now assemble the matrix element $ \threebraket{x^{2}n}{x^{2}}{n} $ in pieces. First, we have
+	where we have used the commutator identity $ \big[a, a^{\dagger}\big] = 1 $. Using this expression for $ x^{2} $, we now assemble the matrix element $ \bmel{x^{2}n_{0}}{x^{2}}{n_{0}} $ in pieces. First, (temporarily dropping the subscript $ _{0} $ for conciseness and referring to the unperturbed $ \ket{n_{0}} $ as $ \ket{n} $), we have
 	\begin{align*}
 		 x^{2} \ket{n} &= \frac{x_{0}^{2}}{2}(a^{2} + 2a^{\dagger}a + a^{2} + 1)\ket{n} \\
 		&= \frac{x_{0}^{2}}{2}\big[\sqrt{n}\sqrt{n-1}\ket{n-2} + 2\sqrt{n}\sqrt{n}\ket{n} + \sqrt{n+1}\sqrt{n+2}\ket{n+2} + \ket{n}\big]\\
@@ -3654,57 +3656,57 @@ These are the two linearly independent states spanning the isotropic harmonic os
 		&= \frac{x_{0}^{4}}{4}\big[6n^{2} + 6n + 3\big]
 	\end{align*}
 	
-	\item Using the just-calculated matrix element $ \threebraket{x^{2}n}{x^{2}}{n} = \threebraket{n}{x^{4}}{n} $, the perturbed \Ham's energy to first order in perturbation theory is
+	\item Using the just-calculated matrix element $ \threebraket{x^{2}n_{0}}{x^{2}}{n_{0}} = \threebraket{n_{0}}{x^{4}}{n_{0}} $, the perturbed \Ham's energy to first order in perturbation theory is
 	\begin{equation*}
-		\t{E}_{n} = E_{n} + \lambda \frac{3x_{0}^{4}}{4}(2n^{2} + 2n + 1)
+		E_{n} = E^{(0)}_{n} + \lambda \frac{3x_{0}^{4}}{4}(2n^{2} + 2n + 1)
 	\end{equation*}
 	We end our approximation here, since the first-order correction is nontrivial.
 	
 	Written out in full, the corrected energy eigenvalues are
 	\begin{equation*}
-		\t{E}_{n} = \hbar \omega\big(n + \tfrac{1}{2}\big) + \lambda \frac{3x_{0}^{4}}{4}(2n^{2} + 2n + 1)
+		E_{n} = \hbar \omega\big(n + \tfrac{1}{2}\big) + \lambda \frac{3x_{0}^{4}}{4}(2n^{2} + 2n + 1)
 	\end{equation*}
-	Note that, unlike $ E_{n} $, the energies $ \t{E}_{n} $ are no longer equally spaced by $ \hbar \omega $.
+	Note that, unlike $ E^{(0)}_{n} $, the energies $ E_{n} $ are no longer equally spaced by $ \hbar \omega $.
 \end{itemize}
 
-\subsubsection{QHO with a Cubic Perturbation}
+\subsection{QHO with a Cubic Perturbation}
 \textit{Use perturbation theory to estimate the energy eigenvalues of the perturbed Hamiltonian}
 \begin{equation*}
-	\t{H} = \frac{p^{2}}{2m} + \frac{1}{2}kx^{2} + \lambda x^{3}, \qquad \lambda > 0,
+	H = \frac{p^{2}}{2m} + \frac{1}{2}kx^{2} + \lambda x^{3}, \qquad \lambda > 0,
 \end{equation*}
 \textit{which contains the cubic perturbation term $ \lambda x^{3} $.}
 \begin{itemize}
-	\item As in the previous problem, the unperturbed Hamiltonian $ H $ is the familiar quantum harmonic oscillator
+	\item As in the previous problem, the unperturbed Hamiltonian $ H_{0} $ is the familiar quantum harmonic oscillator
 	\begin{equation*}
-		H = \frac{p^{2}}{2m} + \frac{1}{2}kx^{2}
+		H_{0} = \frac{p^{2}}{2m} + \frac{1}{2}kx^{2}
 	\end{equation*}
 	with the eigenvalue relation
 	\begin{equation*}
-		H\ket{n} = E_{n} \ket{n}, \qquad E_{n} = \hbar \omega \left(n + \tfrac{1}{2}\right)
+		H_{0}\ket{n_{0}} = E^{(0)}_{n} \ket{n_{0}}, \qquad E^{(0)}_{n} = \hbar \omega \left(n + \tfrac{1}{2}\right)
 	\end{equation*}
 	
-	\item The perturbation term is $ H' = \lambda x^{3} $. We also define the perturbed potential
+	\item The perturbation term is $ H' = \lambda x^{3} $. Finally, we define the perturbed potential
 	\begin{equation*}
-		\t{V}(x) \equiv \frac{1}{2}kx^{2} + \lambda x^{3}
+		V(x) \equiv \frac{1}{2}kx^{2} + \lambda x^{3}
 	\end{equation*}
 	
 	\item To first order, the perturbed \Ham's energy eigenvalues are
 	\begin{equation*}
-		\t{E}_{n} = E_{n} + \threebraket{n}{\lambda x^{3}}{n}
+		E_{n} = E^{(0)}_{n} + \threebraket{n_{0}}{\lambda x^{3}}{n_{0}}
 	\end{equation*}
 	In the coordinate wavefunction representation the expectation value reads
 	\begin{equation*}
-		\threebraket{n}{\lambda x^{3}}{n} = \int_{-\infty}^{\infty}\psi_{n}^{*}\lambda x^{3}\psi_{n}\diff x = 0
+		\mel{n_{0}}{\lambda x^{3}}{n_{0}} = \int_{-\infty}^{\infty}\psi_{n}^{*}\lambda x^{3}\psi_{n}\diff x = 0
 	\end{equation*}
-	The expectation value is zero; a short explanation follows. Note that $ V(x) = \frac{1}{2}kx^{2} $ is an even potential, the \Ham $ H $'s eigenfunctions are either symmetric or asymmetric (see e.g. \hyperref[qmv:sss:even-odd]{Subsubsection \ref{qmv:sss:even-odd}}).
+	This expectation value turns out to be zero---a short explanation follows. Because $ V(x) = \frac{1}{2}kx^{2} $ is an even potential, the \Ham $ H_{0} $'s eigenfunctions are either symmetric or asymmetric (see e.g. \hyperref[qmv:ss:even-odd]{Subsection \ref{qmv:ss:even-odd}}).
 	
 	If $ \psi_{n}(x) $ is even, the integrand $ \psi_{n}^{*}\lambda x^{3}\psi_{n} $, being the product of an even, odd, and even function, is odd. Similarly, if $ \psi_{n}(x) $ is odd, the integrand is a product of three odd functions, and is thus still odd. In both cases we take the integral of an odd function over $ -\infty $ to $ \infty $---result is zero. 
 	
-	\item Because the first-order correction to $ \t{E}_{n} $ gives a trivial result, we move on to the second order \pert approximation
+	\item Because the first-order correction to the perturbed energies $ E_{n} $ gives a trivial result, we move on to the second order \pert approximation
 	\begin{equation*}
-		\t{E}_{n} = E_{n} + \sum_{m \neq n} \frac{\abs{\threebraket{m}{H'}{n}}^{2}}{E_{n} - E_{m}}
+		E_{n} = E^{(0)}_{n} + \sum_{m \neq n} \frac{\abs{\mel{m_{0}}{H'}{n_{0}}}^{2}}{E^{(0)}_{n} - E^{(0)}_{m}}
 	\end{equation*}
-	The expectation value can be simplified to
+	Temporarily dropping the subscript $ _{0} $ for conciseness and referring to the unperturbed eigenfunctions $ \ket{n_{0}} $ as $ \ket{n} $, the expectation value can be simplified to
 	\begin{equation*}
 		\threebraket{m}{H'}{n} = \threebraket{m}{\lambda x^{3}}{n} = \lambda \threebraket{xm}{x^{2}}{n}
 	\end{equation*}
@@ -3740,54 +3742,54 @@ These are the two linearly independent states spanning the isotropic harmonic os
 		\threebraket{xm}{x^{2}}{n} = \frac{x_{0}^{3}}{\sqrt{8}} \Big[&\sqrt{n(n-1)(n-2)}\delta_{m, n-3} + 3n\sqrt{n}\delta_{m, n-1}\\
 		& + 3(n+1)\sqrt{n+1}\delta_{m, n+1} + \sqrt{(n+1)(n+2)(n+3)}\delta_{m, n+3}\Big]
 	\end{align*}
-	With $ \threebraket{xm}{x^{2}}{n} $ known, we just multiply by $ \lambda $ to find matrix element
+	Switching back to subscript notation for the unperturbed eigenstates, with $ \mel{xm}{x^{2}}{n} \equiv \mel{xm_{0}}{x^{2}}{n_{0}} $ known, we just multiply by $ \lambda $ to find matrix element
 	\begin{equation*}
-		\threebraket{m}{H'}{n} = \lambda \threebraket{xm}{x^{2}}{n},
+		\mel{m_{0}}{H'}{n_{0}} = \lambda \threebraket{xm_{0}}{x^{2}}{n_{0}},
 	\end{equation*}
- 	needed to find the perturbed energy $ \t{E}_{n} $.
+ 	needed to find the perturbed energy $ E_{n} $.
 	
-	\item Using the just-derived $ \threebraket{m}{H'}{n} $, the perturbed \Ham's energy $ \t{E}_{n} $ is thus
+	\item Using the just-derived $ \mel{m_{0}}{H'}{n_{0}}  $, the perturbed \Ham's energy $ E_{n} $ is thus
 	\begin{align*}
-		\t{E}_{n} = E_{n} + \sum_{m \neq n} \frac{\abs{\braket{m}{H'n}}^{2}}{E_{n} - E_{m}} = E_{n} &+ \frac{\lambda^{2} x_{0}^{6}}{8}\bigg(\frac{n(n-1)(n-2)}{E_{n}-E_{n-3}} + \frac{9n^{3}}{E_{n}-E_{n-1}} \\
-		&+ \frac{9(n+1)^{3}}{E_{n} - E_{n+1}} + \frac{(n+1)(n+2)(n+3)}{E_{n} - E_{n+3}} \bigg)
+		E_{n} = E^{(0)}_{n} + \sum_{m \neq n} \frac{\abs{\braket{m_{0}}{H'n_{0}}}^{2}}{E^{(0)}_{n} - E^{(0)}_{m}} = E^{(0)}_{n} &+ \frac{\lambda^{2} x_{0}^{6}}{8}\bigg(\frac{n(n-1)(n-2)}{E^{(0)}_{n}-E^{(0)}_{n-3}} + \frac{9n^{3}}{E^{(0)}_{n}-E^{(0)}_{n-1}} \\
+		&+ \frac{9(n+1)^{3}}{E^{(0)}_{n} - E^{(0)}_{n+1}} + \frac{(n+1)(n+2)(n+3)}{E^{(0)}_{n} - E^{(0)}_{n+3}} \bigg)
 	\end{align*}
-	Note that, nominally, we must sum over all $ m \neq n $ to find $ \t{E}_{n} $. However, because of the Kronecker deltas in the matrix element $ \threebraket{m}{H'}{n} $, there are only four $ m $ that are not equal to $ n $ at a given value of $ n $. 
+	Note that, nominally, we must sum over all $ m \neq n $ to find $ E_{n} $. However, because of the Kronecker deltas in the matrix element $ \mel{m_{0}}{H'}{n_{0}} $, there are only four $ m $ that are not equal to $ n $ at a given value of $ n $. 
 	
-	Next, we substitute in the energy differences (e.g. $ E_{n} - E_{n-3} $) in the denominators, which are known from the unperturbed \Ham $ H $, where the energies are equally spaced by $ \hbar \omega $. Substituting in energies and factoring out $ \hbar \omega $ gives
+	Next, we substitute in the energy differences (e.g. $ E^{(0)}_{n} - E^{(0)}_{n-3} $) in the denominators, which are known from the unperturbed \Ham $ H_{0} $, where the energies are equally spaced by $ \hbar \omega $. Substituting in energies and factoring out $ \hbar \omega $ gives
 	\begin{align*}
-		\t{E}_{n} &= E_{n} + \frac{\lambda^{2} x_{0}^{6}}{24 \hbar \omega}\left[n(n-1)(n-2) + 27n^{3} - 27(n+1)^{3} - (n+1)(n+2)(n+3) \right]\\
-		& = E_{n} + \frac{\lambda^{2} x_{0}^{6}}{24 \hbar \omega} \left(n^{3}-3n^{2} + 2n + 27n^{3} - 27n^{3} - 81n^{2} - 81n - 27 - n^{3} - 6n^{2} - 11n - 6\right)\\
-		&=E_{n} - \frac{\lambda^{2} x_{0}^{6}}{24 \hbar \omega} \left(90n^{2} + 90n + 33\right)\\
-		&=E_{n} - \frac{\lambda^{2} x_{0}^{6}}{8 \hbar \omega} \left(30n^{2} + 30n + 11\right)
+		E_{n} &= E^{(0)}_{n} + \frac{\lambda^{2} x_{0}^{6}}{24 \hbar \omega}\left[n(n-1)(n-2) + 27n^{3} - 27(n+1)^{3} - (n+1)(n+2)(n+3) \right]\\
+		& = E^{(0)}_{n} + \frac{\lambda^{2} x_{0}^{6}}{24 \hbar \omega} \left(n^{3}-3n^{2} + 2n + 27n^{3} - 27n^{3} - 81n^{2} - 81n - 27 - n^{3} - 6n^{2} - 11n - 6\right)\\
+		&=E^{(0)}_{n} - \frac{\lambda^{2} x_{0}^{6}}{24 \hbar \omega} \left(90n^{2} + 90n + 33\right)\\
+		&=E^{(0)}_{n} - \frac{\lambda^{2} x_{0}^{6}}{8 \hbar \omega} \left(30n^{2} + 30n + 11\right)
 	\end{align*}
-	Note that the energy correction is negative---the perturbed energies $ \t{E}_{n} $ are lower than for the standard QHO energies $ E_{n} $.
+	Note that the energy correction is negative---the perturbed energies $ E_{n} $ are lower than the standard QHO energies $ E^{(0)}_{n} $.
 	
-	\item Next, we find the perturbed eigenfunctions $ \ket{\t{n}} $. From the theory section, the $ \ket{\t{n}} $ are defined as
+	\item Next, we find the perturbed eigenfunctions $ \ket{n} $. From the theory section, the $ \ket{n} $ are defined as
 	\begin{equation*}
-		\ket{\t{n}} = \ket{n} + \sum_{m\neq n}\frac{\abs{\bra{m}H'\ket{n}}^{2}}{E_{n}-E_{m}} \ket{m}
+		\ket{n} = \ket{n_{0}} + \sum_{m\neq n}\frac{\abs{\bra{m_{0}}H'\ket{n_{0}}}^{2}}{E^{(0)}_{n}-E^{(0)}_{m}} \ket{m_{0}}
 	\end{equation*}
-	which in our case, using the matrix element $ \threebraket{m}{H'}{n}  $, is
+	which in our case, using the matrix element $ \mel{m_{0}}{H'}{n_{0}}  $, is
 	\begin{align*}
-		\ket{\t{n}} =
-		\ket{n} &+ \frac{\lambda x_{0}^{3}}{\sqrt{8}}\Bigg[\frac{\sqrt{n(n_1)(n-2)}}{3\hbar \omega}\ket{n-3} + \frac{3n\sqrt{n}}{\hbar \omega}\ket{n-1} \\
-		&- \frac{3(n+1)\sqrt{n+1}}{\hbar \omega}\ket{n+1} - \frac{\sqrt{(n+1)(n+2)(n+3)}}{3\hbar \omega}\ket{n+3}\Bigg]
+		\ket{n} =
+		\ket{n_{0}} &+ \frac{\lambda x_{0}^{3}}{\sqrt{8}}\Bigg[\frac{\sqrt{n(n_1)(n-2)}}{3\hbar \omega}\ket{n_{0}-3} + \frac{3n\sqrt{n}}{\hbar \omega}\ket{n_{0}-1} \\
+		&- \frac{3(n+1)\sqrt{n+1}}{\hbar \omega}\ket{n_{0}+1} - \frac{\sqrt{(n+1)(n+2)(n+3)}}{3\hbar \omega}\ket{n_{0}+3}\Bigg]
 	\end{align*}
-	The perturbed ground state wavefunction $ \ket{\t{0}} $ is
+	The perturbed ground state wavefunction $ \ket{0} $ is
 	\begin{equation*}
-		\ket{\t{0}} = \ket{0} + \frac{\lambda x_{0}^{3}}{3\sqrt{8}\hbar\omega}\left[-9\ket{1} - \sqrt{6}\ket{3}\right]
+		\ket{\t{0}} = \ket{0}_{0} + \frac{\lambda x_{0}^{3}}{3\sqrt{8}\hbar\omega}\left[-9\ket{1}_{0} - \sqrt{6}\ket{3}_{0}\right]
 	\end{equation*}
-	Note that we drop the $ \ket{n-3} $ and $ \ket{n-1} $ terms, since $ \ket{-3} $ and $ \ket{-1} $ don't exist.
+	where $ \ket{n}_{0} $ denotes the unperturbed QHO eigenstates. Note that we drop the $ \ket{n_{0}-3} $ and $ \ket{n_{0}-1} $ terms, since $ \ket{-3}_{0} $ and $ \ket{-1}_{0} $ don't exist.
 	
-	\item Finally, we find $ \threebraket{\t{0}}{x}{\t{0}} $, the expected value of position in the perturbed ground state. First, writing $ x $ in terms of the annihilation and creation operators, the ket term is
+	\item Finally, we find $ \mel{0}{x}{0} $, the expected value of position in the perturbed ground state. First, writing $ x $ in terms of the annihilation and creation operators, the ket term is
 	\begin{align*}
-		x\ket{\t{0}} &= \frac{x_{0}}{\sqrt{2}}(a + a^{\dagger})\left[ \ket{0} + \frac{\lambda x_{0}^{3}}{3\sqrt{8}\hbar\omega}\left(-9\ket{1} - \sqrt{6}\ket{3}\right)\right]\\
-		&= \frac{x_{0}}{\sqrt{2}}\ket{1} + \frac{\lambda x_{0}^{4}}{12\hbar \omega} \left[-9 \ket{0} - \sqrt{6} \sqrt{3}\ket{2} + \ket{1} - 9 \sqrt{2}\ket{2} - \sqrt{6}\sqrt{4}\ket{4}\right]
+		x\ket{0} &= \frac{x_{0}}{\sqrt{2}}(a + a^{\dagger})\left[ \ket{0}_{0} + \frac{\lambda x_{0}^{3}}{3\sqrt{8}\hbar\omega}\left(-9\ket{1}_{0} - \sqrt{6}\ket{3}_{0}\right)\right]\\
+		&= \frac{x_{0}}{\sqrt{2}}\ket{1}_{0} + \frac{\lambda x_{0}^{4}}{12\hbar \omega} \left[-9 \ket{0}_{0} - \sqrt{6} \sqrt{3}\ket{2}_{0} + \ket{1}_{0} - 9 \sqrt{2}\ket{2}_{0} - \sqrt{6}\sqrt{4}\ket{4}_{0}\right]
 	\end{align*}
-	Next, using the orthonormality of the $ \ket{n} $ states, the full expectation value is
+	Next, using the orthonormality of the $ \ket{n_{0}} $ states, the full expectation value is
 	\begin{equation*}
-		\threebraket{\t{0}}{x}{\t{0}} = -\frac{\lambda x_{0}^{4}}{12 \hbar \omega}(9 + 9) = -\frac{3\lambda x_{0}^{4}}{2 \hbar \omega}
+		\mel{0}{x}{0} = -\frac{\lambda x_{0}^{4}}{12 \hbar \omega}(9 + 9) = -\frac{3\lambda x_{0}^{4}}{2 \hbar \omega}
 	\end{equation*}
-	In other words, according to perturbation theory, the position expectation value in the state $ \ket{\t{0}} $ shifts left from the origin to the region of negative $ x $. 
+	In other words, according to perturbation theory, the position expectation value in the perturbed state $ \ket{0} $ shifts left from the origin to the region of negative $ x $. 
 	
 %	Note that the wavefunction is not physically correct---we would expect the particle to fall to the infinite potential well which occurs at x \to -infinity (assuming lambda is positive) because of the cubic potential. That said, the particle is still in a local minimum at the origin, and it may not have enough energy to escape this minimum and reach x \to -\infty
 
@@ -3795,54 +3797,45 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	
 \end{itemize}
 
-\subsection{Thirteenth Exercise Set}
+\section{Thirteenth Exercise Set}
 
-\subsubsection{Theory: Degenerate Perturbation Theory}
+\subsection{Theory: Degenerate Perturbation Theory}
 \begin{itemize}
-	\item Consider $ H = H_{0} + H' $. And eigenvalue relation
+	\item Consider the perturbed \Ham $ H = H_{0} + H' $ with the eigenvalue relation
 	\begin{equation*}
-		H_{0} \ket{\psi}  = E \ket{\psi}
+		H_{0} \ket{\psi}  = E^{(0)} \ket{\psi}
 	\end{equation*}
-	where the energy $ E $ is $ N $-times degenerate, meaning
+	where the energy $ E^{(0)} $ is $ N $-times degenerate, meaning the wavefunction $ \ket{\p} $ can be written as the general linear combination
 	\begin{equation*}
-		\ket{\psi} = \sum_{i}^{N}c_{i}\ket{i}
+		\ket{\psi} = \sum_{i}^{N}c_{i}\ket{i} \qquad \quad \text{where} \ \, H\ket{i} = E^{(0)} \ket{i} \ \text{for each } i
 	\end{equation*}
-	where for each $ \ket{i} $
-	\begin{equation*}
-		H\ket{i} = E \ket{i}
-	\end{equation*}
-	
-	\item We consider only first-order correction.  Procedure:
+	\item In this course, we will consider only the first-order correction; the procedure to find this correction proceeds as follows:
 	\begin{enumerate}
-		\item Create a matrix of perturbation elements in a chosen basis of the subspace of degenerate states, e.g. in our case $ \ket{i} $. 
+		\item Create a matrix of perturbation elements in a chosen basis of the subspace of degenerate states, in our case $ \{\ket{i}\} $. The matrix reads
 		\begin{equation*}
 			\begin{pmatrix}
-				\threebraket{1}{H'}{1} & \threebraket{1}{H'}{2} &  \cdots & \threebraket{1}{H'}{N} \\
-				\threebraket{2}{H'}{1} & \threebraket{2}{H'}{2} &  \cdots & \threebraket{2}{H'}{N} \\
+				\mel{1}{H'}{1} & \mel{1}{H'}{2} &  \cdots & \mel{1}{H'}{N} \\
+				\mel{2}{H'}{1} & \mel{2}{H'}{2} &  \cdots & \mel{2}{H'}{N} \\
 				\vdots & \cdots & \ddots & \vdots\\
-				\threebraket{N}{H'}{1} & \threebraket{N}{H'}{2} &  \cdots & \threebraket{N}{H'}{N} 
+				\mel{N}{H'}{1} & \mel{N}{H'}{2} &  \cdots & \mel{N}{H'}{N} 
 			\end{pmatrix}
 		\end{equation*}
 		
-		\item Diagonalize the matrix
-		
-		\item The corrected energies are then
+		\item Next, diagonalize the matrix and find its eigenvalues $ \lambda_{j} $ and and eigenvectors $ \vec{u}_{j} $. To first order in perturbation theory, the corrected energies are then
 		\begin{equation*}
-			\t{E}_{j} = E + \lambda_{j} 
+			E_{j} = E^{(0)} + \lambda_{j} 
 		\end{equation*}
-		In general the degeneracy is broken if the $ \lambda_{j} $ are different. 
+		In general the degeneracy is broken if all of the eigenvalues $ \lambda_{j} $ are different, i.e. $ \lambda_{j} \neq \lambda_{i} $ for all $ i \neq j $. Note that if certain eigenvalues $ \lambda_{j} $ are equal, then a degree of degeneracy remains in the corrected energy eigenvalues.
 		
-		Note that if certain eigenvalues $ \lambda_{j} $ are the same, then at least some degeneracy remains in the perturbed energy eigenvalues.
-		
-		\item Then the new eigenstates are 
+		\item Finally, again to first order, the corrected eigenstates are 
 		\begin{equation*}
-			\ket{\p_{j}} = \sum_{k=1}^{N}u_{j, k} \ket{k}
+			\ket{\p_{j}} = \sum_{k=1}^{N}u_{j_{k}} \ket{k}
 		\end{equation*}
-		where $ u_{j} $ is the perturbation matrix's eigenvector corresponding to $ \lambda_{j} $. 
+		where $ \vec{u}_{j} $ is the perturbation matrix's eigenvector corresponding to $ \lambda_{j} $, and $ u_{j_{k}} $ is $ \vec{u}_{j} $'s $ k $-th component.
 	\end{enumerate}
 \end{itemize}
 
-\subsubsection{Hydrogen Atom in a Homogeneous Electric Field (rough draft)}
+\subsection{Hydrogen Atom in a Homogeneous Electric Field (rough draft)}
 \textit{Consider a hydrogen atom placed in a homogeneous electric field of magnitude $ \E $. Investigate the resulting energy splitting of the first excited state.}
 \begin{itemize}
 	\item The system's \Ham is 
@@ -3854,7 +3847,10 @@ These are the two linearly independent states spanning the isotropic harmonic os
 		H_{0} = \frac{p^{2}}{2m} - \frac{q^{2}}{4\pi \epsilon_{0} r} \eqtext{and} H' = - q \E z
 	\end{equation*}
 	Note that neither \Ham contains a spin-dependent term, which corresponds to our problem's rotation symmetry about the $ z $ axis. This symmetry will greatly simply our problem when we calculate matrix elements. 
+\end{itemize}
 
+\textbf{Review of Hydrogen Eigenstates}
+\begin{itemize}
 	\item We now quickly review the unperturbed hydrogen states for $ H_{0} $. In Dirac notation:
 	\begin{equation*}
 		H_{0}\ket{nlm}\ket{m_{s}} = E_{n} \ket{nlm}\ket{m_{s}}
@@ -3871,14 +3867,16 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\end{equation*}
 	
 	\item We now find the degeneracy of the first excited state. There are 8 possible linearly independent eigenfunctions with energy $ E_{2} $; these are
-	\begin{align*}
-		&\ket{200}\ket{\ua}, \qquad \ket{200}\ket{\da}\\
-		&\ket{211}\ket{\ua}, \qquad \ket{211}\ket{\da}\\
-		&\ket{210}\ket{\ua}, \qquad \ket{210}\ket{\da}\\
-		&\ket{21-1}\ket{\ua}, \qquad \ket{21-1}\ket{\da}\\
-	\end{align*}
+	\[
+	\begin{array}{ll}
+		\ket{200}\ket{\ua}, & \ket{200}\ket{\da}\\
+		\ket{211}\ket{\ua}, & \ket{211}\ket{\da}\\
+		\ket{210}\ket{\ua}, & \ket{210}\ket{\da}\\
+		\ket{21-1}\ket{\ua}, & \ket{21-1}\ket{\da}
+	\end{array}
+	\]
 	
-	\item  Next we consider the radially-dependent wavefunction:
+	\item Next, we consider the radially-dependent wavefunction $ R_{nl}(r) $ and spherical harmonics $ Y_{lm}(\theta, \phi) $ in the expression
 	\begin{equation*}
 		\p_{nlm}(\r) = R_{nl}(r) Y_{lm}(\theta, \phi)
 	\end{equation*}
@@ -3888,7 +3886,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 		& R_{20}(r) = \frac{2}{(2r_{B})^{3/2}}\left(1 - \frac{r}{2r_{B}}\right)e^{-\frac{r}{2r_{B}}}\\
 		& R_{21}(r) = \frac{1}{\sqrt{3}(2r_{B})^{3/2}}\frac{r}{r_{B}}e^{-\frac{r}{2r_{B}}}
 	\end{align*}
-	where $ r_{B} $ is the Bohr radius.  And the following spherical harmonics
+	where $ r_{B} $ is the Bohr radius, and the following spherical harmonics
 	\begin{align*}
 		& Y_{00}(\theta, \phi) = \frac{1}{\sqrt{4\pi}}	\\
 		& Y_{11}(\phi, \theta) = - \sqrt{\frac{3}{8\pi}}\sin \theta e^{i \phi}	\\
@@ -3896,16 +3894,19 @@ These are the two linearly independent states spanning the isotropic harmonic os
 		& Y_{1-1}(\phi, \theta)	 = \sqrt{\frac{3}{8\pi}}\sin \theta e^{-i\phi}
 	\end{align*}
 	Note the presence of $ m \in {-1, 0, 1} $ in the exponents of the spherical harmonics $ Y_{11} $, $ Y_{10} $ and $ Y_{1-1} $.
+\end{itemize}
 	
-	\item On to our perturbation matrix, which is $ 8 \cross 8 $ because of $ N = 8 $ degeneracy. A general matrix element takes the form
+\textbf{Back to the Perturbed Hydrogen Atom}
+\begin{itemize}
+	\item On to our perturbation matrix, which has dimensions $ 8 \cross 8 $ because of first excited state's $ N = 8 $ degeneracy. A general matrix element takes the form
 	\begin{equation*}
-		\bra{m_{s}} \threebraket{2lm}{H'}{2l'm'} \ket{m_{s}'}
+		\bra{m_{s}} \mel{2lm}{H'}{2l'm'} \ket{m_{s}'}
 	\end{equation*}
 	In principle there are 64 matrix elements, but we can take care of a lot of these by considering the problem's symmetry. 
 	
 	\item First, note that $ H' = - q \E z $ acts only in the position Hilbert space. The matrix element is then
 	\begin{equation*}
-		\threebraket{2lm}{H'}{2l'm'}\braket{m_{s}}{m_{s}'} = \threebraket{2lm}{H'}{2l'm'} \delta_{m_{s}, m_{s}'}
+		\mel{2lm}{H'}{2l'm'}\braket{m_{s}}{m_{s}'} = \mel{2lm}{H'}{2l'm'} \delta_{m_{s}, m_{s}'}
 	\end{equation*}
 	
 	We then write the $ 8 \cross 8 $ matrix in 4 blocks  of size $ 4 \cross 4 $ determined by $ \ket{\ua} $ or $ \ket{da} $. The off-diagonal blocks are zero because of $ \delta_{m_{s}, m_{s}'} $. Next, the two diagonal blocks are equal, again because of the symmetry of $ \delta_{m_{s}, m_{s}'} = \delta_{m_{s}', m_{s}}$. 
@@ -3920,11 +3921,11 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	
 	\item We now take a matrix element (we only the need position Hilbert space now):
 	\begin{equation*}
-		\threebraket{2lm}{[H', L_{z}]}{2l'm'} = \threebraket{2lm}{(H' L_{z} - L_{z}H')}{2l'm'}
+		\mel{2lm}{[H', L_{z}]}{2l'm'} = \mel{2lm}{(H' L_{z} - L_{z}H')}{2l'm'}
 	\end{equation*}
 	We distribute to get two matrix elements
 	\begin{equation*}
-		\threebraket{2lm}{H'L_{z}}{2l'm'} - \threebraket{2lm}{L_{z}H'}{2l'm'}
+		\mel{2lm}{H'L_{z}}{2l'm'} - \mel{2lm}{L_{z}H'}{2l'm'}
 	\end{equation*}
 	
 	\item Next, we consider the basis in which we find the matrix elements. The number $ l $ corresponds to the operator $ L^{2} $ and $ m $ to $ L_{z} $. We have
@@ -3937,25 +3938,25 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\end{equation*}
 	Applying these eigenvalue relations gives
 	\begin{align*}
-		& \threebraket{2lm}{H'L_{z}}{2l'm'} - \threebraket{2lm}{L_{z}H'}{2l'm'} = hm'\threebraket{2lm}{H'}{2l'm'} - \hbar m \threebraket{2lm}{H'}{2l'm'}
+		& \mel{2lm}{H'L_{z}}{2l'm'} - \mel{2lm}{L_{z}H'}{2l'm'} = hm'\mel{2lm}{H'}{2l'm'} - \hbar m \mel{2lm}{H'}{2l'm'}
 	\end{align*}
 	Take a closer look: (use $ L_{z}^{\dagger} = L_{z} $)
 	\begin{align*}
-		&\threebraket{2lm}{L_{z}H'}{2l'm'} \\
-		& = \threebraket{L_{z}2lm}{H'}{2l'm'} \\
-		&= \threebraket{(\hbar m)2lm}{H'}{2l'm'}\\
-		& = (\hbar m)^{*}\threebraket{2lm}{H'}{2l'm'}\\
-		& = \hbar m \threebraket{2lm}{H'}{2l'm'}
+		&\mel{2lm}{L_{z}H'}{2l'm'} \\
+		& = \mel{L_{z}2lm}{H'}{2l'm'} \\
+		&= \mel{(\hbar m)2lm}{H'}{2l'm'}\\
+		& = (\hbar m)^{*}\mel{2lm}{H'}{2l'm'}\\
+		& = \hbar m \mel{2lm}{H'}{2l'm'}
 	\end{align*}
 	
 	\item Back to the main thing
 	\begin{align*}
-		 & hm'\threebraket{2lm}{H'}{2l'm'} - \hbar m \threebraket{2lm}{H'}{2l'm'}\\
-		 & = \hbar(m' - m)\threebraket{2lm}{H'}{2l'm'} = 0
+		 & hm'\mel{2lm}{H'}{2l'm'} - \hbar m \mel{2lm}{H'}{2l'm'}\\
+		 & = \hbar(m' - m)\mel{2lm}{H'}{2l'm'} = 0
 	\end{align*}
 	We we've used $ [H', L_{z}] = 0 $ to get the zero. This implies 
 	\begin{equation*}
-		m' \neq m \implies \threebraket{2lm}{H'}{2l'm'} = 0
+		m' \neq m \implies \mel{2lm}{H'}{2l'm'} = 0
 	\end{equation*}
 	
 	\item We now consider the $ 4 \cross 4 $ matrix $ \mat{D} $. We choose a basis so the states with the same $ m $ are grouped together. 
@@ -4016,16 +4017,16 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	
 	\item For matrix elements this means
 	\begin{align*}
-		& \threebraket{2lm}{\{H', P\}}{2l'm'} =\\
-		 &\threebraket{2lm}{H' P}{2l'm'} + \threebraket{2lm}{PH'}{2l'm'}\\
-		& = \threebraket{2lm}{H'}{2l'm'} (-1)^{l'} + \threebraket{2lm}{H'}{2l'm'}(-1)^{l}\\
-		& = \big[(-1)^{l'} + (-1)^{l}\big]\threebraket{2lm}{H'}{2l'm'} = 0
+		& \mel{2lm}{\{H', P\}}{2l'm'} =\\
+		 &\mel{2lm}{H' P}{2l'm'} + \mel{2lm}{PH'}{2l'm'}\\
+		& = \mel{2lm}{H'}{2l'm'} (-1)^{l'} + \mel{2lm}{H'}{2l'm'}(-1)^{l}\\
+		& = \big[(-1)^{l'} + (-1)^{l}\big]\mel{2lm}{H'}{2l'm'} = 0
 	\end{align*}
 	We end up with
 	\begin{equation*}
-		(-1)^{l'} + (-1)^{l} \neq 0 \implies \threebraket{2lm}{H'}{2l'm'} = 0
+		(-1)^{l'} + (-1)^{l} \neq 0 \implies \mel{2lm}{H'}{2l'm'} = 0
 	\end{equation*}
-	Or if $ l $ and $ l' $ are both even or both odd then $ \threebraket{2lm}{H'}{2l'm'} = 0 $. \textbf{TODO} review if it isn't switched. 
+	Or if $ l $ and $ l' $ are both even or both odd then $ \mel{2lm}{H'}{2l'm'} = 0 $. \textbf{TODO} review if it isn't switched. 
 	
 \end{itemize}
 
@@ -4036,36 +4037,36 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	
 	Rows in the same order: $ \ket{200}, \ket{210}, \ket{211}, \ket{21-1} $. 
 	
-	\item The $ \threebraket{2lm}{H'}{2l'm'} = 0  $ from above means that the diagonal matrix elements in the diagonal blocks are zero. 
+	\item The $ \mel{2lm}{H'}{2l'm'} = 0  $ from above means that the diagonal matrix elements in the diagonal blocks are zero. 
 	
 	We end up with only two non-zero matrix elements. Consider only the upper block of the three block diagonals of $ \mat{D} $. 
 	
 	\item This block is
 	\begin{equation*}
 		\begin{pmatrix}
-		0 & \threebraket{200}{H'}{210}\\
-		\threebraket{210}{H'}{200} & 0
+		0 & \mel{200}{H'}{210}\\
+		\mel{210}{H'}{200} & 0
 		\end{pmatrix}
 	\end{equation*}
 	The matrix elements of a Hermitian operator $ H $ form a hermitian matrix, which means
 	\begin{equation*}
-		\threebraket{200}{H'}{210} = \threebraket{210}{H'}{200}^{*}
+		\mel{200}{H'}{210} = \mel{210}{H'}{200}^{*}
 	\end{equation*}
 	
 	\item We have only one non-zero matrix element from originally 64.
 	\begin{align*}
-		\threebraket{200}{H'}{210} &= \int \diff^{3}\vec{r} \psi_{200}^{*}(\r) (-q \E z)\psi_{210}(\r)\\
+		\mel{200}{H'}{210} &= \int \diff^{3}\vec{r} \psi_{200}^{*}(\r) (-q \E z)\psi_{210}(\r)\\
 		& = \int_{0}^{\infty}r^{2} \diff r \int_{-1}^{1}\diff [\cos \theta] \int_{0}^{2\pi}\diff \phi\left[ \frac{2}{(2r_{B})^{3/2}}\left(1 - \frac{r}{r_{B}}\right)e^{-\frac{r}{2r_{B}}}\frac{1}{\sqrt{4\pi}}\right](-q\E r\cos \theta)\\
 		& = \left[\frac{1}{\sqrt{3}}\frac{1}{(2r_{B})^{3/2}} \frac{r}{r_{B}}e^{-\frac{r}{r_{B}}} \sqrt{\frac{3}{4\pi}} \cos \theta\right]\\
 		& = (- q \E)\int_{0}^{\infty}\frac{r^{4}\diff r}{(2r_{B})^{3} r_{B}}\left(1 - \frac{r}{2r_{B}}\right)e^{-\frac{r}{r_{B}}} \cdot \frac{2}{\sqrt{3}}\int_{-1}^{1}\diff [\cos \theta] \cos^{2}\theta \int_{0}^{2\pi} \diff \phi \frac{\sqrt{3}}{4\pi}\\
 	\end{align*}
 	note $ z = r \cos \theta $. First integral $ u = \frac{r}{r_{B}} $
 	\begin{align*}
-		\threebraket{200}{H'}{210} &= \int \diff^{3}\vec{r} \psi_{200}^{*}(\r) (-q \E z)\psi_{210}(\r)	(-q\E)\frac{2}{\sqrt{3}}\frac{\sqrt{3}}{4\pi} \cdot \frac{r_{B}}{8} \int_{0}^{\infty}u^{4}\diff u\left(1 - \frac{u}{2}\right)e^{-u} \cdot \left(\frac{2}{3}\right) \cdot \left(2\pi\right)\\
+		\mel{200}{H'}{210} &= \int \diff^{3}\vec{r} \psi_{200}^{*}(\r) (-q \E z)\psi_{210}(\r)	(-q\E)\frac{2}{\sqrt{3}}\frac{\sqrt{3}}{4\pi} \cdot \frac{r_{B}}{8} \int_{0}^{\infty}u^{4}\diff u\left(1 - \frac{u}{2}\right)e^{-u} \cdot \left(\frac{2}{3}\right) \cdot \left(2\pi\right)\\
 	\end{align*}
 	We find the $ u $ integral with the gamma function. Result is
 	\begin{align*}
-			\threebraket{200}{H'}{210} & = -q\E r_{B}\frac{1}{12}\left(4! - \frac{1}{2}5!\right) = 3q\E r_{B}
+			\mel{200}{H'}{210} & = -q\E r_{B}\frac{1}{12}\left(4! - \frac{1}{2}5!\right) = 3q\E r_{B}
 	\end{align*}
 	
 	\item Our baby matrix $  $ is then
@@ -4173,6 +4174,4 @@ These are the two linearly independent states spanning the isotropic harmonic os
 
 
 
-
-
-
+% TODO kramers degeneracy and time reversal theory in 10th exercise set to equation sheet
