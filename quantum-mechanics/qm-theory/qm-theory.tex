@@ -1,0 +1,1804 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{mwe}
+\usepackage[margin=3cm]{geometry}
+\usepackage[normalem]{ulem}  % for underline with line wrapping
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bm} % for bold vectors in math mode
+\usepackage{physics} % many useful physics commands
+\usepackage[separate-uncertainty=true]{siunitx} % for scientific notation and units
+\usepackage{xcolor}  % to color hyperref links
+\usepackage[colorlinks = true, allcolors=blue]{hyperref}
+
+\setlength{\parindent}{0pt} % to stop indenting new paragraphs
+\newcommand{\diff}{\mathop{}\!\mathrm{d}} % differential
+\newcommand{\dr}{\diff^{3} \r}  % d^3 r
+\renewcommand{\grad}{\nabla}
+
+\newcommand{\eqtext}[1]{\qquad \text{#1} \qquad}
+\newcommand{\Schro}{Schr\"{o}dinger\xspace}
+\newcommand{\Ham}{Hamiltonian\xspace}
+\newcommand{\Herm}{Hermitian\xspace}
+
+\newcommand{\CG}{Clebsch-Gordan}
+
+\renewcommand{\vec}[1]{\bm{#1}} % for vectors
+\renewcommand{\op}[1]{\hat{#1}} % for operators
+\newcommand{\mat}[1]{\mathbf{#1}} % for matrices
+\newcommand{\dvec}[1]{\dot{\vec{#1}}} % for dotted vector quantity
+\newcommand{\tvec}[1]{\tilde{\vec{#1}}} % for tilde vector quantities
+\newcommand{\uvec}[1]{\hat{\vec{#1}}} % for dotted vector quantity
+
+\renewcommand{\t}[1]{\tilde{#1}}
+
+\newcommand{\tev}{e^{-i\frac{H}{\hbar}t}}  % time evolution operator
+\newcommand{\tevp}{e^{i\frac{H}{\hbar}t}}  % time evolution operator with positive exponent
+
+
+\newcommand{\F}[1]{\widehat{#1}} % fourier transform
+
+
+\renewcommand{\H}{\mathcal{H}}  % Hilbert space
+\newcommand{\ua}{\uparrow}  % for spin up states
+\newcommand{\da}{\downarrow}  % for spin down states
+\renewcommand{\r}{\vec{r}}  % position vector
+
+\renewcommand{\O}{\mathcal{O}}  % script operator quantity
+\newcommand{\II}{\operatorname{I}}  % non-bold identity operator
+\newcommand{\T}{\mathcal{T}}  % time reversal operator
+\newcommand{\Par}{\mathcal{P}}  % parity operator
+
+\newcommand{\p}{\psi}  % time-independent wavefunction
+\renewcommand{\P}{\Psi}  % time-dependent wavefunction
+
+
+
+% \big braket-style commands
+\newcommand{\evb}[1]{\big \langle {#1} \big \rangle}  % for big expectation values
+\newcommand{\bket}[1]{\big | {#1} \big \rangle }
+\newcommand{\bbra}[1]{ \big \langle {#1} \big |  }
+\newcommand{\bbraket}[2]{\big \langle {#1} \big | {#2} \big \rangle}  % for brakets of fixed size
+\newcommand{\bmel}[3]{\big \langle {#1} \big | {#2} \big | {#3} \big \rangle}  % for matrix elements of fixed size
+% end
+
+% shorthand bra and ket
+\renewcommand{\b}[1]{\bra{#1}}
+\newcommand{\bb}[1]{\bbra{#1}}
+\renewcommand{\k}[1]{\ket{#1}}
+\newcommand{\bk}[1]{\bket{#1}}
+
+\pdfinfo{
+	/Title (Quantum Mechanics Oral Study Guide)
+	/Author (Elijan Mastnak)
+	/Subject (Physics)
+}
+
+
+\begin{document}
+\title{Quantum Mechanics Lecture Notes}
+\author{Elijan Mastnak}
+\date{2020-21 Winter Semester}
+\maketitle
+
+\begin{center}
+\textbf{About These Notes}
+\end{center}
+These are my lecture notes from the course \textit{Kvanta Mehanika} (Quantum Mechanics), a mandatory course for third-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. The exact material herein is specific to the physics program at the University of Ljubljana, but the content is fairly standard for an late-undergraduate course in quantum mechanics. I am making the notes publicly available in the hope that they might help others learning the same material.
+
+
+\vspace{2mm}
+\textit{Navigation}: For easier document navigation, the table of contents is ``clickable'', meaning you can jump directly to a section by clicking the colored section names in the table of contents. Unfortunately, the \uline{clickable links do not work in most online or mobile PDF viewers}; you have to download the file first.
+
+\vspace{2mm}
+\textit{On Content}: The material herein is far from original---it comes almost exclusively from Professor Anton Ram\v{s}ak's lecture notes on quantum mechanics at the University of Ljubljana. I take credit for nothing beyond translating the notes to English and typesetting.
+
+\vspace{2mm}
+\textit{Disclaimer:} Mistakes---both trivial typos and legitimate errors---are likely. Keep in mind that these are the notes of an undergraduate student in the process of learning the material himself---take what you read with a grain of salt. If you find mistakes and feel like telling me, by \href{https://github.com/ejmastnak/fmf}{\underline{GitHub}} pull request, \href{mailto:ejmastnak@gmail.com}{\underline{email}} or some other means, I'll be happy to hear from you, even for the most trivial of errors.
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\section{Fundamentals of Wave Quantum Mechanics}
+
+\subsection{Understanding the \Schro Equation} 
+Idea: find the simplest equation the satisfies the following quantum mechanical properties:
+\begin{itemize}
+	\item A particle has wave characteristics---a wavelength $ \lambda = 2\pi/k $ and frequency $ \nu = 2\pi/\omega $
+	
+	\item A particle's energy is proportional to its frequency, i.e. $ E = \hbar \omega $ (e.g. photoelectric effect)
+	
+	\item Momentum is related to a wave vector via $ \vec{p} = \hbar \vec{k} $ (de Broglie)
+	
+	\item A free particle has the classical energy $ E = \frac{p^{2}}{2m} $ and thus the dispersion relation $ \omega \propto k^{2} $
+\end{itemize}
+The \Schro equation satisfies these requirements
+\begin{equation*}
+	i \hbar \pdv{\Psi(\r, t)}{t} = - \frac{\hbar^{2}}{2m}\laplacian \P(\r, t) + V(\r, t)\Psi(\r, t)
+\end{equation*}
+The potential terms accounts for a particle having energy $ E = \frac{p^{2}}{2m} + V $ in a potential. 
+
+Note that the \Schro equation and thus the solution $ \P $ are complex---we can decompose $ \P $ into a real and imaginary part via
+\begin{equation*}
+	\P = \P_{\text{Re}} + i \P_{\text{Im}}
+\end{equation*}
+Substituting this decomposition into the \Schro equation produces
+\begin{equation*}
+	i \hbar (\dot{\P}_{\text{Re}} + i \dot{\P}_{\text{Im}})  = - \frac{\hbar^{2}}{2m} (\P_{\text{Re}}'' + i \P_{\text{Im}}'') + V(\P_{\text{Re}} + i \P_{\text{Im}})
+\end{equation*}
+Writing the real and imaginary parts separately gives the coupled system of real equations
+\begin{align*}
+	&- \hbar \dot{\P}_{\text{Im}} = - \frac{\hbar^{2}}{2m}\Psi_{\text{Re}}'' + V \P_{\text{Re}}\\
+	& - \hbar \dot{\P}_{\text{Re}} = - \frac{\hbar^{2}}{2m}\Psi_{\text{Im}}'' + V \P_{\text{Im}}
+\end{align*}
+Precisely this coupling leads to the desired oscillation and wavelike behavior of the wavefunction $ \P $, even though the \Schro equation is first degree in time.
+
+\vspace{2mm}
+\textbf{On the Diffusion Equation}\\
+Note the similarity of the \Schro equation to the diffusion equation
+\begin{equation*}
+	\pdv{T}{t} = D \pdv[2]{T}{x}
+\end{equation*}
+Both are first degree in time and second degree in position. The wave-like ansatz $ T(x, t) \propto e^{i(kx - \omega t)} $ solves the diffusion equation with a quadratic dispersion relation
+\begin{equation*}
+	\omega = -iDk^{2},
+\end{equation*}
+as desired. However, the energy relation requirement $ E = \frac{p^{2}}{2m} $ holds only for $ D = \frac{i\hbar}{2m} \in \mathbb{C} $, and a complex diffusion constant is non-physical. We thus reject the diffusion equation.
+
+\subsection{Probability Interpretation of the Wavefunction}
+
+\begin{itemize}
+	\item The wavefunction encodes the probability of finding a quantum particle in a region of space. We use the wavefunction to define the probability density
+	\begin{equation*}
+		\rho (\r, t) = \abs{\P(\r, t)}^{2}
+	\end{equation*}
+	The probability $ \diff P $ of finding the particle in the region of space $ \diff \r $ is
+	\begin{equation*}
+		\diff P = \rho(\r, t) \diff \r
+	\end{equation*}
+	Logically, the probability of finding the particle somewhere in all of space $ V $ is one:
+	\begin{equation*}
+		\int_{V} \abs{\P(\r, t)}^{2}\dr \equiv
+	\end{equation*}
+	The above relation is called the normalization condition on the wavefunction.
+	
+	\item If a wavefunction is normalized at a given point in time, we would assume it is normalized at all other times, too. We show this ``conservation of normalization'' by differentiating probability density with the product rule:
+	\begin{align*}
+		  \pdv{\rho(\r, t)}{t} = \pdv{\abs{\P(\r, t)}^{2}}{t} &= \pdv{\P^{*}(\r, t)}{t} \P(\r, t) + \pdv{\P(\r, t)}{t} \P^{*}(\r t)\\
+	\end{align*}
+	We substitute in $ \dot{\P} $ from the \Schro equation to get
+	\begin{align*}
+		\pdv{\rho(\r, t)}{t} = &\left(- \frac{\hbar i}{2m}\laplacian \P^{*}(\r, t) + \frac{i}{\hbar} V^{*}(\r, t)\Psi^{*}(\r, t)\right)\P(\r, t) \\
+		& + \left(\frac{\hbar i}{2m}\laplacian \P(\r, t) - \frac{i}{\hbar} V(\r, t)\Psi(\r, t)\right)\Psi^{*}(\r, t)
+	\end{align*}
+	where we have allowed the possibility of complex potential $ V(\r, t) \in \mathbb{C} $ when conjugating the \Schro equation. We then use the identity
+	\begin{equation*}
+		\P \laplacian \P^{*} = \div (\P \grad \P^{*}) - \grad \P \cdot \grad \P^{*}
+	\end{equation*}
+	to write 
+	\begin{equation*}
+		\pdv{\rho(\r, t)}{t} + \div \vec{j}(\r, t) = q(\r, t)
+	\end{equation*}
+	where we have defined the probability current
+	\begin{equation*}
+		\vec{j}(\r, t) = \frac{\hbar}{2im}\big[\P(\r, t)\grad\P(\r, t) - \P(\r, t)\grad\P^{*}(\r, t)\big]
+	\end{equation*}
+	and the probability source density
+	\begin{equation*}
+		q(\r, t) = 2 \Im \big[V(\r, t)\rho(\r, t)\big]
+	\end{equation*}
+	
+	\item \textit{Important}: Note that probability is conserved when $ q(\r, t) = 0$, resulting in the continuity equation
+	\begin{equation*}
+		\pdv{\rho(\r, t)}{t} + \div \vec{j}(\r, t) = 0
+	\end{equation*}
+	The source density $ q $ is zero if $ V $ is a real function.
+	
+\end{itemize}
+\textbf{Quantum Tomography: $ \P $ from $ \abs{\P}^{2} $}
+\begin{itemize}
+	\item If you know a system's probability density $\abs{\P(\r, t)}^{2} $, it is possible to reconstruct the wavefunction $ \P $. This process is called quantum tomography. We consider only the one-dimensional case. 
+	
+	\item First, we write the wavefunction in the polar form with complex modulus $ \abs{\P} = \sqrt{\rho(x, t)} $ and phase $ S(x, t) $
+	\begin{equation*}
+		\P(x, t) = \sqrt{\rho(x, t)}e^{\frac{iS(x, t)}{\hbar}}
+	\end{equation*}
+	We substitute this expression for $ \P $ into the probability current density to get
+	\begin{align*}
+		j(x, t) &\equiv \frac{\hbar}{2im}\left(\P^{*}(x, t)\pdv{x}\P(x, t) - \P(x, t)\pdv{x}\P^{*}(x, t)\right) \\
+		& = \frac{1}{m} \rho(x, t)\pdv{S(x, t)}{x}
+	\end{align*}
+	
+	\item Substituting the above expression for $ j(x, t) $ into the probability continuity equation gives
+	\begin{equation*}
+		\pdv{\rho(x, t)}{t} + \frac{1}{m}\pdv{x}\left[\rho(x, t) \pdv{S(x, t)}{x}\right] = 0
+	\end{equation*}
+	We then integrate the equation with respect to $ x $ and rearrange to get
+	\begin{equation*}
+		\frac{\rho(x, t)}{m} \pdv{S(x, t)}{x} = - \int_{-\infty}^{x} \pdv{\rho(\chi, t)}{t}\diff \chi
+	\end{equation*}
+	where we have assumed the boundary condition $ \rho(-\infty, t) \to 0 $ for the lower limit of integration and $ \chi $ is a dummy variable for integration. We solve for the wavefunction's phase $ S $ to get
+	\begin{equation*}
+		S(x, t) = S_{0} - \int_{-\infty}^{x} \left[ \frac{m}{\rho(\xi, t)} \int_{-\infty}^{x} \pdv{\rho(\chi, t)}{t}\diff \chi\right] \diff \xi
+	\end{equation*}
+	
+	\item \textit{Important}: The above expression for $ S(x, t) $ shows that, when finding $ \S(x, t) $ from probability density $ \rho(x, t) $, complex phase is determined only up to a constant phase factor $ e^{iS_{0}} $.
+\end{itemize}
+
+\subsection{Stationary States}
+\begin{itemize}
+	\item ``Standing wavefunctions'' in the \Schro equation, in analogy with standing waves in the wave  equation, occur when the wavefunction can be factored into the product of a position-dependent and time-dependent wavefunction in the form
+	\begin{equation*}
+		\P(\r, t) = \p(\r)f(t)
+	\end{equation*}
+	Such solutions $ \P $ are called \textit{stationary states}. 
+	
+	\item Derivation of stationary states: assume the potential is independent of time, i.e. $ V = V(\r) $. Substitute the ansatz $ \P(\r, t) = \p(\r)f(t) $ into the \Schro equation to get
+	\begin{equation*}
+		i \hbar \p(\r) \pdv{f(t)}{t} = - \frac{\hbar^{2}}{2m} f(t) \laplacian \p(\r) + V(\r)f(t)\p(\r)
+	\end{equation*}
+	Next, divide by $ \p(\r)f(t) $ to get
+	\begin{equation*}
+		\frac{i \hbar}{f(t)} \pdv{f(t)}{t} = - \frac{\hbar^{2}}{2m}\frac{\laplacian \p(\r)}{\p(\r)} + V(\r) 
+	\end{equation*}
+	Since the left-hand side of the equation depends only on time, and the right-hand side only on position, the equality holds for all $ t $ and $ \r $ only if both sides are constant. We make this requirement explicit by writing
+	\begin{equation*}
+		\frac{i \hbar}{f(t)} \pdv{f(t)}{t} = - \frac{\hbar^{2}}{2m}\frac{\laplacian \p(\r)}{\p(\r)} + V(\r) \equiv E
+	\end{equation*}
+	where the constant $ E $ represents the stationary state's energy.
+	
+	\item We use the position-dependent portion of the separated equation to form the stationary \Schro equation
+	\begin{equation*}
+		-\frac{\hbar^{2}}{2m}\laplacian \p_{n}(\r) + V(\r) \p_{n}(\r) = E_{n}\p_{n}(\r), \qquad n \in \mathbb{N}.
+	\end{equation*}
+	Note that this is an eigenvalue equation with for the stationary state eigenfunctions $ \p_{n} $ and energy eigenvalues $ E_{n} $.
+	
+	Meanwhile, we solve the time-dependent portion of the separated equation to get
+	\begin{equation*}
+		f(t) = e^{-i\frac{E_{n}}{\hbar}t} \equiv e^{-i\omega_{n}t},
+	\end{equation*}
+	which represents oscillation in time with at the frequency $ \omega_{n} $, which satisfies the familiar quantum-mechanical relation $ E_{n} = \hbar \omega_{n} $. 
+	
+	\item The complete set of stationary state eigenfunctions $ \{\p_{n}(\r)\} $ form an orthonormal basis of the wavefunction solution space and satisfy the relation
+	\begin{equation*}
+		\int \p^{*}_{n}(\r)  \p_{m}(\r) \dr = \delta_{nm},
+	\end{equation*}
+	where $ \delta_{nm} $ is the Kronecker delta. 
+	
+	\item It is possible to write any solution $ \P(\r, t) $ \Schro equation in terms of the eigenfunction basis. To do this, we first expand the wavefunction $ \P $'s initial state $ \P(\r, 0) $ in the eigenfunction basis in the form
+	\begin{equation*}
+		\P(\r, 0) = \sum_{n}c_{n} \p_{n}(\r), \qquad c_{n} = \int \p_{n}^{*}\P(\r, 0)\dr.
+	\end{equation*}
+	We then write the solution $ \P(\r, t) $ at arbitrary time in the form
+	\begin{equation*}
+		\P(\r, t) = \sum_{n}c_{n}e^{-i\frac{E_{n}}{\hbar}t}\p_{n}(\r),
+	\end{equation*}
+	where $ c_{n} $ are the coefficients from the expansion of $ \P(\r, 0) $ in the eigenfunction basis and $ E_{n} $ are the eigenfunction' corresponding energy eigenvalues.
+\end{itemize}
+
+\subsection{Differentiability of the First and Second Wavefunction Derivatives}
+\begin{itemize}
+	\item The wavefunction is assumed to be a continuous quantity. What about its derivative? We integrate the stationary \Schro equation on the interval $ x \in [a, b] $ to get
+	\begin{equation*}
+		-\frac{\hbar^{2}}{2m}\int_{a}^{b}\p''(x) \diff x + \int_{a}^{b}V(x)\p(x)\diff x = E \int_{a}^{b}\p (x) \diff x
+	\end{equation*}
+	Evaluating the integral of $ \psi''(x) $ and rearranging gives
+	\begin{equation*}
+		\psi'(b) - \psi'(a) = \frac{2m}{\hbar^{2}}\int_{a}^{b}V(x) \p(x) \diff x - \frac{2mE}{\hbar^{2}}\int_{a}^{b}\p(x)\diff x
+	\end{equation*}
+	
+	\item We are interested in the limit behavior $ a \to b $. Since $ \p $ is continuous, we have $ \int_{a}^{b}\p(x)\diff x \to 0 $ as $ a \to b $ (from introductory real analysis). As long as $ V(x) $ is continuous, then $ V(x)\p(x) $ is also continuous, implying $ \int_{a}^{b}V(x)\p(x)\diff x \to 0 $ as $ a \to b $. We then have
+	\begin{equation*}
+		\lim_{a \to b} \big[\psi'(b) - \psi'(a)\big] = \frac{2m}{\hbar^{2}} \cdot 0 - \frac{2mE}{\hbar^{2}} \cdot 0 = 0.
+	\end{equation*}
+	The resulting equality $ \lim_{a \to b} \big[\psi'(b) - \psi'(a)\big] = 0 $ implies the wavefunction derivative $ \psi' $ is also a continuous function.
+	
+	\item If the potential takes the form of a delta function, i.e. $ V(x) = \lambda \delta (x) $ where $ \lambda $ is a constant, the wavefunction's first  derivative has a discontinuity of the form
+	\begin{equation*}
+		\lim_{a \to b} \big[\psi'(b) - \psi'(a)\big] = \frac{2m\lambda}{\hbar^{2}}\psi(a)
+	\end{equation*}
+	
+	\item To analyze the second derivative, we write the \Schro equation in the form
+	\begin{equation*}
+		\frac{1}{\psi(x)} \dv[2]{\p(x)}{x} = \frac{2m}{\hbar^{2}}\big[V(x) - E\big].
+	\end{equation*}
+	We see by observing the sign of $ \psi''(x) $ based on the value of $ E $, we see that $ \p $ is concave where $ E > V $ and convex where $ E < V $. 
+	
+	\item Points of inflection (zeros of $ \psi'' $) occur at the classically-expected turning points where $ E = V $. The wavefunction must be smooth at the turning points to satisfy the continuity condition's on $ \p $ and $ \p' $. 
+\end{itemize}
+
+\subsection{Degeneracy and the Nondegeneracy Theorem}
+\begin{itemize}
+	\item Consider the one-dimensional stationary \Schro equation 
+	\begin{equation*}
+		-\frac{\hbar^{2}}{2m}\psi_{n}''(x) + V(x)\p_{n}(x) = E_{n}\p_{n}(x).
+	\end{equation*}
+	An energy eigenvalue $ E $ is called \textit{degenerate} if their exist multiple linearly independent eigenfunctions, e.g. $ \psi_{1}, \psi_{2} $, with the same energy eigenvalue $ E $. The nondegeneracy theorem states that the energy eigenvalue spectrum $ \{E_{n}\} $ of a one-dimensional system is nondegenerate, as long as the wavefunctions $ \psi_{n} $ vanish at $ \pm \infty $.
+	
+	\item The stationary \Schro equation for the two  eigenfunctions read
+	\begin{align*}
+		& -\frac{\hbar^{2}}{2m}\psi_{1}''(x) + \big[V(x) - E\big]\p_{1}(x) = 0\\
+		& -\frac{\hbar^{2}}{2m}\psi_{2}''(x) + \big[V(x) - E\big]\p_{2}(x) = 0
+	\end{align*}
+	We multiply the first equation by $ \p_{1} $, the second by $ \p_{2} $ and subtract the equations to get
+	\begin{equation*}
+		\p_{1}\dv[2]{\p_{2}}{x} - \p_{2}\dv[2]{\p_{1}}{x} = 0
+	\end{equation*}
+	
+	\item \textit{Mathematical aside}: the Wronskian determinant of the wavefunctions $ \p_{1} $ and $ \p_{2} $ is
+	\begin{equation*}
+		W_{12} \equiv \det 
+		\begin{pmatrix}
+			\p_{1} & \p_{2}\\
+			\p_{1}' & \p_{2}'
+		\end{pmatrix}
+		= \p_{1}\p_{2}' - \p_{2}\p_{1}'.
+	\end{equation*}
+	
+	\item In terms of the Wronskian, the above equation relating $ \p_{1} $, $ \p_{2} $ and their second derivatives reads
+	\begin{equation*}
+		\dv{x}\left(\p_{1}\dv{\p_{2}}{x} - \p_{2}\dv{\p_{1}}{x}\right) = \dv{W_{12}}{x} = 0,
+	\end{equation*}
+	which implies the Wronskian is constant with respect to $ x $. 
+	
+	\item Next, we apply the condition $ \p_{1, 2} \to 0 $ and $ \p'_{1, 2} \to 0 $ as $ \abs{x} \to \infty $, which implies $ W_{12} = 0 $ as $ \abs{x} \to \infty  $. This implies $ W_{12} = 0 $ for all $ x $, since $ W $ is constant with respect to $ x $. The result $ W_{12} = 0 $ implies
+	\begin{equation*}
+		\p_{1}\dv{\p_{2}}{x} = \p_{2}\dv{\p_{1}}{x} \implies \frac{1}{\p_{1}} \dv{\p_{1}}{x} - \frac{1}{\p_{2}} \dv{\p_{2}}{x} = \dv{x}(\ln \p_{1} - \ln \p_{2}) = 0.
+	\end{equation*}
+	Integrating the final equality produces
+	\begin{equation*}
+		\ln \p_{1} - \ln \p_{2} = \ln \frac{\p_{1}}{\p_{2}} = C \implies \p_{1}(x) = \t{C} \p_{2}(x).
+	\end{equation*}
+	where $ \t{C} $ is a constant. In other words, $ \p_{1} $ and $ \p_{2} $ are linearly dependent, implying the one-dimensional energy spectrum $ \{E_{n}\} $ is nondegenerate, as long as $ \p_{1,2} $ vanish at infinity.
+\end{itemize}
+
+\subsection{Expectation Value}
+\begin{itemize}
+	\item Assume we know a particle's wavefunction $ \psi(x, t) $ and the associated probability density $ \rho(x, t) = \abs{\P(x, t)}^{2} $. 
+	
+	The moments of the probability density are called expectation values. The probability density's $ n $-th moment is defined just like the mathematical definition of a probability distribution's moment, i.e.
+	\begin{equation*}
+		\ev{x^{n}} = \int_{-\infty}^{\infty} x^{n}\rho(x, t) \diff x = \int_{-\infty}^{\infty} \Psi^{*}(x, t)x^{n}\Psi(x,t)\diff x
+	\end{equation*}
+	In general, all of the probability density's moments may not exist. 
+	
+	\item In quantum mechanics, we generally restrict ourselves to those wavefunctions in the Schwartz space of rapidly falling functions. This space consists of those $ \psi \in L^{2} $ that are infinitely differential and the fall rapidly as $ \abs{x} \to \infty $, i.e. those $ \psi $ for which there exists finite constant $ M \in \mathbb{R} $ such that
+	\begin{equation*}
+		x^{n} \abs{\psi(x)}^{m} < M \qquad \text{for all } n, m \in \mathbb{N} \text{ and all } x \in \mathbb{R}
+	\end{equation*}
+	Physical interpretation for why we require wavefunctions fall rapidly: in physical experiments, we expect the majority of the probability for detecting a particle is concentrated in the neighborhood of the experiment and not at infinity. 
+\end{itemize}
+\textbf{Example: The Momentum Operator}
+\begin{itemize}
+	\item We begin by finding the derivative of the position expectation value.
+	\begin{align*}
+		\dv{\ev{x}}{t} &= \pdv{t}\int_{-\infty}^{\infty} \Psi^{*}(x, t)x\Psi(x,t)\diff x \\
+		&= \int_{-\infty}^{\infty} \left(\pdv{\P^{*}(x, t)}{t} x \P(x, t) + \P^{*}(x, t)x\pdv{\P(x, t)}{t}\right)\diff x
+	\end{align*}
+	Assuming a real potential $ V(x) $, we can express $ \pdv{\P^{*}}{t} $ and $ \pdv{\P}{t} $ in terms of $ \pdv[2]{\P^{*}}{x} $ and $ \pdv[2]{\P}{x} $ using the \Schro equation, substitute these expressions in to the above expression for $ \dv{\ev{x}}{t} $, and simplify like terms to get
+	\begin{equation*}
+		\dv{\ev{x}}{t} = \frac{\hbar}{2im}\int_{-\infty}^{\infty} \left( \pdv[2]{\P^{*}(x, t)}{x} x \P(x, t) - \pdv[2]{\P(x, t)}{x} x \P^{*}(x, t) \right)
+	\end{equation*}
+	We then rewrite this expression with a reverse-engineered derivative with respect to $ x $:
+	\begin{align*}
+		\dv{\ev{x}}{t} = & \frac{\hbar}{2im} \int_{-\infty}^{\infty} \pdv{x}\left(\pdv{\P^{*}}{x}x\P - \abs{\P}^{2} - \P^{*}x\pdv{\P}{x}\right)\diff x\\
+		& + \frac{1}{m} \int_{-\infty}^{\infty} \P^{*} \left(-i\hbar \pdv{x}\P\right)\diff x.
+	\end{align*}
+	For rapidly falling wavefunctions in the Schwartz space, the first integral evaluates to zero. We are left with
+	\begin{equation*}
+		\dv{\ev{x}}{t} = \frac{1}{m} \int_{-\infty}^{\infty} \P^{*} \left(-i\hbar \pdv{x}\P\right)\diff x
+	\end{equation*}
+	
+	\item The above result for $ \dv{\ev{x}}{t} $, written in the form momentum-like form
+	\begin{equation*}
+		m \dv{\ev{x}}{t} = \ev{p} = \int_{-\infty}^{\infty} \P^{*} \left(-i\hbar \pdv{x}\P\right)\diff x,
+	\end{equation*}
+	motivates the introduction of the momentum operator
+	\begin{equation*}
+		\hat{p} \to - \hbar \pdv{x} \implies \ev{p} = \int_{-\infty}^{\infty} \P \hat{p} \P \diff x
+	\end{equation*}
+	
+	\item \textbf{Notation:} The hat in $ \hat{p} $ explicitly indicates the quantity in question is an operator. By convention, however, we usually write operators without the hat symbol and distinguish between operators and scalar quantities based on context.
+	
+	\item In three dimensions, the momentum operator generalizes to 
+	\begin{equation*}
+		\hat{\vec{p}} \to i \hbar \grad \eqtext{and}  \ev{\hat{\vec{p}}} = m \dv{\ev{\hat{\vec{r}}}}{t}
+	\end{equation*}
+	
+	\item The momentum operator (dropping the hat notation) and probability current density are related by
+	\begin{equation*}
+		\vec{j}(\r, t) = \frac{1}{m}\Re \big[\P^{*}(\r, t) \vec{p} \P(\r, t)\big] \eqtext{and} \ev{\bm{p}}  = m \int_{V} \vec{j}(\r, t) \dr
+	\end{equation*}
+	We discuss operators formally in the following section.
+\end{itemize}
+
+
+\subsection{Operators}
+\begin{itemize}
+	\item In quantum mechanics, every measurable quantity---called an \textit{observable}---is assigned a corresponding operator. Some common operators are
+	\begin{equation*}
+		\hat{x} \to x \mathrm{I} \qquad \hat{\r} \to \r \mat{I} \qquad \hat{V} = V(\r, t)\mathrm{I},
+	\end{equation*}
+	where $ \mat{I} $ is the identity operator. We typically leave the identity operator implicit and write e.g. $ \hat{x} \to x $. 
+	
+	The momentum operator in various forms reads
+	\begin{equation*}
+		p_{\alpha} = -i\hbar \pdv{}{\alpha} \qquad p_{\alpha} = (-i\hbar)^{n} \pdv[n]{}{\alpha} \qquad \vec{\hat{p}} = \sum_{\alpha = x, y, z} \hat{p}_{\alpha} = - i \hbar \grad \qquad \vec{\hat{p}}^{2} = (-i\hbar)^{2} \laplacian.
+	\end{equation*}
+	
+	\item \textbf{Notation:} In this section I will intermittently write operators with a hat, i.e. $ \hat{p} $. However, I stress again that by convention we usually write operators without the hat symbol and distinguish between operators and scalar quantities based on context. I will typically denote generic operator quantities by either $ \O $ or the capital Latin letters $ A $, $ B $, $ C $, $ \ldots  $.
+	
+	\item We can define operators as functions. Consider analytic complex function $ f(x) $ with the power series definition
+	\begin{equation*}
+		f(z) = \sum_{n=0}^{\infty}c_{n}z^{n}
+	\end{equation*}
+	As long as the function $ f $ is defined as a power series, we can define the function of an operator $ \O $, which is itself an operator, as
+	\begin{equation*}
+		f(\O) = \sum_{n = 0}^{\infty}c_{n} \O^{n}.	
+	\end{equation*}
+	For example, the exponential function of an operator $ \O $ is defined as via the exponential function's Taylor series as
+	\begin{equation*}
+		e^{\O} = \mathrm{I} + \O + \frac{\O^{2}}{2!} + \frac{\O^{3}}{3!} + \cdots + \frac{\O^{n}}{n!} + \cdots 
+	\end{equation*}
+	
+	
+	
+	\item A common example of an operator constructed from other operators is the Hamiltonian $ H $, defined as
+	\begin{equation*}
+		H = \frac{p^{2}}{2m} + V.
+	\end{equation*}
+	We can use the Hamiltonian to concisely write the \Schro equation in operator form:
+	\begin{equation*}
+		i\hbar \pdv{\P}{t} = H\P.
+	\end{equation*}
+	Note that the Hamiltonian operator has the same form as the Hamiltonian function from classical mechanics. If we observe the stationary \Schro equation in operator form, i.e.
+	\begin{equation*}
+		H \p_{n} = E_{n}\p_{n},
+	\end{equation*}
+	we see the Hamiltonian's eigenvalues are a quantum system's energy eigenvalues $ E_{n} $.
+	
+	\item Functions of operators give simple results when applied to eigenvalue relations. Consider for example $ \O $ for which we know the eigenvalue relation $ \O \p =  \lambda \p $. In this case the operator function $ f(\O) $ applied to $ \p $ reads
+	\begin{equation*}
+		f(\O) \psi \equiv \left(\sum_{n = 0}^{\infty}c_{n} \O^{n}\right)\p = \sum_{n=0}^{\infty}c_{n} \left(\O^{n} \p\right) =  \sum_{n=0}^{\infty}c_{n} \lambda^{n} \p = f(\lambda) \p.
+	\end{equation*}
+	In other words, the operator expression $ f(\O) \psi $ reduces to the scalar expression $ f(\lambda) \p $. 
+	
+	\item Next, we consider the operator $ \pdv{x} $, which forms the basis of the momentum operator $ p_{x} $. Considering two wavefunctions $ \phi $ and $ \p $ and applying integration by parts, we have
+	\begin{equation*}
+		\int_{-\infty}^{\infty} \phi^{*} \pdv{\p}{x} \diff x = \phi^{*}\p \big |_{-\infty}^{\infty} - \int_{-\infty}^{\infty} \pdv{\phi^{*}}{x} \p  \diff x.
+	\end{equation*}
+	If the wavefunctions are well-behaved and vanish at infinity (as is commonly assumed for a wavefunction), the equality reduces to
+	\begin{equation*}
+		\int_{-\infty}^{\infty} \phi^{*} \pdv{\p}{x} \diff x = -\int_{-\infty}^{\infty} \pdv{\phi^{*}}{x} \p \diff x.
+	\end{equation*}
+	In other words, the action of the operator $ \pdv{x} $ on one wavefunction (e.g. $ \psi $) in the original integrand gives an asymmetric result in which the operator acts on the opposite wavefunction (e.g. $ \phi $) in the result. Because of the asymmetric minus sign, we say the operator $ \pdv{x} $ is antisymmetric or anti-Hermitian.
+	
+	Meanwhile, the operator $ \pdv[2]{}{x} $ is symmetric (or Hermitian):
+	\begin{equation*}
+		\int_{-\infty}^{\infty} \phi^{*} \pdv[2]{\p}{x} \diff x = \cdots = \int_{-\infty}^{\infty} \pdv[2]{\phi^{*}}{x} \p \diff x.
+	\end{equation*}
+	Note that the minus sign does not appear.
+	
+	\item The momentum operator $ p \to -i\hbar \pdv{x} $ is Hermitian---even though it contains the anti-Hermitian operator $ \pdv{x} $, the presence of the imaginary unit $ i $ recovers the operator's symmetry. We have
+	\begin{equation*}
+		\int_{-\infty}^{\infty} \phi^{*} p \psi \diff x = \int_{-\infty}^{\infty} \phi^{*} \left(-i\hbar \pdv{\p}{x}\right) = \int_{-\infty}^{\infty} \left(-i\hbar \pdv{\phi}{x}\right)^{*} \p \diff x = \int_{-\infty}^{\infty} (p \phi)^{*} \psi \diff x
+	\end{equation*}
+	Similarly, the operators $ x, p^{2}, V $ and $ H $ are all Hermitian\footnote{assuming the potential energy $ V $ is real}, i.e.
+	\begin{equation*}
+		\int_{-\infty}^{\infty} \phi^{*}\O \psi \diff x = \int_{-\infty}^{\infty} (\O \phi)^{*}\p \diff x
+	\end{equation*}
+	for $ \O = x, p^{2}, V, H $.
+	
+\end{itemize}
+
+\subsection{Commutators}
+\begin{itemize}
+	\item The commutator in quantum mechanics is analogous to the Poisson bracket in classical mechanics. The commutator of two operators $ A $ and $ B $ is defined as
+	\begin{equation*}
+		[A, B] = AB - BA
+	\end{equation*}
+	If $ [A, B] = 0 $, the two operators are said to commute, in which case $ AB = BA $. If this is not the case, then $ A $ and $ B $ do not commute.
+	
+	Note that the commutator of two operators is in general also an operator.
+	
+	\item We calculate the value of a commutator by having the commutator act on an arbitrary wavefunction. As an example, we consider the commutator of position and momentum, which occurs frequently in quantum mechanics. We find $ [x, p] $ as follows:
+	\begin{align*}
+		[x, p] \p &\equiv (xp - px)\p = x \left(- i\hbar \pdv{x}\right)\p - \left(- i\hbar \pdv{x}\right)x \p \\
+		& = - i\hbar x \p ' + i \hbar x \p ' + i \hbar \p = i \hbar \p
+	\end{align*}
+	The equality $ [x, p] \p = i \hbar \p $ implies $ [x, p] = i \hbar $.
+	
+	\item Next, we quote some common commutator identities:
+	\begin{align*}
+		&[\lambda A, B] = \lambda [A, B], \qquad \lambda \in \mathbb{C} \\
+		&[A, B] = - [B, A]\\
+		&[A + B, C] = [A, C] + [B, C]\\
+		& [AB, C] = A[B, C] + [A, C]B.
+	\end{align*}
+	
+	\item Finally, we quote three more identities. The Jacobi identity is
+	\begin{equation*}
+		\big[A, [B, C]\big] + \big[B, [C, A]\big] + \big[C, [A, B]\big] = 0,
+	\end{equation*}
+	The Baker-Campbell-Hausdorff formula gives the solution to the equation $ e^{A}e^{B} = e^{C} $, which is
+	\begin{equation*}
+		C = A + B + \frac{1}{2}[A, B] + \frac{1}{12}\big[A - B, [A, B]\big] + \cdots.
+	\end{equation*}
+	Finally, the Baker-Hausdorff lemma is
+	\begin{equation*}
+		e^{A}Be^{-A} = B + [A, B] + \frac{1}{2!}\big[A, [A, B]\big] + \frac{1}{3!} \big[A, [A, [A, B]]\big] + \cdots
+	\end{equation*}
+	
+\end{itemize}
+
+
+\subsection{Uncertainty Principle}
+\begin{itemize}
+	\item Recall the for a probability distribution $ \rho(x, t) = \abs{\P(x, t)}^{2} $, position expectation values are defined as
+	\begin{equation*}
+		\ev{x^{n}} = \int_{-\infty}^{\infty} \P^{*}(x, t) x^{n} \P(x, t) \diff x.
+	\end{equation*}
+	With reference to this definition of $ \ev{x^{n}} $, we define the ``width'' of a probability distribution $ \rho $ as
+	\begin{equation*}
+		\Delta x = \sqrt{\ev{x^{2}} - \ev{x}^{2}}.
+	\end{equation*}
+	Note the equivalence of the width $ \Delta x $ to the familiar standard deviation of a statistical distribution. 
+	
+	\item More generally, we define the uncertainty of a quantum mechanical operator $ \O $ as
+	\begin{equation*}
+		\Delta \O = \sqrt{\ev{\O^{2}} - \ev{\O}^{2}},
+	\end{equation*}
+	where the expectation values $ \ev{\O^{n}} $ are defined as
+	\begin{equation*}
+		\ev{\O^{n}} = \int_{V} \P^{*}(\r, t) \O^{n} \P(\r, t) \dr.
+	\end{equation*}
+	
+	\item We now quote an important result: the product of uncertainties of two operators $ A $ and $ B $ obeys the inequality
+	\begin{equation*}
+		\Delta A \Delta B \geq \frac{1}{2} \big | \evb{[A, B]} \big |.
+	\end{equation*} 
+	\textbf{TODO:} consider adding proof from Exercises.
+	
+	This inequality, using the commutator $ [x, p] = i \hbar $, is responsible for the famous Heisenberg uncertainty principle
+	\begin{equation*}
+		\Delta x \Delta p \geq \frac{\hbar}{2}.
+	\end{equation*}
+	This inequality implicitly assumes two independent measurements of $ x $ and $ p $.
+	
+\end{itemize}
+
+\subsection{Time-Dependent Expectation Values}
+\begin{itemize}
+	\item The time-dependent expectation value of an operator $ \O $ for a quantum system with the wavefunction $ \P(\r, t) $ is defined as
+	\begin{equation*}
+		\ev{\O, t} = \int_{V} \P^{*}(\r, t) \O \P(\r, t) \dr.
+	\end{equation*}
+	
+	\item The time derivative of $ \ev{\O, t} $ is
+	\begin{equation*}
+		\dv{\ev{O, t}}{t} = \int_{V} \left(\pdv{\P^{*}}{t} \O \P + \P^{*}\pdv{\O}{t}\P + \P^{*}\O \pdv{\P}{t}\right) \dr.
+	\end{equation*}
+	We then use the \Schro equation to express time derivatives of $ \P $ in terms of position derivatives, i.e.
+	\begin{equation*}
+		\pdv{\P}{t} = \frac{1}{i\hbar}H \P \eqtext{and} \pdv{\P^{*}}{t} = -\frac{1}{i\hbar}(H \P)^{*}.
+	\end{equation*}
+	Substituting these expressions into the time derivative of $ \ev{\O, t} $ gives
+	\begin{align*}
+		\dv{\ev{O, t}}{t} &= \ev{\pdv{\O}{t}} + \frac{1}{i \hbar} \int_{V} \big[- (H\P)^{*}\O \P + \P^{*}\O H \P \big] \dr\\
+		& = \ev{\pdv{\O}{t}} + \frac{1}{i \hbar} \int_{V} (\P^{*}\O H \P - \P^{*}H A \P) \dr
+	\end{align*}
+	where we have used $ (H \P)^{*} = \P^{*}H^{*} $ and applied the Hermitian identity $ H^{*} = H $. 
+	
+	Finally, we use a commutator to compactly write the above result for time derivative of $ \ev{\O, t} $ in the form
+	\begin{equation*}
+		\dv{\ev{O, t}}{t} =  \ev{\pdv{\O}{t}} + \frac{1}{i\hbar}\ev{[A, H]}.
+	\end{equation*}
+	Note the similarity to an analogous result from classical mechanics for a function $ f(p, q) $ of the canonical coordinates, in terms of Poisson brackets, which reads 
+	\begin{equation*}
+		\dv{f}{t} = \pdv{f}{t} + \{f, H\}.
+	\end{equation*}
+\end{itemize}
+
+\subsection{The Ehrenfest Theorem}
+\begin{itemize}
+	\item The Ehrenfest theorem can be interpreted as an quantum-mechanical analog of Newton's second law. We start the derivation of the Ehrenfest theorem by considering the time-dependent expectation value of the position operator $ x $.  Using the above result 
+	\begin{equation*}
+		\dv{\ev{O, t}}{t} =  \ev{\pdv{\O}{t}} + \frac{1}{i\hbar}\ev{[A, H]}
+	\end{equation*}
+	with $ \O = x $ and the identity $ \pdv{x}{t} = 0 $ produces the relationship
+	\begin{align*}
+		\dv{\ev{x, t}}{t} &= \frac{1}{i\hbar}\ev{[x, H]} = \frac{1}{i\hbar}\ev{\left[x, \frac{p^{2}}{2m} + V\right]}\\
+		& = \frac{1}{2i\hbar m} \ev{[x, p^{2}]} + \frac{1}{i\hbar}\ev{[x, V]}
+	\end{align*}
+	
+	\item We pause for a moment to calculate the two commutators. The first is
+	\begin{equation*}
+		[x, p^{2}] = p[x, p] + [x, p]p = p(i\hbar) + (i\hbar) p = 2i \hbar p
+	\end{equation*}
+	The second is simply $ [x, V] = 0 $, since $ x $ and $ V $ commute. 
+	
+	\item Using the just-derived intermediate results $ [x, p^{2}] = 2i\hbar p $ and $ [x, V(x, t)] = 0 $, the time derivative of $ \ev{x, t} $ is 
+	\begin{equation*}
+		\dv{\ev{x, t}}{t} = \frac{1}{2i\hbar m} \ev{2 i\hbar p} + \frac{1}{i\hbar}\ev{0} = \frac{1}{m}\ev{p, t},
+	\end{equation*}
+	in analogy with the classical result $ m \dot{x} = p $. 
+	
+	\item Next, we find the time derivative of $ \ev{p, t} $. Using the general result for the time derivative of an expectation value and implicitly recognizing $ \pdv{p}{t} = 0 $, we have
+	\begin{align*}
+		\dv{\ev{p, t}}{t} &= \frac{1}{i\hbar}\ev{[p, H]} = \frac{1}{i\hbar}\ev{\left[p, \frac{p^{2}}{2m} + V\right]}\\
+		&= \frac{1}{2i \hbar m}\ev{[p, p^{2}]} + \frac{1}{i\hbar} \ev{[p, V]}
+	\end{align*}
+	
+	\item Again, we pause to calculate the two commutators. The first is simply $ [p, p^{2}] = 0 $, which follows from $ [p, p] = 0 $ and $ [A, BC] = B[A, C] + [A, B]C $. We find the second as follows:
+	\begin{align*}
+		[p, V]\p &\equiv \left[ \left(-i\hbar \pdv{x}\right) V - V\left(-i\hbar \pdv{x}\right) \right] \p = - i \hbar f \pdv{V}{x} - i \hbar V \pdv{f}{x} + i \hbar V \pdv{f}{x} \\
+		& =  - i \hbar \pdv{V}{x}f \implies [p, V] = - i \hbar \pdv{V}{x}
+	\end{align*}
+	
+	\item Using the just derived intermediate results $  [p, p^{2}] = 0 $  and $ [p, V] = - i \hbar \pdv{V}{x} $, the time derivative of $ \ev{p, t} $ is 
+	\begin{equation*}
+		\dv{\ev{p, t}}{t} = \frac{1}{2i \hbar m}\ev{0} + \frac{1}{i\hbar} \ev{- i \hbar \pdv{V}{x}} = \ev{-\pdv{V}{x}}
+	\end{equation*}
+	
+	\item \textit{Note}: I must confess that we have been guilty of a minor notational inconsistency---formally, we have been working with the $ x $ component of momentum $ p_{x} $, even though we have been writing just $ p $ for conciseness. With unambiguous notation, the above result would read
+	\begin{equation*}
+		\dv{\ev{p_{x}, t}}{t} = \ev{-\pdv{V}{x}}
+	\end{equation*}
+	We could then apply an analogous derivation for the coordinates $ y $ and $ z $ to get
+	\begin{equation*}
+		\dv{\ev{p_{y}, t}}{t} = \ev{-\pdv{V}{y}} \eqtext{and} \dv{\ev{p_{z}, t}}{t} =  \ev{-\pdv{V}{z}}
+	\end{equation*}
+	Putting the $ x, y $ and $ z $ results together and combining the three position derivatives into the single gradient operator gives the Ehrenfest theorem:
+	\begin{equation*}
+		\dv{\ev{\vec{p}, t}}{t} = \ev{-\grad V} = \ev{\vec{F}}, \qquad \text{where } \vec{F}(\r) = - \grad V(\r).
+	\end{equation*}
+	Note the similarity to Newton's second law $ \dot{\vec{p}} = \vec{F} $.
+	
+	\item Without proof, we quote a similar result relating angular momentum $ \vec{L} $ and torque $ \vec{M} $:
+	\begin{equation*}
+		\dv{\ev{\vec{L}, t}}{t} = \ev{\vec{M}}, \qquad \text{where } \vec{M}(\r) = \r \cross \vec{F} = - \r \cross \grad V(\r)
+	\end{equation*}
+	The proof analyzes $ \r $ and $ \p $ in terms of their Cartesian components and rests on the commutator identities
+	\begin{equation*}
+		[x_{\alpha}, x_{\beta}] = 0, \qquad [p_{\alpha}, p_{\beta}] = 0, \qquad [x_{\alpha}, p_{\beta}] = i \hbar \delta_{\alpha, \beta}.
+	\end{equation*}
+	
+\end{itemize}
+
+\subsection{Virial Theorem}
+\begin{itemize}
+	\item We derive the virial theorem in quantum mechanics by finding the time derivative of the expectation value $ \ev{\r \cdot \vec{p}, t} $. Again using the general result for the time derivative of an expectation value and recognizing $ \pdv{\r \cdot \vec{p}}{t} = 0 $, we have
+	\begin{equation*}
+		\dv{\ev{\r \cdot \vec{p}}}{t} = \frac{1}{i \hbar} \evb{[\r \cdot \vec{p}, H]}
+	\end{equation*}
+ 	
+ 	\item We evaluate the commutator by components, starting with
+ 	\begin{equation*}
+ 		\big[ x_{\alpha} p_{\alpha}, H\big] = \left[x_{\alpha}p_{\alpha}, \frac{p_{\alpha}^{2}}{2m} + V\right] = \frac{x_{\alpha}}{2m} [p_{\alpha}, p_{\alpha}^{2}] + [x_{\alpha}, p_{\alpha}^{2}]\frac{p_{\alpha}}{2m} + x_{\alpha}[p_{\alpha}, V] + [x_{\alpha}, V]p_{\alpha}
+ 	\end{equation*}
+ 	We use the results $ [p_{\alpha}, p_{\alpha}^{2}] = [x_{\alpha}, V] = 0 $ and expand $ [x_{\alpha}, p_{\alpha}^{2}] $ to get
+ 	\begin{equation*}
+ 		\big[ x_{\alpha} p_{\alpha}, H\big] = \frac{p_{\alpha}}{2m}[x_{\alpha}, p_{\alpha}]p_{\alpha} + [x_{\alpha}, p_{\alpha}]\frac{p_{\alpha}^{2}}{2m} + x[p_{\alpha}, V]
+ 	\end{equation*}
+ 	Reusing the earlier results $ [x_{\alpha}, p_{\alpha}] = i \hbar $ and $ [p_{\alpha}, V] = - i \hbar \pdv{V}{x_{\alpha}} $ gives
+ 	\begin{equation*}
+ 		\big[ x_{\alpha} p_{\alpha}, H\big] = 2i \hbar \frac{p_{\alpha}^{2}}{2m} - i \hbar x_{\alpha} \pdv{V}{x_{\alpha}}.
+ 	\end{equation*}
+ 	
+ 	\item If we substitute the above result into the time derivative of $ \ev{\r \cdot \vec{p}} $, write the components in vector form, and use $ \vec{F} = - \grad V $, we get the virial theorem
+ 	\begin{equation*}
+ 		\dv{\ev{\r \cdot \vec{p}}}{t} = 2\frac{\ev{p^{2}}}{2m} + \ev{\r \cdot \vec{F}} = 2 \ev{T} + \ev{\r \cdot \vec{F}}
+ 	\end{equation*}
+ 	where we have defined the kinetic energy operator $ T = \frac{p^{2}}{2m} $.
+ 	
+ 	\item For a stationary state in which $ \dv{\ev{\r \cdot \vec{p}}}{t} = 0 $, we recover the familiar classical results
+ 	\begin{equation*}
+ 		2\ev{T} = - \ev{\r \cdot \vec{F}}.
+ 	\end{equation*}
+\end{itemize}
+
+\section{The Formalism of Quantum Mechanics}
+\subsection{The Copenhagen Interpretation}
+\begin{enumerate}
+	\item A quantum system is described by a state vector $ \ket{\psi} $ in a function Hilbert space.
+	
+	\item Every physically observable quantity is associated with a Hermitian operator
+	
+	\item The expectation value of an observable with operator $ A $ for a system in the state $ \ket{\psi} $ is $ \mel{\psi}{A}{\psi} $.
+	
+	\item The time evolution of a state $ \ket{\psi} $ is determined by the \Schro equation
+	\begin{equation*}
+		i \hbar \dv{t} \ket{\psi} = H \ket{\psi},
+	\end{equation*}
+	where $ H $ is the Hamiltonian operator.
+	
+	\item When measuring an observable with operator $ A $, the result of a single measurement is an eigenvalue of $ A $ (e.g. the eigenvalue $ a \in \mathbb{R} $). The probability of this measurement result is $ \abs{\braket{a}{\psi}}^{2} $, where $ \ket{a} $ is $ A $'s eigenstate corresponding to the eigenvalue $ a $. After a measurement, the system's wavefunction ``collapses'' into the state $ \ket{a} $.
+\end{enumerate}
+
+\subsection{Dirac Notation: Inner Product and Ket}
+For the remainder of this chapter, $ L^{2} $ denotes the Hilbert space of all complex functions $ \psi : \mathbb{R}^{3} \to \mathbb{C} $ for which
+\begin{equation*}
+	\norm{\psi}_{2} \equiv \int_{V} \abs{\psi}^{2} \dr < \infty
+\end{equation*}
+\begin{itemize}
+	\item The inner product of two vectors $ \phi, \psi \in L^{2} $ is written
+	\begin{equation*}
+		\braket{\phi}{\psi} \equiv \int_{V}\psi^{*}(\r)\psi(\r)\dr
+	\end{equation*}
+	Some properties of the inner product include
+	\begin{align*}
+		& \braket{\lambda \psi + \mu \chi}{\phi} = \lambda^{*} \braket{\psi}{\phi} + \mu^{*} \braket{\chi}{\phi}\\
+		&\braket{\phi}{\psi} = \braket{\psi}{\phi}^{*}\\
+		& \braket{\psi}{\psi} \geq 0 \eqtext{and} \braket{\psi}{\psi} = 0 \iff \psi \equiv 0 \\
+		&\abs{\braket{\phi}{\psi}}^{2} \leq \braket{\phi}{\phi}\braket{\p}{\p}
+	\end{align*}
+	
+	\item In Dirac notation, the wavefunction representing a quantum state is written as a ket, which is interpreted as a vector in the Hilbert space $ L^{2} $. A generic wavefunction $ \psi $ and eigenfunction $ \psi_{n} $ are written
+	\begin{equation*}
+		\begin{array}{ccccc}
+			\psi(\r) \in L^{2} & \to & \ket{\p} & & \\
+			\psi_{n}(\r) & \to  & \ket{\psi_{n}} & \to & \ket{n}\\
+		\end{array}
+	\end{equation*}
+	Note that the eigenfunction is conventionally written just with its index, e.g. $ \psi_{2} $ is written $ \ket{2} $.
+	
+	\item A basis of eigenstates is written $ \{\ket{n}\} $, and orthonormal eigenstates obey $ \braket{m}{n} = \delta_{mn} $. 
+		
+\end{itemize}
+
+\subsection{Linear and Antilinear Operators}
+\begin{itemize}
+	\item An operator $ \O $ is linear if for all vectors $ \phi, \psi \in L^{2} $ and all scalars $ \lambda, \mu \in \mathbb{C} $
+	\begin{equation*}
+		\O(\lambda \phi + \mu \p)  = \lambda A \phi + \mu A \p.
+	\end{equation*}
+	An operator $ \O $ is antilinear if
+	\begin{equation*}
+		\O(\lambda \phi + \mu \p)  = \lambda^{*} A \phi + \mu^{*} A \p \eqtext{or} \lambda A = A \lambda^{*}.
+	\end{equation*}
+	
+	\item Because the Hamiltonian (or kinetic energy) operator and potential energy operators are both linear, the \Schro equation is linear. The \Schro equation thus obeys the superposition principle: any linear combination of solutions to the \Schro equation also solves the \Schro equation.
+\end{itemize}
+
+\subsection{Dirac Notation: Bra}
+\begin{itemize}
+	\item Linear functionals are linear operators $ f:L^{2} \to \mathbb{C} $ that map wavefunctions in $ L^{2} $ to scalars in $ \mathbb{C} $. 
+	
+	\item Riesz representation theorem: for each linear functional $ f:L^{2} \to \mathbb{C} $ there exists a vector $ \ket{\phi_{f}} \in L^{2} $ for which 
+	\begin{equation*}
+		f\ket{\psi} = \braket{\phi_{f}}{\psi} \equiv \int_{V} \phi_{f}^{*} \psi \dr  \quad \text{for all } \psi \in L^{2}.
+	\end{equation*}
+	
+	\item In other words, we can interpret that action of a linear functional $ f $ on a wavefunction $ \ket{\psi} $ as the expression
+	\begin{equation*}
+		f\ket{\psi} =  \int_{V} \phi_{f}^{*} \psi \dr
+	\end{equation*}
+	In terms of the bra term in braket notation, the above reads
+	\begin{equation*}
+		f \ket{\psi} = \mel{\phi_{f}}{}{\psi} = \braket{\phi_{f}}{\psi}
+	\end{equation*}
+	where $ \bra{\phi_{f}} $ represents the action of the linear functional $ f $ on $ \psi $. A technicality:  $ \mel{\phi_{f}}{}{\psi}  $ represents the action of a linear functional $ f $ on the vector in $ L^{2} $, and the result is the scalar product $ \braket{\phi_{f}}{\psi} \in \mathbb{C} $. 
+	
+\end{itemize}
+
+\subsection{Expanding a State in a Basis}
+Consider an orthonormal basis $ \{\ket{\psi_{n}}\} \equiv \{\ket{n}\} $ consisting of the eigenstates $ \ket{n} $ of some operator. 
+\begin{itemize}
+	\item Every such basis $ \{\ket{n}\} $ (of the Hilbert space $ L^{2} $) has a corresponding basis $ \{\bra{n}\} $ of the Hilbert space's dual space of linear functionals. 
+	
+	\item In Dirac notation, the expansion of a state $ \ket{\p} $ in a basis $ \{\ket{n}\} $ takes the general form
+	\begin{equation*}
+		\ket{\psi} = \sum_{n}c_{n} \ket{n}
+	\end{equation*}
+	We find the coefficients $ c_{n} $ by acting on the basis expansion with $ \bra{m} $ and applying the basis' orthonormality identity $ \braket{n}{m} = \delta_{nm} $ to get
+	\begin{equation*}
+		\braket{m}{n} = \sum_{n}c_{n} \braket{m}{n} = sum_{n}c_{n}\delta_{mn} = c_{m},
+	\end{equation*}
+	which, switching from $ m $ to $ n $, implies
+	\begin{equation*}
+		c_{n} = \braket{n}{\psi} \eqtext{and} \ket{\psi} = \sum_{n} \braket{n}{\psi} \ket{n}.
+	\end{equation*}
+	
+	\item Since $ \braket{n}{\psi} $ is a scalar, we can rewrite the above expansion of $ \ket{\psi} $ in the basis $ \{\ket{n}\} $ and apply $ \braket{n}{\psi} = \bra{n}\ket{\psi} $ to get
+	\begin{equation*}
+		\ket{\psi} = \sum_{n} \braket{n}{\psi} \ket{n} = \sum_{n} \ket{n} \braket{n}{\psi} = \sum_{n} \ket{n} \mel{n}{}{\psi} = \left(\sum_{n} \ket{n} \bra{n}\right) \ket{\psi}
+	\end{equation*}
+	Comparing the first and last term gives an important identity:
+	\begin{equation*}
+		\ket{\p} = \bigg(\sum_{n} \ket{n} \bra{n}\bigg) \ket{\psi} \implies \sum_{n} \ket{n} \bra{n} = \operatorname{I}
+	\end{equation*}
+	where $ \operatorname{I} $ is the identity operator. This is an important identity, so I'll write it again:
+	\begin{equation*}
+		\operatorname{I} = \sum_{n} \ket{n} \bra{n}
+	\end{equation*}
+	This holds for any orthonormal basis $ \{\ket{n}\} $.
+
+\end{itemize}
+
+\subsection{Expanding an Operator in a Basis}
+Consider an operator $ \O $ and an orthonormal basis $ \{\ket{n}\} $. 
+\begin{itemize}
+	\item Using the previous identity for the identity operator, we have
+	\begin{align*}
+		\O \ket{\p} &\equiv (\II \O \II) \ket{\p} = \left(\sum_{m} \ket{m} \bra{m}\right) \O \left(\sum_{n} \ket{n} \bra{n}\right) \ket{\p}\\
+		& = \sum_{m}\ket{m}\bra{m} \O \sum_{n} \ket{n} \braket{n}{\p}
+	\end{align*}
+	
+	\item We introduce the \textit{matrix element} $ \O_{mn} $ (more on this later)
+	\begin{equation*}
+		\O_{mn} = \mel{m}{\O}{n} \in \mathbb{C}
+	\end{equation*}
+	In terms of this matrix element, we can then write $ \O $ in the basis $ \{\ket{n}\} $ as
+	\begin{align*}
+		\O \ket{\p} & = \sum_{m}\ket{m}\bra{m} \O \sum_{n} \ket{n} \braket{n}{\p}\\
+		& = \sum_{mn} \ket{m}\O_{mn}\bra{n} \ket{\p}
+	\end{align*}
+	Which gives us the desired expression
+	\begin{equation*}
+		\O = \sum_{mn} \ket{m}\O_{mn}\bra{n}
+	\end{equation*}
+	In other words, an operator $ \O $ can be represented in an arbitrary orthonormal basis $ \{\ket{n}\} $ in terms of a matrix $ \O_{mn} $ with matrix elements
+	\begin{equation*}
+		\O_{mn} = \mel{m}{\O}{n} \equiv \int_{V} \psi_{m}^{*}\O \psi_{n} \dr 
+	\end{equation*}
+	
+	\item More on writing an operator in an orthonormal basis... Consider the concrete operator equation
+	\begin{equation*}
+		\O \ket{\psi} = \ket{\varphi},
+	\end{equation*}
+	i.e. $ \O $ acts on the vector $ \ket{\psi} $ to produce $ \ket{\varphi} $. Additionally, let $ \ket{\psi} $ be expanded in the basis $ \{\ket{n} \} $ as
+	\begin{equation*}
+		\ket{\psi} = \sum_{n}c_{n} \ket{n} = \sum_{n} \braket{n}{\psi} \ket{n} 
+	\end{equation*}
+	 We write the operator equation $ \O \ket{\psi} = \ket{\varphi}, $ in the basis $ \{\ket{n}\} $ as
+	\begin{align*}
+		\O \ket{\p} &\equiv \sum_{mn}\ket{m}\O_{mn}\bra{n}  \ket{\psi} = \sum_{mn}\ket{m} \O_{mn}  c_{n}\\
+		& = \sum_{m}\left(\sum_{n}\O_{mn}c_{n}\right) \ket{m} \\
+		& \equiv \sum_{m}d_{m}\ket{m} \\
+		& = \ket{\phi}
+	\end{align*}
+	In other words, the state $ \ket{\varphi} = \O \ket{\p} $ has the basis expansion
+	\begin{equation*}
+		\ket{\varphi} = \sum_{m} d_{m}\ket{m}
+	\end{equation*}
+	Where the the coefficients $ d_{m} $, operator $ \O $, and coefficients $ c_{n} $ of the vector $ \psi $ are related by 
+	\begin{equation*}
+		d_{m} = \sum_{n}\O_{mn} c_{n}
+	\end{equation*}
+	In vector form, the action of an operator $ \O $ in a basis $ \{\ket{n}\} $ on a state $ \ket{\p} $ with coefficients $ c_{n} $ to produce a state $ \ket{\varphi} $ with coefficients $ d_{m} $ corresponds to the matrix equation
+	\begin{equation*}
+		\bm{\O} \vec{c} = \vec{d},
+	\end{equation*}
+	where the matrix elements $ \O_{mn} $ are given by $ \O_{mn} = \mel{m}{\O}{n} $.
+	
+	\item An important case occurs when we expand an operator in a basis of its eigenstates. Consider an operator $ \O $ with eigenvalues $ \lambda_{n} $ and eigenstates $ \ket{n} $ obeying the eigenvalue relation
+	\begin{equation*}
+		\O \ket{n} = \lambda_{n} \ket{n}.
+	\end{equation*}
+	In this case, if we expand $ \O $ in the basis of the eigenstates $ \{\ket{n}\} $, the operator's matrix $ \bm{\O} $ in the basis $ \{\ket{n}\} $is diagonal, and the matrix elements obey
+	\begin{equation*}
+		\O_{mn} = \mel{m}{\O}{n} = \lambda_{n} \delta_{mn}.
+	\end{equation*}
+	
+\end{itemize}
+
+
+\subsection{Hermitian Operators}
+\begin{itemize}
+	\item An operator $ \O $ is symmetric, also called Hermitian, if for all $ \phi, \psi \in L^{2} $ we have
+	\begin{equation*}
+		\braket{\phi}{\O \p} = \braket{\O\phi}{\p}.
+	\end{equation*}
+	The operator $ \O $ is antisymmetric, or anti-Hermitian, if
+	\begin{equation*}
+		\braket{\phi}{\O \p} = - \braket{\O \phi}{\p}.
+	\end{equation*}
+	
+	\item The expectation values of Hermitian operators are real. We show this by applying $ \braket{\p}{\O \p} = \braket{\O \p}{\p} $ (for \Herm operators), followed by $ \braket{\p}{\O \p} = \braket{\O \p}{\p}^{*} $  (for any operator)
+	\begin{equation*}
+		\ev{\O} \equiv \braket{\psi}{\O \psi} = \braket{\O \psi}{\psi} = 		\braket{\psi}{\O \psi}^{*} = \ev{\O}^{*}
+	\end{equation*}
+	The equality $ \ev{\O} = \ev{\O}^{*} $ implies $ \ev{\O} \in \mathbb{R} $. 
+	
+	\item The expectation value of a squared \Herm operator is positive, i.e.
+	\begin{equation*}
+		\ev{\O^{2}} = \mel{\p}{\O^{2}}{\p} = \braket{\O \p}{\O \p}\geq 0
+	\end{equation*}
+	Using the equality $ \ev{\O^{2}} \geq 0 $ to eigenstates of the operator $ \O^{2} $ with the eigenvalue relation $ \O^{2} \ket{\psi_{n}} = \lambda_{n} \ket{\psi_{n}} $ and applying the identity $ \braket{\p_{n}}{\p_{n}} \geq 0 $ produces
+	\begin{equation*}
+		\mel{\p_{n}}{\O^{2}}{\p_{n}} = \lambda_{n}\braket{\psi_{n}}{\p_{n}} \implies \lambda_{n} \geq 0
+	\end{equation*}
+	In other words, the square $ \O^{2} $ of a \Herm operator is positive definite.
+	
+	\item The eigenvalues of a \Herm operator are real. To show this, we start with a generic \Herm operator with the eigenvalues relation $  \O \ket{\psi_{n}} = \lambda_{n} \ket{\psi_{n}} $. We then act on both sides of the equation with $ \bra{\p_{n}} $ and apply the eigenvalue relation to get
+	\begin{equation*}
+		\O \ket{\p_{n}} = \lambda_{n} \ket{\p_{n}} \implies \mel{\p_{n}}{\O}{\p_{n}} = \lambda_{n} \braket{\p_{n}}{\p_{n}}
+	\end{equation*}
+	We then apply $ \mel{\p_{n}}{\O}{\p_{n}} \in \mathbb{R} $ (expectation value of a \Herm operator is real) and $ \braket{\p_{n}}{\p_{n}} = 1 \in \mathbb{R} $ (the eigenstate normalization condition) to get $ \lambda_{n} \in \mathbb{R} $. 
+	
+	\item A \Herm operator's eigenfunctions corresponding to different eigenvalues are orthogonal. Start with
+	\begin{equation*}
+		\O \ket{1} = \lambda_{1}\ket{1} \eqtext{and} \O \ket{2} = \lambda_{2}\ket{2},
+	\end{equation*}
+	and act on each equation with $ \bra{2} $ and $ \bra{1} $, respectively, to get
+	\begin{equation*}
+		\mel{2}{\O}{1} = \lambda_{1}\braket{2}{1} \eqtext{and} \mel{1}{\O}{2} = \lambda_{2}\braket{1}{2}
+	\end{equation*}
+	Take the complex conjugate of the second equation and apply $ \lambda_{n} = \lambda_{n}^{*} $ for a \Herm operator to get 
+	\begin{equation*}
+		\mel{1}{\O}{2}^{*} = \lambda_{2}\braket{1}{2}^{*}
+	\end{equation*}
+	The rest is just playing around with the general identity $ \braket{\p}{\phi} = \braket{\phi}{\p}^{*} $, the \Herm identity $ \braket{1}{\O 2} = \braket{\O 1}{2} $, and the eigenvalue relation to get
+	\begin{equation*}
+		\lambda_{2}\braket{1}{2}^{*} = \mel{1}{\O}{2}^{*} \equiv \braket{1}{\O 2}^{*} = \braket{O2}{1} = \braket{2}{O1} = \lambda_{1}\braket{2}{1}
+	\end{equation*}
+	We end up with 
+	\begin{equation*}
+		\lambda_{2}\braket{1}{2}^{*} = \lambda_{1}\braket{2}{1} \implies \lambda_{2}\braket{2}{1} = \lambda_{1}\braket{2}{1}
+	\end{equation*}
+	And end up with 
+	\begin{equation*}
+		(\lambda_{2} - \lambda_{1}) \braket{2}{1} = 0
+	\end{equation*}
+	Goodness gracious I made that way more convoluted than it needed to be.
+\end{itemize}
+
+\subsection{Adjoint Operators and Their Properties}
+\begin{itemize}
+	\item Consider an operator $ \O $. The operator $ \O $'s adjoint, denoted by $ \O^{\dagger} $, is defined by the relationship
+	\begin{equation*}
+		\braket{\phi}{\O \p} = \bbraket{\O^{\dagger}\phi}{\p}
+	\end{equation*}
+	From the general identity $ \braket{\phi}{\psi} = \braket{\psi}{\phi}^{*} $, we also have
+	\begin{equation*}
+		\braket{\phi}{\O \p} = \bbraket{\O^{\dagger}\phi}{\p} = \bbraket{\p}{\O^{\dagger}\phi}^{*}
+	\end{equation*}
+	
+	\item Consider two operators $ A $ and $ B $ related by $ A = \lambda B $ where $ \lambda \in \mathbb{C} $ is a constant. The operators' adjoint are then related by
+	\begin{equation*}
+		A^{\dagger} = \lambda^{*}B^{\dagger},
+	\end{equation*}
+	which follows directly from
+	\begin{equation*}
+		\bbraket{A^{\dagger}\phi}{\p} = \braket{\phi}{A \p} = \braket{\phi}{\lambda B \p} = \bbraket{\lambda^{*}B^{\dagger}\phi}{\p}
+	\end{equation*}
+	
+	\item Any operator $ \O $ obeys $ \big(\O^{\dagger}\big)^{\dagger} = \O $, which implies the operator  $ \O + \O^{\dagger} $ is \Herm and the operator $ \O - \O^{\dagger} $ is anti-\Herm.  More so, if $ \O $ is \Herm, then $ i\O $ is anti-\Herm.
+	
+	\item The expectation values of an operator $ \O $ obey the convenient identities
+	\begin{equation*}
+	\begin{array}{ccccc}
+		2 \Re \ev{\O} & \equiv & 2 \Re \mel{\p}{\O}{\p} & = & \mel{\p}{(\O + \O^{\dag})}{\p}\\
+		2i \Im \ev{\O} & \equiv & 2i \Im \mel{\p}{\O}{\p} & = & \mel{\p}{(\O - \O^{\dag})}{\p}
+	\end{array}
+	\end{equation*}
+	
+	\item The adjoint of an operator defined by $ \O = \ket{m}\bra{n} $ is $ \O^{\dagger} = \ket{n} \bra{m} $, which follows from
+	\begin{equation*}
+		\braket{\phi}{\O \p} = \braket{\phi}{m}\braket{n}{\p} = \big(\bra{\p} \ket{n} \bra{m} \ket{\phi} \big)^{*}
+	\end{equation*}
+	Similarly, $ \big(\bra{\p}\O\big)^{\dagger} = \O^{\dagger}\ket{\p} $
+	
+	\item Two operators $ A $ and $ B $ obey
+	\begin{equation*}
+		\big(AB\big)^{\dagger} = B^{\dagger}A^{\dagger},
+	\end{equation*}
+	which follows from
+	\begin{equation*}
+		\braket{\phi}{AB\p} = \bbraket{A^{\dagger}\phi}{B\p} = \bbraket{B^{\dagger}A^{\dagger}\phi}{\p}.
+	\end{equation*}
+	The product of two \Herm operators is \Herm if the two operators commute.
+	
+	\item The projection operator $ P_{n} \equiv \ket{n}\bra{n} $ equals its adjoint, i.e. $ P_{n} = P_{n}^{\dagger} $. More so, $ P_{n} = P_{n}^{2} $, which follows from
+	\begin{equation*}
+		P_{n}^{2} = \ket{n}\bra{n} \ket{n}\bra{n} = \ket{n}\bra{n} = P_{n}
+	\end{equation*}
+	and the normalization condition $ \braket{n}{n} = 1 $.
+	
+	\item Consider an operator $ \O $ written in some generic orthonormal basis $ \{\ket{n}\} $:
+	\begin{equation*}
+		\O = \sum_{mn} \ket{m}\O_{mn}\bra{n}.
+	\end{equation*}
+	The adjoint operator $ \O^{\dagger} $ is then written in the basis as
+	\begin{equation*}
+		\O^{\dagger} = \sum_{mn}\ket{n}\O_{mn}^{*}\bra{m} = \sum_{mn}\ket{m} \O_{nm}^{*}\bra{n}
+	\end{equation*}
+	The matrix elements of an operator and its adjoint are thus related by
+	\begin{equation*}
+		\big(\O^{\dagger}\big)mn = \O_{nm}^{*}
+	\end{equation*}
+\end{itemize}
+
+\subsection{Self-Adjoint Operators}
+\begin{itemize}
+	\item An operator $ \O $ is self-adjoint if:
+	\begin{enumerate}
+		\item Both $ \O $ and $ \O^{\dagger} $ are Hermitian, i.e.
+		\begin{equation*}
+			\braket{\phi}{\O \p} = \braket{\O\phi}{\p} \eqtext{and} \bbraket{\phi}{\O^{\dagger} \p} = \bbraket{\O^{\dagger}\phi}{\p} \ \text{for all } \phi, \p \in L^{2},
+		\end{equation*}
+		
+		\item $ \O $ and $ \O^{\dagger} $ act on the same domain (in our case generally $ L^{2} $).
+	\end{enumerate} 
+	A self-adjoint operator obeys $ \O = \O^{\dagger} $, which makes sense from the name---a self-adjoint operator $ \O $ equals its adjoint $ \O^{\dagger} $.
+	
+	\item Every self-adjoint operator is \Herm, but in general not every \Herm operator is self-adjoint. However (without proof), in finite $ N $-dimensional vector spaces $ \mathbb{C}^{N} $ and in the Schwartz space of rapidly falling functions, \Herm and self-adjoint operators are equivalent. 
+	
+	Since physicists typically work only with quantities in $ \mathbb{R}^{N} $ or functions in the Schwartz space, we tend to incorrectly use the terms Hermitian and self-adjoint interchangeably.
+
+\end{itemize}
+
+\subsection{Unitary Operators}
+\begin{itemize}
+	\item Unitary operators in quantum mechanics are analogous to orthogonal transformations in classical mechanics. A unitary operator $ U $ obeys the relationship
+	\begin{equation*}
+		UU^{\dagger} = U^{\dagger}U = \II \implies U^{-1} = U^{\dagger}
+	\end{equation*}
+	
+	\item Unitary operators preserve the inner product. In symbols, for a unitary operator $ U $ and any two functions $ \bket{\t{\phi}} = U\ket{\phi} $ and $ \bket{\t{\p}} = U \ket{\p} $, 
+	\begin{equation*}
+		\braket{\phi}{\p} = \bbraket{\t{\phi}}{\t{\p}}
+	\end{equation*}
+	The above follows directly from $  \bbraket{\t{\phi}}{\t{\p}} = \braket{U\phi}{U\p} = \braket{UU^{\dagger}\phi}{\p} = \braket{\phi}{\p} $.
+	
+	\item For matrix elements, using $ U^{\dagger} = U^{-1} $:
+	\begin{equation*}
+		\mel{\phi}{\O}{\p} = \bmel{U^{\dagger}\t{\phi}}{\O}{U^{\dagger}\t{\p}} =  \bmel{\t{\phi}}{U\O U^{\dagger}}{\t{\p}} \equiv  \bmel{\t{\phi}}{\t{\O}}{\t{\p}} 
+	\end{equation*}
+	where we have defined $ \t{\O} = U \O U^{\dagger} $. In other words, the matrix element of $ \O $ corresponding to the wavefunctions $ \ket{\phi} $ and $ \ket{\p} $ equal the matrix elements of the transformed operator $ \t{\O} = U \O U^{\dagger}  $ found with the transformed wavefunctions $  \bket{\t{\phi}} $ and $ \bket{\t{\p}} $.
+	
+	\item If $ \bket{\t{\p}} = U \ket{\p}$ then $ \bra{\t{p}} = \bra{U \p} = \bra{\p}U^{\dagger} $.
+	
+	\item Consider an orthonormal basis $ \{\ket{\p_{n}}\} $ and the transformed basis $ \{\bket{\t{\p}_{n}}\} $ = $ \{\ket{U\p_{n}}\} $ where $ U $ is a unitary operator. We then have
+	\begin{equation*}
+		U = U\II = U \sum_{n}\ket{\p_{n}}\bra{\p_{n}} = \sum_{n}U\ket{\p_{n}}\bra{\p_{n}} =  \sum_{n}\bket{\t{\p}_{n}}\bra{\p_{n}}
+	\end{equation*}
+	We then use $ \II = \sum_{m}\ket{\p_{m}}\bra{\p_{m}} $ and define the matrix elements $ U_{mn} = \bbraket{\p_{m}}{\t{\p}_{n}} $ to get
+	\begin{equation*}
+		U =  \sum_{n}\bket{\t{\p}_{n}}\bra{\p_{n}} = \sum_{n}\left(\sum_{m}\ket{\p_{m}}\bra{\p_{m}}\right)\bket{\t{\p}_{n}}\bra{\p_{n}} = \sum_{mn}\ket{\p_{m}}U_{mn}\bra{\p_{n}}
+	\end{equation*}
+	
+	\item \textbf{TODO} The identity operator takes the same form in the original basis $ \{\ket{\p_{n}}\} $ and the transformed basis $ \{\bket{\t{\p}_{n}}\} $:
+	\begin{equation*}
+		UU^{\dagger} = \sum_{mn} \bket{\t{\p}_{m}} \braket{\p_{m}}{\p_{n}} \bbra{\t{\p}_{n}} = \sum_{n}\bket{\t{\p}_{n}}\bbra{\t{\p}_{n}}
+	\end{equation*}
+	
+	\item In a unitary change of basis $ \{\ket{\p_{n}}\} \to \{\bket{\t{\p}_{n}}\} $, the coefficients transform according to
+	\begin{equation*}
+		\ket{\phi} = \sum_{n}c_{n}\ket{\p_{n}} = \sum_{mn}\bket{\t{\p}_{m}}\bmel{\t{\p}_{m}}{c_{n}}{\p_{n}} = \sum_{n}d_{n}\bket{\tilde{\p}_{n}}
+	\end{equation*}
+	where the new coefficients are
+	\begin{equation*}
+		d_{n} = \sum_{m}U_{nm}^{\dagger}c_{m}
+	\end{equation*}
+	
+	\item Unitary transformations preserve eigenvalue equations:
+	\begin{align*}
+		&\O\ket{\psi_{n}} = \lambda_{n} \ket{\p_{n}} \implies U \O \II \ket{\p_{n}} = U \O U^{\dagger}U \ket{\p_{n}} = \lambda_{n} U\ket{\p_{n}}\\
+		&\t{\O} \ket{U\p_{n}} = \lambda_{n}\ket{U\p_{n}}\\
+		&\t{\O} = \bket{\t{\p}_{n}} = \lambda_{n} \bket{\t{\p}_{n}}
+	\end{align*}
+	
+	\item If $ k $ is \Herm, then $ U = e^{iK} $ is unitary by the Baker-Campbell-Hausdorff formula, i.e. $ UU^{\dagger} = e^{iK}e^{-iK} = \II $.
+	
+	\item Every single-parameter unitary operator $ U(s) $, where $ s \in \mathbb{R} $ is a real constant, can be written in the form 
+	\begin{equation*}
+		U(s) = e^{isK}
+	\end{equation*}
+	where $ K $ is a self-adjoint operator called the \textit{generator} of the unitary operator $ U $. 
+	
+	\textbf{TODO} derivation on page 35 of KvaMeh notes.
+	
+	
+	
+\end{itemize}
+\textbf{Anti-Unitary Operator}: 
+\begin{itemize}
+	\item An anti-unitary operator $ U $ obeys the relationship
+	\begin{equation*}
+		\braket{U\phi}{U\psi} = \braket{\phi}{\psi}^{*}= \braket{\psi}{\phi}
+	\end{equation*}
+	
+	\item Anti-unitary operators are antilinear, i.e.
+	\begin{equation*}
+		U\big(\lambda \ket{\phi} + \mu \ket{\psi}\big) = \lambda^{*}U\ket{\phi} + \mu^{*}U\ket{\psi}
+	\end{equation*}
+
+\end{itemize}
+
+\subsection{Time Evolution}
+\begin{itemize}
+	\item Expanding in basis formed of the energy eigenstates $ \{\ket{\phi_{n}}\} $ of the \Ham operator $ H $ reads
+	\begin{equation*}
+		\ket{\p(t)} = \sum_{m}\braket{\phi_{n}}{\p(0)}e^{-i\frac{E_{n}}{\hbar}t}\ket{\phi_{n}}
+	\end{equation*}
+	Using the operator function identity $ f(\O)\psi_{n} = f(\lambda_{n} )\psi_{n} $, we can replace the energy eigenvalues $ E_{n} $ in the last line with the \Ham operator $ H $ to get
+	\begin{align*}
+		\ket{\p(t)} &= \sum_{m}\braket{\phi_{n}}{\p(0)} e^{-i\frac{E_{n}}{\hbar}t}\ket{\phi_{n}} = \sum_{m} \braket{\phi_{n}}{\p(0)} e^{-i\frac{H}{\hbar}t}\ket{\phi_{n}}
+	\end{align*}
+	Factoring $ e^{-i\frac{H}{\hbar}t} $ out of the sum gives
+	\begin{equation*}
+		\ket{\p(t)} = e^{-i\frac{H}{\hbar}t} \mel{\phi_{n}}{\p(0)}{\phi(n)} \equiv U(t) \ket{\p(0)}
+	\end{equation*}
+	where we have defined the time evolution operator $ U(t) \equiv e^{-i\frac{H}{\hbar}t} $.
+	
+	\item As the notation $ U(t) $ suggests, the time evolution operator is unitary with generator $ H $. Because $ U $ is unitary, it preserves the inner product.
+	
+	\item Applying $ U(t) $ to an infinitesimal time step $ \diff t $ in the evolution of a wavefunction $ \ket{\p} $ gives
+	\begin{equation*}
+		\ket{\delta \p} = \ket{\psi(t + \diff t)} - \ket{\p(t)} = -i\frac{H}{\hbar}\diff t \ket{\p(t)}
+	\end{equation*}
+	``Dividing'' by $ \diff t $ and rearranging produces the \Schro equation
+	\begin{equation*}
+		i \hbar \frac{\ket{\psi(t + \diff t)} - \ket{\p(t)}}{\diff t} = i \hbar = \dv{t}\ket{\psi(t)} = H \ket{\psi(t)}
+	\end{equation*}
+\end{itemize}
+
+\subsection{Momentum Eigenfunction Representation} 
+% see Schwabl preview page 176
+
+
+
+\section{Examples of Quantum Systems}
+
+\subsection{Quantum Harmonic Oscillator}
+\begin{itemize}
+	\item In one dimension, the quantum harmonic oscillator's Hamiltonian reads
+	\begin{equation*}
+		H = \frac{p^{2}}{2m} + \frac{1}{2}kx^{2} = - -\frac{\hbar^{2}}{2m}\dv[2]{}{x} + \frac{1}{2}m \omega^{2}x^{2}, \qquad \omega = \sqrt{\frac{k}{m}}.
+	\end{equation*}
+	The standard formalism for analyzing the harmonic oscillator follows.
+	
+	\item We introduce characteristic energy $ \hbar \omega $ and length $ \xi = \sqrt{\frac{\hbar}{m\omega}}$  and write the Hamiltonian as a difference of perfect squares:
+	\begin{equation*}
+		H = \frac{\hbar \omega}{2}\left(\frac{x^{2}}{\xi^{2}} - \xi^{2} \dv[2]{}{x}\right).
+	\end{equation*}
+	Keeping in mind that $ x $ and $ \dv{x} $ don't commute, we factor the above into
+	\begin{equation*}
+		H = \frac{\hbar \omega}{4}\left[\left(\frac{x}{\xi} + \xi \dv{x}\right)\left(\frac{x}{\xi} - \xi \dv{x}\right) + \left(\frac{x}{\xi} - \xi \dv{x}\right)\left(\frac{x}{\xi} + \xi \dv{x}\right)\right].
+	\end{equation*}
+	
+	\item Next, we introduce the annihilation and creation operators, denoted by $ a $  and $ a^{\dagger} $ respectively, and defined by
+	\begin{equation*}
+		a = \frac{1}{\sqrt{2}}\left(\frac{x}{\xi} + \xi \dv{x}\right) \eqtext{and} a^{\dagger} = \frac{1}{\sqrt{2}}\left(\frac{x}{\xi} - \xi \dv{x}\right). 
+	\end{equation*} 
+	We recover $ x $ and $ \dv{x} $ from $ a $ and $ a^{\dagger} $ with
+	\begin{equation*}
+		x = \frac{\xi}{\sqrt{2}}\big(a + a^{\dagger}\big) \eqtext{and} \dv{x} = \frac{1}{\sqrt{2}\xi}\big(a - a^{\dagger}\big). 
+	\end{equation*}
+	Additionally, we can write the Hamiltonian as
+	\begin{equation*}
+		H = \frac{\hbar\omega}{2}\big(a a^{\dagger} + a^{\dagger}a\big)
+	\end{equation*}
+	
+	\item Next, we quote to commutation relation
+	\begin{equation*}
+		\big[a, a^{\dagger}\big] = 1,
+	\end{equation*}
+	which is proven with a direct application of $ [x, p] = i \hbar $. The relationship allows use to write the Hamiltonian in the form
+	\begin{equation*}
+		H = \hbar \omega \left(a^{\dagger}a + \frac{1}{2}\right).
+	\end{equation*}
+	
+\end{itemize}
+
+\subsubsection{Eigenvalues and Eigenfunctions}
+% See preview page 59 of Schwabl
+\begin{itemize}
+	\item The next standard step is introducing the counting operator $ \hat{n} \equiv a^{\dagger}a $
+	\begin{equation*}
+		\hat{n}\k{\phi_{n}} = n \ket{\phi_{n}},
+	\end{equation*}
+	whose eigenvalues are the index $ n $ of the eigenfunction $ \ket{\phi_{n}} $. We search for real $ n $ corresponding to normalizable eigenstates. First, we show $ n \geq 0 $, which follows from
+	\begin{equation*}
+		\mel{\phi_{n}}{\hat{n}}{\phi_{n}} = \mel{\phi_{n}}{a^{\dagger}a}{\phi_{n}} = \braket{a \phi_{n}}{a \phi_{n}} = n \braket{\phi_{n}}{\phi_{n}} \geq 0.
+	\end{equation*}
+	
+	\item First, we confirm $ n = 0 $ is a valid solution of counting operator's eigenvalue equation. This comes down to (why only $ a $?) solving the equation
+	\begin{equation*}
+		a \ket{\phi_{0}} = 0.
+	\end{equation*}
+	In the coordinate operator and wavefunction representation, the equation reads
+	\begin{equation*}
+		\frac{1}{\sqrt{2}}\left(\frac{x}{\xi} + \xi \dv{x}\right)\phi_{0}(x) = 0 \eqtext{or} \xi \dv{x} \phi_{0}(x) = - \frac{x}{\xi}\phi_{0}(x)
+	\end{equation*}
+	The solution is the Gaussian function
+	\begin{equation*}
+		\phi_{0}(x) = \frac{1}{\sqrt{\sqrt{\pi}\xi}}e^{-\frac{1}{2}\frac{x^{2}}{\xi^{2}}} \equiv \braket{x}{\phi_{0}}.
+	\end{equation*}
+	The state $ \k{\phi_{0}} $ is the oscillator's ground state, with energy $ E_{0} = \frac{1}{2}\hbar \omega $. We can find all other solutions from the ground state solution. 
+
+	\item First, we derive the commutator relation
+	\begin{equation*}
+		\big[\hat{n}, a^{\dagger}\big] = \big[a^{\dagger} a, a^{\dagger}\big] = a^{\dagger}\big[a, a^{\dagger}\big] + \big[a^{\dagger}, a^{\dagger}\big]a = a^{\dagger}
+	\end{equation*}
+	This relationship shows that $ a^{\dagger} $ acts on a state with eigenvalue $ n $ to create a state with eigenvalue $ n + 1 $. We show this with
+	\begin{align*}
+		\hat{n}a^{\dagger}\k{\phi_{n}} &\equiv a^{\dagger} a a^{\dagger}\k{\phi_{n}} = a^{\dagger}\big(a^{\dagger}a + 1\big)\ket{\phi_{n}} = \big(a^{\dagger}\hat{n} + a^{\dagger}\big)\k{\phi_{n}}\\
+		& = a^{\dagger}n \k{\phi_{n}} + a^{\dagger}\k{\phi_{n}} = (n + 1)a^{\dagger}\ket{\phi_{n}}.
+	\end{align*}
+	Because the counting operator $ \hat{n} $ acts on the state $ a^{\dagger}\ket{\phi_{n}} $ to produce an eigenvalue $ (n+1) $, $ a^{\dagger} $ must have the effect of raising $ \k{\phi_{n}} $'s index by one. In symbols:
+	\begin{equation*}
+		a^{\dagger} \k{\phi_{n}} = c_{n}\ket{\phi_{n + 1}}.
+	\end{equation*}
+	
+	\item We find the constant $ c_{n} $ from the assumption that the original state $ \ket{\phi_{n}} $ is normalized, i.e. $ \braket{\phi_{n}}{\phi_{n}} = 1 $. The relevant calculation reads
+	\begin{align*}
+		\bbraket{c_{n}^{*}\phi_{n+1}}{c_{n}\phi_{n+1}} &= \bbraket{a^{\dagger}\phi_{n}}{a^{\dagger}\phi_{n}} = \bbraket{\phi_{n}}{aa^{\dagger}\phi_{n}} = \bbraket{\phi_{n}}{(a^{\dagger}a + 1)\phi_{n}} \\
+		&= \braket{\phi_{n}}{(n + 1)\phi_{n}},
+	\end{align*}
+	which implies $ \abs{c_{n}}^{2} = (n+1) $. Up to a constant phase factor of magnitude one, we define $ c_{n} = \sqrt{n+1} $. The action of $ a^{\dagger} $ is then fully summarized with
+	\begin{equation*}
+		a^{\dagger} = \k{\phi_{n}} \sqrt{n+1}\ket{\phi_{n+1}} \eqtext{or} \ket{\phi_{n + 1}} = \frac{a^{\dagger}}{\sqrt{n+1}}\k{\phi_{n}}. 
+	\end{equation*}
+	If we start with $ \ket{\phi_{n}} = \ket{\phi_{0}} $, the latter expression produces to the recursive relation
+	\begin{equation*}
+		\ket{\phi_{n}} = \frac{a^{\dagger}}{\sqrt{n}}\ket{\phi_{n-1}} = \frac{\big(a^{\dagger}\big)^{n}}{\sqrt{n!}}\ket{\phi_{0}}.
+	\end{equation*}
+	
+	\item While the creation operator $ a^{\dagger} $ raises the index of a harmonic oscillator's eigenstate, the annihilation operator $ a $ lowers a eigenstate's index. The derivation follows the same pattern as above for $ a^{\dagger} $: we use the commutator relation
+	\begin{equation*}
+		\big[\hat{n}, a\big] = a^{\dagger}\big[a, a\big] + \big[a^{\dagger}, a\big]a = - a
+	\end{equation*}
+	to show that
+	\begin{equation*}
+		\hat{n}a \ket{\phi_{n}} = (a \hat{n} - a)\ket{\phi_{n}} = (n-1)a\ket{\phi_{n}}.
+	\end{equation*}
+	Because the counting operator acts on the state $ a\k{\phi_{n}} $ to produce an eigenvalue $ (n-1) $, $ a $ must have the effect of lowering $ \ket{\phi_{n}} $'s index by one, i.e.
+	\begin{equation*}
+		a\ket{\phi_{n}} = d_{n}\ket{\phi_{n-1}}
+	\end{equation*}
+	
+	\item As for $ a^{\dagger} $, we find the constants $ d_{n} $ under that assumption that the original state $ \ket{\phi_{n}} $ is normalized, i.e. $ \braket{\phi_{n}}{\phi_{n}} = 1 $. The relevant calculation reads
+ 	\begin{equation*}
+ 		\bbraket{d_{n}^{*}\phi_{n-1}}{d_{n}\phi_{n-1}} = \bbraket{a\phi_{n}}{a\phi_{n}} = \bbraket{\phi_{n}}{a^{\dagger}a\phi_{n}} = \bbraket{\phi_{n}}{n\phi_{n}} = n \bbraket{\phi_{n}}{\phi_{n}}
+ 	\end{equation*}
+ 	which implies $ \abs{d_{n}}^{2} = 2 $. Up to a constant phase factor of magnitude one, we define $ d_{n} = \sqrt{n} $. The action of $ a $ is then fully summarized with
+ 	\begin{equation*}
+ 		a\k{\phi_{n}} = \sqrt{n}\ket{\phi_{n-1}} \eqtext{or} \ket{\phi_{n - 1}} = \frac{a}{\sqrt{n}}\k{\phi_{n}}. 
+ 	\end{equation*}
+ 	The latter expression results in the recursion relations
+ 	\begin{equation*}
+ 		\ket{\phi_{n}} = \frac{a}{\sqrt{n+1}}\ket{\phi_{n+1}} \eqtext{and} \ket{\phi_{0}} = \frac{a^{n}}{\sqrt{n!}}\ket{\phi_{n}}.
+ 	\end{equation*}
+ 	
+ 	\item The recursive relations involving $ a^{\dagger} $  and $ a $ solve the harmonic oscillator problem. The results are
+ 	\begin{equation*}
+ 		H\ket{n} = E_{n}\ket{n} \qquad E_{n} = \left(n + \frac{1}{2}\right)\hbar \omega \qquad \braket{m}{n} = \delta_{mn}.
+ 	\end{equation*}
+	 
+\end{itemize}
+
+\textbf{Some Discussion of the Solution}
+\begin{itemize}
+	\item In one dimension, the harmonic oscillator's energy eigenvalues $ E_{n} $ are nondegenerate.\footnote{This does not hold in higher dimensions} We prove nondegeneracy by contradiction: assume in addition to $ \k{\phi_{n}} $ there exists another linearly independent eigenstates $ \bk{\t{\phi}_{n}} $ with the same energy $ E_{n} $. From the recursion relation
+	\begin{equation*}
+		\ket{\phi_{n}} = \frac{a^{n}}{\sqrt{n!}}\ket{\phi_{0}},
+	\end{equation*}
+	the state $ \bk{\t{\phi}_{n}} $ must obey $ a^{n}\bk{\t{\phi}_{n}} \propto \bk{\t{\phi}_{0}} $. However, the harmonic oscillator's ground state is non-degenerate, since the earlier ground state equation 
+	\begin{equation*}
+		\xi \dv{x} \phi_{0}(x) = - \frac{x}{\xi}\phi_{0}(x)
+	\end{equation*}
+	has only one normalized solution:
+	\begin{equation*}
+		\braket{x}{\phi_{0}} = \frac{1}{\sqrt{\sqrt{\pi}\xi}}e^{-\frac{1}{2}\frac{x^{2}}{\xi^{2}}}.
+	\end{equation*}
+	Because the oscillator's ground state is nondegenerate and all higher states are proportional to the ground state via $  a^{n}\bk{\phi_{n}} \propto \bk{\phi_{0}}  $, all higher states are also nondegenerate.
+	
+	\item The harmonic oscillator's energy eigenvalues have only integer indexes $ n \in \mathbb{N} $. We prove this by contradiction: assume there exists an energy eigenstate $ \k{\phi_{\lambda}} $ with index $ \lambda = n + \nu $ where $ \nu \in (0, 1) $. Applying the counting operator to $ \k{\phi_{\lambda}} $ produces
+	\begin{equation*}
+		\hat{n}\ket{\phi_{\lambda}} = \lambda \ket{\phi_{\lambda}} = (n + \nu)\ket{\phi_{\lambda}}
+	\end{equation*}
+	Repeatedly applying the annihilation operator $ a $ to the state $ \ket{\phi_{\lambda}} $ and using the recursion relation $ \ket{\phi_{n}} = \frac{a^{n}}{\sqrt{n!}}\ket{\phi_{0}} $ would eventually lead to a state with the index $ \lambda \in (-1, 0) $, i.e. a negative index. This contradicts the earlier result from the beginning of the ``Eigenvalues and Eigenfunctions'' section, which showed that harmonic oscillator's indexes are non-negative, i.e. $ n \geq 0 $. 
+\end{itemize}
+
+\subsubsection{Eigenfunctions in the Coordinate Representation}
+\begin{itemize}
+	\item In the coordinate representation, the harmonic oscillators eigenfunctions are found with the generating formula
+	\begin{equation*}
+		\braket{x}{\phi_{n}} = \phi_{n}(x) = \frac{1}{\sqrt{2^{n}n!}}\left(\frac{x}{\xi} - \xi \dv{x}\right)^{n}\phi_{0}(x).
+	\end{equation*}
+	The ground state eigenfunction with $ n = 0 $ is even, and the excited state eigenfunctions with $ n = 1, 2, \ldots $ alternate between even and odd according to the parity of the index $ n $. 
+	
+	Perhaps more intuitively, the eigenfunctions are just the product of a Hermite polynomial and the fundamental Gaussian solution $ \phi_{0}(x) $. In this form, the eigenfunctions are written
+	\begin{align*}
+		\phi_{n} = C_{n} H_{n}\left(\frac{x}{\xi}\right)e^{-\frac{1}{2}\frac{x^{2}}{\xi^{2}}},
+	\end{align*}
+	where $ H_{n} $ is the $ n $th Hermite polynomial and
+	\begin{equation*}
+		\xi = \sqrt{\frac{\hbar}{m \omega}} \eqtext{and} C_{n} = \frac{1}{\sqrt{2^{n}n!\xi \sqrt{n}}}
+	\end{equation*}
+	
+	\item The characteristic width of each eigenfunction increases with the index $ n $; the width $ \sigma_{x} $ of the $ n $th state obeys
+	\begin{equation*}
+		\frac{\sigma_{x_{n}}^{2}}{\xi^{2}} = \frac{1}{2}\bmel{n}{\big(a^{\dagger}\big)^{2} + a^{\dagger}a + aa^{\dagger} + a^{2}}{n} = n + \frac{1}{2}
+	\end{equation*}
+	In the $ p $-space representation, the $ n $th eigenfunctions characteristic width is
+	\begin{equation*}
+		\sigma^{2} \sigma_{p_{n}}^{2} = - \frac{\hbar^{2}}{2}\bmel{n}{\big(a^{\dagger}\big)^{2} - a^{\dagger}a - aa^{\dagger} + a^{2}}{n} = \hbar^{2}\left(n + \frac{1}{2}\right)
+	\end{equation*}
+	The product $ \sigma_{x_{n}}\sigma_{p_{n}} $ is thus
+	\begin{equation*}
+		\sigma_{x_{n}}\sigma_{p_{n}} = \hbar\left(n + \frac{1}{2}\right)
+	\end{equation*}
+	Note that in the ground state $ \sigma_{x_{n}}\sigma_{p_{n}} = \hbar/2 $, in agreement with the Heisenberg uncertainty principle.
+	
+	
+\end{itemize}
+
+\subsubsection{The Harmonic Oscillator in Three Dimensions}
+\begin{itemize}
+	\item We consider the three-dimensional case with an anisotropic potential. The \Ham reads
+	\begin{equation*}
+		H(\r) = \frac{p^{2}}{2m} + \frac{1}{2}\sum_{ij} \omega_{ij}x_{i}x_{j}
+	\end{equation*}
+	Just like in classical mechanics in the field of small oscillations modeled by harmonic oscillators, we can transform to normal coordinates and conjugate momenta, in which case the \Ham transforms to the diagonal form
+	\begin{equation*}
+		H = \frac{p^{2}}{2m} + \frac{1}{2}\sum_{i=1}^{3}k_{i}x_{i}^{2}, \qquad k_{i} = m\omega_{i}^{2}
+	\end{equation*}
+	
+	\item As in the one-dimensional case, we introduce annihilation and creation operators, this time for each index $ i $. The Hamiltonian becomes
+	\begin{equation*}
+		H = \sum_{i = 1}^{3}\hbar \omega_{i}\left(a^{\dagger}_{i}a_{i} + \frac{1}{2}\right), \qquad \big[a_{i}, a_{j}^{\dagger}\big] = \delta_{ij}.
+	\end{equation*}
+	
+	\item Because $ H $ is a sum of linearly independent operators $ H_{i} $, the \Ham's eigenstates can be written in the factored form
+	\begin{equation*}
+		\P_{n_{1}n_{2}n_{3}}(\r) = \prod_{i = 1}^{3}\phi_{n_{i}}(x_{i}) \equiv \braket{\r}{n_{1}n_{2}n_{3}}
+	\end{equation*}
+	The higher states can be constructed from the ground state according to
+	\begin{equation*}
+		\ket{n_{1}n_{2}n_{3}} = \prod_{i = 1}^{3}\frac{\big(a_{i}^{\dagger}\big)^{n_{i}}}{\sqrt{n_{i}!}}\ket{000}
+	\end{equation*}
+\end{itemize}
+
+\subsubsection{Coherent Ground State}
+\begin{itemize}
+	\item Consider a particle in the ground state of harmonic potential whose initial state at $ t = 0 $ is initially displaced by $ \ev{x} = x_{0} $ from the equilibrium position. The particle's initial wavefunction is thus $ \phi_{0}(x - x_{0}) $, where $ \phi_{0} $ is the harmonic ground state eigenfunction at the equilibrium position.
+	
+	\item We begin by considering the eigenvalue equation
+	\begin{equation*}
+		a \k{\phi_{\alpha}} = \alpha\k{\p_{\alpha}}
+	\end{equation*}
+	where the eigenvalue is the complex number $ \alpha = \abs{\alpha}e^{i\delta} \in \mathbb{C}$. We expand the state $ \k{\p_{\alpha}} $ in the harmonic oscillator's eigenbasis $ \{\ket{n}\} $. Using the recursion relation
+	\begin{equation*}
+		\ket{n} = \frac{\big(a^{\dagger}\big)^{n}}{\sqrt{n!}}\k{0},
+	\end{equation*}
+	the expansion of $ \k{\p_{\alpha}} $ in the basis $ \{\k{n} \} $ reads
+	\begin{align*}
+		\k{\p_{\alpha}} &= \sum_{n}\braket{n}{\p_{\alpha}}\ket{n} = \sum_{n} \frac{1}{\sqrt{n!}} \braket{\big(a^{\dagger}\big)^{n}\phi_{0}}{\p_{\alpha}}\ket{n} \\
+		& = \braket{\phi_{0}}{\p_{\alpha}}\sum_{n}\frac{\alpha^{n}}{\sqrt{n!}}\ket{n} = \braket{\phi_{0}}{\p_{\alpha}}\sum_{n}\frac{\big(\alpha a^{\dagger}\big)^{n}}{n!}\ket{0}\\
+		& = \braket{\phi_{0}}{\p_{\alpha}}e^{\alpha a^{\dagger}}\ket{0}
+	\end{align*} 
+	where we the last line uses the Taylor series definition of the exponential function. We determine the constant $ \braket{\phi_{0}}{\p_{\alpha}} $ from the normalization condition $ \braket{\p_{\alpha}}{\p_{\alpha}} \equiv 1 $; the calculation reads
+	\begin{equation*}
+		1 \equiv \braket{\p_{\alpha}}{\p_{\alpha}} \abs{\braket{\phi_{0}}{\p_{\alpha}}}^{2}\sum_{n}\frac{\abs{\alpha}^{2n}}{n!} \implies \braket{\phi_{0}}{\p_{\alpha}} = e^{-\frac{1}{2}\abs{\alpha}^{2}}
+	\end{equation*}
+	
+	\item The state $ \ket{\p_{\alpha}} $ at $ t = 0 $ is called a called a coherent state. Its time evolution reads
+	\begin{equation*}
+		\k{\p_{\alpha}(t)} = \exp(-\frac{1}{2}i\omega t - \frac{1}{2}\abs{\alpha}^{2}) \sum_{n} \frac{\big(\alpha e^{-i\omega t}a^{\dagger}\big)^{n}}{n!}\ket{0}
+	\end{equation*}
+	In terms of the eigenfunctions $ \ket{\phi_{n}(t)} $, the above time evolution is written
+	\begin{equation*}
+		\k{\p_{\alpha}(t)} = \sum_{n}c_{n}\k{\phi_{n}(t)} \eqtext{where} c_{n} = \frac{\alpha^{n}}{\sqrt{n!}}e^{-\frac{1}{2}\abs{\alpha}^{2}}
+	\end{equation*}
+	
+	\item For the state $ \ket{\p_{\alpha}(t)} $, the probability $ P_{n} $ for occupation of a state with index $ n $ falls exponentially:
+	\begin{equation*}
+		P_{n} = \abs{c_{n}}^{2} = \frac{\ev{\hat{n}}^{2}}{n!}e^{-\ev{\hat{n}}}
+	\end{equation*}
+	where $ \ev{\hat{n}} = \mel{\p_{\alpha}}{\hat{n}}{\p_{\alpha}} $. 
+	
+	\item The position expectation value of the state $ \ket{\p_{\alpha}(t)} $ obeys
+	\begin{equation*}
+		\ev{x(t)} = x_{0}\cos(\omega t - \delta), \eqtext{where} x_{0} = \sqrt{2}\xi \abs{\alpha},
+	\end{equation*}
+	which follows from
+	\begin{equation*}
+		\mel{\ket{\p_{\alpha}(t)}}{x}{\ket{\p_{\alpha}(t)}} = \frac{\xi}{\sqrt{2}} \bmel{\ket{\p_{\alpha}(t)}}{\big(a + a^{\dagger}\big)}{\ket{\p_{\alpha}(t)}} = \frac{\xi}{\sqrt{2}} \big(\alpha e^{-i\omega t} + \alpha^{*}e^{i\omega t}\big).
+	\end{equation*}
+	Note that $ \ev{x(t)} $ has the time dependence as the analogous classical solution $ x(t) = x_{0}\cos(\omega t - \delta) $.
+	
+	The real component of the constant $ \alpha = \abs{\alpha}e^{i\delta} $ corresponds to the displacement of the particle (or wavefunction's center)  from equilibrium, while the imaginary part of $ \alpha $ corresponds to the initial velocity $ v_{0} = \frac{\ev{p}}{m}\big|_{t = 0} $.
+	
+	\item Next, we note the energy expectation value is
+	\begin{equation*}
+		\ev{E} = \hbar \omega\left(\abs{\alpha}^{2} +  \frac{1}{2}\right) = \hbar \omega \left(\frac{m\omega x_{0}^{2}}{2\hbar} + \frac{1}{2}\right)
+	\end{equation*}
+	In the classical limit $ \hbar \to 0 $, the energy reduces to the classical value $ E = \frac{1}{2}m\omega^{2}x_{0}^{2} $. 
+	
+	\item Finally---characteristic for a coherent state---the probability density $ \rho(t) $ oscillates back and forth in the harmonic potential while preserving the shape of the initial Gaussian distribution, i.e.
+	\begin{equation*}
+		\rho(x, t) = \abs{\psi_{\alpha}(t)}^{2} = \frac{1}{\sqrt{2\pi}\sigma_{x_{0}}}\exp(-\frac{(x - \ev{x})^{2}}{2 \sigma_{x_{0}}^{2}})
+	\end{equation*}
+	
+\end{itemize}
+
+\subsection{Operators in Matrix Form}
+\begin{itemize}
+	\item Finally, as an exercise, we write the operators $ a^{\dagger} $, $ x $ and $ p $ in the harmonic oscillator eigenbasis $ \{\ket{n} \} $. 
+	
+	First, $ a^{\dagger} $. Using the equation $ a^{\dagger}\ket{n} = \sqrt{n+1}\ket{n+1} $, the matrix elements are 
+	\begin{equation*}
+		a^{\dagger}_{mn} = \bmel{m}{a^{\dagger}}{n} = \mel{n+1}{\sqrt{n+1}}{n}\delta_{m, n+1}
+	\end{equation*}
+	In matrix form $ a^{\dagger} $ reads
+	\begin{equation}
+	a^{\dagger} =
+	\begin{pmatrix}
+	0 & 0 & 0 & \cdots\\
+	1 & 0 & 0 & \cdots\\
+	0 & \sqrt{2} & 0 & \cdots\\
+	\vdots & \vdots & \ddots & \vdots
+	\end{pmatrix}
+	\end{equation}
+	Note that $ a^{\dagger} $ is asymmetric and thus non-\Herm. 
+	
+	\item Similarly, the expressions for $ x $ and $ p $ are
+	\begin{equation*}
+		x = \sqrt{\frac{\hbar}{2m\omega}} 
+		\begin{pmatrix}
+		0 & 1 & 0 & \cdots\\
+		1 & 0 & \sqrt{2} & \cdots\\
+		0 & \sqrt{2} & 0 & \ddots\\
+		\vdots & \vdots & \ddots & \ddots
+		\end{pmatrix}
+		\eqtext{and}
+		p = \sqrt{\frac{m\hbar \omega}{2}} 
+		\begin{pmatrix}
+		0 & i & 0 & \cdots\\
+		-i & 0 & i\sqrt{2} & \cdots\\
+		0 & -i\sqrt{2} & 0 & \ddots\\
+		\vdots & \vdots & \ddots & \ddots
+		\end{pmatrix}
+	\end{equation*}
+	As expected, both $ x $ and $ p $ have \Herm matrices.
+\end{itemize}
+
+\subsection{Gaussian Wave Packet}
+\begin{itemize}
+	\item Consider a free particle with an generic initial wavefunction expanded in the momentum (plane wave) basis, i.e.
+	\begin{equation*}
+		\k{\p(0)} = \int \tilde{\p}(p)\ket{p}\diff p.
+	\end{equation*}
+	Because of the plane wave dispersion relation $ E = \frac{p^{2}}{2m} $, plane waves have a different phase velocity for each $ p $. This varying phase velocity for different $ p $ causes the wavefunction do deform from the initial state in its time evolution $ \ket{\p, (t)} $.
+	
+	\item We analyze this deformation process in the concrete case when the initial state is a Gaussian wave packet. In the momentum representation, the wavefunction is
+	\begin{equation*}
+		\tilde{\p}(p) = C\exp(-\frac{(p-p_{0})^{2}}{4\sigma_{p}^{2}}) \eqtext{where} C = \frac{1}{\sqrt{\sqrt{2\pi}\sigma_{p}}}
+	\end{equation*}
+	The relevant constants are expectation values:
+	\begin{align*}
+		& \ev{p} = \int p \abs{\tilde{\p}(p)}^{2}\diff p = p_{0}\\
+		& \ev{p^{2}} = \int p^{2}\abs{\t{\p}(p)}^{2}\diff p = p_{0}^{2} + \sigma_{p}^{2}\\
+		&\Delta p^{2} \equiv \sigma_{p}^{2} = \ev{p^{2}} - \ev{p}^{2} \\
+		&\ev{E} = \frac{p_{0}^{2}+\sigma_{p}^{2}}{2m}
+	\end{align*}
+	
+	\item In the $ x $ representation, the wavefunction is the characteristic function of the momentum representation $ \t{\p}(p) $:
+	\begin{align*}
+		\p(x, 0) &= \braket{x}{\p(0)} = \int \t{\p}(p)\braket{x}{p}\diff p = \frac{C}{\sqrt{2\pi \hbar}}\int \exp(-\frac{(p-p_{0})^{2}}{4\sigma_{p}^{2}} + i \frac{px}{\hbar})\diff p\\
+		& = \frac{C}{\sqrt{2\pi \hbar}} \int \exp\left\{ -\frac{1}{4\sigma_{p}^{2}} \left[p - \left(p_{0} + 2i\frac{\sigma_{p}^{2}}{\hbar}x\right) \right]^{2} - \frac{\sigma_{p}^{2}x^{2}}{\hbar^{2}} + i \frac{p_{0}x}{\hbar} \right\}\diff p\\
+		& =  \frac{1}{\sqrt{\sqrt{2\pi}\sigma_{p}}} \exp(-\frac{x^{2}}{4\sigma_{x}^{2}} + i\frac{p_{0}x}{\hbar})
+	\end{align*}
+	where the last line uses $ \sigma_{x} = \frac{\hbar}{2\sigma_{p}} $ and 
+	\begin{equation*}
+		\int_{-\infty}^{\infty} e^{-zx^{2}}\diff x = \sqrt{\frac{\pi}{z}} \quad \text{for } \Re z > 0.
+	\end{equation*}
+	
+	\item Next, the wavefunction's time evolution for $ t > 0 $ is 
+	\begin{align*}
+		\psi(x, t) &= \frac{C}{\sqrt{2\pi \hbar}}\int \exp(-\frac{(p-p_{0})^{2}}{4\sigma_{p}^{2}} + i \frac{p^{2}}{2m\hbar}t)\diff p\\
+		& =  \frac{1}{\sqrt{\sqrt{2\pi}\tilde{\sigma}(t)}} \exp\left[-\frac{x^{2}}{4\sigma_{x}\tilde{\sigma}(t)} + i\left(\frac{p_{0}}{\hbar}x - \frac{p_{0}^{2}}{2m\hbar}t\right)\right]
+	\end{align*}
+	where
+	\begin{equation*}
+		\tilde{\sigma}(t) = \sigma_{x}\left(1 + i \frac{\hbar t}{2m\sigma_{x}^{2}}\right)
+	\end{equation*}
+	
+	\item The corresponding wavefunction (without derivation) is
+	\begin{equation*}
+		\rho(x, t) = \frac{1}{\sqrt{2\pi}\sigma(t)}\exp\left(-\frac{(x- \ev{x})^{2}}{2\sigma(t)^{2}}\right)
+	\end{equation*}
+	where
+	\begin{equation*}
+		\sigma(t) = \abs{\tilde{\sigma}(t)} \eqtext{and} \sigma(t)^{2} = \sigma_{x}^{2}\left(1 + \frac{\hbar^{2}t^{2}}{4m^{2\sigma_{x}^{4}}}\right)
+	\end{equation*}
+	For reference, this (supposedly) follows from
+	\begin{equation*}
+		2 \Re \left[- \frac{x^{2}}{4\sigma_{x}\tilde{\sigma}(t)} + i\left(\frac{p_{0}}{\hbar}x - \frac{p_{0}^{2}}{2m\hbar}t\right)\frac{\sigma_{x}}{\t{\sigma}(t)}\right] = - \frac{\left(x - \frac{p_{0}}{m}t\right)^{2}}{2 \abs{\t{\sigma}(t)}^{2}}
+	\end{equation*}
+	Recall that $ \t{\sigma}(t) $ is complex.
+	
+	\item Summary: the solution to the \Schro equation does not preserve the shape of the initial condition (like e.g. the wave equation). The deformation is a consequence of the momentum basis functions $ \ket{p} $ having varying phase velocity. The solution remains a Gaussian wave packet, but its width increases with time.
+	
+\end{itemize}
+
+\subsection{Phase and Group Velocity}
+\textbf{TODO:} Optional material, add as time permits.
+
+
+\subsection{Time Evolution of the Dirac Delta Function}
+\textbf{TODO:} Optional material, add as time permits.
+
+
+\section{Symmetries}
+
+
+\subsection{Translational Symmetry}
+% Relevant for constant (free) or periodic potentials 
+In this section we consider only active translations, which correspond to a translation of a wavefunction, as opposed to a translation of the coordinate system or basis vectors. 
+\begin{itemize}
+	\item In one dimension, a translation of a wavefunction $ \p $ by $ s $ reads
+	\begin{equation*}
+		\tilde{\p}(x) = \p(x - s)
+	\end{equation*}
+	We write the translation in terms of a translation operator $ U(s) $ according to
+	\begin{equation*}
+		U(s)\p = \p(x - s)
+	\end{equation*}
+	
+	\item We find the expression for $ U(s) $ with a Taylor series expansion of $ \p(x - s) $:
+	\begin{align*}
+		U(s)\p(x) &= \p(x - s) = \p(x) - s \pdv{x}{\p(x)} \pm  \cdots + \frac{(-s)^{n}}{n!}\pdv[n]{\p(x)}{x} + \cdots \\
+		& = e^{-s \pdv{x}}\p(x) \\
+		& = e^{-is\frac{p}{\hbar}}\p(x)
+	\end{align*}
+	The translation operator in one dimensions is thus
+	\begin{equation*}
+		U(s) = e^{-is\frac{p}{\hbar}}
+	\end{equation*}
+	
+	\item In three dimensions, a translation by a distance $ s $ in the direction of the unit vector $ \uvec{n} $ reads
+	\begin{equation*}
+		\tilde{\p}(\r) = \p(\r - s\uvec{n})
+	\end{equation*}
+	and the corresponding translation operator is
+	\begin{equation*}
+		U(s \uvec{n}) = e^{-is \frac{\uvec{n}\cdot \vec{p}}{\hbar}} \eqtext{or} U(\vec{s}) = e^{-i \frac{\vec{s}\cdot \vec{p}}{\hbar}}
+	\end{equation*}
+	where we have defined the vector displacement $ \vec{s} = s \uvec{n} $. Note that $ \uvec{n}\cdot \vec{p} $, i.e. the projection of momentum in the direction $ \uvec{n} $ is the transformation's generator.
+	
+	\item Like in classical mechanics, symmetries in quantum mechanics correspond to a conserved quantity---translational symmetry corresponds to conservation of (translational) momentum. 
+	
+	In free space (for a globally constant potential), momentum is conserved under the condition $ [\vec{p}, H] = 0 $, which occurs when the Hamiltonian is invariant under translation, i.e. when
+	\begin{equation*}
+		[U(\vec{s}), H] = 0 \ \text{for all } \vec{s} \in \mathbb{R}^{3}
+	\end{equation*}
+	
+	\item In the presence of a periodic potential with period $ \vec{a} $, ie. $ V(\r) = V(\r + n \vec{a}) $ where $ n \in \mathbb{Z} $ is an integer, translational invariance holds for translations of the form $ \vec{s}_{n} = n \vec{a} $. In this case, the wavefunction takes the form
+	\begin{equation*}
+		\psi_{\vec{k}}(\r) = e^{i\vec{k}\cdot \r}u(\r)
+	\end{equation*}
+	where $ u(\r + \vec{a}) = u(\r) $ is a periodic function. 
+	
+\end{itemize}	
+
+\textbf{Example: Position Expectation Value After Translation}
+\begin{itemize}	
+	\item Example: calculating expectation value of position after a one-dimensional translation of the form $ \tilde{\p} = U(s)\p(x) = \p(x - s) $.
+	
+	First, we define the translated position operator
+	\begin{equation*}
+		\tilde{x} = U^{\dagger}xU = e^{i\frac{sp}{\hbar}} x e^{-i\frac{sp}{\hbar}}
+	\end{equation*}
+	and use the Baker-Hausdorff lemma to write
+	\begin{equation*}
+		\tilde{x} = e^{i\frac{sp}{\hbar}} x e^{-i\frac{sp}{\hbar}} = x + \left[ i \frac{sp}{\hbar}, x\right] + \frac{1}{2!}\left[i\frac{sp}{\hbar}, \left[ i \frac{sp}{\hbar}, x\right]\right] + \cdots 
+	\end{equation*}
+	The first commutator evaluates to
+	\begin{equation*}
+		\frac{i}{\hbar}[sp, x] = \frac{i}{\hbar} s[p, x] + \frac{i}{\hbar}[s, x]p = \frac{i}{\hbar}(-i\hbar)s + 0 = s
+	\end{equation*}
+	The remaining, higher-order commutators evaluate to zero, leaving
+	\begin{equation*}
+		\tilde{x} = x + s + 0 + \cdots
+	\end{equation*}
+	
+	\item We then find the expectation according to 
+	\begin{align*}
+		\ev{\tilde{x}} &= \mel{\p(x-s)}{x}{\p(x - s)} \\
+		& = \bmel{U(s)\p(x)}{x}{U(s)\p(x)}\\
+		& = \bmel{\p(x)}{U^{\dagger}(s)xU(s)}{\p(x)}\\
+		& = \bmel{\p(x)}{\t{x}}{\p(x)}\\
+		& = \mel{\p(x)}{x + s}{\p(x)}\\
+		& = \ev{x} + s
+	\end{align*}
+	 
+\end{itemize}
+
+\subsection{Rotation}
+% Relevant for spherically-symmetric potentials
+We consider active rotations of a wavefunction $ \psi $ about an axis in the direction of the unit vector $ \uvec{n} $. 
+\begin{itemize}
+	\item We first consider rotations by an infinitesimal angle $ \diff \phi $, for which the rotated wavefunction $ \t{\p} $ is
+	\begin{equation*}
+		\t{\p}(\r) = \p(\r - \diff \r) \ \text{where } \diff \r = \diff \phi (\uvec{n} \cross \r)
+	\end{equation*}
+	We find the expression for the rotation operator with a first-order Taylor expansion
+	\begin{align*}
+		\t{\p}(\r) &= \p(\r - \diff \r) = \p(\r) - \frac{i}{\hbar}\big[(\uvec{n}\cross \r) \cdot \vec{p}\big]\p(\r)\diff \phi + \mathcal{O} (\diff \phi^{2})\\
+		& = \left[\mat{I} - \frac{i}{\hbar}\big[\uvec{n}\cdot (\r \cross \vec{p})\big]\diff \phi\right] \p(\r)  + \mathcal{O} (\diff \phi^{2})\\
+		& = \left[\mat{I} - \frac{i}{\hbar}(\uvec{n}\cdot \vec{L})\diff \phi\right] \p(\r) + \mathcal{O} (\diff \phi^{2})
+	\end{align*}
+	where $ \mat{I} $ is the identity operator and $ \vec{L} = \r \cross \vec{p} $ is the angular momentum operator. 
+	
+	\item We then construct a rotation by the macroscopic angle $ \phi $ from a product of $ N \to \infty $ infinitesimal rotations by $ \diff \phi = \frac{\phi}{N} $ according to 
+	\begin{equation*}
+		\tilde{\p}(\r) = \lim_{N \to \infty} \left(\mat{I} - \frac{i}{\hbar}(\uvec{n}\cdot \vec{L})  \frac{\phi}{N} \right)^{N}\p(\r) \equiv \exp(- \frac{i}{\hbar}(\uvec{n}\cdot \vec{L})\phi) \p(\r)
+	\end{equation*}
+	The rotation operator for an angle $ \phi $ about the axis $ \uvec{n} $ is thus
+	\begin{equation*}
+		U(\phi \uvec{n}) = U(\vec{\phi}) = \exp(- \frac{i}{\hbar}(\vec{\phi}\cdot \vec{L})) 
+	\end{equation*}
+	where we have defined the ``vector angle'' $ \vec{\phi} = \phi \uvec{n} $. The generator of the rotation operator is $ \uvec{n} \cdot \vec{L} $, the component of angular momentum along the rotation axis $ \uvec{n} $. 
+	
+	\item Rotational symmetry corresponds to conservation of angular momentum. A system's angular momentum is conserved if the system's Hamiltonian commutes with the angular momentum operator, i.e. $ [\vec{L}, H] = 0 $, which occurs when the \Ham is invariant under rotation, i.e.
+	\begin{equation*}
+		[U(\vec{\phi}), H] = 0 \ \text{for all rotations } \vec{\phi}
+	\end{equation*}
+	This form of conservation occurs for spherically symmetric potentials of the form $ V(\r) = V(r) $ where $ r = \abs{r} $. 
+\end{itemize}
+
+\subsection{Parity}
+% Relevant for even potentials
+\begin{itemize}
+	\item Space inversion is encoded by the parity operator $ \Par $, which maps $ \r $ to $ -\r $ in the form $ \Par:\p(\r) \mapsto \p(-\r) $.
+	
+	\item The parity operator is \Herm, which we prove with
+	\begin{equation*}
+		\mel{\phi(\r)}{\Par}{\p(\r)} = \braket{\phi(\r)}{\p(-\r)} = \braket{\phi(-\r)}{\p(\r)} = \braket{\Par \phi(\r)}{\p(\r)}
+	\end{equation*}
+	The parity operator is also unitary, i.e. $ \Par \Par = \II \implies \Par = \Par^{-1} $.
+
+	\item The parity operator changes the sign of the gradient (or derivative) operator:
+	\begin{equation*}
+		\Par \grad \p = - \grad \Par \psi \implies \Par \grad = - \grad \Par
+	\end{equation*}
+	The relationship $ \Par \grad = - \grad \Par $ implies
+	\begin{equation*}
+		\Par \grad^{n} = (-1)^{n}\grad^{n} \Par \eqtext{and} \Par \dv[2]{}{x} = \dv[2]{}{x} \Par
+	\end{equation*}
+	The last two identities lead to
+	\begin{equation*}
+		\Par \vec{p} = - \vec{p} \Par \eqtext{and} \Par (\r \cross \vec{p}) = \Par \vec{L} = \vec{L} \Par 
+	\end{equation*}
+	
+	\item For an even potential $ V(\r) = V(-\r) $, the parity operator acts on $ V $ as $ \Par V(\r) = V(-\r)\Par = V(\r)\Par $, in which case
+	\begin{equation*}
+		\Par H\p(\r) = H \Par \p(\r) \implies [\Par, H] = 0
+	\end{equation*}
+	In this case, if $ \ket{\p(\r)} $ is a stationary state of the \Ham and obeys the stationary \Schro equation
+	\begin{equation*}
+		H\k{\p(\r)} = E \ket{\p(\r)}
+	\end{equation*}
+	then $ \ket{\p(-\r)} $ is also a stationary state with the same energy $ E $, i.e.
+	\begin{equation*}
+		H\k{\p(-\r)} = E \ket{\p(-\r)}
+	\end{equation*}
+	We can then (again, this applies only to an even potential) combine the stationary state solutions $  \ket{\p(\r)} $ and $ \ket{\p(-\r)} $ to create the odd and even functions $  \ket{\p_{+}(\r)} $ and $ \k{\p_{-}(\r)} $ according to
+	\begin{equation*}
+		\p_{\pm}(\r) = \frac{1}{\sqrt{2}}\left(\p(\r) \pm \p(-\r)\right)
+	\end{equation*}
+	In other words, for an even potential, we can always create an even or odd stationary state eigenfunction for each energy eigenvalue $ E $ (assuming $ E $ is nondegenerate).
+	
+	Note also that both $  \ket{\p_{+}(\r)} $ and $ \k{\p_{-}(\r)} $ are eigenfunctions of the parity operator with eigenvalues $ \pm 1 $, i.e.
+	\begin{equation*}
+		\Par \p_{+}(\r) =  \p_{+}(\r) \eqtext{and} \Par \p_{-}(\r) =  -1 \cdot \p_{-}(\r)
+	\end{equation*}
+	
+\end{itemize}
+
+\subsection{Time Reversal}
+% Relevant for time-independent potentials
+\begin{itemize}
+	\item The time reversal operator $ T $ maps time $ t $ to $ -t $ in the form $ T: \P(\r, t) \mapsto \P(\r, -t) $.
+	
+	\item Assume $ \P(\r, t) $ solves the \Schro equation for for some time-independent potential $ V = V(\r) $ and \Ham $ H \neq H(t) $. The \Schro equation reads
+	\begin{equation*}
+		i \hbar \pdv{\P(\r, t)}{t} = H \P(\r, t)
+	\end{equation*}
+	We then act on the equation with the time reversal operator to get
+	\begin{align*}
+		& T\left(i \hbar \pdv{\P(\r, t)}{t}\right) = i \hbar \pdv{\P(\r, -t)}{(-t)} = H \P(\r, -t)  \\
+		& \implies i \hbar \pdv{\P(\r, -t)}{t} = -H \P(\r, -t) 
+	\end{align*}
+	In other words, $ T\P(\r, t) = \P(\r, -t) $ solves the same \Schro for $ H \to - H $.
+	
+	\item Alternatively, we can define a modified time reversal operator $ \T = KT $ where $ K : \psi \mapsto \psi^{*} $ is the complex conjugation operator. The complex conjugation obeys $ K z = z^{*}K $ for all $ z \in \mathbb{C} $ and equals its inverse, ie. $ K = K^{-1} $. 
+	
+	Again assuming a real Hamiltonian, we return to the \Schro equation
+	\begin{equation*}
+		i \hbar \pdv{\P(\r, t)}{t} = H \P(\r, t) 
+	\end{equation*}
+	and act on the equation with the $ \T $ to get
+	\begin{align*}
+		& \T\left(i \hbar \pdv{\P^{*}(\r, t)}{t}\right) = -i \hbar \pdv{\P^{*}(\r, -t)}{(-t)} = H \P^{*}(\r, -t) \\
+		& \implies i \hbar \pdv{\P^{*}(\r, -t)}{t} = H \P^{*}(\r, -t) 
+	\end{align*}
+	In other words, $ \P^{*}(\r, -t) $ also solves the \Schro equation for the same Hamiltonian $ H $. 
+	
+	\item Next, we consider stationary states of the form
+	\begin{equation*}
+		\P(\r, t) = \p(\r)e^{-i\frac{E}{\hbar}t}
+	\end{equation*}
+	The modified time reversal operator $ \T $ acts on this state to produce
+	\begin{equation*}
+		\P^{*}(\r, -t) = \p^{*}(\r)e^{-(-i)\frac{E}{\hbar}(-t)} = \p^{*}(\r)e^{-i\frac{E}{\hbar}t}
+	\end{equation*}
+	In other words, $ \T $ affects only the position-dependent term $ \p(\r) $, which it conjugates. With this in mind,	$ \T $ acts on the stationary \Schro equation $ H \p(\r) = E\p(\r) $ to produce
+	\begin{equation*}
+		 H \p^{*}(\r) = E\p^{*}(\r) 
+	\end{equation*}
+	In other words, but $ \p $ and $ \p^{*} $ solve the stationary \Schro equation for a given energy eigenvalue $ E $. For a non-degenerate spectrum, the conjugate function can be written $ \p^{*} = e^{i\phi}\p(\r) $. Since $ \p $ and $ \p^{*} $ differ only by a constant phase term $ e^{i\delta} $ of magnitude 1, they correspond to physically identical wavefunction, since phase information is lost in any physically observable quantities, which involve the squared modulus of $ \p $.
+	
+	\item The time reversal operator $ \T $ acts on the momentum operator $ \vec{p} $, angular momentum operator $ \vec{L} $, and \Ham $ H $ (assuming $ H $ is time-independent and real) as
+	\begin{equation*}
+		\T \vec{p} = - \vec{p} \T \qquad \T \vec{L} = - \vec{L} \T \qquad \T H = H \T
+	\end{equation*}
+	
+	\item Finally, we briefly mention that for particles with spin quantum number $ s = 1/2 $, we require $ \T $ act on the spin operator $ \vec{S} $ according in the same way as for angular momentum, i.e. $ \T \vec{S} = - \vec{S} \T $. For this too hold, we generalize the definition of $ \T $ for spin $ s = 1/2 $ particles to
+	\begin{equation*}
+		\T = i \sigma_{y} K T \quad \text{where }  \sigma_{y} = 
+		\begin{pmatrix}
+			0 & - i\\
+			i & 0
+		\end{pmatrix}
+	\end{equation*}
+	We will discuss spin and time reversal more thoroughly in a dedicated chapter. 
+	% TODO add link
+	
+	\item Finally, we note that position doesn't change sign under $ \T $ reversal, i.e. $ \T x = x \T $, as opposed to momentum, which obeys $ \T p = - p \T $. These to identities imply
+	\begin{equation*}
+		\T[x, p] = - [x, p]\T
+	\end{equation*}
+	For the fundamental commutator relationship $ [x, p] = i\hbar $ to remain invariant under $ \T $ reversal, $ \T $ must obey $ \T i = i \T $, i.e. $ \T $ must be an anti-unitary operator.
+	
+\end{itemize}
+
+\subsection{Gauge Transformations}
+% Corresponds to wavefunction invariance under phase change
+\begin{itemize}
+	\item We have already noted a few times in this text that multiplying a wavefunction by a phase factor $ e^{i\delta} $ of magnitude one has no physically observable effect on the wavefunction. 
+	
+	Multiplying a wavefunction by $ e^{i\delta} $ is a case of a so-called global gauge transformation, which is a unitary transformation of the form
+	\begin{equation*}
+		U(\delta)\ket{\psi} = e^{i\delta}\ket{\p} \equiv \bket{\tilde{\p}}
+	\end{equation*}
+	If we apply the transformation $ U(\delta) = e^{i\delta} $ to all basis functions $ \{\ket{n}\} $ spanning the Hilbert space of wavefunctions, then all matrix elements of an arbitrary operator $ \O $ remain unchanged, i.e. 
+	\begin{equation*}
+		\bmel{U(\delta) \phi}{\O}{U(\delta)\p} = \bmel{\t{\phi}}{\O}{\t{\p}} = \bmel{\phi}{\O}{\p} 
+	\end{equation*}
+	Even more, we can multiply each basis vector $ \ket{n} $ by an individual factor $ e^{i \delta_{n}} $, and all physical observable remain unchanged.
+	
+	\item Recall that in classical mechanics potential energy is determined up to an additive constant $ V_{0} $, i.e we can make the transformation $ V(\r) \to V(\r) + V_{0} $ without changing a system's equations of motion. This follows from the relationship between force and potential energy $ \vec{F} = - \grad\big[V(\r) + V_{0}\big] = - \grad V(\r) $ is unchanged by $ V_{0} $.
+	
+	Meanwhile, in quantum mechanics, a the transformation $ V(\r) \to \to V(\r) + V_{0} $ shifts a system's energy eigenvalues by $ V_{0} $, i.e. $ E_{n} \to E_{n} + V_{0} $. In this case, the time evolution operator changes according to
+	\begin{equation*}
+		e^{-i\frac{E}{\hbar}t}\k{\p} \to e^{-i\frac{E+V_{0}}{\hbar}t}\k{\p} = e^{-i\frac{E}{\hbar}t} e^{-i\frac{V_{0}}{\hbar}t}  \k{\p} 
+	\end{equation*}
+	We define the corresponding global gauge transformation as
+	\begin{equation*}
+		U(\delta(t)) \equiv e^{-i\frac{V_{0}}{\hbar}t} \qquad \text{ where } \delta(t) = -\frac{V_{0}}{\hbar}t
+	\end{equation*}
+	
+	\item We can also define a so-called local gauge transformation
+	\begin{equation*}
+		U(\delta(\r, t)) \ket{\P(\r, t)} = e^{i\delta(\r, t)}\ket{\P(\r, t)} \equiv \bket{\t{\P}(\r, t)}
+	\end{equation*}
+	This gauge transformation preserves probability density, i.e.
+	\begin{equation*}
+		\big|\t{\P}(\r, t) \big|^{2} = \abs{\P(\r, t)}^{2}
+	\end{equation*}
+	We will return to local gauge transformations when discussing a particle in an electromagnetic field. 
+\end{itemize}
+
+
+
+\end{document}
+
+
