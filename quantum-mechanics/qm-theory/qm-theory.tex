@@ -14,7 +14,13 @@
 \setlength{\parindent}{0pt} % to stop indenting new paragraphs
 \newcommand{\diff}{\mathop{}\!\mathrm{d}} % differential
 \newcommand{\dr}{\diff^{3} \r}  % d^3 r
+
+
+\renewcommand{\div}{\nabla \cdot}
+\renewcommand{\curl}{\nabla \cross}
 \renewcommand{\grad}{\nabla}
+\renewcommand{\laplacian}{\nabla^{2}}
+
 
 \newcommand{\eqtext}[1]{\qquad \text{#1} \qquad}
 \newcommand{\Schro}{Schr\"{o}dinger\xspace}
@@ -23,12 +29,12 @@
 
 \newcommand{\CG}{Clebsch-Gordan}
 
-\renewcommand{\vec}[1]{\bm{#1}} % for vectors
-\renewcommand{\op}[1]{\hat{#1}} % for operators
-\newcommand{\mat}[1]{\mathbf{#1}} % for matrices
-\newcommand{\dvec}[1]{\dot{\vec{#1}}} % for dotted vector quantity
-\newcommand{\tvec}[1]{\tilde{\vec{#1}}} % for tilde vector quantities
-\newcommand{\uvec}[1]{\hat{\vec{#1}}} % for dotted vector quantity
+\renewcommand{\vec}[1]{\bm{#1}}  % for vectors
+\renewcommand{\op}[1]{\hat{#1}}  % for operators
+\newcommand{\mat}[1]{\mathbf{#1}}  % for matrices with a tilde
+\newcommand{\dvec}[1]{\dot{\vec{#1}}}  % for dotted vector quantity
+\newcommand{\tvec}[1]{\tilde{\vec{#1}}}  % for tilde vector quantities
+\newcommand{\uvec}[1]{\hat{\vec{#1}}}  % for dotted vector quantity
 
 \renewcommand{\t}[1]{\tilde{#1}}
 
@@ -43,6 +49,7 @@
 \newcommand{\ua}{\uparrow}  % for spin up states
 \newcommand{\da}{\downarrow}  % for spin down states
 \renewcommand{\r}{\vec{r}}  % position vector
+\renewcommand{\L}{\vec{L}}  % angular momentum
 
 \renewcommand{\O}{\mathcal{O}}  % script operator quantity
 \newcommand{\II}{\operatorname{I}}  % non-bold identity operator
@@ -510,6 +517,14 @@ as desired. However, the energy relation requirement $ E = \frac{p^{2}}{2m} $ ho
 		& = - i\hbar x \p ' + i \hbar x \p ' + i \hbar \p = i \hbar \p
 	\end{align*}
 	The equality $ [x, p] \p = i \hbar \p $ implies $ [x, p] = i \hbar $.
+	
+	\item More generally, the operators $ \r $ and $ \vec{p} $ obey canonical commutation relations
+	\begin{align*}
+		& [r_{\alpha}, r_{\beta}] = 0\\
+		& [p_{\alpha}, p_{\beta}] = 0\\
+		& [r_{\alpha}, p_{\beta}] = i\hbar \delta_{\alpha \beta}
+	\end{align*}
+	for $ \alpha, \beta \in \{x, y, z\} $. These are analogous to the canonical Poisson bracket relationships between $ \vec{q} $ and $ \vec{p} $ in classical mechanics.
 	
 	\item Next, we quote some common commutator identities:
 	\begin{align*}
@@ -1797,6 +1812,366 @@ We consider active rotations of a wavefunction $ \psi $ about an axis in the dir
 	We will return to local gauge transformations when discussing a particle in an electromagnetic field. 
 \end{itemize}
 
+
+\section{Angular Momentum}
+\begin{itemize}
+	\item Angular momentum is associated with the angular momentum operator $ \vec{L} $. The operator $ \vec{L} $ is \Herm (so angular momentum is a physically observable quantity) and obeys
+	\begin{equation*}
+		\L = \r \cross \vec{p} = - \vec{p} \cross \r
+	\end{equation*}
+	This relationship is proven with the help of
+	\begin{align*}
+		(\curl \r)\p &= \curl (\r \p) = (\grad \p) \cross \r + \p (\curl \r) = (\grad \p)\cross \r + 0\\
+		& = - \r \cross (\grad \p) = - (\r \cross \grad)\p
+	\end{align*}
+	We could also prove the relationship by components, e.g.
+	\begin{equation*}
+		L_{z}\p = - i\hbar(y p_{x} - xp_{y}) \p = i\hbar(p_{y}x - p_{x}y)\p
+	\end{equation*}
+	We would proceed analogously for $ L_{x} = yp_{z} - zp_{y} $ and $ L_{y} = zp_{x} - x p_{z} $. 
+	
+	\item As a side note, in quantum mechanics the dot and cross products of non-commutative operators do not commute as in classical mechanics. Consider for example
+	\begin{align*}
+		&\r \cdot \vec{p} = \vec{p} \cdot \r + 3i\hbar \qquad \vec{p} \cross \L = - \L \cross \vec{p} + 2i\hbar \vec{p} \\
+		& (\r \cross \L)\cdot (\r \cross \L) = \r^{2}\vec{p}^{2} - (\r \cdot \vec{p})^{2} + i \hbar (\r \cdot \vec{p})
+	\end{align*}
+	
+	\item The components of angular momentum $ L_{x}, L_{y} $ and $ L_{z} $ obey analogous commutator relations to the Poisson bracket relations obeyed by angular momentum in classical mechanics, e.g.
+	\begin{equation*}
+		[L_{x}, L_{y}] = i\hbar(xp_{y} - yp_{x}) = i\hbar L_{z} \eqtext{and} [L^{2}, L_{\alpha}] = 0, \quad \alpha = x, y, z
+	\end{equation*}
+	We can prove the first relationship with
+	\begin{align*}
+		[L_{x}, L_{y}] &= [yp_{z} - zp_{y}, zp_{x} - xp_{z}]\\
+		& = [yp_{z}, zp_{x}] - [zp_{y}, zp_{z}] - [yp_{z}, xp_{z}] + [zp_{y}, xp_{z}]
+	\end{align*}
+	The middle two commutators are zero, since both sides contain identical terms $ z $ and $ p_{z} $, respectively. We expand the remaining commutators using $ [AB, C] = A[B, C] + [A, C]B $ and $ [A, BC] = B[A, C] + [A, B]C $ and apply the canonical commutator relations $ [r_{\alpha}, r_{\beta}] = [p_{\alpha}, p_{\beta}] = 0 $ and $ [r_{\alpha}, p_{\beta}] = i\hbar \delta_{\alpha \beta} $ to get
+	\begin{align*}
+		[L_{x}, L_{y}] &= yp_{x}[p_{z}, z] + xp_{y}[z, p_{z}] = i\hbar (yp_{x} + xp_{y}) = i\hbar L_{z}
+	\end{align*}
+
+	
+	\item More generally, angular momentum obeys the commutator relation
+	\begin{equation*}
+		[L_{\alpha}, \O_{\beta}] = i \hbar \epsilon_{\alpha \beta \gamma}\O_{\gamma}
+	\end{equation*}
+	where the operator $ \O $ can be any of $ \r $, $\vec{p}$ or $ \L $.
+	
+\end{itemize}
+
+\subsection{Properties of the Angular Momentum Operator}
+
+\subsubsection{Commutation Relations}
+\begin{itemize}
+	\item Essentially all properties of the angular momentum operator arise from the commutator relation
+	\begin{equation*}
+		\big[L_{\alpha}, L_{\beta}\big] = i \hbar \epsilon_{\alpha \beta \gamma}L_{\gamma} \eqtext{or, in vector form,} \L \cross \L = i \hbar \L
+	\end{equation*}
+	
+	\item If an operator $ \O $ commutes with $ \L $, then $ \L $ and $ \O $ have mutual eigenvectors, which can be exploited to simplify quantum mechanical problems.  
+	
+	In general, any operator $ \O $ that is invariant under rotation (i.e. for which $ U(\vec{\phi})\O = \O U(\vec{\phi})  $) commutes with the angular momentum operator. In symbols,
+	\begin{equation*}
+		U(\vec{\phi})\O = \O U(\vec{\phi})  \implies [\L, \O] = 0
+	\end{equation*}
+	where $ U(\phi) $ is the operator encoding rotation about the axis $ \uvec{n} $ by the angle $ \phi $. Applicable operators invariant under rotation include $ \r \cdot \vec{p} $, $ \vec{p}^{2} $, $ \L^{2} $ and rotationally invariant potentials $ V = V(\abs{\r}) $. 
+	
+	\item \textbf{TODO} we proof the above commutation relation with the series definition of $ U(\vec{\phi}) $. 
+	
+	\item We often work in terms of the squared angular momentum $ \L^{2} $, which we can write in any of the equivalent forms\footnote{Note that we have previously used $ L^{2} $ in this text to denote the Hilbert space of wavefunctions. The difference between the square of angular momentum and the Hilbert space should be clear from context.}
+	\begin{equation*}
+		\L^{2} = \L \cdot \L = L^{2} = \sum_{\alpha} L_{\alpha}^{2}
+	\end{equation*}
+	Because $ \L^{2} $ is invariant under rotations, we have
+	\begin{equation*}
+		[L_{\alpha}, L^{2}] = 0 \quad \text{for } \alpha \in \{x, y, z\}
+	\end{equation*}
+	which means that squared angular momentum $ L^{2} $ and its components $ L_{\alpha} $ can share the same eigenvectors and basis.
+	
+\end{itemize}
+
+\subsubsection{The Ladder Operators}
+\begin{itemize}
+	\item We often analyze angular momentum problems in terms of the ladder operators $ L_{+} $ and $ L_{-} $, defined by
+	\begin{equation*}
+		L_{+} \equiv L_{x} + iL_{y} \eqtext{and} L_{-} \equiv L_{x} - i L_{y}
+	\end{equation*}
+	The ladder operators obey $ L_{\pm} = L_{\mp}^{\dagger} $, i.e. they are each other's \Herm conjugates.
+	
+	\item The ladder operators commute with the squared angular momentum operator, i.e.
+	\begin{equation*}
+		[L^{2}, L_{+}] = [L^{2}, L_{-}] = 0
+	\end{equation*}
+	
+	\item Analogy to the quantum harmonic oscillator: the ladder operators $ L_{+} $ and $ L_{-} $ are analogous to the creation and annihilation operators $ a^{\dagger} $  and $ a $, i.e. they ``raise'' and ``lower'' the indexes of angular momentum basis states, just like $ a^{\dagger} $ and $ a $ raise and lower the indexes of the harmonic oscillator's Hamiltonian's basis states. 
+	
+	The operator $ L_{z} $ is analogous to the number operator $ \hat{n} = a^{\dagger}a $, in that it counts the number of angular momentum quanta in an angular basis state. 
+	
+	\item First, we derive the important commutation relation $ [L_{z}, L_{\pm}] = \pm \hbar L_{\pm} $ via
+	\begin{align*}
+		[L_{z}, L_{\pm}] &\equiv [L_{z}, L_{x} \pm i L_{y}] = [L_{z}, L_{x}] \pm i [L_{z}, L_{y}] = i \hbar L_{y} \pm i(-i \hbar L_{x})\\
+		& = \hbar [\pm L_{x} + iL_{y}] = \pm \hbar L_{\pm}
+	\end{align*}
+	where we have used $ [L_{\alpha}, L_{\beta}] = i \hbar \epsilon_{\alpha \beta \gamma} L_{\gamma} $.
+	
+	\item Second, we derive the equally important commutation relation $ [L_{+}, L_{-}] = 2\hbar L_{z} $. To show this, we start with
+	\begin{align*}
+ 		L_{\pm}L_{\mp} &= (L_{x} \pm i L_{y})(L_{x} \mp i L_{y}) = L_{x}^{2} + L_{y}^{2} \pm i L_{y}L_{x} \mp i L_{x}L_{y} \\
+ 		& = L^{2} - L_{z}^{2} \pm i L_{y}L_{x} \mp i L_{x}L_{y} 
+	\end{align*}
+	Next, we use $ [L_{\alpha}, L_{\beta}] = i \hbar \epsilon_{\alpha \beta \gamma} L_{\gamma}  $ to show 
+	\begin{equation*}
+		\pm i L_{y}L_{x} \mp i L_{x}L_{y} = \pm \hbar L_{z}
+	\end{equation*}
+	which leaves the two equations (two because of the $ \pm $ terms)
+	\begin{equation*}
+		L_{\pm}L_{\mp} = L^{2} - L_{z}^{2} \pm \hbar L_{z}
+	\end{equation*}
+	Finally we subtract the equations with plus and minus to get
+	\begin{equation*}
+		L_{+}L_{-} - L_{-}{+}  \equiv [L_{+}, L_{-}] = 2 \hbar L_{z}
+	\end{equation*}
+	
+\end{itemize}
+
+\subsection{Eigenvalues and Eigenfunctions of $ L_{z} $ and $ L^{2} $}
+We will now use the just-derived relations $ [L_{z}, L_{\pm}] = \pm \hbar L_{\pm} $ and $ [L_{+}, L_{-}] = 2 \hbar L_{z} $ to find the eigenvalues of the operators $ L_{z} $ and $ L^{2} $. 
+
+\subsubsection{Eigenvalues of $ L_{z} $}
+\begin{itemize}
+	
+	\item Let $ \ket{m} $ be an eigenstate of $ L_{z} $, meaning $ \ket{m} $ satisfies the eigenvalue relation
+	\begin{equation*}
+		L_{z}\ket{m} = m \hbar \ket{m}
+	\end{equation*}
+	\textit{Note}: although the complete corresponding eigenvalue is $ m\hbar $ with units of angular momentum; we often refer to eigenvalues of $ L_{z} $ solely in terms of the dimensionless index $ m $ and leave the $ \hbar $ implicit.
+	
+	\item Next, using $ [L_{z}, L_{\pm}] = \pm \hbar L_{\pm} $ in the form $ L_{z}L_{\pm} = L_{\pm}L_{z} \pm \hbar L_{z} $, the operator $ L_{z}L_{\pm} $ acts on $ \ket{m} $ as
+	\begin{align*}
+		L_{z}L_{\pm} \ket{m} &= (L_{\pm}L_{z} \pm \hbar L_{z})\ket{m} = L_{\pm} L_{z}\ket{m} \pm \hbar L_{z}\ket{m}\\
+		& = L_{\pm} \hbar \ket{m} \pm \hbar L_{z}\ket{m}\\
+		& = (m \pm 1)\hbar L_{\pm}\ket{m}
+	\end{align*}
+	Since $ L_{z} $ acts on the state $ L_{\pm}\ket{m} $,  to produce $ (m \pm 1)\hbar L_{\pm}\ket{m} $, i.e. the same state with eigenvalue $ (m \pm 1)\hbar $, it follows that $ \L_{+} $ and $ L_{-} $ raise and lower the index $ m $ of the state $ \ket{m} $ by one, i.e. 
+	\begin{equation*}
+		L_{\pm} \ket{m} \propto \ket{m+1}
+	\end{equation*}
+	We will determine the exact relationship in the following sections.
+	
+	\item Because $ L_{z} $ and $ L^{2} $ commute, the eigenstate $ \ket{m} $ of $ L_{z} $ is also an eigenstate of $ \ket{L^{2}} $. 
+	
+	We now show that the eigenvalues of $ L^{2} $ cannot be negative:
+	\begin{equation*}
+		L^{2}\ket{m} = \lambda \ket{m} \implies \mel{m}{L^{2}}{m} = \sum_{\alpha} \braket{L_{\alpha}m}{L_{\alpha}m} = \lambda \braket{m}{m}
+	\end{equation*}
+	Since the quantities $ \braket{L_{\alpha}m}{L_{\alpha}m} $ and $ \braket{m}{m} $ are non-negative, the equality holds only if $ \lambda \geq 0 $, meaning the eigenvalues of $ L^{2} $ are non-negative.
+	
+	\item Next, we use the commutator relation $ [L^{2}, L_{\pm}] = 0 \implies L^{2} L_{\pm} = L_{\pm} L^{2}  $ and the eigenvalue relation $ L^{2}\ket{m} = \lambda \ket{m} $ to show
+	\begin{equation*}
+		L^{2} L_{\pm}\ket{m} = L_{\pm} L^{2} \ket{m} = L_{\pm}\lambda \ket{m} = \lambda L_{\pm} \ket{m}
+	\end{equation*}
+	In other words, the state $ L_{\pm} \ket{m} $ is also an eigenvalue of $ L^{2} $ with the same eigenvalue $ \lambda $. But we know from the previous bullet that $ L_{\pm} $ raises or lowers the index of $ \ket{m} $ by one, i.e. $ L_{\pm} \ket{m} \propto \ket{m \pm 1} $, which means that (under the action of $ L^{2} $) states $ \ket{m \pm 1} $ have the same eigenvalue as $ \ket{m} $.
+	
+	\item Next, we introduce the orbital quantum number\footnote{Note that $ l $ is also called the azimuthal quantum number.} $ l > 0 $, which is related to the $ L^{2} $ eigenvalue $ \lambda $ by $ \lambda = l(l+1)\hbar^{2} $. The motivation for this apparently strange parameterization of $ \lambda $ will quickly be clear.
+	
+	We use $ L_{\pm}L_{\mp} = L^{2} - L_{z}^{2} \pm \hbar L_{z} $ and $ L_{\pm} = L_{\mp}^{\dagger} $ to show
+	\begin{equation*}
+		\braket{L_{\pm}m}{L_{\pm}m} = \mel{m}{L_{\mp}L_{\pm}}{m} = \mel{m}{(L^{2} - L_{z}^{2} \mp \hbar L_{z})}{m}\\
+	\end{equation*}
+	Next, we apply the eigenvalue relations for $ L^{2} $ and $ L_{z} $ to get
+	\begin{align*}
+		\braket{L_{\pm}m}{L_{\pm}m} &= \bmel{m}{\big[l (l+1) - m(m\pm 1)\big]\hbar^{2}}{m}\\
+		&\equiv (C_{l,m\pm 1})^{2} \braket{m}{m}
+	\end{align*}
+	Where we have defined the constant
+	\begin{equation*}
+		C_{l, m\pm1} = \hbar \sqrt{l (l+1) - m(m\pm 1)} \in \mathbb{R}
+	\end{equation*}
+	Since both $ \braket{L_{\pm}m}{L_{\pm}m} $ and $ \braket{m}{m} $ are both non-negative, it follows that $ (C_{l,m\pm 1})^{2} \geq 0 $, which is why $ C_{l, m\pm1} $ is real.
+	
+	\item The identity $  C_{l, m\pm1} \in \mathbb{R} $ is important---it means that for a state with a given orbital quantum number $ l $, we can raise or lower states with $ L_{\pm} $ only as long as $  C_{l, m\pm1} $ remains real, which implies
+	\begin{equation*}
+		l (l+1) \geq m(m\pm 1) \implies \abs{m} \leq l
+	\end{equation*}
+	
+\end{itemize}
+
+\subsubsection{Eigenvalues of $ L^{2} $}
+\begin{itemize}
+	\item Using $ \abs{m} \leq l $, we can now find the possible values of the orbital quantum number $ l $ and thus determine $ L^{2} $'s eigenvalues $ \lambda = l (l+1)\hbar^{2} $. 
+	
+	\item First, we consider a generic $ L^{2} $ eigenstate $ \ket{lm} $ indexed by both $ m $ and $ l $. We start with the maximum permitted value of $ m $, i.e. $ m = l $, and act on the state $ \ket{ll} $ with $ L_{-} $ until we reach the minimum possible value $ m = -l $. This reads
+	\begin{equation*}
+		\begin{array}{lcl}
+			L_{-}\k{ll}     & = & C_{l,l-1}\k{l, l-1}\\
+			L^{2}_{-}\k{ll} & = & C_{l,l-2}\k{l, l-2}\\[-0.3em]
+			& \vdots &\\[-0.3em]
+			L^{k}_{-}\k{ll} & = & C_{l,l-k}\k{l, l-k} =  C_{l,l-k}\k{l, -l}\\
+		\end{array}
+	\end{equation*}
+	Since we reached the state with $ m = -l $ after $ k \in \mathbb{N}$ integral steps, we have
+	\begin{equation*}
+		l - k = - l \implies 2l = k \implies 2l \in \mathbb{N}
+	\end{equation*}
+	The possible values of $ l $, (accounting for $ l \geq 0 $), are thus
+	\begin{equation*}
+		l = 
+		\begin{cases}
+			0, 1, 2, \ldots & k \text{ even}\\
+			\frac{1}{2}, \frac{3}{2}, \frac{5}{2}, \ldots & k \text{ odd}
+		\end{cases}
+	\end{equation*}
+	More so, the unit increments of $ l $ mean the general condition $ \abs{m} \leq l $ can be written in the form
+	\begin{equation*}
+		m \in \big\{\hspace{-0.3em}-l, -l+1, \ldots, l-1, l\big\}
+	\end{equation*}
+	
+	\item Since $ m $ can take on $ 2l + 1 $ values at a given $ l $, $ L^{2} $'s eigenvalue spectrum has degeneracy $ 2l + 1 $, since at a given $ l $ there are $ 2l + 1 $ linearly independent eigenstates $ \ket{lm} $ with the same eigenvalue $ \lambda = l (l+1)\hbar^{2} $. 
+	
+	\item The recursive action of $ L_{-} $ on $ \ket{lm} $ also reveals the relationship
+	\begin{equation*}
+		L_{\pm}\ket{lm} = C_{l, m \pm 1} \ket{l, m \pm 1} = \hbar \sqrt{l (l+1) - m(m\pm 1)} \ket{l, m \pm 1}
+	\end{equation*}
+	Earlier, we had determined this relationship only to $ L_{\pm} \ket{m} \propto \ket{m \pm 1} $.
+	
+	\item \textbf{TODO:} Only integer or half-integer values of $ l $ are possible because (similar to the harmonic oscillator) non-integer values of $ l $  would allow us to repeatedly lower indices with $ L_{-} $ until $ C_{l, m-1} $ were a imaginary number, which is prohibited.
+\end{itemize}
+
+
+\subsubsection{Eigenfunctions of $ L_{z} $}
+\begin{itemize}
+	\item In spherical coordinates, the coordinate representation of the operator $ L_{z} $ reads
+	\begin{equation*}
+		L_{z} = - i \hbar \pdv{\phi}
+	\end{equation*}
+	where $ \phi $ is the azimuthal angle. For each $ m $, the eigenvalues equation
+	\begin{equation*}
+		L_{z} \p_{m} = \left(-i\hbar\pdv{\phi} \right)\p_{m} = m \hbar \p_{m}
+	\end{equation*}
+	has the unique solution
+	\begin{equation*}
+		\p_{m} = Ce^{im \phi}
+	\end{equation*}
+	
+	\item We consider only $ \p_{m} $ solving the \Schro equation, which must be continuous. To satisfy continuity, the $ \p_{m} $ must be periodic over $ \phi \in [0, 2\pi] $, i.e.
+	\begin{equation*}
+		\p_{m}(\phi) = \p_{m}(\phi + 2\pi) \iff 1 = e^{2\pi i m}  \implies m \in \mathbb{Z}
+	\end{equation*}
+	In other words, only integer values of $ m $ satisfy the \Schro equation and correspond to physical eigenstates of $ L_{z} $.
+	
+\end{itemize}
+
+\subsubsection{Eigenfunctions of $ L^{2} $}
+\begin{itemize}
+	\item Without derivation, the eigenfunctions of the angular momentum operator $ L^{2} $, in the coordinate representation, are the spherical harmonics, i.e.
+	\begin{equation*}
+		\braket{\r}{lm} = Y_{l}^{m}(\theta, \phi) 
+	\end{equation*}
+	The spherical harmonics arise in the angular solution of the Laplace equation $ \laplacian u(\r) = 0 $, i.e. if we separate $ u(\r) $ into radial and angular component, the solution is
+	\begin{equation*}
+		\laplacian u(\r) = f(r)Y_{l}^{m}(\theta, \phi) = 0
+	\end{equation*}
+	where $ Y_{l}^{m}(\theta, \phi)  $ are the spherical harmonics. 
+	
+	\item In quantum mechanics for $ m \geq 0  $ we often use the definition
+	\begin{equation*}
+		Y_{l}^{m}(\theta, \phi) = (-1)^{m}\sqrt{\frac{(2l+1)}{4\pi}\frac{(l-m)!}{(l+m)!}} P_{l}^{m}(\cos \theta)e^{im\phi}
+	\end{equation*}
+	where $ P_{l}^{m} $ are the associated Legendre polynomials.
+	
+	\item The spherical harmonics obey 
+	\begin{equation*}
+		Y_{l}^{-m} = (-1)^{m}Y_{l}^{m^{*}}
+	\end{equation*}
+	
+	\item As a concrete example, the first few spherical harmonics for for $ l = 0, 1, 2 $ are
+	\[
+		\begin{array}{ll}
+			Y_{0}^{0} = \frac{1}{\sqrt{4\pi}} &\\
+			Y_{1}^{0} = \sqrt{\frac{3}{4\pi}}\cos \theta & Y_{l}^{\pm 1} = \mp \sqrt{\frac{3}{8\pi}}\sin \theta e^{\pm i \phi}\\
+			Y_{2}^{0} = \sqrt{\frac{5}{16\pi}}  (3\cos^{2}\theta - 1) & Y_{2}^{\pm 1} = \mp \sqrt{\frac{15}{8\pi}}\sin \theta \cos \theta e^{\pm i \phi}\\
+			Y_{2}^{\pm 2} = \sqrt{\frac{5}{32\pi}}\sin^{2}\theta e^{\pm 2i \phi}
+		\end{array}
+	\]
+\end{itemize}
+
+\subsubsection{Matrix Representation of Angular Momentum}
+\begin{itemize}
+	\item We write a generic state $ \ket{\p} $ in the basis $ \{\ket{lm}\} $ of angular momentum eigenfunctions as
+	\begin{equation*}
+		\k{\p} = \sum_{l = 0}^{\infty}\sum_{m=-l}^{l}c_{lm}\ket{lm}
+	\end{equation*}
+	Note that the presence of two quantum numbers $ l $ and $ m $ introduces a double sum.
+	
+	\item We write a generic operator $ \O $ in the $ \k{lm} $ basis as
+	\begin{equation*}
+		\O = \sum_{l'lm'm}\k{l'm'}\O_{l'lm'm}\bra{lm}
+	\end{equation*}
+	
+	\iffalse
+	
+	\item As an example, we find the matrix representation of the ladder operator $ L_{+} $, i.e.
+	\begin{equation*}
+		L_{+} = \sum_{ll'mm'}\k{l'm'}L_{+_{l'lm'm}}\bra{lm}
+	\end{equation*}
+	The matrix element $ L_{+_{l'lm'm}} $ reads
+	\begin{align*}
+		L_{+_{l'lm'm}} &= \mel{l'm'}{L_{+}}{lm}\\
+		& = \hbar \b{l, m+1}\sqrt{l (l+1) - m(m+1)}\k{l, m+1}\delta_{l'l}\delta_{m'+1,m}
+	\end{align*}
+	Because of the $ \delta_{l'l} $ matrix is block diagonal with respect to $ l $, and reads
+	\begin{equation*}
+	\begingroup
+	\setlength\arraycolsep{1.0pt}
+	\renewcommand*{\arraystretch}{0}
+		L_{+} \to \hbar
+		\begin{pmatrix}
+		 \t{L}_{+}^{(0)}   & & & & \\
+		 & \t{L}_{+}^{(1)}   & & & \\[-0.4em]
+		 & & \ddots           & & \\
+		 & & & \t{L}_{+}^{(l)}   & \\[-0.4em]
+		 & & & & \ddots         & \\
+		\end{pmatrix}
+	\endgroup
+	\end{equation*}
+	where $ \t{L}_{+}^{(l)} $ is a $ l(l+1) \cross l(l+1) $ is an off-diagonal matrix of the form: 
+	
+	Blah stupid matrices in latex forget it lol :D
+	
+	\fi
+	
+	\item Finally, as a concrete example, for $ l = 1 $ the matrices for $ L_{x, y, z} $ and $ L^{2} $ read
+	\begin{align*}
+		& L_{x} = \frac{\hbar}{\sqrt{2}} 
+		\begin{pmatrix}
+			0 & 1 & 0\\
+			1 & 0 & 1\\
+			0 & 1 & 0
+		\end{pmatrix}
+		&&
+		L_{y} = \frac{\hbar}{\sqrt{2}} 
+		\begin{pmatrix}
+			0 & -i & 0 \\
+			i & 0 & -i \\
+			0 & i & 0
+		\end{pmatrix}\\
+		& L_{z} = \hbar
+		\begin{pmatrix}
+			1 & 0 & 0\\
+			0 & 0 & 0\\
+			0 & 0 & -1
+		\end{pmatrix}
+		&&
+		L^{2} = 2\hbar^{2}
+		\begin{pmatrix}
+			1 & 0 & 0\\
+			0 & 1 & 0\\
+			0 & 0 & 1
+		\end{pmatrix}
+	\end{align*}
+	As would be expected, $ L^{2} $ and $ L_{z} $ are diagonal in the $ \ket{lm} $ basis.
+	
+\end{itemize}
 
 
 \end{document}
