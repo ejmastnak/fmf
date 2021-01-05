@@ -81,6 +81,7 @@ def get_number_signal(sequence, char_duration, fs):
     Represents the sound of dialing the inputted list of characters.
     :param sequence: a list of keypad characters 0-9, A-D and #, *
     :param char_duration: the duration in seconds of a single character's sound
+    :param fs: sample rate [Hz]
     :return:
     """
     N = int(fs*char_duration)  # number of samples in a single character's sound
