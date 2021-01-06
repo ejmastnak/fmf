@@ -2547,7 +2547,7 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 
 \section{Electromagnetic Wave Propagation}
 
-\subsection{Twelfth Exercise Set (continued)}
+\subsection{Thirteenth Exercise Set (rough draft)}
 \subsubsection{Theory: Electromagnetic Wave Propagation in Waveguides}
 \begin{itemize}
 	\item Assume empty waveguides with $ \e = 1 $---we can use the wave equation
@@ -2557,7 +2557,7 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	
 	\item We assume bounded waveguide geometry, e.g. a pipe-like waveguide along the $ z $ axis. We use the following ansatz for electric field:
 	\begin{equation*}
-		\E(\r) = \E(\rh) e^{i(kz - \omega t)}
+		\E(\r, t) = \E(\rh) e^{i(kz - \omega t)}
 	\end{equation*}
 	where $ \rh $ is the position within the waveguide's planar cross section, i.e. the $ xy $ plane perpendicular to $ \uvec{z} $ along the direction of EM propagation. 
 	
@@ -2575,6 +2575,344 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	\begin{equation*}
 		 \left[\nabla_{\perp}^{2} + \left(\frac{\omega^{2}}{c_{0}^{2}} - k^{2}\right)\right]\E = 0
 	\end{equation*}
+	where $ \E = \E(\rho) $. However, because their is no time derivative, we can use the same equation for $ \E = \E(\r, t) $.
+	
+	\item $ \E $ has three components, so the wave equation in vector form really has 3 equations for each component. 
+	
+	Analogously, $ \H $ has three components, and thus three associated equations. 
+	
+	However, we can express $ \H $ in terms of $ \E $, which simplifies the equations involved. 
+	
+\end{itemize}
+
+\textbf{Relationship Between $ \E $ and $ \H $}
+\begin{itemize}
+	\item We start with the Maxwell equations
+	\begin{equation*}
+		\curl \E = - \mm \pdv{\H}{t} \eqtext{and} \curl \H = \ee \pdv{\E}{t}
+	\end{equation*}
+	In components, the equations read
+	\begin{equation*}
+		\begin{bmatrix}
+		\pdv{x}\\
+		\pdv{y}\\
+		\pdv{z}
+		\end{bmatrix}
+		\cross
+		\begin{bmatrix}
+		E_{x}\\
+		E_{y}\\
+		E_{z}
+		\end{bmatrix}
+		= 
+		\begin{bmatrix}
+		\pdv{E_{z}}{y} - ik E_{y}
+		ik E_{x} - \pdv{E_{z}}{x}\\
+		\pdv{E_{y}}{x} - \pdv{E_{x}}{y}
+		\end{bmatrix} 
+		= i \mm \omega
+		\begin{bmatrix}
+		H_{x}\\
+		H_{y}\\
+		H_{z}
+		\end{bmatrix}
+	\end{equation*}
+	where we have used $ \pdv{z} = ik $ and $ \pdv{t} = -i\omega $
+	
+	\item The second equation reads
+	\begin{equation*}
+		\begin{bmatrix}
+		\pdv{x}\\
+		\pdv{y}\\
+		\pdv{z}
+		\end{bmatrix}
+		\cross
+		\begin{bmatrix}
+		H_{x}\\
+		H_{y}\\
+		H_{z}
+		\end{bmatrix}
+		= 
+		\begin{bmatrix}
+		\pdv{H_{z}}{y} - ik H_{y}
+		ik H_{x} - \pdv{H_{z}}{x}\\
+		\pdv{H_{y}}{x} - \pdv{H_{x}}{y}
+		\end{bmatrix} 
+		= -i \ee \omega
+		\begin{bmatrix}
+		E_{x}\\
+		E_{y}\\
+		E_{z}
+		\end{bmatrix}
+	\end{equation*}
+	We have six component equations. 
+	
+	\item The first and fifth equations both contain $ H_{x} $ and $ E_{y} $.
+	
+	They read
+	\begin{equation*}
+		\pdv{E_{z}}{y} - ikE_{y} = i \mm \omega H_{x} \eqtext{and} ikH_{x}  - \pdv{H_{y}}{x}   = -i\ee \omega E_{y}
+	\end{equation*}
+	We combine to get
+	\begin{equation*}
+		k \pdv{E_{x}}{y} - i k^{2}E_{y}= \mm \omega \left(\pdv{H_{z}}{x} - i \ee \omega E_{y}\right)
+	\end{equation*}
+	then
+	\begin{equation*}
+		k \pdv{E_{z}}{y} - \mm \omega \pdv{H_{z}}{x} = iE_{y}\left(k^{2} - \omega^{2}\mm \ee\right) =  iE_{y}\left(k^{2} - \frac{\omega^{2}}{c^{2}}\right) 
+	\end{equation*}
+	We find $ E_{y} $ in terms of the $ z $ components with
+	\begin{equation*}
+		E_{y} = i \frac{k \pdv{E_{z}}{y} - \mm \omega \pdv{H_{z}}{x}}{\frac{\omega^{2}}{c^{2}} - k^{2}}
+	\end{equation*}
+	
+	\item Similarly, the second and fourth component equations contain $ E_{x} $ and $ H_{y} $ in terms of $ E_{z} $ and $ H_{z} $. 
+	
+	Without derivation (analogous to the above) the other equations for the components $ E_{x}, E_{y} $ and $ H_{x}, H_{y} $ are
+	\begin{align*}
+		&H_{x} = i \frac{k\pdv{H_{z}}{x} - \omega \ee \pdv{E_{z}}{y}}{\frac{\omega^{2}}{c^{2}} - k^{2}}\\
+		&E_{x} = i \frac{k \pdv{E_{z}}{x} + \omega \mm \pdv{H_{z}}{y}}{\frac{\omega^{2}}{c^{2}} - k^{2}}\\
+		&H_{y} = i \frac{k\pdv{H_{z}}{y} + \omega \ee \pdv{E_{z}}{x}}{\frac{\omega^{2}}{c^{2}} - k^{2}}\\
+	\end{align*}
+	Note that these equations apply only in Cartesian coordinates.
+	
+	\item Next, we consider boundary conditions. Consider a boundary wall of the waveguide. 
+	
+	Encircle a small portion of the boundary wall with a surface to use Stoke's law.
+	
+	The wall contains $ \rho(z, t) $ and $ \j(z, t) $. 
+	
+	We use the other two equations:
+	\begin{equation*}
+		\curl \E = - \mm \pdv{\H}{t} \eqtext{and} \div \H = 0
+	\end{equation*}
+	When we send the loop to zero thickness, the first equation gives
+	\begin{equation*}
+		\curl \E \to 0 \implies E_{\parallel} = 0
+	\end{equation*}
+	while the second equation gives
+	\begin{equation*}
+		H_{\perp} \to 0
+	\end{equation*}
+	
+	\item Finally, we find $ E_{z} $ and $ H_{z} $ from the waveguide wave equation
+	\begin{equation*}
+		\left[\laplacian_{\perp} + \left(\frac{w^{2}}{c^{2}} - k^{2}\right)\right]
+		\begin{Bmatrix}
+		E_{z}\\
+		H_{z}
+		\end{Bmatrix}
+		= 0
+	\end{equation*}
+	We consider solutions with two orthogonal components: one with $ E_{z} = 0 $ and $ H_{z} \neq 0 $ and the second with $ H_{z} = 0 $ and $ E_{z} \neq 0 $. The general solution will be a linear combination of the two solutions.
+	
+	The first method is called transverse electric (TE), since the electric field is perpendicular (transverse) to the direction of EM wave propagation (and $ E_{z} = 0 $). 
+	
+	The first method is called transverse magnetic (TM), since the magnetic field is perpendicular (transverse) to the direction of EM wave propagation (and $ H_{z} = 0 $). 
+	
+%	Note that the opposite E or H component has a component in the direction $ z $ of wave propagation---which doesn't hold in free space.
+	
+\end{itemize}
+
+\subsubsection{Waveguide of Two Parallel Plates}
+\textit{Consider a waveguide consisting to two large parallel conducting plates separated by a distance $ a $}
+\begin{itemize}
+	\item Let $ x $ be vertical (up down in paper), $ z $ left right in paper (direction of wave propagation) and $ y $ out of the page. 
+	
+	In this case $ \pdv{y} = 0 $ because of translational symmetry along $ y $. 
+	
+	\item For TM we have $ E_{z} \neq 0 $ and $ H_{z} = 0 $. 
+	
+	First what remaining components are non-zero. $ H_{y} \neq 0 $. $ E_{y} = 0 $. $ H_{x} = 0 $ and $ E_{x} \neq 0 $. Noting that $ \pdv{y} = 0 $. 
+	
+	$ \H $ points out of the page along $ y $, while $ \E $ points in the $ xz $ plane.
+	
+	\item Next, we find $ E_{z} $ using
+	\begin{equation*}
+		\left[\laplacian_{\perp} + \left(\frac{w^{2}}{c^{2}} + k^{2}\right)\right]E_{z} \equiv \left[\laplacian_{\perp} + \kappa^{2}\right]E_{z}
+	\end{equation*}
+	Since $ \pdv{y} = 0 $ this becomes
+	\begin{equation*}
+		\left(\pdv[2]{}{x} + \kappa^{2}\right)E_{z} = 0
+	\end{equation*}
+	The solution is oscillation. We can write the general solution as
+	\begin{equation*}
+		E_{z}(x) = A\sin \kappa x + B \cos \kappa x
+	\end{equation*}
+	
+	\item Boundary conditions $ E_{\parallel} = 0 $. The parallel components to waveguide surface are $ z $ and $ y $. We already know $ E_{y} = 0 $, so at the boundary surfaces we have
+	\begin{equation*}
+		E_{\perp} = E_{z}(0) = E_{z}(a) = 0
+	\end{equation*}
+	The condition $ E_{z}(0) = 0$ implies  $ B = 0 $ and thus
+	\begin{equation*}
+		E_{z} = A\sin \kappa x
+	\end{equation*}
+	While $ E_{z}(a) = 0 $ implies $ \kappa a = n \pi $, so 
+	\begin{equation*}
+		\kappa = \frac{n\pi}{a}, \qquad n = 1, 2, 3, \ldots
+	\end{equation*}
+	Note that $ n = 0 $ gives a trivial solution
+	
+	The TM solution for $ E_{z} $ is then
+	\begin{equation*}
+		E_{z}(x) = A \sin \frac{n\pi x}{a}
+	\end{equation*}
+\end{itemize}
+\textbf{Dispersion Relation}
+\begin{itemize}
+	\item We want to find the relationship between $ \omega $ and $ k $.
+	
+	We use the $ E_{z} $ wave equation and the definition of $ \kappa $ to get
+	\begin{equation*}
+		\kappa^{2} = \frac{\omega^{2}}{c^{2}} - k^{2} = \left(\frac{n\pi}{a}\right)^{2}
+	\end{equation*}
+	which implies
+	\begin{equation*}
+		\omega = c_{0}\sqrt{k^{2} + \left(\frac{n\pi}{a}\right)^{2}}
+	\end{equation*}
+	At large $ k $, this approaches the free space relation $ \omega = c_{0}k $
+	
+	\item Note also that frequencies below $ \frac{n\pi}{a} $ are unattainable---in other words, there is a minimum possible frequency at which EM waves can propagate through the waveguide.
+	
+	\item We call the frequency band spanning the frequencies between $ n = 1 $ and $ n = 2 $ the wave band. The bandwidth is the difference between the $ n = 1 $ and $ n = 2 $ frequencies.
+	\begin{equation*}
+		\Delta \omega = \frac{c_{0}\pi}{a}
+	\end{equation*}
+\end{itemize}
+
+\textbf{Impedance}
+\begin{itemize}
+	\item The impedance for TM waves is defined in terms of the fields as
+	\begin{equation*}
+		Z \equiv \frac{E_{\perp}}{H_{\parallel}}
+	\end{equation*}
+	In our case for the parallel-plate waveguide this reads
+	\begin{equation*}
+		Z = \frac{E_{x}}{H_{y}}
+	\end{equation*}
+	Using the equations for the components $ E_{x} $ and $ H_{y} $, we have
+	\begin{equation*}
+		Z = \frac{ik \pdv{E_{z}}{x}}{i \omega \ee \pdv{E_{z}}{x}} = \frac{k}{\omega \ee}
+	\end{equation*}
+	We use the dispersion relation to get
+	\begin{equation*}
+		Z = \frac{\sqrt{\frac{\omega^{2}}{c_{0}^{2}} - \left(\frac{n\pi}{a}\right)^{2}}}{\omega \ee} = \frac{1}{c_{0}\ee}\sqrt{1 - \left(\frac{n\pi c_{0}}{a}\right)^{2}\frac{1}{\omega^{2}}}
+	\end{equation*}
+	The coefficient is
+	\begin{equation*}
+		\frac{1}{c_{0}\ee} = \frac{\sqrt{\ee \mm}}{\ee} = \sqrt{\frac{\mm}{\ee}} \equiv Z_{0}
+	\end{equation*}
+	which is the impedance of free space.
+	
+	\item We also define the frequency
+	\begin{equation*}
+		\frac{n\pi c_{0}}{a} \equiv \omega_{n}
+	\end{equation*} 
+	which is the frequency of each brach in the dispersion relation.
+	
+	In terms of $ \omega_{n} $ then the impedance is
+	\begin{equation*}
+		Z(\omega) = Z_{0}\sqrt{1 - \left(\frac{\omega_{n}}{\omega}\right)^{2}}
+	\end{equation*}
+	For large $ \omega $, the impedance approaches $ Z_{0} $. 
+\end{itemize}
+
+\textbf{Ratio of Electric Field Amplitudes}
+\begin{itemize}
+	\item Find the ratio of amplitudes $ \frac{E_{z_{0}}}{E_{x_{0}}} $.
+	
+	First
+	\begin{equation*}
+		\frac{E_{z}}{E_{x}} = \frac{E_{z}}{ik\pdv{E_{z}}{x}} \kappa^{2}
+	\end{equation*}
+	We know $ E_{z} = A \sin \kappa x $ from earlier, and get
+	\begin{equation*}
+		\frac{E_{z_{0}}}{E_{x_{0}}} = \frac{\kappa}{k} = 
+	\end{equation*}
+	We can interpret $ \kappa $ as a wave vector in the $ x $ direction, while $ k $ is the wave vector along the direction of propagation $ z $. 
+	
+%	\item With similar triangles involving $ E_{z}, E_{x}, \E, k, \kappa $ and so on we can show $ \E $ is perpendicular to a vector with magnitude $ \sqrt{\kappa^{2} + k^{2}} $---the hypotenuse of $ \kappa $ and $ k $.
+\end{itemize}
+
+\textbf{TE Propagation Mode}
+\begin{itemize}
+	\item This is analogous to TM, so only sketched. In this case $ E_{z} = 0 $ and we find $ H_{z} $. 
+	
+	\item The wave equation is solved with
+	\begin{equation*}
+		H_{z} = A \sin \kappa x + B \cos \kappa x
+	\end{equation*}
+	
+	\item Boundary equations are now different though---$ H_{\perp} = 0 $. The perpendicular component is $ H_{x} $. We turn to the component equations to get
+	\begin{equation*}
+		H_{x} = i \frac{k \pdv{H_{z}}{x}}{\kappa^{2}}
+	\end{equation*}
+	Since $ H_{x} = 0 $ at the boundary it follows that
+	\begin{equation*}
+		\pdv{H_{z}}{x}\Big|_{x = 0, a} = 0
+	\end{equation*}
+	The boundary condition is now in terms of a derivative---note that $ \pdv{H_{z}}{x} $ is a ``normal'' derivative; since in points in the direction $ x $, which is normal to the waveguide's boundary. 
+	
+	Note that in general, the boundary condition in TE mode involves the normal derivative of $ H_{z} $ with respect to the waveguide boundary surface. 
+	
+	\item Taking the derivative of $ H_{z} $ and evaluating the boundary condition gives
+	\begin{equation*}
+		H_{z}(x) = B\cos \frac{n\pi x}{a}, \qquad n = 1, 2, 3, \ldots
+	\end{equation*}
+	Note that $ n = 0 $ produces $ H_{z} = B $ which is not at trivial solution  in itself, but the other field components involve derivatives of $ H_{z} $ and are trivial, so we again reject $ n = 0 $. 
+	
+	\item Since $ \kappa $ is the same as in TM mode, the dispersion relation in TE is the same. 
+	
+	The only notable difference in TE mode is the boundary condition involving the normal derivative of $ H_{z} $. 
+	
+	And also impedance turns out to be
+	\begin{equation*}
+		Z(\omega) = \frac{Z_{0}}{\sqrt{1 - \left(\frac{\omega_{n}}{\omega}\right)^{2}}}
+	\end{equation*}
+	
+\end{itemize}
+
+\textbf{Generalization: waveguide with a rectangular cross section}
+\begin{itemize}
+	\item In this case,
+	\begin{equation*}
+		\laplacian_{\perp} = \pdv[2]{}{x} + \pdv[2]{}{y}
+	\end{equation*}
+	and $ \pdv{y} $ is not zero. We then have
+	\begin{equation*}
+		\left(\pdv[2]{}{x} + \pdv[2]{}{y} + \kappa^{2}\right)E_{x}(x, y) = 0
+	\end{equation*}
+	We use separation of variables: $ E_{x}(x, y) = X(x)Y(y) $. We get
+	\begin{equation*}
+		X''Y + XY'' + \kappa^{2}XY = 0 \implies \frac{X''}{X} + \frac{Y''}{Y} + \kappa^{2} = 0
+	\end{equation*}
+	The $ x $ and $ y $ terms must be constant for the equation to hold, so we define
+	\begin{equation*}
+		\frac{X''}{X} = - \kappa_{x}^{2} \eqtext{and} \frac{Y''}{Y} = - \kappa_{y}^{2}
+	\end{equation*}
+	
+	\item The equations then read
+	\begin{equation*}
+		X'' + \kappa_{x}^{2}X = 0 \eqtext{and} 	Y'' + \kappa_{y}^{2}Y = 0
+	\end{equation*}
+	We solve the equations like before and get sinusoidal solutions. 
+	
+	\item Boundary conditions now involve $ a $ and $ b $
+	\begin{equation*}
+		\kappa_{x} = \frac{n\pi }{a}\eqtext{and} \kappa_{y} = \frac{m \pi}{b}, \qquad n, m = 1, 2, 3, \ldots
+	\end{equation*}
+	Note $ \kappa^{2} = \kappa_{x}^{2} + \kappa_{y}^{2} $.
+
+	\item  Dispersion relation is
+	\begin{equation*}
+		\omega = c_{0} \sqrt{k^{2} + \left(\frac{n\pi}{a}\right)^{2} +  \left(\frac{m\pi}{b}\right)^{2}}
+	\end{equation*}
+	The lowest branch now depends on the ratio of $ a $ and $ b $. 
+	
+	\item Finally, note that because of both two indices $ n $ and $ m $, in TE mode with cosine solutions one of either $ n $ or $ m $ can be zero.
+	
+	In TM mode both indices are $ n, m = 1, 2, 3, \ldots $.
 \end{itemize}
 
 
