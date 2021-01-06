@@ -2641,15 +2641,19 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\end{equation*}
 	We can show $ [H, p_{y}] = 0 $ with an analogous procedure. Finally, since $ p_{z} = 0 $, the identity $ [H, p_{z}] = 0 $ is trivial---it's even strictly necessary, since our particle's momentum is confined to the $ xy $ plane.
 	
-	\item Next, recall that if two operators commute, it is possible to find eigenfunctions that are simultaneously eigenfunctions of both operators (see e.g. the 2D harmonic oscillator problem in Subsection \ref{qmv:ss:2dqho}). In our case, because $ \vec{p} = (p_{x}, p_{y}, 0)$ and $ H $ commute, it is possible to find such functions that are simultaneously eigenfunctions of both operators. Instead of finding $ H $'s eigenfunctions, we can search for $ \vec{p} $'s eigenfunctions instead. 
+	\item Next, recall that if two operators commute, it is possible to find eigenfunctions that are simultaneously eigenfunctions of both operators (see e.g. the 2D harmonic oscillator problem in Subsection \ref{qmv:ss:2dqho}). In our case, because $ \vec{p} = (p_{x}, p_{y}, 0)$ and $ H $ commute, $ \vec{p} $'s eigenfunctions will also be $ H $'s eigenfunctions, and instead of finding $ H $'s eigenfunctions, we can search for $ \vec{p} $'s eigenfunctions instead, which is easier.
 	
-	\item The momentum operator $ \vec{p} $'s eigenfunctions correspond to the particle's momentum states $ \ket{\psi_{p}} $. We want to solve the eigenvalue equation
+	\item To find $ \vec{p} $'s eigenfunctions, we would solve the equation
+	\begin{equation*}
+		\vec{p} \ket{\p} = a \ket{\p} \eqtext{or} \vec{p}\ket{\p_{p}}\otimes\ket{p_{s}} = a \ket{\p_{p}}\otimes\ket{p_{s}}
+	\end{equation*}
+	I've used $ a $ instead of the conventional $ \lambda $ to denote the eigenvalue to avoid confusion with the Rashba coupling parameter $ \lambda $. Since $ \vec{p} $ acts only on the momentum Hilbert space $ \H_{p} $ (and thus only on $ \ket{\p_{p}} $ and not $ \ket{p_{s}} $), we can immediately simplify to the purely momentum equation
 	\begin{equation*}
 		\vec{p}\ket{\psi_{p}} = a \ket{\psi_{p}} \qquad \text{where } \vec{p} = -i\hbar \nabla
 	\end{equation*}
-	I've used $ a $ instead of the conventional $ \lambda $ to denote the eigenvalue to avoid confusion with the Rashba coupling parameter $ \lambda $. Recall the momentum eigenfunctions are plane waves of the form $ e^{i\vec{k}\cdot \vec{r}} $, for which the eigenvalue equation in the coordinate wavefunction representation reads
+	Recall the momentum eigenfunctions are plane waves of the form $ e^{i\vec{k}\cdot \vec{r}} $, for which the eigenvalue equation in the coordinate wavefunction representation reads
 	\begin{equation*}
-		\vec{p} e^{i\vec{k}\cdot \vec{r}} = -i\hbar (i \vec{k}) e^{i\vec{k}\cdot \vec{r}} = \hbar \vec{k}e^{i\vec{k}\cdot \vec{r}}
+		\vec{p} e^{i\vec{k}\cdot \vec{r}} =  -i\hbar \nabla e^{i\vec{k}\cdot \vec{r}}  = -i\hbar (i \vec{k}) e^{i\vec{k}\cdot \vec{r}} = \hbar \vec{k}e^{i\vec{k}\cdot \vec{r}}
 	\end{equation*}
 	In Dirac notation, the equation reads
 	\begin{equation*}
@@ -2714,7 +2718,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 		 S_{-}\ket{\da} & \equiv & S_{-}\ket{\tfrac{1}{2}- \tfrac{1}{2}} & = & 0
 	\end{array}
 	\]
-	The first and last identities hold since $ m $ cannot increase beyond $ s = 1/2 $ or decrease below $ s = -1/2$, respectively.
+	The first and last identities hold from a physical interpretation since $ m $ cannot increase beyond $ s = 1/2 $ or decrease below $ s = -1/2$, respectively.
 
 	\item In terms of $ S_{+} $ and $ S_{-} $ and using the above intermediate results, $ S_{x} $ and $ S_{y} $ act on $ \ket{\psi_{s}} $ to produce
 	\begin{align*}
@@ -2728,7 +2732,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\end{equation*}
 	Using the just-derived action of $ S_{x} $ and $ S_{y} $ act on $ \ket{\psi_{s}} $, we have
 	\begin{equation*}
-		\frac{\hbar^{2}k^{2}}{2m}\big(\alpha \ket{\da} + \beta \ket{\ua}\big)+ \frac{\lambda k_{x} \hbar^{2}}{2i} \big(-\alpha \ket{\da} + \beta \ket{\ua}\big) - \frac{\lambda k_{y} \hbar^{2}}{2} \big(\alpha \ket{\da} + \beta \ket{\ua}\big) = E\big(\alpha \ket{\da} + \beta \ket{\ua}\big)
+		\frac{\hbar^{2}k^{2}}{2m}\big(\alpha \ket{\ua} + \beta \ket{\da}\big)+ \frac{\lambda k_{x} \hbar^{2}}{2i} \big(-\alpha \ket{\da} + \beta \ket{\ua}\big) - \frac{\lambda k_{y} \hbar^{2}}{2} \big(\alpha \ket{\da} + \beta \ket{\ua}\big) = E\big(\alpha \ket{\ua} + \beta \ket{\da}\big)
 	\end{equation*}
 	Note that this equation contains only scalar values and the two linearly independent states $ \ket{\da} $ and $ \ket{\ua} $---all operators are gone from the equation. 
 	
@@ -2738,7 +2742,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\end{equation*}
 	while multiplying the equation from the left by $ \bra{\da} $ produces
 	\begin{equation*}
-		\frac{\hbar^{2}k^{2}}{2m} \beta - \frac{\lambda \hbar^{2}k_{x}}{2i} \beta - \frac{\lambda \hbar^{2}k_{y}}{2} \alpha = E \beta
+		\frac{\hbar^{2}k^{2}}{2m} \beta - \frac{\lambda \hbar^{2}k_{x}}{2i} \alpha - \frac{\lambda \hbar^{2}k_{y}}{2} \alpha = E \beta
 	\end{equation*}
 	We have a system of two equations for the two unknown coefficients $ \alpha $ and $ \beta $; in matrix form this system reads
 	\begin{equation*}
@@ -2787,7 +2791,11 @@ These are the two linearly independent states spanning the isotropic harmonic os
 		\end{bmatrix}
 		= \left( \frac{\hbar^{2}k^{2}}{2m} - E\right)^{2} - \left(\frac{\lambda \hbar^{2}k^{2}}{2}\right)^{2} 
 	\end{equation*}	
-	The polynomial's two zeros are
+	We want to find the $ E $ such that $ p(E) = 0 $, i.e. solving
+	\begin{equation*}
+		\left( \frac{\hbar^{2}k^{2}}{2m} - E\right)^{2} = \left(\frac{\lambda \hbar^{2}k^{2}}{2}\right)^{2} 
+	\end{equation*}
+	Squaring both sides and solving for $ E $ gives
 	\begin{equation*}
 		E_{\pm} = \frac{\hbar^{2}k^{2}}{2m} \pm \frac{\lambda \hbar^{2}k}{2}
 	\end{equation*}
@@ -3018,8 +3026,8 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\item If we insert the definitions of the Pauli matrices $ \sigma_{y} $ and $ \sigma_{x} $ and multiply out the matrices $ \sigma_{y} $ and $ \sigma_{x} $ with the spinor $ \big[\alpha, \beta\big]^{T} $, we end up with the matrix equation
 	\begin{equation*}
 		\begin{bmatrix}
-			\frac{\hbar^{2}k^{2}}{2m} & \frac{\lambda \hbar}{2i}(k_{x} - ik_{y})\\
-			-\frac{\lambda \hbar}{2i}(k_{x} + ik_{y}) & \frac{\hbar^{2}k^{2}}{2m}
+			\frac{\hbar^{2}k^{2}}{2m} & \frac{\lambda \hbar^{2}}{2i}(k_{x} - ik_{y})\\
+			-\frac{\lambda \hbar^{2}}{2i}(k_{x} + ik_{y}) & \frac{\hbar^{2}k^{2}}{2m}
 		\end{bmatrix}
 		\begin{bmatrix}
 			\alpha\\
@@ -3034,7 +3042,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\end{equation*}
 	This is exactly the same $ 2 \cross 2 $ eigenvalue problem as in the previous exercise set. The procedure from here forward is same as in the previous problem---we would solve the eigenvalue problem for the \Ham's energy eigenvalues and eigenfunctions as before.
 	
-	The lesson is that when working with particles with $ S = \frac{1}{2} $, we are able to use the Pauli spin matrix representation of the spin operator to derive the same eigenvalue problem as in the previous Hilbert space approach.
+	The lesson is that when working with particles with $ s = 1/2 $, we are able to use the Pauli spin matrix representation of the spin operator to derive the same eigenvalue problem as in the previous Hilbert space approach.
 \end{itemize}
 
 \subsection{Theory: Time Reversal Symmetry}
@@ -3080,7 +3088,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	
 	
 	
-\subsection{Tine-Reversal Symmetry and Rashba Coupling}
+\subsection{Time-Reversal Symmetry and Rashba Coupling}
 \textit{Analyze the Rashba-coupled Hamiltonian from the previous two problems,}
 \begin{equation*}
 	H = \frac{p^{2}}{2m} + \frac{\lambda\hbar}{2} (p_{x}\sigma_{y} - p_{y}\sigma_{x}),
