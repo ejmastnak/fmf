@@ -2174,6 +2174,543 @@ We will now use the just-derived relations $ [L_{z}, L_{\pm}] = \pm \hbar L_{\pm
 \end{itemize}
 
 
+\section{Central Potential}
+\begin{itemize}
+	\item We consider a particle in the time-independent central potential $ V = V(r) $ with \Ham 
+	\begin{equation*}
+		H = \frac{p^{2}}{2m} + V(r) = -\frac{\hbar^{2}}{2m} \laplacian + V(r)
+	\end{equation*}
+	The particle's angular momentum $ \L $ and magnitude of angular momentum $ L^{2} $ are conserved, i.e.
+	\begin{equation*}
+		[\L, H] = [L^{2}, H] = 0
+	\end{equation*}
+	Second, the we state the relations
+	\begin{equation*}
+		\r \cdot \L = 0 \eqtext{and} \vec{p} \cdot \L = 0
+	\end{equation*}
+	These two equations are the quantum mechanical analog of a particle's motion and velocity lying in a two-dimensional plane in central force motion.
+	
+\end{itemize}
+
+\subsection{The Radial Equation}
+\begin{itemize}
+	\item We analyze rotationally-symmetric central potential problems in spherical coordinates, where the Laplace operator reads
+	\begin{equation*}
+		\laplacian = \frac{1}{r^{2}}\pdv{r}r^{2}\pdv{r} + \frac{1}{r^{2}\sin \theta}\pdv{\theta}\sin \theta \pdv{\theta} + \frac{1}{r^{2}\sin^{2}\theta} \pdv[2]{}{\phi}
+	\end{equation*}
+	Without proof, the Laplace operator's angular component is related to angular momentum $ L^{2} $ via
+	\begin{equation*}
+		 \frac{1}{r^{2}\sin \theta}\pdv{\theta}\sin \theta \pdv{\theta} + \frac{1}{r^{2}\sin^{2}\theta} \pdv[2]{}{\phi} = -\frac{L^{2}}{\hbar^{2}r^{2}}
+	\end{equation*}
+	The Laplacian can thus be written
+	\begin{equation*}
+		\laplacian = \frac{1}{r^{2}}\pdv{r}r^{2}\pdv{r} -\frac{L^{2}}{\hbar^{2}r^{2}} 
+	\end{equation*} 
+	where the angular component $ \frac{L^{2}}{\hbar^{2}r^{2}} $ corresponds to rotational kinetic energy.
+	
+	\item We can compose the \Ham into a radial and angular component:
+	\begin{equation*}
+		H = -\frac{\hbar^{2}}{2m}\laplacian + V(r) = - \frac{h^{2}}{2m} \left(\frac{1}{r^{2}} \pdv{r}r^{2} \pdv{r}\right) + \frac{L^{2}}{2mr^{2}} + V(r)
+	\end{equation*}
+	Next, to solve the stationary \Schro equation
+	\begin{equation*}
+		H\P(\r) = E\P(\r),
+	\end{equation*}
+	we use the ansatz
+	\begin{equation*}
+		\P(\r) = \p(r)Y_{l}^{m}(\theta, \phi)
+	\end{equation*}
+	where we have separated $ \P(\r) $ into a radial and angular component. The spherical harmonics $ Y_{l}^{m}(\theta, \phi) $ are a natural choice for the angular component because they are the eigenfunctions of the angular momentum operator $ L^{2} $.
+	
+	\item Substituting the ansatz $ \P(\r) = \p(r)Y_{l}^{m}(\theta, \phi) $ into the stationary \Schro equation, applying the angular momentum eigenvalue relation
+	\begin{equation*}
+		L^{2} Y_{l}^{m} = l (l+1)\hbar^{2} Y_{l}^{m}
+	\end{equation*}
+	and canceling $ Y_{l}^{m} $ from both sides of the equations produces the purely radial problem
+	\begin{equation*}
+		- \frac{h^{2}}{2m} \left(\frac{1}{r^{2}} \pdv{r}r^{2} \pdv{r}\right)\p(r) + \left(V(r) + \frac{l (l+1)\hbar^{2}}{2mr^{2}}\right)\p(r) = E\p(r)
+	\end{equation*}
+	Note that all angular dependence is gone---we have completed an important step towards finding the complete eigenfunction $ \P(\r) $.
+	
+	\item We solve for the radial eigenfunction $ \p(r) $ with ansatz
+	\begin{equation*}
+		\p(\r) = \frac{u(r)}{r}
+	\end{equation*}
+	We then substitute this ansatz into radial eigenvalue equation. First, as a intermediate step, we calculate
+	\begin{equation*}
+		\frac{1}{r^{2}}\pdv{r}r^{2}\pdv{r} \left(\frac{u}{r}\right) = \frac{1}{r^{2}}\pdv{r}r^{2}\left(\frac{u'}{r} - \frac{u}{r^{2}}\right) = \frac{1}{r^{2}}\pdv{r}(ru' - u) = \frac{u''}{r}
+	\end{equation*}
+	Using this intermediate result, the radial eigenvalue equation in terms of $ u $ reads
+	\begin{equation*}
+		-\frac{\hbar^{2}}{2m}u''(r) + \left[V(r) + \frac{l (l+1)\hbar^{2}}{2mr^{2}}\right]u(r) = Eu(r)
+	\end{equation*}
+	
+	\item Finally, we define an effective potential 
+	\begin{equation*}
+		V_{\text{eff}}(r) = V(r) + \frac{l (l+1)\hbar^{2}}{2mr^{2}}
+	\end{equation*}
+	which includes the potential $ V(r) $ in additional to the ``centrifugal'' term $ \frac{l (l+1)\hbar^{2}}{2mr^{2}} $.
+	
+	
+	In terms of $ V_{\text{veff}} $, the stationary \Schro equation for $ u $ reads
+	\begin{equation*}
+	-\frac{\hbar^{2}}{2m}u''(r) + V_{\text{eff}}(r)u(r) = Eu(r)
+	\end{equation*}
+	Note that we have reduced originally three-dimensional problem, involving $ \r = (r, \phi, \theta)  $ to a one-dimensional problem.
+	
+\end{itemize}
+
+\subsection{General Properties of the Radial Solution}
+\subsubsection{Solutions for $ r \to 0 $}
+\begin{itemize}
+	\item We consider potentials of the form
+	\begin{equation*}
+		\lim_{r \to 0}r^{2}V(r) = 0
+	\end{equation*}
+	For such potentials, the potential $ V(r) $ and energy $ E $ in the radial eigenvalue equation for $ u $ are negligible in comparison to the centrifugal component of $ V_{\text{eff}} $, and the eigenvalue equation simplifies to
+	\begin{equation*}
+		-\frac{\hbar^{2}}{2m}u''(r) + \frac{l (l+1)\hbar^{2}}{2mr^{2}}u(r) = 0 \implies u''(r) = \frac{l (l+1)}{r^{2}}u(r)
+	\end{equation*}
+	We solve the equation with the ansatz $ u(r) = Cr^{\lambda} $, which produces
+	\begin{align*}
+		\lambda (\lambda - 1)Cr^{\lambda-2} = \frac{l (l+1)}{r^{2}}Cr^{\lambda} \implies 	\lambda (\lambda - 1) = l (l+1)
+	\end{align*}
+	
+	\item We solve the equation $ \lambda (\lambda - 1) = l (l+1) $ with the quadratic formula:
+	\begin{equation*}
+		\lambda_{\pm} = \frac{1}{2} \pm \frac{1}{2}\sqrt{1 + 4l (l+1)} = \frac{1}{2} \pm \frac{1}{2}\sqrt{(2l+1)^{2}}  = \frac{1}{2} \pm \left(l + \frac{1}{2}\right)
+	\end{equation*}
+	The two possible values of $ \lambda $ are
+	\begin{equation*}
+		\lambda_{+} = l + 1 \eqtext{and} \lambda_{-} = -l
+	\end{equation*}
+	The general solution to the second-order linear eigenvalue equation is thus the linear combination
+	\begin{equation*}
+		u(r) = C_{+}r^{\lambda_{+}} + C_{-}r^{\lambda_{-}} = C_{l}r^{l+1} + \frac{D_{l}}{r^{l}}
+	\end{equation*}
+	
+	\item We determine the constants $ C_{l} $ and $ D_{l} $ from boundary and normalization conditions. 
+	
+	We start all the way back at the normalization condition on $ \P(\r) $, which, when integrating in spherical coordinates, reads
+	\begin{equation*}
+		1 \equiv \braket{\P}{\P} = \int_{r = 0}^{\infty}\abs{\p(r)}^{2}r^{2}\diff r \int_{\phi = 0}^{2\pi}\int_{\theta = 0}^{\pi}\abs{Y_{l}^{m}(\theta, \phi)}^{2}\sin \theta \diff \theta \diff \phi 
+	\end{equation*}
+	From the angular momentum chapter, we know the spherical harmonics are normalized. The integral's angular component thus evaluates to one, which implies
+	\begin{equation*}
+		\int_{ 0}^{\infty}\abs{\p(r)}^{2}r^{2}\diff r = \int_{0}^{\infty}\abs{u(r)}^{2}\diff r \equiv 1
+	\end{equation*}
+	This normalization condition on $ u $ requires $ D_{l} = 0 $ for $ l > 0 $, since the integral of $ \abs{u(r)}^{2} $ would otherwise diverge at $ 0 $. 
+	
+	\item \textbf{TODO:} resolve what's going on here.
+	
+	For $ l = 0 $, we turn to the solution of the Poisson equation for electrostatic potential $ \phi $, which reads
+	\begin{equation*}
+		\laplacian \phi(\r) = -\frac{\rho(\r)}{\epsilon_{0}}
+	\end{equation*}
+	For a point charge, with charge density $ \rho(\r) = q \delta^{3}(\r) $, the solution is 
+	\begin{equation*}
+		\phi(\r) = \frac{q}{4\pi \epsilon_{0}r}
+	\end{equation*}
+	If we cancel like terms, the Poisson equation reads
+	\begin{equation*}
+		\laplacian \frac{1}{4\pi \epsilon_{0}r} = \delta^{3}(\r)
+	\end{equation*}
+	
+	\textbf{TODO:} so this step here I'm not sure about. The above implies that $ \p(\r) $ solves the equation
+	\begin{equation*}
+		\laplacian \p(\r) = - 4 \pi D_{0} \delta^{3}(\r)
+	\end{equation*}
+	But a solution $ \p \sim r^{-1} $ does not solve the \Schro equation, because the potential does not agree with $ \delta^{3}(\r) $ at the origin. 
+	
+	This means that, to satisfy the \Schro equation, we must have $ D_{l} = 0 $ for all $ l $ (to remove proportionality of $ \psi $ to $ \delta^{3}(\r) $ at the origin). With $ D_{l} = 0 $ we're left with 
+	\begin{equation*}
+		u(r) = C_{l}r^{l+1} \eqtext{and} \p(r) = C_{l}r^{l}
+	\end{equation*}
+	
+\end{itemize}
+
+\subsubsection{Solutions for $ r \to \infty $}
+
+\textbf{Continuum States with $ E > 0 $}
+\begin{itemize}
+	\item We consider potentials $ V(r) $ for which 
+	\begin{equation*}
+		\lim_{r \to \infty} V(r) = 0
+	\end{equation*}
+	More so, we assume there exists some finite distance $ r_{0} \in \mathbb{R} $ such that the potential $ V(r) $ is negligible for $ r > r_{0} $. 
+	
+	\item If we also neglect the centrifugal term, the entire effective potential $ V_{\text{eff}} $ vanishes for $ r > r_{0} $. The radial eigenvalue equation reduces to
+	\begin{equation*}
+		- \frac{\hbar^{2}}{2m}u''(r) = Eu(r)
+	\end{equation*}
+	The solution to this problem is
+	\begin{equation*}
+		u(r) = C_{-}e^{-i k r} + C_{+}e^{i k r}, \qquad k = \sqrt{\frac{2mE}{\hbar^{2}}}
+	\end{equation*}
+	Note that each energy has degeneracy two, since their exist two linearly independent eigenfunctions $ u(r) $ at a given value of $ k $. 
+	
+	\item If we neglect $ V(r) $ for $ r > r_{0} $ but include the centrifugal term, the radial eigenvalue equation is
+	\begin{equation*}
+		-\frac{\hbar^{2}}{2m}u''(r) + \frac{l (l+1)\hbar^{2}}{2mr^{2}}u(r) = E u(r)
+	\end{equation*}
+	In this case, without derivation, the solutions for $ u(r) $ are the spherical Bessel functions $ j_{l} $ and Neumann functions $ n_{l} $,
+	\begin{equation*}
+		u(r) = rj_{l}(kr) \eqtext{and} u(r) = r n_{l}(kr)
+	\end{equation*}
+	In the asymptotic limit $ r \to \infty $, the solutions simplify to
+	\begin{equation*}
+		u(r) \to \sin\big(kr - \tfrac{\pi}{2}l\big) \eqtext{and} u(r) \to - \cos\big(kr - \tfrac{\pi}{2}l\big)
+	\end{equation*}
+\end{itemize}
+\textbf{Bound States with $ E < 0 $}
+\begin{itemize}
+	\item We now consider potentials $ V(r) $ obeying
+	\begin{equation*}
+		\lim_{r \to \infty}rV(r) = 0
+	\end{equation*}
+	In this case, the asymptotic solution to the radial eigenvalue equation for large $ r $ is
+	\begin{equation*}
+		u(r) \to D_{-}e^{-\kappa r} + D_{+}e^{\kappa r}, \qquad \kappa = \sqrt{\frac{2m\abs{E}}{\hbar^{2}}}
+	\end{equation*}
+	At the energy eigenvalues $ E = E_{n} $ we have $ D_{+} = 0 $, and the corresponding solutions
+	\begin{equation*}
+		u_{n}(r) = D_{n}e^{-\kappa r}
+	\end{equation*}
+	is a bound state. Because the problem is one dimensional, the bound energy eigenvalues are nondegenerate by the nondegeneracy theorem.
+	
+\end{itemize}
+
+\subsubsection{Discussion of the Solutions for $ r \to \infty $}
+\begin{itemize}
+	\item We now ask more quantitatively how fast the potential $ V(r) $ must fall as $ r $ approaches infinity to justify the free and bound state ansatzes
+	\begin{equation*}
+		u_{\text{free}}(r) = C_{-}e^{-i k r} + C_{+}e^{i k r}\eqtext{and} u_{\text{bound}}(r) = D_{-}e^{-\kappa r} + D_{+}e^{\kappa r}
+	\end{equation*}
+\end{itemize}
+
+\textbf{Bound States with $ E < 0 $}
+\begin{itemize}
+	\item We first consider the bound state with $ E < 0 $ and write the solution as
+	\begin{equation*}
+		u(r) = v(r) e^{\pm \kappa r}
+	\end{equation*}
+	We substitute this expression for $ u(r) $ into the radial eigenvalue equation to get
+	\begin{equation*}
+		-\frac{\hbar^{2}}{2m}\Big[v''(r) \pm 2\kappa v'(r) + \kappa^{2}v(r)\Big]e^{\pm \kappa r} + V_{\text{eff}}(r)v(r)e^{\pm \kappa r} = E v(r)e^{\pm \kappa r}
+	\end{equation*}
+	We then cancel $ e^{\pm i \kappa r} $ from the equation, multiply through by $ \frac{2m}{\hbar^{2}} $, and recognize that $ \kappa^{2} = \sqrt{\frac{-2mE}{\hbar^{2}}} $ (recall $ E < 0 $) cancels with $ \frac{2mE}{\hbar^{2}} $ to get
+	\begin{equation*}
+		v''(r) \pm \kappa v'(r) - \frac{2m}{\hbar^{2}}V_{\text{eff}}(r)v(r) = 0
+	\end{equation*}
+	
+	\item Since $ v(r) $ is just a correction to $ e^{\pm \kappa r} $, we assume $ v(r) $ changes slowly with $ r $ and neglect the second derivative $ v''(r) $. We're left with
+	\begin{equation*}
+		\pm \kappa v'(r) = \frac{2m}{\hbar^{2}}V_{\text{eff}}(r)v(r) \eqtext{or} \frac{v'(r)}{v(r)} = \pm \frac{m}{\kappa \hbar^{2}}V_{\text{eff}}(r)
+	\end{equation*}
+	This is a first-order equation with separable variables, which we can integrate, i.e. 
+	\begin{equation*}
+		\int \frac{\diff v}{v} = \pm \frac{m}{\kappa \hbar^{2}} \int V_{\text{eff}}(r) \diff r
+	\end{equation*}
+	to get
+	\begin{equation*}
+		v(r) = v(r_{0}) \exp(\pm \frac{m}{\kappa \hbar^{2}}\int_{r_{0}}^{r}V_{\text{eff}}(\t{r})\diff \t{r})
+	\end{equation*}
+	where $ r_{0} $ is a ``large'' value of $ r $ where $ V_{\text{eff}} $ decays slowly.
+	
+	\item From the above expression for $ v(r) $, we see that the bound state ansatz
+	\begin{equation*}
+		u_{\text{bound}}(r) = D_{-}e^{-\kappa r} + D_{+}e^{\kappa r} = v(r)e^{\pm \kappa r}
+	\end{equation*}
+	is valid as long as $ v(r) $ converges to a constant value as $ r $ approaches infinity. This holds when the limit
+	\begin{equation*}
+		\lim_{r \to \infty} \int_{r_{0}}^{r}V(\t{r})\diff \t{r}
+	\end{equation*}
+	converges, which occurs when 
+	\begin{equation*}
+		\lim_{r \to \infty}rV(r) = 0
+	\end{equation*}
+	Note that the centrifugal component of $ V_{\text{eff}} $ falls with $ r^{-2} $ and is not problematic. 
+	
+	
+	To summarize, the bound state ansatz $ u_{\text{bound}}(r) = D_{-}e^{-\kappa r} + D_{+}e^{\kappa r} $ is valid for potentials for which $ r V(r) $ vanishes at infinity.
+	
+	\item The limiting case at which the bound state condition 
+	\begin{equation*}
+		\lim_{r \to \infty}rV(r) = 0
+	\end{equation*}
+	no long holds is potentials of the form $ V(r) = - \lambda/r $, for which we have
+	\begin{equation*}
+		\lim_{r \to \infty} \int_{r_{0}}^{r}V(\t{r})\diff \t{r} = \lim_{r \to \infty} \left(- \lambda \ln \frac{r}{r_{0}}\right) \to \infty
+	\end{equation*}
+	To correspond solutions for $ u(r) $ in this limiting case is
+	\begin{equation*}
+		u(r) \to v(r)e^{\pm \kappa r} = e^{\pm \kappa r} \exp(\mp \nu \ln  \frac{r}{r_{0}}), \qquad \nu = \frac{m \lambda}{\kappa \hbar^{2}}
+	\end{equation*}
+	Canceling the exponent and logarithm shows the bound state solutions fall as
+	\begin{equation*}
+		u(r) \sim r^{\nu} e^{- \kappa r}
+	\end{equation*}
+	
+\end{itemize}
+
+\textbf{Free Scattering States with $ E > 0 $}
+\begin{itemize}
+	\item Finally, we consider the free scattering states with positive energy, for which we assumed the ansatz
+	\begin{equation*}
+		u_{\text{free}}(r) = C_{-}e^{-i k r} + C_{+}e^{i k r}, \qquad k = \sqrt{\frac{2mE}{\hbar^{2}}}
+	\end{equation*}
+	
+	\item Because the free and bound state ansatzes are so similar, differing only by the presence of the imaginary unit $ i $ in the exponent and the replacement of $ \kappa $ with $ k $, we would follow an analogous procedure to the above analysis of the bound states. To avoid repeating an analogous procedure, we simply quote the result: 
+	
+	As before, to justify the exponential free state ansatz, the potential $ V(r) $ must obey
+	\begin{equation*}
+		\lim_{r \to \infty} r V(r) = 0
+	\end{equation*}
+	The corresponding free state solutions are
+	\begin{equation*}
+		u(r) \to e^{\pm i k r} \exp(\mp i \nu \ln  \frac{r}{r_{0}}), \qquad \nu = \frac{m \lambda}{k \hbar^{2}}
+	\end{equation*}
+	and decay asymptotically as
+	\begin{equation*}
+		u(r) \sim r^{\nu} e^{- ik r}
+	\end{equation*}
+\end{itemize}
+
+\subsection{The Coulomb Potential}
+
+\subsubsection{Energy Eigenvalues}
+\begin{itemize}
+	\item We aim to find energy levels of an electron with charge $ e_{0} $ and mass $ m_{\text{e}} $ in a Coulomb potential, for which the radial eigenvalue equation reads
+	\begin{equation*}
+		-\frac{\hbar^{2}}{2m_{\text{e}}}u''(r) + \left(\frac{l (l+1)\hbar^{2}}{2m_{\text{e}}r^{2}} - \frac{e_{0}^{2}}{4\pi \epsilon_{0}r}\right)u(r) = Eu(r)
+	\end{equation*}
+	An electron in a Coulomb potential is the basis for solving the problem of the hydrogen atom.
+	
+	\item We first introduce the dimensionless coordinate $ \rho = \kappa r $ where, as before, $ \kappa = \sqrt{\frac{2mE}{\hbar^{2}}} $. In this case the equation simplifies to 
+	\begin{equation*}
+		\left(-\dv[2]{}{\rho} + \frac{l (l+1)}{\rho^{2}} - \frac{m_{\text{e}}e_{0}^{2}}{2\pi \epsilon_{0} \kappa \hbar^{2}}\frac{1}{\rho}\right)u(\rho) = - u(\rho)
+	\end{equation*}
+	Finally, in terms of $ \rho_{0} $, we have
+	\begin{equation*}
+		u'' - \frac{l \left(l+1\right)}{\rho^{2}}u + \frac{\rho_{0}}{\rho}u - u = 0, \qquad \rho_{0} = \frac{m_{\text{e}}e_{0}^{2}}{2\pi \epsilon_{0}\kappa \hbar^{2}}
+	\end{equation*}
+	
+	\item We proceed with the ansatz
+	\begin{equation*}
+		u(\rho) = \rho^{l + 1}v(\rho)e^{-\rho},
+	\end{equation*}
+	which is intended to model the localized behavior of bound states for large $ \rho $. 
+	
+	\item As an intermediate step, the ansatz's first and second are
+	\begin{align*}
+		& u' = \rho^{l}e^{-\rho} \big[(l+1-\rho)v + \rho v'\big]\\
+		& u'' = \rho^{l}e^{-\rho}\left\{\left[-2l -2 + \rho + \frac{l (l+1)}{\rho}\right]v + 2(l + 1 - \rho)v' + \rho v''\right\}
+	\end{align*}
+	We substitute then substitute $ u $ and $ u'' $ into the dimensionless radial eigenvalue equation. After some tedious but simple algebra involving combining like terms and dividing through by $ \rho^{l}e^{-\rho} $ we get the equation
+	\begin{equation*}
+		\rho v'' + 2(l + 1 - \rho)v' + \big[\rho_{0} - 2(l+1)\big]v = 0
+	\end{equation*}
+	Note that this equation contains only $ v(\rho) $. 
+	
+	\item We solve the equation for $ v(\rho) $ with the Frobenius method. This involves writing $ v(\rho) $ as a power series, i.e.
+	\begin{equation*}
+		v(\rho) = \sum_{k = 0}^{\infty} c_{k}\rho^{k}
+	\end{equation*}
+	The plan is to find $ v $'s first two derivatives, substitute the power series ansatz into the equation for $ v $, cancel like terms, and find a recursion relation for the coefficients. The first two derivatives are
+	\begin{align*}
+		& v' = \sum_{k = 0}^{\infty}kc_{k}\rho^{k-1} \ \stackrel{k\to k+1}{=} \ \sum_{k=0}^{\infty}(k+1)c_{k+1}\rho^{k}\\
+		&v'' = \sum_{k = 0} k(k+1)c_{k+1}\rho^{k-1}
+	\end{align*}
+	Note the shifting of the index, which is shown explicitly for the $ v' $ and left implicit for $ v'' $.
+	
+	We substitute the power series ansatz expressions into the equation for $ v $ to get
+	\begin{align*}
+		\rho\sum_{k = 0}^{\infty}k(k+1)c_{k}\rho^{k-1}  &+ 2(l+1-\rho)\sum_{k=0}^{\infty}(k+1)c_{k+1}\rho^{k} \\
+		& + \big[\rho_{0} - 2(l+1)\big]\sum_{k}^{\infty} c_{k}\rho^{k} = 0
+	\end{align*}
+	We then distribute coefficients and re-index the $ 2(l+1) $ term from $ k + 1 $ to $ k $ to get
+	\begin{align*}
+		\sum_{k = 0}^{\infty}k(k+1)c_{k}\rho^{k}  &+ 2(l+1)\sum_{k=0}^{\infty}(k+1)c_{k+1}\rho^{k} - 2 \sum_{k=1}kc_{k}\rho^{k} \\
+		& + \big[\rho_{0} - 2(l+1)\big]\sum_{k=0}c_{k}\rho^{k} = 0
+	\end{align*}
+	For the equation to hold, the coefficients of $ \rho^{k} $ at a given $ k $ must be equal, which implies 
+	\begin{equation*}
+		\big[k(k+1) + 2(l+1)(k+1)\big]c_{k+1} = \big[2k - (\rho_{0} - 2(l+1))\big]c_{k}
+	\end{equation*}
+	We then rearrange the above equation to get the recursive relation
+	\begin{equation*}
+		c_{k+1} = \frac{2(k+l+1)-\rho_{0}}{(k+1)(k+2l + 2)}c_{k}
+	\end{equation*}
+	For large $ k $, i.e. $ k \gg l, \rho_{0} $, the equation reduces to the relationship for the exponential function, i.e.
+	\begin{equation*}
+		\frac{c_{k}}{c_{k-1}} \to \frac{2}{k} \eqtext{or} c_{k} = \frac{2^{k}}{k!}c_{0}
+	\end{equation*}
+	where we have re-indexed the first term by one. With the coefficients $ c_{k} $ known (at least for large $ k $) we have
+	\begin{equation*}
+		v(\rho) = \sum_{k = 0}^{\infty}c_{k}\rho^{k} = c_{0}\sum_{k = 0}^{\infty} \frac{1}{k!}(2\rho)^{k} = c_{0}e^{2\rho}
+	\end{equation*}
+	
+	\item In terms of the large $ k $ solution $ v(\rho) \sim e^{2\rho} $, which corresponds to the asymptotic behavior of $ v(\rho) $ for large $ \rho $, the solution for $ u(\rho) $ is
+	\begin{equation*}
+		u(\rho) = \rho^{l+1}v(\rho)e^{-\rho} = \rho^{l+1}e^{2\rho}e^{-\rho} =  \rho^{l+1}e^{\rho}
+	\end{equation*}
+	The relationship $ u(\rho) \sim \rho^{l+1}e^{\rho} $ does not un general converge for large $ \rho $. In fact, $ u(\rho) $ is convergent only if the series ansatz for $ v(\rho) $, i.e.
+	\begin{equation*}
+		v(\rho) = \sum_{k = 0}^{\infty}c_{k}\rho^{k},
+	\end{equation*}
+	truncates at a finite $ k_{\text{max}} \geq 0 $. Truncating at $ k_{\text{max}} $ implies $ c_{k} = 0 $ for $ k > k_{\text{max}} $. If we return to the recursive coefficient relation
+	\begin{equation*}
+		c_{k+1} = \frac{2(k+l+1)-\rho_{0}}{(k+1)(k+2l + 2)}c_{k},
+	\end{equation*}
+	the condition $ c_{k} = 0 $ for $ k > k_{\text{max}} $ implies
+	\begin{equation*}
+		2(k_{\text{max}} + l + 1) - \rho_{0} = 0 \implies \rho_{0} = 2(k_{\text{max}} + l + 1) \in \mathbb{N}
+	\end{equation*}
+	In other words, $ \rho_{0} $ must be an integer to satisfy the convergence of $ v(\rho) $ and thus $ u(\rho) $ for large $ \rho $. 
+	
+	\item With this integer restriction on $ \rho_{0} $ in mind, we define the principle quantum number
+	\begin{equation*}
+		n \equiv k_{\text{max}} + l + 1
+	\end{equation*}
+	which implies $ \rho_{0} = 2n $. In terms of $ \rho_{0} = 2n $ and the earlier equations
+	\begin{equation*}
+		\rho_{0} = \frac{m_{\text{e}}e_{0}^{2}}{2\pi \epsilon_{0}\kappa \hbar^{2}} \eqtext{and} \kappa = \sqrt{\frac{2m_{\text{e}}E}{\hbar^{2}}},
+	\end{equation*}
+	the energy eigenvalues of an electron in a Coulomb potential are thus
+	\begin{equation*}
+		E_{n} = - \frac{m_{\text{e}}}{2\hbar^{2}}\left(\frac{e_{0}^{2}}{4\pi \epsilon_{0}}\right)^{2}\frac{1}{n^{2}} \equiv - \frac{\text{Ry}}{n^{2}}, \quad n = 1, 2, 3, \ldots
+	\end{equation*}
+	where we have defined the Rydberg energy unit
+	\begin{equation*}
+		\SI{1}{Ry} = \frac{m_{\text{e}}}{2\hbar^{2}}\left(\frac{e_{0}^{2}}{4\pi \epsilon_{0}}\right)^{2} = \abs{E_{1}} = \SI{13.6}{\electronvolt}
+	\end{equation*}
+\end{itemize}
+
+\subsubsection{Eigenfunctions}
+\begin{itemize}
+	\item First, we consider energy eigenvalue degeneracy. For each value of $ E_{n} $, which depends only on the principle quantum number $ n $, their exist $ n $ values of the orbital quantum number $ l = 0, 1, \ldots, n-1 $. 
+	
+	The complete wavefunction 
+	\begin{equation*}
+		\P(\r) = \p(r)Y_{l}^{m}(\theta, \phi) 
+	\end{equation*}
+	is thus $ n $-times degenerate with respect to the radial component $ \p(r) $, since $ n $ values of $ l $ correspond to the same energy $ E_{n} $. 
+	
+	Additionally, the energy eigenvalues are degenerate with respect to the quantum number $ m $, which corresponds to the projection of angular momentum onto the $ z $ axis. Since $ E_{n} $ does not depend on $ m $ and $ m $ can assume $ 2l + 1 $ values from $ -l $ to $ l $, there are $ 2l + 1 $ states proportional to $ Y_{l}^{m} $ with energy $ E_{n} $ at a given $ l $.  
+	
+	Considering both the degeneracy with respect to both $ l $ and $ m $, the total degeneracy of a given energy level $ E_{n} $ is
+	\begin{equation*}
+		\sum_{l = 0}^{n-1}(2l+1) = n^{2}
+	\end{equation*}
+	In other words, the energy level $ E_{n} $ has degeneracy $ n^{2} $. 
+	
+	\item Next, we return to the series for $ v(\rho) $, i.e.
+	\begin{equation*}
+		v(\rho) = \sum_{k = 0}^{k_{\text{max}}} c_{k}\rho^{k}
+	\end{equation*}
+	where we have made the truncation at $ k_{\text{max}} $ explicit. Since $ k_{\text{max}} = n - l - 1 $, the function $ v(\rho) $ is a polynomial of order $ n - l - 1 $. 
+	
+	Without derivation, it turns out that $ v(\rho) $ takes the form of an associated Laguerre polynomial, i.e.
+	\begin{equation*}
+		v(\rho) \propto L_{k_{\text{max}}}^{2l+1}(2\rho) = L_{n - l - 1}^{2l + 1}
+	\end{equation*}
+	Note that $ v(\rho) $ is indexed by both $ l $ and $ n $.
+	
+	\item The complete wavefunction is thus thus
+	\begin{equation*}
+		\P_{nlm}(\r) = \p_{nl}(r)Y_{l}^{m}(\theta, \phi)
+	\end{equation*}
+	where the radial component is
+	\begin{equation*}
+		\p_{nl} = \sqrt{\left(\frac{2}{na_{0}}\right)^{3}\frac{(n - l - 1)!}{2n(n + l)!}}\cdot \left(\frac{2r}{na_{0}}\right)^{l}\cdot L_{n - l - 1}^{2l + 1} \left(\frac{2r}{na_{0}}\right)\cdot e^{-\frac{r}{na_{0}}}
+	\end{equation*}
+	where we have introduced the Bohr radius
+	\begin{equation*}
+		a_{0} = \frac{4\pi \epsilon_{0}\hbar^{2}}{m_{\text{e}} e_{0}^{2}} = \SI{0.053}{\nano \meter}
+	\end{equation*}
+	
+	\item The wavefunctions $ \P_{nlm} $ are conveniently orthonormal, i.e.
+	\begin{equation*}
+		\int \P^{*}_{n'l'm'}(\r)\P_{nlm}(\r)\dr = \braket{n'l'm'}{nlm} = \delta_{n'n}\delta_{l'l}\delta_{m'm}
+	\end{equation*}
+\end{itemize}
+
+\subsubsection{Semi-Classical and Classical Limits}
+\begin{itemize}
+	\item The angular momentum of the electron around the hydrogen nucleus is quantized according to the Wilson-Sommerfeld quantization condition
+	\begin{equation*}
+		\frac{1}{2\pi}\oint p \diff q = n \hbar, \qquad n \in \mathbb{Z}
+	\end{equation*}
+	where $ p $ and $ q $ are a system's momentum and coordinates. 
+	
+	For an electron on a hypothetical circular orbit of radius $ r $ at speed $ v $ about the nucleus, the integral reads 
+	\begin{equation*}
+		n \hbar \equiv \frac{1}{2\pi}\oint (m_{\text{e}}v)\diff q = \frac{1}{2\pi}m_{\text{e}} v (2\pi r) = m_{\text{e}} r v = L_{z}
+	\end{equation*}
+	This produces the angular momentum quantization condition $ L_{z} = n \hbar $. 
+	
+	Combining the quantization $ n\hbar = L_{z} = m_{\text{e}}rv $ with Newton's law
+	\begin{equation*}
+		F = m_{\text{e}}a = \frac{m_{\text{e}}v^{2}}{r} = \frac{e_{0}^{2}}{4\pi \epsilon_{0}r^{2}}
+	\end{equation*}
+	Reproduces the Bohr energy formula
+	\begin{equation*}
+		E_{n} = - \frac{m_{\text{e}}}{2\hbar^{2}}\left(\frac{e_{0}^{2}}{4\pi \epsilon_{0}}\right)^{2}\frac{1}{n^{2}} \equiv - \frac{\text{Ry}}{n^{2}}, \quad n = 1, 2, 3, \ldots
+	\end{equation*}
+	
+	\item Next, we consider the eigenfunctions $ \ket{nlm} $, which do not in general correspond to a uniform circular orbit of the electron about the nucleus. 
+	
+	Circular orbits correspond to orbits with large angular momentum for which the quantum numbers obey
+	\begin{equation*}
+		n \gtrsim l \gg 1 \eqtext{and} l \gtrsim m \gg 1
+	\end{equation*}
+	For maximum possible angular momentum, i.e. $ l = n - 1 $, the associated Laguerre polynomial is $ L_{n - l - 1}^{2l + 1} = L_{0}^{2l + 1} = 1 $ and the corresponding radial eigenfunction is
+	\begin{equation*}
+		\p_{n, l}(r) = \p_{n, n-1}(r) = 2^{n}\big[n^{4}(2n-1)!a_{0}^{3}\big]^{-1/2}\left(\frac{r}{na_{0}}\right)^{n-1}e^{-\frac{r}{na_{0}}}
+	\end{equation*}
+	The expectation values of $ r $ and $ r^{2} $ for this radial function are
+	\begin{align*}
+		& \ev{r} = \int_{0}^{\infty}r \p_{n, n-1}^{2}(r)r^{2}\diff r = n\left(n+\frac{1}{2}\right)a_{0}\\
+		& \ev{r^{2}} = \cdots =  n^{2}(n+1)\left(n + \frac{1}{2}\right)a_{0}^{2}
+	\end{align*}
+	The corresponding uncertainty in $ r $ is
+	\begin{equation*}
+		\Delta r = \sqrt{\ev{r^{2}} - \ev{r}^{2}} = \frac{n}{2}\sqrt{2n + 1}a_{0}
+	\end{equation*}
+	In the limit of large $ n $, the relative uncertainty in radius is
+	\begin{equation*}
+		\lim_{n \to \infty} \frac{\Delta r}{\ev{r}} = \lim_{n \to \infty} \frac{1}{\sqrt{2n + 1}} = 0
+	\end{equation*}
+	In other words, the orbit approaches a spherical shell with radius $ \ev{r} $ for large $ n $, in agreement with the classical limit.
+	
+\end{itemize}
+
+\subsubsection{The Quantum Laplace-Runge-Lenz Vector}
+\begin{itemize}
+	\item The $ n^{2} $-fold degeneracy of the hydrogen atom's energy eigenvalues $ E_{n} $ has a classical analog: in the Kepler problem, multiple elliptical orbits with different orientations in space correspond to the same orbital energy. 
+	
+	Recall from classical mechanics that the ellipses differ in their orientation of the semi-major axis in space, which corresponds to the orbit's conserved Laplace-Runge-Lenz (LRL) vector. 
+	
+	\item We can introduce a quantum LRL vector $ \vec{A} $ of the form
+	\begin{equation*}
+		\vec{A} = \frac{1}{2} \big[\vec{p} \cross \L + (\vec{p}\cross \L)^{\dagger}\big] - \frac{m_{\text{e}}e_{0}^{2}}{4\pi \epsilon_{0}} \frac{\r}{r}
+	\end{equation*}
+	The expression is similar to the classical LRL vector, except that is has been ``Hermitized'', i.e. we have generalized the classical expression $ \vec{p}\cross \vec{L} $ to 
+	\begin{equation*}
+		\frac{1}{2} \big[\vec{p} \cross \L + (\vec{p}\cross \L)^{\dagger}\big] 
+	\end{equation*}
+	so that $ \vec{A} $ is Hermitian. 
+	
+	\item The large degeneracy of $ E_{n} $ in the hydrogen atom indicates the presence of conserved quantity in addition to energy and momentum, and this conserved quantity is precisely the LRL vector $ \vec{A} $. 
+	
+	Namely, the hydrogen atom obeys the following conservation laws:
+	\begin{equation*}
+		[\L, H] = [L^{2}, H]  = [\vec{A}, H] = 0 \eqtext{and} [\vec{A}, \L] = 0
+	\end{equation*}
+	The relationship $ [\vec{A}, \L] = 0 $ is analogous to a well-known phenomenon from classical mechanics, namely that the LRL vectors lies in the plane of the elliptical orbit.
+	
+\end{itemize}
+
 \end{document}
 
 
