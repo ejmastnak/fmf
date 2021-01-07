@@ -1985,49 +1985,55 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	Up to a negative sign (depending on the direction of current), $ \pdv{W_{\text{EM}}}{t} $ and $ P $ are equal, indicating that energy is conserved, as it must be.
 \end{itemize}
 
-\subsection{Eleventh Exercise Set (rough draft)}
+\subsection{Eleventh Exercise Set}
 
 \subsubsection{A Radially Polarized Sphere}
-\textit{Consider a radially polarized sphere---polarization points in the radial direction and grows with radius as $ \P = k \r $ where $ k $ is a known constant. Find volume density of bound charges, surface density of bound charges, and the total bound charge.}
+\textit{Consider a radially polarized sphere, in which electric polarization points in the radial direction and grows with increasing radius as $ \P(\r) = k \r $ where $ k $ is a constant. Find the volume density of bound charges, the surface density of bound charges, and the total bound charge. Finally, find the electric field due to the sphere.}
 
 \begin{itemize}
-	\item We relate polarization and volume charge density as
+	\item Polarization and bound charge density $ \rho_{\text{b}} $ are related by
 	\begin{equation*}
 		\rho_{\text{b}} = - \div \P
 	\end{equation*}
-	We also know Gauss's law
+	while electric field and total charge density $ \rho $ are related by Gauss's law
 	\begin{equation*}
 		\rho = \ee \div \E
 	\end{equation*}
-	which accounts for all charges, including both bound and external charges. 
 	
-	\item We now relate $ \rho $ and $ \sigma $. Consider a surface element of the sphere. With normal $ \uvec{n} $. We use the polarization in integral form.
+	\item We find volume charge density with $ \rho_{\text{b}} = - \div \P $ and the known expression for $ \P $:
 	\begin{equation*}
-		\int \diff V \rho_{\text{b}} = - \int \div \P \diff V \implies q_{\text{b}} = - \int \P \cdot \diff \vec{S} = - \P \cdot \diff \vec{S} \big |_{\text{in}}^{\text{out}} = - 0 - (- \P \cdot \uvec{n}S)
+		\rho_{\text{b}} = - \div \P = - \div (k \r) = -k \div \r = - 3k
 	\end{equation*}
-	We then get surface charge density as 
-	\begin{equation*}
-		\sigma_{\text{b}} = \P \cdot \uvec{n}
-	\end{equation*}
+	where we've used $ \div \r = 3 $. Note the bound volume charge density is negative, since the electric dipoles in the sphere have their positive poles radially outward and negative pole radially inward, so negative charge is concentrated toward the sphere's center.
+
+% The ``in-between'' dipoles cancel, leaving negative charge within the sphere and positive charge at the surface
 	
-	\item Start with $ \rho_{\text{b}} $, with known form of $ \P $:
+	\item To relate surface and volume charge density, we integrate $ \rho_{\text{b}} = - \div \P $ over the sphere's volume and apply the divergence theorem
 	\begin{equation*}
-		\rho_{\text{b}} = - \div \P = - k \div \r = - k \cdot 3 = - 3k
+		\int_{V} \rho_{\text{b}}\diff V = q_{\text{b}} = - \int_{V}\div \P \diff V = - \int_{S}\P \cdot \diff \vec{S} = - \P \cdot \vec{S} \big |_{\text{in}}^{\text{out}}
 	\end{equation*}
-	Note $ \div \r = 3 $. Note the volume charge density is negative; $ \rho_{\text{b}} $ is negative because all dipoles in the sphere have their negative pole towards the sphere's center and the positive poles radially outward. The middle dipoles cancel, and we're schematically left with negative charges in the center. 
-	
-	\item Next: surface charge density
+	Where the last step writes $ \vec{S} = \uvec{n}S $ and notes that polarization is zero outside the sphere. The bound surface charge density is then
 	\begin{equation*}
-		\sigma_{\text{b}} = \P \cdot \uvec{n} = k \r \cdot \uvec{n} = k r \big |_{r = a}  = k a
+		q_{\text{b}} = \P \cdot \uvec{n} S \implies \sigma_{\text{B}} = \frac{q_{\text{b}}}{S} = \P \cdot \uvec{n}
 	\end{equation*}
-	This is positive, which makes sense---the dipoles point outwards (see above bullet point).
-	
-	\item Next, we find total charge. We expect this to be zero; all dipoles should cancel out. We have (integrate both volume and surface)
+	At the surface $ r = a $, charge density $ \sigma_{\text{b}} $ evaluates to
 	\begin{equation*}
-		q_{\text{b}} = \int \rho_{\text{b}} \diff V + \int \sigma_{\text{b}} \diff S = - 3k \frac{4}{3}\pi a^{3} + ka 4\pi a^{2} = 0
+		\sigma_{\text{b}} = \P \cdot \uvec{n} = (k \r) \cdot \uvec{n} = k r \big |_{r = a}  = k a
+	\end{equation*}
+	Note that surface charge density is positive, since the electric dipoles have their positive pole oriented radially outward. 
+	
+	\item We find total bound charge from $ \rho_{\text{b}} $ and $ \sigma_{\text{b}} $ by integrating both volume and surface charge densities:
+	\begin{equation*}
+		q_{\text{b}} = \int_{V} \rho_{\text{b}} \diff V + \int_{S} \sigma_{\text{b}} \diff S = - 3k \frac{4}{3}\pi a^{3} + ka 4\pi a^{2} = 0
 	\end{equation*} 
+	We should expect total charge to be zero, since all dipoles within the sphere should cancel out.
+\end{itemize}	
 	
-	\item Next we consider electric field. Note use of spherical symmetry---Gauss's law:
+\textbf{Electric Field}
+\begin{itemize}
+	\item By Gauss's law, the electric field outside the sphere is zero, since the sphere's total charge is zero.
+
+	\item Inside the sphere, using the problem's spherical symmetry, we use Gauss's law with a spherical surface to get
 	\begin{equation*}
 		\ee E 4\pi r^{2} = \rho_{\text{b}} V = \rho_{\text{b}} \frac{4}{3}\pi r^{3} \implies E(r) = \frac{\rho_{\text{b}}}{3 \ee} r
 	\end{equation*} 
@@ -2035,168 +2041,175 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	\begin{equation*}
 		\E(r) = \frac{\rho_{\text{b}}}{3 \ee} \r
 	\end{equation*}
-	Plug in value of $ \rho_{\text{b}} = -3k $ to get
+	We then substitute in the charge density $ \rho_{\text{b}} = -3k $ to get
 	\begin{equation*}
 		\E = \frac{-k}{\ee}\r \implies \E = - \frac{\P}{\ee}
 	\end{equation*}
-	Note the linear relationship between electric field and polarization. Comes from the relationship $ \rho_{\text{b}} = - \div \P $ and Gauss's law $ \rho = \div (\ee \E) $. Because there are no external charge $ \rho = \rho_{\text{b}} $, which is the reason for $ \E = - \frac{\P}{\ee} $
-
+	Note the linear relationship between electric field and polarization.
+	
+	The linear relationship arises because the sphere contains only bound charge, meaning total charge and bound charge are equal, i.e. $ \rho = \rho_{\text{b}} $. We could then combine $ \rho_{\text{b}} = \rho = - \div \P $ and Gauss's law $ \rho = \div (\ee \E) $ to get  $ \E = - \frac{\P}{\ee} $.
+	
 \end{itemize}
 
-\subsubsection{A Polarized Halved Sphere}
-\textit{Consider a sphere of radius $ a $ with homogeneous (uniform) polarization $ \P $ pointing in the e.g. $ z $ direction. Find the electric field inside and outside the sphere. }
+\subsubsection{A Halved Polarized Sphere}
+\textit{Consider a sphere of radius $ a $ with homogeneous (uniform) polarization $ \P $ pointing in the $ z $ direction. Find the electric field inside and outside the sphere. }
 
 \textit{We then cut the sphere in half in a plane perpendicular to the direction of polarization and slightly separate the halves to form a capacitor. Find the electric field in the slit between the halves.}
 
 \begin{itemize}
-	\item First, find the typical quantities related to polarization. First, volume density of bound charges:
+	\item First, we find volume density of bound charges, which is
 	\begin{equation*}
 		\rho_{\text{b}} = - \div \P = 0,
 	\end{equation*}
-	since the divergence of the homogeneous field $ \P $ is zero. In other words, there are no bound charges in the sphere's volume. 
+	since the divergence of $ \P $, which is homogeneous, is zero by definition. In other words, there are no bound charges in the sphere's volume. 
 	
-	\item Next, $ \sigma_{\text{b}} = \P \cdot \uvec{n} $ we have
+	\item Next, we find bound surface charge density $ \sigma_{\text{b}} = \P \cdot \uvec{n} $ where $ \uvec{n} $ is the normal to the surface. In terms of an $ \theta $  between the normal $ \uvec{n} $ and polarization $ \P $, surface charge density is 
 	\begin{equation*}
 		\sigma_{\text{b}} = \P \cdot \uvec{n} = P \cos \theta
 	\end{equation*}
-	where $ \theta $ is the angle between the normal $ \uvec{n} $ and polarization $ \P $. Note that the surface charge density is nonzero.
+% Note that the surface charge density is nonzero.
 	
-	\item We proceed with the Poisson equation, which simplifies to the Laplace equation where $ \rho_{\text{b}} = 0 $, which is everywhere but the surface:
+	\item We proceed with the Poisson equation, which simplifies to the Laplace equation within the sphere were $ \rho_{\text{b}} = 0 $. 
 	\begin{equation*}
-		\laplacian U(\r) = 0
+		\laplacian U(\r) = - \frac{\rho_{\text{b}}}{\ee} = 0
 	\end{equation*}
-	We account for the surface with boundary conditions. 
+	We account for the non-zero surface charge density with boundary conditions. 
 	
 	The general solution for $ U(\r) $ is 
 	\begin{equation*}
-		U(r) = \sum_{l = 0}^{\infty}(A_{l}r^{l} + B_{l}r^{-(l+1)})P_{l}(\cos \theta)
+		U(\r) = \sum_{l = 0}^{\infty}(A_{l}r^{l} + B_{l}r^{-(l+1)})P_{l}(\cos \theta)
 	\end{equation*}
-	Note that our charge distribution depends only on $ \cos \theta $. So our solution can include only $ \cos \theta $-dependent terms, which is only $ l = 1 $. Our general solution is
+	Since the surface charge distribution $ \sigma_{\text{b}} $ depends only on $ \cos \theta $, our solution can include only $ \cos \theta $-dependent terms, which occurs for $ l = 1 $. The general solution reduces to
 	\begin{equation*}
 		U(\r) = (A_{1}r + B_{1}r^{-2})\cos \theta
 	\end{equation*}
-	Inside and outside we have
+	To avoid divergence at $ r \to 0 $ and $ r \to \infty $, we separate $ U(\r) $ according to
 	\begin{equation*}
-		U(\r) = 
+		U(\r) \equiv 
 		\begin{cases}
-			A_{1}r \cos \theta & r < a\\
-			B_{1}r^{-2} \cos \theta & r > a
+			U_{\text{in}} = A_{1}r \cos \theta & r < a\\
+			U_{\text{out}} = B_{1}r^{-2} \cos \theta & r > a
 		\end{cases}
 	\end{equation*}
-	to avoid divergence at $ r \to 0 $ and $ r \to \infty $. 
+	We find $ A_{1} $ and $ B_{1} $ with  boundary conditions. 
 	
-	We need to find $ A_{1} $ and $ B_{1} $ with the boundary conditions. 
+	\item First boundary condition: the electric potential must be continuous at the boundary (a discontinuous potential would imply infinite charge, which is nonphysical). The continuity condition at $ r = a $ requires
+	\begin{equation*}
+		A_{1}a = \frac{B_{1}}{a^{2}} \implies B_{1} = A_{1}a^{3}
+	\end{equation*}
 	
-	\item First boundary condition: the electric potential must be continuous at the boundary (discontinuous potential would imply infinite charge, which is nonphysical). This continuity condition at $ r = a $ requires
+	\item For the second boundary condition we require electric field is perpendicular to the surface. We then apply Gauss's law near the sphere's surface to get
 	\begin{equation*}
-		A_{1}a = \frac{B_{1}}{a^{2}} \implies A_{1}a^{2} = B_{1}
+		q_{\text{b}} = \ee S (E_{\text{out}}^{\perp} - E_{\text{in}}^{\perp})  \implies \sigma_{\text{b}} = \ee (E_{\text{out}}^{\perp} - E_{\text{in}}^{\perp})
 	\end{equation*}
-	Next, we consider the electric field, which we can related to surface charge density, for the second boundary condition. Electric field is perpendicular to the surface. From Gauss's law we have
+	We know $ \sigma_{\text{b}} = P \cos \theta $ and use $ E_{\text{in/out}}^{\perp} = - \pdv{U_{\text{in/out}}}{r}\big |_{r = a} $ to get
 	\begin{equation*}
-		q = \ee S (E_{\text{out}}^{\perp} - E_{\text{in}}^{\perp})  \implies \sigma_{\text{b}} = \ee (E_{\text{out}}^{\perp} - E_{\text{in}}^{\perp})
+		\sigma_{\text{b}} = P\cos \theta = \ee (E_{\text{out}}^{\perp} - E_{\text{in}}^{\perp}) = \ee \left[  \frac{2B_{1}}{a^{3}} + A_{1}\right]\cos \theta 
 	\end{equation*}
-	We know $ \sigma_{\text{b}} $ and use $ E_{\text{in}}^{\perp} = - \pdv{U}{r}\big |_{r = a} = \frac{2B_{1}}{a^{3}}\cos \theta $
-	\begin{equation*}
-		\sigma_{\text{b}} = P\cos \theta = \ee \left[  \frac{2B_{1}}{a^{3}} + A_{1}\right]\cos \theta 
-	\end{equation*}
-	We insert the first boundary condition into the second to get
+	We substitute the first boundary condition $ B_{1} = A_{1}a^{3} $ into the second to get
 	\begin{equation*}
 		P \cos \theta = \ee \left(2A_{1} + A_{1}\right)\cos \theta \implies P = 3 \ee A_{1} 
 	\end{equation*}
 	and thus
 	\begin{equation*}
-		A_{1} = \frac{P}{3\ee} \eqtext{and} B_{1} = \frac{Pa^{e}}{3\ee}
+		A_{1} = \frac{P}{3\ee} \eqtext{and} B_{1} = \frac{Pa^{3}}{3\ee}
 	\end{equation*}
 	The electric potential is then
 	\begin{equation*}
-		U(\r) = 
+		U(\r) \equiv 
 		\begin{cases}
-			\dfrac{P}{3\ee} r \cos \theta & r < a\\[2mm]
-			\dfrac{Pa^{3}}{3\ee}\dfrac{1}{r^{2}}\cos \theta & r > a
+			U_{\text{in}} = \dfrac{P}{3\ee} r \cos \theta & r < a\\[3mm]
+			U_{\text{out}} = \dfrac{Pa^{3}}{3\ee}\dfrac{1}{r^{2}}\cos \theta & r > a
 		\end{cases}
 	\end{equation*}
 	
-	\item We now discuss the solution. The 3 is called the depolarization factor (it was 1 in the previous solution where we had $ U = \frac{P}{\ee}\cdots $). Next, note that $ r \cos \theta = z $. 
-	
-	$ r \cos \theta = z $ means the field inside the sphere is homogeneous:
+	\item We now discuss the solution. The 3 in the denominators is called the depolarization factor (it was 1 in the previous solution where we had $ U = \frac{P}{\ee}\cdots $). Next, we note that $ r \cos \theta = z $---since $ U_{\text{in}} $ depends only on $ z $, the field inside the sphere is homogeneous:
 	\begin{equation*}
-		E_{z} = - \pdv{U}{z} = -\frac{P}{3\ee} \implies \E = - \frac{\P}{3\ee}
+		E_{z} = - \pdv{U_{\text{in}}}{z} = -\frac{P}{3\ee} \implies \E = - \frac{\P}{3\ee}
 	\end{equation*}
 	where we note that $ \P $ points in the $ z $ direction. The field is negative because with our choice of polarization, positive charges are in the positive $ z $ direction and negative charges in the negative z direction. 
 	
-	\item For the field outside the sphere we have the field of an electric dipole, which is expected; the sphere is polarized like an electric dipole. Think of the cosine term as from the dot product of $ \pe $ and $ \r $. 
+	\item The field outside the sphere is field of an electric dipole; the cosine term is analogous to the dipole dot product term $ \pe \cdot \r $. A dipole field is expected, since the sphere is polarized like an electric dipole. 
 	
 \end{itemize}
 
 \textbf{Halved Sphere; Electric Field in the Slit}
 \begin{itemize}
-	\item Cut the sphere in half perpendicular to the polarization. We know have bound charges on the cut surfaces as well. The bound charges on the top half's bottom surface are negative, and vice-versa. Note the relationship $ \sigma_{\text{b}} = \P \cdot \uvec{n} $ is preserved. 
+	\item We now consider the electric field in the slit when the sphere is cut in half in a plane perpendicular to the polarization. 
 	
-	\item Think of the slit as a parallel-plate capacitor. We know the field of a parallel plate capacitor:
+	Because of the slit through the middle, bound charges accumulates on the cut surfaces as well as the outer surface. Since polarization points ``upwards'' in the positive $ z $ direction, the bound charges on cut surface of the upper hemisphere are negative, while the bound charges on the cut surface of the lower sphere are positive. The relationship $ \sigma_{\text{b}} = \P \cdot \uvec{n} $ is preserved. 
+	
+	\item To find electric field because of the slit, we model the slit as a parallel-plate capacitor, for which the electric field reads
 	\begin{equation*}
-		\t{\E} = \frac{\t{\sigma}}{\ee} = \frac{\P}{\ee}
+		\t{\E} = \frac{\t{\sigma_{\text{b}}}}{\ee}\uvec{n} = \frac{(\P \cdot \uvec{n})}{\ee} \uvec{n} = \frac{\P}{\ee}
 	\end{equation*}
-	where tilde accounts for the flat surface. 
+	where tilde accounts for the flat surface and $ \uvec{n} $ is the normal to the cut surface.
 	
-	\item But we must also consider the hemispherical surfaces. These have
+	We must also consider the electric field contribution from the bound charge on the hemispherical surfaces. Reusing the already derived electric field
 	\begin{equation*}
 		\E_{\text{in}} = - \frac{\P}{3\ee}
 	\end{equation*}
-	And the total field in the slit is
+	The total field in the slit is
 	\begin{equation*}
-		\E = \frac{\P}{\ee} - \frac{\P}{3\ee} = \frac{2\P}{3\ee}
+		\E = \t{\E} + \E_{\text{in}} = \frac{\P}{\ee} - \frac{\P}{3\ee} = \frac{2\P}{3\ee}
 	\end{equation*}
 \end{itemize}
 
 
 \subsubsection{Theory: Dielectric and Displacement Field}
 \begin{itemize}
-		\item Stress that the previous two problems involved ferro-electric materials---the polarization was built in to the material. We now consider a dielectric material; the polarization occurs only in the presence of an external field. 
+		\item The previous two problems involved ferro-electric materials in which the polarization was built in to the material, even in the absence of an external electric field. We now consider dielectric materials, in which polarization occurs only in the presence of an external field. 
 		
 		\item We recall the equations $ \rho_{\text{b}} = - \div \P $ and Gauss's law $ \rho = \ee \div \E $. We subtract the equations to get
 		\begin{equation*}
 			\rho_{\text{f}} = \rho - \rho_{\text{b}} = \div (\ee \E + \P) \equiv \div \D
 		\end{equation*}
-		Where the free charge density $ \rho_{\text{f}} $ is the sum of total charge density and the bound charge density. The electric displacement field is $ \D = \ee \E + \P $. $ \D $ is useful because it depends only on free charge. 
+		where the free charge density $ \rho_{\text{f}} = \rho - \rho_{\text{b}} $ is difference between the total and bound charge densities. The electric displacement field is defined as
+		\begin{equation*}
+			\D = \ee \E + \P
+		\end{equation*}
+		The $ \D $ field depends on free charge and is useful when analyzing dielectrics.
 		
-		\item For small fields, we make the approximation $ \D \propto \E $ where $ \D $ and $ \E $ are linearly dependent. We have the approximate relationship 
+		\item For small fields, we make the approximation $ \D \propto \E $ where $ \D $ and $ \E $ are linearly dependent, which results in the approximate linear relationship 
 		\begin{equation*}
 			\D = \ee \eee \E
 		\end{equation*}
 		where $ \eee $ is the permittivity tensor.
 \end{itemize}
 
-\subsubsection{Dielectric Plate in a Parallel-Plate Capacitor}
-\textit{Consider a parallel-plate capacitor with plate separation $ d $, plate surface area $ S $ and a dielectric insulator. The dielectric tensor has components $ \e_{1} $ and $ \e_{2} $, and $ \e_{2} $ is angled from the $ y $ axis by an angle $ \phi $. Find the capacitance. 2D coordinate system.}
+\subsubsection{Parallel-Plate Capacitor with an Anisotropic Dielectric}
+\textit{Consider a parallel-plate capacitor with plate separation $ d $, plate surface area $ S $, and the intra-plate space filled with a dielectric insulator. whose dielectric tensor has components $ \e_{1} $, $ \e_{2} $ and $ \e_{2} $. The principle axes corresponding to $ \e_{1} $ and $ \e_{3} $ are parallel to the capacitor plates, but the principle axis corresponding to $ \e_{2} $ makes an angle $ \phi $ with the normal to the plates. Find the capacitor's capacitance $ C $.}
+
+% Work in a two-dimensional coordinate system in which the $ y $ axis coincides with the vertical separation between the capacitor plates.
 
 \begin{itemize}
-	\item Capacitance is defined as
+	\item First, recall that capacitance is in general defined as
 	\begin{equation*}
 		C = \frac{q}{U}
 	\end{equation*}
-	Assume we put a potential difference between the plates, and determine the accumulated charge $ q $ on the plates. 
+	where $ q $ is the charge on the capacitor plates and $ U $ is the potential difference between the plates.
 	
-	\item Because $ \eee $ is angled, $ \E $ and $ \D $ are not parallel. However, $ \E $ is perpendicular to the plates. We now consider why.
+	\item Because $ \eee $ is angled (equivalently, because $ \eee $'s second principle axis does not align with the normal to the capacitor plates), $ \E $ and $ \D $ are not parallel. 
 	
-	We use the following Maxwell equation:
+	From the boundary conditions for Maxwell's equations, we know $ \E $ must be perpendicular to the capacitor plates. To show this, for review, we consider the Maxwell equation
 	\begin{equation*}
 		\curl \E = - \pdv{\B}{t} 
 	\end{equation*}
-	In our static case we have $ \curl \E = 0 $. In integral form we have
+	In our static case we have $ \pdv{\B}{t} = 0 $. We integrate the equation over a surface hugging the boundary and apply Stokes' law to get 
 	\begin{equation*}
-		\oint \E \cdot \diff \vec{l} = 0
+		\int_{S}\curl \E \cdot \div \vec{S} = \oint \E \cdot \diff \vec{l} = 0
 	\end{equation*}
-	where we make a rectangular path thinly hugging one capacitor plate. Because the path thinly hugs the plate, the integration registers only the component of $ \E $ parallel to the plates:
+	where the line integral runs over a rectangular path thinly hugging a capacitor plate. Because the path thinly hugs the plate, the integral registers only the component of $ \E $ parallel to the plates:
 	\begin{equation*}
-		E_{\text{out}}^{(\parallel)}\cdot l = E_{\text{int}}^{(\parallel)} \cdot l = 0 \implies E_{\text{out}}^{(\parallel)} = E_{\text{in}}^{(\parallel)}
+		E_{\text{out}}^{(\parallel)}\cdot l - E_{\text{in}}^{(\parallel)} \cdot l = 0 \implies E_{\text{out}}^{(\parallel)} = E_{\text{in}}^{(\parallel)}
 	\end{equation*}
-	Now, the field outside the capacitor is zero; we have
+	Because the electric field outside the capacitor is zero, we have
 	\begin{equation*}
 		E_{\text{out}}^{(\parallel)} = 0 \implies E_{\text{in}}^{(\parallel)} = 0
 	\end{equation*}
-	And $ E_{\text{in}}^{(\parallel)} = 0 $ implies the electric field has only a component perpendicular to the capacitor plates. 
+	The result $ E_{\text{in}}^{(\parallel)} = 0 $ implies the electric field has only a component perpendicular to the capacitor plates. 
 	
-	\item We now need to write the tensor in the principle axis system
+	\item Working in the two-dimensional $ x, y $ plane (since the problem is invariant to translation in the $ z $ direction along the plates) the dielectric tensor in the principle axis system, which we denote $ \t{\eee} $, reads
 	\begin{equation*}
 		\t{\eee} = 
 		\begin{pmatrix}
@@ -2204,7 +2217,7 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 			0 & \e_{2}
 		\end{pmatrix}
 	\end{equation*}
-	In our system, rotated by $ \phi $ relative to the principle axis system, we have rotate the principle axes tensor by rotation matrices:
+	The capacitor's coordinate system is rotated by $ \phi $ relative to the principle axis system. To transform from $ \t{\eee} $ to $ \eee $, we rotate the principle axes tensor by rotation matrices:
 	\begin{align*}
 		\eee &= \mat{R} \t{\eee} \mat{R} = 
 		\begin{pmatrix}
@@ -2220,14 +2233,14 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 			\sin \phi & \cos \phi
 		\end{pmatrix}\\
 		& = 
-		\begin{pmatrix}
+		\begin{bmatrix}
 			\e_{1} \cos^{2}\phi + \e_{2} \sin^{2}\phi & (\e_{2} - \e_{1})\sin \phi \cos \phi \\
 			(\e_{2} - \e_{1})\sin \phi \cos \phi & \e_{1} \sin^{2}\phi + \e_{2} \cos^{2}\phi &
-		\end{pmatrix}
+		\end{bmatrix}
 	\end{align*}
-	Note that $ \eee $ is symmetric, as it must be. 
+	Note that $ \eee $ is symmetric, as is expected for the dielectric tensor.
 	
-	\item Note that $ \E $ has only a $ y $ (perpendicular) component. Take advantage of this to write (from $ \D = \ee \eee \E $). 
+	\item Because of the boundary condition, $ \E_{\parallel} = 0 $, if follows that $ \E $ has only a $ y $ component (where the $ y $ axis is normal to the plates). The electric field then reads $ \E = (E_{x}, E_{y}) \equiv (0, E) $, which we combine with $ \D = \ee \eee \E $ to get
 	\begin{equation*}
 		\begin{pmatrix}
 			D_{x}\\
@@ -2235,42 +2248,48 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 		\end{pmatrix}
 		 = 
 		 \ee 
- 		\begin{pmatrix}
+ 		\begin{bmatrix}
  			\e_{1} \cos^{2}\phi + \e_{2} \sin^{2}\phi & (\e_{2} - \e_{1})\sin \phi \cos \phi \\
  			(\e_{2} - \e_{1})\sin \phi \cos \phi & \e_{1} \sin^{2}\phi + \e_{2} \cos^{2}\phi &
- 		\end{pmatrix}
+ 		\end{bmatrix}
 		\begin{pmatrix}
 			0\\
 			E
 		\end{pmatrix}
 	\end{equation*}
-	where we have $ E_{y} = E $. 
 	
-	\item Now onto $ C = \frac{q}{U} $. We get $ U $ from $ E $. We get $ q $ from the $ y $ component of $ D_{y} $, which points perpendicular to the capacitor plates. We would use Gauss's law with $ \D $, enclosing a capacitor plate, to get (recall $ \rho - \rho_{\text{b}} = \div \D $). So Gauss in terms of $ \D $ reads
+	\item In terms of $ E $, the electric field between the capacitor plates is simply
 	\begin{equation*}
-		q_{\text{f}} = \int \rho_{\text{f}} \diff V = \int \D \cdot \diff \vec{S}
+		U = Ed
 	\end{equation*}
-	which we use for our capacitor plate to get (note the $ D_{y} $ is parallel to $ \diff \vec{S} $)
+	where $ d $ is the distance between the plates. 
+			
+	\item Next, we use the boundary condition on the $ \D $ field to find the charge $ q $ on the plates. We derive the relevant boundary condition, we apply Gauss's law to a thin region tightly enclosing a capacitor plate. For the $ \D $ field, which obeys $ \div \D = \rho_{\text{f}} $, Gauss's law reads
+	\begin{equation*}
+		\int_{V} \rho_{\text{f}} \diff V = \int_{S} \D \cdot \diff \vec{S} \implies q_{\text{f}} = \left[D_{\text{out}}^{(\perp)} - D_{\text{in}}^{(\perp)} \right] S
+	\end{equation*}
+	In our case, where $ D_{\text{out}}^{(\perp)} = 0 $ and $ D_{\text{out}}^{(\perp)} = D_{y} $ the charge on the capacitor plates (up to a minus sign depending on the definition of the surface normal) is
 	\begin{equation*}
 		q_{\text{f}} = D_{y} S
+	\end{equation*}	
+	We find $ D_{y} $ from the earlier matrix equation:
+	\begin{equation*}
+		D_{y} = \ee \left( \e_{1} \sin^{2}\phi + \e_{2} \cos^{2}\phi \right) E = \ee \left( \e_{1} \sin^{2}\phi + \e_{2} \cos^{2}\phi \right) \frac{U}{d}
+	\end{equation*}
+	The charge on the capacitor plates is then
+	\begin{equation*}
+		q_{\text{f}} = D_{y} S = \frac{\ee SU}{d} \left( \e_{1} \sin^{2}\phi + \e_{2} \cos^{2}\phi \right) 
 	\end{equation*}
 	
-	\item We turn to the matrix equation to get
-	\begin{equation*}
-		D_{y} = \ee \left( \e_{1} \sin^{2}\phi + \e_{2} \cos^{2}\phi \right) E
-	\end{equation*}
-	We then have from Gauss that $ D_{y} = \frac{q_{\text{f}}}{S} $ so 
-	\begin{equation*}
-		\frac{q_{\text{f}}}{S} =  \ee \left( \e_{1} \sin^{2}\phi + \e_{2} \cos^{2}\phi \right) \frac{U}{d} 
-	\end{equation*}
-	where we wrote $ E $ in terms of $ U $ as $ E = \frac{U}{d} $.
-	
-	\item The capacitance is then
+	\item In terms of $ q_{\text{f}} $, the capacitor's capacitance $ C $ is
 	\begin{equation*}
 		C = \frac{q_{\text{f}}}{U} = \frac{\ee S}{d}\left(\e_{1} \sin^{2}\phi + \e_{2} \cos^{2}\phi\right) = C_{0}\left(\e_{1} \sin^{2}\phi + \e_{2} \cos^{2}\phi\right)
 	\end{equation*}
-	where $ C_{0} =  \frac{\ee S}{d} $ is the capacitance of an empty capacitor. Note that $ \phi = 0 $ (a nicely aligned permittivity tensor) implies $ C = C_{0}\e_{2} $. 
+	where $ C_{0} =  \frac{\ee S}{d} $ is the capacitance of an empty capacitor. 
+	
+	Note that for $ \phi = 0 $, corresponding to an isotropic dielectric in which the dielectric tensor's second principle axes \textit{does} align with normal to the capacitor plates, the capacitor's capacitance reduces to $ C = C_{0}\e_{2} $. 
 \end{itemize}
+
 
 
 \subsection{Twelfth Exercise Set (rough draft)}
