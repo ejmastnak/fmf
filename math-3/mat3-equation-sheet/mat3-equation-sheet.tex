@@ -1,0 +1,320 @@
+\documentclass[10pt, a4paper]{article}
+\usepackage{multicol}
+\usepackage[english]{babel}
+\usepackage{mwe}
+\usepackage{graphicx}
+\usepackage{siunitx} % for ranges and scientific notation
+\usepackage{amsmath} % for general math things
+\usepackage{amssymb} % for the real and complex number symbols
+\usepackage{siunitx} % for scientific notation
+\usepackage{bm} % for bold vectors in math mode
+\usepackage{mathtools} % for defined equals := symbol
+\usepackage{esint} % various fancy integral symbols
+\usepackage{physics} % for differential notation
+\usepackage[margin=1cm]{geometry}
+\newcommand*\diff{\mathop{}\!\mathrm{d}} % for differentials to not be italicized and have a little space
+\newcommand*\Ocal{\mathcal{O}} % cursive O for placeholder quantity
+\newcommand*\Ohat{\hat{\mathcal{O}}} % operator of cursive O for operator of placeholder quantity
+\newcommand{\R}{\mathbb{R}} % shorthand for the real numbers
+\setlength{\parindent}{0pt} % to disable paragraph indentation
+\pagenumbering{gobble} % remove page numbers
+\usepackage[hidelinks]{hyperref}
+
+
+
+\pdfinfo{
+	/Title (Vector Analysis and Differential Equation Cheatsheet)
+	/Author (Elijan Mastnak)
+	/Subject (Mathematics)
+}
+
+\begin{document}
+\begin{multicols}{2}
+\section*{Vector Analysis} \vspace{-3mm}
+
+\textbf{Line Integrals}	\vspace{1mm} 
+
+$ \int_{\Gamma} f \diff s = \int_I f(\bm{r})  \norm{\dot{\bm{r}}} \diff t \quad \oint_{\Gamma} \bm{F} \cdot \diff \bm{s} \quad \text{(circulation)} $ \newline
+$ \int_{\bm{a}}^{\bm{b}} \bm{\Phi} \cdot \diff \bm{s} = \phi(\bm{b}) - \phi(\bm{a}) \quad \int_{\Gamma} \bm{F} \cdot \diff \bm{s} = \int_I \bm{F}(\bm{r}) \cdot \dot{\bm{r}} \diff t $
+\vspace{2mm}
+
+\textbf{Surface Integral Formulas} 	\vspace{1mm} 
+
+$ \iint_{\mathcal{S}} f \diff S = \iint_D f(\bm{r})  \sqrt{EG - F^2}  \diff u \diff v $ \vspace{1mm} \newline
+$ \iint_{\mathcal{S}} \bm{F} \cdot \diff \bm{S} = \text{ flux through }  \mathcal{S}$ \vspace{1mm} \newline
+$\iint_{\mathcal{S}} \bm{F} \cdot \diff \bm{S} = \iint_{\mathcal{S}} (\bm{F} \cdot \bm{n} )\diff S $ \vspace{1mm} \newline
+$ \quad = \iint_D \bm{F}(\bm{r}) \cdot (\bm{r}_u \cross \bm{r}_v)  \diff u \diff v  $
+\vspace{2mm}
+
+\textbf{Vector Operator Formulas}
+
+\vspace{1mm}
+$ \grad{f}(x, y, z) = \left( \pdv{f}{x},  \pdv{f}{y},  \pdv{f}{z}  \right) $\vspace{0.5mm}\newline
+$ \pdv{f}{\bm{n}} = \expval{\grad{f},\frac{ \bm{n}}{\norm{\bm{n}}}} $\vspace{0.5mm}\newline
+$ \div{\bm{F}} = \pdv{F_1}{x} + \pdv{F_2}{y} + \pdv{F_3}{z} $\vspace{0.5mm}\newline
+$ \curl{\bm{F}} = \left( \pdv{F_3}{y} - \pdv{F_2}{z}, \pdv{F_1}{z} - \pdv{F_3}{x} , \pdv{F_2}{x} - \pdv{F_1}{y}  \right) $\vspace{0.5mm}\newline
+$ \Delta f = \div(\grad f) = \pdv[2]{f}{x} + \pdv[2]{f}{y} + \pdv[2]{f}{z} $
+\vspace{2mm}
+
+\textbf{Important Theorems}	
+
+\vspace{1mm}
+$ \oint_{\partial D} \bm{F} \cdot \diff \bm{s} = \iint_D \left(Y_x - X_y\right) \diff x \diff y 	\quad \text{(Green)} $ \vspace{2mm} \newline 
+$ \oiint_{\partial \Omega } \bm{F} \cdot \diff \bm{S} = \iiint_{\Omega}\div{\bm{F}}\diff V \quad \text{(Gauss)} $ \vspace{2mm} \newline
+$  \oint_{\partial \mathcal{S}}\bm{F} \cdot \diff \bm{s} = \iint_{\mathcal{S}} \curl{\bm{F}} \cdot \diff \bm{S} \quad \text{(Stokes)} $ 
+
+\vspace{-3mm}
+\subsection*{Parameterizations of Common Shapes} \vspace{-1mm}
+
+\textbf{Sphere} 
+
+$ \Omega = \left\{ (x, y, z) \subset \R^3 \, \big | \, x^2 + y^2 + z^2 \leq a^2 \right\} $ \newline
+$ \bm{r}(\phi, \theta, \rho) = (\rho \cos \theta \cos \phi, \rho \cos \theta \sin \phi, \rho \sin \theta ) $\newline 
+$ \mathcal{S} = \left\{ (x, y, z) \subset \R^3 \, \big | \, x^2 + y^2 + z^2 = a^2 \right\} $ \newline
+$ \bm{r}(\phi, \theta) = (a \cos \theta \cos \phi, a \cos \theta \sin \phi, a \sin \theta ) $\newline
+$ \phi \in [0, 2\pi], \, \theta \in \left [-\frac{\pi}{2}, \frac{\pi}{2} \right ], \, \rho \in [0, a] \quad J = r^2 \cos \theta $
+
+\vspace{2mm}
+
+\textbf{Surface of Torus}
+
+$ \bm{r}(\phi, \theta) = ((b \cos \theta + a) \cos \phi, (b \cos \theta + a) \sin \phi, b \sin \theta) $ \newline
+$ \phi \in [0, 2\pi], \, \theta \in [0, 2 \pi] $ 
+
+\vspace{2mm}
+
+\textbf{Surface of Cone}
+
+$ \mathcal{S} = \left\{ (x, y, z) \in \R^3 \, | \, z^2 = x^2 + y^2, \, z\in [0, 1] \right\} $  \newline
+$ \bm{r}(\rho, \phi) = (\rho \cos \phi, \rho \sin \phi, \rho) $\newline
+$ \phi \in [0, 2\pi], \, \rho \in [0, 1]  $
+
+\vspace{2mm}
+
+\textbf{Surface of Cylinder}
+
+$ \mathcal{S} = \left\{ (x, y, z) \in \R^3 \, | \, x^2 + y^2 = a^2, \, z \in [z_{min}, z_{max}] \right\} $  \newline
+$ \bm{r}(\phi, z) = (a \cos \phi, a \sin \phi, z) $ \newline
+$ \phi \in [0, 2\pi], \, z \in [z_{min}, z_{max}]  $
+\vspace{-4mm}
+
+\section*{Differential Equations} \vspace{-2mm}
+
+\subsection*{First-Order Differential Equations} \vspace{-1mm}
+
+\textbf{Linear DE}
+
+$  y' + p(x)y = q(x) $  \vspace{1mm} \newline
+$ P(x) \equiv \int p(x) \diff x $ \quad $ C(x) = \int q(x) e^{P(x)}  $ \vspace{1mm} \newline 
+$ y = C(x) e^{-P(x)}$  
+
+ \vspace{1mm} 
+\textbf{Bernoulli DE}
+
+$ u(x) y' + v(x) y = w(x) y^\alpha $ \vspace{1mm} \newline
+new var: $ z = y^{1-\alpha} $ \quad $ z' = (1-\alpha)y^{-\alpha} y' $\vspace{1mm} \newline
+$ \frac{u(x)}{(1-\alpha)}z' + v(x) z = w(x) \implies$ LDE for $ z $ 
+
+\vspace{1mm}
+\textbf{Riccati DE}
+
+$ y' = u y^2 + v y + w $ \newline
+guess solution $ y_1 $ \quad new var: $ z = y - y_1 $ \vspace{1mm} \newline
+$ z' - (2uy_1 + v)z = uz^2 \implies $ Bernoulli DE for $ z $ 
+
+\vspace{1mm}
+\textbf{Homogeneous DE}
+
+$ y' = f(x,y); \quad f(tx, ty) = f(x, y) $ \vspace{1mm} \newline
+$ g(z) \equiv f(1, z) - z \implies \frac{\diff z}{g(z)} = \frac{\diff x}{x} $ separable DE for $ z $ \vspace{0.5mm} \newline
+$ y(x) = x z(x) $
+
+\vspace{1mm}
+\textbf{Exact DE}
+
+$ P(x, y) \diff x + Q(x, y) \diff y = 0; \quad P_y = Q_x $\vspace{0.5mm} \newline
+solve with separation of variables
+
+\vspace{1mm}
+\textbf{Solving with Integrating Factors}
+
+$ P(x, y) \diff x + Q(x, y) \diff y = 0; \quad P_y \neq Q_x $ \vspace{-2.5mm} \newline
+\[
+\mu = 
+\begin{cases}
+	\mu(x) = \exp(\int \frac{P_y - Q_x}{Q} \diff x); & \frac{P_y - Q_x}{Q} \text{ independent of $ y $}\\
+	\mu(y) = \exp(\int \frac{Q_x - P_y}{P} \diff x); & \frac{Q_x - P_y}{P} \text{ independent of $ x $}
+\end{cases}
+\] \vspace{-2.5mm} \newline
+$ \mu P(x, y) \diff x + \mu Q(x, y) \diff y = 0 $ \vspace{1mm} \newline
+$ u_x = \mu P (x, y) \qquad u_y = \mu \tilde Q(x, y) $\vspace{-2.5mm} \newline
+\[
+u = u(x, y) = 
+\begin{cases}
+	\int \mu P(x, y) \diff x + C(y) + D \\
+	\int \mu Q(x, y) \diff y + C(x) + D
+\end{cases} \qquad \qquad \qquad
+\] \vspace{-2.5mm}
+
+\textbf{Parametric Solution Case I}
+
+$ F(x, y') = 0 $ \vspace{0.5mm} \newline
+find parameterizations for $ x(t) $ and $ y'(t) $ \vspace{0.5mm} \newline
+$ y(t) = \int \dot x(t) y'(t) \diff t \implies $ param. solution $ x(t), y(t) $
+
+\vspace{2mm}
+\textbf{Parametric Solution Case II}
+
+$ F(y, y') = 0 $ \vspace{0.5mm} \newline
+find parameterizations for $ y(t) $ and $ y'(t) $ \vspace{0.5mm} \newline
+$ x(t) = \int \frac{\dot{y}(t)}{y'(t)} \diff t \implies $ param. solution $ x(t), y(t) $
+
+\vspace{2mm}
+\textbf{Clairaut DE}
+
+$ y = x y' + f(y') $ \vspace{0.5mm} \newline
+general solution: $ y_g = Cx + f(C) $\newline
+singular solution: $ x + f'(y_s') = 0 \implies $ parametric or separable
+
+\vspace{2mm}
+\textbf{Calculus of Variations}
+
+$ L = L(x, y') \implies	L_{y'} = C $ \vspace{0.5mm} \newline
+$ L = L(y, y') \implies L - y' L_{y'} = C  $ 
+
+\vspace{-5mm}
+\subsection*{Systems of LDEs with Constant Coefficients}
+\vspace{-1mm}
+\textbf{Homogeneous and Diagonalizable}
+
+$ \dot{\bm{x}} = \mathbf{A} \bm{x}(t); \quad \mathbf{A} $ diagonalizable \newline
+$  \mathbf{D} = \operatorname{diag}(\lambda_1, \lambda_2, \dots, \lambda_n) \quad \mathbf{P} = [v_1, v_2, \dots, v_n] $ \vspace{1mm} \newline
+$ \mathbf{P} e^{t \mathbf{D}} \bm{c} = c_1 e^{\lambda_1 t} \bm{v_1} + \dots + c_n e^{\lambda_n t} \bm{v_n} $
+
+
+\vspace{1mm}
+\textbf{Homogeneous and Non-Diagonalizable}
+
+$ \dot{\bm{x}} = \mathbf{A} \bm{x}(t); \quad \mathbf{A} $ non-diagonalizable \newline
+$ \lambda  $ multiplicity $ 1 \implies $ one solution: $ c e^{\lambda t} \bm{v} $ \newline
+$ \lambda  $ multiplicity $ r > 1 \implies r $ solutions: \vspace{1mm} \newline
+$ c_1 e^{\lambda t} \bm{v}^{(1)}, \quad c_2 e^{\lambda t} \left (\bm{v}^{(2)} + t\bm{v}^{(1)} \right ), \dots, $ \newline
+$ c_r e^{\lambda t} \left (\bm{v}^{(r)} + t \bm{v}^{(r-1)} + \frac{t^2}{2}\bm{v}^{(r-2)} + \dots + \frac{t^{r-1}}{(r-1)!} \bm{v}^{(1)} \right )  $\newline
+$ \bm{v}^{(r)} \in \ker (\mathbf{A} - \lambda \mathbf{I})^r \setminus \ker (\mathbf{A} - \lambda \mathbf{I})^{r-1} $ \vspace{1mm} \newline
+$ \bm{v}^{(i-1)} = \mathbf{A} \bm{v}^{(i)}; \quad \bm{v}^{(1)} $ eigenvector for $ \lambda $
+
+\vspace{1mm}
+\textbf{Non-Homogeneous} \newline
+$ \dot{\bm{x}}(t) = \mathbf{A} \bm{x}(t) + \bm{b}(t) $ \newline
+$ \bm{x}_h $ solution to homogeneous system $ \dot{\bm{x}}(t) = \mathbf{A} \bm{x}(t) $ \newline
+$ \bm{x}(t) = (x_1(t), \dots, x_n(t)); \quad \mathbf{X}(t) = [x_1(t) \cdots x_n(t)] $ \vspace{1mm} \newline
+$ \bm{x}_p(t) = \bm{c}(t) \mathbf{X}(t); \quad \bm{c}(t) = \int \mathbf{X}^{-1}(t) \bm{b}(t) \diff t $\newline
+general solution: $ \bm{x}_g = \bm{x}_h + \bm{x}_p $
+
+\vspace{1mm}
+\textbf{Complex Solutions of Systems of LDEs}\newline
+$ \lambda, \lambda^* \in \mathbb{C} $ complex conjugate eigenvalue pair \newline
+$ \bm{v}, \tilde{\bm{v}} \in \mathbb{C}^n $ complex eigenvectors for $ \lambda, \lambda^* $ \newline
+complex solutions: $ c e^{\lambda t} \bm{v}, \tilde{c} e^{\lambda^* t} \tilde{\bm{v}} $  \newline
+equivalent real solutions: \newline
+$ \Re(c_1 e^{\lambda t} \bm{v}), \, \Im(c_2 e^{\lambda t} \bm{v}) \quad $ OR $ \quad \Re(c_1 e^{\lambda^* t} \tilde{\bm{v}}), \, \Im(c_2 e^{\lambda^* t} \tilde{\bm{v}}) $
+
+\vspace{-3mm}
+\subsection*{Higher-Order Differential Equations}
+
+\textbf{Homogeneous LDE with Constant Coefficients} \newline
+$ a_n y^{(n)} + \cdots + a_1 y' + a_0 y = 0 $ \newline
+$ p(\lambda) = a_n \lambda^n + \dots + a_1 \lambda + a_0 $ \newline
+$ \lambda $ zero, multiplicity $ 1: $ one solution $ y = c e^{\lambda x} $ \newline
+$ \lambda $ zero, multiplicity $ k: $ $ k $ solutions \newline
+$ y_1 = c_1 e^{\lambda x}, y_{2} = c_{2} x e^{\lambda x}, \dots, y_{k} = c_{k} x^{k-1} e^{\lambda x}  $
+
+\textbf{Homogeneous Cauchy-Euler} \newline
+$ a_n x^n y^{(n)} + \cdots + a_1 x y' + a_0 y = 0 $ \newline
+$ p(\lambda) = a_0 + a_1 \lambda + a_2 \lambda (\lambda - 1) + \cdots + a_n \lambda (\lambda - 1)\cdots (\lambda - n + 1) $ \newline
+$ \lambda $ zero, multiplicity $ 1: $ one solution $ y = c x^{\lambda} $ \newline
+$ \lambda $ zero, multiplicity $ k: $ $ k $ solutions \newline
+$ y_1 = c_1 x^{\lambda }, y_{2} = c_{2} \ln\abs{x} x^{\lambda }, \dots, y_{k} = c_{k} \ln\abs{x}^{k-1} x^{\lambda}  $
+
+\textbf{Non-Homogeneous LDE} \newline
+$ a_n y^{(n)} + \cdots + a_1 y' + a_0y = b(x) $ \newline
+$ y_h $ solution to homog. eq. $ a_n y^{(n)} + \cdots + a_1 y' + a_0y = 0 $ \newline \vspace{-3mm}
+\[
+	\mathbf{Y}(x) = 
+	\begin{bmatrix}
+		y_1 & \dots & y_n \\
+		\vdots & \ddots & \vdots \\
+		y_1^{(n-1)} & \dots & y_n^{(n-1)}
+	\end{bmatrix}
+	\quad 
+	\bm{b}(x) = 
+	\begin{bmatrix}
+		0 \\
+		\vdots \\
+		0 \\[0.5ex]
+		\frac{b(x)}{a_n}
+	\end{bmatrix}
+\] \vspace{-4mm} \newline 
+$ y_p = \bm{y}(x) \cdot \bm{c}(x); \quad \bm{c}(x) = \int \mathbf{Y}^{-1}(x) \bm{b}(x) \diff x $ \vspace{0.5mm}\newline
+general solution: $ \bm{x}_g = \bm{x}_h + \bm{x}_p $
+\vspace{1mm}
+
+\textbf{Special Case I: Non-Homogeneous LDE} \newline
+$ a_n y^{(n)} + \cdots + a_1 y' + a_0y = P(x) e^{\lambda_0 x}; P$ polynomial degree $ p $  \vspace{0.5mm} \newline
+$ y_h $ solution to homog. eq. $ a_n y^{(n)} + \cdots + a_1 y' + a_0y = 0 $  \vspace{0.5mm} \newline
+ansatz: $ y_p = x^k Q(x) e^{\lambda_0 x}$  \newline
+$ k $ multiplicity of $ \lambda_0 $ as zero of char. poly $ p(\lambda) $ \newline
+$ Q(x) = a_p x^p + a_{p-1}x^{p-1} + \dots + a_1 x + a_0$\newline 
+general solution: $ \bm{x}_g = \bm{x}_h + \bm{x}_p $
+
+
+\textbf{Special Case II: Non-Homogeneous LDE} \newline
+$ a_n y^{(n)} + \cdots + a_1 y' + a_0y = P(x)e^{a x}\cos(bx) $ \newline
+$ a_n y^{(n)} + \cdots + a_1 y' + a_0y = P(x)e^{a x}\sin(bx) $ \newline
+$ y_h $ solution to homog. eq. $ a_n y^{(n)} + \cdots + a_1 y' + a_0y = 0 $  \vspace{0.5mm} \newline
+$ \tilde{y}_p $ particular solution to equation: \newline  $ a_n y^{(n)} + \cdots + a_1 y' + a_0y = P(x) e^{(a + ib)x} $ \vspace{-3mm} \newline
+\[
+	y_p  = 
+	\begin{cases}
+		\Re(\tilde{y}_p) & \text{non-homogeneous term is cosine} \\[1.0ex]
+		\Im(\tilde{y}_p) & \text{non-homogeneous term is sine}
+	\end{cases}
+\] \vspace{-3mm} \newline
+general solution: $ \bm{x}_g = \bm{x}_h + \bm{x}_p $
+\vspace{1mm}
+
+\textbf{Non-Homogeneous Cauchy-Euler} \newline
+$ a_n x^n y^{(n)} + \cdots + a_1 x y' + a_0 y = b(x) $ \newline
+$ y_h $ solution to homog. eq. $ a_n x^n y^{(n)} + \cdots + a_1 x y' + a_0 y = 0 $ \newline 
+$ \mathbf{Y}(x) $ fundamental matrix; $ \bm{b}(x) = \left (0, \dots, 0, \frac{b(x)}{a_n x^n}\right ) \in \R^n$
+\newline 
+$ y_p = \bm{y}(x) \cdot \bm{c}(x); \quad \bm{c}(x) = \int \mathbf{Y}^{-1}(x) \bm{b}(x) \diff x $ \vspace{0.5mm}\newline
+general solution: $ \bm{x}_g = \bm{x}_h + \bm{x}_p $
+\vspace{1mm}
+
+\textbf{Complex Solutions of Higher-Order LDEs}\newline
+$ \lambda, \lambda^* \in \mathbb{C} $ zeros of char. poly; complex conjugate pair \newline
+complex solutions: $ c e^{\lambda x}, \tilde{c} e^{\lambda^* x} $  \newline
+equivalent real solutions: \newline
+$ \Re(c e^{\lambda x}), \, \Im(c e^{\lambda x}) \quad $ OR $ \quad \Re(e^{\lambda^* x}), \, \Im(e^{\lambda^* x}) $
+
+\vspace{-5mm}
+\subsection*{Calculus of Variations}
+$ I(y) = \int_{a}^{b} L(x, y, y') \diff x $ \newline
+$ \pdv{L}{y} = \dv{}{x} \left[\pdv{L}{y'} \right] \quad \text{and} \quad \left[\pdv{L}{y'} \mu \right]^{b}_{a} = 0 \implies I $ extrema at $ y $ \vspace{1mm} \newline
+$ L = L(x, y) \implies \pdv{L}{y} = 0 $ \newline 
+$ L = L(x, y') \implies \pdv{L}{y'} = C $ \newline 
+$ L = L(y, y') \implies L - y' \pdv{L}{y'} = C $
+
+\textbf{Path from $ A $ to $ B $ on Surface $ \mathcal{S} $}
+
+1. Parameterize path with $ \bm{r} : J \to \R^3 $, one variable $ x, y, z $ unknown, $ J \subset \R $ interval from $ A $ to $ B $.\newline
+2. Calculate $ \bm{r}' $ and its magnitude $ \norm{\bm{r}'} = \sqrt{\bm{r}_x'^2 + \bm{r}_y'^2 +  \bm{r}_z'^2}$\newline
+3. Find extrema of functional $ \ell = \int_J \norm{\bm{r}'} $.
+
+\end{multicols}
+
+
+
+\end{document}
+
