@@ -71,7 +71,7 @@
 These are my notes from the Exercises portion of the class \textit{Kvanta Mehanika} (Quantum Mechanics), a required course for third-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. The exact problem sets herein are specific to the physics program at the University of Ljubljana, but the content is fairly standard for an late-undergraduate Quantum Mechanics course. I am making the notes publicly available in the hope that they might help others learning the same material.
 
 \vspace{2mm}
-\textit{Navigation}: For easier document navigation, the table of contents is ``clickable'', meaning you can jump directly to a section by clicking the colored section names in the table of contents. Unfortunately, \uline{the clickable links do not work in most online or mobile PDF viewers}; you have to download the file first.
+\textit{Navigation}: For easier document navigation, the table of contents is ``clickable'', meaning you can jump directly to a section by clicking the colored section names in the table of contents. Unfortunately, \textit{the clickable links do not work in most online or mobile PDF viewers}; you have to download the file first.
 
 \vspace{2mm}
 \textit{On Authorship:} 
@@ -521,7 +521,7 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 	
 	\item The general ansatz solutions in regions $ 1 $ and $ 3 $ are
 	\begin{equation*}
-		\psi_{1} = A_{1} e^{ik_{1}x} + B_{1}e^{-ik_{1}x} \eqtext{and} \psi_{3} = A_{3} e^{-ik_{2}x} + B_{3}e^{ik_{2}x}
+		\psi_{1} = A_{1} e^{ik_{1}x} + B_{1}e^{-ik_{1}x} \eqtext{and} \psi_{3} = A_{3} e^{-ik_{3}x} + B_{3}e^{ik_{3}x}
 	\end{equation*}
 	The terms with $ A $ coefficients represent movement toward the potential barrier 
 	
@@ -543,18 +543,18 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 	\begin{equation*}
 		j(x) = \frac{\hbar}{2mi}\left[\psi^{*}(x)\psi'(x) - \psi^{'^{*}}(x)\psi(x)\right] = \frac{\hbar}{m} \Im \left\{\psi^{*}\psi'(x)\right\}
 	\end{equation*}
-	where $ \psi^{*} $ and $ \psi' $ denotes the complex conjugate and derivative of $ \psi $, respectively.
+	where $ \psi^{*} $ and $ \psi' $ denote the complex conjugate and derivative of $ \psi $, respectively.
 	
 	\item Substituting in the region 1 ansatz $ \psi_{1} = A_{1} e^{ik_{1}x} + B_{1}e^{-ik_{1}x}  $  gives the probability current in region 1:
 	\begin{align*}
 		j_{1} &= \frac{\hbar}{m}\Im \left\{A_{1}A_{1}^{*}ik_{1} - B_{1}B_{1}^{*}ik_{1} + B_{1}^{*}A_{1}ik_{1}e^{2ik_{1}x} - B_{1}A_{1}^{*}ik_{1}e^{-2ik_{1}x}\right\}\\
-		&=\frac{\hbar k_{1}}{m}(A_{1}A_{1}^{*} - B_{1}B_{1}^{*}) \equiv v_{1}(A_{1}A_{1}^{*} - B_{1}B_{1}^{*}) =  v_{1}(\abs{A}^{2} - \abs{B}^{2})
+		&=\frac{\hbar k_{1}}{m}(A_{1}A_{1}^{*} - B_{1}B_{1}^{*}) \equiv v_{1}(A_{1}A_{1}^{*} - B_{1}B_{1}^{*}) =  v_{1}(\abs{A_{1}}^{2} - \abs{B_{1}}^{2})
 	\end{align*}
 	Noting that $ \frac{\hbar k_{1}}{m} $ has units of velocity, we've defined the constant $ v_{1} \equiv \frac{\hbar k_{1}}{m} $. 
 	
 	The procedure for $ j_{3} $ in region 3 is analogous. The result is
 	\begin{equation*}
-		j_{3} = v_{3}(B_{3}B_{3}^{*} - A_{3}A_{3}^{*}) = v_{3}(\abs{B}_{3}^{3} - \abs{A}_{3}^{3}) \eqtext{where} v_{3} \equiv \frac{\hbar k_{3}}{m}
+		j_{3} = v_{3}(B_{3}B_{3}^{*} - A_{3}A_{3}^{*}) = v_{3}(\abs{B_{3}}^{3} - \abs{A_{3}}^{3}) \eqtext{where} v_{3} \equiv \frac{\hbar k_{3}}{m}
 	\end{equation*}
 
 	
@@ -607,7 +607,7 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 	
 	\item In general, the incident current is the sum of the two squares of the incidence amplitudes $ A_{1} $ and $ A_{3} $, while the reflected current is the sum of the reflected amplitudes $ B_{1} $ and $ B_{3} $, i.e.
 	\begin{equation*}
-		j_{\text{in}} = \abs{A_{1}}^{2} + \abs{A_{3}}^{2} \eqtext{and} j_{\text{ref}} = \abs{B_{1}}^{2} + \abs{B_{3}}^{2}
+		j_{\text{in}} = \abs{A_{1}}^{2} + \abs{A_{3}}^{2} \eqtext{and} j_{\text{out}} = \abs{B_{1}}^{2} + \abs{B_{3}}^{2}
 	\end{equation*}
 	In terms of the coefficient vector $ \vec{A} $, the incident probability current is
 	\begin{equation*}
@@ -618,12 +618,19 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 		\end{bmatrix}
 		= \vec{A}^{\dagger}\vec{A}
 	\end{equation*}
-	An analogous procedure with the reflected amplitudes gives $ j_{\text{out}} = \vec{B}^{\dagger}\vec{B} $. 
-	
-	
-	\item Conservation of probability requires $ j_{\text{in}} = j_{\text{ref}} $ or $ \vec{A}^{\dagger}\vec{A} = \vec{B}^{\dagger}\vec{B} $. Combining the scattering matrix equation $ \vec{B} = \mat{S}\vec{A} $ with the requirement $ \vec{A}^{\dagger}\vec{A} = \vec{B}^{\dagger}\vec{B} $ implies
+	An analogous procedure with the reflected amplitudes gives
 	\begin{equation*}
-		\vec{A}^{\dagger}\vec{A} \equiv \vec{B}^{\dagger}\vec{B} = (\vec{A}^{\dagger}\mat{S}^{\dagger})(\mat{S}\vec{A}) \implies \vec{S}^{\dagger}\mat{S} = \mat{I}
+		j_{\text{out}} = B_{1}B_{1}^{*} + B_{3}B_{3}^{*} = \big[B_{1}^{*}, B_{3}^{*}\big]
+		\begin{bmatrix}
+			B_{1}\\
+			B_{3}
+		\end{bmatrix}
+		= \vec{B}^{\dagger}\vec{B}
+	\end{equation*}	
+	
+	\item Conservation of probability requires $ j_{\text{in}} = j_{\text{out}} $ or $ \vec{A}^{\dagger}\vec{A} = \vec{B}^{\dagger}\vec{B} $. Combining the scattering matrix equation $ \vec{B} = \mat{S}\vec{A} $ with the requirement $ \vec{A}^{\dagger}\vec{A} = \vec{B}^{\dagger}\vec{B} $ implies
+	\begin{equation*}
+		\vec{A}^{\dagger}\vec{A} = \vec{B}^{\dagger}\vec{B} = (\vec{A}^{\dagger}\mat{S}^{\dagger})(\mat{S}\vec{A}) \implies \vec{S}^{\dagger}\mat{S} = \mat{I}
 	\end{equation*}
 	In other words, the scattering matrix $ \mat{S} $ must be unitary to conserve probability in scattering problems
 \end{itemize}
@@ -672,7 +679,7 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 		&\psi_{1}(x) = \frac{A_{1}}{\sqrt{v}}e^{ikx} + \frac{B_{1}}{\sqrt{v}} e^{-ikx} = \frac{e^{ikx}}{\sqrt{v}} + \frac{r}{\sqrt{v}} e^{-ikx}\\
 		& \psi_{3} = \frac{A_{3}}{\sqrt{v}} e^{-ikx} + \frac{B_{3}}{\sqrt{v}} e^{ikx} = 0 +  \frac{t}{\sqrt{v}} e^{ikx}
 	\end{align*}
-	Note that because the potential is the same on both sides of the delta function, $ k_{1} = k_{3} \equiv k$ and $ v_{1} = v_{3} \equiv v $.
+	where $ k^{2} = \frac{2mE}{\hbar^{2}} $. Note that because the potential is the same on both sides of the delta function, $ k_{1} = k_{3} \equiv k$ and $ v_{1} = v_{3} \equiv v $.
 	
 	\item On to boundary conditions. Continuity between regions 1 and 3 requires
 	\begin{equation*}
@@ -709,7 +716,7 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the proble
 \end{itemize}
 \textbf{On the Problem's Symmetry:} A few notes on why the scattering matrix for the delta potential has only two independent parameters, i.e. why $ \tilde{t} = t $ and $ \tilde{r} = r $.
 \begin{itemize}
-	\item  Start by noting that the wave functions $ \psi_{1,3} $ in regions 1 and 3 solve the stationary \Schro equation
+	\item  We begin by noting that the wave functions $ \psi_{1,3} $ in regions 1 and 3 solve the stationary \Schro equation
 	\begin{equation*}
 		H \psi = E \psi \eqtext{where} H = -\frac{\hbar^{2}}{m}\pdv[2]{}{x} + V(x)
 	\end{equation*}
@@ -3212,12 +3219,12 @@ These are the two linearly independent states spanning the isotropic harmonic os
 \end{itemize}
 	
 	
-\subsection{Scattering on a Spin-Dependent Delta Function in 1D}
+\subsection{Scattering on a Spin-Dependent Delta Function}
 \textit{Consider a spin-dependent scattering problem with two particles: particle 1 with spin $ s_{1} = 1/2 $ in the state $ \ket{\ua} $ and particle $ 2 $ with spin $ s_{2} = 1 $ in the state $ \ket{10} $. The particles have the Hamiltonian}
 \begin{equation*}
 	H = \frac{p_{1}^{2}}{2m} - \frac{\lambda}{\hbar^{2}}\vec{S}_{1}\cdot \vec{S}_{2}\delta(x)
 \end{equation*}
-\textit{Particle $ 2 $ is fixed at the origin at $ x = 0 $ and particle $ 1 $ approaches and hits particle $ 2 $ from the region $ x \to -\infty $. Determine the particle's spins after the collision.}
+\textit{Particle $ 2 $ is fixed at the origin at $ x = 0 $ and particle $ 1 $ approaches and scatters off particle $ 2 $ from the region $ x \to -\infty $. Determine the particle's spins after the collision.}
 
 
 \begin{itemize}
@@ -3283,9 +3290,15 @@ These are the two linearly independent states spanning the isotropic harmonic os
 		 	k	& - i\kappa
 		 \end{bmatrix}
 	\end{equation*}
-	If we send a particle in towards the delta potential from the left, the particle is partly reflected and partly transmitted, according to
+	where 
 	\begin{equation*}
-		\psi(x < 0) = e^{ikx} + re^{-ikx} \eqtext{and} \psi(x>0) te^{ikx}
+		k = \sqrt{\frac{2mE}{\hbar^{2}}} \eqtext{and} \kappa = \frac{m\lambda}{\hbar^{2}} 
+	\end{equation*}
+	
+	
+	If we send a particle in towards the delta potential from the left, with incidence vector $ \vec{A} = (1, 0) $, the particle is partly reflected and partly transmitted, according to
+	\begin{equation*}
+		\psi(x < 0) = e^{ikx} + re^{-ikx} \eqtext{and} \psi(x>0) = te^{ikx}
 	\end{equation*}
 	Recall that the scattering matrix $ \mat{S} $ is unitary and thus obeys $ \mat{S}^{\dagger}\mat{S} = \mat{I} $. Finally, recall the coefficient parameters obey $ \abs{t}^{2} + \abs{r}^{2} = T + R = 1 $, where $ T $ and $ R $ are the probability of transmission and reflection, respectively.
 	
@@ -3293,7 +3306,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\begin{equation*}
 		\H = \H_{p} \otimes \H_{1} \otimes \H_{2}
 	\end{equation*}
-	where the combined spin Hilbert space $ \H_{1} \otimes \H_{2} $ is six-dimensional.
+	where $ \H_{p} $ is the first particle's momentum space, and $ \H_{1} $ and $ \H_{2} $ are the first and second particle's two and three dimensional spin Hilbert spaces, respectively. The combined spin Hilbert space $ \H_{s} = \H_{1} \otimes \H_{2} $ is six-dimensional.
 	
 	We identified two possible bases for use with our problem: The first is a product basis using the commutativity of $ S_{1}^{2} $, $ S_{z_{1}} $, $ S_{2}^{2} $ and $ S_{z_{2}} $. 
 	
@@ -3313,7 +3326,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\begin{equation*}
 		H = \frac{p_{1}^{2}}{2m} - \frac{\lambda}{\hbar^{2}}\vec{S}_{1} \cdot \vec{S}_{2}\delta (x_{1})
 	\end{equation*}
-	First, we'll rewrite the dot product using the total spin operator identity
+	First, we'll rewrite the dot product in terms of total spin $ \vec{S} $:
 	\begin{equation*}
 		\vec{S} = \vec{S}_{1} + \vec{S}_{2} \implies S^{2} = S_{1}^{2} + 2\vec{S}_{1}\vec{S}_{2} + S_{2}^{2},
 	\end{equation*}
@@ -3336,7 +3349,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\begin{equation*}
 		H \ket{\psi} = E\ket{\psi}
 	\end{equation*}
-	Because $ H $ and the spin operators commute, we can factor the system's wavefunction into a momentum and spin portion of the form $ \ket{\psi} = \ket{\psi_{1}} \otimes \ket{sm} $. This factorization gives
+	Because $ H $ and the spin operators commute, we can factor the system's wavefunction into a momentum and spin portion of the form $ \ket{\psi} = \ket{\psi_{1}} \otimes \ket{sm} $, which gives
 	\begin{align*}
 		H \ket{\psi_{1}} \otimes \ket{sm_{s}} &= \left(\frac{p_{1}^{2}}{2m}\ket{\psi_{1}}\right)\otimes \ket{sm_{s}} - \frac{\lambda}{2\hbar^{2}} \delta (x_{1})\ket{\psi_{1}}\otimes (S^{2} -S_{1}^{2} - S_{2}^{2}) \ket{sm_{s}}\\
 		&= E \ket{\psi_{1}}\otimes \ket{sm_{s}}
@@ -3374,10 +3387,10 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\begin{equation*}
 		\lambda_{3/2} = \frac{\lambda}{2} \eqtext{and} \lambda_{1/2} = - \lambda
 	\end{equation*}
-	The $ s = 3/2 $ and $ s = 1/2 $ eigenvalue equations involving $ \ket{\psi_{1}} $ then read
-		\begin{equation*}
-			\frac{p_{1}^{2}}{2m} - \lambda_{3/2}\delta(x) = H_{3/2} \eqtext{and} \frac{p_{1}^{2}}{2m} - \lambda_{1/2}\delta(x) = H_{1/2} 
-		\end{equation*}
+	The \Ham{}s for $ s = 3/2 $ and $ s = 1/2 $ then read
+	\begin{equation*}
+		H_{3/2} = \frac{p_{1}^{2}}{2m} - \lambda_{3/2}\delta(x) \eqtext{and} H_{1/2} = \frac{p_{1}^{2}}{2m} - \lambda_{1/2}\delta(x)
+	\end{equation*}
 		
 	\item Recall (e.g. from the second exercise set) that a bound state in a delta potential $ V(x) = - \lambda \delta(x) $ has the wavefunction
 	\begin{equation*}
@@ -3422,18 +3435,18 @@ These are the two linearly independent states spanning the isotropic harmonic os
 			k & -i \kappa_{s}
 		\end{bmatrix}
 	\end{equation*}
-	where we have introduced a subscript $ _{s} $ to make the dependence of $ r $ and $ t $ on the value of the total spin $ s $ explicit. The possible values of $ \kappa_{s} $ for $ s \in \{1/2, 3/2\} $ are
+	where we have introduced a subscript $ _{s} $ to make the dependence of $ r $, $ t $ and $ \kappa $ on the value of total spin $ s $ explicit. The possible values of $ \kappa_{s} $ for $ s \in \{1/2, 3/2\} $ are
 	\begin{equation*}
 		\kappa_{3/2} \equiv \frac{m\lambda_{3/2}}{\hbar^{2}} = \frac{m\lambda}{2\hbar^{2}} \eqtext{and} \kappa_{1/2} \equiv \frac{m\lambda_{1/2}}{\hbar^{2}} = - \frac{m\lambda}{\hbar^{2}}
 	\end{equation*}
 	
 	\item  For a particle incident on the origin from the left, the scattering wavefunction on $ x \in (-\infty, 0) $ (to the left of the delta potential) takes the general form:
 	\begin{equation*}
-		\ket{\psi_{-}} = \left(e^{ik x} + r_{s}e^{-ik x}\right)\ket{sm_{s}},
+		\bket{\psi_{\text{b}}^{-}} = \left(e^{ik x} + r_{s}e^{-ik x}\right)\ket{sm_{s}},
 	\end{equation*}
-	This ansatz contains the incident wave $ e^{ikx} $ and the reflected wave $ re^{-ikx} $. Meanwhile, the wavefunction on $ x \in (0, \infty)  $ (to the right of the delta potential) is
+	This ansatz contains the incident wave $ e^{ikx} $ and the reflected wave $ re^{-ikx} $. The subscript $ {}_{\text{b}} $ indicates this is a basis function for scattering states on the region $ x < 0 $. Meanwhile, the wavefunction on $ x \in (0, \infty)  $ (to the right of the delta potential) is
 	\begin{equation*}
-		\ket{\psi_{+}} = t_{s} e^{ikx}\ket{sm_{s}}
+		\ket{\psi_{\text{b}}^{+}} = t_{s} e^{ikx}\ket{sm_{s}}
 	\end{equation*}
 	where $ t_{s}e^{ikx} $ is the transmitted wave. Note the explicit dependence of $ t $ and $ r $ on the particle's spin $ s $. The above two wavefunctions, which are written in the total angular momentum basis $ \ket{sm_{s}} $, form a complete basis of the Hilbert space of free scattering states. In the remainder of the problem, we will use these basis states to construct the initial and final scattering states in our specific problem. 
 	
@@ -3445,7 +3458,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\begin{equation*}
 		\ket{\psi_{\text{in}}} = e^{ikx} \ket{\ua} \ket{0}
 	\end{equation*}
-	Note that this wavefunction is written in the product basis---it is the product of the first particle's spin state $ \ket{\ua} $ and the second particle's spin state $ \ket{0} $. However, the above eigenfunctions $ \bket{\psi^{(s)}_{-}} $ and $ \bket{\psi^{(s)}_{+}} $ spanning the Hilbert space of free scattering are written in the total angular momentum basis.
+	Note that this wavefunction is written in the product basis---it is the product of the first particle's spin state $ \ket{\ua} $ and the second particle's spin state $ \ket{0} $. However, the above eigenfunctions $ \bket{\psi_{\text{b}}^{-}} $ and $ \bket{\psi_{\text{b}}^{+}} $ spanning the Hilbert space of free scattering are written in the total angular momentum basis.
 	
 	At this point, we need a way to transform the initial state from the product basis to the total angular momentum basis---we make the transformation using the Clebsch-Gordan (CG) coefficients.
 \end{itemize}	
@@ -3477,17 +3490,17 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	
 	\item Recall the basis scattering states on the region $ x < 0 $ are
 	\begin{equation*}
-		\ket{\psi_{-}} = \left(e^{ik x} + r_{s}e^{-ik x}\right)\ket{sm_{s}},
+		\bket{\psi_{\text{b}}^{-}} = \left(e^{ik x} + r_{s}e^{-ik x}\right)\ket{sm_{s}},
 	\end{equation*}
 	while the second set of basis states, for the region $ x > 0 $, are
 	\begin{equation*}
-		\ket{\psi_{+}} = t_{s} e^{ikx}\ket{sm_{s}}
+		\bket{\psi_{\text{b}}^{+}} = t_{s} e^{ikx}\ket{sm_{s}}
 	\end{equation*}
 	Both scattering state basis functions are written the basis $ \ket{sm_{s}} $.
 	
 	\item Our next step is to construct our specific scattering problem's wavefunctions on the regions $ x < 0 $ and $ x > 0 $ using the using the above basis functions. 
 	
-	To do this, we first note that the incident state $ \ket{\psi_{\text{in}}} $ contains the state $ \ket{\tfrac{3}{2}\tfrac{1}{2}} $ with coefficient $ \sqrt{\tfrac{2}{3}} $, and the state $ \ket{\tfrac{1}{2}\tfrac{1}{2}} $ with coefficient $ -\sqrt{\tfrac{1}{3}} $. We thus construct the wavefunction $ \ket{\psi_{-}} $, which describes the particle on the region $ x < 0 $, from a linear combination of the basis state $ \bket{\psi_{-}} $ with $ \ket{sm_{s}} = \ket{\tfrac{3}{2}\tfrac{1}{2}} $ weighted by $  \sqrt{\tfrac{2}{3}}  $, and the basis state $ \bket{\psi_{-}} $ with $ \ket{sm_{s}} = \ket{\tfrac{1}{2}\tfrac{1}{2}}  $ weighted by $ -\sqrt{\tfrac{1}{3}}  $. The result is 
+	To do this, we first note that the incident state $ \ket{\psi_{\text{in}}} $ contains the state $ \ket{\tfrac{3}{2}\tfrac{1}{2}} $ with coefficient $ \sqrt{\tfrac{2}{3}} $, and the state $ \ket{\tfrac{1}{2}\tfrac{1}{2}} $ with coefficient $ -\sqrt{\tfrac{1}{3}} $. We thus construct the wavefunction $ \ket{\psi_{-}} $, which describes the particle on the region $ x < 0 $, from a linear combination of the basis state $ \bket{\psi_{\text{b}}^{-}} $ with $ \ket{sm_{s}} = \ket{\tfrac{3}{2}\tfrac{1}{2}} $ weighted by $  \sqrt{\tfrac{2}{3}}  $, and the basis state $ \bket{\psi_{\text{b}}^{-}} $ with $ \ket{sm_{s}} = \ket{\tfrac{1}{2}\tfrac{1}{2}}  $ weighted by $ -\sqrt{\tfrac{1}{3}}  $. The result is 
 	\begin{equation*}
 		\ket{\psi_{-}} = \sqrt{\frac{2}{3}}\left(e^{ikx} + r_{3/2}e^{-ikx}\right)\ket{\frac{3}{2}\frac{1}{2}} - \sqrt{\frac{1}{3}}\left(e^{ikx} + r_{1/2}e^{-ikx}\right)\ket{\frac{1}{2}\frac{1}{2}}
 	\end{equation*}
