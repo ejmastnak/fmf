@@ -1,0 +1,2878 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{mwe}
+\usepackage[margin=3.5cm]{geometry}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{esint} % various fancy integral symbols
+\usepackage{bm} % for bold vectors in math mode
+\usepackage{physics} % many useful physics commands
+\usepackage{xcolor}  % to color hyperref links
+\usepackage[colorlinks = true, allcolors=blue]{hyperref}
+
+\setlength{\parindent}{0pt} % to stop indenting new paragraphs
+\newcommand{\eqtext}[1]{\qquad \text{#1} \qquad}
+
+
+\newcommand{\diff}{\mathop{}\!\mathrm{d}} % differential
+\DeclareDocumentCommand\vnabla{}{\nabla} % so vector operators are not bold
+
+\newcommand{\R}{\mathbb{R}} % shorthand for the real numbers
+\newcommand{\F}{\mathbb{F}} % shorthand for scalars
+\newcommand{\C}{\mathbb{C}} % shorthand for the complex numbers
+
+
+\pdfinfo{
+	/Title (Matematika 3 Lecture Notes)
+	/Author (Elijan Mastnak)
+	/Subject (Mathematics)
+}
+
+
+\begin{document}
+\title{Matematika 3 Lecture Notes}
+\author{Elijan Mastnak}
+\date{2019-2020 Winter Semester}
+\maketitle
+
+
+\begin{center}
+\textbf{About These Notes}
+\end{center}
+These are my lecture notes from course \textit{Matematika 3} (Mathematics 3), a required course second-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. The exact material herein is specific to the physics program at the University of Ljubljana, but the content is fairly standard for an undergraduate-level course covering multivariable calculus, vector analysis, and ordinary differential equations. The course also includes an introduction to Hilbert spaces and a foundation for Fourier analysis. I am making the notes publicly available in the hope that they might help others learning the same material.
+
+\vspace{2mm}
+\textit{Navigation}: For easier document navigation, the table of contents is ``clickable'', meaning you can jump directly to a section by clicking the colored section names in the table of contents. Unfortunately, \textit{the clickable links do not work in most online or mobile PDF viewers}; you have to download the file first.
+
+
+\vspace{2mm}
+\textit{On Authorship:} These lecture were given by Professor Oliver Dragi\v{c}evi\'{c}, who accordingly deserves credit for the content herein. I have merely typeset the notes and provided additional comments where I saw fit.
+
+\vspace{2mm}
+\textit{Disclaimer:} Mistakes---both trivial typos and legitimate errors---are likely. Keep in mind that these are the notes of an undergraduate student in the process of learning the material himself---take what you read with a grain of salt. If you find mistakes and feel like telling me, by \href{https://github.com/ejmastnak/fmf}{\underline{Github}} pull request, \href{mailto:ejmastnak@gmail.com}{\underline{email}} or some other means, I'll be happy to hear from you, even for the most trivial of errors.
+
+ \newpage
+
+\tableofcontents
+
+\newpage
+
+\section{Parameter-Dependent Integrals}
+
+\subsection{Introduction to Parameter-Dependent Integral}
+
+\subsubsection{Definition: Parameter-Dependent Integrals}
+Let $ a, b, c, d \in \mathbb{R}$ be real numbers and let $ f : [a, b] \cross [c, d] \rightarrow \mathbb{R}$ be an integrable scalar function of two variables. The parameter-dependent integral $ F $ is the scalar function $ F : [c, d] \rightarrow \mathbb{R} $ defined by 
+\begin{equation*}
+F(t) = \int_{a}^{b}f(x, t) \diff x
+\end{equation*}
+where the variable $ t $ is called the parameter.
+
+
+
+\subsubsection{Proposition: Continuity of Parameter-Dependent Integrals}
+Let $ a, b, c, d \in \mathbb{R}$ be real numbers and $ f : [a, b] \cross [c, d] \rightarrow \mathbb{R}$ be a continuous function. In this case, the function $ F : [c, d] \rightarrow \mathbb{R} $ defined by 
+\begin{equation*}
+F(t) = \int_{a}^{b}f(x, t) \diff x
+\end{equation*}
+is also continuous.
+
+
+\subsubsection{Proposition: Differentiability of Parameter-Dependent Integrals I}
+Let $ f(x, t) : P = [a, b] \cross [c, d] \rightarrow \mathbb{R}$ be a continuous function and continuously differentiable with respect to the second variable (i.e. $ \pdv{f}{t} $ is continuous everywhere on $ P $). In this case, the function 
+\begin{equation*}
+F(t) = \int_{a}^{b}f(x, t) \diff x
+\end{equation*}
+is differentiable on $ [c, d] $ and
+\begin{equation*}
+F'(t) = \int_{a}^{b}\pdv{f}{t} (x, t) \diff x
+\end{equation*}
+
+\subsubsection{Proposition: Differentiability of Parameter-Dependent Integrals II}
+This proposition extends the previous one to include functions in the limits of the integral. Let $ f(x, t) : P = [a, b] \cross [c, d] \rightarrow \mathbb{R}$ be a continuous function and continuously differentiable with respect to the second variable (i.e. $ \pdv{f}{t} $ exists everywhere on $ P $). Also, let $ \alpha, \beta : [c, d] \rightarrow [a, b] $ be two differentiable functions. In this case, the function 
+\begin{equation*}
+F(t) \coloneqq \int_{\alpha(t)}^{\beta(t)}f(x, t) \diff x
+\end{equation*}
+is differentiable on $ [c, d] $ and
+\begin{equation*}
+F'(t) = \dv{F(t)}{t} = \int_{\alpha(t)}^{\beta(t)}\pdv{f}{t} (x, t) \diff x + f(\beta(t), t)\beta'(t) - f(\alpha(t), t)\alpha'(t)
+\end{equation*}
+
+\subsubsection{Simplified (Restricted) Fubini's Theorem for Double Integration}
+Define the finite constants $ a, b, c, d \in \mathbb{R} $ and let $ f(x, t) : P = [a, b] \cross [c, d] \rightarrow \mathbb{R}$ be a continuous function. Note that the rectangle $ P $ on which $ f $ is defined is bounded. In this case
+\begin{equation*}
+\int_{a}^{b}\left(\int_{c}^{d} f(x, y) \diff y \right) \diff x = \int_{c}^{d}\left(\int_{a}^{b} f(x, y) \diff x \right) \diff y
+\end{equation*}
+The general form of Fubini's theorem, given later in this section, extends to functions with an unbounded domain.
+
+
+
+\subsection{Improper Parameter-Dependent Integrals}
+
+\subsubsection{Definition: Uniform Convergence of an Improper Parameter-Dependent Integral}
+Let $ f: [a, \infty) \cross [c, d] \rightarrow \mathbb{R}$ be a continuous function. In this case, the parameter-dependent integral
+\begin{equation*}
+	F(t) = \int_{a}^{\infty}f(x,t) \diff x 
+\end{equation*}
+converges uniformly on the interval $ [c, d] $ if for all $ \epsilon > 0  $ there exists $ M_0 \in \R;\ M_0 \geq a $ such that
+\begin{equation*}
+	\abs{\int_{M}^{\infty}f(x,t) \diff x} < \epsilon
+\end{equation*}
+for all $ t \in [c, d] $ and for all $ M > M_0 $.
+
+\subsubsection{Proposition: Condition for Uniform Convergence}
+Let $ f: [a, \infty) \cross [c, d] \rightarrow \mathbb{R}$ be a continuous function. Assume also there exists an integrable function $ \phi : [a, \infty) \cross [0, \infty) $ such that $ \abs{f(x, t)} \leq \phi(x) $ for all $ x \geq a  $ and for all $  t \in [c, d] $. In this case the parameter-dependent integral
+\begin{equation*}
+	F(t) \coloneqq \int_{a}^{\infty} f(x, t) \diff x
+\end{equation*}
+converges uniformly on the interval $ [c, d] $.
+
+\subsubsection{Proposition: Uniform Convergence Implies Continuity}
+Let $ f: [a, \infty) \cross [c, d] \rightarrow \mathbb{R}$ be a continuous function and let the parameter-dependent integral
+\begin{equation*}
+	F(t) \coloneqq \int_{a}^{\infty} f(x, t) \diff x
+\end{equation*}
+converge uniformly on the interval $ [c, d] $. In this case $ F $ is continuous on $ [c, d] $.
+
+\subsubsection{Proposition: Uniform Convergence Implies Integrability}
+Let $ f: [a, \infty) \cross [c, d] \rightarrow \mathbb{R}$ be a continuous function and let the parameter-dependent integral
+\begin{equation*}
+	F(t) \coloneqq \int_{a}^{\infty} f(x, t) \diff x
+\end{equation*}
+converge uniformly on the interval $ [c, d] $. In this case $ F $ is integrable on $ [c, d] $ and
+\begin{equation*}
+\int_{c}^{d}\left(\int_{a}^{\infty} f(x, t) \diff x\right) \diff t = \int_{a}^{\infty}\left(\int_{c}^{d} f(x, t) \diff t\right) \diff x
+\end{equation*}
+
+
+\subsubsection{Example: An Identity for $ \ln(\frac{d}{c}) $ Using Double Integration} 
+Let $ F(t) $ be the parameter-dependent integral given by
+\begin{equation*}
+	F(t) \coloneqq \int_{0}^{\infty} e^{-tx} \diff x \quad \text{where} \quad 0 < t < \infty
+\end{equation*}
+and define the constants $ c, d \in \mathbb{R} $ such that $ 0 < c \leq t \leq d < \infty $. 
+
+Without proof, the $ F $ converges uniformly on $ [c, d] $ by the definition of uniform convergence. Because $ F $ converges uniformly, it is also continuous and integrable on $ [c, d] $. 
+Using analysis techniques from Matematika 1 we can calculate
+\begin{align*}
+	F(t) = \frac{1}{t} && \text{and} && \int_{c}^{d}F(t)\diff t= \int_{c}^{d}\frac{1}{t}\diff t = \ln(t) \Big|^d_c = \ln(\frac{d}{c})
+\end{align*}
+(Because $ t $ is positive, we drop the absolute value in the logarithm). By applying the previous proposition and making use of double integration, we can show that
+\begin{align*}
+\int_{c}^{d}F(t)\diff t &= \int_{c}^{d} \int_{0}^{\infty} e^{-tx} \diff x \diff t = \int_{0}^{\infty} \int_{c}^{d} e^{-tx} \diff t \diff x\\[1.5ex]
+& = \int_{0}^{\infty} \left.\frac{e^{-tx}}{-x} \right |_{t=c}^d \diff x = \int_{0}^{\infty}\frac{e^{-dx} - e^{-cx}}{-x} \diff x\\[1.5ex] 
+& = \int_{0}^{\infty}\frac{e^{-cx} - e^{-dx}}{x} \diff x
+\end{align*}
+Note that in the derivation, we used the indefinite integral identity
+\begin{equation*}
+\int e^{-tx} \diff t = \frac{e^{-tx}}{-x} + C
+\end{equation*}
+It follows from the above discussion that
+\begin{equation*}
+\int_{0}^{\infty}\frac{e^{-cx} - e^{-dx}}{x} \diff x = \ln(\frac{d}{c}) \quad \forall \quad c, d > 0
+\end{equation*}
+
+
+\subsubsection{Theorem: Differentiability of Improper Parameter-Dependent Integrals}
+Let $ f: [a, \infty) \cross [c, d] \rightarrow \mathbb{R}$ be a continuous function such that:
+\begin{enumerate}
+	\item $ f $'s partial derivative with respect to $ t $, given by  $ \pdv{f}{t} : [a, \infty) \cross [c, d] \rightarrow \mathbb{R} $ is continuous on $ [c, d] $.
+	
+	\item For all $ t \in [c, d] $ the function $ F(t) $ given by
+	\begin{equation*}
+	F(t) \coloneqq \int_{a}^{\infty} f(x, t) \diff x
+	\end{equation*}
+	exists. Note that the existence of $ F(t) $ is not necessarily trivial.
+	
+	\item The function $ G(t) $ given by
+	\begin{equation*}
+	G(t) \coloneqq \int_{a}^{\infty} \pdv{f(x, t)}{t} \diff x
+	\end{equation*}
+	converges uniformly on the interval $ [c, d] $.
+\end{enumerate}
+In this case $ F $ is differentiable on $ [c, d] $ and 
+\begin{equation*}
+F'(t) = \dv{F(t)}{t} = G(t)
+\end{equation*}
+or, more thoroughly,
+\begin{equation*}
+\dv{}{t} \int_{a}^{\infty} f(x, t) \diff x = \int_{a}^{\infty}  \pdv{f(x, t)}{t} \diff x
+\end{equation*}
+
+\subsubsection{Theorem: General Form of Fubini's Theorem}
+Define the constants $ a, b, c, d \in \mathbb{R} \cup \{-\infty, \infty\} $ and let $ f $ be a continuous function such that either
+$f(x, t) \geq 0 $ for all $ x, t \in \mathbb{R} $ or
+\begin{equation*}
+	\int_{a}^{b}\int_{c}^{d}\abs{f(x, t)}\diff t \diff x < \infty
+\end{equation*}
+In this case, 
+\begin{equation*}
+	\int_{a}^{b}\int_{c}^{d}\abs{f(x, t)}\diff t 	\diff x = 	\int_{c}^{d}\int_{a}^{b}\abs{f(x, t)}\diff x 	\diff t
+\end{equation*}
+
+\subsubsection{Example: Evaluating the Dirichlet integral}
+We aim to evaluate the Dirichlet integral
+\begin{equation*}
+	I = \int_{0}^{\infty}\frac{\sin x}{x} \diff x
+\end{equation*}
+using double integration and the ideas of the past sections. First, define a new function of $ I(t) $ given by:
+\begin{equation}
+	I(t) \coloneqq \int_{0}^{\infty}\frac{\sin x}{x}e^{-tx} \diff x \label{eq_dirichlet_1}
+\end{equation}
+
+Without proof, we note that for $ t > 0 $ the integral represented by $ I(t) $ converges absolutely, permitting us to differentiate with respect to $ t $ inside the integral for values of $ t > 0$.
+\begin{equation*}
+	I'(t) = \int_{0}^{\infty} \pdv{}{t} \frac{\sin x}{x}e^{-tx} \diff x = - \int_{0}^{\infty} e^{-tx} \sin x  \diff x
+\end{equation*}
+
+Evaluating the integral by parts yields
+\begin{equation*}
+	I'(t) = \left. \frac{e^{-tx}\left(t \sin x + \cos x\right)}{t^2 + 1}  \right|_{x=0}^{x = \infty} = -\frac{1}{t^2 + 1}
+\end{equation*}
+
+Thus
+\begin{align}
+	&I(t) = \int I'(t) = \int -\frac{1}{t^2 + 1} \diff t = -\arctan t + C\nonumber\\
+	&I(t) = -\arctan t + C \label{eq_dirichlet_2}
+\end{align}
+
+From Equation \ref{eq_dirichlet_1} we see that 
+\begin{equation*}
+	\lim_{t\rightarrow \infty}I(t) = 0 
+\end{equation*}
+
+Meanwhile from Equation \ref{eq_dirichlet_2} we see that 
+\begin{equation*}
+	\lim_{t\rightarrow \infty}I(t) = \lim_{t\rightarrow \infty}(-\arctan t + C)
+\end{equation*}
+
+From which follows that 
+\begin{align}
+	&0 = -\frac{\pi}{2} + C\nonumber\\
+	&C = \frac{\pi}{2}\nonumber\\
+	&I(t) = -\arctan t + \frac{\pi}{2}\nonumber\\
+	&I(0) = \frac{\pi}{2} \label{eq_dirichlet_3}
+\end{align}
+
+Referring back to Equation \ref{eq_dirichlet_1}, we also see that
+
+\begin{equation*}
+I(0) = \int_{0}^{\infty}\frac{\sin x}{x}e^{-(0)x} \diff x =  \int_{0}^{\infty}\frac{\sin x}{x} \diff x
+\end{equation*}
+
+Plugging in the value from Equation \ref{eq_dirichlet_3} gives
+\begin{equation*}
+	\int_{0}^{\infty}\frac{\sin x}{x} \diff x = \frac{\pi}{2}
+\end{equation*}
+
+Note, again without proof, that because of the uniform convergence of $ I(t) $ on a small interval $ [0, \tau), \tau > 0$ around $t = 0 $ we are justified in extending our derivation of $ I = \frac{\pi}{2} $ from values of $ t > 0 $ to value of $ t \geq 0 $.
+
+
+\subsubsection{Note: Weierstrass Test for Uniform Convergence}
+Let $ [c, d] \in \mathbb{R}$ be finite constants such that $ c < d $ and let $ F(y) $ be the function given by:
+\begin{equation*}
+	F(y) = \int_{a}^{\infty}f(x, y)\diff x \quad y \in [c, d]
+\end{equation*} 
+More so, let $ W: [a, \infty] \rightarrow [0, \infty] $ be a non-negative function of $ x $ such that the improper integral
+\begin{equation*}
+	\int_{0}^{\infty} W(x) \diff x
+\end{equation*}
+converges. In this case, if
+\begin{equation*}
+	\abs{f(x, y)} \leq W(x) \quad \forall \quad y \in [c, d]
+\end{equation*}
+then $ F(y) $ converges uniformly for all $ y \in [c, d] $.
+
+\subsection{The Gamma and Beta Functions}
+
+\subsubsection{Definition of the Gamma Function}
+For $ t > 0 $ we define the gamma function $ \Gamma $ as:
+\begin{equation*}
+	\Gamma(t) \coloneqq \int_{0}^{\infty}x^{t-1}e^{-x}\diff x
+\end{equation*}
+The gamma function is locally uniformly convergent for all $ x $ in the interval $ (0, \infty) $.
+
+\subsubsection{Properties of the Gamma Function}
+\begin{enumerate}
+	\item The gamma function is a smooth function, meaning all of its derivatives with respect to $ t $ are continuous functions i.e. $ \Gamma \in C^{\infty} $
+	
+	\item $ \Gamma(1) = 1 $ \qquad $ \Gamma \left( \frac{1}{2}\right) = \sqrt{\pi}$
+	
+	\item 
+	\begin{equation*}
+		\Gamma(t+1) = \int_{0}^{\infty} x^t e^{-x} \diff x = -x^t e^{-x} \Big|_{x=0}^{x=\infty} + t\int_{0}^{\infty}x^{t-1}e^{-x} \diff x = t\,\Gamma(t)
+	\end{equation*}
+	
+	\item It follows from $ \Gamma(t+1) = t\,\Gamma(t) $ that $ \Gamma(1) = 1 $ that:
+	\begin{align*}
+		&\Gamma(2) = 1 \cdot \Gamma(1) = 1\\
+		&\Gamma(3) = 2 \cdot \Gamma(2) = 2\\
+		&\Gamma(4) = 3 \cdot \Gamma(3) = 6\\
+		&\;\,\qquad\vdots\\ % hacky way to align vdots with equals
+		&\Gamma(n) = (n-1)! \quad \forall \quad n\in\mathbb{N}^+
+	\end{align*}
+	
+\end{enumerate}
+
+
+
+
+\subsubsection{Definition of the Beta Function}
+For real numbers $ p, q > 0 $ we define the beta function $ B $ as
+\begin{equation*}
+	B(p, q) \coloneqq \int_{0}^{1}x^{p-1}(1-x)^{q-1}\diff x
+\end{equation*}
+
+\subsubsection{Proposition: Trigonometric Definition of the Beta Function}
+For all real numbers $ \alpha, \beta > 0 $, we can alternatively define the beta function with the relationship:
+\begin{equation*}
+	\frac{1}{2}B \left (\frac{\alpha}{2}, \frac{\beta}{2} \right ) = \int_{0}^{\pi/2} \left(\sin x\right)^{\alpha - 1} \left(\cos x\right)^{\beta - 1} \diff x
+\end{equation*}
+or equivalently
+\begin{equation*}
+	B(p, q) = 2\int_{0}^{\pi/2} \left(\sin x\right)^{2p - 1} \left(\cos x\right)^{2q - 1} \diff x
+\end{equation*}
+
+\subsubsection{Proposition: Identity for the Beta Function}
+\begin{equation*}
+	B(p, q) = \int_{0}^{\infty}\frac{u^{p-1}}{(1+u)^{p+q}}\diff y
+\end{equation*}
+Proof: By applying the change of variables 
+\begin{align*}
+	&x = \frac{u}{1+u} \qquad 1-x = \frac{1}{1+u} \qquad \diff x = \frac{\diff u}{1+u}\\
+	&u(x=0) = 0 \qquad u(x=1) = \infty
+\end{align*}
+to the definition of the beta function we obtain
+\begin{align*}
+B(p, q) &= \int_{0}^{1}x^{p-1}(1-x)^{q-1}\diff x = \int_{0}^{\infty}\frac{u^{p-1}}{(1+u)^{p-1}}\frac{1}{(1+u)^{q-1}}\frac{1}{(1+u)^{2}}\\[1.5ex]
+&=\int_{0}^{\infty}\frac{u^{p-1}}{(1+u)^{(p-1) + (q-1) + 2}} = \int_{0}^{\infty}\frac{u^{p-1}}{(1+u)^{p+q}}\diff y
+\end{align*}
+
+\subsubsection{Theorem: Relationship Between the Gamma and Beta Function}
+The gamma and beta functions are related by the relationship:
+\begin{equation*}
+	B(p, q) = \frac{\Gamma(p)\Gamma(q)}{\Gamma(p+q)}
+\end{equation*}
+
+\subsubsection{Consequence: The Identity $ \Gamma(1/2) = \sqrt{\pi} $}
+Applying the above theorem with $ p = q = 1/2 $ and referring to the trigonometric definition of the beta function we obtain
+\begin{align*}
+	\frac{\Gamma(\frac{1}{2})\Gamma(\frac{1}{2})}{\Gamma(1)} &= B\left(\frac{1}{2}, \frac{1}{2}\right) = 2\int_{0}^{\pi / 2}(\sin x)^{(2 \frac{1}{2} - 1)}(\cos x)^{(2 \frac{1}{2} - 1)} \diff x \\[1.5ex]
+	& = 2 \int_{0}^{\pi / 2}\diff x = 2 \left(\frac{\pi}{2} \right)= \pi
+\end{align*}
+It follows that
+\begin{align*}
+	&\frac{\Gamma(\frac{1}{2})\Gamma(\frac{1}{2})}{\Gamma(1)} = \left(\Gamma\left(\frac{1}{2}\right)\right)^2= \pi\\[1.5ex]
+	&\Gamma(1/2) = \sqrt{\pi}
+\end{align*}
+Without proof, a more general identity is
+\begin{equation*}
+	B(p, 1-p) = \Gamma(p)\Gamma(1-p) = \frac{\pi}{\sin(p\pi)}
+\end{equation*}
+
+\subsubsection{Theorem: Stirling's Formula}
+Stirling's formula gives a good approximation for the factorial function and provides a measure of the approximation's accuracy. Additionally, Stirling's formula generalizes the factorial function from the positive integers to the positive real numbers.
+
+\begin{equation*}
+	\lim_{x\rightarrow \infty} \frac{x!}{\left(\frac{x}{e}\right)^x \sqrt{x}} = \sqrt{2\pi}
+\end{equation*}
+so
+\begin{equation*}
+	x! = \Gamma(x + 1) \sim \left(\frac{x}{e}\right)^x\sqrt{2\pi x}
+\end{equation*}
+
+\newpage
+
+\section{Multiple Riemann Integration}
+
+\subsection{Introduction to Riemann Integrability}
+
+\subsubsection{Definition: Partition of a Rectangle $ P $}
+Let $ P $ be a rectangle defined by 
+\begin{equation*}
+	P \coloneqq [a, b] \cross [c, d] \in \mathbb{R}^2
+\end{equation*}
+and $ f : P \rightarrow [0, \infty)$ be a bounded, continuous function.
+
+To form a partition of $ P $, we split the interval $ [a, b] $ into $ n $ parts given by $ a = x_0 < x_1 < \dots < x_{n-1} < x_n = b $ and split the interval $ [c, d] $ into $ m $ parts given by $ c = y_0 < y_1 < \dots < y_{m-1} < y_m = d $. Next, we create an arbitrary rectangle $ P_{jk} $, which is a sub-rectangle of P, defined by
+\begin{equation*}
+	P_{jk} \coloneqq [x_{j-1}, x_j] \cross [y_{k-1}, y_k] \quad  \quad 
+\end{equation*}
+
+In this case, $ D = \{P_{jk}; j \in \{1, \dots, n \} \, k \in \{1, \dots, m \}\} $, the set of all sub-rectangles $ P_{jk} $, is a partition of $ P $.
+
+\subsubsection{Definition: Upper and Lower Sums}
+Let $ P $ be a rectangle defined by 
+\begin{equation*}
+	P \coloneqq [a, b] \cross [c, d] \in \mathbb{R}^2
+\end{equation*}
+and $ f : P \rightarrow [0, \infty)$ be a bounded function and let $ D $ be a partition of $ P $.
+
+Let	$ m_{jk} = \inf f(x,y), \, (x, y) \in P_{jk} $, written shorthand as $ \inf_{P_{jk}}f $, be the infimum of $ f $ on the rectangle $ P_{jk} $ and let $ M_{jk} = \sup f(x,y), \, (x, y) \in P_{jk} $, written shorthand as $ \sup_{P_{jk}}f $, be the supremum of $ f $ on the rectangle $ P_{jk} $. In this case the lower and upper sums of $ f $ on the partition $ D $, denoted by $ s(f, D) $ and $ S(f, d) $ respectively, are:
+\begin{align*}
+	s(f, D) \coloneqq \sum_{j, k}^{} m_{jk} A\left(P_{jk}\right)\\
+	S(f, D) \coloneqq \sum_{j, k}^{} M_{jk} A\left(P_{jk}\right)
+\end{align*}
+where $ A\left(P_{jk}\right) $ denotes the area of the rectangle $ P_{jk} $.
+
+\subsubsection{Definition: Riemann Sum}
+Let $ P $ be a rectangle defined by $P \coloneqq [a, b] \cross [c, d] \in \mathbb{R}^2 $, let $ f : P \rightarrow [0, \infty)$ be a bounded function, and let $ D $ be an arbitrary partition of $ P $. 
+
+Next, for each sub-rectangle $ P_{jk} $ we choose a point $ \xi_{jk} \in  P_{jk}  $ inside the rectangle, and let $ \xi \coloneqq \{ \xi_{jk}; \, j, k\} $ be the set of all such points $ \xi_{jk} $. In this case, the Riemann sum of $ f $ for the partition $ D $ and set of points $ \xi $, denoted by $ R(f, D, \xi) $, is defined as:
+\begin{equation*}
+	R(f, D, \xi) \coloneqq \sum_{j, k}f(\xi_{jk})A\left(P_{jk}\right)
+\end{equation*}
+where $ A\left(P_{jk}\right) $ denotes the area of the rectangle $ P_{jk} $.
+
+\subsubsection{Proposition: Effect of Refinement on Upper and Lower Sums}
+Let $ P $ be a rectangle defined by $P \coloneqq [a, b] \cross [c, d] \in \mathbb{R}^2 $, let $ f : P \rightarrow [0, \infty)$ be a bounded function, and let $ D $ and $ D' $ be partitions of $ P $ such that $ D'$ is finer than $ D $. In this case,
+\begin{equation*}
+	s(f, D) \leq s(f, D') \leq S(f, D') \leq S(f, D)
+\end{equation*}
+In other words, refinement of a partition causes the upper and lower sums $ S $ and $ s $ to become closer together in value.
+
+\subsubsection{Consequence: Relationship Between Upper and Lower Sums}
+Let $ P $ be a rectangle defined by $P \coloneqq [a, b] \cross [c, d] \in \mathbb{R}^2 $, let $ f : P \rightarrow [0, \infty)$ be a bounded function, and let $ D_1 $ and $ D_2 $ be arbitrary partitions of $ P $. In this case,
+\begin{equation*}
+	s(f, D_1) \leq S(f, D_2)
+\end{equation*}
+In other words, every lower sum $ s $ is less than or equal to every upper sum $ S $, regardless of partition.
+Proof:
+Let $ D' $ be a finer partition than both $ D_1 $ and $ D_2 $. Applying the above proposition, we see that:
+\begin{equation*}
+	s(f, D_1) \leq s(f, D') \leq S(f, D') \leq S(f, D_2)
+\end{equation*}
+so $ s(f, D_1) \leq S(f, D_2) $.
+
+\subsubsection{Definition: Riemann Integrability}
+Let $ P $ be a rectangle defined by $P \coloneqq [a, b] \cross [c, d] \in \mathbb{R}^2 $, let $ f : P \rightarrow [0, \infty)$ be a bounded function, and let $ D $ be an arbitrary partition of $ P $. 
+
+More so, let $ s(f) \coloneqq \sup_D s(f, D) $ and $ S(f) \coloneqq \inf_D S(f, D) $ be the largest lower sum and smallest upper sum, respectively, of $ f $ over all possible partitions $ D $. In this case, $ f $ is Riemann-integrable if
+\begin{equation*}
+	s(f) = S(f) \quad \text{(condition for Riemann integrability)}
+\end{equation*}
+
+Epsilon-delta definition:
+$ f $ is Riemann-integrable on the rectangle $ P $ if for each $ \epsilon > 0 $ there exists $ \delta > 0 $ such that for each partition $ D $ of $ P $ where the area of each partition $ A(D_{jk}) < \delta $ for each $ j, k $ it follows that for each point $ \xi_{jk} \in D_{jk} $ forming the set $ \xi = \{\xi_{jk}; j \, , k \} $ the Riemann sum
+\begin{equation*}
+ \abs{R(f, D, \xi) - I} < \epsilon
+\end{equation*}
+
+\subsubsection{Definition: Riemann Sum}
+Let $ P $ be a rectangle defined by $P \coloneqq [a, b] \cross [c, d] \in \mathbb{R}^2 $, let $ f : P \rightarrow [0, \infty)$ be a bounded function, and let $ D $ be an arbitrary partition of $ P $. 
+
+If $ f $ is Riemann-integrable by the previous definition, the $ s(f) = S(f) $ are $ f $'s Riemann sum on the partition $ D $. It follows that Riemann integrability on a partition implies the existence of the Riemann sum on that partition. 
+
+If $ f $ is Riemann-integrable on the partition $ D $ of the rectangle $ f $, we write the Riemann integral as
+\begin{equation*}
+	\iint_P f(x, y)\diff x \diff y \quad \text{or more concisely} \quad \iint_P f \diff S
+\end{equation*}
+
+Note: For the remainder of this chapter, integrability is assumed to mean Riemann-integrability.
+
+\subsubsection{Lemma: Condition for Integrability}
+Let $ P $ be a rectangle defined by $P \coloneqq [a, b] \cross [c, d] \in \mathbb{R}^2 $, let $ f : P \rightarrow [0, \infty)$ be a bounded function, and let $ D $ be an arbitrary partition of $ P $. In this case, $ f $ is integrable on $ P $ if for each $ \epsilon > 0 $ there exists partition $ D $ of $ P $ such that
+\begin{equation*}
+	S(f, D) - s(f, D) < \epsilon
+\end{equation*}
+
+\subsubsection{Theorem: Continuity Implies Integrability}
+Let $ P $ be a rectangle defined by $P \coloneqq [a, b] \cross [c, d] \in \mathbb{R}^2 $ and let $ f : P \rightarrow [0, \infty)$ be a bounded function. In this case, if $ f $ is continuous, $ f $ is also integrable.
+
+\subsubsection{Theorem: Properties of Integrable Functions}
+Let $ P $ be a rectangle defined by $P \coloneqq [a, b] \cross [c, d] \in \mathbb{R}^2 $ and let $ f, g : P \rightarrow [0, \infty)$ be integrable functions. In this case:
+\begin{enumerate}
+	\item The function $ f + g $ is integrable.
+	\item The function $ cf $ is integrable for each $ c \in \mathbb{R} $.
+\end{enumerate}
+Additionally, if $ f \leq g $ for all $ x, y \in P$ then
+\begin{equation*}
+	\iint_P f(x, y) \diff x \diff y \leq \iint_P g(x, y) \diff x \diff y 
+\end{equation*}
+Finally, assuming $ f $ is integrable, $ \abs{f} $ is also integrable and
+\begin{equation*}
+	\abs{\iint_P f(x, y) \diff x \diff y} \leq \iint_P \abs{f(x, y)} \diff x \diff y
+\end{equation*}
+
+\subsection{Volume}
+
+\subsubsection{Definition: Volume for a Function on a Rectangle in $ \R $}
+Let $ P $ be a rectangle defined by $P \coloneqq [a, b] \cross [c, d] \in \mathbb{R}^2 $ and let $ f : P \rightarrow [0, \infty)$ be a continuous, bounded function. In this case, the volume $ V $ of the three dimensional body bounded by the graph of $ f $, given by the set of points $ \left\{ (x, y, z); (x, y) \in P, 0\leq z \leq f(x, y) \right\} $ is defined as
+\begin{equation*}
+	V = \iint_P f(x, y) \diff x \diff y
+\end{equation*}
+
+\subsubsection{Note: Volume for a Function on a Rectangle in $ \R^n $}
+This proposition generalizes the previous definition to hyper-rectangles of arbitrary dimension. Let $ P \subset \R^n $ be a bounded hyper-rectangle in $ \R^n $ and let $ f : P \rightarrow [0, \infty)$ be a continuous, bounded function. In this case, the volume $ V $ of the body bounded by the graph of $ f $ is defined as
+\begin{equation*}
+	V = \stackrel{n}{\iint \dots \int_{P}} f(x_1, x_2, \dots, x_n) \diff x_1 \diff x_2 \dots \diff x_n
+\end{equation*}
+
+\subsubsection{Proposition: Volume for a Function on an Arbitrary Set}
+Let $ A \subset \mathbb{R}^n $ be an arbitrary bounded subset of $ \mathbb{R}^n $ and let $ P \subset \mathbb{R}^n $ be an arbitrary bounded hyper-rectangle containing $ A $ i.e. $ A \subset P $. More so, let $ f : A\rightarrow [0, \infty)$ be a continuous, bounded function defined on $ A $ and let $ \tilde{f}: P \rightarrow [0, \infty) $ be a generalization of $ f $ given by
+\[ \tilde{f} \coloneqq 
+\begin{cases} 
+	f(x) & x \in A \\
+	0 & x \in P \setminus A 
+\end{cases}
+\]
+In this case, assuming the integrals exist,
+\begin{equation*}
+	\int_A f(x) \diff x = \int_P \tilde{f}(x) \diff x
+\end{equation*}
+where $ x \in \mathbb{R}^n $ is an arbitrary element of $ \mathbb{R}^n $.
+
+\subsubsection{Definition: $ n $-Dimensional Volume}
+By definition, the bounded set $ A \subset \mathbb{R}^n $ has $ n $-dimensional volume if the function $ 1 $ is integrable on A. In this case
+\begin{equation*}
+	V(A) \coloneqq \int_A 1 \diff x
+\end{equation*}
+where $ x \in \mathbb{R}^n $ is an arbitrary element of $ \mathbb{R}^n $.
+
+\subsubsection{Theorem: Condition for $ n $-Dimensional Volume}
+The bounded set $ A \subset \mathbb{R}^n $ has $ n $-dimensional volume if the volume of its boundary, denoted by $ \partial A$, is zero. That is, $ A $ has $ n $-dimensional volume if $ V(\partial A) = 0 $.
+
+\subsubsection{Note: Condition for Zero $ n $-Dimensional Volume}
+The bounded set $ A \subset \mathbb{R}^n $ has $ n $-dimensional volume equal to zero if for each $ \epsilon > 0 $ 
+\begin{enumerate}
+	\item There exist hyper-rectangles $ P_1, P_2, \dots, P_n $ such that the union of the hyper-rectangles contains $ A $ i.e. $ A \subset \bigcup P_j \quad j \in \{1, 2, \dots, n\} $ and
+	\item The sum of the volumes of the hyper-rectangles is less than $\epsilon$, written
+	\begin{equation*}
+		\sum_j V(P_j) < \epsilon
+	\end{equation*}
+\end{enumerate} 
+
+\subsubsection{Proposition: Finite Union of Sets with Zero Volume}
+Any bounded set consisting of a finite union of bounded subsets with $ n $-dimensional volume equal to zero has $ n $-dimensional volume equal to zero. More formally, let $ m \in \mathbb{Z} $ be a finite integer, let
+\begin{equation*}
+ A_1, A_2, \dots, A_m \subset \mathbb{R}^n \quad | \quad V(A_i) = 0
+\end{equation*}
+be $ m $ bounded sets with $ n $-volume equal to zero and let $ A \subset \mathbb{R}^n $ be the bounded set given by 
+\begin{equation*}
+	A = A_1 \cup A_2 \cup \dots \cup A_m 
+\end{equation*}
+In this case $ V(A) = 0 $.
+
+\subsubsection{Proposition: The Graph of a Function Has Zero $ n $-Volume }
+Let $ K \subset \mathbb{R}^n $ be a bounded subset of $ \mathbb{R}^n $ and let $ f : K  \rightarrow \mathbb{R} $ be an integrable function. In this case, the graph $ \mathcal{G}(f) $ of $ f $, given by
+\begin{equation*}
+	\mathcal{G}(f) \coloneqq \{(x, f(x)) \in \mathbb{R}^{n+1};\, x \in K \} \subset \mathbb{R}^n \cross \mathbb{R} \equiv \mathbb{R}^{n+1}
+\end{equation*}
+has zero volume in $ \mathbb{R}^{n+1} $.
+
+\subsubsection{Integral Over a Set with Zero Volume}
+Let $ K \subset \mathbb{R}^n $ be a bounded hyper-rectangle in $ \mathbb{R}^n $, let $ A \subset K $ be a subset of $ K $ such that $ A $ has zero $ n $-volume i.e. $ V(A) = 0$, and let $ f : K \rightarrow \mathbb{R} $ be a bounded function whose restriction to the set $ K \setminus A $ is zero everywhere on its domain, i.e.
+\begin{equation*}
+ \left. f \right|_{K\setminus A} = 0 
+\end{equation*}
+In this case, the integral of $ f $ over the set $ K $ equals zero, i.e.
+\begin{equation*}
+	\int_K f(x) \diff x = 0
+\end{equation*}
+where $ x \in  \mathbb{R}^n $ is an element of $ \mathbb{R}^n $.
+
+\subsubsection{Implication: Integral Over a Set with Zero Volume}
+Let $ K \subset \mathbb{R}^n $ be a bounded hyper-rectangle in $  \mathbb{R}^n $, let $ f : K \rightarrow \mathbb{R} $ be a bounded, integrable function, and let $ A \subset K $ be a subset of $ K $ with zero $ n $-volume, i.e. $ V(A) = 0$. More so, define the function $ \tilde{f} $ given by 
+\[ \tilde{f} = 
+\begin{cases} 
+f(x) & x \in K \setminus A \\
+\phi(x) & x \in A 
+\end{cases}
+\]
+where $ \phi(x) \rightarrow \mathbb{R}$ is an arbitrary bounded function that can take on any finite value in $ \mathbb{R} $. In this case
+\begin{equation*}
+	\int_K f(x) \diff x = \int_K \tilde{f}(x) \diff x 
+\end{equation*}
+where $ x \in  \mathbb{R}^n $ is an element of $ \mathbb{R}^n $.
+
+\subsection{Zero Measure}
+
+\subsubsection{Definition: Set with Zero Measure}
+Let $ A \subset \mathbb{R}^n $	be an arbitrary subset of $ \mathbb{R}^n $, noting that $ A $ is not necessarily bounded. In this case the subset $ A $ has measure zero on $ \mathbb{R}^n $, denoted by $ m(A) = 0 $, if for each $ \epsilon > 0 $ there exist countably many hyper-rectangles $ A_j $ such that	\begin{equation*}
+	A \subset A_1 \cup A_2 \cup \dots \cup A_j 
+\end{equation*}
+and
+\begin{equation*}
+	\sum_j V(A_j) < \epsilon
+\end{equation*}.
+
+\subsubsection{Note: Zero $ n $-Volume Implies Zero Measure}
+Let $ A \subset \mathbb{R}^n $	be an arbitrary subset of $ \mathbb{R}^n $ such that $ A $ has zero $ n $-volume. In this case, the measure of $ A $ on $ \mathbb{R}^n $ is zero. In symbols,
+\begin{equation*}
+	V(A) = 0 \implies m(A) = 0
+\end{equation*}
+
+\subsubsection{Proposition: Union of Sets with Zero Measure}
+Any set consisting of a countable union of subsets with measure zero on $ \mathbb{R}^n $ also has zero measure on $ \mathbb{R}^n $. More formally, let $ m \in \mathbb{Z} \cup \{\infty\} $ be a countable number, let
+\begin{equation*}
+A_1, A_2, \dots, A_m \subset \mathbb{R}^n \quad | \quad m(A_i) = 0
+\end{equation*}
+be $ m $ sets with zero measure on $ \mathbb{R}^n $ and let $ A \subset \mathbb{R}^n $ be the set given by 
+\begin{equation*}
+A = A_1 \cup A_2 \cup \dots \cup A_m 
+\end{equation*}
+In this case $ m(A) = 0 $.
+
+\subsubsection{Theorem: Measure and Integrability}
+Let $ A \subset \mathbb{R}^n $ be a bounded subset of $ \mathbb{R}^n $ and define the function $ f : A  \rightarrow \mathbb{R} $. In this case, $ f $ is integrable on $ A $ if, and only if, the set of all of $ f $'s discontinuities has measure zero on $ \mathbb{R}^n $.
+
+\subsubsection{Note: Almost Everywhere}
+A statement is said to hold \textit{almost everywhere} (abbreviated \textit{a.e.}) on a set $ K \subset \mathbb{R}^n $ if the statement holds everywhere on $ K $ except possibly on a subset of $ K $ with zero measure.
+
+\subsubsection{Proposition: Compact Set and Zero Measure}
+Let $ A  \subset \mathbb{R}^n $ be a subset of $ \mathbb{R}^n $. If $ A $ is compact, then $ A $ having zero measure is equivalent to $ A $ having zero volume.
+\begin{equation*}
+	m(A) = 0 \iff V(A) = 0 \quad \text{($ A $ is compact)}
+\end{equation*}
+
+\subsection{Integrals Over Bounded Sets}
+
+\subsubsection{Theorem: Properties of Integrals Over Bounded Sets}
+Let $ A  \subset \mathbb{R}^n $ be a bounded subset of $ \mathbb{R}^n $, let $ f, g : A \rightarrow \mathbb{R} $ be two bounded functions, and let $ x \in A $ denote an element of $ A \subset \mathbb{R}^n $. In this case:
+\begin{itemize}
+	\item If $ f $ and $ g$ are integrable on $ A $, then $ f + g $ is also integrable on $ A $ and:
+	\begin{equation*}
+		\int_A (f + g)(x)\diff x = \int_A f(x) \diff x + \int_A g(x)\diff x
+	\end{equation*}
+	
+	\item If $ f $ and $ g $ are integrable on $ A $ and $ f \leq g$ for each $ x \in A $ then:
+	\begin{equation*}
+		\int_A f(x) \diff x \leq \int_A g(x) \diff x
+	\end{equation*}
+	
+	\item If $ f $ is integrable on $ A $ then $ \abs{f} $ is also integrable on $ A $ and: 
+	\begin{equation*}
+		\abs{\int_A f(x) \diff x} \leq \int_A \abs{f(x)\diff x}
+	\end{equation*}
+	
+	\item If $ f $ is integrable on $ A $ and has $ A $ has $ n $-volume in $ \mathbb{R}^n $ then:
+	\begin{equation*}
+		\abs{\int_A f(x) \diff x} \leq \sup_{x \in A}  \abs{f(x)} V(A)
+	\end{equation*}
+	
+	\item Let $ A, B \subset  \mathbb{R}^n $ be two bounded subsets of $ \mathbb{R}^n $ such that $ V(A \cap B) = 0 $ and let the function $ f : A \cup B \rightarrow \mathbb{R} $ be bounded and integrable on both $ A $ and $ B $. In this case, the integral of $ f $ over $ A \cup B$ also exists and:
+	\begin{equation*}
+	\int_{A \cup B}f(x) \diff x = \int_A f(x)\diff x + \int_B f(x) \diff x
+	\end{equation*}
+\end{itemize}
+
+\subsubsection{Note: Average Value of a Function on a Set}
+Let $ A  \subset \mathbb{R}^n $ be a bounded subset of $ \mathbb{R}^n $ such that $ V(A) > 0 $ and let $ f : A \rightarrow \mathbb{R} $ be a bounded, integrable function. In this case, the average value $ \bar{f} $ of $ f $ on $ A $ is given by:
+\begin{equation*}
+	\bar{f} = \frac{1}{V(A)}\int_A f(x)\diff x
+\end{equation*}
+
+\subsubsection{Proposition: Integral Over a Set Equal to Zero}
+Let $ A  \subset \mathbb{R}^n $ be a bounded subset of $ \mathbb{R}^n $ and let $ f : A \rightarrow [0, \infty)$ be a function such that
+\begin{equation*}
+	\int_A f(x) \diff x = 0
+\end{equation*}
+In this case $ f(x) = 0$ almost everywhere on $ A $.
+
+\subsubsection{Theorem: Fubini's Theorem III}
+Let $ P = [a, b] \cross [c, d] \in \mathbb{R}^2 $ be a rectangle in $ \mathbb{R}^2 $, let $ f : P \rightarrow \mathbb{R} $ be an integrable function, and let $ f(x, \bullet) : [c, d] \rightarrow \mathbb{R} $ mapping $ y \mapsto f(x, y)$ be integrable on $ [c, d] $ for each $ x \in [a, b] $. In this case:
+\begin{equation*}
+	\iint_P f(x, y)\diff x \diff y = \int_{a}^{b} \int_{c}^{d} f (x, y) \diff y \diff x
+\end{equation*}
+
+
+\subsubsection{Implication: Iterated Integral Over a Rectangle in $ \mathbb{R}^2 $}
+Let $ P = [a, b] \cross [c, d] \in \mathbb{R}^2 $ be a rectangle in $ \mathbb{R}^2 $, let $ f : P \rightarrow \mathbb{R} $ be an integrable function, and let $ f(x, \bullet) : [c, d] \rightarrow \mathbb{R} $ mapping $ y \mapsto f(x, y)$ be integrable on $ [c, d] $ for each $ x \in [a, b] $. If $ f $ is continuous on $ P $, then: 
+\begin{equation*}
+ \int_{c}^{d} \int_{a}^{b} f (x, y) \diff x \diff y = \iint_P f(x, y)\diff x \diff y = \int_{a}^{b} \int_{c}^{d} f (x, y) \diff y \diff x
+\end{equation*}
+
+\subsubsection{Proposition: Iterated Integral Over an Arbitrary Set in $ \mathbb{R}^2 $}
+Let $\alpha, \beta: [a, b] \rightarrow \mathbb{R}$ be two continuous functions such that $ \alpha(x) < \beta(x)  $ for each $ x \in [a, b] $, let $ A \subset \mathbb{R} $ be the set given by:
+\begin{equation*}
+	A = \{(x, y) \in \mathbb{R}^2 \quad | \quad a \leq x \leq b, \, \alpha(x) \leq y \leq \beta(x)  \}
+\end{equation*}
+and let $ f: A \rightarrow \mathbb{R} $ be a continuous function. In this case
+\begin{equation*}
+	\iint_A f(x, y)\diff x \diff y = \int_{a}^{b} \int_{\alpha(x)}^{\beta(x)}f(x, y)\diff y \diff x
+\end{equation*}
+
+\subsubsection{Theorem: Iterated Integral Over a Hyper-Rectangle in $ \mathbb{R}^3 $}
+Let $ K = [a_1, b_1] \cross [a_2, b_2] \cross [a_1, b_2] \in \mathbb{R}^3 $ be a hyper-rectangle in $ \mathbb{R}^3 $, let $ f : K \rightarrow \mathbb{R} $ be a continuous function, and let $ P = [a_1, b_1] \cross [a_2, b_2] \subset \mathbb{R}^2 $. In this case: 
+\begin{align*}
+\iiint_K f(x, y, z)\diff x \diff y \diff z &= \iint_P \left(\int_{a_3}^{b_3}f(x, y, z)\diff z \right) \diff x \diff y \\[1.5ex]
+&= \int_{a_1}^{b_1} \int_{a_2}^{b_2} \int_{a_3}^{b_3} f(x, y, z) \diff z \diff y \diff x
+\end{align*}
+
+\subsubsection{Proposition: Iterated Integral Over an Arbitrary Set in $ \mathbb{R}^3 $}
+Let $ A \in \mathbb{R}^2 $ be a set in $ \mathbb{R} $ with definite area, let $ \alpha, \beta : A \rightarrow \mathbb{R} $ be two continuous functions such that $ \alpha (x, y) < \beta(x, y) $ for each $ (x, y) \in A$, let $ B \subset \mathbb{R}^3 $ be the set given by:
+\begin{equation*}
+	B = \{(x, y, z) \in A \cross \mathbb{R} \quad | \quad \alpha(x, y) \leq z \leq \beta(x, y)  \}
+\end{equation*}
+and let $ f : B \rightarrow \mathbb{R}$ be a continuous function. In this case:
+\begin{equation*}
+	\iiint_B f(x, y, z)\diff x \diff y \diff z = \iint_A \left(\int_{\alpha(x, y)}^{\beta (x, y)}f(x, y, z)\diff z \right) \diff x \diff y
+\end{equation*}
+
+\subsubsection{Example: Iterated Integral in $ \mathbb{R}^3 $}
+Let $ T: \mathbb{R}^3 $ be the 3-dimensional body bounded by the planes $ x = 0 $, $ y = 0 $ and $ z = 2 $, and by the elliptic paraboloid $ z = x^2 + y^2 $, such that $ T $ is located in the first octant i.e. $ (x, y, z) \geq 0 $. The problem is to calculate the integral
+\begin{equation*}
+	I = \iiint_T x \diff x \diff y \diff z
+\end{equation*}
+We will solve the problem by recursively reducing the degree of the iterated integral. First, to convert the triple integral into a double integral, we define the set $ \Omega \in \mathbb{R}^2 $ such that 
+\begin{equation*}
+	\Omega = \text{pr}_{\mathbb{R}^2}^{\perp}(T)
+\end{equation*}
+is the orthogonal projection of the set $ T $ onto the Cartesian plane $ \mathbb{R}^2 $ (i.e. the $ xy $ plane). We see that 
+\begin{equation*}
+	\Omega = \left\{(x, y) \in \mathbb{R}^2 \, | \, x, y \geq 0 \quad \text{and} \quad x^2 + y^2 \leq 2  \right\}
+\end{equation*}
+Our original triple integral becomes
+\begin{align*}
+	I &= \iiint_T x \diff x \diff y \diff z = \iint_{\Omega} \left(\int_{z = x^2 + y^2}^{2} x \diff z\right) \diff x \diff y\\[1.5ex]
+	&= \iint_{\Omega} \left(2x - x^3 - xy^2\right) \diff x \diff y
+\end{align*}
+Next, we simplify the double integral over $ \Omega $ and apply the substitution $ u = 2 - x^2 $ to obtain
+\begin{align*}
+	I &= \iint_{\Omega} \left(2x - x^3 - xy^2\right) \diff x \diff y = \int\left( \int_{y = 0}^{\sqrt{2 - x^2}} \left(2x - x^3 - xy^2\right) \diff y\right) \diff x\\[1.5ex]
+	&=\int_{0}^{\sqrt{2}}  \frac{2}{3}(2-x^2)^{\frac{3}{2}} x \diff x \stackrel{\left(u = 2-x^2\right)}{=} \frac{1}{3}\int_{0}^{2} u^{\frac{3}{2}} \diff u = \frac{8\sqrt{2}}{15}
+\end{align*}
+
+\subsubsection{Definition: Jacobian Matrix and Determinant}
+Let $ A \subset \mathbb{R}^n $ be an open, bounded set with definite volume and let $ \bm{\Phi}: A \rightarrow \mathbb{R}^n $ be a vector-valued function of differentiability class $ C^{1} $ with $ n $ scalar components
+\begin{equation*}
+	\bm{\Phi} = \left(\Phi_1, \dots, \Phi_n \right) \quad \Phi_i : A \rightarrow \mathbb{R}
+\end{equation*}
+The function $\bm{\Phi}$'s Jacobian matrix $  \mathbf{J_{\bm{\Phi}}}(x) $ at the point $ x \in A $ is the $ n \cross n $ matrix:
+\[
+\mathbf{J_{\bm{\Phi}}}(x) =
+	\begin{bmatrix}
+		\dfrac{\partial \mathbf{\Phi}}{\partial x_1} & \cdots & \dfrac{\partial \mathbf{\Phi}}{\partial x_n} \end{bmatrix}
+= \begin{bmatrix}
+\dfrac{\partial \Phi_1}{\partial x_1} & \cdots & \dfrac{\partial \Phi_1}{\partial x_n}\\
+\vdots & \ddots & \vdots\\
+\dfrac{\partial \Phi_n}{\partial x_1} & \cdots & \dfrac{\partial \Phi_n}{\partial x_n} \end{bmatrix}
+\]
+The function $\bm{\Phi}$'s Jacobian determinant $  \det \left(\mathbf{J_{\Phi}}(x)\right) $ at the point $ x \in A $ is
+\[
+\det (\mathbf{J_{\Phi}}(x))=
+\det \begin{bmatrix}
+\dfrac{\partial \mathbf{\Phi}}{\partial x_1} & \cdots & \dfrac{\partial \mathbf{\Phi}}{\partial x_n} \end{bmatrix}
+= \det \begin{bmatrix}
+\dfrac{\partial \Phi_1}{\partial x_1} & \cdots & \dfrac{\partial \Phi_1}{\partial x_n}\\
+\vdots & \ddots & \vdots\\
+\dfrac{\partial \Phi_n}{\partial x_1} & \cdots & \dfrac{\partial \Phi_n}{\partial x_n} \end{bmatrix}
+\]
+
+\subsubsection{Theorem: Change of Variables for Multiple Integration} \label{theorm:change_of_vars}
+Let $ A \subset \mathbb{R}^n $ be an open, bounded set with definite volume and let $ \bm{\Phi}: A \rightarrow \mathbb{R}^n $ be an injective function of differentiability class $ C^{1} $ such that $ \bm{\Phi} $ has a non-zero Jacobian determinant $ \det(\mathbf{J_{\Phi}}(x)) $ for all $ x \in A $ and the function $ \mathbf{J_\Phi}: x \mapsto \det(\mathbf{J_{\Phi}}(x))$ mapping $ x \in A $ to the Jacobian determinant $ \det(\mathbf{J_{\Phi}}(x)) $ is bounded for all $ x \in A $. If the set $ \bm{\Phi}(A) \subset \mathbb{R}^n $ is open and has definite $ n $-volume, then the function $ f: \bm{\Phi}(A) \rightarrow \mathbb{R} $ is integrable, the function with the mapping $ x \mapsto f(\bm{\Phi}(x)) \, \abs{\det(\mathbf{J_{\Phi}}(x))} $ is integrable, and:
+\begin{equation*}
+	\int_{\bm{\Phi}(A)}f(x)\diff x = \int_A f(\bm{\Phi}(t)) \,\abs{\det(\mathbf{J_{\bm{\Phi}}}(t))} \diff t
+\end{equation*}
+
+\subsection{Integration in Polar, Cylindrical, and Spherical Coordinates}
+
+\subsubsection{Note: Change of Variables to Polar Coordinates}
+Let $ \bm{\Phi} : \mathbb{R}^+ \cross [0, 2\pi) \rightarrow \mathbb{R}^2 $ be the function transforming between polar coordinates $ (r, \phi) $ and Cartesian coordinates $ (x, y) $ with the scalar components:
+\begin{align*}
+	& x(r, \phi) = r \cos\phi\\
+	& y(r, \phi) = r \sin\phi 
+\end{align*}
+
+The corresponding Jacobian matrix $ \mathbf{J}_{\bm{\Phi}} $ for transformation from polar to Cartesian coordinates is
+\[
+\mathbf{J}_{\bm{\Phi}}(r, \phi) = \begin{bmatrix}
+\dfrac{\partial x}{\partial r} & \dfrac{\partial x}{\partial \phi} \\[2.0ex]
+\dfrac{\partial y}{\partial r} & \dfrac{\partial y}{\partial \phi}
+\end{bmatrix} = 
+\begin{bmatrix}
+\cos \phi & -r \sin \phi \\[1.5ex]
+\sin \phi & r \cos \phi
+\end{bmatrix}
+\]
+The Jacobian determinant $ \det \mathbf{J}_{\bm{\Phi}} $ is
+\begin{equation*}
+ \det \mathbf{J}_{\bm{\Phi}} = r \cos^2 \phi + r \sin^2 \phi = r(\cos^2\phi + \sin^2 \phi) = r
+\end{equation*}
+
+If $ A \subset \mathbb{R}^2 $ is an open, bounded set with definite volume and $ f : \mathbb{R}^2 \rightarrow \mathbb{R}  $ is an integrable function, we convert between integration in Cartesian and polar coordinates using the formula:
+\begin{equation*}
+	\iint_{\bm{\Phi}(A)} f(x, y) \diff x \diff y = \iint_{A}f(r \cos \phi, r \sin \phi)\, r \diff r \diff \phi
+\end{equation*}
+
+
+\subsubsection{Note: Change of Variables to Cylindrical Coordinates}
+Let $ \bm{\Phi} : \mathbb{R}^+ \cross [0, 2\pi) \cross \mathbb{R} \rightarrow \mathbb{R}^3 $ be the function transforming between cylindrical coordinates $ (r, \phi, z) $ and Cartesian coordinates $ (x, y, z) $ with the scalar components:
+\begin{align*}
+	& x(r, \phi, z) = r \cos \phi\\
+	& y(r, \phi, z) = r \sin \phi \\
+	& z(r, \phi, z) = z
+\end{align*}
+
+The corresponding Jacobian matrix $ \mathbf{J}_{\bm{\Phi}} $ for transformation from cylindrical to Cartesian coordinates is:
+\[
+\mathbf{J}_{\phi} = 
+\begin{bmatrix}
+	\dfrac{\partial x}{\partial r} & \dfrac{\partial x}{\partial \phi} & \dfrac{\partial x}{\partial z}\\[2.0ex]
+	\dfrac{\partial y}{\partial r} & \dfrac{\partial y}{\partial \phi} & \dfrac{\partial y}{\partial z} \\[2.0ex]
+	\dfrac{\partial z}{\partial r} & \dfrac{\partial y}{\partial \phi} & \dfrac{\partial z}{\partial z}
+	\end{bmatrix} = 
+	\begin{bmatrix}
+	\cos \phi & - r \sin \phi  & 0 \\[1.5ex]
+ \sin \phi & r \cos & 0  \\[1.5ex]
+	0 & 0 & 1
+\end{bmatrix}
+\]
+The Jacobian determinant $ \det \mathbf{J}_{\bm{\Phi}} $ is:
+\begin{equation*}
+\det \mathbf{J}_{\bm{\Phi}} = r(\cos^2\phi + \sin^2 \phi) = r
+\end{equation*}
+If $ A \subset \mathbb{R}^3 $ is an open, bounded set with definite volume and $ f : \mathbb{R}^3 \rightarrow \mathbb{R}  $ is an integrable function, we convert between integration in Cartesian and cylindrical coordinates using the formula:
+\begin{equation*}
+	\iiint_{\bm{\Phi}(A)} f(x, y, z) \diff x \diff y \diff z = \iiint_{A}f\left(r \cos \phi, r \sin \phi, z \right)\, r \diff r \diff \phi \diff z
+\end{equation*}
+
+	
+\subsubsection{Note: Change of Variables to Spherical Coordinates}
+Let $ \bm{\Phi} : \mathbb{R}^+ \cross [0, \pi] \cross [0, 2\pi) \rightarrow \mathbb{R}^3 $ be the function transforming between polar coordinates $ (r, \theta, \phi) $ (where $ \theta  $ is the azimuthal angle and $ \phi $ is the polar angle) and Cartesian coordinates $ (x, y, z) $ with the scalar components:
+\begin{align*}
+	& x(r, \theta, \phi) = r \sin \theta \cos \phi\\
+	& y(r, \theta, \phi) = r \sin \theta \sin \phi \\
+	& z(r, \theta, \phi) = r \cos \theta
+\end{align*}
+
+The corresponding Jacobian matrix $ \mathbf{J}_{\bm{\Phi}} $ for transformation from spherical to Cartesian coordinates is:
+\[
+\mathbf{J}_{\phi} = 
+\begin{bmatrix}
+	\dfrac{\partial x}{\partial r} & \dfrac{\partial x}{\partial \theta} & \dfrac{\partial x}{\partial \phi}\\[2.0ex]
+	\dfrac{\partial y}{\partial r} & \dfrac{\partial y}{\partial \theta} & \dfrac{\partial y}{\partial \phi}\\[2.0ex]
+	\dfrac{\partial z}{\partial r} & \dfrac{\partial z}{\partial \theta} & \dfrac{\partial z}{\partial \phi} 
+\end{bmatrix} = 
+\begin{bmatrix}
+	\sin \theta \cos \varphi & r \cos \theta \cos \varphi & - r \sin \theta \sin \varphi \\
+	\sin \theta \sin \varphi & r \cos \theta \sin \varphi & r \sin \theta \cos \varphi \\
+	\cos \theta & - r \sin \theta & 0
+\end{bmatrix}
+\]
+The Jacobian determinant $ \det \mathbf{J}_{\bm{\Phi}} $ is:
+\begin{align*}
+	\det \mathbf{J}_{\bm{\Phi}} &= r^2(\cos^2 \phi \cos^2 \theta \sin \theta + \sin^3\theta \sin^2 \phi + \sin^2 \phi \cos^2\theta \sin \theta + \sin^3 \theta \cos^2 \phi) \\[1.5ex]
+	& = r^2\left(\cos^2\theta \sin \theta (\cos^2 \phi 	+ \sin^2  \phi) + \sin^3 \theta (\sin^\phi + \cos^2\phi)\right) \\[1.5ex]
+	& = r^2 \sin \theta (\sin^2 \theta + \cos^2 \theta) = r^2 \sin \theta
+\end{align*}
+If $ A \subset \mathbb{R}^3 $ is an open, bounded set with definite volume and $ f : \mathbb{R}^3 \rightarrow \mathbb{R}  $ is an integrable function, we convert between integration in Cartesian and spherical coordinates using the formula:
+\begin{align*}
+	& \iiint_{\bm{\Phi}(A)} f(x, y, z) \diff x \diff y 	\diff z = \\[1.5ex]
+	&\iiint_{A}f\left(r \sin \theta \cos \phi, r \sin \theta \sin \phi, r \cos \theta \right)\, r^2 \sin \theta \diff r \diff \theta \diff \phi
+\end{align*}
+	
+\subsection{Applications of Multiple Integration}
+For this subsection, let $ \diff V =  \diff x \diff y \diff z $ be a differential volume element in $ \mathbb{R}^{3} $.
+
+\subsubsection{Mass}
+Let $ Q \subset \mathbb{R}^3 $ be a continuous 3-dimensional body in Euclidean space with an associated density $ \rho (x, y, z) $. The mass $ M $ of the body $ Q $ is given by
+\begin{equation*}
+	M = \iiint_{Q} \rho (x, y, z) \diff V
+\end{equation*}
+
+\subsubsection{Center of Mass}
+Let $ Q \subset \mathbb{R}^3 $ be a continuous 3-dimensional body in Euclidean space with an associated density $ \rho (\bm{r}) $ and total mass $ M $. The center of mass $ \bm{r}^{*} $ of the body $ Q $ is given by:
+\begin{equation*}
+\bm{r}^{*} = \frac{1}{M} \iiint_{Q} \rho (\bm{r}) \bm{r} \diff V
+\end{equation*}
+In terms of $ (x, y, z) $ components, if $ \bm{r}^{*} = (x^{*}, y^{*}, z^{*}) $ and density is given by $ \rho (x, y, z) $, the center of mass is:
+\begin{align*}
+	& x^{*} = \frac{1}{M} \iiint_Q \rho (x, y, z) \, x \diff V \\[1.5ex]
+	& y^{*} = \frac{1}{M} \iiint_Q \rho (x, y, z) \, y \diff V \\[1.5ex]
+	& z^{*} = \frac{1}{M} \iiint_Q \rho (x, y, z) \, z \diff V 
+\end{align*}
+
+\subsubsection{Moment of Inertia}
+Let $ Q \subset \mathbb{R}^3 $ be a continuous 3-dimensional body in Euclidean space with an associated density $ \rho (\bm{r}) $. The moment of inertia $ I_a $ of body $ Q $ about a fixed axis of rotation $ a $ is given by:
+\begin{equation*}
+	I_a = \iiint_{Q} \rho (\bm{r}) \norm{\bm{d}(\bm{r})}^2 \diff V
+\end{equation*}
+where 
+\begin{equation*}
+\bm{d}(\bm{r}) = \text{pr}_{a}^{\perp}(\bm{r})
+\end{equation*}
+is the orthogonal projection of the point $ \bm{r} $ onto the axis of rotation $ a $ and $ \norm{\bm{d}} $ is the perpendicular distance from the axis of rotation to the point $ \bm{r} $. 
+
+\subsection{Improper Integrals in $ \mathbb{R}^n $}
+
+The concern of this sub-section is to find a way to generalize the notion of improper integrals to integrals over arbitrary subsets of $ \mathbb{R}^n $.
+
+\subsubsection{Review: Improper Integrals in $ \mathbb{R} $}
+We consider two cases: an integral of an unbounded function on a bounded interval and the integral of a bounded function on an unbounded interval. The notions of the improper integral in these two cases are defined below.
+\begin{enumerate}
+	\item Integral of an unbounded function on a bounded interval. Let $ a, b \in \mathbb{R} $ be two constants such that $ a < b $ and let $ g: (a, b] \rightarrow \mathbb{R} $ be unbounded at $ x = a $, i.e.
+	\begin{equation*}
+	\lim_{x \rightarrow a} g(x) = \infty
+	\end{equation*}
+	In this case, we define the improper integral:
+	\begin{equation*}
+		\int_{a}^{b} g(x) \diff x = \lim_{\epsilon \rightarrow a} \int_{\epsilon}^{b} g(x) \diff x
+	\end{equation*}
+	provided the limit exists. 
+	
+	\item Integral of a bounded function on an unbounded interval. Let $ a \in \mathbb{R} $ be a constant and let $ g: [a, \infty) \rightarrow \mathbb{R} $ be a bounded function. In this case, we define the improper integral:
+	\begin{equation*}
+		\int_{a}^{\infty} g(x) \diff x = \lim_{M \rightarrow \infty} \int_{a}^{M} g(x) \diff x
+	\end{equation*}
+	provided the limit exists. 
+	
+\end{enumerate}
+
+\subsubsection{Lemma: Improper Integral of a Bounded, Non-negative Function on an Unbounded Set}
+Let $ D \subset \mathbb{R}^n $ be an unbounded subset of $ \mathbb{R}^{n} $ and let $ f : D \rightarrow \mathbb{R}^{+} $ be a bounded, non-negative function, i.e. $ f(x) \geq 0 $ for all $ x \in D $. To define the improper integral of $ f $ on $ D $, define the sequence of bounded sets $ D_j $ such that
+\begin{equation*}
+	D_j \coloneqq D \cap [-j, j]^n \quad j \in \mathbb{N}
+\end{equation*}
+where $ [-j, j]^n $ is a hyper-rectangle in $ \mathbb{R}^n $. More so, assume the sequence of integrals $ I_j $ given by:
+\begin{equation*}
+	I_j \coloneqq \int_{D_j} f(x) \diff x
+\end{equation*} 
+exists, noting that because $ f \geq 0 $, $ I_1 \leq I_2 \leq I_3 \leq \dots $ and $ I_j $ is an increasing sequence. In this case, we define the improper integral of $ f $ over $ D $ using the sequence $ I_j $ with the relation:
+\begin{equation*}
+	\int_D f(x) \diff x \coloneqq \lim_{j \rightarrow \infty} I_j
+\end{equation*}
+provided the limit exists.
+
+\subsubsection{Theorem: Improper Integral of a Bounded Function on an Unbounded Set}
+This theorem generalizes the previous lemma, which considered only non-negative functions. Let $ D \subset \mathbb{R}^n $ be an unbounded subset of $ \mathbb{R}^{n} $ and let $ f : D \rightarrow \mathbb{R} $ be a bounded function. To make use of the previous lemma, we split $ f $ into two non-negative functions $ f^{+}, f^{-}: D \rightarrow \mathbb{R}^{+}$ such that:
+\begin{align*}
+	&f^{+} \coloneqq \max(f, 0)\\
+	&f^{-} \coloneqq \max(-f, 0) = (-f)^+\\
+	&f = f^+ - f^-
+\end{align*}
+Next, we apply the previous lemma to $ f^+ $ and $ f^- $ separately. The definition for the improper integral of $ f $ over $ D $ that naturally follows is:
+\begin{equation*}
+	\int_D f(x) \diff x \coloneqq \int_D f^+(x) \diff x - \int_D f^-(x) \diff x
+\end{equation*}
+provided the integrals of both $ f^+ $ and $ f^- $ over $ D $ exist.
+
+\subsubsection{Note: Absolute Integrability On an Unbounded Set}
+Let $ D \subset \mathbb{R}^n $ be an unbounded subset of $ \mathbb{R}^{n} $ and define the function $ f : D \rightarrow \mathbb{R} $ such that the improper integral of $ f $ over $ D $
+\begin{equation*}
+	\int_D f(x) \diff x = \int_D f^+(x) \diff x - \int_D f^-(x) \diff x
+\end{equation*}
+exists. The functions $ f^+ $ and $ f^- $ are defined above. In this case, the expression 
+\begin{equation*}
+	\int_D f^+(x) \diff x + \int_D f^-(x) \diff x \in \mathbb{R}
+\end{equation*}
+also exists and is finite. More so,
+\begin{equation*}
+	\int_D f^+(x) \diff x + \int_D f^-(x) \diff x = \int_D \abs{f(x)} \diff x \in \mathbb{R}
+\end{equation*}
+In this case, we say that $ f $ is absolutely integrable on $ D $.
+
+
+\subsubsection{Example: An Identity for $ \sqrt{\pi} $}
+Let $ I $ be the integral given by
+\begin{equation*}
+	I = \iint_{\mathbb{R}^2} e^{-(x^2 + y^2)} \diff x \diff y
+\end{equation*}
+though a change of from Cartesian to polar coordinates, the integral becomes
+\begin{align*}
+	I & = \int_{0}^{2\pi} \int_{0}^{\infty} e^{-r^2} r \diff r \diff \phi \\[1.5ex]\\
+	& = 2\pi \int_{0}^{\infty} e^{-r^2 }r \diff r
+\end{align*}
+through a change of variables $ u = r^2 $ we obtain
+\begin{equation}
+I = \pi \int_{0}^{\infty} e^{-u} \diff u = \pi \left(- e^{-u} \bigg |_{0}^{\infty}\right) = \pi \label{eq:id_pi_plr}
+\end{equation}
+On the other hand, in Cartesian coordinates, by applying the basic property of the exponential function $ e^a e^b = e^{a + b} $ we obtain
+\begin{align}
+	I &= \iint_{\mathbb{R}^2} e^{-x^2} e^{-y^2} \diff x \diff y = \int_{-\infty}^{\infty} \left(e^{-y^2} \int_{-\infty}^{\infty} e^{-x^2} \diff x\right) \diff y \nonumber \\[1.5ex]
+	& = \int_{-\infty}^{\infty} e^{-y^2} \diff y \int_{-\infty}^{\infty} e^{-x^2} \diff x \nonumber \\[1.5ex]
+	& = \left(\int_{-\infty}^{\infty} e^{-t^2} \diff t\right)^2 \label{eq:id_pi_crt}
+\end{align}
+By equating Equations \ref{eq:id_pi_plr} and \ref{eq:id_pi_crt} we obtain
+\begin{align*}
+	&\left(\int_{-\infty}^{\infty} e^{-t^2} \diff t\right)^2 = \pi \\[1.5ex]
+	&\int_{-\infty}^{\infty} e^{-t^2}\diff t = \sqrt{\pi} 
+\end{align*}
+
+\subsubsection{Lemma: Improper Integral of an Unbounded, Non-negative Function on a Bounded Set}
+Let $ D \subset \mathbb{R}^n $ be a bounded subset of $ \mathbb{R}^{n} $ and let $ f : D \rightarrow \mathbb{R}^{+} \cup \{\infty\} $ be an unbounded, non-negative function, i.e. $ f(x) \geq 0 $ for all $ x \in D $. To define the improper integral of $ f $ on $ D $, define the sequence of founded functions $ f_j $ such that:
+\[ f_j(x) = 
+	\begin{cases}
+		f(x), & 0 \leq f(x) \leq j \\
+		j, & f(x) > j
+	\end{cases}
+\]
+noting that 
+\begin{equation*}
+	f_1 \leq f_2 \leq \dots \leq \lim_{j \rightarrow \infty} f_j = f
+\end{equation*}
+is an increasing sequence of bounded functions. More so, assume the sequence of integrals $ I_j $ given by:
+\begin{equation*}
+	I_j \coloneqq \int_{D} f_j(x) \diff x
+\end{equation*} 
+exists, noting that because $ f \geq 0 $, $ I_1 \leq I_2 \leq I_3 \leq \dots $ and $ I_j $ is an increasing sequence. In this case, we define the improper integral of $ f $ over $ D $ using the sequence $ I_j $ with the relation:
+\begin{equation*}
+\int_D f(x) \diff x \coloneqq \lim_{j \rightarrow \infty} I_j
+\end{equation*}
+provided the limit exists.
+	
+\subsubsection{Theorem: Improper Integral of a an Unbounded Function on a Bounded Set}
+This theorem generalizes the previous lemma, which considered only non-negative functions. 
+Let $ D \subset \mathbb{R}^n $ be a bounded subset of $ \mathbb{R}^{n} $ and let $ f : D \rightarrow \mathbb{R} \cup \{\pm \infty\} $ be an unbounded function. To make use of the previous lemma, we split $ f $ into two non-negative functions $ f^{+}, f^{-}: D \rightarrow \mathbb{R}^{+}$ such that:
+\begin{align*}
+&f^{+} \coloneqq \max(f, 0)\\
+&f^{-} \coloneqq \max(-f, 0) = (-f)^+\\
+&f = f^+ - f^-
+\end{align*}
+Next, we apply the previous lemma to $ f^+ $ and $ f^- $ separately. The definition for the improper integral of $ f $ over $ D $ that naturally follows is:
+\begin{equation*}
+\int_D f(x) \diff x \coloneqq \int_D f^+(x) \diff x - \int_D f^-(x) \diff x
+\end{equation*}
+provided the integrals of both $ f^+ $ and $ f^- $ over $ D $ exist.
+	
+\subsubsection{Note: Absolute Integrability of an Unbounded Function}
+Let $ D \subset \mathbb{R}^n $ be a bounded subset of $ \mathbb{R}^{n} $ and let $ f : D \rightarrow \mathbb{R} \cup \{\pm \infty \} $ be an unbounded function such that the improper integral of $ f $ over $ D $
+\begin{equation*}
+\int_D f(x) \diff x = \int_D f^+(x) \diff x - \int_D f^-(x) \diff x
+\end{equation*}
+exists. The functions $ f^+ $ and $ f^- $ are defined above. In this case, the expression 
+\begin{equation*}
+	\int_D f^+(x) \diff x + \int_D f^-(x) \diff x \in \mathbb{R}
+\end{equation*}
+also exists and is finite. More so,
+\begin{equation*}
+\int_D f^+(x) \diff x + \int_D f^-(x) \diff x = \int_D \abs{f(x)} \diff x \in \mathbb{R}
+\end{equation*}
+In this case, we say that $ f $ is absolutely integrable on $ D $.
+
+\newpage
+
+
+\section{Curves and Surfaces in Space}
+
+\subsection{Introduction to Curves in Space}
+
+A curve is the image of a continuous function from an interval (e.g. $ [a, b] \subset \mathbb{R}  $) to a topological space (e.g. $ \mathbb{R}^n $). The function that defines the curve is called a parametrization.
+
+\subsubsection{Definition: Curve and Parameterization}
+Let $ a, b \in \mathbb{R} $ be two real numbers such that $ a < b $, let $ I = [a, b] $ be an interval in $ \mathbb{R} $, and let $ \bm{r} : I \rightarrow \mathbb{R}^n$ be a continuous, vector-valued function mapping values in $ I $ to vectors in $ \mathbb{R}^n $. The image $ \Gamma $ of $ \bm{r} $ given by $ \Gamma 
+= \bm{r}(I) $ is a curve (or space curve) in $ \mathbb{R}^n $. The function $ \bm{r} $ is a parameterization of the curve $ \Gamma $.
+
+\subsubsection{Definition: Smooth and Regular Curve}
+Let $ I \subset \mathbb{R} $ be a non-negative, real interval and let the continuous function $ \bm{r} : I \rightarrow \mathbb{R}^n $ be a parameterization of the curve $ \Gamma = \bm{r}(I) $.
+
+\begin{enumerate}
+	\item For the purpose of this text, we say that $ \bm{r} $ is smooth  if $ \bm{r} $ is of differentiability class $ C^1 $ i.e. if $ \bm{r} $'s first derivative exists and is continuous for all $ t \in I $. More generally, the smoothness of $ \bm{r} $ is characterized by its differentiability class $ C^n $. Note the definition of smoothness is not universal; other texts often require $ \bm{r} \in C^n $ or $ \bm{r} \in C^\infty $ for $ \bm{r} $ to be smooth.
+	\item The function $ \bm{r} $ is regular if, in addition to being smooth, $\dot{\bm{r}}(t) \neq \bm{0} $ or equivalently $ \norm{\dot{\bm{r}}(t)} \neq 0$ for all $ t \in I $.
+\end{enumerate}
+
+\subsubsection{Length of a Curve}
+Let $ a, b \in \mathbb{R} $ be two real numbers such that $ a < b $, let $ I = [a, b] $, let $ \bm{r} : I \rightarrow \mathbb{R}^n $ be a smooth function and let $ \Gamma = \bm{r}(I) $ be a curve in $ \mathbb{R}^n $. In this case, the length $ \ell $ of the curve $ \Gamma $ is given by:
+\begin{equation*}
+	\ell(\Gamma) \coloneqq \int_{a}^{b} \norm{\dot{\bm{r}}(t)} \diff t
+\end{equation*}
+
+\subsubsection{Theorem: Curve Length is Independent of Parameterization}
+The length of a curve $ \Gamma \subset \mathbb{R}^n $ is independent of the choice of parameterization (assuming the parameterization is regular). 
+
+More formally, if $ \Gamma \subset \R^n $ is a curve in $ \R^n $ and $ r : [a, b] \rightarrow \Gamma $ and $ \rho : [\alpha, \beta] \rightarrow \Gamma $ are two regular parameterizations of the same curve $ \Gamma $, then:
+\begin{equation*}
+	\int_{a}^{b} \norm{\dot{r}(t)} \diff t = 		\int_{\alpha}^{\beta} \norm{\dot{\rho}(t)} \diff t
+\end{equation*}
+
+\textbf{Proof}: Because $ r $ and $ \rho $ are regular and parameterize the same curve, it follows that $ r(a) = \rho(\alpha) $ and $ r(b) = \rho(\beta) $. More so, for each $ t \in [a, b] $ there exists $ \tau \in [\alpha, \beta]$ such that $ r(t) = \rho(\tau) $. As a result, there exists a function $ \varphi : [\alpha, \beta] \rightarrow [a, b] $ such that $ \varphi(\tau) = t $ and 
+\begin{equation*}
+	\rho(\tau) = r(\varphi(\tau))
+\end{equation*}
+Additionally, since the paths are regular, it follows that
+\begin{equation*}
+	\rho'(\tau) = \left(r(\varphi(\tau))\right)' = r'(\varphi(\tau))\varphi'(\tau)
+\end{equation*}
+where we use the chain rule for derivatives to get the second equality. Applying the definition of curve length, we see that 
+\begin{equation}
+	\ell(\Gamma) = \int_{\alpha}^{\beta} \norm{\rho'(\tau)} \diff \tau = \int_{\alpha}^{\beta} \norm{r'(\varphi(\tau))\varphi'(\tau)} \diff \tau \label{eq:crv_lngth_param_proof_1}
+\end{equation}
+Note that $ \varphi $ is a scalar function. More so, because of the regularity of $ r $ and $ \rho $ it follows that $ \varphi $ is increasing on $ [\alpha, \beta] $, so $ \varphi'(\tau) $ is positive for all $ \tau \in [\alpha, \beta] $. As a result we can more $ \varphi'(\tau) $ out of the norm in Equation \ref{eq:crv_lngth_param_proof_1} to obtain:
+\begin{equation}
+	\ell(\Gamma) = \int_{\alpha}^{\beta} \norm{r'(\varphi(\tau))} \varphi'(\tau) \diff \tau \label{eq:crv_lngth_param_proof_2}
+\end{equation}
+Next, we make the change of variables $ t = \varphi(\tau) $, $ \diff t = \varphi'(\tau) \diff \tau $, $ \varphi(\alpha) = a $, and $ \varphi(\beta) = b $. Plugging this change of variables into Equation \ref{eq:crv_lngth_param_proof_2} gives
+\begin{equation}
+	\ell(\Gamma) = \int_{\alpha}^{\beta} \norm{r'(\varphi(\tau))} \varphi'(\tau) \diff \tau = \int_{a}^{b} \norm{r'(t)} \diff t \label{eq:crv_lngth_param_proof_3}
+\end{equation}
+Comparing Equations \ref{eq:crv_lngth_param_proof_1} and \ref{eq:crv_lngth_param_proof_3} gives the equality
+\begin{equation*}
+ \int_{\alpha}^{\beta} \norm{\rho'(\tau)} \diff \tau  = \ell(\Gamma) = \int_{a}^{b} \norm{r'(t)} \diff t
+\end{equation*}
+Since the choice of parameterizations $ r $ and $ \phi $ was arbitrary, it follows that the length of a curve is independent of parameterization.
+
+\subsubsection{Arc Length Parameterization}
+Let $ a, b \in \mathbb{R} $ be two real numbers such that $ a < b $, let $ I = [a, b] $, and let the function $ \bm{r} : I \rightarrow \mathbb{R}^n $ be a regular parameterization of the curve $ \Gamma = \bm{r}(I) $. The \textit{arc length parameter} $ s(t) $ of the curve $ \Gamma $ is defined to be:
+\begin{equation*}
+	s(t) \coloneqq \int_{a}^{t}\norm{\bm{r}'(\tau)} \diff \tau \quad \text{for} \quad t \in [a, b]
+\end{equation*}
+and the parameterization $ \tilde{\bm{r}}(s) = \bm{r}(t(s)) $, where $ t(s) $ is the inverse of $ s(t) $, is called the \textit{arc length parameterization} of $ \Gamma $. The arc length parameterization is useful because of the property:
+\begin{equation*}
+	\norm{\tilde{\bm{r}}'(s(t))} = 1 \quad \forall \quad t \in [a, b]
+\end{equation*}
+meaning that the arc length parameterization $ \tilde{\bm{r}} $ traverses the curve $ \Gamma $ at unit speed. 
+%TODO add derivation from lecture notes 
+
+\subsection{Tangent, Normal, and Binormal Vectors}
+
+\textbf{Notation}:
+For the entirety of this subsection, let $ a, b \in \mathbb{R} $ be two real numbers such that $ a < b $, let $ I = [a, b] $, let the function $ \bm{r} : I \rightarrow \mathbb{R}^3 $ be a regular parameterization of the curve $ \Gamma = \bm{r}(I) $ in terms of the general parameter $ t $ and let $ \bm{r}(s) = \bm{r}(t(s)) $ be the arc length parameterization of $ \Gamma $, where
+\begin{equation*}
+	s(t) = \int_{0}^{t} \norm{\bm{r}'(\tau)} \diff \tau
+\end{equation*}
+is the arc length.
+
+\subsubsection{Definition: Unit Tangent Vector}
+The unit tangent vector (or simply tangent vector) $ \mathbf{T} $ to the curve $ \Gamma $ at $ t $ is the vector given by:
+\begin{equation*}
+	\mathbf{T}(t) = \frac{\dot{\bm{r}}(t)}{\norm{\dot{\bm{r}}(t)}}
+\end{equation*}
+As the name implies, the tangent vector points tangent to the curve $ \Gamma $ at $ t $. 
+
+\subsubsection{Alternate Definition of the Tangent Vector}
+Because the general parameterization $ \bm{r}(t) $ and the arc length $ s $ are related by
+\begin{equation*}
+	\dv{\bm{r}}{s} = \frac{\dot{\bm{r}}}{\norm{\dot{\bm{r}}}} 
+\end{equation*}
+it follows that the tangent vector can be defined in terms of the arc length $ s $ as
+\begin{equation*}
+	\mathbf{T} = \dv{\bm{r}}{s} \quad \text{or more formally} \quad \mathbf{T}(s) = \dv{[\bm{r}(t(s))]}{s}
+\end{equation*}
+
+\subsubsection{Definition: Unit  Normal Vector}
+The unit normal vector (or simply normal vector) $ \mathbf{N} $ to the curve $ \Gamma $ at $ s $ is the unit vector given by: 
+\begin{equation*}
+	\mathbf{N}(s) = \frac{\mathbf{T}'(s)}{\norm{\mathbf{T}'(s)}}
+\end{equation*}
+where $ s $ is the arc-length parameter and $ \mathbf{T}'(s) = \dv{\mathbf{T}}{s} $.
+
+\subsubsection{Note: Alternate Definition of the Normal Vector}
+The unit normal vector $ \mathbf{N} $ to the curve $ \Gamma $ at time $ t $ is also given in terms of the vector product:
+\begin{equation*}
+	\mathbf{N}(t) = \frac{\dot{\bm{r}}(t) \cross \big (\dot{\bm{r}}(t) \cross \ddot{\bm{r}}(t) \big )}{\norm{\dot{\bm{r}}(t) \cross \big(\dot{\bm{r}}(t) \cross \ddot{\bm{r}}(t) \big)}}
+\end{equation*}
+Note that this formulation is valid for any parameter $ t $, while the previous formula applied only to the arc length parameter $ s $.
+
+Additionally, we can define the unit normal vector $ \mathbf{N} $ in terms of the cross product
+\begin{equation*}
+	\mathbf{N}(t) = \mathbf{B}(t) \cross \mathbf{T}(t)
+\end{equation*}
+
+
+\subsubsection{Definition: Binormal Vector}
+The binormal vector $ \mathbf{B} $ is the unit vector defined as: 
+\begin{equation*}
+	\mathbf{B} = \mathbf{T} \cross \mathbf{N}
+\end{equation*}
+and the binormal vector to the curve $ \Gamma $ at $ t $ is given by
+\begin{equation*}
+	\mathbf{B}(t) = \mathbf{T}(t) \cross \mathbf{N}(t)
+\end{equation*}
+
+\subsubsection{Note: Alternate Definition of the Binormal Vector}
+The binormal vector $ \mathbf{B} $ to the curve $ \Gamma $ at time $ t $ is also given by the vector product:
+\begin{equation*}
+	\mathbf{B}(t) = \frac{\dot{\bm{r}}(t)  \cross \ddot{\bm{r}}(t) }{\norm{\dot{\bm{r}}(t)  \cross \ddot{\bm{r}}(t) }}
+\end{equation*}
+This formulation is valid for any parameter $ t $, not just for the arc length parameter $ s $.
+
+\subsubsection{Definition: Normal Plane}
+	Let $ a, b \in \mathbb{R} $ be two real numbers such that $ a < b $, let $ I = [a, b] $, and let the function $ \bm{r} : I \rightarrow \mathbb{R}^3 $ be a regular parameterization of the curve $ \Gamma = \bm{r}(I) $. In this case, the normal plane to $ \Gamma $ at the point $ \bm{r}(t) $ is the plane through $ \bm{r}(t) $ that is perpendicular to the tangent vector $ \mathbf{T}(t) $. Equivalently, the normal plane is the set of all points $ \bm{p} = (x, y, z) $ such that:
+\begin{equation*}
+	\left(\bm{p} - \bm{r}(t)\right) \cdot \mathbf{T}(t) = 0
+\end{equation*}
+It follows that the normal plane at $ \bm{r}(t) $ is the plane containing both $ \mathbf{N}(t) $ and $ \mathbf{B}(t) $. 
+
+\subsubsection{Definition: Osculating Plane}
+Let $ a, b \in \mathbb{R} $ be two real numbers such that $ a < b $, let $ I = [a, b] $, and let the function $ \bm{r} : I \rightarrow \mathbb{R}^3 $ be a regular parameterization of the curve $ \Gamma = \bm{r}(I) $. In this case, the osculating plane to $ \Gamma $ at the point $ \bm{r}(t) $ is the plane through $ \bm{r}(t) $ that is perpendicular to the binormal vector $ \mathbf{B}(t) $. Equivalently, the osculating plane is the set of all points $ \bm{p} = (x, y, z) $ such that:
+\begin{equation*}
+	\left(\bm{p} - \bm{r}(t)\right) \cdot \mathbf{B}(t) = 0
+\end{equation*}
+It follows that the osculating plane at $ \bm{r}(t) $ is the plane containing both $ \mathbf{T}(t) $ and $ \mathbf{N}(t) $.
+
+
+\subsubsection{Frenet-Serret Frame}
+Let $ \Gamma $ be a curve in $ \mathbb{R}^3 $ and let $ \bm{r} : [a, b] \rightarrow \mathbb{R}^3 $ be a regular parameterization of $ \Gamma $. The triad of vectors $ (\mathbf{T}, \mathbf{N}, \mathbf{B}) $ (i.e. the unit tangent, normal, and binormal vectors to the curve $ \Gamma $ at a point $ \bm{r}(t) $) are called the \textit{TNB} or \textit{Frenet-Serret frame} of the curve $ \Gamma $ at the point $ \bm{r}(t) $. The TNB frame at any point $ \bm{r}(t) $ forms an orthonormal basis of the Euclidean space $ \mathbb{R}^3 $.
+
+\subsection{Curvature}
+\textbf{Notation:} For the entirety of this subsection, let $ a, b \in \mathbb{R} $ be two real numbers such that $ a < b $, let $ I = [a, b] $, let the function $ \bm{r} : I \rightarrow \mathbb{R}^3 $ be a regular parameterization of the curve $ \Gamma = \bm{r}(I) $ in terms of the general parameter $ t $ and let $ \bm{r}(s) = \bm{r}(t(s)) $ be the arc length parameterization of $ \Gamma $, where
+\begin{equation*}
+	s(t) = \int_{0}^{t} \norm{\bm{r}'(\tau)} \diff \tau
+\end{equation*}
+is the arc length.
+	
+\subsubsection{Curvature in Terms of Arc Length Parameter and Acceleration}
+The curvature of a space curve at a point on the curve equals the \textit{magnitude of the acceleration} of a particle moving along the curve at unit speed at that point. Because the definition requires unit speed, we often describe curvature in terms of the arc length parameter $ s $, which results in traversal of a curve at unit speed.
+
+If $ \Gamma $ is a space curve and $ \bm{r}(s) $ is the arc length parameterization, the acceleration of the curve is given by $ \bm{r}''(s) $, and the curvature at $ s $ is given by
+\begin{equation*}
+	\kappa(s) = \norm{ \bm{r}''(s)}
+\end{equation*}
+This expression applies only if the curve $ \Gamma $ is parameterized in terms of the arc length parameter $ s $.
+
+\subsubsection{Curvature in Terms Arc Length Parameter and Tangent Vector}
+For a arc length parameterization, the unit tangent vector $ \mathbf{T}(s) $ is given by $ \bm{r}'(s) $, the acceleration $ \bm{r}''(s) $ is given by $ \mathbf{T}'(s) $, and the curvature at $ s $ in terms of the tangent vector is given by
+\begin{equation*}
+	\kappa(s) = \norm{ \bm{r}''(s)} = \norm{\mathbf{T}'(s)}
+\end{equation*}
+Once again, this expression applies only if the curve $ \Gamma $ is parameterized in terms of the arc length parameter $ s $.
+
+\subsubsection{Curvature in Terms of General Parameter}
+In terms of the general parameter $ t $, the curvature $ \kappa $ of the curve $ \Gamma $ at $ t $ is given by 
+\begin{equation*}
+	\kappa(t) = \frac{\norm{\dot{\bm{r}}(t) \cross \ddot{\bm{r}}(t)}}{\norm{ \dot{\bm{r}}(t)}^3}
+\end{equation*}
+where $ \dot{\bm{r}} $ denotes differentiation with respect to the general parameter $ t $. This formulation of curvature applies to any choice of parameter, while the previous one is valid only for the arc length parameter $ s $.
+	
+\subsubsection{Radius of Curvature}
+The radius of curvature $ \rho $ of the curve $ \Gamma $ at $ s $ is given by
+\begin{equation*}
+	\rho = \frac{1}{\kappa}
+\end{equation*}
+where $ \kappa (s) $ is the curvature of the curve $ \Gamma $ at $ s $. The radius of curvature is equal to the radius of the osculating circle at $ s $.
+
+	
+\subsubsection{Curvature in Terms of General Parameter and Tangent Vector}
+For a general parameterization $ \bm{r}(t) $ of the curve $ \Gamma $, we can describe the curvature on a curve at $ t $ in terms of the tangent vector $ \mathbf{T} $ with the formula:
+\begin{equation*}
+	\kappa(t) = \frac{\norm{\dot{\mathbf{T}}(t)}}{\norm{\dot{\bm{r}}(t)}}
+\end{equation*}
+This formulation of curvature applies to any choice of parameter $ t $. Incidentally, it follows that
+\begin{equation*}
+	\frac{\norm{\dot{\mathbf{T}}(t)}}{\norm{\dot{\bm{r}}(t)}} =  \frac{\norm{\dot{\bm{r}}(t) \cross \ddot{\bm{r}}(t)}}{\norm{ \dot{\bm{r}}(t)}^3}
+\end{equation*} 
+
+
+\subsubsection{Relationship Between Curvature, $ \mathbf{T}' $, and $ \mathbf{N} $}
+Curvature $ \kappa $ is related to the tangent vector $ \mathbf{T} $ and normal vector $ \mathbf{N} $ by the relationship:
+\begin{equation*}
+	\mathbf{T}' = \kappa \mathbf{N}
+\end{equation*}
+Where $	\mathbf{T}' $ denotes differentiation with respect to the arc length parameter $ s $.
+
+More thoroughly, if $ \bm{r}(s) $ is the arc length parameterization of the curve $ \Gamma $, then the acceleration $ \bm{r}''(s) = \mathbf{T}'(s) $ at $ s $ is related to the normal vector $ \mathbf{N}(s) $ at $ s $ by the relationship
+\begin{equation*}
+	\mathbf{T}'(s) = \kappa(s) \mathbf{N}(s)
+\end{equation*}
+where $ \kappa (s) $ is the curvature of the curve $ \Gamma $ at $ s $.
+
+\subsubsection{Note: Geometric Interpretation of Zero Curvature}
+If the curvature $ \kappa $ equals zero for all points on a curve, then $ \mathbf{T}'(s) = 0 $ and the tangent to the curve is constant, meaning the curve is a straight line.
+\begin{align*}
+	& \kappa = 0 \text{ for all points on } \Gamma \qquad \iff \qquad \Gamma \text{ is a straight line}
+\end{align*}
+
+
+\subsection{Torsion}
+The torsion of a curve describes how sharply the curve twists out of the plane of curvature. In this respect, torsion gives a sense of how three-dimensional a plane curve is.
+
+
+\subsubsection{Relationship Between Torsion, $ \mathbf{B}' $, and $ \mathbf{N} $}
+Torsion $ \tau $ is related to the binormal vector $ \mathbf{B} $ and normal vector $ \mathbf{N} $ by the relationship:
+\begin{equation*}
+	\mathbf{B}' = - \tau \mathbf{N}
+\end{equation*}
+Where $	\mathbf{B}' $ denotes differentiation with respect to the arc length parameter $ s $.
+
+More thoroughly, if $ \bm{r}(s) $ is the arc length parameterization of the curve $ \Gamma $, then the derivative of the binormal vector $\mathbf{B}'(s) $ at $ s $ is related to the normal vector $ \mathbf{N}(s) $ at $ s $ by the relationship
+\begin{equation*}
+	\mathbf{B}'(s) = \tau(s) \mathbf{N}(s)
+\end{equation*}
+where $ \tau (s) $ is the torsion of the curve $ \Gamma $ at $ s $.
+	
+\subsubsection{Note: Geometric Interpretation of Zero Torsion}
+If the curvature $ \tau $ equals zero for all points on a curve, then $  \mathbf{B}'(s) = 0  $ and the binormal to the curve is constant, meaning the curve is two-dimensional and contained in a single plane. 
+\begin{align*}
+	& \tau = 0 \text{ for all points on } \Gamma \qquad \iff \qquad \Gamma \text{ is a plane curve}
+\end{align*}
+
+\subsubsection{Formula for Torsion in Terms of Arc Length Parameter}
+If $ \bm{r}(s) $ is the arc length parameterization of a space curve $ \Gamma $, we describe the torsion $ \tau $ of $ \Gamma $ at $ s $ with the formula:
+\begin{equation*}
+	\tau(s) = \frac{\left[\bm{r}'(s), \bm{r}''(s), \bm{r}'''(s)\right] }{\norm{\bm{r}''(s)}^2} = \frac{\left(\bm{r}'(s) \cross \bm{r}''(s)\right) \cdot \bm{r}'''(s)}{\kappa^2} 
+\end{equation*}
+where we have used the definition of curvature $ \kappa = \norm{\bm{r}''(s)} $ and $ \left[\bm{r}'(s), \bm{r}''(s), \bm{r}'''(s)\right]  $ denotes the scalar triple product operation. Note that this formula applies only to an arc length parameterization $ \bm{r}(s) $.
+
+\subsubsection{Formula for Torsion in Terms of General Parameter}
+If $ \bm{r}(t) $ is a general parameterization of a space curve $ \Gamma $, we describe the torsion $ \tau $ of $ \Gamma $ at $ t $ with the formula:
+\begin{equation*}
+	\tau(t) = \frac{\left[\dot{\bm{r}}(t), \ddot{\bm{r}}(t), \dddot{\bm{r}}(t)\right]}{\norm{\dot{\bm{r}}(t) \cross \ddot{\bm{r}}(t)}^2} = \frac{\left(\dot{\bm{r}}(t) \cross \ddot{\bm{r}}(t)\right) \cdot \dddot{\bm{r}}(t)}{\norm{\dot{\bm{r}}(t) \cross \ddot{\bm{r}}(t)}^2}
+\end{equation*}
+where $ \left[\dot{\bm{r}}(t), \ddot{\bm{r}}(t), \dddot{\bm{r}}(t)\right] $ denotes the scalar triple product operation. Note that this formula holds for any parameter $ t $, while the previous one applies only to the arc length parameter $ s $.
+
+\subsection{Frenet-Serret Formulae}
+The Frenet-Serret formulas succinctly relate the $ \mathbf{T}, \mathbf{N} $, and $ \mathbf{B} $ vectors to the curvature $ \kappa $ and torsion $ \tau $ of a curve. 
+
+Let $ \bm{r}(s) $ be the arc length parameterization of a space curve $ \Gamma $. In terms of $ s $, the Frenet-Serret formulas are:
+\begin{align*}
+	& \mathbf{T}' = \kappa \mathbf{N}\\
+	& \mathbf{N}' = -\kappa \mathbf{T} + \tau \mathbf{B}\\
+	& \mathbf{B}' = - \tau \mathbf{N}
+\end{align*}
+where $ ' $ denotes differentiation with respect to the arc length parameter $ s $. In this form, the formulas hold only for the arc length parameterization $ \bm{r}(s) $.
+
+\subsubsection{Matrix Form of the Frenet-Serret Formulas}
+In matrix form, the Frenet-Serret formulas are:
+\[
+\begin{bmatrix} 
+	\mathbf{T'} \\ 
+	\mathbf{N'} \\ 
+	\mathbf{B'} 
+\end{bmatrix}
+= 
+\begin{bmatrix}
+0 & \kappa & 0 \\
+-\kappa & 0 & \tau \\
+ 0 & -\tau & 0 
+\end{bmatrix} 
+\begin{bmatrix} 
+	\mathbf{T} \\ 
+	\mathbf{N} \\ 
+	\mathbf{B}
+\end{bmatrix}
+\]
+Once again, $ ' $ denotes differentiation with respect to the arc length parameter $ s $, and the formulas in this form hold only for the arc length parameterization $ \bm{r}(s) $.
+
+
+\subsubsection{Frenet-Serret Formulas in Terms of General Parameter}
+In terms of a general parameterization $ \bm{r}(t) $, the Frenet-Serret formulas are:
+\[ \dv{}{t} 
+\begin{bmatrix}
+	\mathbf{T}\\
+	\mathbf{N}\\
+	\mathbf{B}
+\end{bmatrix}
+= 
+\begin{bmatrix}
+	\dot{\mathbf{T}}\\
+	\dot{\mathbf{N}}\\
+	\dot{\mathbf{B}}
+\end{bmatrix}
+=
+\|\mathbf{r}'(t)\|
+\begin{bmatrix}
+	0&\kappa&0\\
+	-\kappa&0&\tau\\
+	0&-\tau&0
+\end{bmatrix}
+\begin{bmatrix}
+	\mathbf{T}\\
+	\mathbf{N}\\
+	\mathbf{B}
+\end{bmatrix}	\]
+where the extra factor $ \|\mathbf{r}'(t)\| $ results because of the change of variables from $ s $ to $ t $. 
+
+
+\iffalse
+\subsection{Collected Space Curve Formulas}
+
+\subsubsection{Planes and Stuff}
+Acceleration is parallel to the normal vector and lies in the osculating plane.
+
+\subsubsection{Perpendicular Stuff}
+\begin{enumerate}
+	\item $ \mathbf{N}' \perp \mathbf{N} $ and also $  \mathbf{T}' \perp \mathbf{T} $
+ The tangent vector is perpendicular to its derivative. Or
+	\begin{equation*}
+		\mathbf{T} \perp \mathbf{T}'
+	\end{equation*}
+	Because the unit tangent vector $ \mathbf{T} $ is normalized, it follows that $ \norm{\mathbf{T}} = 1 $, from which follows that 
+	\begin{equation*}
+\mathbf{T} \cdot \mathbf{T} = 1
+	\end{equation*}
+	Differentiating both side of the equation with respect to the parameter gives 
+	\begin{equation*}
+ 		\mathbf{T}' \cdot \mathbf{T} + \mathbf{T} \cdot \mathbf{T}' = 0 \implies \mathbf{T}' \cdot \mathbf{T} = 0 \implies 	\mathbf{T} \perp \mathbf{T}'
+	\end{equation*}
+	\item $ \mathbf{T} \perp \mathbf{N}$
+\end{enumerate}
+
+\subsubsection{Parallel Stuff}
+\begin{enumerate}
+	\item $  \mathbf{T}' \parallel \mathbf{N} $
+\end{enumerate}
+\fi
+
+\subsection{Surfaces in Euclidean Space}
+Throughout this section, unless otherwise stated, the word surface is taken to be a surface in Euclidean space  $ \mathbb{R}^3 $. Surfaces may be given in explicit, implicit, and parametric form, with implicit and parametric form being most popular.
+
+\subsubsection{Explicitly Defined Surface}
+In explicit form, a surface is the graph of a continuous scalar function of two variables defined on a connected subset of $ \mathbb{R^2} $. More formally, if $ D \subset \mathbb{R}^2 $ is a connected subset of $  \mathbb{R}^2  $ and $ f : D \rightarrow \mathbb{R} $ is a continuous function, then the graph of $ f $
+\begin{equation*}
+	\mathcal{G}(f) = \{(x, y, z) \, | \, (x, y) \in D, z = f(x, y) \}
+\end{equation*}
+is an explicitly defined surface.
+
+\subsubsection{Implicitly Defined Surface}
+An implicit surface is the set of all zeros of a continuously differentiable scalar function of three variables. More formally, let $ \Omega \subset \mathbb{R}^3$ be a subset of $ \mathbb{R}^3 $ and let $ f : \Omega \rightarrow \mathbb{R} $ be a continuously differentiable function such that $ \nabla f \neq 0 $ for all $ (x, y, z) \in \Omega $ (i.e the gradient of $ f $ given by $ \nabla f = \left(f_z, f_y, f_z\right) $) is nonzero over $ f $'s domain. In this case, the set $ \mathcal{S} $ of all points satisfying the equation $ f(x, y, z) = 0 $, given by:
+\begin{equation*}
+	\mathcal{S} = \{(x, y, z) \, | \, f(x, y, z) = 0 \}
+\end{equation*}
+is an implicitly defined surface.
+
+\subsubsection{Parametric Surface}
+Let $ D \subset \mathbb{R}^2 $ be a connected surface in $ \mathbb{R}^2 $, and let $ \bm{r}: D \rightarrow \mathbb{R}^3 $ be a continuously differentiable vector function (i.e. $ \bm{r} \in C^1 $) with scalar components $ \bm{r}(u, v) = (r_1(u, v), r_2(u, v), r_3(u, v)) $. More so, let 
+\begin{equation*}
+	\bm{r}_u(u, v) \cross \bm{r}_v(u, v) \neq 0
+\end{equation*}
+for all points $ (u, v) \in D $. This is equivalent to requiring that the Jacobian matrix 
+	\[ \mathbf{J}_{\bm{r}}(u, v) =
+	\begin{bmatrix}
+		\dfrac{\partial r_1}{\partial u} & \dfrac{\partial r_1}{\partial v}\\[2.5ex]
+		\dfrac{\partial r_2}{\partial u} & \dfrac{\partial r_2}{\partial v}\\[2.5ex]
+		\dfrac{\partial r_3}{\partial u} & \dfrac{\partial r_3}{\partial v}
+	\end{bmatrix}	
+	\]
+has rank 2 (maximum rank for a  $3 \cross 2$ matrix) for all $ (u, v) \in D $ i.e. 
+\begin{equation*}
+	\rank\left(\mathbf{J}_{\bm{r}}(u, v)\right) = 2 \quad \forall \quad  (u, v) \in D 
+\end{equation*}
+In this case, the set
+\begin{equation*}
+	\mathcal{S} = \{ \bm{r}(u, v) \, | \, (u, v) \in D \}
+\end{equation*}
+is a parametrically defined surface.
+
+% TODO \subsubsection{Local Approximation of a Parametric Surface} with the tangent plane
+
+
+\subsubsection{Normal Vector to a Parametric Surface}
+The normal vector $ \bm{n} $ to a parametric surface $ \mathcal{S} $ parameterized by the vector function $ \bm{r} : \mathbb{R}^2 \rightarrow \mathbb{R}^3 $ mapping $ (u, v) \mapsto \bm{r}(u, v) $ at the point $ \bm{r}_0 = \bm{r}(u_0, v_u)$ is 
+\begin{equation*}
+	\bm{n}(u_0, v_0) = \bm{r}_u (u_0, v_0) \cross \bm{r}_v (u_0, v_0)
+\end{equation*}
+where $ \bm{r}_u $ and $ \bm{r}_v $ are $ \bm{r} $'s partial derivatives with respect to $ u $ and $ v $, respectively.
+
+
+\subsubsection{Tangent Plane of a Parametric Surface}
+The tangent plane $ \mathcal{T} $ to a parametric surface $ \mathcal{S} $ parameterized by the vector function $ \bm{r} : \mathbb{R}^2 \rightarrow \mathbb{R}^3 $ mapping $ (u, v) \mapsto \bm{r}(u, v) $ at the point $ \bm{r}_0 = \bm{r}(u_0, v_u)$ is the set of all points $ \bm{p} = (x, y, z) $ satisfying the equation:
+\begin{equation*}
+	\left(\bm{p} - \bm{r}_0 \right) \cdot (\bm{r}_u \cross \bm{r}_v) = 0
+\end{equation*}
+where $ \bm{r}_u $ and $ \bm{r}_v $ are $ \bm{r} $'s partial derivatives with respect to $ u $ and $ v $, respectively, evaluated at $ (u_0, v_0) $. We can write the equation for $ \mathcal{T} $ at $ (u_0, v_0) $ more thoroughly as:
+\begin{equation*}
+	\mathcal{T} = \left\{ (x, y, z) \in \mathbb{R}^3 \, | \, \big((x, y, z) -  \bm{r}(u_0, v_u)\big) \cdot \big(\bm{r}_u(u_0, v_0) \cross \bm{r}_v(u_0, v_0)  \big) = 0 \right \}
+\end{equation*}
+
+\subsubsection{Tangent Plane of an Implicit Surface}
+Let $ \Omega \subset \mathbb{R}^3$ be a subset of $ \mathbb{R}^3 $, let $ f : \Omega \rightarrow \mathbb{R} $ be a continuously differentiable function such that $ \nabla f \neq 0 $ for all $ (x, y, z) \in \Omega $, and let $ \mathcal{S} $ be the implicit surface given as the solution set of the equation $ f(x, y, z) = 0 $, i.e.
+\begin{equation*}
+	\mathcal{S} = \left\{ (x, y, z) \in \mathbb{R}^3 \, | \, f(x, y, z) = 0 \right\}
+\end{equation*}
+In this case, the equation of the tangent plane $ \mathcal{T} $ of the surface $ \mathcal{S} $ at the point $ \bm{r}_0 = (x_0, y_0, z_0) $ is the set of all points $ \bm{p} = (x, y, z) $ satisfying the equation
+\begin{equation*}
+	\left(\bm{p} - \bm{r}_0 \right) \cdot \nabla f(\bm{r}_0) = 0
+\end{equation*} 
+where $ \nabla f(\bm{r}_0) $ denotes the gradient of $ f $ evaluated at $ \bm{r}_0 = (x_0, y_0, z_0) $. We can write the equation for $ \mathcal{T} $ at $ (x_0, y_0, z_0) $ more thoroughly as:
+\begin{equation*}
+	\mathcal{T} = \left\{ (x, y, z) \in \mathbb{R}^3 \, | \, \big((x, y, z) -  (x_0, y_0, z_0) \big) \cdot \nabla f(x_0, y_0, z_0) \big) = 0 \right \}
+\end{equation*}
+
+\iffalse
+%TODO orientation of a surface
+
+Orienting a surface means defining a unit normal vector $ n $ at each point $ p $ such that $ n $ varies \textit{continuously} with $ p $. The surface is orientable if such an assignment is possible.
+
+An orientation of a surface is a group of 3 vectors $ r_u, r_v, \pm r_u \cross r_v $ defined at each point, where the base of these 3 vectors are on the surface, $ r_u $ and $ r_v $ are perpendicular, and both $ r_u $ and $ r_v $  are tangential to the surface, and  $ r_u \cross r_v $ is normal to the surface. And the normal vector must vary continuously with points on the surface.
+
+\fi
+
+\subsection{Surfaces of Revolution}
+Surfaces of revolution are surfaces formed by rotating a curve around an axis of revolution in Euclidean space. This section considers only the simple case of a plane curve in the $ xz $ plane rotated about the $ z $-axis.
+
+\subsubsection{Matrix for Rotation About the $ z $-Axis}
+Rotation of a vector in the $ xz $ plane about the $ z $-axis through an angle $ \varphi $ in $ \mathbb{R}^3 $ is a linear transformation described by the matrix $ R_{\varphi} $
+\[ 	R_{\varphi} = 
+\begin{bmatrix}
+	\cos \varphi & -\sin \varphi & 0 \\
+	\sin \varphi & \cos \varphi & 0 \\
+	0 & 0 & 1
+\end{bmatrix}
+\]
+
+\subsubsection{Parametrization of a Surface of Rotation}
+A surface of rotation formed by rotating a plane curve in the $ xz $ plane about the $ z $ axis may be parameterized with the parameters by the function $ \bm{r} : \mathbb{R}^2 \rightarrow \mathbb{R}^3 $ mapping $ (t, \phi) \mapsto \bm{r}(t, \phi)$, where $ I \subset \mathbb{R}$ is an interval in $ \mathbb{R} $, $ t \in I $, $ \varphi \in [0, 2\pi) $, and $ \bm{r} $ is given by:
+\[ 	\bm{r}(t, \phi) = R_{\varphi} \, \big(x(t), y(t), z(t) \big)^{T} = 
+\begin{bmatrix}
+	\cos \varphi & -\sin \varphi & 0 \\
+	\sin \varphi & \cos \varphi & 0 \\
+	0 & 0 & 1
+\end{bmatrix}
+\begin{bmatrix}
+	x(t) \\
+	0 \\
+	z(t)
+\end{bmatrix}
+\]
+where $ y(t) \equiv 0 $ because the curve is in the $ xz $ plane.
+
+\subsubsection{Parameterization of Common Surfaces of Revolution}
+\begin{enumerate}
+	\item A cylinder of radius $ a $ whose $ z $ coordinate ranges from $ \alpha $ to $ \beta $ is described by the parameters $ z $ and polar angle $ \varphi $. The parameterization $ \bm{r}(z, \varphi) $ is:
+	\[\bm{r}(z, \varphi) = 
+	\begin{bmatrix}
+		a \cos \varphi \\
+		a \sin \varphi \\
+		z
+	\end{bmatrix}
+	\]
+	where $ z \in [\alpha, \beta] $ and $ \varphi \in [0, 2\pi)$.
+	
+	\item A cone of radius $ R $ and height $ h $ is parameterized by the $ x $ coordinate $ x $ and the polar angle $ \varphi $. The parameterization $ \bm{r}(x, \varphi) $ is:
+	\[\bm{r}(x, \varphi) = 
+	\begin{bmatrix}
+		x \cos \varphi \\[1.0ex]
+		x \sin \varphi \\[1.0ex]
+		h\left(1 - \frac{x}{R}\right)
+	\end{bmatrix}
+	\]
+	where $ x \in [0, R] $ and $ \varphi \in [0, 2\pi)$.
+\end{enumerate}
+
+\subsection{Area of Surfaces}
+
+\subsubsection{Definition of Surface Area in Euclidean Space}
+Let $ D \subset \mathbb{R}^2 $ be a connected subset of $ \mathbb{R}^2 $ and let $ \bm{r} : D \rightarrow \mathbb{R}^3 $ mapping $ (u, v) \mapsto \bm{r}(u, v) $ be a continuously differentiable vector function parametrizing the surface $ \mathcal{S} $. In this case, the area $ A $ of the surface $ \mathcal{S} $ is defined as:
+\begin{equation*}
+	A(\mathcal{S}) \coloneqq \iint_D \norm{\bm{r}_u \cross \bm{r}_v} \diff u \diff v
+\end{equation*}
+where $ \bm{r}_u $ and $ \bm{r}_v $ are $ \bm{r} $'s partial derivatives with respect to $ u $ and $ v $, respectively.
+
+\subsubsection{Alternate Formulation of Area of a Surface}
+By applying the vector identity
+\begin{equation*}
+	\norm{\bm{r}_u \cross \bm{r}_v}^2 = \norm{\bm{r}_u}^2 \norm{\bm{r}_v}^2 - \left(\bm{r}_u \cdot \bm{r}_v\right)^2
+\end{equation*}
+to the definition of the area of the surface $ \mathcal{S} $, we obtain can obtain the alternate formulation
+\begin{equation*}
+	A(\mathcal{S}) = \iint_D \sqrt{\norm{\bm{r}_u}^2 \norm{\bm{r}_v}^2 - \left(\bm{r}_u \cdot \bm{r}_v\right)^2} \diff u \diff v
+\end{equation*}
+
+\subsubsection{Theorem: Surface Area is Independent of Parameterization}
+The area of a surface is independent of the surface's parameterization.
+
+More formally, if $ \mathcal{S} $ is a surface in Euclidean space, $ D, \Delta \subset \mathbb{R}^2 $ are connected subsets of $ \mathbb{R}^2 $, and the continuously differentiable vector functions $ \bm{r} : D \rightarrow \mathbb{R}^3 $ mapping $ (u, v) \mapsto \bm{r}(u, v) $ and $ \bm{\rho} : \Delta \rightarrow \mathbb{R}^3 $ mapping $ (\mu, \nu) \mapsto \bm{\rho}(\mu, \nu) $ are two parameterizations of $ \mathcal{S} $, then
+\begin{equation*}
+\iint_D \sqrt{\norm{\bm{r}_u}^2 \norm{\bm{r}_v}^2 - \left(\bm{r}_u \cdot \bm{r}_v\right)^2} \diff u \diff v =  \iint_\Delta \sqrt{\norm{\bm{\rho}_\mu}^2 \norm{\bm{\rho}_\nu}^2 - \left(\bm{\rho}_\mu \cdot \bm{\rho}_\nu\right)^2} \diff \mu \diff \nu
+\end{equation*}
+
+\textbf{Proof}: 
+Let $ \bm{\Phi} : \Delta \rightarrow D $ be a bijective mapping between the sets $ D $ and $ \Delta $, so that the functions $ \bm{r} $ and $ \bm{\rho} $ are related by the composition $ \bm{\rho} = \bm{r} \circ \bm{\Phi} $, written more formally as
+\begin{equation*}
+	\bm{\rho}(\mu, \nu) = \bm{r} \big( \bm{\Phi}(\mu, \nu) \big) 
+\end{equation*}
+The function $ \bm{\Phi} $ may be written in terms of the scalar components $ U $ and $ (\mu, \nu)  $ where:
+\begin{equation*}
+	\bm{\Phi} (\mu, \nu) = \big ( U(\mu, \nu) , V(\mu, \nu)  \big)
+\end{equation*}
+In terms of the scalar components $ U $ and $ V $, the function $ \bm{\rho} $ becomes
+\begin{equation*}
+	\bm{\rho}(\mu, \nu) = \bm{r} \big(  U(\mu, \nu),  V(\mu, \nu) \big) 
+\end{equation*}.
+Using the chain rule for the derivative of a composition, we calculate $ \bm{\rho} $'s partial derivatives $ \bm{\rho}_\mu $ and $ \bm{\rho}_\nu $ to be:
+\begin{align*}
+	&\bm{\rho}_\mu = \bm{r}_u U_\mu + \bm{r}_v V_\mu\\
+	&\bm{\rho}_\nu = \bm{r}_u U_\nu + \bm{r}_v V_\nu\\
+\end{align*}
+Next, we calculate the vector product
+\begin{align*}
+	\bm{\rho}_\mu \cross \bm{\rho}_\nu & = \left(\bm{r}_u U_\mu + \bm{r}_v V_\mu\right) \cross \left( \bm{r}_u U_\nu + \bm{r}_v V_\nu\right)\\
+	& = \bm{r}_u \cross \bm{r}_v \left(U_\mu V_\nu - V_\mu U_\nu \right) 
+\end{align*}
+Next, taking the norm of both sides gives:
+\begin{equation*}
+	\norm{\bm{\rho}_\mu \cross \bm{\rho}_\nu } = \norm{\bm{r}_u \cross \bm{r}_v} \left(U_\mu V_\nu - V_\mu U_\nu \right) 
+\end{equation*}
+in which we recognize that the term $ \left(U_\mu V_\nu - V_\mu U_\nu \right) $ to be the determinant of the Jacobian matrix 
+\[\mathbf{J}_{\bm{\Phi}} = 
+\begin{bmatrix}
+	U_\mu & U_\nu \\
+	V_\mu & V_\nu
+\end{bmatrix}	
+\]
+encoding the change of coordinates between $ (u, v) $ and $ (\mu, \nu) $. From the equality:
+\begin{equation*}
+	\norm{\bm{\rho}_\mu \cross \bm{\rho}_\nu } = \norm{\bm{r}_u \cross \bm{r}_v} \; \det \mathbf{J}_{\bm{\Phi}}(\mu, \nu)
+\end{equation*}
+and Theorem \ref{theorm:change_of_vars} describing the change of coordinates during multiple integration, it follows that
+\begin{align*}
+	A(\mathcal{S}) &= \iint_D \sqrt{\norm{\bm{r}_u}^2 \norm{\bm{r}_v}^2 - \left(\bm{r}_u \cdot \bm{r}_v\right)^2} \diff u \diff v \\[1.5ex]
+ &=  \iint_\Delta \sqrt{\norm{\bm{\rho}_\mu}^2 \norm{\bm{\rho}_\nu}^2 - \left(\bm{\rho}_\mu \cdot \bm{\rho}_\nu\right)^2} \diff \mu \diff \nu =	A(\mathcal{S})
+\end{align*}
+Since the parameterizations $ \bm{r} $ and $ \bm{\rho} $ were arbitrary, if follows that surface area is independent of parameterization.
+\newpage 
+\section{Vector Analysis}
+
+\subsection{Line Integrals}
+A line integral is an integral of a function (or field) evaluated along a curve.
+	
+\subsubsection{Line Integral of a Scalar Field}
+Let $ I = [a, b] \subset \mathbb{R} $ be an interval and let $ \bm{r} : I \rightarrow \mathbb{R}^n $ be a smooth parameterization of the curve $ \Gamma $. More so, let $ f : \mathbb{R}^n \rightarrow \mathbb{R} $ be a scalar field. In this case, the line integral of $ f $ on $ \Gamma $ is:
+\begin{equation*}
+	\int_\Gamma f(\bm{r}) \diff s = \int_{a}^{b} f(\bm{r}(t)) \norm{\bm{r}'(t)} \diff t
+\end{equation*}
+
+\subsubsection{Proposition: Line Integral of a Scalar Field is Independent of Parameterization}
+The integral of a scalar field $ f $ along a curve is independent of the curve's parameterization. 
+
+More formally, let $ f : \mathbb{R}^n \rightarrow \mathbb{R} $ be a scalar field and let $ \Gamma \subset \mathbb{R}^n$ be a space curve. More so, let $ I = [a, b] $ and $ J = [\alpha, \beta]$ be connected intervals in $ \mathbb{R} $, and let the smooth functions $ \bm{r} : I \rightarrow \Gamma $ mapping $ t \mapsto \bm{r}(t) $ and $ \bm{\rho} : J \rightarrow \Gamma $ mapping $ \tau \mapsto \bm{\rho}(\tau) $ be two arbitrary parameterizations of $ \Gamma $. In this case:
+\begin{equation*}
+	\int_\Gamma f(\bm{r}) \diff s = \int_{a}^{b} f(\bm{r}(t)) \norm{\bm{r}'(t)} \diff t = \int_{\alpha}^{\beta} f(\bm{\rho}(t)) \norm{\bm{\rho}'(\tau)} \diff \tau = \int_\Gamma f(\bm{\rho}) \diff s
+\end{equation*}
+	
+\subsubsection{Line Integral of a Vector Field}
+Let $ I = [a, b] \subset \mathbb{R} $ be an connected interval and let $ \bm{r} : I \rightarrow \mathbb{R}^n $ be a smooth parameterization of the curve $ \Gamma $. More so, let $ \bm{F} : \mathbb{R}^n \rightarrow \mathbb{R}^n $ be a vector field. In this case, the line integral of $ \bm{F} $ on $ \Gamma $ is:
+\begin{equation*}
+	\int_\Gamma \bm{F}(\bm{r}) \cdot \diff \bm{r} = \int_{a}^{b} \bm{F}(\bm{r}(t)) \cdot \bm{r}'(t) \diff t
+\end{equation*}
+
+\subsubsection{Proposition: Line Integral of a Vector Field is Independent of Parameterization}
+
+The integral of a vector field $ \bm{F} $ along a curve is independent of the curve's parameterization. 
+	
+More formally, let $ \bm{F} : \mathbb{R}^n \rightarrow \mathbb{R}^n $ be a vector field and let $ \Gamma \subset \mathbb{R}^n$ be a space curve. More so, let $ I = [a, b] $ and $ J = [\alpha, \beta]$ be connected intervals in $ \mathbb{R} $, and let the smooth functions $ \bm{r} : I \rightarrow \Gamma $ mapping $ t \mapsto \bm{r}(t) $ and $ \bm{\rho} : J \rightarrow \Gamma $ mapping $ \tau \mapsto \bm{\rho}(\tau) $ be two arbitrary parameterizations of $ \Gamma $. In this case:
+\begin{equation*}
+	\int_\Gamma \bm{F}(\bm{r}) \cdot \diff \bm{r} = \int_{a}^{b} \bm{F}(\bm{r}(t)) \cdot \bm{r}'(t) \diff t = \int_{\alpha}^{\beta} \bm{F}(\bm{\rho}(\tau)) \cdot \bm{\rho}'(\tau) \diff \tau =\int_\Gamma \bm{F}(\bm{\rho}) \cdot \diff \bm{\rho}
+\end{equation*}
+
+\subsubsection{Proposition: Line Integral of a Vector Field and Orientation}
+Changing the orientation of a curve over which we evaluate the line integral of a vector field changes the sign of the integral. 
+
+More formally, let $ \bm{F} : \mathbb{R}^n \rightarrow \mathbb{R}^n $ be a vector field, let $ I = [a, b] $ be a connected interval in $ \mathbb{R} $, and let the smooth function $ \bm{r} : I \rightarrow \mathbb{R}^n $ parameterize the curve $ \Gamma \subset \mathbb{R}^n$. Finally, let $ \Gamma_{-} $ be the same curve $ \Gamma $, but with opposite orientation. In this case
+\begin{equation*}
+	\int_{\Gamma_{-}} \bm{F}(\bm{r}) \cdot \diff \bm{r} = - \int_{\Gamma} \bm{F}(\bm{r}) \cdot \diff \bm{r}
+\end{equation*}
+
+\subsubsection{Proposition: Line Integral of the Sum of Vector Fields}
+Let $ \bm{F}, \bm{G} : \mathbb{R}^n \rightarrow \mathbb{R}^n $ be two vector fields and let $ \Gamma \subset \mathbb{R}^n$ be a curve parameterized by the smooth function $ \bm{r} : \mathbb{R} \rightarrow \mathbb{R}^n $. In this case
+\begin{equation*}
+	\int_{\Gamma} \left(\bm{F} + \bm{G}\right)(\bm{r}) \cdot \diff \bm{r} = \int_{\Gamma} \bm{F}(\bm{r}) \cdot \diff \bm{r} + \int_{\Gamma} \bm{G}(\bm{r}) \cdot \diff \bm{r}
+\end{equation*}
+
+\subsection{Vector Fields}
+	
+\subsubsection{Definition: Gradient}
+Let $ u : D \subset \mathbb{R}^n \rightarrow \mathbb{R}$ be a scalar function of $ n $ variables $ x_1, x_2, \dots, x_n $ and let $ p \in \mathbb{R}^n $ be a point in $ \mathbb{R} $. The gradient of $ u $, denoted by $ \nabla u $, is the vector field given by
+\begin{equation*}
+	\nabla u(p) = \left(\pdv{u}{x_1} (p), \pdv{u}{x_2} (p), \dots, \pdv{u}{x_n} (p)\right)
+\end{equation*}
+mapping the point $ p \in \mathbb{R}^n $ to the vector $ \nabla u(p) \in \mathbb{R}^n $.
+
+\subsubsection{Definition: Conservative Vector Field}
+A conservative vector field is a vector field that is the gradient of a multivariable scalar function (or scalar field). More formally, the vector field $ \bm{F} :  D \subset \mathbb{R}^n \rightarrow \mathbb{R}^n $ is a conservative field if there exists scalar function $ u : D \rightarrow \mathbb{R} $ such that
+\begin{equation*}
+	\bm{F} = \nabla u
+\end{equation*}
+
+\subsubsection{Theorem: The Gradient Theorem for Line Integrals}
+The gradient theorem generalizes the fundamental theorem of calculus. Let $ \bm{F} :  D \subset \mathbb{R}^n \rightarrow \mathbb{R}^n $ be a conservative vector field and let $ u : D \rightarrow \mathbb{R} $ be a continuously differentiable scalar function such that $ \bm{F} = \nabla u $. More so, let $ I = [a, b] $ be an interval in $ \mathbb{R} $, let the smooth function $ \bm{r} : I\rightarrow \mathbb{R}^n $ parameterize the curve $ \Gamma $, and let $ \bm{\alpha} = \bm{r}(a) $ and $ \bm{\beta} = \bm{r}(b) $ be the endpoints of $ \Gamma $. In this case,
+\begin{equation*}
+	\int_\Gamma \bm{F}(\bm{r})\cdot \diff \bm{r} = u(\bm{\beta}) - u(\bm{\alpha})
+\end{equation*}
+
+\subsubsection{Proposition: Equivalent Properties of Vector Fields}
+If $ \bm{F} :  D \subset \mathbb{R}^n \rightarrow \mathbb{R}^n $ is a vector field, the following properties are equivalent:
+\begin{enumerate}
+	\item $ \bm{F} $ is a conservative field.
+	\item The line integral of $ \bm{F} $ over any closed path is equal to zero.
+	\item The line integral of $ \bm{F} $ between any two points is independent of the path taken and depends only on the starting and ending point of the curve.
+\end{enumerate}
+
+\subsection{Surface Integrals}
+A surface integral is an integral of a function (or field) evaluated on a surface.
+
+\subsubsection{Surface Integral of a Scalar Field}
+Let $ D \subset \mathbb{R}^2 $ be a connected subset of $ \mathbb{R}^2 $ and let $ \bm{r} : D \rightarrow \mathbb{R}^3 $ mapping $ (u, v) \mapsto \bm{r}(u, v) $ be a continuously differentiable vector function parametrizing the surface $ \mathcal{S} $. Finally, let $ f : \mathbb{R}^3 \rightarrow \mathbb{R} $ be a scalar field. In this case, the surface integral of $ f $ over the surface $ \mathcal{S} $ is given by:
+\begin{equation*}
+	\iint_{\mathcal{S}} f \diff \mathcal{S} = \iint_{D} f(\bm{r}(u, v)) \norm{\bm{r}_u \cross \bm{r}_v} \diff u \diff v
+\end{equation*}
+where $ \bm{r}_u $ and $ \bm{r}_v $ are $ \bm{r} $'s partial derivatives with respect to $ u $ and $ v $, respectively.
+	
+\subsubsection{Proposition: The Surface Integral of a Scalar Field is Independent of Parametrization}
+The surface integral of a scalar field is independent of the surface's parametrization.
+
+More formally, if $ \mathcal{S} $ is a surface in Euclidean space, $ D, \Delta \subset \mathbb{R}^2 $ are connected subsets of $ \mathbb{R}^2 $, and the continuously differentiable vector functions $ \bm{r} : D \rightarrow \mathbb{R}^3 $ mapping $ (u, v) \mapsto \bm{r}(u, v) $ and $ \bm{\rho} : \Delta \rightarrow \mathbb{R}^3 $ mapping $ (\mu, \nu) \mapsto \bm{\rho}(\mu, \nu) $ are two parameterizations of $ \mathcal{S} $, then
+\begin{equation*}
+		\iint_{D} f(\bm{r}(u, v)) \norm{\bm{r}_u \cross \bm{r}_v} \diff u \diff v = \iint_\Delta f(\bm{\rho}(\mu, \nu)) \norm{\bm{\rho}_\mu \cross \bm{\rho}_\nu} \diff \mu \diff \nu
+\end{equation*}
+
+\subsubsection{Definition: Surface Integral of a Vector Field}
+Let $ \mathcal{S} \subset \mathbb{R}^3 $ be a surface and let $ \bm{N} : \mathcal{S} \to \mathbb{R}^3 $ be the vector function mapping points on $ \mathcal{S} $ to the unit normal vector $\mathbf{N}$ at that point. Finally, let $ \bm{F} : \mathcal{S} \rightarrow \mathbb{R}^3 $ be a vector field. In this case:
+\begin{equation*}
+	\iint_{\mathcal{S}} \bm{F} \cdot \diff \bm{\mathcal{S}} = \iint_{\mathcal{S}} \bm{F} \cdot \bm{N} \diff \mathcal{S}
+\end{equation*} 
+
+\subsubsection{Note: Alternate Formulation of the Surface Integral of a Vector Field}
+Let $ D \subset \mathbb{R}^2 $ be a connected subset of $ \mathbb{R}^2 $, let $ \bm{r} : D \rightarrow \mathcal{S} \subset \mathbb{R}^3 $ mapping $ (u, v) \mapsto \bm{r}(u, v) $ be a continuously differentiable vector function parametrizing the surface $ \mathcal{S} $. Finally, let $ \bm{F} : \mathcal{S} \rightarrow \mathbb{R}^3 $ be a vector field. In this case:
+\begin{equation*}
+	\iint_{\mathcal{S}} \bm{F} \cdot \diff \bm{\mathcal{S}} = \iint_D \bm{F}\big(\bm{r}(u, v) \big) \cdot (\bm{r}_u \cross \bm{r}_v) \diff u \diff v
+\end{equation*}
+
+\subsection{Vector Operators}
+	
+\subsubsection{Definition: Curl in Euclidean Space}
+Let $ \bm{F} :  D \subset \mathbb{R}^3 \rightarrow \mathbb{R}^3 $ be a vector field in Euclidean space with scalar components $ (F_x, F_y, F_z) $. The curl of $ \bm{F} $, denoted by $ \nabla \cross \bm{F} $, is defined as
+\begin{equation*}
+	\nabla \cross \bm{F} =
+	\left(\frac{\partial F_z}{\partial y} - \frac{\partial F_y}{\partial z}\right) \boldsymbol{\hat\imath} + \left(\frac{\partial F_x}{\partial z} - \frac{\partial F_z}{\partial x} \right) \boldsymbol{\hat\jmath} + \left(\frac{\partial F_y}{\partial x} - \frac{\partial F_x}{\partial y} \right) \boldsymbol{\hat k}
+\end{equation*}
+or, in matrix form
+\[\nabla \cross \bm{F} =
+\begin{bmatrix}\dfrac{\partial F_z}{\partial y} - \dfrac{\partial F_y}{\partial z} \\[2.5ex]
+\dfrac{\partial F_x}{\partial z} - \dfrac{\partial F_z}{\partial x}\\[2.5ex]
+\dfrac{\partial F_y}{\partial x} - \dfrac{\partial F_x}{\partial y}\end{bmatrix}	
+\]
+
+\subsubsection{Proposition: Curl of a Conservative Vector Field}
+The curl of a conservative vector field is zero. More formally, if $ \bm{F} :  D \subset \mathbb{R}^3 \rightarrow \mathbb{R}^3 $ is a conservative vector field and $ \bm{p} = (x, y, z) $ denotes a point in Euclidean space, then
+\begin{equation*}
+	(\nabla \cross \bm{F})(\bm{p}) = \bm{0} \quad \forall \quad \bm{p} \in D
+\end{equation*}
+where $ \bm{0} $ denotes the zero vector.
+
+\subsubsection{Definition: Divergence in Euclidean Space}
+Divergence is an vector operator that operates on a vector field to produce a scalar field. If $ \bm{F} : \Omega \subset \mathbb{R}^3 \to \mathbb{R}^3 $ with scalar components $ \bm{F} = (F_x, F_y, F_z) $, the divergence of $ \bm{F} $, denoted by $ \div{F} $, is the scalar field $ \div{F} : \Omega \to \mathbb{R}$ given by:
+\begin{equation*}
+	\div{F} = \pdv{F_x}{x} + \pdv{F_y}{y} + \pdv{F_z}{z}
+\end{equation*}
+
+\subsubsection{Definition: Laplacian in Euclidean Space}
+The Laplacian, or Laplace operator, is a differential operator giving the divergence of a scalar field's gradient. More formally, let $ f : \Omega \subset \mathbb{R}^3 \to \mathbb{R} $ be a twice differentiable scalar field. The Laplacian of $ f $, denoted by $ \Delta f $ or $ \nabla^2 f $, is the scalar field $ \Delta{F} : \Omega \to \mathbb{R}$ given:
+\begin{equation*}
+	\Delta f = \div{\grad{f}} = \pdv[2]{f}{x} + \pdv[2]{f}{y} + \pdv[2]{f}{z}
+\end{equation*}
+
+\subsubsection{Note: Harmonic Functions}
+Scalar functions whose Laplacian is zero are called harmonic functions. More formally, if $ f : \Omega \subset \mathbb{R}^3 \to \mathbb{R} $ is a twice continuously differentiable scalar function such that
+\begin{equation*}
+	\Delta f = 0
+\end{equation*}
+then $ f $ is a harmonic function.
+
+\subsubsection{Proposition: Properties of Vector Operators}
+Let $ f, g: \mathbb{R}^3 \to \mathbb{R} $ be two continuously differentiable scalar fields and let $ \bm{F}, \bm{G}: \mathbb{R}^3 \to \mathbb{R}^3 $ be two vector fields. In this case:
+\begin{enumerate}
+	\item $ \grad(fg)  = g\grad{f} + f\grad{g}$
+	\item $\div(f \bm{F}) = \langle {f}, \grad\bm{F} \rangle + \langle \grad{f}, \bm{F} \rangle $ 
+	\item $ \div (\bm{F} \cross \bm{G}) = \left \langle \bm{G}, \curl{\bm{F}} \right \rangle - \left \langle \bm{F}, \curl{\bm{G}} \right  \rangle $
+\end{enumerate}
+where $ \langle \cdot, \cdot \rangle $ denotes the standard scalar Euclidean product.
+
+\subsection{Important Theorems in Vector Analysis}
+
+\subsubsection{Gauss's Theorem (Divergence Theorem)}
+Let $ V \subset \mathbb{R}^3 $ be a closed and bounded (or, more generally, compact) subset of $ \mathbb{R}^3 $ with a piecewise smooth boundary $ S = \partial V $ where $ S $ is a piecewise smooth surface with outward orientation. More so, let $ \bm{F} $ be a continuously differentiable vector field defined on a neighborhood of $ V $. In this case:
+\begin{equation*}
+	\iint_S \bm{F} \cdot \diff \bm{\mathcal{S}} = \iiint_V \div{\bm{F}} \diff V
+\end{equation*}
+
+\subsubsection{Green's Theorem}
+Let $ D \subset \mathbb{R}^2 $ be a bounded subset of $ \mathbb{R}^2 $ with a closed, piecewise continuous border $ \partial D = C $ such that $ C $ is positively oriented. More so, let $ \bm{F} $ be a continuously differentiable vector field defined on a neighborhood of $ D $ with scalar components given by $ \bm{F}(x, y) = (X(x, y), Y(x, y)) $. In this case:
+\begin{equation*}
+	\oint_{C} X \diff x + Y \diff y = \iint_D \left(\pdv{Y}{x} - \pdv{X}{y} \right)
+\end{equation*}
+where the direction of integration in the integral $ \oint_C $ is in the positive direction of the curve $ C $.
+
+\subsubsection{Stoke's Theorem in $ \mathbb{R}^3 $}
+Let $ \Sigma \subset \mathbb{R}^3 $ be a bounded, outward oriented, piecewise smooth surface in $ \mathbb{R}^3 $ with piecewise continuous border $ \partial \Sigma $. More so, let $ \bm{F} $ be a continuously differentiable vector field defined on a neighborhood of $ \Sigma $. In this case:
+\begin{equation*}
+	\int_{\partial \Sigma} \bm{F} \cdot \diff \bm{s} = \iint_{\Sigma} \curl{\bm{F}} \cdot \diff \bm{\mathcal{S}}
+\end{equation*}
+Where $ \diff \bm{s} $ denotes a line element of $ \partial \Sigma $  and $ \diff \bm{\mathcal{S}} $ denotes an area element of $ \Sigma $.
+
+\subsubsection{Green's First Two Identities}
+Let $ \Omega \subset \R^3 $ be an open, bounded subset of $ \R^3 $ with a piecewise continuous border $ \partial \Omega $, let $ u, v $ be smooth scalar fields defined on a neighborhood of $ \bar{\Omega} $, and let $ \bm{n} $ denote the outward-pointing normal vector to border $ \partial \Omega $. In this case, Green's first two identities are:
+\begin{align*}
+	&\iint_{\partial \Omega} u \pdv{v}{\bm{n}} \diff S = \iiint_{\Omega} (u \Delta v + \grad{u} \cdot \grad{v}) \diff V\\[1.5ex]
+	&\iint_{\partial \Omega}\left(u\pdv{v}{\bm{n}} - v \pdv{u}{\bm{n}} \right) \diff S = \iiint_{\Omega} (u \Delta v - v\Delta u) \diff V
+\end{align*}
+where $ \pdv{v}{\bm{n}} = \grad{v} \cdot \bm{n} $ denotes the directional derivative of v in the direction of $ \bm{n} $.
+
+\subsubsection{Conservative Vector Field on a Star Domain} 
+Let $ S \subset \R^3 $ be a closed, bounded star domain in $ \R^3 $, and let $ \bm{F} : S \to \R^3 $ be a vector field defined on the set $ S $ such that $ \curl{\bm{F}} = 0 $ for all $ \bm{x} \in S $. In this case, $ \bm{F} $ is a conservative vector field and there exists scalar field $ f : S \to \R $ such that $ \bm{F} = \grad{f} $.
+
+\subsection{Vector Operators in Various Coordinate Systems}
+
+\textbf{TODO}
+%\subsubsection{Proposition: Vector Operations are Independent of Coordinate System}
+
+%The value of the gradient, curl, divergence, and Laplace operators are independent of the coordinate system in which we define the fields on which they act.
+
+\newpage 
+\section{Differential Equations}
+
+\subsection{Ordinary First Order Differential Equations}
+\textbf{TODO} Add remaining types of ordinary first-order differential equations. 
+\subsubsection{Homogeneous Differential Equation}
+A homogeneous differential equation is a differential equation of the form
+\begin{equation*}
+	y' = f(x,y)
+\end{equation*}
+where $ f $ is a homogeneous function of order $ 0 $, meaning that $ f(tu, tv) = f(u, v) $ for $ t > 0 $.
+
+To solve a homogeneous DE, we start by applying the $ 0 $th order homogeneity.
+\begin{align*}
+	f(x, y) = f\left(x, \frac{y}{x}x \right)
+\end{align*}
+We introduce a new variable $ z = \frac{y}{x} $ with $ y' = z'x + z $ and our DE takes the form
+\begin{align*}
+	&z'x + z = f(1, z)\\
+	&z'x = f(1, z) - z\\
+	&\frac{\diff x}{x} = \frac{\diff z}{f(1, z) - z}\\
+	& \frac{\diff x}{x} = \frac{\diff z}{g(z)}
+\end{align*}
+where $ g(z) \coloneqq f(1, z) - z $. This is an equation with separable variables, which can be solved for $ z $ by integrating both sides. Once $ z $ is found, we plug in $ y = zx $.
+
+
+\subsubsection{Definition: First Integral}
+A first integral of the first-order differential equation $ y' = f(x, y) $ is a function $ u = u(a, b) $ such that 
+\begin{equation*}
+	u(x, y(x)) = C \qquad C \in \R
+\end{equation*}
+for each solution $ y = y(x) $ of the differential equation. Note that the set of all $ (a, b) $ such that $ u(a, b) = C $ is a level set.
+
+\subsubsection{Definition: Exact Differential Equation}
+The differential equation
+\begin{equation*}
+	P(x, y) \diff x + Q(x, y) \diff y = 0
+\end{equation*}
+is exact if any of the equivalent conditions hold:
+\begin{enumerate}
+	\item The vector field $ \bm{F} = (P, Q) $ is conservative
+	\item There exists a scalar function $ u(x, y) $ such that $ \bm{F} = (P, Q)  = \grad{u}$
+	\item $ P_y = Q_x $
+\end{enumerate} 
+
+\subsubsection{Integrating Factor}
+Lets have a differential equation, not necessarily exact, of the form
+\begin{equation*}
+	P(x, y) \diff x + Q(x, y) \diff y = 0
+\end{equation*}
+For the special cases where either $ \frac{P_y - Q_x}{Q} $ is independent of $ y $ or $ \frac{Q_x - P_y}{P} $ is independent of $ x $, we have the integrating factors
+\begin{align*}
+	& \mu(x) = \exp(\int \frac{P_y - Q_x}{Q} \diff x)\\
+	& \mu(y) = \exp(\int \frac{Q_x - P_y}{P} \diff x)
+\end{align*}
+
+
+\subsubsection{Parametric Solution Case 1}
+Our goal is to describe the family of curves solving the differential equation
+\begin{equation*}
+	F(x, y') = 0
+\end{equation*}	
+parametrically.  We denote $ y' = \dv{y}{x} $, $ \dot{y} = \dv{y}{t} $, and $ \dot{x} = \dv{x}{t} $. Next, we introduce the parametric functions
+\begin{align*}
+	& x(t) = \psi(t)\\
+	& y'(t) = \dv{y}{x} (t) = \theta (t)
+\end{align*}
+Our goal is to find an expression for $ y(t) $. We apply the chain rule to the composition $ y \circ x $ to get
+\begin{align*}
+	\dv{[y \circ x]}{t} = \dv{y}{x} \dv{x}{t} \quad \implies \quad \dv{[y \circ x]}{t} \equiv \dot{y}(t) = \dv{y}{x} \dv{x}{t}
+\end{align*}
+It follows that
+\begin{equation*}
+	\dot{y}(t) = \theta(t) \dot{\psi}(t) \quad \implies \quad y(t) = \int \theta(t) \dot{\psi}(t)  \diff t = \int y'(t) \dot{x}(t)  \diff t
+\end{equation*}
+In this case, the functions $ y(t) $ and $ x(t) $ parameterize the solution to the differential equation.
+
+\subsubsection{Parametric Solution Case II}
+Our goal is to describe the family of curves solving the differential equation
+\begin{equation*}
+	F(y, y') = 0
+\end{equation*}	
+parametrically. We denote $ y' = \dv{y}{x} $, $ \dot{y} = \dv{y}{t} $, and $ \dot{x} = \dv{x}{t} $. Next, we introduce the parametric functions
+\begin{align*}
+	& y(t) = \psi(t)\\
+	& y'(t) = \dv{y}{x} (t) = \theta (t)
+\end{align*}
+Our goal is to find an expression for $ x(t) $. We apply the chain rule to the composition $ y \circ x $ to get
+\begin{align*}
+	\dv{[y \circ x]}{t} = \dv{y}{x} \dv{x}{t} \quad \implies \quad \dv{[y \circ x]}{t} \equiv \dot{y}(t) = \dv{y}{x} \dv{x}{t}
+\end{align*}
+It follows that
+\begin{equation*}
+	\dot{\psi}(t) = \theta(t) \dot{x}(t) \quad \implies \quad x(t) = \int \frac{\dot{\psi}(t)}{\theta(t)}  \diff t = \int \frac{\dot{y}(t)}{y'(t)}  \diff t 
+\end{equation*}
+In this case, functions $ y(t) $ and $ x(t) $ parameterize the solution to the differential equation.
+
+\subsubsection{Clairaut Differential Equation}
+The Clairaut differential equation has the form
+\begin{equation*}
+	y = x y' + f(y')
+\end{equation*}
+where $ f \in C^{1} $ is a continuously differentiable function.
+
+We solve the equation by differentiating with respect to $ x $ to get:
+\begin{align*}
+	& y' = y' + xy'' + f'(y') y''\\
+	& 0 = y''(x + f'(y'))
+\end{align*}
+It follows that either $ y'' = 0 $, which gives the solution 
+\begin{equation*}
+	y = Cx + f(C)
+\end{equation*}
+which is a family of linear functions parameterized by the constant $ C $. This solution is called the general solution.
+
+The alternative option 
+\begin{equation*}
+	x + f'(y') = 0
+\end{equation*}
+can be written as $ F(x, y') = 0 $ and solved parametrically using previous techniques. The resulting solution for $ y(x) $ is called the singular solution. The graph of the singular solution is the envelope of the graphs of the general solutions.
+
+\subsection{Metric Spaces and Picard's Existence Theorem}
+
+\subsubsection{Review: Metric Spaces}
+A metric space $ (M, d) $ is a set $ M $ equipped with a metric $ d : M \cross M \to \R^+ $ that measures the distance elements of $ M $. For each $ u, v, w \in M $, the metric $ d $ must satisfy:
+\begin{align*}
+	&d(u, v) \leq 0 \quad \text{and} \quad d(u, v) = 0 \iff v = u \\
+	&d(u, v) = d(v, u)\\
+	&d(u, w) \leq d(u, v) + d(v, w)
+\end{align*}
+
+\subsubsection{Definition: Lipschitz Continuity}
+Let $ (M, d_m) $ and $ (N, d_n) $ be two metric spaces. The function $ \phi: M \to N $ mapping from $ M $ to $ N $ is said to be Lipschitz continuous if there exists a non-negative real constant $ \gamma \in \R^+ $  such that for each $ m_1, m_2 \in M$
+\begin{equation*}
+	d_n \big (\phi(m_1), \phi(m_2) \big) \leq \gamma d_m(m_1, m_2)
+\end{equation*}
+If the special case of a real function $ f: \R \to \R $ equipped with the standard metric $ d(x_1, x_2) = \abs{x_2 - x_1} $, the function $ f $ is Lipschitz continuous if there exists a non-negative real constant $ \gamma \in \R^+ $ such that for all $ x_1, x_2 \in \R $ 
+\begin{equation*}
+	\abs{f(x_1) - f(x_2)}  \leq \gamma \abs{x_1 - x_2}
+\end{equation*}
+
+
+\subsubsection{Review: Banach's Fixed-Point Theorem}
+Let $ (M, d) $ be a complete metric space and let $ \phi: M \to M $ be a contraction mapping (i.e. a Lipschitz continuous function from $ M $ to $ M $ with Lipschitz constant $ \gamma < 1 $). In this case, there exists exactly one fixed point $ a \in M $ such that $ \phi(a) = a$. More so, for the sequence $ x_n = (\phi \, \circ \stackrel{n}{\dots} \circ \, \phi)(x) $ defined as $ n $ compositions of the function $ \phi $, we have:
+\begin{equation*}
+	\lim_{n \to \infty} x_n(x) = a
+\end{equation*}
+for each $ x \in M $.
+
+\subsubsection{Theorem: Picard's Existence Theorem}
+Let $ x_0, y_0 \in \R $ be real numbers and let $ P \coloneqq [x_0 - a, x_0 + a] \cross [y_0 - b, y_0 + b] \subset \R^2 $ be a rectangle in $ \R^2 $. Let $ f : P \to \R $ be a continuous function such that $ f $ is uniformly Lipschitz continuous in the second variable $ y $, meaning there exists Lipschitz constant $ \gamma > 0 $ such that for each $ (x, y_1), (x, y_2) \in P $,
+\begin{equation*}
+	\abs{f(x, y_1) - f(x, y_2)} \leq \gamma \abs{y_2 - y_1}
+\end{equation*}
+
+\iffalse (notation for proof, which is left out)
+Finally, let $ \alpha \in [0, 1] $ be a real number, let $ M = \sup_{P}(f) $, and let 
+\begin{equation*}
+	c \coloneqq \min\left \{a, \frac{b}{M}, \frac{\alpha}{\gamma}\right \}
+\end{equation*}
+where $ \gamma $ is the Lipschitz constant of the function $ f $. 
+\fi 
+
+In this case, there exists exactly one solution to the initial-value problem 
+\begin{equation*}
+	y'(x) = f(x,y(x)),\qquad y(x_0) = x_0.
+\end{equation*}
+
+
+\subsection{System of Linear Differential Equations}
+
+\subsubsection{Definition: Homogeneous System of LDEs with Constant Coefficients}
+Define the function $ \bm{y}: I \to \R^n $ and the constant matrix of coefficients $ \mathbf{A} \in \R^{n \cross n}$. In this case, the matrix equation
+\begin{equation*}
+	\bm{y}'(x) = \mathbf{A} \bm{y}(x)
+\end{equation*}
+is a homogeneous system of linear differential equations with constant coefficients.
+
+\subsubsection{Definition: Non-Homogeneous System of LDEs with Constant Coefficients}
+Define the functions $ \bm{y}: I \to \R^n $ and $ \bm{b}:  I \to \R^n $ and the constant matrix of coefficients $ \mathbf{A} \in \R^{n \cross n}$. In this case, the matrix equation
+\begin{equation*}
+	\bm{y}'(x) = \mathbf{A} \bm{y}(x) + \bm{b}(x)
+\end{equation*}
+is a non-homogeneous system of linear differential equations with constant coefficients.
+
+\subsubsection{Solution of a Homogeneous System of LDEs with Constant Coefficients}
+Define the function $ \bm{y}: I \to \R^n $ and the constant matrix of coefficients $ \mathbf{A} \in \R^{n \cross n}$ and let
+\begin{equation*}
+	\bm{y}'(x) = \mathbf{A} \bm{y}(x)
+\end{equation*}
+be a homogeneous system of linear differential equations with constant coefficients. The solution to this homogeneous system can be written:
+\begin{equation*}
+	\bm{y}(x) = \bm{c} e^{x \mathbf{A}}
+\end{equation*}
+where $ \bm{c} \in \R^n $ is a constant vector.
+
+% Start on DE 52. Do the new Wronskian, the calculating $ e^{\mathbf{A}} $ if $ \mathbf{A} $ is diagonalizable and if it is not, with Jordan canonical form.
+
+
+\subsubsection{Definition: Homogeneous and Non-Homogeneous System of First-Order LDEs with Variable Coefficients}
+Let $ I \subset \R $ be an interval on the real line, and let $ a_{ij}, b_j: I \to \R $ be continuous functions with indexes in the range $ i, j \in \{1, 2, \dots, n \} $. Let $ \mathbf{A}: I \to \R^{n \cross n} $ be a matrix function defined as:
+\[
+\mathbf{A}(x) \coloneqq
+\begin{bmatrix}
+	a_{11}(x) & \dots & a_{1n}(x) \\[1.0ex]
+	\vdots & \ddots & \vdots \\[1.0ex]
+	a_{n1}(x) & \dots & a_{nn}(x) 
+\end{bmatrix} 
+\in \R^{n \cross n}
+\]
+and let $ \bm{b} : I \to \R^n $ and $ \bm{y} : I \to \R^n $ be a vector functions of one variable defined as:
+\[
+\bm{b}(x) \coloneqq
+\begin{bmatrix}
+	b_1(x)\\[1.0ex]
+	\vdots \\[1.0ex]
+	b_n(x)
+\end{bmatrix}
+\in \R^{n}
+\quad \text{and} \quad
+\bm{y}(x) \coloneqq
+\begin{bmatrix}
+	y_1(x)\\[1.0ex]
+	\vdots \\[1.0ex]
+	y-_n(x)
+\end{bmatrix}
+\in \R^{n}
+\]
+In this case, the matrix equations
+\begin{align*}
+	& \bm{y}'(x) = \mathbf{A}(x) \bm{y}(x) && \text{and} && \bm{y}'(x) = \mathbf{A}(x) \bm{y}(x) + \bm{b}(x) 
+\end{align*}
+are homogeneous and nonhomogeneous systems of first-order linear differential equations with constant coefficients, respectively.
+
+\subsubsection{Proposition: Equivalent Properties of Systems of Linear Differential Equations}
+Let $ I \subset \R $ be an interval on the real line and let the vector-valued functions $ \bm{y}_1, \bm{y}_2, \dots, \bm{y}_k : I \to \R^n $ be solutions of the homogeneous system $ \bm{y}' = A \bm{y} $ on the interval $ I $. In this case, the following are equivalent:
+\begin{enumerate}
+	\item The vector functions $ \bm{y}_1, \bm{y}_2, \dots, \bm{y}_k $ are linearly independent.
+	
+	\item There exists $ x_0 \in I $ such that the vectors $ \bm{y}_1(x_0), \bm{y}_2(x_0), \dots, \bm{y}_k(x_0) $ are linearly independent in $ \R^n $.
+	
+	\item The vectors $ \bm{y}_1(x), \bm{y}_2(x), \dots, \bm{y}_k(x) $ are linearly independent in $ \R^n $ for all $ x \in I $.
+	
+\end{enumerate}
+	
+\subsubsection{Theorem: Dimension of Solution Set}
+Let $ I \subset R$ be an interval on the real line, let $ \bm{y} : I \to \R^n$ be a vector valued function with $ n $ scalar components $ (y_1, y_2, \dots, y_n) $, and let $ \mathbf{A} : I \to \R_{n \cross n} $ be a matrix function. In this case, the solution set to the homogeneous system of first-order linear differential equations 
+\begin{equation*}
+	\bm{y}' = A \bm{y}
+\end{equation*}
+is $ n $-dimensional.
+
+
+\subsubsection{Definition: Fundamental Matrix}
+Let $ I \subset \R $ be an interval on the real line, let $ \bm{y} : I \to \R^n $ be a vector-valued function and let $ \mathbf{A} : I \to \R^{n \cross n} $ be a matrix-valued function, and let
+\begin{equation*}
+	\bm{y}'(x) = \mathbf{A}(x) \bm{y}(x)
+\end{equation*}
+be a system of $ n $ homogeneous linear differential equations. Finally, let $ \bm{y}_1, \bm{y}_2, \dots, \bm{y}_n $ be $ n $ linearly independent solutions to the homogeneous system
+\begin{equation*}
+	\bm{y}'(x) = \mathbf{A}(x) \bm{y}(x)
+\end{equation*}
+In this case, the fundamental matrix $ \mathbf{Y} : I \to \R^{n \cross n} $ is a matrix-valued function whose columns are the linearly independent solutions to the homogeneous system. In other words
+\begin{equation*}
+	\mathbf{Y} = [y_1, y_2, \dots, y_n]
+\end{equation*}
+
+\subsubsection{Proposition: Solution in Terms of Fundamental Matrix}
+Let $ I \subset \R $ be an interval on the real line, let $ \bm{y} : I \to \R^n $ be a vector-valued function, let $ \mathbf{A} : I \to \R^{n \cross n} $ be a matrix-valued function, and let
+\begin{equation*}
+	\bm{y}'(x) = \mathbf{A}(x) \bm{y}(x)
+\end{equation*}
+be a system of $ n $ homogeneous linear differential equations with the fundamental matrix $  \mathbf{Y} : I \to \R^{n \cross n} $. In this case, every solution to the system can be written in the form
+\begin{equation*}
+	\bm{y}(x) = \mathbf{Y}(x) \bm{c}
+\end{equation*}
+where $ \bm{c} \in \R^n $ is a constant vector.
+
+
+\subsubsection{Proposition: Condition for Fundamental Matrix}
+Let $ I \subset \R $ be an interval on the real line, let $ \bm{y} : I \to \R^n $ be a vector-valued function, let $ \mathbf{A} : I \to \R^{n \cross n} $ be a matrix-valued function, and let
+\begin{equation*}
+	\bm{y}'(x) = \mathbf{A}(x) \bm{y}(x)
+\end{equation*}
+be a system of $ n $ homogeneous linear differential equations. In this case, the matrix-valued function $ \mathbf{Y} : I \to \R^{n\cross n} $ is a fundamental matrix of the system if and only if 
+\begin{equation*}
+	\mathbf{Y}'(x) = \mathbf{A}(x) \mathbf{Y}(x) 
+\end{equation*}
+and $ \mathbf{Y}(x) $ is invertible for all $ x $ in $ I $.
+
+
+\subsubsection{Proposition: Particular Solution of a Non-Homogeneous System of LDEs with Variable Coefficients}
+Let $ I \subset \R $ be an interval on the real line, let $ \bm{y} : I \to \R^n $ and $ \bm{b} : I \to \R^n $ be a vector-valued functions, let $ \mathbf{A} : I \to \R^{n \cross n} $ be a matrix-valued function, and let
+\begin{equation*}
+	\bm{y}'(x) = \mathbf{A}(x) \bm{y}(x) + \bm{b}(x)
+\end{equation*}
+be a non-homogeneous system of $ n $ linear differential equations with variable coefficients such that the corresponding homogeneous system
+\begin{equation*}
+	\bm{y}'(x) = \mathbf{A}(x) \bm{y}(x)
+\end{equation*}
+has the fundamental matrix $ \mathbf{Y} : I \to \R^{n \cross n} $ and the homogeneous solution $ \bm{y}_h : I \to \R^n $ given by
+\begin{equation*}
+	 \bm{y}_h(x) = \mathbf{Y}(x) \bm{c}
+\end{equation*}
+where $ \bm{c} \in \R^n $ is a vector of constants. In this case, the particular solution $ \bm{y}_p(x) $ can be written in the form
+\begin{equation*}
+	\bm{y}_p(x) = \mathbf{Y}(x) \bm{z}(x)
+\end{equation*}
+where $ \mathbf{Y} = \mathbf{Y}(x) $ is the fundamental matrix and $ \bm{z}: I \to \R^n $ is a vector-valued function given by:
+\begin{equation*}
+	\bm{z}(x) = \int \mathbf{Y}^{-1}(x) \bm{b}(x) \diff x
+\end{equation*}
+
+\textbf{Short Derivation}:
+Differentiate $ \bm{y}_p(x) = \mathbf{Y}(x) \bm{z}(x) $ with respect to $ x $ to get:
+\begin{align*}
+	\bm{y}_p' = \mathbf{Y}' \bm{z} + \mathbf{Y} \bm{z}' = \mathbf{A} \mathbf{Y} \bm{z} + \mathbf{Y} \bm{z}' = \mathbf{A} \bm{y}_p + \mathbf{Y} \bm{z}'
+\end{align*}
+Comparing this to the general equation $ \bm{y}' = \mathbf{A} \bm{y} + \bm{b} $ and in particular comparing the last terms it follows that from the particularity of the solution that:
+\begin{align*}
+	& \bm{b} = \mathbf{Y} \bm{z}' && \implies && \bm{z}' = \mathbf{Y}^{-1} \bm{b} && \implies && 	\bm{z} = \bm{z}(x) = \int \mathbf{Y}^{-1}(x) \bm{b}(x) \diff x
+\end{align*}
+
+\subsubsection{Summary: Particular Solution of a Nonhomogeneous System of LDEs with Variable Coefficients}
+The particular solution $ \bm{y}_p $ to the nonhomogeneous system 
+\begin{equation*}
+	\bm{y}'(x) = \mathbf{A}(x) \bm{y}(x) + \bm{b}(x) 
+\end{equation*}
+is
+\begin{equation*}
+	\bm{y}_p(x) = \mathbf{Y}(x) \int \mathbf{Y}^{-1}(x) \bm{b}(x) \diff x
+\end{equation*}
+where $ \mathbf{Y} $ is the fundamental matrix of the homogeneous system $ \bm{y}'(x) = \mathbf{A}(x) \bm{y}(x) $.
+
+\subsubsection{Proposition: General Solution of a Nonhomogeneous System of LDEs with Variable Coefficients}
+Let $ I \subset \R $ be an interval on the real line, let $ \bm{y}, \bm{b}: I \to \R^n $ be vector-valued functions, let $ \mathbf{A} : I \to \R^{n \cross n} $ be a matrix-valued function, and let
+\begin{equation*}
+	\bm{y}'(x) = \mathbf{A}(x) \bm{y}(x) + \bm{b}(x)
+\end{equation*}
+be a non-homogeneous system of $ n $ linear differential equations with variable coefficients with homogeneous solution $ \bm{y}_h $ and particular solution $ \bm{y}_p $. In this case, the system has the general solution $ \bm{y}_g : I \to \R^n $
+\begin{equation*}
+	\bm{y}_g = \bm{y}_h + \bm{y}_p
+\end{equation*}
+
+\subsubsection{Definition: Wronskian Determinant}
+Let $ I \subset \R $ be an interval on the real line, let $ \bm{y}: I \to \R^n $ be a vector-valued function, let $ \mathbf{A} : I \to \R^{n \cross n} $ be a matrix-valued function, and let
+\begin{equation*}
+	\bm{y}'(x) = \mathbf{A}(x) \bm{y}(x) + \bm{b}(x)
+\end{equation*}
+be a homogeneous system of $ n $ linear differential equations with variable coefficients with fundamental matrix $ \mathbf{Y}: I \to \R^{n \cross n} $. In this case, the system's Wronskian determinant, often called the Wronskian and denoted by $ W(x) $, is the determinant:
+\begin{equation*}
+	W (x) \coloneqq \det\mathbf{Y}(x)
+\end{equation*}
+
+\subsubsection{Proposition: Wronskian Determinant and Trace}
+Let $ I \subset \R $ be an interval on the real line, let $ \bm{y}: I \to \R^n $ be a vector-valued function, let $ \mathbf{A} : I \to \R^{n \cross n} $ be a matrix-valued function, and let
+\begin{equation*}
+	\bm{y}'(x) = \mathbf{A}(x) \bm{y}(x) + \bm{b}(x)
+\end{equation*}
+be a homogeneous system of $ n $ linear differential equations with variable coefficients with fundamental matrix $ \mathbf{Y}: I \to \R^{n \cross n} $ and Wronskian $ W(x) = \det \mathbf{Y}(x) $. In this case:
+\begin{equation*}
+	W'(x) = \tr \big (\mathbf{A}(x) \big)W(x)
+\end{equation*}
+and
+\begin{equation*}
+	W(x) = C e^{\int_{x_0}^{x} \tr (\mathbf{A}(\chi) )W(\chi) \diff \chi} \quad \text{for each } x, x_0 \in I
+\end{equation*}
+where $ C \in \R $ is a constant.
+
+\subsection{Higher-Order Linear Differential Equations with Variable Coefficients}
+\textbf{Note}: This section is a medley of content from LDEs with constant and not constant coefficients. It stills needs to be cleaned up and may not be correct.
+
+\subsubsection{Definition: Homogeneous and Non-Homogeneous $ n $th-Order LDE with Constant Coefficients}
+Let $ I \in \R $ be an interval on the real line, let $ y: I \to \R $ be a real function of differentiability class $ C^n $, let $ b: I \to \R $ be a real function, and let $ a_0, a_1, \dots, a_n \in \R$ be real constants. In this case, the equations
+\begin{align*}
+	& a_0 y + a_1 y' + \dots + a^{n}y^{(n)} = 0 \quad \text{or} \quad \sum_{i=0}^{n}a_{i}y^{(i)} = 0 \quad \text{and}\\[1.0ex]
+	& a_0 y + a_1 y' + \dots + a^{n}y^{(n)} = b(x) \quad \text{or} \quad \sum_{i=0}^{n}a_{i}y^{(i)} = b(x)
+\end{align*}
+are homogeneous and non-homogeneous $ n $th order linear differential equations with constant coefficients, respectively.
+
+\subsubsection{Proposition: Matrix Representation of an $ n $th Order LDE}
+Let $ I \in \R $ be an interval on the real line, let $ y: I \to \R $ be a real function of differentiability class $ C^n $, let $ b: I \to \R $ be a real function, and let $ a_0, a_1, \dots, a_n \in \R$ be real constants and let
+\begin{equation*}
+	\sum_{i=0}^{n}a_{n}y^{(n)} = b(x)
+\end{equation*}
+be a non-homogeneous $ n $th order linear differential equation with constant coefficients. Define the functions $ z_1, z_2, \dots, z_n : I \to \R $ given by:
+\begin{align*}
+	&z_1 \coloneqq y && z_1' = z_2\\
+	&z_2 \coloneqq y' && z_2' = z_3\\
+	&z_n \coloneqq y^{(n-1)} && z_{n-1}' = z_n
+\end{align*}
+In this case, the functions $ z_1, z_2, \dots, z_n $ satisfy the relationships:
+\begin{align*}
+	&\sum_{i=0}^{n} a_i z_{i+1} + a_{n} z_{n}' = b  &&  z_n' = \frac{1}{a_n} \left(b - \sum_{i=1}^{n} a_{i-1}z_i  \right)
+\end{align*}
+And the $ n $th order equation $ \sum_{i=0}^{n}a_{i}y^{(i)} = b(x) $ is equivalently represented by the matrix system:
+\[
+\begin{bmatrix}
+	z_1 ' \\[1.0ex]
+	\vdots \\[1.0ex]
+	z_n '
+\end{bmatrix}
+= 
+\begin{bmatrix}
+	0 & 1 & 0 & \dots & 0\\[1.0ex]
+	0 & 0 & 1 & \dots & 0 \\[1.0ex]
+	\vdots & \ddots & \cdots & \ddots & 0 \\[1.0ex]
+	0 & 0 & 0 & \dots & 1 \\[1.0ex]
+	- \frac{a_0}{a_n} & - \frac{a_1}{a_n} & - \frac{a_2}{a_n} & \dots & - \frac{a_{n-1}}{a_n}
+\end{bmatrix}
+\begin{bmatrix}
+	z_1 \\[1.0ex]
+	\vdots \\[1.0ex]
+	z_n
+\end{bmatrix}
++ 
+\begin{bmatrix}
+	0 \\[1.0ex]
+	\vdots \\[1.0ex]
+	0 \\[1.0ex]
+	\frac{b}{a_n}
+\end{bmatrix}
+\]
+
+%TODO formal pre-conditions ends here
+
+\subsubsection{Proposition: Dimensions of Solution Set}
+The solution set of the homogeneous $ n $th order linear differential equation
+\begin{equation*}
+	\sum_{i=0}^{n} a_i y^{(i)} = 0
+\end{equation*}
+is a $ n $-dimensional vector space. In particular, this implies that the solution set consists of $ n $ linearly independent functions $ y_1, y_2, \dots, y_n $.
+
+\subsubsection{Definition: Fundamental Matrix of an $ n $th Order LDE}
+Let $ \sum_{i=0}^{n} a_i y^{(i)} = 0 $ be homogeneous $ n $th order linear differential equation with the linearly independent solutions $ y_1, y_2, \dots, y_n $. In this case, the equation's fundamental matrix $ \mathbf{Y} $ is the $ n \cross n $ matrix:
+\[\mathbf{Y} = \begin{bmatrix}
+	y_1 & \dots & y_n\\[1.0ex]
+	\vdots & \ddots & \vdots \\[1.0ex]
+	y_1^{(n-1)} & \dots & y_n^{(n-1)}
+\end{bmatrix}\]
+
+\subsubsection{Definition: Wronskian of an $ n $th Order LDE}
+Let $ \mathbf{Y} $ be the fundamental matrix for the homogeneous $ n $th order linear differential equation $ \sum_{i=0}^{n} a_i y^{(i)} = 0 $. In this case, we define the Wronskian as:
+\begin{equation*}
+	W = \det \mathbf{Y}
+\end{equation*}
+
+\subsubsection{Proposition: Wronskian and Trace}
+Let $ \sum_{i=0}^{n} a_i y^{(i)} = 0 $ be homogeneous $ n $th order linear differential equation defined on the real interval $ I \subset \R $ with fundamental matrix $ \mathbf{Y} $ and Wronskian $ W(x) $. In this case, for all $ x, x_0 \in I $
+\begin{equation*}
+	W(x) = W(x_0) e^{-\int_{x_0}^{x} \tr \mathbf{A}(\zeta) \diff \zeta }
+\end{equation*}
+where the matrix $ \mathbf{A} $ is defined as above
+\[\mathbf{A} = 
+\begin{bmatrix}
+	0 & 1 & 0 & \dots & 0\\[1.0ex]
+	0 & 0 & 1 & \dots & 0 \\[1.0ex]
+	\vdots & \ddots & \ddots & \ddots & 0 \\[1.0ex]
+	0 & 0 & 0 & \dots & 1 \\[1.0ex]
+	- \frac{a_0}{a_n} & - \frac{a_1}{a_n} & - \frac{a_2}{a_n} & \dots & - \frac{a_{n-1}}{a_n}
+\end{bmatrix}
+\]
+Note that the trace $ \tr \mathbf{A}(x) $ is simply equal to the bottom right matrix element:
+\begin{equation*}
+	\tr \mathbf{A}(x) = \frac{- a_{n-1 (x)}}{a_n (x)}
+\end{equation*}
+
+\subsubsection{Variation of Parameters for an $ n $th Order LDE}
+Let $ \sum_{i = 0}^{n} a_i(x) y^{(i)}(x) = b(x) $ be a non-homogeneous $ n $th order LDE and let $ y_1, y_2, \dots, y_n $ be the solutions to the homogeneous equation $  \sum_{i = 0}^{n} a_i(x) y^{(i)}(x) = 0 $.
+
+In this case, the particular solution $ y_p $ of the equation is:
+\begin{equation*}
+	y_p = c_1 y_1 + \dots + c_n y_n = \sum_{i = 1}^{n} c_{i} y_{i}
+\end{equation*}
+
+
+To reach the same answer in matrix form, we define
+\[
+	\mathbf{Y}(x) = 
+	\begin{bmatrix}
+		y_1 & \dots & y_n \\
+		\vdots & \ddots & \vdots \\
+		y_1^{(n-1)} & \dots & y_n^{(n-1)}
+	\end{bmatrix}
+	\quad 
+	\bm{b}(x) = 
+	\begin{bmatrix}
+		0 \\
+		\vdots \\
+		0 \\[0.5ex]
+		\frac{b(x)}{a_n}
+	\end{bmatrix}
+	\quad 
+	\bm{y}(x) =
+	\begin{bmatrix}
+		y_1(x) \\
+		\vdots \\
+		y_n(x)
+	\end{bmatrix}
+\]
+In this case the particular solution $ y_p $ is given by the dot product
+\begin{equation*}
+	y_p = \bm{y}(x) \cdot \left[\int \mathbf{Y}^{-1}(x) \bm{b}(x) \diff x \right]
+\end{equation*}
+
+\subsubsection{General Solution to a Non-Homogeneous $ n $th Order LDE}
+Let 
+\begin{equation*}
+	\sum_{i = 0}^{n} a_i(x) y^{(i)}(x) = b(x) 
+\end{equation*}
+be a non-homogeneous $ n $th order linear differential equation with the homogeneous solution $ y_h $ and the particular solution $ y_p $. In this case, the general solution $ y_g $ to the equation is
+\begin{equation*}
+	y_g = y_h + y_p
+\end{equation*}
+
+\subsection{Higher-Order LDEs with Constant Coefficients}
+
+\subsubsection{Definition: LDE with Constant Coefficients}
+Let $ n \in \mathbb{N} $ be an integer, let $ a_n, \dots, a_0 \in \R $ be real constants, and let $ b : \R \to \R $ be a function. In this case, an $ n $th order linear differential equation with coefficients is a differential equation of the form 
+\begin{equation*}
+	a_n y^{(n)} + \dots + a_1 y' + a_0 y = b(x)
+\end{equation*}
+If additionally $ b(x) = 0 $, the equation is called a \textit{homogeneous} linear differential equation with constant coefficients.
+\begin{align*}
+	a_n y^{(n)} + \dots + a_1 y' + a_0 y = 0 \qquad \text{(homogeneous)}
+\end{align*}
+
+
+\subsubsection{Note: Operator Notation for LDE with Constant Coefficients}
+Let $ n \in \mathbb{N} $ be an integer, let $ a_n, \dots, a_0 \in \R $ be real constants, and let $ b : \R \to \R $ be a function and let $ L $ be the differential operator
+\begin{equation*}
+	L = \sum_{i=0}^{n} a_i \dv[i]{}{x} = a_0 + a_1\dv{}{x} + \dots + a_n \dv[n]{}{x}
+\end{equation*}
+In terms of $ L $, a linear differential equation with constant coefficients is written
+\begin{equation*}
+	L y = b(x) \iff \sum_{i=0}^{n} a_i y^{(i)} = a_n y^{(n)} + \dots + a_1 y' + a_0 y = b(x)
+\end{equation*}
+
+\subsubsection{Trial Solution and Characteristic Polynomial}
+To solve the homogeneous linear differential equation
+\begin{equation*}
+	Ly \equiv a_n y^{(n)} + \dots + a_1 y' + a_0 y = 0
+\end{equation*}
+we use the trial solution $ y(x) = e^{\lambda x} $. When plugged into the equation, the trial solution gives the equation:
+\begin{align*}
+	L (e^{\lambda x}) = (a_n \lambda^n + \dots + a_1 \lambda + a_0) e^{\lambda x} = 0
+\end{align*}
+The complex polynomial $ p : \R \to \mathbb{C} $ given by:
+\begin{equation*}
+	p(\lambda) = a_n \lambda^n + \dots + a_1 \lambda + a_0
+\end{equation*}
+is called the characteristic polynomial of the differential equation.
+
+\subsubsection{Solution in Terms of Characteristic Polynomial}
+Let $ p : \R \to \mathbb{C} $ be the characteristic polynomial of the differential equation with constant coefficients
+\begin{equation*}
+	a_n y^{(n)} + \dots + a_1 y' + a_0 y = 0
+\end{equation*}
+and let $ p $ have the factorized form
+\begin{equation*}
+	p(\lambda ) = a_n(\lambda - \lambda_1)^{k_1} \cdots (\lambda - \lambda_m)^{k_m}
+\end{equation*}
+where $ \lambda_i \in \mathbb{C}, m \in \mathbb{N}, k_1, \dots, k_n \in \mathbb{N}, k_1 + \dots + k_m = n $.
+	
+	In this case, the exponential functions
+\begin{align*}
+	y = e^{\lambda_i x} \quad j \in  \{1, 2, \dots, m\}
+\end{align*}
+solve the linear differential equation.
+
+\subsubsection{Theorem: Complete Solution Set to LDE with Constant Coefficients}
+Let $ a_0, a_1, \dots, a_n \in \R $ be real constants, let $ m, k_1, k_2, \dots, k_m $ be (not necessarily equal) integers, let $ \lambda_1, \lambda_2, \dots, \lambda_m \in \mathbb{C} $ by complex constants and let $ p(\lambda) $ be the complex polynomial
+\begin{equation*}
+	p(\lambda) = a_n \lambda^n + \dots + a_1 \lambda + a_0 = a_n (\lambda - \lambda_1)^{k_1} \cdots (\lambda - \lambda_m)^{k_m}
+\end{equation*}
+In this case, the family of $ n $ exponential functions
+\[
+\mathcal{B}  = 
+\begin{Bmatrix}
+	&e^{\lambda_1 x}, x e^{\lambda_1 x}, \dots, x^{k_1 -1}e^{\lambda_1 x}, \\[1.5ex]
+	&e^{\lambda_2 x}, x e^{\lambda_2 x}, \dots, x^{k_2 -1}e^{\lambda_2 x}, \\[1.5ex]
+	&\vdots\\[1.5ex]
+	&e^{\lambda_m x}, x e^{\lambda_m x}, \dots, x^{k_m -1 }e^{\lambda_m x} 
+\end{Bmatrix}
+\]
+forms a basis of the solution set to the homogeneous linear differential equation with constant coefficients
+\begin{align*}
+	& a_n y^{(n)} + \dots + a_1 y' + a_0 y = 0
+\end{align*}
+and
+\begin{equation*}
+ 	k_1 + k_2 + \dots + k_m = n
+\end{equation*}
+
+\subsubsection{Proposition: Real Components of a Complex Solution}
+If the complex function $ y : \R \to \mathbb{C} $ solves the homogeneous linear differential equation with constant coefficients
+\begin{align*}
+	& a_n y^{(n)} + \dots + a_1 y' + a_0 y = \sum_{i = 0}^{n} a_i y^{(n)} = 0
+\end{align*}
+then the real and imaginary components $ \Re y $ and $ \Im y $ also solve the equation.
+
+\subsection{LDE with Variable Coefficients}
+
+\subsubsection{Euler-Cauchy Equation}
+The Euler-Cauchy equation is the linear differential equation
+\begin{equation*}
+	a_n x^n y^{(n)} + \dots + a_1 x y' + a_0 y = b(x)
+\end{equation*}
+where $ a_n, \dots, a_1, a_0 \in \R $ are real constants.
+
+The equation is solved with the trial solution $ y = x^{\lambda} $. When plugged in, the trial solution gives the polynomial equation
+\begin{equation*}
+	x^{\lambda} \sum_{i = 0}^{n} a_i \lambda (\lambda - 1) \cdots (\lambda - i + 1) = 0
+\end{equation*}
+
+\subsection{Introduction to the Calculus of Variations}
+
+\subsubsection{Definition: Functional}
+A functional is a mapping from a set of functions to the real numbers $ \R $.
+
+\subsubsection{Functionals and Lagrangian}
+Let $ L: \R^3 \to \R $ be a differentiable scalar function of 3 real variables and let $ I $ be a functional mapping functions $ y $ to the real numbers $ \R $ with the relationship:
+\begin{equation*}
+	I : y \mapsto \int_{a}^{b} L(x, y, y') \diff x
+\end{equation*}
+The motivation of the calculus of variations is to find the function $ y : \R \to \R  $ minimizing the functional $ I $.
+
+Typical problems involve:
+\begin{itemize}
+	\item Find the shortest path connecting to points
+	\item Find the path minimizing the time taken to travel between two points
+\end{itemize}
+
+
+\subsubsection{Example: Minimizing Distance Between Points}
+Let $ A, B \in \R^2 $ be two points in a plane with coordinates $ A = (a_1, a_2) $ and $ B = (b_1, b_2) $ and let $ \gamma $ be a curve connecting the points $ A, B $. More so, let $ \gamma $ be the graph of a differentiable function $ f : \R \to \R $. 
+
+In this case, the length $ \ell $ of the curve between $ A $ and $ B $ (i.e. the arc-length of $ \gamma $ ) is a functional of $ f $ given by:
+\begin{equation*}
+	\ell(f) = \int_{a_1}^{b_1} \sqrt{1 + [f'(x)]^2} \diff x
+\end{equation*}
+For such a problem, the Lagrangian is $ L(u, v, w) = \sqrt{1 + \omega^2} $ and the goal is to find the function $ f $ minimizing the functional $ \ell $.
+
+\subsubsection{Example: Brachistochrone Problem}
+Let $ A, B \in \R^2 $ be two points in a plane with coordinates $ A = (a_1, a_2) $ and $ B = (b_1, b_2) $ where $ b_1 > a_1 $ and let $ \gamma $ be a curve connecting the points $ A, B $. More so, let $ \gamma $ be the graph of a differentiable function $ f : \R \to \R $. 
+
+\begin{align*}
+	&s(t) = \int_{a_1}^{x(t)} \sqrt{1 + [f(\tau)]^2} \diff \tau \\[1.0ex]
+	&s'(t) = v(t) = \sqrt{1 + [f(x(t))]^2} (x'(t)) \\[1.0ex]
+\end{align*}
+Equating potential energy 
+\begin{equation*}
+	E_p = mgh = mg (a_2 - f(x))
+\end{equation*}
+and kinetic energy
+\begin{equation*}
+	E_k = \frac{mv^2}{2} = \frac{m}{2} \left (\sqrt{1 + [f(x(t))]^2} \left (\dv{x}{t}\right ) \right )^2
+\end{equation*}
+gives
+\begin{align*}
+	&\sqrt{2 g (a_2 - f(x))} = \sqrt{1 + [f(x)]^2} \dv{x}{t} \\[1.5ex]
+	&t = \int \diff t = \int_{a_1}^{b_1} \frac{1}{\sqrt{2g}} \sqrt{\frac{1 + [f(x)]^2}{a_2 - f(x)}} \diff x
+\end{align*}
+In this case, the linear functional is $ t = t(f) $ and the Lagrangian is 
+\begin{align*}
+	L = L(u, v, w) =  \frac{1}{\sqrt{2g}} \sqrt{\frac{1 + w^2}{a_2 - v}}
+\end{align*}
+
+\subsubsection{Formalizing the Calculus of Variation Problem}
+Let $ L : \R^3 \to \R $ be a scalar function of three variables, let $ I = [a, b] \in \R $ be an interval on the real line, let $ X $ be the space of differentiable real functions mapping from $ I $ to $ \R $, and let $ y: I \to \R $ be a differentiable function. For a given Lagrangian $ L(u, v, w) $ we want to find the extrema of the functional 
+\begin{equation*}
+	J(y) = \int_{a}^{b} L(x, y, y') \diff x
+\end{equation*}
+mapping from $ X $ to the real numbers.
+
+The extrema of the functional $ J $ is the function $ y $ for which $ J $ has an extrema in all directions. More formally, $ y $ is the function for which for each smooth function $ \eta: I \to R $ that is zero at the endpoints ($ \eta(a) = \eta(b) = 0 $) the function $ \epsilon I \to \R $ mapping to $ I(y + \epsilon \eta) $ has an extrema at $ 0 $.
+
+\subsubsection{Critical Point of a Functional}
+The function $ y $ is a critical point of the functional $ J $ if $ J $ has directional derivatives
+\begin{equation*}
+	\pdv{}{\epsilon} J(y + \epsilon \eta) \big |_{\epsilon = 0}
+\end{equation*}
+equal to zero for all smooth functions $ \eta : I \to \R $.
+
+\subsubsection{Lemma: Integral Over a Closed Interval}
+Let $ I = [a, b] $ be an interval on the real line, let $ f : I \to \R $ be a continuous function, and let
+\begin{equation*}
+	\int_{a}^{b} f(x) \eta(x) \diff x = 0
+\end{equation*}
+for all continuously differentiable functions $ \eta : I \to \R $ for which $ \eta(a) = \eta(b) = 0 $. In this case, $ f(x) = 0 $ for all $ x \in I$.
+
+\subsubsection{Generalization of Previous Lemma}
+Let $ I = [a, b] $ be an interval on the real line, let $ M, N : I \to \R $ be continuous functions and let
+\begin{equation*}
+	\int_{a}^{b} (M \eta + N \eta') \diff x = 0
+\end{equation*}
+for all continuously differentiable functions $ \eta : I \to \R $ for which $ \eta(a) = \eta(b) = 0 $. In this case, $ N $ is differentiable and $ N' = M $.
+
+\subsubsection{Euler-Lagrange Equation}
+For a Lagrangian $ L(x, y, y') $, the Euler-Lagrange equation is
+\begin{equation*}
+	L_{y} - \dv{}{x} \left[L_{y'}\right] = 0
+\end{equation*}
+More formally, for a Lagrangian $ L(u, v, w) $ where $ u, v, w $ are real functions, we define the function $ V : \R \to \R^3 $ with the relationship
+\begin{equation*}
+	V = V(x) = (x, y(x), y'(x))
+\end{equation*}
+In this case, the Euler-Lagrangian equation reads
+\begin{equation*}
+	\pdv{}{v} \big [L(V(x)) \big ] - \dv{}{x} \left[\pdv{}{w}\big[L(V(x)) \big ] \right]
+\end{equation*}
+
+\subsubsection{Necessary Condition for Extrema of a Functional}
+Let $ I = [a, b] $ be an interval on the real line, let $ y: I \to \R $ be a continuously differentiable function of the variable $ x $, and let $ L : \R^3 \to R $ with the relationship $ L = L(x, y, y') $ be the Lagrangian for the functional $ J $ defined as:
+\begin{equation*}
+	J(y) = \int_{a}^{b} L(x, y, y') \diff x
+\end{equation*}
+If $ y $ is an extrema of the functional $ J $, then $ y $ satisfies the Euler-Lagrange equation.
+
+\subsubsection{Note: Functional with Variable Endpoints}
+
+\subsubsection{Note: Lagrangian Independent of $ y $}
+Let $ L = L(x, y') $ be a Lagrangian for a CV problem such that $ L $ is independent of $ y $. In this case, the Euler-Lagrange equation simplifies to
+\begin{align*}
+	L_{y'} = C && (\text{Euler-Lagrange equation if } L = L(x, y'))
+\end{align*}
+
+\subsubsection{Note: Lagrangian Independent of $ x $}
+Let $ L = L(y, y') $ be a Lagrangian for a CV problem such that $ L $ is independent of $ x $. In this case, the Euler-Lagrange equation simplifies to
+\begin{align*}
+	L - y' L_{y'} = C && (\text{Euler-Lagrange equation if } L = L(y, y'))
+\end{align*}
+
+% TODO \subsubsection{Solution to Shortest Distance Problem} 
+
+\newpage
+		
+\section{Introduction to Hilbert Spaces and Fourier Series}
+
+\subsection{Basics of Hilbert Spaces}
+For the entirety of this section, let $ V $ be a vector space over the scalar field $ \F $, where in general $ \F $ is taken to be the complex numbers $ \mathbb{C} $.
+
+
+\subsubsection{Definition: Inner Product}
+An inner product on the vector space $ V $ is a mapping $ \expval{\cdot, \cdot}: V \cross V \to \R $ mapping $ (x, y) \mapsto \expval{x, y} $ with the following properties:
+\begin{enumerate}
+	\item $ \expval{x, x} \geq 0 $ for all $ x \in V $
+	\item $ \expval{x, x} = 0 \iff x = 0$
+	\item $ \expval{x, y} $ is linear in the first factor and anti-linear in the second factor. In terms of the scalars $ \lambda, \mu \in \F $, this is written:
+	\begin{align*}
+		&\expval{\lambda x + \mu y, z} = \lambda \expval{x, z} + \mu \expval{y, z}\\
+		&\expval{z, \lambda x + \mu y} =  \overline{\lambda} \expval{z, x} + \overline{\mu} \expval{z, y}
+	\end{align*}
+	where $ \overline{\lambda} $ denotes the complex conjugate of $ \lambda $.
+	\item $ \expval{x, y} = \overline{\expval{y, x}}$
+\end{enumerate}
+
+\subsubsection{Definition: Inner Product Space}
+An inner product space is a vector space $ V $ over the scalar field $ \mathbb{F} $ equipped with an inner product $ \expval{\cdot,\cdot} $.
+
+\subsubsection{Definition: Norm}
+Let $ V $ be an inner product space and let $ x \in V $ be an element of $ V $. A norm on the inner product space $ V $ is a mapping $ \norm{\cdot} : V \to [0, \infty) $ mapping $ x \mapsto \norm{x} $ with the following properties:
+\begin{enumerate}
+	\item $ \norm{x} \geq 0 $ for all $ x \in V $
+	\item $ \norm{x} = 0 \iff x = 0$
+	\item $ \norm{\lambda x} = \abs{\lambda} \norm{x} $ for all $ \lambda \in \F $.
+	\item $ \norm{x + y} \leq \norm{x} + \norm{y}$ for all $ x, y \in V$
+\end{enumerate} 
+
+\subsubsection{Theorem: Cauchy-Schwartz Inequality}
+Let $ V $ be an inner product space with the norm $ \norm{\cdot} $ and let $ x, y \in V $ be a elements of $ V $. For each $ x, y \in V $:
+\begin{equation*}
+	\abs{\expval{x, y}} \leq \norm{x} \norm{y}
+\end{equation*}
+		
+\subsubsection{Definition: Metric}
+Let $ x, y \in V $ be elements of the inner product space $ V $. A metric on the inner product space $ V $ is the mapping $ d : V \cross V \to [0, \infty) $ mapping $ (x, y) \mapsto \norm{x - y} $.
+\begin{equation*}
+	d(x, y) = \norm{x - y}
+\end{equation*}
+
+%TODO
+\subsubsection{Definition: Completeness of a Vector Space}
+A vector space $ V $ is complete if every Cauchy sequence has its limit in the $ V $.
+
+\subsubsection{Definition: Hilbert Space}
+A Hilbert space is a complete inner product space with respect to the metric induced by the inner product. 
+
+\subsubsection{Definition: The $ \norm{\cdot}_1 $ and $ \norm{\cdot}_2  $ Norms}
+Let $ I = [a, b] $ be an interval on the real line and let $ f:I \to \R $ be an integrable function. The $ \norm{f}_1  $ and $ \norm{f}_2 $ norms are defined as
+\begin{align*}
+	\norm{f}_1 = \int_{a}^{b} \abs{f} && \norm{f}_2 = \sqrt{\int_{a}^{b} \abs{f}^2}
+\end{align*}
+
+\subsubsection{Definition: $ L^2 $ Space}
+Let $ I = [a, b] $ be an interval on the real line. The Hilbert space $ L^2(I) $ is the set of all functions $ f : I \to \mathbb{C} $ for which 
+\begin{equation*}
+	\int_{a}^{b} \abs{f}^2 < \infty
+\end{equation*}
+where the norm is defined as
+\begin{equation*}
+	\norm{f}_2 = \sqrt{\int_{a}^{b} \abs{f}^2}
+\end{equation*}
+
+\subsubsection{Proposition: Integrating a Complex Function}
+Let $ I = [a, b] $ be an interval on the real line, let $ u, v : I \to \R $ be real, integrable functions and let $ f : I \to \mathbb{C}$ be the complex function given by $ f = u + iv $. In this case, $ f $ is integrable and
+\begin{equation*}
+	\int_{a}^{b} f = \int_{a}^{b} u + i\int_{a}^{b} v
+\end{equation*}
+
+\subsubsection{Comparison of the $ \norm{\cdot}_1 $ and $ \norm{\cdot}_2 $ Norms}
+Let $ I = [a, b] $ be an interval on the real line and let $ f \in L^2(I) $ be a function in $ L^2(I) $. In this case:
+\begin{align*}
+	\norm{f}_1 &= \int_{a}^{b} \abs{f} = \int_{a}^{b} \abs{f} \cdot 1  = \expval{\abs{f}, 1} \leq \norm{\abs{f}}_2 \norm{1}_2 = \\[1.0ex] & =\sqrt{\int_{a}^{b} \abs{f}^2} \sqrt{\int_{a}^{b} 1 } = \norm{f}_{2} \sqrt{b - a}
+\end{align*}
+The general result is that $ \norm{f}_1 \leq \norm{f}_2 $, which implies that $ L^2(I) \subset L^1(I) $.
+
+\subsubsection{Definition: Orthogonality}
+Let $ V $ be an inner product space. The elements $ x, y \in V$ are orthogonal if $ \expval{x, y} = 0$.
+
+\subsubsection{Definition: Orthogonal Complement}
+Let $ V $ be an inner product space and let $ A \subset V$ be a subset of $ V $. In this case, $ A $'s orthogonal complement $ A^{\perp} $ is the subset $ A^{\perp} \subset V $ consisting of all $ y \in V $ for which $  \expval{x, y} = 0  $ for all $ x \in A $. In set builder notation:
+\begin{equation*}
+	A^{\perp} = \{ y \in V \, | \, \expval{x, y} = 0 \quad \forall \quad x \in A \}
+\end{equation*} 
+Note that zero is always a member of any orthogonal complement because $ \expval{x, 0} \equiv 0 $ for all $ x $.
+
+\subsubsection{Proposition: Closure of the Orthogonal Complement}
+Let $ V $ be an inner product space, let $ A \subset V$ be a subset of $ V $, and let $ A^{\perp} $ be $ A $'s orthogonal complement. In this case, $ A^{\perp} $ is a closed set.
+
+\subsubsection{Theorem: Pythagorean Theorem}
+Let $ V $ be an inner products space and let $ x_1, x_2, \dots, x_n \in V $ be mutually orthogonal elements of $ V $. In this case:
+\begin{equation*}
+	\norm{\sum_{i=1}^{n} x_i }^2 = \sum_{i=1}^{n} \norm{x_i }^2
+\end{equation*}
+
+\subsubsection{Definition: Orthogonal Projection}
+Let $ V $ be an inner product space and let $ U \subset V $ be a linear subspace of $ V $. If there exists $ u \in U $ such that, for a given $ v \in V $, the vector difference $ v - u \perp U $, then $ u $ is the orthogonal projections of $ v $ onto the subspace $ U $ and is denoted by $ \operatorname{Pr}_{U}(v) $.
+
+\subsubsection{Proposition: Properties of the Orthogonal Projection}
+Let $ V $ be an inner product space, let $ U \subset V $ be a linear subspace of $ V $ and define the vectors $ v \in V$ and $ u \in U $ such that $ u = \operatorname{Pr}_{U}(v) $ is the orthogonal projection of $ v $ onto the subspace $ U $.
+
+\begin{enumerate}
+	\item $ u $ is unique.
+	\item $ u $ is the closest vector in $ U $ to the vector $ v \in V$.
+\end{enumerate}
+
+%TODO basis for which space...!?
+\subsubsection{Proposition: Calculating the Orthogonal Projection}
+Let $ V $ be a finite-dimensional inner product, let $ U \subset V $ be a subspace of $ V $, and let $ \mathcal{B} = \{e_1, e_2, \dots, e_n \} $ be an orthonormal basis of the subspace $ U $. In this case, the orthogonal projection $  \operatorname{Pr}_{U}(v) $ exists for all $ v \in V $ and is equal to
+\begin{equation*}
+	 \operatorname{Pr}_{U}(v) = \sum_{i = 1}^{n} \expval{v, e_i} e_i
+\end{equation*}
+
+\subsubsection{Proposition: Bessel Inequality}
+Let $ H $ be a Hilbert space with the orthonormal basis $ \mathcal{E} = \{e_1, e_2, \dots, e_n \} $ where $ n \in \{\mathbb{N} \cup \infty \} $ and let $ x \in H $ be an element of $ H $. In this case,
+\begin{equation*}
+	\norm{x}^2 \geq \sum_{i=1}^{n} \abs{\expval{x, e_i}}^2 
+\end{equation*}
+for all $ x \in H $.
+
+\subsubsection{Proposition: Sequences in Hilbert Spaces}
+Let $ H $ be a Hilbert space with orthonormal basis $ \mathcal{E} = \{e_1, e_2, \dots \} $ and let $ (c_n)_n \in \F $ be a sequence in the scalars such that
+\begin{equation*}
+	\sum_{i = 1}^{n}\abs{c_i}^2 < \infty
+\end{equation*}
+In this case, the series 
+\begin{equation*}
+	x \coloneqq \sum_{i=1}^{\infty}c_i e_i
+\end{equation*}
+converges and $ c_i = \expval{x, e_i} $ for all $ i \in \mathbb{N} $.
+
+\textbf{Note: Interpreting the Previous Proposition}
+The sequence 
+\begin{equation*}
+	(s_n)_n \coloneqq \sum_{i = 1}^{n} c_i e_i
+\end{equation*}
+converges in $ H $. The confirm this, we refer to the Cauchy criterion. Let $ m, n \in \mathbb{N} $ be integers such that $ m > n $. In this case 
+\begin{equation*}
+	s_m - s_n = \sum_{i = n + 1}^{m} c_i e_i
+\end{equation*}
+Next,
+\begin{align*}
+	\norm{s_m - s_n }^2 = \norm{\sum_{i = n + 1}^{m} c_i e_i}^2 = \sum_{i = n+1}^{m}\abs{c_j}^2 < \epsilon \text{ for } m, n > M_0 \in \mathbb{N}
+\end{align*}
+We can make the final estimate because because the $ c \in l^2 $ so the partial sums $ \sum_{i=1}^{n}c_j $ satisfy the Cauchy criterion in $ \F $.
+
+The result is that $ (s_n)_n $ the Cauchy criterion for convergence in $ H $. Because $ H $ is complete, there exists 
+\begin{equation*}
+	x \coloneqq \lim_{n \to \infty} s_n 
+\end{equation*}
+(compare to previous proposition).
+
+\textbf{Note: On Coefficients} 
+\begin{align*}
+	\lim_{n \to \infty} \expval{s_n, e_i} = \expval{x, e_i} = c_j
+\end{align*}
+First, we show that
+\begin{align*}
+	&\abs{\expval{x, e_i} - \expval{s_n, e_i}} = \abs{\expval{x - s_n}, e_i} \leq \norm{x - s_n} \norm{e_j} = \norm{x - s_n}\\
+	&\lim_{n \to \infty} \norm{x - s_n} = \norm{x - x} = 0
+\end{align*}
+For $ n \geq j $ we have:
+\begin{align*}
+	&\expval{s_n, e_j} = \sum_{j = 1}^{n} c_j \expval{e_j, e_i} = c_j
+\end{align*}
+The result here is that
+\begin{equation*}
+	 \expval{x, e_j} = c_j
+\end{equation*}
+
+\textbf{Quick Review of Terms}:
+
+$ H $ is a Hilbert space with orthonormal basis $ \mathcal{E} = \big \{ e_i \big \}_{1}^{n} $. 
+\begin{itemize}
+\item $ c_n \in \F $ is a scalar and $ (c_n)_n $ is a sequence of scalars. All $ s, x $ and $ e $ terms are vectors (i.e. elements of $ H $); $ e $ terms are orthonormal basis vectors.
+
+\item $ s_n = \sum_{i = 1}^{n} c_i e_i $ is a finite series of elements of $ H $ and an element of $ H $ itself.
+
+\item $ (s_n)_n $ is a sequence of finite series i.e. a sequence of $ s_n $ terms.
+
+\item $ x_n = \lim_{n \to \infty} s_n $ is a generalization of $ s_n $ to an infinite-dimensional space.
+
+
+\end{itemize}
+
+\subsection{Introduction to Fourier Series}
+
+\subsubsection{Definition: Fourier Series}
+Let $ H $ be a Hilbert space with orthonormal basis $ \mathcal{E} = \big \{ e_i \big \}_{1}^{\infty}$ and define $ x \in H $. The series
+\begin{equation*}
+	\sum_{i = 1}^{\infty} \expval{x, e_i}e_i
+\end{equation*}
+is called the Fourier series of $ x $ for the chosen basis $ \mathcal{E} $ and the scalars $ \expval{x, e_j} \in \F $ are called the Fourier coefficients of the Fourier series.
+
+\subsubsection{Definition: Completeness of a Orthonormal Basis}
+Let $ H $ be a Hilbert space with orthonormal basis $ \mathcal{E} = \big \{ e_i \big \}_{1}^{\infty}$ and define $ x \in H $. The orthonormal basis $ \mathcal{E} $ is complete if 
+\begin{equation*}
+	x = \sum_{i = 1}^{\infty} \expval{x, e_i}e_i \quad \text{for all} \quad x \in H
+\end{equation*}
+
+
+\subsubsection{Theorem: Equivalent Properties of Fourier Series}
+Let $ H $ be a Hilbert space with orthonormal basis $ \mathcal{E} = \big \{ e_i \big \}_{1}^{\infty}$. The following properties are equivalent:
+\begin{enumerate}
+	\item $ \mathcal{E} $ is a complete orthonormal basis for $ H $
+	\item For each $ x, y \in H $
+	\begin{equation*}
+		\expval{x, y} = \sum_{i = 1}^{\infty} \expval{x, e_i} \overline{\expval{y, e_i}}
+	\end{equation*}
+	
+	\item Parseval's equality: for all $ x \in H $
+	\begin{equation*}
+		\norm{x}^2 = \sum_{i=1}^{\infty}\abs{\expval{x, e_i}}^2
+	\end{equation*}
+	
+	\item $ \mathcal{E} $ is not contained in any orthonormal system with cardinality greater than $ \mathcal{E} $.
+	
+	\item The orthogonal complement $ \mathcal{E}^{\perp} $ consists only of the zero vector, i.e. $ \mathcal{E}^{\perp} = \{ 0 \} $. 
+\end{enumerate}
+
+\subsubsection{Note: The $ L^2(-\pi, \pi) $ Space}
+The Hilbert space $  L^2(-\pi, \pi) $ is the space given by:
+\begin{equation*}
+	\left\{ f:[-\pi, \pi] \to \F \, \big | \, \norm{f}_2 < \infty \right\}
+\end{equation*}
+where the norm $ \norm{f}_2 $ is given by:
+\begin{equation*}
+	\norm{f}_2 = \sqrt{\int_{-\pi}^{\pi} \abs{f(x)}^2 \diff x}
+\end{equation*}
+and the inner product is
+\begin{equation*}
+	\expval{f, g} = \int_{-\pi}^{\pi} f(x) \overline{g(x)} \diff x \quad \forall \quad f, g \in L^2(-\pi, \pi)
+\end{equation*}
+
+\subsubsection{Proposition: Complete Orthonormal Basis of $ L^2(-\pi, \pi) $}
+Let $ e_n : [-\pi , \pi] \to \F $ be the family of functions with the relation
+\begin{align*}
+	&e_n(x) = \frac{1}{\sqrt{2\pi}} e^{inx} &&   x \in [-\pi, \pi]; \, n \in \mathbb{Z}
+\end{align*}
+and let $ \mathcal{E} $ be the set given by $ \mathcal{E} = \left\{ e_n \, \big | \, n \in \mathbb{Z} \right\} $. In this case, $ \mathcal{E}  $ is a complete orthonormal basis of the Hilbert space $  L^2(-\pi, \pi) $.
+
+
+\subsubsection{Proposition: Complete Orthonormal Basis of Real $ L^2(-\pi, \pi) $}
+Let $ L^2_{\R}(-\pi, \pi) $ denote the real component of the Hilbert space $ L^2(-\pi, \pi) $; that is, the space given by:
+\begin{equation*}
+	\left\{ f:[-\pi, \pi] \to \R \, \big | \, \norm{f}_2 < \infty \right\}
+\end{equation*}
+where the norm and inner product are defined as for $ L^2(-\pi, \pi) $. Let $ e_{n_c},  e_{n_s} : [-\pi , \pi] \to \R $ be the family of functions with the relation
+\begin{align*}
+	&e_{n_c}(x) = \frac{1}{\sqrt{\pi}} \cos(n x) && e_{n_s}(x) = \frac{1}{\sqrt{\pi}} \sin(n x) &&   x \in [-\pi, \pi]; \, n \in \mathbb{Z} \setminus \{0\}
+\end{align*}
+and let $ \mathcal{F} $ be the set given by $ \mathcal{F} = \left\{\frac{1}{\sqrt{2\pi}}, e_{n_c}, e_{n_s} \, \big | \, n \in \mathbb{Z} \setminus \{0\} \right\} $. In this case, $ \mathcal{F}  $ is a complete orthonormal basis of $  L^2_{\R}(-\pi, \pi)  $.
+
+\subsubsection{Proposition: Fourier Coefficients and Fourier Series}
+Let $ f \in  L^2_{\R}(-\pi, \pi)  $ be a function. The Fourier coefficients $ a_n, b_n \in \R $ for the function $ f $ with respect to the basis $ \mathcal{F} $ are given by
+\begin{align*}
+	&a_n = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \cos(nx) \diff x && b_n = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \sin(nx) \diff x && n \in \mathbb{N}
+\end{align*}
+and Fourier series for $ f $ is
+\begin{align*}
+	&\frac{a_0}{2} + \sum_{n = 1}^{\infty} \left[a_n \cos(nx) + b_n \sin(nx) \right] && \text{where} && a_0 = \frac{1}{\pi}\int_{-\pi}^{\pi} f(x) \diff x
+\end{align*}
+
+
+Note that in general the Fourier coefficients, and thus the Fourier series, for a given function $ f \in  L^2_{\R}(-\pi, \pi) $ depend on the choice of the basis for the space $  L^2_{\R}(-\pi, \pi) $.
+
+\subsubsection{Proposition: Fourier Coefficients Fall with Increasing $ n $}
+Let $ f \in L^2(-\pi, \pi) $ be a function with Fourier coefficients $ a_n, b_n $ and define $ x \in \in [-\pi, \pi] $ . In this case
+\begin{align*}
+	\lim_{n \to \infty} \int_{-\pi}^{\pi} f(x) \cos(nx) \diff x = \lim_{n \to \infty} \int_{-\pi}^{\pi} f(x) \sin(nx) \diff x = 0
+\end{align*}
+In other words:
+\begin{align*}
+	\lim_{n \to \infty}  a_n = \lim_{n \to \infty} b_n = 0
+\end{align*}
+
+
+\subsubsection{Definition: $ L_2 $ Convergence of Fourier Series}
+Let $ f \in  L^2_{\R}(-\pi, \pi)  $ be a function and let $ s_n(x) $ be the sequence given by
+\begin{align*}
+	s_n(x) = \frac{a_0}{2} + \sum_{k = 1}^{n} \left[a_k \cos(kx) + b_k \sin(kx) \right]
+\end{align*}
+The sequence $ s_n $ converges to $ f $ in the $ L_2 $ sense if 
+\begin{equation*}
+	\lim_{n \to \infty} \norm{s_n - f}_{2} = 0
+\end{equation*}
+
+\subsubsection{Proposition: $ L_2 $ Convergence of Fourier Series}
+Let $ f \in  L^2_{\R}(-\pi, \pi)  $ be a function and let $ s_n(x) $ be defined as above. In this case, $ s_n $ converges to $ f $ with respect to the $ L_2 $ norm (i.e. in the $ L_2 $ sense described above) for all $ f \in L^2_{\R}(-\pi, \pi) $.
+
+
+\subsubsection{Proposition: Identity for Fourier Coefficients}
+Let $ f \in L^2_{\R}(-\pi, \pi) $ be a function with Fourier coefficients $ a_0, a_n, b_n $. In this case
+\begin{equation*}
+	\frac{1}{\pi} \int_{-\pi}^{\pi} \abs{f(x)}^2 \diff x = \frac{a_0^2}{2} + \sum_{n = 1}^{\infty} \left(a_n^2 + b_n^2 \right)
+\end{equation*}
+for all $ x \in [-\pi, \pi] $.
+
+\subsubsection{Definition: Pointwise Convergence of Fourier Series}
+Let $ f \in  L^2_{\R}(-\pi, \pi)  $ be a function and let $ s_n(x) $ be the sequence given by
+\begin{align*}
+	s_n(x) = \frac{a_0}{2} + \sum_{k = 1}^{n} \left[a_k \cos(kx) + b_k \sin(kx) \right]
+\end{align*}
+The sequence $ s_n $ converges pointwise to $ f $ if
+\begin{equation*}
+		\lim_{n \to \infty} s_n(x) = f(x) \quad \forall \quad x \in [-\pi, \pi]
+\end{equation*}
+Pointwise convergence is in general a stronger requirement than convergence in the $ L_2 $ sense. Unlike for $ L_2 $ convergence, the sequence $ s_n $ \textit{does not} converge pointwise to $ f $ for all $ f \in  L^2_{\R}(-\pi, \pi)  $ but only for special cases of $ f $.
+
+
+\subsubsection{Theorem: Pointwise Convergence of Fourier Series for Continuous Functions}
+Let $ f \in L^2(-\pi, \pi) $ be a continuous and differentiable function with Fourier coefficients $ a_0, a_n, b_n $. 
+In this case, $ f $'s Fourier series converges pointwise to $ f $ for all $ x \in [-\pi, \pi] $. In other words:
+\begin{align*}
+	f(x) = \frac{a_0}{2} + \sum_{n = 1}^{\infty} \left[a_n \cos(nx) + b_n \sin(nx) \right]
+\end{align*}
+
+\subsubsection{Theorem: Pointwise Convergence of Fourier Series for Piecewise Continuous Functions}
+Let $ f \in L^2(-\pi, \pi) $ be a piecewise continuous and piecewise differentiable function with Fourier coefficients $ a_0, a_n, b_n $. More so, let $f_{\_}(x) $ and $ f_{+}(x) $ denote the left and right limits, respectively of $ f $ at $ x $, written in symbols as:
+\begin{align*}
+	f_{\_}(x) = \lim_{t \to x^{-}} f(t) && f_{+}(x) = \lim_{t \to x^{+}} f(t)
+\end{align*}
+In this case, $ f $'s Fourier series converges pointwise to $ f $ for all $ x \in [-\pi, \pi] $. In other words:
+\begin{align*}
+	\frac{f_{\_}(x) + f_{+}(x)}{2} = \frac{a_0}{2} + \sum_{n = 1}^{\infty} \left[a_n \cos(nx) + b_n \sin(nx) \right]
+\end{align*}
+
+
+
+\end{document}
+
+
+
+
+
