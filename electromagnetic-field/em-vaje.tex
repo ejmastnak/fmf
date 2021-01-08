@@ -2288,276 +2288,262 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 
 
 
-\section{Twelfth Exercise Set (rough draft)}
+\section{Twelfth Exercise Set}
 \subsection{Point Dipole in a Spherical Dielectric Cavity}
-\textit{Spherical cavity of radius $ a $ inside a dielectric material with permittivity $ \e $. Place a dipole with dipole momentum $ \pe $ in the cavity. What is electric potential inside and outside the cavity? And find the resulting effective dipole moment $ \pe' $ in the dielectric.}
+\textit{Consider an empty spherical cavity of radius $ a $ within a vast dielectric material with permittivity $ \e $. We place an electric dipole with dipole momentum $ \pe $ in the cavity. What is the resulting electric potential inside and outside the cavity? Find the resulting effective dipole moment $ \pe' $ in the dielectric.}
 \begin{itemize}
-	\item  Assume $ \pe $ points in the $ z $ direction.
+	\item  We choose our coordinate system so that the dipole $ \pe $ within the cavity points in the $ \uvec{z} $ direction.
 	
 	
-	\item We solve the Laplace equation
+	\item We find the electric potential due to the dipole by solving the Laplace equation 
 	\begin{equation*}
 		\laplacian U(\r) = 0
 	\end{equation*}
-	in spherical coordinates. The general solution is
+	In spherical coordinates, which are best suited to the problem's spherical geometry, the general solution is
 	\begin{equation*}
 		U(r) = \sum_{l = 0}^{\infty}(A_{l}r^{l} + B_{l}r^{-(l+1)})P_{l}(\cos \theta)
 	\end{equation*}
-	Boundary conditions: we consider the spherical cavity's boundary, and the center of the cavity. The potential at the center should approach the dipole potential:
+	where $ P_{l} $ are the Legendre polynomials.
+	
+	\item We then consider boundary conditions along the spherical cavity's surface and at the center of the cavity, where the dipole $ \pe $ is placed. The potential at the spheres center should approach the potential of an electric dipole:
 	\begin{equation*}
 		U(r \to 0) = U_{\mathrm{dipole}} = \frac{p_{e}\cos \theta}{4 \pi \ee r^{2}}
 	\end{equation*}
-	This implies only the $ l = 1 $ term with $ \cos \theta $ can exist in the general solution for $ U $. 
-	
-	Outside only terms with $ A $  survive to avoid divergence at small $ r $.
-	
-	Outside only terms with $ B $ terms survive to avoid divergence at large $ r $.
-	
-	\item We have (reusing earlier results from similar problems) a general solution
+	Because this solution contains only $ \cos \theta $ to the first power, only the $ l = 1 $ term with $ \cos \theta $ can exist in the general solution for $ U $, which simplifies the general solution to
 	\begin{equation*}
-		U(r, \theta) = 
+		U(r) = (A_{1}r + B_{1}r^{-2})\cos \theta
+	\end{equation*}
+	For the potential to converge at $  r \to \infty $, the $ A_{1}r $ term must vanish at large $ r $ (outside the cavity). The general solution further simplifies to
+	\begin{align*}
+		U(r) &= 
+		\begin{cases}
+			U_{\text{dipole}} + A_{1}r \cos \theta & r < a\\
+			B_{1}r^{-2} \cos \theta & r > a
+		\end{cases}\\
+		& = 
 		\begin{cases}
 			\dfrac{p_{e}\cos \theta}{4 \pi \ee r^{2}} + A_{1}r \cos \theta & r < a\\[2mm]
 			\dfrac{B_{1}}{r^{2}}\cos \theta & r > a
 		\end{cases}
+	\end{align*}
+	
+	\item Next, we require $ U $ is continuous at the cavity's boundary $ r = a $, which produces
+	\begin{equation*}
+		U(r \to a^{+}) = U(r \to a^{-}) \implies \frac{p_{e}}{4\pi \ee a^{2}} + A_{1}a = \frac{B_{1}}{a^{2}}
+	\end{equation*}
+	\textit{Note}: We could derive the same result using the boundary conditions for Maxwell's equations in materials, among which is required that the component of electric field $ E_{\parallel} $ tangent to the boundary surface must be equal on both sides of the boundary. The tangential component of electric field is found with
+	\begin{equation*}
+		E_{\parallel} = -\frac{1}{r}\pdv{U}{\theta}\bigg |_{r=a},
+	\end{equation*}
+	and the boundary condition $ E_{\text{in}}^{\parallel} = E_{\text{out}}^{\parallel}  $ then implies 
+	\begin{equation*}
+		- \frac{p_{e}}{4\pi \ee a^{2}} \sin \theta - A_{1} a \sin \theta = \frac{B_{1}}{a^{2}} \sin \theta,
+	\end{equation*}
+	which is the same result we arrived at from requiring continuity of electric potential $ U $ at the boundary. 
+	
+	\item Finally, we apply the boundary condition on the $ \D $ field, which applies to the components $ D_{\perp} $ perpendicular to the boundary surface and reads
+	\begin{equation*}
+		D_{\text{in}}^{\perp} - D_{\text{out}}^{\perp} = \sigma_{\text{f}}
+	\end{equation*}
+	where $ \sigma_{\text{f}} $ is the surface density of free charges along the boundary. We find $ D_{\perp} $ with
+	\begin{equation*}
+		D_{\perp} = - \ee \e \pdv{U}{r}\bigg |_{r=a},
+	\end{equation*}
+	In our case, which involves a dielectric with only bound charges, we have $ \sigma_{\text{f}} $, and the boundary condition on $ D $ reduces to
+	\begin{equation*}
+		D_{\text{in}}^{\perp} = D_{\text{out}}^{\perp} \iff \ee \e_{\text{in}} \pdv{U_{\text{in}}}{r}\bigg |_{r=a} = \ee \e_{\text{out}} \pdv{U_{\text{out}}}{r}\bigg |_{r=a}
+	\end{equation*}
+	The relative permittivity inside the empty cavity is $ \e_{\text{in}} = 1 $, and we denote $ \e_{\text{out}} \equiv \e $ in the dielectric. We then substitute $ U_{\text{in}} $ and $ U_{\text{out}} $ into the boundary condition and simplify to get
+	\begin{equation*}
+		2 \frac{p_{e}}{4\pi \ee a^{3}} - A_{1} = 2 \e \frac{B_{1}}{a^{3}}
 	\end{equation*}
 	
-	\item More boundary conditions: $ U $ is continuous at $ r = a $. We get (canceling $ \cos \theta $)
+	\item We then add the earlier boundary condition requiring continuity of $ U $, which read
 	\begin{equation*}
-		\frac{p_{e}}{4\pi \ee a^{2}} + A_{1}a = \frac{B_{1}}{a^{2}}
+		\frac{p_{e}}{4\pi \ee a^{3}} + A_{1} = \frac{B_{1}}{a^{3}},
 	\end{equation*}
-	
-	\item And a final boundary condition using the electric field: we work with the electric field tangent to the cavity's surface. From Maxwell:
+	to the just-derived boundary condition on $ D_{\perp} $ to get
 	\begin{equation*}
-		\curl \E = 0 \to \oint \E \cdot \diff \vec{l} = 0
+		3 \frac{p_{e}}{4 \pi \ee a^{3}} = \frac{B_{1}}{a^{3}}(1 + 2 \e) \implies B_{1} = \frac{3}{1 + 2\e} \frac{p_{e}}{4\pi \ee}
 	\end{equation*}
-	Which implies $ \E_{\parallel} $ is equal on each side of the cavity. 
-	
-	We differentiate with respect to $ \theta $ to get $ E_{\parallel} $
-	\begin{equation*}
-		E_{\parallel} = -\frac{1}{r}\pdv{U}{\theta}
-	\end{equation*}
-	Applying the continuity condition of $ \E_{\parallel} $ at the boundary gives
-	\begin{equation*}
-		- \frac{p_{e}}{4\pi \ee a^{2}} \sin \theta - A_{1} \sin \theta = \frac{B_{1}}{a^{2}} \sin \theta 
-	\end{equation*}
-	This is the same result as the previous boundary condition requiring continuity of $ U $ at the boundary. 
-	
-	\item We need another boundary condition: We use the $ \D $ field and thus consider only free charges. We use Gauss's law for $ \D $, which requires that $ D_{\perp} $ is the same at both sides of the boundary. In general
-	\begin{equation*}
-		D_{\perp} = - \ee \e \pdv{U}{r}
-	\end{equation*}
-	and we evaluate this at $ a $ and apply continuity at the boundary to get
-	\begin{equation*}
-		+2 \frac{p_{e}}{4\pi \ee a^{3}} - A_{1} = 2 \e \frac{B_{1}}{a^{3}}
-	\end{equation*}
-	
-	\item Continuity of $ U $ gives
-	\begin{equation*}
-		\frac{p_{e}}{4\pi \ee a^{3}} + A_{1} = \frac{B_{1}}{a^{3}}
-	\end{equation*}
-	Adding this to the $ D_{\perp} $ equation gives
-	\begin{equation*}
-		3 \frac{p_{e}}{4 \pi \ee a^{3}} = \frac{B_{1}}{a^{3}}(1 + 2 \e)
-	\end{equation*}
-	Which gives us
-	\begin{equation*}
-		B_{1} = \frac{3}{1 + 2\e} \frac{p_{e}}{4\pi \ee}
-	\end{equation*}
-	
-	\item From which we can find $ A_{1} $ with
+	With $ B_{1} $ known, we can find $ A_{1} $ according to
 	\begin{equation*}
 		A_{1} = \frac{B_{1}}{a^{3}} - \frac{p_{e}}{4\pi \ee a^{3}} = \frac{p_{e}}{4\pi \ee a^{3}}\left(\frac{3}{1 + 2\e} - 1\right) = \frac{2(1 - \e)}{1 + 2\e} \frac{p_{e}}{4 \pi \ee a^{3}}
 	\end{equation*}
 	
-	\item Our specific solution for $ U(r, \theta) $ is then
+	\item With the coefficients $ A_{1} $ and $ B_{1} $ known, the solution for $ U(r, \theta) $ is then
 	\begin{equation*}
 		U(r, \theta) = \frac{p_{e}}{4\pi \ee}\cos \theta
 		\begin{cases}
-			\dfrac{1}{r^{2}} - \dfrac{2(r-1)}{1 + 2\e}\dfrac{r}{a^{3}} & r < a\\[2mm]
+			\dfrac{1}{r^{2}} - \dfrac{2(\e - 1)}{1 + 2\e}\dfrac{r}{a^{3}} & r < a\\[2mm]
 			\dfrac{3}{1 + 2\e} \dfrac{1}{r^{2}} & r > a
 		\end{cases}
 	\end{equation*}
-	For $ r < a $ the first $ 1/r^{2} $ term is the dipole term. The second $ r < a $ contains a $ z = r \cos \theta $ term, which corresponds to a homogeneous field inside the cavity. 
+	Inside the cavity where $ r < a $, the first $ 1/r^{2} $ term is the potential of the electric dipole $ \pe $, while the term containing $  r \cos \theta \equiv z $ corresponds to a homogeneous field inside the cavity. 
 	
-	For $ r > a $ we have another $ 1/r^{2} $ term---again like a dipole. But note the larger factor $ \frac{3}{1 + 2\e} $, which would reduce to the usual $ 1 $ for relative permittivity $ \e = 1 $ This is the so-called effective dipole term in the problem instructions. Outside we thus have the effective dipole moment
+	Outside the cavity where $ r > a $, we have another $ 1/r^{2} $ term---again like a dipole, but with an additional factor $ \frac{3}{1 + 2\e} $, which would reduce to the usual $ 1 $ for relative permittivity $ \e = 1 $ This is the so-called effective dipole term in the problem instructions. Outside the cavity we thus have the effective dipole moment
 	\begin{equation*}
 		p_{e}' = \frac{3}{1 + 2\e}p_{e}
 	\end{equation*}
 	
-	\item We could find surface density of bound charges with Gauss's law and
+	\item To find the surface density of bound charges, we have two options. We could could use Gauss's law in the form
 	\begin{equation*}
-		\sigma_{\mathrm{b}} = \ee \left(E_{\mathrm{\perp}}^{\text{out}} - E_{\mathrm{\perp}}^{\text{in}}\right)
+		\sigma_{\mathrm{b}} = \ee \left(E^{\mathrm{\perp}}_{\text{out}} - E^{\mathrm{\perp}}_{\text{in}}\right), \qquad E_{\perp} = \pdv{U}{r} \bigg |_{r = a}
 	\end{equation*}
-	Alternatively, we could us
+	Alternatively, we could use the relationship between surface charge density and polarization, which reads
 	\begin{equation*}
 		\sigma_{\mathrm{b}} = \P \cdot \uvec{n}
 	\end{equation*}
-	where $ \P $ is electric polarization. Note that $ \uvec{n} $ points from the dielectric material into the cavity, and $ \P $ points out of the cavity. Thus
+	Note that the surface's normal vector $ \uvec{n} $ points from the dielectric material's surface into the cavity, while the polarization $ \P $ points out of the cavity. The product $  \P \cdot \uvec{n} $ thus evaluates to
 	\begin{equation*}
-		 \P \cdot \uvec{n} = - P_{\perp}
+		 \P \cdot \uvec{n} \equiv - P_{\perp}
 	\end{equation*}
-	We could then use
+	where $ P_{\perp} $ is the component of polarization normal to the cavity's surface. Assuming a linear relationship between $ \D $ and $ \E $, we then find polarization with
 	\begin{equation*}
-		\D = \ee \e \E = \ee \E + \P 
+		\ee \e \E  \approx \D = \ee \E + \P \implies \P = \ee (\e - 1)\E
 	\end{equation*}
-	And thus 
+	We then use $ \P = \ee (\e - 1)\E $ to find surface charge density via
 	\begin{equation*}
-		\P = \ee (\e - 1)\E
-	\end{equation*}
-	which gives
-	\begin{equation*}
-		\sigma_{\mathrm{b}} = -\ee(\e - 1)\E_{\perp}\big |_{r = a}
+		\sigma_{\mathrm{b}} = \P \cdot \uvec{n} = -P_{\perp} = -\ee(\e - 1)\E_{\perp}\big |_{r = a}
 	\end{equation*}
 \end{itemize}
 
 
 \subsection{Dielectric Constant of Cold Plasma}
-\textit{Find the relative permittivity $ \e $ of a cold plasma.}
+\textit{Find the relative permittivity $ \e $ of a cold plasma, then find the dispersion relation for electromagnetic waves in the plasma.}
 \begin{itemize}
-	\item Recall plasma is ionized gas---electrons leave their atoms, and we end up with positive ions from atomic cores and negative free electrons. Since atoms are much more massive than electrons, we assume the atoms are at rest as a first approximation. 
+	\item Plasma is a gas of ions, i.e. a gas of free electrons that have been ionized from their positive nuclear cores. We assume the plasma is cold to neglect thermal motion. Since the nuclei are much more massive than electrons, we assume the atoms are at rest as a first approximation. 
 	
-	\item We assume an oscillatory electric field inside the plasma:
+	We then ask how electromagnetic waves propagates through the plasma. We write the electromagnetic waves in terms of the electric field, which we model with the oscillatory ansatz
 	\begin{equation*}
 		\E = \E_{0} e^{i(kz - \omega t)}
 	\end{equation*}
-	Assume atoms have charge $ q $ and electrons have charge $ -q $. The force on a representative free electron is then
-	\begin{equation*}
-		\vec{F} = - q \E = - q \E_{0} e^{i(kz - \omega t)} \equiv m \vec{a} = m \ddot{\r}   
-	\end{equation*}
-	where we have introduced the coordinate $ \r $ to measure the electron's displacement.
 	
-	Since force is oscillatory, we have
+	\item Assuming the positive ion cores have charge $ q $ and electrons have charge $ -q $, the force on a representative free electron of mass $ m $ is
+	\begin{equation*}
+		\vec{F}  = m \ddot{\r} = - q \E = - q \E_{0} e^{i(kz - \omega t)}
+	\end{equation*}
+	where we have introduced the coordinate $ \r $ to measure the electron's displacement. Since force is oscillatory, the resulting motion is modeled by
 	\begin{equation*}
 		\r = \r_{0}e^{i(kz - \omega t)}
 	\end{equation*}
-	and thus
+	Substituting the expressions for $ \r $ and $ \E $ into Newton's law $ m \ddot{\r} = - q \E  $ gives
 	\begin{equation*}
-		\vec{F} = - m \omega^{2}\r_{0}e^{i(kz - \omega t)} =  - q \E_{0} e^{i(kz - \omega t)}
+		- m \omega^{2}\r_{0}e^{i(kz - \omega t)} =  - q \E_{0} e^{i(kz - \omega t)},
 	\end{equation*}
-	which implies
+	from which we can find the position's oscillation amplitude $ \r_{0} $ via
 	\begin{equation*}
 		m \omega^{2} \r_{0} = q \E_{0} \implies \r_{0} = \frac{q}{m \omega^{2}}\E_{0}
 	\end{equation*}
-	This amplitude of displacement of the negative electron from the positive atom creates a dipole moment with amplitude
+	
+	\item The displacement $ \r_{0} $ of the negative electron from the positive ion core creates a dipole moment with amplitude
 	\begin{equation*}
 		\pe_{0} = - q \r_{0} = - \frac{q^{2}}{m \omega^{2}} \E_{0}
 	\end{equation*}
-	The total polarization in the substance is then
+	In terms of $ \pe_{0} $, the polarization of the plasma is then
 	\begin{equation*}
 		\P_{0} = n \pe_{0} =  - \frac{nq^{2}}{m \omega^{2}} \E_{0}
 	\end{equation*}
 	where $ n $ is the number density of electric dipoles in the material. 
 	
-	We now have a relationship between $ \P $ and $ \E $, which we can connect with permittivity:
+	\item We then use the relationship $ \P $, $ \E $ and permittivity, which reads
 	\begin{equation*}
-		\P_{0} = \ee (\e - 1)\E_{0}
+		\P_{0} = \ee (\e - 1)\E_{0},
 	\end{equation*}
-	From which we find the dielectric constant (relative permittivity)
+	to find the plasma's dielectric constant (relative permittivity)
 	\begin{equation*}
-		\e = 1 - \frac{nq^{2}}{m \ee \omega^{2}}
+		\e = 1 + \frac{\P_{0}}{\ee \E_{0}} = 1 - \frac{nq^{2}}{m \ee \omega^{2}}
 	\end{equation*}
-	We note that $ \frac{nq^{2}}{m \ee} $ has units of frequency, and we define
+	
+	\item Next, we note that $ \frac{nq^{2}}{m \ee} $ has units of frequency, and define the plasma frequency
 	\begin{equation*}
-		\omega_{\mathrm{p}} = \sqrt{\frac{nq^{2}}{m \ee}}
+		\omega_{\mathrm{p}}^{2} = \frac{nq^{2}}{m \ee},
 	\end{equation*}
-	which describes the oscillation of electrons if displaced from the positive atomic ions. We then have
+	which describes the frequency at which displaced electrons oscillated about the positive ion cores. In terms of plasma frequency, the plasma's dielectric constant is
 	\begin{equation*}
 		\e = 1 - \frac{\omega_{\mathrm{p}}^{2}}{\omega^{2}}
 	\end{equation*}
-	
-	
-	
-	\item Note that for field frequencies $ \omega > \omega_{\mathrm{p}} $ we have $ \e > 0 $ and for $ \omega < \omega_{\mathrm{p}} $ we have $ \e < 0 $. For material with $ \e < 0 $, EM radiation cannot propagate through the material---discussed more shortly.
+	Note that for electromagnetic wave frequencies $ \omega > \omega_{\mathrm{p}} $ we have $ \e > 0 $ and for $ \omega < \omega_{\mathrm{p}} $ we have $ \e < 0 $. However, electromagnetic waves cannot propagate through a material with dielectric constant $ \e < 0 $, which we will discuss more shortly.
 \end{itemize}
-\textbf{Maxwell Equation}
+\textbf{Dispersion Relation for EM Waves in Plasma}
 \begin{itemize}
-	\item We want to find the wave equation. In material, we have
-	\begin{equation*}
-		\div \E = 0 \eqtext{and} \curl \E = - \mm \pdv{\H}{t}
-	\end{equation*}
-	and also 
-	\begin{equation*}
-		\div \H = 0 \eqtext{and} \curl \H = \ee \e \pdv{\E}{t}
-	\end{equation*}
-	note that there is no current density $ \vec{j} $ in our material, which simplifies the last equation---there is only displacement current. 
+	\item Next, we will find the dispersion relation for the electromagnetic waves in the plasma. In material with zero electric current density (i.e. $ \vec{j} = 0 $) the Maxwell equations read
+	\[
+		\begin{array}{ll}
+			\div \E = 0 & \qquad \curl \E = - \mm \pdv{\H}{t}\\
+			\div \H = 0 & \qquad \curl \H = \ee \e \pdv{\E}{t}
+		\end{array}
+	\]
+	We take the curl of the equations for $ \div \E $ and $ \curl \E $ to get
+	\begin{align*}
+		& \curl (\curl \E) = - \mm \pdv{t} \left(\ee \e \pdv{\E}{t}\right)\\
+		& \grad (\div \E) - \laplacian \E = - \mm \e \ee \pdv[2]{\E}{t}
+	\end{align*}
 	
-	\item Apply curl to the first lines to get
-	\begin{equation*}
-		\curl (\curl \E) = - mm \pdv{t} \left(\ee \e \pdv{\E}{t}\right)
-	\end{equation*}
-	\begin{equation*}
-		\grad (\div \E) - \laplacian \E = - \mm \e \ee \pdv[2]{\E}{t}
-	\end{equation*}
-	Because $ \div \E = 0 $ we get
+	\item The relationship $ \div \E = 0 $ simplifies the second equation to the wave equation
 	\begin{equation*}
 		\laplacian \E - \mm \ee \e \pdv[2]{\E}{t} = 0
 	\end{equation*}
-	If we insert the earlier oscillatory ansatz $ \E = \E_{0}e^{i(kz - \omega t)} $ we get
+	We then substitute in the oscillatory electric field ansatz $ \E = \E_{0}e^{i(kz - \omega t)} $ to get
 	\begin{equation*}
 		- k^{2} \E - \mm \ee \e (- \omega^{2})\E = 0 \implies \E (\mm \ee \e \omega^{2} - k^{2}) = 0
 	\end{equation*}
-	Which gives us
+	The equality $  \E (\mm \ee \e \omega^{2} - k^{2}) = 0 $ holds for all $ \E $ only if
 	\begin{equation*}
 		\mm \ee \e \omega^{2} - k^{2} = 0 \implies \frac{\omega^{2}}{k^{2}} = \frac{1}{\ee \mm} \frac{1}{\e} = \frac{c_{0}^{2}}{\e}
 	\end{equation*}
-	And next, substituting in $ \e = 1 - \frac{\omega_{\mathrm{p}}^{2}}{\omega^{2}} $, we have
+	Next, we substitute in the plasma's dielectric constant $ \e = 1 - \frac{\omega_{\mathrm{p}}^{2}}{\omega^{2}} $ to get
 	\begin{equation*}
-		c_{0}^{2} = \frac{\omega^{2}}{k^{2}}\left( 1 - \frac{\omega_{\mathrm{p}}^{2}}{\omega^{2}}\right) = \frac{\omega^{2}}{k^{2}} - \frac{\omega_{\mathrm{p}}^{2}}{k^{2}}
+		c_{0}^{2} = \e \frac{\omega_{2}}{k^{2}} = \frac{\omega^{2}}{k^{2}}\left( 1 - \frac{\omega_{\mathrm{p}}^{2}}{\omega^{2}}\right) = \frac{\omega^{2}}{k^{2}} - \frac{\omega_{\mathrm{p}}^{2}}{k^{2}}
 	\end{equation*}
-	And then rearrange to get
+	Finally, we rearrange the relationship between $ c_{0} $, $ k $ and $ \omega $ to get the dispersion relation
 	\begin{equation*}
 		k^{2}c_{0}^{2} = \omega^{2} - \omega_{\mathrm{p}}^{2} \implies \omega = \sqrt{\omega_{\mathrm{p}}^{2} + c_{0}^{2}k^{2}}
 	\end{equation*}
-	This is a dispersion relation for electric field in a material---it relates the frequency $ \omega $ and wave-number $ k $ of the electric field. Note that the relation is nonlinear.
+	This is a dispersion relation for electromagnetic waves in the plasma---it relates the waves' frequency $ \omega $ and wave vector $ k $. Note that the dispersion relation prohibits $ \omega < \omega_{\mathrm{p}} $ since at the minimum possible $ k $, i.e. $ k = 0 $, frequency is $ \omega = \omega_{\mathrm{p}} $. The prohibited region of $ \omega < \omega_{\mathrm{p}} $ corresponds to $ \e < 0 $---this relationship quantifies the previous claim that EM waves cannot propagate through materials with $ \e < 0 $. 
 	
-	\item For electric field in a vacuum, we have $ \e = 1 $; in this case we have the linear dispersion relation
+	
+	
+	Note that in a vacuum, with $ \e = 1 $, EM waves obey the linear dispersion relation
 	\begin{equation*}
 		\frac{\omega^{2}}{k^{2}} = \frac{c_{0}^{2}}{\e} = c_{0}^{2} \implies \omega = c_{0}k
 	\end{equation*}
 	
-	\item Back to the dispersion relation in material:
+	\item We now consider the limiting cases for the dispersion relation in plasma, i.e.
 	\begin{equation*}
 		 \omega = \sqrt{\omega_{\mathrm{p}}^{2} + c_{0}^{2}k^{2}}
 	\end{equation*}
-	For large $ k $ we get roughly $ \omega = c_{0}k $. 
-	
-	For small $ k $ we get $ \omega \to \omega_{\mathrm{p}} $. 
-	
-	A more accurate expansion for small $ \omega $ would give
+	For large $ k $, such that $ c_{0}k \gg \omega_{\text{p}} $, we approach the linear relation $ \omega = c_{0}k $. Meanwhile, very small $ k $, such that $ c_{0}k \ll \omega_{\text{p}} $, result in the constant dispersion relation $ \omega \to \omega_{\mathrm{p}} $. We get a more accurate approximation for small $ k $ with the first-order Talor approximation
 	\begin{equation*}
-		\omega = \omega_{\mathrm{p}}\left(1 + \frac{c_{0}^{2}}{\omega_{\mathrm{p}}^{2}} k^{2}\right)^{1/2} \approx \omega_{\mathrm{p}}\left[1 + \frac{c_{0}^{2}}{2 \omega_{\mathrm{p}}^{2}}k^{2}\right]
+		\omega = \omega_{\mathrm{p}}\left(1 + \frac{c_{0}^{2}}{\omega_{\mathrm{p}}^{2}} k^{2}\right)^{1/2} \approx \omega_{\mathrm{p}}\left[1 + \frac{c_{0}^{2}}{2 \omega_{\mathrm{p}}^{2}}k^{2}\right], \qquad \left(k \ll \frac{w_{\text{p}}}{c_{0}}\right)
 	\end{equation*}
+	As a side note, we remark that in this limit of small $ k $, where the dispersion relation obeys $ \omega \sim k^{2} $. A quadratic dispersion relation means the photons making up the electric field behave like particles with mass, which leads to the concept of effective mass, like in solid state physics.
+\end{itemize}
+
+\textbf{Further Discussion}	
+\begin{itemize}
 	
-	\item Note that for small $ k $ and small frequencies, we have $ \omega \sim k^{2} $, which means the photons making up the electric field behave like particles with mass, which leads to the concept of effective mass, like in solid state physics.
-	
-	\item Note also that the dispersion relation prohibits $ \omega < \omega_{\mathrm{p}} $ since at the minimum possible $ k $, i.e. $ k = 0 $, frequency is $ \omega = \omega_{\mathrm{p}} $. The prohibited region of $ \omega < \omega_{\mathrm{p}} $ corresponds to $ \e < 0 $---this connection  validates the previous assertion that EM radiation cannot exist in materials with $ \e < 0 $. 
-	
-	\item We more thoroughly consider $ \e < 0 $. Rearranging the equation 
+	\item Next, we more thoroughly consider the regime of $ \e < 0 $. Assuming $ \e < 0 $, we rearranging the equation 
 	\begin{equation*}
-		\frac{\omega^{2}}{k^{2}} = \frac{c_{0}^{2}}{\e}
+		\frac{\omega^{2}}{k^{2}} = \frac{c_{0}^{2}}{\e} \eqtext{to get} k = \frac{\omega}{c_{0}}\sqrt{\e}  = \frac{\omega}{c_{0}}i \sqrt{\e_{R}},
 	\end{equation*}
-	leads to 
-	\begin{equation*}
-		k = \frac{\omega}{c_{0}}\sqrt{\e}  = \frac{\omega}{c_{0}}i \sqrt{\e_{R}}
-	\end{equation*}
-	Note that $ k $ is imaginary because $ \e < 0 $. Substituting this $ k $ into our wave ansatz for $ \E $ gives
+	where $ k $ is imaginary because $ \e < 0 $. Substituting this expression for $ k $ into the oscillator ansatz for the electric field $ \E $ gives
 	\begin{equation*}
 		\E = \E_{0} e^{i(kz - \omega t)} = \E_{0}e^{-\frac{\omega}{c_{0}}\sqrt{\e_{R}}z}e^{-i\omega t}
 	\end{equation*}
-	The position-dependent term is $ \propto e^{-z} $, which means that an electromagnetic wave will exponentially decay with position in a material with $ \e < 0 $. 
+	The position-dependent term is proportional to $ e^{-z} $, which means that an electromagnetic wave will exponentially decay with position in a material with $ \e < 0 $. 
 	
 	\item Next, we use the dispersion relation to find the group and phase velocity of the electromagnetic waves in the plasma. The phase velocity is 
 	\begin{equation*}
-		v_{\mathrm{p}} = \frac{\omega_{\mathrm{p}}}{k} = \frac{\sqrt{\omega_{\mathrm{p}}^{2} + c_{0}^{2}k^{2}}}{k} = \sqrt{c_{0}^{2} + \frac{\omega_{\mathrm{p}}^{2}}{k^{2}}}
+		v_{\text{phase}} = \frac{\omega_{\mathrm{p}}}{k} = \frac{\sqrt{\omega_{\mathrm{p}}^{2} + c_{0}^{2}k^{2}}}{k} = \sqrt{c_{0}^{2} + \frac{\omega_{\mathrm{p}}^{2}}{k^{2}}}
 	\end{equation*}
-	Note that $ v_{p} > c_{0} $---the phase velocity is greater than the speed of light in vacuum. 
+	Note that $ v_{phase} > c_{0} $---the phase velocity is greater than the speed of light in vacuum. 
 	
 	\item The group velocity---the quantity relevant to the universal speed limit of $ c_{0} $---is 
 	\begin{equation*}
-		v_{\mathrm{g}} = \pdv{\omega}{k} = \frac{2 c_{0}^{2}k}{2 \sqrt{\omega_{\mathrm{p}}^{2} + c_{0}^{2}k^{2}}} = \frac{c_{0}}{\sqrt{1 + \frac{\omega_{\mathrm{p}}^{2}}{c_{0}^{2}k^{2}}}}
+		v_{\mathrm{group}} = \pdv{\omega}{k} = \frac{2 c_{0}^{2}k}{2 \sqrt{\omega_{\mathrm{p}}^{2} + c_{0}^{2}k^{2}}} = \frac{c_{0}}{\sqrt{1 + \frac{\omega_{\mathrm{p}}^{2}}{c_{0}^{2}k^{2}}}}
 	\end{equation*}
-	As expected, $ v_{\mathrm{g}} < c_{0} $, in agreement with special relativity. Note also $ v_{\mathrm{p}}v_{\mathrm{g}} = c_{0}^{2} $.
+	As expected, $ v_{\mathrm{group}} < c_{0} $, in agreement with special relativity. As a final comment, note that $ v_{\mathrm{phase}}v_{\mathrm{group}} = c_{0}^{2} $.
 \end{itemize}
 
 \section{Thirteenth Exercise Set (rough draft)}
