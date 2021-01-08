@@ -162,21 +162,54 @@ Boundary Condition: $ \psi'(0_{+}) - \psi'(0_{-}) = -\frac{2m\lambda\psi(0)}{\hb
 $ \psi(x) = \sqrt{\kappa} e^{-\kappa \abs{x}} $, \quad $ E_{0} = \frac{m\lambda^{2}}{2\hbar^{2}} $, \quad $ \kappa = \frac{m\lambda}{\hbar^{2}} $
 
 
-\newsec{Delta Function Scattering}
- $ \mat{S} = 
+\newsec{Scattering}
+$ j(x) = \frac{\hbar}{2mi}\left[\psi^{*}\psi' - \psi^{'^{*}}\psi\right] = \frac{\hbar}{m} \Im \left\{\psi^{*}\psi'\right\} $\\
+Regions 1 and 3 free, region 2 with $ E > V = V(x) $\\
+$ \psi_{2} = C f(x) + D g(x) $\\
+$ \psi_{1} = \frac{A_{1}}{\sqrt{v_{1}}} e^{ik_{1}x} + \frac{B_{1}}{\sqrt{v_{1}}}e^{-ik_{1}x} $ \quad $ \psi_{3} = \frac{A_{3}}{\sqrt{v_{3}}} e^{-ik_{3}x} + \frac{B_{3}}{\sqrt{v_{3}}}e^{ik_{3}x} $\\
+
+
+$ v \equiv \frac{\hbar k}{m} $, \qquad $ k^{2} = \frac{2mE}{\hbar^{2}} $\\
+$  j_{1,3} = \abs{A_{1,3}}^{2} - \abs{B_{1,3}}^{2} $\\
+$ \begin{bmatrix}
+	B_{1}\\
+	B_{3}
+\end{bmatrix}
+= 
+\begin{bmatrix}
+	r & \tilde{t}\\
+	t & \tilde{r}
+\end{bmatrix}
+\begin{bmatrix}
+	A_{1}\\
+	A_{3}
+\end{bmatrix}
+\iff \vec{B} = \mat{S} \vec{A} $\\
+$ 	T = \abs{t}^{2} \quad R = \abs{r}^{2} $ \qquad  $ \tilde{T} = \abs{\tilde{t}}^{2} \quad \tilde{R} = \abs{\tilde{r}}^{2} $\\
+ $ T + R = 1 $ and $ \tilde{T} + \tilde{R} = 1 $ \\
+$ j_{\text{in}} = \vec{A}^{\dagger}\vec{A} $ \qquad $ j_{\text{out}} = \vec{B}^{\dagger}\vec{B} $ \qquad  $ j_{\text{in}} \equiv j_{\text{out}} $ \\
+  $ j_{\text{in}} = j_{\text{out}} \implies  (\vec{A}^{\dagger}\mat{S}^{\dagger})(\mat{S}\vec{A}) \implies \vec{S}^{\dagger}\mat{S} = \mat{I} $
+ 
+ 
+ 
+ \newsec{Delta Function Scattering}
+$ H = \frac{p^{2}}{2m} + \lambda \delta (x) $, \quad $ E > 0 $\\
+$ r = \tilde{r} = -\frac{i\kappa}{k + i\kappa} $, \quad $ t = \tilde{t} = \frac{k}{k + i\kappa} $\\
+$ k^{2} = \frac{2mE}{\hbar^{2}} $ \qquad  $ \kappa = \frac{m\lambda}{\hbar^{2}} $\\
+$ \mat{S} =  
 \begin{bmatrix}
 	r & t\\
 	t & r
 \end{bmatrix}
-= 
-\frac{1}{k + i \kappa}
+= \frac{1}{k + i \kappa} 
 \begin{bmatrix}
-	-i\kappa & k\\
-	k & -i \kappa
+	- i \kappa & k\\
+	k & - i \kappa
 \end{bmatrix} $
 
-\textbf{TODO Scattering}
+ 
 
+ 
 \newsec{Harmonic Oscillator}
 $ H = \frac{p^{2}}{2m} + \frac{kx^{2}}{2} = \frac{p^{2}}{2m} + \frac{m\omega}{2}x^{2}, \qquad \omega = \sqrt{\frac{k}{m}} $\\
 $ H \ket{n} = \hbar \omega \left(n + \frac{1}{2}\right)\ket{n}, \quad n = 0, 1, 2, \ldots $\\
