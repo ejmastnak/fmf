@@ -5,6 +5,7 @@
 \usepackage[normalem]{ulem}  % for underline with line wrapping
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{esint}
 \usepackage{bm} % for bold vectors in math mode
 \usepackage{physics} % many useful physics commands
 \usepackage[separate-uncertainty=true]{siunitx} % for scientific notation and units
@@ -2823,37 +2824,418 @@ We will now use the just-derived relations $ [L_{z}, L_{\pm}] = \pm \hbar L_{\pm
 
 \subsection{Landau Levels}
 \begin{itemize}
-	\item The Landau gauge potential is used generate a homogeneous magnetic field of the form $ \B = B \uvec{z} $. Two possible gauge potentials generating this magnetic field are
+	\item We consider only a particle in the two-dimensional $ xy $ plane. The Landau gauge potential is used generate a homogeneous magnetic field of the form $ \B = B \uvec{z} $. Two possible gauge potentials generating this magnetic field are
 	\begin{equation*}
 		\A = x B \uvec{y} \eqtext{and} \A = - y B \uvec{x}
 	\end{equation*}
 	Both recover $ \B = B \uvec{z} $ via $ \B = \curl \A $; we will work with the latter, i.e. $ \A = - y B \uvec{x} $.
 	
+%	note that the sum of the two Landau options recovers the symmetric gauge potential in the previous section.
+	
 	\item In terms of the gauge potential $ \A = - y B \uvec{x} $, the stationary \Schro equation for a particle in an electromagnetic field reads
 	\begin{align*}
 		H\P &= \frac{(\vec{p} - q\A)^{2}}{2m} + q \phi = \frac{1}{2m} \left(-i\hbar \grad + qyB \right)^{2}\P + q \phi \P \\
-		&  =\frac{1}{2m}\left[\left(-i\hbar \pdv{x} + qB_{y}\right)^{2} - \hbar^{2}\pdv[2]{}{y} - \hbar^{2}\pdv[2]{}{z}\right]\P + q\phi \P = E \P
+		&  =\frac{1}{2m}\left[\left(-i\hbar \pdv{x} + qBy\right)^{2} - \hbar^{2}\pdv[2]{}{y} - \hbar^{2}\pdv[2]{}{z}\right]\P + q\phi \P = E \P
 	\end{align*}
-	We solve the equation with the ansatz
+	Next, we assume the electric potential depends only on the single coordinate $ y $, ie. $ \phi(\r) = \phi(y) $, and solve the equation with the ansatz
 	\begin{equation*}
 		\P(\r) = \exp\left[i \left(\frac{p_{x}}{\hbar}x + \frac{p_{z}}{\hbar}z \right)\right]\chi(y)
 	\end{equation*}
-	Next, we assume the electric potential depends only on the single coordinate $ y $, ie. $ \phi(\r) = \phi(y) $. 
+	The exponential term contains plane waves in the $ x $ and $ z $ directions.
 	
-	\textbf{TODO}
-	\item Next, apply the eigenvalue identity
+	\item Next, as an intermediate step, we note that applying a function of the operator $ \hat{p}_{x} $ to the operator's plane wave eigenfunction is the same as multiplying the plane wave by the momentum operator's eigenvalue $ p_{x} $. In equation form, this reads. 
 	\begin{equation*}
-		\hat{f}(\hat{p}_{x})e^{i\frac{p_{x}}{\hbar}x} = \hat{f}\left(-i\hbar \pdv{x}\right)e^{i\frac{p_{x}}{\hbar}x} = f(p_{x}) e^{i\frac{p_{x}}{\hbar}x} 
+		\hat{f}(\hat{p}_{x})e^{i\frac{p_{x}}{\hbar}x} \equiv  \hat{f}\left(-i\hbar \pdv{x}\right)e^{i\frac{p_{x}}{\hbar}x} = f(p_{x}) e^{i\frac{p_{x}}{\hbar}x} 
 	\end{equation*}
-	i.e. the action of the function of an operator onto its eigenstate corresponds to multiplying the eigenstates by the function of the eigenvalue.
-	
-	The ansatz for $ \P $ then produces
+	In our case, this identity is used to show
+	\begin{align*}
+		\left(-i\hbar \pdv{x} + qBy\right)^{2}\exp\left[i \left(\frac{p_{x}}{\hbar}x + \frac{p_{z}}{\hbar}z \right)\right]\chi(y) = (p_{x} + qBy)^{2}\exp\left[i \left(\frac{p_{x}}{\hbar}x + \frac{p_{z}}{\hbar}z \right)\right]\chi(y)
+	\end{align*}
+	where $ p_{x} $ on the right hand side is the eigenvalue of the operator $ \hat{p}_{x} \to -i\hbar \pdv{x}$ on the left hand side, and the corresponding function is $ f(x) = x^{2} $. With this identity in mind, we substitute the ansatz for $ \P $ into the \Schro equation, note that $ \phi = \phi(y) $ acts only on the $ \chi(y) $ factor of $ \P $, evaluate the relevant momentum eigenvalue relations for $ x $ and $ z $, and cancel out the common factor $ \exp\left[i \left(\frac{p_{x}}{\hbar}x + \frac{p_{z}}{\hbar}z \right)\right] $ to get
 	\begin{equation*}
-		\frac{1}{2m}\left[(p_{x} + qBy)^{2} - \hbar^{2}\dv[2]{}{y}\right]\chi(y) + V(y)\chi(y) = E\xi(y).
+		\frac{1}{2m}(p_{x} + qBy)^{2}\chi(y) - \frac{\hbar^{2}}{2m}\dv[2]{}{y}\chi(y) + \frac{p^{2}_{z}}{2m}\chi(y) + q\phi(y)\chi(y) = E\chi(y).
+	\end{equation*}
+	where we stress that $ p_{x} $ and $ p_{z} $ are scalar eigenvalues and not operators. We consider only a particle restricted to the  $ xy $ plane, so $ p_{z} = 0 $, and the equation simplifies to
+	\begin{equation*}
+		\frac{1}{2m}\left[(p_{x} + qBy)^{2} - \hbar \dv[2]{}{y}\right]\chi(y) + V(y)\chi(y) = E\chi(y)
+	\end{equation*}
+	where we have defined $ V(y) = q\phi(y) $ and noted $ p_{z} = 0 $. Note than we have reduced the problem to a one-dimensional problem in the coordinate $ y $. 
+	
+	\item Next, we defined the cyclotron frequency $  \omega  $ and characteristic magnetic length $ \xi $, defined as
+	\begin{equation*}
+		\omega = \frac{qB}{m} \eqtext{and} \xi = \sqrt{\frac{\hbar}{qB}}
+	\end{equation*}
+	We introduce a wave vector $ k $, allowing use to write $ p_{x} = \hbar k $, and finally define a $ k $-displacement $ y_{k} = -\xi^{2}k $. In terms of these new quantities, we can write \Ham in the same form as a displaced harmonic oscillator with an additional potential $ V(y) $, i.e.
+	\begin{equation*}
+		-\frac{\hbar^{2}}{2m} \dv[2]{\chi(y)}{y} + \frac{m\omega^{2}}{2}(y - y_{k})^{2}\chi(y) + V(y)\chi(y) = E\chi(y)
 	\end{equation*}
 	
+	\item In absence of an electric potential, and thus $ \phi = V = 0 $, the solutions of the above equation are simply the eigenstates of a displaced harmonic oscillator, i.e.
+	\begin{equation*}
+		\chi_{nk}(y) = \psi_{n}(y - y_{k})
+	\end{equation*}
+	The complete solution $ \Psi $, again for a particle in the $ xy $ plane with $ p_{z} = 0$, is
+	\begin{equation*}
+		\P_{nk}(x, y) = e^{i\frac{p_{x}}{\hbar}x}\chi_{nk}(y) = \frac{1}{\sqrt{2\pi}}e^{ikx} \psi_{n}(y - y_{k})
+	\end{equation*}
+	where the factor $ \sqrt{2\pi} $ is included for normalization. The corresponding energy eigenvalues, i.e.
+	\begin{equation*}
+		E_{n} = \left(n + \frac{1}{2}\right)\hbar \omega
+	\end{equation*}
+	are called Landau levels. These energy eigenvalues are highly degenerate, since a continuum of linearly independent eigenstates $ \P_{nk} $, which can exist for any $ k \in \mathbb{R} $, will have the same energy eigenvalue $ E_{n} $. 
+	
+	\item Since the energy eigenvalue $ E_{n} $ is independent of $ k $, the time evolution of a wavefunction expanded in the $ \{\P_{nk}\} $ basis is trivial, since because of the high degeneracy with respect to $ k $, any linear combination of the stationary states is still a stationary state with the same energy.
+	
+	As an example, consider an arbitrary wavefunction $ \p $ initially expanded in the plane wave basis, i.e.
+	\begin{equation*}
+		\p(x, 0) = \frac{1}{\sqrt{2\pi}} \int \F{\p}(k)e^{ikx}\diff k
+	\end{equation*}
+	The wavefunctions maintains is shape for $ t > 0 $, since the time evolution reads
+	\begin{align*}
+		\p(x, t) &= \frac{1}{\sqrt{2\pi}} \int \F{\p}(k)e^{ikx}e^{-i\frac{E}{\hbar}t} \diff k = e^{-i\frac{E}{\hbar}t} \frac{1}{\sqrt{2\pi}} \int \F{\p}(k)e^{ikx}\diff k\\
+		& = e^{-i\frac{E}{\hbar}t} \p(x, 0)
+	\end{align*}
+	where we can move the time-dependent factor out of the integral since $ E $ does not depend of $ k $. Thus, the wavefunction's probability density $ \rho = \abs{\p}^{2} $ does not change with time, i.e.
+	\begin{equation*}
+		\rho(x, t) = \rho(x, 0)
+	\end{equation*}
+	since the factor $ e^{-i\frac{E}{\hbar}t} $ vanishes when taking $ \p $'s squared absolute value.
+	
+	\item Because the Landau energy levels are degenerate with respect to $ k $, which is related to $ p_{x} $ via $ p_{x} = \hbar k $, the particle's eigenstates cannot move in the $ x $ direction (if they could move, then $ E $ would depend on $ x $ and thus $ k $). Similarly eigenstates at a given Landau level cannot move in the $ y $ direction, since the states are stationary states. 
+	
+	The classical analog of this high degeneracy is a particle having fixed energy moving at a given angular speed around a circle with fixed radius, regardless of the position of the circle's center.
 	
 \end{itemize}
+
+\subsubsection{Some Generalized Solutions}
+\begin{itemize}
+	\item We can generalize the solution to a \Ham with the additional $ y $-dependent harmonic potential $ V(y) = \frac{1}{2}m\omega_{y}y^{2} $. Since the sum of two separate harmonic potentials is still a harmonic potential, the solution in the presence of the additional $ V(y) $ term is the same as for $ V = 0 $, just with renormalized constants
+	\begin{equation*}
+		\omega \to \omega' = \sqrt{\omega^{2} + \omega_{y}} \eqtext{and} y_{k} \to y_{k}' = \frac{\omega^{2}}{\omega^{2} + \omega_{y}^{2}}y_{k}
+	\end{equation*}
+	
+	\item In the presence of a homogeneous electric field $ \bm{\mathcal{E}} = \mathcal{E}\uvec{y} $, which corresponds to the linear potential $ V(y) = -q\mathcal{E}y $. The corresponding eigenvalue equations is
+	\begin{equation*}
+		-\frac{\hbar^{2}}{2m} \dv[2]{\chi(y)}{y} + \frac{m\omega^{2}}{2}(y - y'_{k})^{2}\chi(y) - q \mathcal{E}y\chi(y) = E\chi(y),
+	\end{equation*}
+	where the new displacement $ y'_{k} $ is
+	\begin{equation*}
+		y'_{k} = - \xi^{2}k + \frac{m \mathcal{E}}{qB^{2}}
+	\end{equation*}
+	Next, we define the energy shift
+	\begin{equation*}
+		\epsilon_{k} = \frac{\mathcal{E}}{B}\hbar k + \frac{m \mathcal{E}^{2}}{2B^{2}},
+	\end{equation*}
+	In terms of which the new potential in the presence of the electric field $ \bm{\mathcal{E}} = \mathcal{E}\uvec{y} $ reads
+	\begin{equation*}
+		V'(y) = \frac{m\omega^{2}}{2}(y - y'_{k})^{2} + \epsilon_{k}
+	\end{equation*}
+	The corresponding energy eigenstates are again shifted harmonic oscillator eigenstates of the form
+	\begin{equation*}
+		\chi_{nk}(y) = \p_{n}(y - y_{k}') \implies \P_{nk}(x, y) = \frac{1}{\sqrt{2\pi}}e^{ikx} \psi_{n}(y - y'_{k})
+	\end{equation*}
+	while the corresponding eigenvalues are
+	\begin{equation*}
+		E_{nk} = \left(n + \frac{1}{2}\right)\hbar \omega + \epsilon_{k}
+	\end{equation*}
+	Note that the presence of the $ \epsilon_{k} $ term breaks the energy degeneracy with respect to $ k $. Because of the broken degeneracy with respect to $ k $, the corresponding time-dependent wave packets are mobile in the $ x $ direction, and propagate with group velocity
+	\begin{equation*}
+		v_{\text{group}_{x}} = \pdv{E_{nk}}{[\hbar k]} = \frac{\mathcal{E}}{B}
+	\end{equation*}
+	In other words, the charged particle moves in the direction $ \bm{\mathcal{E}} \cross \B $, which is the basis for understanding the quantum Hall effect.
+	
+\end{itemize}
+
+\subsubsection{The Cylindrically-Symmetric Gauge Potential}
+\begin{itemize}
+	\item We write the \Ham operator in the form
+	\begin{equation*}
+		H = \frac{\vec{\pi}^{2}}{2m}
+	\end{equation*}
+	where we have defined the kinetic moment operator 
+	\begin{equation*}
+		\vec{\pi} = \vec{p} - q \A
+	\end{equation*}
+	The kinetic moment moment operator is \Herm, i.e. $ \vec{\pi} = \vec{\pi}^{\dagger} $, and depends on the choice of gauge potential $ \A $. 
+	
+	\item The $ \vec{\pi} $ operator obeys the commutation relation $ [\pi_{x}, \pi_{y}] = i \hbar q B_{z} $, which we show with
+	\begin{align*}
+		[\pi_{x}, \pi_{y}] & = [p_{x} - qA_{x}, p_{y} - qA_{y}] = -q[p_{x}, A_{y}] - q[A_{x}, p_{y}] \\
+		& = i\hbar q \left(\pdv{A_{y}}{x} - \pdv{A_{x}}{y}\right) = i \hbar q B_{z}
+	\end{align*}
+	where we have used $ [p_{i}, p_{j}] = 0 $ and $ \B = \curl 
+	\A $. We can proceed analogously for the other components, which leads to commutation relation 
+	\begin{equation*}
+		[\pi_{\alpha}, \pi_{\beta}] = i \hbar q \epsilon_{\alpha \beta \gamma} B_{\gamma} \eqtext{or} \vec{\pi} \cross \vec{\pi} = i \hbar q \B
+	\end{equation*}
+	
+	\item We now restrict ourselves to a particle confined in the $ xy $ plane, and define the raising and lowering operators
+	\begin{equation*}
+		a = \frac{1}{\sqrt{2 \hbar q B}} (\pi_{x} + i \pi_{y}) \eqtext{and} a^{\dagger} = \frac{1}{\sqrt{2 \hbar q B}} (\pi_{x} - i \pi_{y})
+	\end{equation*}
+	These operators obey the commutation relation $ \big[a, a^{\dagger}\big] = 1 $, which we show with
+	\begin{align*}
+		\big[a, a^{\dagger}\big] &= \frac{1}{2\hbar q B}[\pi_{x} + i\pi_{y}, \pi_{x} - i \pi_{y}] = \frac{1}{2\hbar q B}\big([\pi_{x}, i\pi_{y}] + [i\pi_{y}, \pi_{x}]\big) \\
+		& = \frac{2}{2\hbar q B}[i \pi_{y}, \pi_{x}] = \frac{i}{\hbar q B} (-i\hbar q B) = 1
+	\end{align*}
+	In terms of $ a $ and $ a^{\dagger} $, the Hamiltonian reads
+	\begin{align*}
+		H &= \frac{\vec{\pi}^{2}}{2m} = \frac{1}{4m} \big[(\pi_{x} + i \pi_{y})(\pi_{x} - i \pi_{y}) + (\pi_{x} - i \pi_{y})(\pi_{x} + i \pi_{y})\big]\\
+		& = \hbar \omega \left(a^{\dagger}a + \frac{1}{2}\right)
+	\end{align*}
+	
+	\item We assume a homogeneous magnetic field $ \B = B \uvec{z} $, which we write in terms of the symmetric gauge potential
+	\begin{equation*}
+		\A = \frac{B}{2}(-y\uvec{x} + x \uvec{y})
+	\end{equation*}
+	We continue our analysis in the complex plane (this works well because our particle is restricted to the $ xy $ plane) and define the particle's position vector $ \r = (x, y) $ in terms of the complex number $ z = x + i y $.
+	
+	\item \textit{Mathematical aside:} We introduce the Wirtinger derivatives, which read
+	\begin{equation*}
+		\pdv{z} = \frac{1}{2}\left(\pdv{x} - i\pdv{y}\right) \eqtext{and} \pdv{z^{*}} = \frac{1}{2}\left(\pdv{x} + i\pdv{y}\right)
+	\end{equation*}
+	The Wirtinger derivatives obey the standard properties of complex differentiation, such as the power rule,
+	\begin{equation*}
+		\pdv{z^{m}}{z} = mz^{m-1} \eqtext{and} \pdv{z}{z^{*}} = 0 = \pdv{z^{*}}{z}
+	\end{equation*}
+	
+	\item In terms of the Wirtinger derivatives, the lowering operator reads 
+	\begin{align*}
+		a = \frac{1}{\sqrt{2\hbar q B}}\left(i \hbar \pdv{x} + \hbar \pdv{y} - \frac{qB}{2}(-i + ix)\right) = -\frac{i}{\sqrt{2}} \left(2 \xi \pdv{z^{*}} + \frac{z}{2\xi}\right)
+	\end{align*}
+	where we have defined $ \xi = \sqrt{\frac{\hbar}{qB}} $.
+	
+	\item Next, we aim to find the particle's energy eigenfunctions. Similar to our treatment of the harmonic oscillator, we apply the lowering operator $ a $ to an as-of-yet unknown ground state:
+	\begin{equation*}
+		a \p_{0}(z, z^{*}) = 0
+	\end{equation*}
+	In the coordinate representation of $ a $, using the Wirtinger derivatives, this reads
+	\begin{equation*}
+		-\frac{i}{\sqrt{2}} \left(2 \xi \pdv{z^{*}} + \frac{z}{2\xi}\right) \p_{0}(z, z^{*}) = 0 \implies 2 \pdv{}{z^{*}}\p_{0}(z, z^{*}) = - \frac{z}{2\xi^{2}}\p_{0}(z, z^{*})
+	\end{equation*}
+	Note that we have written the wavefunction $ \p_{0} $, which was originally a function of $ x $ and $ y $, as a function of the complex variables $ z $ and $ z^{*} $. Since $ x $ and $ y $ are linearly independent, so are $ z $ and $ z^{*} $. 
+	
+	\item We then integrate the above equation with respect to $ z^{*} $, which results in
+	\begin{equation*}
+		\p_{0}(z, z^{*}) = C\exp\left(-\frac{zz^{*}}{4\xi^{2}}\right) = C\exp\left(-\frac{\abs{z}^{2}}{4\xi^{2}}\right) 
+	\end{equation*}
+	where, because of the integration over $ z^{*} $, the normalization constant $ C $ can also have a dependence on $ z $, i.e. $ C = C(z) $. Note that the arbitrary choice of $ C(z) $ corresponds to the earlier continuous degeneracy of the Landau levels.
+	
+	\item In general, we can write the analytic function $ C(z) $ as a power series, e.g. $ C(z) = \sum_{m}C_{m}z^{m} $. Since the choice of $ C(z) $ is arbitrary, we will write $ C $ as the single term
+	\begin{equation*}
+		C = C_{m}z^{m} \implies \p_{0_{m}}(z, z^{*}) = C_{m}z^{m}e^{-\frac{\abs{z}^{2}}{4\xi^{2}}}, \qquad m = 0, 1, 2, \ldots
+	\end{equation*}
+	To satisfy the normalization condition on $ \p_{0_{m}} $, the constant $ C_{m} $ must obey
+	\begin{equation*}
+		C_{m}^{2} = \pi m! \big(2\xi^{2}\big)^{m+1}
+	\end{equation*}
+	Note that $ m $ must be integer-valued to satisfy periodicity of $ \p $ with respect to the azimuthal angle $ \varphi $ on the interval $ [0, 2\pi] $; and non-negative to satisfy the normalization condition.
+	
+	% Non-negative $ m $ because of some kind of singularity with respect to $ \abs{z}^{-\abs{m}} $.
+
+	\item In terms of both the Cartesian coordinates $ x $ and $ y $ and the polar coordinates $ r $ and $ \varphi $, the eigenfunctions read
+	\begin{align*}
+		\P_{0_{m}}(x, y) &\equiv \p_{0_{m}}(z, z^{*}) = C_{m}(x + iy)^{m}e^{-\frac{x^{2}+y^{2}}{4 \xi}}\\
+		& = C_{m}r^{m}e^{im\varphi}e^{-\frac{r^{2}}{4\xi^{2}}}
+	\end{align*}
+	Meanwhile, the ground state eigenvalue relation reads
+	\begin{equation*}
+		H \P_{0_{m}} = \frac{\hbar \omega}{2}\P_{0_{m}} \equiv E_{\text{LLL}}\P_{0_{m}}
+	\end{equation*}
+	where we have defined the ``lowest Landau level'' $ E_{\text{LLL}} = E_{0} = \frac{\hbar\omega}{2}$, which is just the ground state energy eigenvalue.
+	
+	We generate excited states with the raising operator $ a^{\dagger} $, e.g.
+	\begin{equation*}
+		\P_{1_{m}} = a^{\dagger}\P_{0_{m}} \implies \P_{n_{m}} = \big(a^{\dagger}\big)^{n} \P_{0_{m}}
+	\end{equation*}
+	
+	\item Without derivation, the ground state expectation values of $ r $ and $ r^{2} $ are 
+	\begin{align*}
+		\ev{r} = \sqrt{2}\frac{\big(m + \tfrac{1}{2}\big)!}{m!}\xi \eqtext{and} \ev{r^{2}} = \ev{(x^{2} + y^{2})} = 2(m+1)\xi^{2}
+	\end{align*}
+	For $ m \gg 1/2 $, the expectation value $ \ev{r} $ approaches $ r \to \sqrt{2m}\xi $, and the uncertainty in radius approaches
+	\begin{equation*}
+		\Delta r = \sqrt{\ev{r^{2}} - \ev{r}^{2}} \to \sqrt{2(m+1)\xi^{2} - 2m\xi^{2}} = \sqrt{2} \xi
+	\end{equation*}
+	
+\end{itemize}
+
+\subsubsection{Coherent States and the Classical Limit}
+\begin{itemize}
+	\item In the classical limit, we expect uniform circular motion at the Larmor frequency. We will use the raising and lowering operators, much like when finding the coherent states of a shifted harmonic oscillator. We start with a wave packet shifted to $ z \to (z - z_{0}) $
+	\begin{equation*}
+		a \p = -i\frac{z_{0}}{\xi}\p \implies \p = C\exp\left[-\frac{1}{4\xi^{2}}\big(\abs{z}^{2} - 2zz_{0} + \abs{z_{0}}^{2}\big)\right]
+	\end{equation*}
+
+	\item The corresponding probability density is
+	\begin{equation*}
+		\rho(x, y) = \abs{\p}^{2} = C^{2}\exp \left\{-\frac{1}{4\xi^{2}}\big[(x - x_{0})^{2} + (y - y_{0})^{2}\big]\right\}
+	\end{equation*}
+	and is centered at $ \r_{0} = (x_{0}, y_{0}) $. Note that the center $ \r_{0} $ moves clockwise in the plane around a circle of radius $ \abs{r_{0}} = x_{0}^{2} + y_{0}^{2} $ at the cyclotron frequency $ \omega = \frac{qB}{m_{\text{mass}}} $ according to
+	\begin{equation*}
+		z_{0}(t) = \big[x_{0}(0) + i y_{0}(0)\big]e^{-i\omega t}
+	\end{equation*}
+	The wave packet's width is constant is becomes negligible in the classical limit, in which the circular orbit occurs on a macroscopic scale, since $ \xi/r \to 0 $.
+	
+\end{itemize}
+
+\subsection{Local Gauge Transformations}
+\begin{itemize}
+	\item Recall from the chapter on symmetries that the global gauge transformation $ \P \to e^{i\delta}\P $, in which a wave function is multiplied by a constant phase factor, has no effect on the wavefunction's observable properties, and neither does the general change of basis $ \{\ket{n}\} \to \{e^{i\delta_{n}}\}\ket{n}$. 
+	
+	We now introduce the local gauge transformation, which is time-dependent and reads
+	\begin{equation*}
+		\P'(\r, t) = e^{i\delta (\r, t)} \P(\r, t)
+	\end{equation*}
+	We substitute this transformation into the \Schro equation for a particle in an electromagnetic field and get
+	\begin{equation*}
+		i\hbar \pdv{t}\P' = \frac{1}{2m}(-i\hbar \grad - q\A')^{2}\P' + q \phi' \P'
+	\end{equation*}
+	
+	\item Next, an intermediate mathematical aside which will help us simplify the expression $ (-i\hbar \grad - q\A')^{2} $. For a transformed wavefunction $ \P' = e^{i\delta(\r, t)}\P $, we have
+	\begin{align*}
+		\left(i\pdv{x} + f\right)e^{i\delta}\P &= - \pdv{\delta}{x} e^{i\delta }\P + ie^{i\delta}\pdv{\P}{x} + fe^{i\delta}\P\\
+		& = e^{i\delta}\left(i \pdv{x} + f - \pdv{\delta}{x}\right)\P \\
+	\end{align*}
+	Repeating the above procedure recursively leads to
+	\begin{equation*}
+		\left(i\pdv{x} + f\right)^{2}e^{i\delta}\P = e^{i\delta}\left(i \pdv{x} + f - \pdv{\delta}{x}\right)^{2}\P 
+	\end{equation*}
+	
+	\item Next, we choose the gauge potentials
+	\begin{equation*}
+		\A' = \A + \grad \Lambda \eqtext{and} \phi' = \phi - \pdv{\Lambda}{t}
+	\end{equation*}
+	which preserve the magnetic and electric field $ \B' = \B $ and $ \vec{\mathcal{E}}' = \vec{\mathcal{E}} $.
+	
+	Finally, we choose the phase term $ \delta(\r, t) $ in the local gauge transform to be
+	\begin{equation*}
+		\delta(\r, t) = \frac{q}{\hbar}\Lambda(\r, t) \implies \P'(\r, t) = e^{i\frac{q}{\hbar}\Lambda(\r, t)} \P(\r, t)
+	\end{equation*}
+	
+	\item In terms of the above gauge transforms and the earlier mathematical aside, the \Schro equation for the original wavefunction $ \P $ reads
+	\begin{equation*}
+		i\hbar \pdv{t}\P = \frac{1}{2m}\sum_{\alpha}\left(-i\hbar \pdv{x_{\alpha}} - q A'_{\alpha} + \hbar \pdv{\delta}{x_{\alpha}}\right)^{2} \P + \left(q\phi' + \hbar \pdv{\delta}{t}\right)\P
+	\end{equation*}
+	where we have substituted in the identities
+	\begin{equation*}
+		-qA_{\alpha} = -qA'_{\alpha} + \hbar \pdv{\delta}{x_{\alpha}} \eqtext{and} q\phi = q\phi' + \hbar \pdv{\delta}{t} 
+	\end{equation*}
+	These follow from our choice of gauge potential and the earlier mathematical aside, but we state them without full derivation.
+	
+	\item Matrix elements of observable quantities, which correspond to \Herm operators, are gauge-invariant, i.e.
+	\begin{equation*}
+		\rho'(\r, t) = \abs{e^{i\delta}\P(\r, t)}^{2} = \rho(\r, t)
+	\end{equation*}
+	As an example, we consider the kinetic moment operator $ \pi $,
+	\begin{align*}
+		\mel{\P_{1}'}{\vec{\pi}'}{\P_{2}'} & = \mel{\P_{1}'}{\vec{p} - q\A'}{\P_{2}'} = \mel{e^{i\frac{1}{\hbar}\Lambda}\P_{1}}{\vec{p} - q(\A + \grad \Lambda)}{e^{i\frac{q}{\hbar}\Lambda}\P_{2}'}\\
+		& =  \mel{e^{i\frac{1}{\hbar}\Lambda}\P_{1}}{e^{i\frac{q}{\hbar}\Lambda}(\vec{p} - q \A)}{\P_{2}'} = \mel{\P_{1}}{(\vec{p} - q\A)}{\P_{2}}\\
+		& = \mel{\P_{1}}{\vec{\pi}}{\P_{2}}
+	\end{align*}
+	
+	\textbf{TODO:} However, the canonical momentum $ \vec{p} $ is not gauge-invariant. (Does this contradict with matrix elements of observables being gauge invariant?)
+	
+	\iffalse
+	As a result of $ \vec{\pi} $ being gauge invariant instead of $ \vec{\p} $, in an electromagnetic field we modify the definitino of probability current to
+	\begin{equation*}
+		\vec{j}(\r, t) = \frac{1}{m} \Re \big[\P^{*}(\r, t)\vec{\pi}\P(\r, t)\big]
+	\end{equation*}
+	\fi 
+	
+\end{itemize}
+
+\subsection{Aharonov Bohm Effect}
+\begin{itemize}
+	\item We continue our study of a particle in a static (time-independent) magnetic field $ \B = \B(\r) $. Consider a region of space without a magnetic field, which implies
+	\begin{equation*}
+		\B = \curl \A = 0
+	\end{equation*} 
+	Since $ \curl \A = 0 $, we can write $ \A $ as the gradient of a scalar field $ \A = \grad \Lambda $. We then have
+	\begin{equation*}
+		\Lambda(\r) = \Lambda(\r_{0}) + \int_{\r_{0}}^{\r}\A(\t{\r})\cdot \diff \t{\r}
+	\end{equation*}
+	Note that this relationship is analogous the work done by the electric force, for which $ \curl \vec{\mathcal{E}} = 0 $ allows use to write $ \vec{\mathcal{E}} = - \grad \phi $ and thus
+	\begin{equation*}
+		q\phi(\r) - q\phi(\r_{0}) = - q\int_{\r_{0}}^{\r} \vec{\mathcal{E}}(\r) \cdot \diff \t{\r} \implies \phi(\r) = \phi(\r_{0})  - \int_{\r_{0}}^{\r} \vec{\mathcal{E}}(\r) \cdot \diff \t{\r} 
+	\end{equation*}
+	
+	\item We choose the origin $ \r_{0} $ to occur in the region without magnetic field, i.e. $ \B(\r_{0}) = 0 $. The constant $ \Lambda(\r_{0}) $ then represents a global phase shift, which we can freely set to zero. The \Schro equation in the region of space with zero magnetic field reads
+	\begin{equation*}
+		i\hbar \pdv{t}\P = \frac{(\vec{p} - q \A)^{2}}{2m} \P + V\P
+	\end{equation*}
+	However, we can also work with the transformed \Schro equation
+	\begin{equation*}
+		i\hbar \pdv{t}\P' = \frac{(\vec{p} - q \A')^{2}}{2m} \P' + V\P' = \frac{p^{2}}{2m}\P' + V\P'
+	\end{equation*}
+	where the vector potential $ \A' $ (but not necessarily $ \A $) vanishes in the absence of a magnetic field via
+	\begin{equation*}
+		\A' = \A + \grad(-\Lambda) = \A - \A = 0
+	\end{equation*}
+	
+	\textbf{TODO:} minus signs seem off?
+	
+	\item Both wavefunctions $ \P $ and $ \P' $ describe the same particle in the absence of a magnetic field, and are related by the local gauge transformation
+	\begin{equation*}
+		\P'(\r, t) = e^{i\frac{q}{\hbar}} \P(\r, t)
+	\end{equation*}
+	We then define
+	\begin{equation*}
+		\P_{\text{A}}(\r) = \exp\left(i\frac{q}{\hbar} \int_{\r_{0}}^{\r}\A(\t{\r})\cdot \diff\t{r}\right) \P_{0}(\r)
+	\end{equation*}
+	Where $ \P_{\text{A}} $ denotes the wavefunction evaluated in the presence of a non-zero vector potential and $ \P_{0} $ denotes the wavefunction evaluated in the absence of a vector potential.
+\end{itemize}
+\textbf{Aharonov-Bohm Thought Experiment}
+\begin{itemize}
+	\item Consider a two-dimensional system in which an electron can move along a straight quantum wire, which briefly splits into two branches, which then join back into a single wire.
+	
+	\item Assume, in the absence of both a magnetic field and vector potential ($ \B = 0 $ and $ \A = 0 $), that an electron wave packet $ \P $ travels along the wire, splits at the first junction (e.g. Roman numeral I) into two equal parts $ \P_{\text{I}} = \P_{1} + \P_{2} $ where $ \P_{1} $ and $ \P_{2} $ encode the probability for taking either branch 1 and branch 2.
+	
+	Both $ \P_{1} $ and $ \P_{2} $ propagate along their respective branches and joint back at the second junction (e.g. Roman numeral II) into the wavefunction $ \P_{\text{II}} $.
+	
+	The total electric current through the wire after the junction is proportional to $ \abs{\P_{\text{ii}}}^{2} $, the probability of finding the particle at the second junction.
+	
+	\item Next, assume the region between the two branches is permeated with a magnetic field $ \B $, and that $ \B = 0 $ everywhere else, including along the wires carrying the electron wave packet. 
+	
+	Although $ \B = 0 $ along the wires, the vector potential, defined via $ \B = \curl \A $ ``spills out'' from the region between the branches, and is non-zero along the wires. 
+	
+	The corresponding wavefunction encoding the electron at the second junction is then
+	\begin{equation*}
+		\P_{\text{II}} = e^{i\delta_{1}} \P_{0_{1}} + e^{i\delta_{2}}\P_{0_{1}}
+	\end{equation*}
+	where $ \P_{0_{1}} $ and $ \P_{0_{2}} $ are wavefunctions in the absence of $ \A $, while the phases in each branch are defined via
+	\begin{equation*}
+		\delta_{1} = \frac{q}{\hbar} \int_{\text{branch 1}} \A(\r) \cdot \diff \r \eqtext{and} \delta_{2} = \frac{q}{\hbar} \int_{\text{branch 2}} \A(\r) \cdot \diff \r
+	\end{equation*}
+	
+	\item Assuming the probabilities of taking either branch are equal, we have $ \P_{0_{1}} = \P_{0_{2}} \equiv \P_{0} $ and the wavefunction at the second junction is
+	\begin{equation*}
+		\P_{\text{II}} = e^{i\delta_{2}}\left(1 + e^{i(\delta_{1} - \delta_{2})}\right)\P_{0}
+	\end{equation*}
+	Since the phases $ \delta_{1} $ and $\delta_{2} $ are defined by path integrals over branch 1 and 2, respectively, the phase difference $ \delta_{1} - \delta_{2} $ corresponds to a closed line integral over the loop formed by the two branches:
+	\begin{equation*}
+		\delta_{1} - \delta_{2} = \frac{q}{\hbar} \oint_{\text{loop}} \A(\r) \cdot \diff \r
+	\end{equation*}
+	We then rewrite the closed line integral with Stokes law to get
+	\begin{equation*}
+		\delta_{1} - \delta_{2} = \frac{q}{\hbar} \oiint_{S}\curl \A \cdot \diff \vec{S} = \frac{q}{\hbar}\oiint_{S} \B \cdot \diff \vec{S} = \frac{q}{\hbar}\Phi_{\text{M}}
+	\end{equation*}
+	where $ S $ is the surface bounded by the loop and $ \Phi_{\text{M}} $ is the magnetic flux through the surface. In other words, the phase difference $ \delta_{1} - \delta_{2} $ is proportional to the magnetic flux through the region between the two branches.
+	
+	The wavefunction encoding the electron at the second junction is thus
+	\begin{equation*}
+		\P_{\text{II}} = e^{i\delta_{2}}\left(1 + e^{i\frac{q}{\hbar}\Phi_{\text{M}}}\right)\P_{0}
+	\end{equation*}
+	
+	\item The ratio of electric currents in the presence of a magnetic field in the intra-branch region, with non-zero $ \Phi_{\text{M}} $, and in the absence of a magnetic field, with $ \Phi_{\text{M}} = 0 $, is thus
+	\begin{equation*}
+		\frac{I_{\text{B}}}{I_{0}} = \frac{\abs{\P_{\text{II}_{\text{B}}}}^{2}}{\abs{\P_{\text{II}}}^{2}} = \frac{\abs{e^{i\delta_{2}}\left(1 + e^{i\frac{q}{\hbar}\Phi_{\text{M}}}\right)\P_{0}}^{2}}{\abs{e^{i\delta_{2}}(1 + 1)\P_{0}}^{2}} = \frac{1}{4}\abs{1 + e^{i\frac{q}{\hbar}\Phi_{\text{M}}}}^{2} = \cos^{2}\left(\frac{q}{2\hbar}\Phi_{\text{M}}\right)
+	\end{equation*}
+	In other words, the current through the second branch changes with the magnetic field in the region between the two conducting branches, even though the magnetic field is zero along the branches themselves. 
+	
+	Interpretation: the electron current $ I_{\text{B}} $ oscillates in an interference pattern as a function of a magnetic field that occurs only in a region the electrons don't travel through!
+\end{itemize}
+
 
 \end{document}
 
