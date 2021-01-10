@@ -46,6 +46,7 @@
 \renewcommand{\k}{\vec{k}}  % wave vector
 
 \newcommand{\T}{\mathcal{T}}  % time reversal operator
+\renewcommand{\P}{\mathcal{P}}  % parity operator
 \newcommand{\evb}[1]{\big \langle {#1} \big \rangle}  % for expectation values of fixed size
 \newcommand{\bket}[1]{\big | {#1} \big \rangle}  % for big ket
 \newcommand{\bbra}[1]{\big \langle {#1} \big |}  % for big bra
@@ -3664,11 +3665,11 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	
 	\item In terms of $ a $ and $ a^{\dagger} $, the operator $ x^{2} $ reads
 	\begin{equation*}
-		x^{2} = \frac{x_{0}^{2}}{2}(a+a^{\dagger})^{2} = \frac{x_{0}^{2}}{2}(a^{2} + 2a^{\dagger}a + a^{2} + 1)
+		x^{2} = \frac{x_{0}^{2}}{2}(a+a^{\dagger})^{2} = \frac{x_{0}^{2}}{2}(a^{2} + 2a^{\dagger}a + (a^{\dagger})^{2} + 1)
 	\end{equation*}
 	where we have used the commutator identity $ \big[a, a^{\dagger}\big] = 1 $. Using this expression for $ x^{2} $, we now assemble the matrix element $ \bmel{x^{2}n_{0}}{x^{2}}{n_{0}} $ in pieces. First, (temporarily dropping the subscript $ _{0} $ for conciseness and referring to the unperturbed $ \ket{n_{0}} $ as $ \ket{n} $), we have
 	\begin{align*}
-		 x^{2} \ket{n} &= \frac{x_{0}^{2}}{2}(a^{2} + 2a^{\dagger}a + a^{2} + 1)\ket{n} \\
+		 x^{2} \ket{n} &= \frac{x_{0}^{2}}{2}(a^{2} + 2a^{\dagger}a + (a^{\dagger})^{2} + 1)\ket{n} \\
 		&= \frac{x_{0}^{2}}{2}\big[\sqrt{n}\sqrt{n-1}\ket{n-2} + 2\sqrt{n}\sqrt{n}\ket{n} + \sqrt{n+1}\sqrt{n+2}\ket{n+2} + \ket{n}\big]\\
 		& = \frac{x_{0}^{2}}{2}\big[\sqrt{n(n-1)}\ket{n-2}+(2n+1)\ket{n}+\sqrt{(n+1)(n+2)}\ket{n+2}\big]
 	\end{align*}
@@ -3772,12 +3773,12 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	
 	\item Using the just-derived $ \mel{m_{0}}{H'}{n_{0}}  $, the perturbed \Ham's energy $ E_{n} $ is thus
 	\begin{align*}
-		E_{n} = E^{(0)}_{n} + \sum_{m \neq n} \frac{\abs{\braket{m_{0}}{H'n_{0}}}^{2}}{E^{(0)}_{n} - E^{(0)}_{m}} = E^{(0)}_{n} &+ \frac{\lambda^{2} x_{0}^{6}}{8}\bigg(\frac{n(n-1)(n-2)}{E^{(0)}_{n}-E^{(0)}_{n-3}} + \frac{9n^{3}}{E^{(0)}_{n}-E^{(0)}_{n-1}} \\
+		E_{n} = E^{(0)}_{n} + \sum_{m \neq n} \frac{\abs{\mel{m_{0}}{H'}{n_{0}}}^{2}}{E^{(0)}_{n} - E^{(0)}_{m}} = E^{(0)}_{n} &+ \frac{\lambda^{2} x_{0}^{6}}{8}\bigg(\frac{n(n-1)(n-2)}{E^{(0)}_{n}-E^{(0)}_{n-3}} + \frac{9n^{3}}{E^{(0)}_{n}-E^{(0)}_{n-1}} \\
 		&+ \frac{9(n+1)^{3}}{E^{(0)}_{n} - E^{(0)}_{n+1}} + \frac{(n+1)(n+2)(n+3)}{E^{(0)}_{n} - E^{(0)}_{n+3}} \bigg)
 	\end{align*}
 	Note that, nominally, we must sum over all $ m \neq n $ to find $ E_{n} $. However, because of the Kronecker deltas in the matrix element $ \mel{m_{0}}{H'}{n_{0}} $, there are only four $ m $ that are not equal to $ n $ at a given value of $ n $. 
 	
-	Next, we substitute in the energy differences (e.g. $ E^{(0)}_{n} - E^{(0)}_{n-3} $) in the denominators, which are known from the unperturbed \Ham $ H_{0} $, where the energies are equally spaced by $ \hbar \omega $. Substituting in energies and factoring out $ \hbar \omega $ gives
+	Next, we substitute in the energy differences (e.g. $ E^{(0)}_{n} - E^{(0)}_{n-3} = 3\hbar \omega$) in the denominators, which are known from the unperturbed \Ham $ H_{0} $, where the energies are equally spaced by $ \hbar \omega $. Substituting in energies and factoring out $ \hbar \omega $ gives
 	\begin{align*}
 		E_{n} &= E^{(0)}_{n} + \frac{\lambda^{2} x_{0}^{6}}{24 \hbar \omega}\left[n(n-1)(n-2) + 27n^{3} - 27(n+1)^{3} - (n+1)(n+2)(n+3) \right]\\
 		& = E^{(0)}_{n} + \frac{\lambda^{2} x_{0}^{6}}{24 \hbar \omega} \left(n^{3}-3n^{2} + 2n + 27n^{3} - 27n^{3} - 81n^{2} - 81n - 27 - n^{3} - 6n^{2} - 11n - 6\right)\\
@@ -3821,7 +3822,8 @@ These are the two linearly independent states spanning the isotropic harmonic os
 
 \section{Thirteenth Exercise Set}
 
-\subsection{Theory: Degenerate Perturbation Theory}
+\subsection{Theoretical Background for the Coming Problem}
+\subsubsection{Degenerate Perturbation Theory}
 \begin{itemize}
 	\item Consider the perturbed \Ham $ H = H_{0} + H' $ with the eigenvalue relation
 	\begin{equation*}
@@ -3829,11 +3831,11 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\end{equation*}
 	where the energy $ E^{(0)} $ is $ N $-times degenerate, meaning the wavefunction $ \ket{\p} $ can be written as the general linear combination
 	\begin{equation*}
-		\ket{\psi} = \sum_{i}^{N}c_{i}\ket{i} \qquad \quad \text{where} \ \, H\ket{i} = E^{(0)} \ket{i} \ \text{for each } i
+		\ket{\psi} = \sum_{n=1}^{N}c_{n}\ket{n} \qquad \quad \text{where} \ \, H\ket{n} = E^{(0)} \ket{n} \ \text{for each } n
 	\end{equation*}
 	\item In this course, we will consider only the first-order correction; the procedure to find this correction proceeds as follows:
 	\begin{enumerate}
-		\item Create a matrix of perturbation elements in a chosen basis of the subspace of degenerate states, in our case $ \{\ket{i}\} $. The matrix reads
+		\item Create a matrix of perturbation elements in a chosen basis of the subspace of degenerate states, i.e. $ \{\ket{n}\} $. The matrix reads
 		\begin{equation*}
 			\begin{pmatrix}
 				\mel{1}{H'}{1} & \mel{1}{H'}{2} &  \cdots & \mel{1}{H'}{N} \\
@@ -3857,38 +3859,23 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\end{enumerate}
 \end{itemize}
 
-\subsection{Hydrogen Atom in a Homogeneous Electric Field (rough draft)}
-\textit{Consider a hydrogen atom placed in a homogeneous electric field of magnitude $ \E $. Investigate the resulting energy splitting of the first excited state.}
-\begin{itemize}
-	\item The system's \Ham is 
-	\begin{equation*}
-		H = \frac{p^{2}}{2m} - \frac{q^{2}}{4\pi \epsilon_{0} r} - q \E z
-	\end{equation*}
-	where $ r $ is the distance between electron and proton and $ q = -e_{0} $ it the electron's charge. The unperturbed Hamiltonian $ H_{0} $ and perturbation term $ H' $ are
-	\begin{equation*}
-		H_{0} = \frac{p^{2}}{2m} - \frac{q^{2}}{4\pi \epsilon_{0} r} \eqtext{and} H' = - q \E z
-	\end{equation*}
-	Note that neither \Ham contains a spin-dependent term, which corresponds to our problem's rotation symmetry about the $ z $ axis. This symmetry will greatly simply our problem when we calculate matrix elements. 
-\end{itemize}
-
-\textbf{Review of Hydrogen Eigenstates}
+\subsubsection{Review of Hydrogen Atom Eigenvalues and Eigenfunctions}
 \begin{itemize}
 	\item We now quickly review the unperturbed hydrogen states for $ H_{0} $. In Dirac notation:
 	\begin{equation*}
-		H_{0}\ket{nlm}\ket{m_{s}} = E_{n} \ket{nlm}\ket{m_{s}}
+		H_{0}\ket{nlm_{l}}\ket{m_{s}} = E_{n} \ket{nlm_{l}}\ket{m_{s}}
 	\end{equation*}
 	$ n $ is principle quantum number, $ l $ is magnitude of orbital angular momentum.  The energy eigenvalue depends only on $ n $; it is
 	\begin{equation*}
 		E_{n} = - \frac{\mathrm{Ry}}{n^{2}}
 	\end{equation*}
-	where $\mathrm{Ry} = \SI{13.6}{\electronvolt} $ is the Rydberg energy unit. The quantum numbers take the values $ n = 1, 2, \ldots $; $ l = 0, \ldots, n-1 $; $ m = -l, \ldots, l $ and $ m_{s} \in \{-1/2, 1/2\} $; we write the $ m_{s} $ states as $ \ket{\da} $ and $ \ket{\da} $. 
+	where $\mathrm{Ry} = \SI{13.6}{\electronvolt} $ is the Rydberg energy unit. The quantum numbers take the values $ n = 1, 2, \ldots $; $ l = 0, \ldots, n-1 $; $ m_{l} = -l, \ldots, l $ and $ m_{s} \in \{-1/2, 1/2\} $; we write the $ m_{s} $ states as $ \ket{\da} $ and $ \ket{\da} $. 
 	
-	\item The first excited state occurs for $ n = 2 $; the energy eigenvalues is 
+	\item The coming problem involves the first excited state with $ n = 2 $, so we give $ n = 2 $ special consideration here. The energy eigenvalues of the first excited state is
 	\begin{equation*}
 		E_{2} = - \frac{\mathrm{Ry}}{4}
 	\end{equation*}
-	
-	\item We now find the degeneracy of the first excited state. There are 8 possible linearly independent eigenfunctions with energy $ E_{2} $; these are
+	We now conisder the degeneracy of the first excited state. There are 8 possible linearly independent eigenfunctions with energy $ E_{2} $; these are
 	\[
 	\begin{array}{ll}
 		\ket{200}\ket{\ua}, & \ket{200}\ket{\da}\\
@@ -3902,11 +3889,10 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\begin{equation*}
 		\p_{nlm}(\r) = R_{nl}(r) Y_{lm}(\theta, \phi)
 	\end{equation*}
-	
-	We will need the following radial functions
+	For our problem we will need the following radial functions:
 	\begin{align*}
 		& R_{20}(r) = \frac{2}{(2r_{B})^{3/2}}\left(1 - \frac{r}{2r_{B}}\right)e^{-\frac{r}{2r_{B}}}\\
-		& R_{21}(r) = \frac{1}{\sqrt{3}(2r_{B})^{3/2}}\frac{r}{r_{B}}e^{-\frac{r}{2r_{B}}}
+		& R_{21}(r) = \frac{1}{\sqrt{3}(2r_{B})^{3/2}}\frac{r}{r_{B}}e^{-\frac{r}{2r_{B}}},
 	\end{align*}
 	where $ r_{B} $ is the Bohr radius, and the following spherical harmonics
 	\begin{align*}
@@ -3917,218 +3903,255 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\end{align*}
 	Note the presence of $ m \in {-1, 0, 1} $ in the exponents of the spherical harmonics $ Y_{11} $, $ Y_{10} $ and $ Y_{1-1} $.
 \end{itemize}
-	
-\textbf{Back to the Perturbed Hydrogen Atom}
+
+
+\subsubsection{Parity Symmetry}
 \begin{itemize}
-	\item On to our perturbation matrix, which has dimensions $ 8 \cross 8 $ because of first excited state's $ N = 8 $ degeneracy. A general matrix element takes the form
+	\item The parity operator $ \P $ is defined by the relation
 	\begin{equation*}
-		\bra{m_{s}} \mel{2lm}{H'}{2l'm'} \ket{m_{s}'}
+		\P \p(\r) = \p(-\r)
 	\end{equation*}
-	In principle there are 64 matrix elements, but we can take care of a lot of these by considering the problem's symmetry. 
+	In other words, the parity operator reverses a wavefunction's spatial coordinates. 
 	
-	\item First, note that $ H' = - q \E z $ acts only in the position Hilbert space. The matrix element is then
+	\item Next, we assume the generic eigenvalue relation
 	\begin{equation*}
-		\mel{2lm}{H'}{2l'm'}\braket{m_{s}}{m_{s}'} = \mel{2lm}{H'}{2l'm'} \delta_{m_{s}, m_{s}'}
+		\P\p(\r) = p \p(\r)
 	\end{equation*}
-	
-	We then write the $ 8 \cross 8 $ matrix in 4 blocks  of size $ 4 \cross 4 $ determined by $ \ket{\ua} $ or $ \ket{da} $. The off-diagonal blocks are zero because of $ \delta_{m_{s}, m_{s}'} $. Next, the two diagonal blocks are equal, again because of the symmetry of $ \delta_{m_{s}, m_{s}'} = \delta_{m_{s}', m_{s}}$. 
-	
-	\item So we have a block diagonal matrix with two equal $ 4 \cross 4 $ diagonal blocks. Because these blocks are identical, every eigenvalue of the perturbation matrix is at least twice degenerate. We now consider only the block diagonal matrix e.g. $ \mat{D} $. 
-	
-	\item We can simplify the problem further with a nice symmetry: we'll show
+	and apply the parity operator to get
 	\begin{equation*}
-		\big[H', L_{z}\big] = \big[- q \E z, xp_{y}, yp_{x}\big] = 0.
+		\P \big[\P\p(\r)\big] = \P^{2}\p(\r) = p^{2} \p(\r) = \p(\r)
 	\end{equation*}
-	This is because both of the $ \partial_{y} $ and $ \partial_{x} $ terms commute with $ z $, as do the $ x $ and $ y $ coordinates. We expect $ \big[H', L_{z}\big] = 0 $ anyway since the \Ham is symmetric for rotation in the $ xy $ plane about the $ z $ axis. 
-	
-	\item We now take a matrix element (we only the need position Hilbert space now):
-	\begin{equation*}
-		\mel{2lm}{[H', L_{z}]}{2l'm'} = \mel{2lm}{(H' L_{z} - L_{z}H')}{2l'm'}
-	\end{equation*}
-	We distribute to get two matrix elements
-	\begin{equation*}
-		\mel{2lm}{H'L_{z}}{2l'm'} - \mel{2lm}{L_{z}H'}{2l'm'}
-	\end{equation*}
-	
-	\item Next, we consider the basis in which we find the matrix elements. The number $ l $ corresponds to the operator $ L^{2} $ and $ m $ to $ L_{z} $. We have
-	\begin{equation*}
-		L^{2}\ket{nlm} = \hbar^{2} l (l+1)\ket{nlm} \eqtext{and} L_{z}\ket{nlm} = \hbar m\ket{nlm}
-	\end{equation*}
-	Or basically
-	\begin{equation*}
-		L^{2}Y_{lm}(\theta, \phi) =  \hbar^{2} l (l+1)Y_{lm}(\theta, \phi) \eqtext{and} L_{z}Y_{lm}(\theta, \phi) =  \hbar m Y_{lm}(\theta, \phi)
-	\end{equation*}
-	Applying these eigenvalue relations gives
-	\begin{align*}
-		& \mel{2lm}{H'L_{z}}{2l'm'} - \mel{2lm}{L_{z}H'}{2l'm'} = hm'\mel{2lm}{H'}{2l'm'} - \hbar m \mel{2lm}{H'}{2l'm'}
-	\end{align*}
-	Take a closer look: (use $ L_{z}^{\dagger} = L_{z} $)
-	\begin{align*}
-		&\mel{2lm}{L_{z}H'}{2l'm'} \\
-		& = \mel{L_{z}2lm}{H'}{2l'm'} \\
-		&= \mel{(\hbar m)2lm}{H'}{2l'm'}\\
-		& = (\hbar m)^{*}\mel{2lm}{H'}{2l'm'}\\
-		& = \hbar m \mel{2lm}{H'}{2l'm'}
-	\end{align*}
-	
-	\item Back to the main thing
-	\begin{align*}
-		 & hm'\mel{2lm}{H'}{2l'm'} - \hbar m \mel{2lm}{H'}{2l'm'}\\
-		 & = \hbar(m' - m)\mel{2lm}{H'}{2l'm'} = 0
-	\end{align*}
-	We we've used $ [H', L_{z}] = 0 $ to get the zero. This implies 
-	\begin{equation*}
-		m' \neq m \implies \mel{2lm}{H'}{2l'm'} = 0
-	\end{equation*}
-	
-	\item We now consider the $ 4 \cross 4 $ matrix $ \mat{D} $. We choose a basis so the states with the same $ m $ are grouped together. 
-	
-	Columns in order: $ \ket{200}, \ket{210}, \ket{211}, \ket{21-1} $. 
-	
-	Rows in the same order: $ \ket{200}, \ket{210}, \ket{211}, \ket{21-1} $. 
-	
-	Dive into blocks in which the $ m $ terms in the bra and ket terms are equal. All off-diagonal terms with $ m \neq m' $ are zero because of $ \delta_{m, m'} $. 
-	
-	This leaves only $ 4 + 1 + 1 $  nonzero elements in the three diagonal blocks, respectively.
-	
-	\item We now consider parity symmetry.
-\end{itemize}
-\textbf{Parity Symmetry}
-\begin{itemize}
-	\item Define the parity operator $ P $:
-	\begin{equation*}
-		P \p(\r) = \p(-\r)
-	\end{equation*}
-	Assume the eigenvalue relation
-	\begin{equation*}
-		P\p(\r) = p \p(\r)
-	\end{equation*}
-	Note that
-	\begin{equation*}
-		P^{2}\p(\r) = p^{2} \p(\r) = \p(\r)
-	\end{equation*}
-	which implies $ p = \pm 1 $. The eigenvalues of $ P $ are thus $ \pm 1 $. 
-	
-	\item We say $ \p $ has even parity if $ p = 1 $ and odd parity of $ p = - 1 $. 
+	which implies $ p = \pm 1 $. The eigenvalues of $ P $ are thus $ \pm 1 $. We say that a wavefunction $ \p $ has even parity if $ p = 1 $ and odd parity of $ p = - 1 $. 
 \end{itemize}
 
 \textbf{Parity and the Hydrogen Eigenfunctions}
 \begin{itemize}
-	\item We ask what happens with
+	\item We now consider the action of the parity operator on the hydrogen eigenfunctions:
 	\begin{equation*}
-		P\p_{nlm}(\r) = P(R_{ml}(r)Y_{lm}(\theta, \phi)) = R_{ml}(r) P Y_{lm}(\theta, \phi)
+		\P\p_{nlm}(\r) = \P\big[R_{ml}(r)Y_{lm}(\theta, \phi)\big] = R_{ml}(r) \P Y_{lm}(\theta, \phi)
 	\end{equation*}
-	Note that $ r $ is the same under parity inversion and doesn't affect $ R_{ml} $. 
+	where we note that $ R_{ml}(r) $ is unaffected because the distance $ r $ is unchanged by parity inversion.
 	
-	\item We now show $ [P, \vec{L}] = 0 $. We show only for $ L_{z} $; $ x $ and $ y $ analogous
+	\item Next, we will show that $ [\P, \vec{L}] = [\P, (L_{x}, L_{y}, L_{z})] = 0 $. The derivation reads
 	\begin{align*}
-		[P, L_{z}] &= P L_{z} - L_{z}P = P(xp_{y} - yp_{z}) - L_{z}P = \big[(-x)(-p_{y}) - (-y)(-p_{x})\big]P - L_{z}P\\
-		& = (xp_{y} - yp_{x})P - L_{z}P = L_{z}P - L_{z}P = 0
+		[\P, L_{z}] &= \P L_{z} - L_{z}\P = \P(xp_{y} - yp_{z}) - L_{z}\P = \big[(-x)(-p_{y}) - (-y)(-p_{x})\big]\P - L_{z}\P\\
+		& = (xp_{y} - yp_{x})\P - L_{z}\P = L_{z}\P - L_{z}\P = 0
 	\end{align*}
-	Analogous for $ L_{x} $ and $ L_{y} $ so $ [P, \vec{L}] = 0 $. 
+	The procedure for  $ L_{x} $ and $ L_{y} $ is analogous, and the end result is $ [\P, \vec{L}] = 0 $. 
 	
-	\item Because $ [P, \vec{L}] = 0 $, we can find eigenfunctions that are simultaneously eigenfunctions of $ P $ and $ \vec{L} $. So the spherical harmonics are also, for our problem, eigenfunctions of $ P $, since the $ Y_{lm} $ are eigenfunctions of $ \vec{L} $. We end up with (without and thorough derivation)
+	\item Because $ [\P, \vec{L}] = 0 $, the $ \P $ and $ \vec{L} $ share mutual eigenfunctions, meaning the spherical harmonics, which are nominally eigenfunctions of $ \vec{L} $, are also eigenfunctions of $ P $. 
+	
+	Without derivation, the corresponding eigenvalue between $ \P $ and $ Y_{lm} $ is
 	\begin{equation*}
-		PY_{lm}(\theta, \phi) = (-1)^{l}Y_{lm}(\theta, \phi)
+		\P Y_{lm}(\theta, \phi) = (-1)^{l}Y_{lm}(\theta, \phi)
+	\end{equation*}
+\end{itemize}
+
+
+
+\subsection{Hydrogen Atom in a Homogeneous Electric Field (rough draft)}
+\textit{Consider a hydrogen atom placed in a homogeneous electric field of magnitude $ \E $. Analyze the resulting energy splitting of the first excited state.}
+\begin{itemize}
+	\item The system's \Ham is 
+	\begin{equation*}
+		H = \frac{p^{2}}{2m} - \frac{q^{2}}{4\pi \epsilon_{0} r} - q \E z
+	\end{equation*}
+	where $ r $ is the distance between electron and proton and $ q = -e_{0} $ it the electron's charge. The unperturbed Hamiltonian $ H_{0} $ and perturbation term $ H' $ are
+	\begin{equation*}
+		H_{0} = \frac{p^{2}}{2m} - \frac{q^{2}}{4\pi \epsilon_{0} r} \eqtext{and} H' = - q \E z
+	\end{equation*}
+	Note that neither \Ham contains a spin-dependent term, which corresponds to our problem's rotation symmetry about the $ z $ axis. This symmetry will greatly simply our problem when we calculate matrix elements. 
+
+	\item On to our perturbation matrix, which has dimensions $ 8 \cross 8 $ because of first excited state's $ N = 8 $ degeneracy. A general matrix element takes the form
+	\begin{equation*}
+		\mel{2lm_{l}m_{s}}{H'}{2l'm_{l}'m_{s}'} 
+	\end{equation*}
+	In principle there are $ 8 \cross 8 = 64 $ matrix elements, but we can take care of a lot of these by considering the problem's symmetry. 
+	
+	\item First, note that $ H' = - q \E z $ acts only in the position Hilbert space. We can thus factor the spin term $ \ket{m_{s}} $ out of the main matrix element to get
+	\begin{equation*}
+		\mel{2lm_{l}m_{s}}{H'}{2l'm_{l}'m_{s}'} = \mel{2lm_{l}}{H'}{2l'm_{l}'}\braket{m_{s}}{m_{s}'} = \mel{2lm_{l}}{H'}{2l'm_{l}'} \delta_{m_{s}, m_{s}'}
 	\end{equation*}
 	
-	\item Finally, we show that $ H' $ and $ P $ anti-commute:
+	We then write the $ 8 \cross 8 $ matrix in four blocks  of size $ 4 \cross 4 $ the value of $ \braket{m_{s}}{m_{s}'} $. The off-diagonal blocks are zero because of $ \delta_{m_{s}, m_{s}'} $, while the two diagonal blocks are equal because of the symmetry of $ \delta_{m_{s}, m_{s}'} = \delta_{m_{s}', m_{s}}$. 
+	
+	The perturbation matrix is thus a block diagonal matrix with two identical $ 4 \cross 4 $ diagonal blocks, which we call $ \mat{D} $. Because these $ \mat{D} $ sub-matrices are identical, each of the perturbation matrix's eigenvalues is at least doubly degenerate. We now focus only the $ 4\cross 4 $ sub-matrix $ \mat{D} $. 
+	
+	\item Next, we note that the \Ham $ H' $ commutes with the angular momentum operator $ L_{z}' $:
 	\begin{equation*}
-		\{H', P\} = H'P + PH' = H' P + P(-q \E z) = H' P + (-q\E)(-z)P  = H' P - H'P = 0
+		\big[H', L_{z}\big] = \big[- q \E z, xp_{y}, yp_{x}\big] = 0.
+	\end{equation*}
+	This is because both of the $ \partial_{y} $ and $ \partial_{x} $ terms in $ p_{y} $ and $ p_{z} $ commute with $ z $, as do the $ x $ and $ y $ coordinates. Because $ \big[H', L_{z}\big] = 0 $, the \Ham $ H' $ is invariant with respect to rotation in the $ xy $ plane about the $ z $ axis. 
+	
+	\textit{Note}: going forward, since we have already used the spin term $ \braket{m_{s}}{m_{s}'} $ to introduce the sub-matrix $ \mat{D} $, we only need to consider the position Hilbert space $ \ket{nlm_{l}} \equiv \ket{nlm} $, where we'll write $ m_{l} = m $ since there is no longer any ambiguity with $ m_{s} $.
+	
+	\item We now consider the basis in which we find the matrix elements. The quantum number $ l $ corresponds to the operator $ L^{2} $ and $ m $ to $ L_{z} $, and in the basis oc $ L^{2} $ and $ L_{z} $, the relevant eigenvalue relations read
+	\begin{equation*}
+		L^{2}\ket{nlm} = \hbar^{2} l (l+1)\ket{nlm} \eqtext{and} L_{z}\ket{nlm} = \hbar m\ket{nlm},
+	\end{equation*}
+	or, in the coordinate representation in terms of the spherical harmonics,
+	\begin{equation*}
+		L^{2}Y_{lm}(\theta, \phi) =  \hbar^{2} l (l+1)Y_{lm}(\theta, \phi) \eqtext{and} L_{z}Y_{lm}(\theta, \phi) =  \hbar m Y_{lm}(\theta, \phi)
 	\end{equation*}
 	
-	\item For matrix elements this means
+	\item Next, we consider the matrix element
 	\begin{align*}
-		& \mel{2lm}{\{H', P\}}{2l'm'} =\\
-		 &\mel{2lm}{H' P}{2l'm'} + \mel{2lm}{PH'}{2l'm'}\\
+		\mathcal{M}_{HL_{z}} \equiv \mel{2lm}{[H', L_{z}]}{2l'm'} &= \mel{2lm}{(H' L_{z} - L_{z}H')}{2l'm'} \\
+		& = \mel{2lm}{H'L_{z}}{2l'm'} - \mel{2lm}{L_{z}H'}{2l'm'}
+	\end{align*}
+	Next, since $ L_{z} $ is Hermitian, which means $ L_{z}^{\dagger} = L_{z} $ and $ \hbar m \in \mathbb{R} $ we have
+	\begin{align*}
+		\mel{2lm}{L_{z}H'}{2l'm'} & = \mel{L_{z}2lm}{H'}{2l'm'} = \mel{(\hbar m)2lm}{H'}{2l'm'} \\
+		& = (\hbar m)^{*}\mel{2lm}{H'}{2l'm'} = \hbar m \mel{2lm}{H'}{2l'm'}
+	\end{align*}
+	The matrix element $ \mathcal{M}_{HL_{z}} $ is then
+	\begin{align*}
+		\mathcal{M}_{HL_{z}} &= \mel{2lm}{H'L_{z}}{2l'm'} - \mel{2lm}{L_{z}H'}{2l'm'} \\
+		& = hm'\mel{2lm}{H'}{2l'm'} - \hbar m \mel{2lm}{H'}{2l'm'}\\
+		& = \hbar(m' - m)\mel{2lm}{H'}{2l'm'} \equiv 0
+	\end{align*}
+	The last equality holds from $ [H', L_{z}] = 0 \implies \mathcal{M}_{HL_{z}} \equiv \mel{2lm}{[H', L_{z}]}{2l'm'} = 0 $. The equality $ \hbar(m' - m)\mel{2lm}{H'}{2l'm'} \equiv 0 $ implies
+	\begin{equation*}
+		\mel{2lm}{H'}{2l'm'} = 0 \quad \text{if} \quad 	m' \neq m 
+	\end{equation*}
+
+	
+	\item We now return to the $ 4 \cross 4 $ sub-matrix $ \mat{D} $ and choose a basis so that states with the same $ m $ are grouped together and sub-divide $ \mat{D} $ into blocks in which the $ m $ terms in the bra and ket terms are equal. We choose columns to run in the order $ \ket{200}, \ket{210}, \ket{211}, \ket{21-1} $ and rows to run in the order $ \bra{200}, \bra{210}, \bra{211}, \bra{21-1} $. In terms of $ \ket{lm} $ (dropping $ n = 2 $ from $ \ket{2lm} $ for conciseness) the matrix $ \mat{D} $ is then
+	\begin{equation*}
+		\mat{D} \propto
+		\begin{pmatrix}
+			\mel{00}{H'}{00} & \mel{00}{H'}{10} & \mel{00}{H'}{11} & \mel{00}{H'}{1-1}\\
+			\mel{10}{H'}{00} & \mel{10}{H'}{10} & \mel{10}{H'}{11} & \mel{10}{H'}{1-1}\\
+			\mel{11}{H'}{00} & \mel{11}{H'}{10} & \mel{11}{H'}{11} & \mel{11}{H'}{1-1}\\
+			\mel{1-1}{H'}{00} & \mel{1-1}{H'}{10} & \mel{1-1}{H'}{11} & \mel{1-1}{H'}{1-1}
+		\end{pmatrix}
+	\end{equation*}
+	We then apply the earlier result $ \mel{2lm}{H'}{2l'm'} = 0 $ if  $	m' \neq m  $, which simplifies the matrix to
+	\begin{equation*}
+		\mat{D} \propto
+		\begin{pmatrix}
+			\mel{00}{H'}{00} & \mel{00}{H'}{10} & 0 & 0\\
+			\mel{10}{H'}{00} & \mel{10}{H'}{10} & 0 & 0\\
+			0 & 0 & \mel{11}{H'}{11} & 0 \\
+			0 & 0 & 0 & \mel{1-1}{H'}{1-1}
+		\end{pmatrix}
+	\end{equation*}
+	Next, we consider parity symmetry, which will simplify the matrix even further.
+\end{itemize}
+
+
+\textbf{Parity Symmetry}
+\begin{itemize}
+	\item Recall from the theory section beginning this exercise set that $ \P $ and $ \vec{L} $ commute, so the spherical harmonics $ Y_{lm} $ are eigenfunctions of $ \P $. The relevant eigenvalue relation is
+	\begin{equation*}
+		\P Y_{lm}(\theta, \phi) = (-1)^{l}Y_{lm}(\theta, \phi) \eqtext{or, in Dirac notation,} \P\ket{lm} = (-1)^{l}\ket{lm}
+	\end{equation*}
+	Next, we show that $ H' $ and $ P $ anti-commute, i.e. 
+	\begin{equation*}
+		\{H', \P \} = H'\P + \P H' = H' \P + \P(-q \E z) = H' \P + (-q\E)(-z)\P  = H' \P - H'\P = 0
+	\end{equation*}
+	We then apply $ \{H', \P \} = 0 $ and the eigenvalue relation $  \P\ket{lm} = (-1)^{l}\ket{lm} $ to the matrix elements in the $ \mat{D} $ matrix to get
+	\begin{align*}
+		\mathcal{M}_{H\P} & = \mel{2lm}{\{H', \P\}}{2l'm'} = \mel{2lm}{H' \P}{2l'm'} + \mel{2lm}{\P H'}{2l'm'}\\
 		& = \mel{2lm}{H'}{2l'm'} (-1)^{l'} + \mel{2lm}{H'}{2l'm'}(-1)^{l}\\
-		& = \big[(-1)^{l'} + (-1)^{l}\big]\mel{2lm}{H'}{2l'm'} = 0
+		& = \big[(-1)^{l'} + (-1)^{l}\big]\mel{2lm}{H'}{2l'm'} \equiv 0
 	\end{align*}
-	We end up with
+	Where the last equality $ \mathcal{M}_{H\P} = \mel{2lm}{\{H', \P\}}{2l'm'} = 0 $ holds because $  \{H', \P \} = 0 $. The end result is
 	\begin{equation*}
 		(-1)^{l'} + (-1)^{l} \neq 0 \implies \mel{2lm}{H'}{2l'm'} = 0
 	\end{equation*}
-	Or if $ l $ and $ l' $ are both even or both odd then $ \mel{2lm}{H'}{2l'm'} = 0 $. \textbf{TODO} review if it isn't switched. 
+	In other words, if $ l $ and $ l' $ are either both even or both odd, then $ \mel{2lm}{H'}{2l'm'} = 0 $.
 	
-\end{itemize}
-
-\textbf{Returning to Matrix Elements}
-\begin{itemize}
-	\item Return to matrix $ \mat{D} $.  Recall
-	Columns in order: $ \ket{200}, \ket{210}, \ket{211}, \ket{21-1} $. 
 	
-	Rows in the same order: $ \ket{200}, \ket{210}, \ket{211}, \ket{21-1} $. 
-	
-	\item The $ \mel{2lm}{H'}{2l'm'} = 0  $ from above means that the diagonal matrix elements in the diagonal blocks are zero. 
-	
-	We end up with only two non-zero matrix elements. Consider only the upper block of the three block diagonals of $ \mat{D} $. 
-	
-	\item This block is
+	\item We now return to matrix $ \mat{D} $, which read (using only $ \ket{lm} $ and not $ \ket{2lm} $ for shorthand)
 	\begin{equation*}
+		\mat{D} \propto
 		\begin{pmatrix}
-		0 & \mel{200}{H'}{210}\\
-		\mel{210}{H'}{200} & 0
+			\mel{00}{H'}{00} & \mel{00}{H'}{10} & 0 & 0\\
+			\mel{10}{H'}{00} & \mel{10}{H'}{10} & 0 & 0\\
+			0 & 0 & \mel{11}{H'}{11} & 0 \\
+			0 & 0 & 0 & \mel{1-1}{H'}{1-1}
 		\end{pmatrix}
 	\end{equation*}
-	The matrix elements of a Hermitian operator $ H $ form a hermitian matrix, which means
+	We now apply the result $ (-1)^{l'} + (-1)^{l} \neq 0 \implies \mel{2lm}{H'}{2l'm'} = 0 $, which means that the diagonal matrix elements in the diagonal blocks are zero. The matrix simplifies further to
+	\begin{equation*}
+		\mat{D} \propto
+		\begin{pmatrix}
+			0 & \mel{200}{H'}{210} & 0 & 0\\
+			\mel{210}{H'}{200} & 0 & 0 & 0\\
+			0 & 0 & 0 & 0 \\
+			0 & 0 & 0 & 0
+		\end{pmatrix}
+	\end{equation*}
+	where we have returned to the longer $ \ket{nlm} $ notation, since the matrix has cleared up considerably. 
+	
+	\item Recall that $ \mat{D} $ is a diagonal sub-matrix corresponding to the Hamiltonian $ H' $, which is a Hermitian operator. Since Hermitian operators correspond to Hermitian matrices, the matrix $ \mat{D} $ must also be Hermitian, which implies
 	\begin{equation*}
 		\mel{200}{H'}{210} = \mel{210}{H'}{200}^{*}
 	\end{equation*}
+	We are conveniently left with a single non-zero matrix element from the 64 elements in the original perturbation matrix.
 	
-	\item We have only one non-zero matrix element from originally 64.
+	\item We find the matrix element $ \mel{200}{H'}{210} $ by direct calculation in the coordinate representation. Substituting in the relevant radial eigenfunctions and spherical harmonics, which were given in the theory section opening this exercise set, and converting to spherical coordinates (e.g. $ z = r\cos \theta $), the calculation reads
 	\begin{align*}
 		\mel{200}{H'}{210} &= \int \diff^{3}\vec{r} \psi_{200}^{*}(\r) (-q \E z)\psi_{210}(\r)\\
-		& = \int_{0}^{\infty}r^{2} \diff r \int_{-1}^{1}\diff [\cos \theta] \int_{0}^{2\pi}\diff \phi\left[ \frac{2}{(2r_{B})^{3/2}}\left(1 - \frac{r}{r_{B}}\right)e^{-\frac{r}{2r_{B}}}\frac{1}{\sqrt{4\pi}}\right](-q\E r\cos \theta)\\
-		& = \left[\frac{1}{\sqrt{3}}\frac{1}{(2r_{B})^{3/2}} \frac{r}{r_{B}}e^{-\frac{r}{r_{B}}} \sqrt{\frac{3}{4\pi}} \cos \theta\right]\\
-		& = (- q \E)\int_{0}^{\infty}\frac{r^{4}\diff r}{(2r_{B})^{3} r_{B}}\left(1 - \frac{r}{2r_{B}}\right)e^{-\frac{r}{r_{B}}} \cdot \frac{2}{\sqrt{3}}\int_{-1}^{1}\diff [\cos \theta] \cos^{2}\theta \int_{0}^{2\pi} \diff \phi \frac{\sqrt{3}}{4\pi}\\
+		& = -q\E\int_{0}^{\infty}r^{2} \diff r \int_{-1}^{1}\diff [\cos \theta] \int_{0}^{2\pi}\diff \phi\left[ \frac{2}{(2r_{B})^{3/2}}\left(1 - \frac{r}{2r_{B}}\right)e^{-\frac{r}{2r_{B}}}\frac{1}{\sqrt{4\pi}}\right] r\cos \theta \\
+	 	& {} \qquad \cdot \left[\frac{1}{\sqrt{3}}\frac{1}{(2r_{B})^{3/2}} \frac{r}{r_{B}}e^{-\frac{r}{r_{B}}} \sqrt{\frac{3}{4\pi}} \cos \theta\right]\\
+		& = - q \E \frac{\sqrt{3}}{4\pi}\int_{0}^{\infty}\diff r \frac{r^{4}}{(2r_{B})^{3} r_{B}}\left(1 - \frac{r}{2r_{B}}\right)e^{-\frac{r}{r_{B}}} \cdot \frac{2}{\sqrt{3}}\int_{-1}^{1}\diff [\cos \theta] \cos^{2}\theta \int_{0}^{2\pi} \diff \phi\\
+		& = -q\E \frac{2}{\sqrt{3}}\frac{\sqrt{3}}{4\pi} \cdot \frac{r_{B}}{8} \int_{0}^{\infty} u^{4}\left(1 - \frac{u}{2}\right)e^{-u} \diff u \cdot \left(\frac{2}{3}\right) \cdot \left(2\pi\right)
 	\end{align*}
-	note $ z = r \cos \theta $. First integral $ u = \frac{r}{r_{B}} $
-	\begin{align*}
-		\mel{200}{H'}{210} &= \int \diff^{3}\vec{r} \psi_{200}^{*}(\r) (-q \E z)\psi_{210}(\r)	(-q\E)\frac{2}{\sqrt{3}}\frac{\sqrt{3}}{4\pi} \cdot \frac{r_{B}}{8} \int_{0}^{\infty}u^{4}\diff u\left(1 - \frac{u}{2}\right)e^{-u} \cdot \left(\frac{2}{3}\right) \cdot \left(2\pi\right)\\
-	\end{align*}
-	We find the $ u $ integral with the gamma function. Result is
-	\begin{align*}
-			\mel{200}{H'}{210} & = -q\E r_{B}\frac{1}{12}\left(4! - \frac{1}{2}5!\right) = 3q\E r_{B}
-	\end{align*}
-	
-	\item Our baby matrix $  $ is then
+	where we have introduced the new variable $ u = \frac{r}{r_{B}} $. We find the integral over $ u $ using the gamma function, and the result is
 	\begin{equation*}
-		\begin{pmatrix}
-		0 & 3q\E r_{B} \\
-		3q\E r_{B} & 0
-		\end{pmatrix}
+			\mel{200}{H'}{210} = -q\E r_{B}\frac{1}{12}\left(4! - \frac{1}{2}5!\right) = 3q\E r_{B}
 	\end{equation*}
 	
-	Recall this $ 2 \cross 2 $ matrix is part of the $ (4 \cross 4) $ matrix $ \mat{D} $. Because $ \mat{D}  $ has two zero diagonal elements it has two zero eigenvalues. The other eigenvalues come from $ 2 \cross 2 $ matrix; these are
+	\item Since $ \mel{210}{H'}{200} = \mel{200}{H'}{210}^{*} = (3q\E r_{B})^{*} = 3q\E r_{B}  $, the matrix $ \mat{D} $ is
+	\begin{equation*}
+		\mat{D} \propto
+		\begin{pmatrix}
+			0 & 3q\E r_{B} & 0 & 0\\
+			3q\E r_{B} & 0 & 0 & 0\\
+			0 & 0 & 0 & 0 \\
+			0 & 0 & 0 & 0
+		\end{pmatrix}
+	\end{equation*}
+	Because $ \mat{D}  $ has two zero diagonal elements, it has two zero eigenvalues
+	\begin{equation*}
+		\lambda_{1} = \lambda_{2} = 0
+	\end{equation*}
+	The matrix $ \mat{D} $'s two non-zero eigenvalues come from $ \mat{D} $'s $ 2 \cross 2 $ upper-left sub-matrix and are the zeroes of the second-degree characteristic polynomial
 	\begin{equation*}
 		(- \lambda)^{2} - (3 q \E r_{B})^{2} = 0
 	\end{equation*}
-	which result in
-	\begin{align*}
-		&\lambda_{3} = 3q\E r_{B} = -3e_{0}\E r_{B}\\
-		&\lambda_{4} = -3q\E r_{B} = 3e_{0}\E r_{B}
-	\end{align*}
-	For $ \lambda_{3} $ energy falls linearly with $ \E $ and increases with $ \E $ for $ \lambda_{4} $. The energies $ \lambda_{1} $ and $ \lambda_{2} $ have degeneracy 2.
-	
-	\item But recall the spin symmetry (block identical to $ \mat{D} $). This doubles degeneracy by two. So $ \lambda_{3} $ and $ \lambda_{4} $ states have degeneracy two and the $ \lambda_{1} $ and $ \lambda_{2} $ have degeneracy 4. The last two correspond to
+	The results are
 	\begin{equation*}
-		\ket{211}\ket{\ua}, \ket{211}\ket{\da}, \ket{21-1}\ket{\ua}, \ket{21-1}\ket{\da}
+		\lambda_{3} = 3q\E r_{B} = -3e_{0}\E r_{B} \eqtext{and} \lambda_{4} = -3q\E r_{B} = 3e_{0}\E r_{B}
 	\end{equation*}
+%	The energy eigenvalue $ \lambda_{3} $ and $ \lambda_{4} $ decrease and increase linearly with $ \E $, respectively, while the energy eigenvalues $ \lambda_{1} $ and $ \lambda_{2} $ have degeneracy 2.
 	
-	\item For the states with lowered energies i.e. $ \lambda_{3} $. We need to find the corresponding eigenvector to write the states in the $ \ket{nlm}\ket{m_{s}} $ basis. We have
+	\item Finally, recall the original $ 8 \cross 8 $ perturbation matrix contains two identical $ 4 \cross 4 $ sub-matrices $ \mat{D} $ along its diagonal, so the degeneracy of $ \mat{D} $'s eigenvalues $ \lambda_{1} $, $ \lambda_{2} $, $ \lambda_{3} $ and $ \lambda_{4} $ are doubled when considering the original $ 8 \cross 8 $ perturbation matrix.
+	
+	As a result, the eigenvalues $ \lambda_{3} $ and $ \lambda_{4} $, which decrease and increase linearly with $ \E $, respectively, have twofold degeneracy two. 
+	
+	Meanwhile, the energy eigenvalues $ \lambda_{1} $ and $ \lambda_{2} $, which are unchanged in the presence of an electric field, have fourfold degeneracy.
+	
+	\item The unchanged eigenvalues $ \lambda_{1} $ and $ \lambda_{2} $ with fourfold degeneracy correspond to the four-dimensional linear combination
+	\begin{equation*}
+		\ket{\p_{1,2}} = a \ket{211}\ket{\ua} + b \ket{211}\ket{\da} + c \ket{21-1}\ket{\ua} + d \ket{21-1}\ket{\da}
+	\end{equation*}
+	where we require $ a^{2} + b^{2} + c^{2} + d^{2} = 1 $ for normalization.
+	
+	\item To find the $ \ket{nlm}\ket{m_{s}} $ states corresponding to the lowered energy $ \lambda_{3} $, we solve the $ 2 \cross 2 $ eigenvector problem
 	\begin{equation*}
 		\begin{pmatrix}
 		3e_{0}\E r_{B} & -3e_{0}\E r_{B} \\
-		\cdots  & \cdots
+		- 3e_{0}\E r_{B} & 3e_{0}\E r_{B}
 		\end{pmatrix}
 		\begin{pmatrix}
 			u_{3, 200}\\
 			u_{3, 210}
 		\end{pmatrix}
 		 = 0
-	\end{equation*}
-	So we have
-	\begin{equation*}
+		\implies 
 		\begin{pmatrix}
 			u_{3, 200}\\
 			u_{3, 210}
@@ -4139,55 +4162,84 @@ These are the two linearly independent states spanning the isotropic harmonic os
 		 1
 		 \end{pmatrix}
 	\end{equation*}
-	And thus the state for $ \lambda_{3} $ is
+	The state associated the eigenvalue $ \lambda_{3} $ is thus the two-dimensional linear combination
 	\begin{equation*}
-		\frac{1\cdot \ket{200} + 1\cdot \ket{210}}{\sqrt{2}}
+		\ket{\p_{3}} = \frac{1\cdot \ket{200} + 1\cdot \ket{210}}{\sqrt{2}}
 	\end{equation*}
 	
-	\item For the states with higher energies i.e. $ \lambda_{4} $. We need to find the corresponding eigenvector to write the states in the $ \ket{nlm}\ket{m_{s}} $ basis. We have
+	\item To find the $ \ket{nlm}\ket{m_{s}} $ states corresponding to the raised energy $ \lambda_{4} $, we solve the $ 2 \cross 2 $ eigenvector problem
+	\begin{equation*}
+		\begin{pmatrix}
+		-3e_{0}\E r_{B} & -3e_{0}\E r_{B} \\
+		-3e_{0}\E r_{B} & -3e_{0}\E r_{B}
+		\end{pmatrix}
+		\begin{pmatrix}
+			u_{4, 200}\\
+			u_{4, 210}
+		\end{pmatrix}
+		 = 0
+		\implies 
+		\begin{pmatrix}
+			u_{4, 200}\\
+			u_{4, 210}
+		\end{pmatrix} 
+	 = \sqrt{\frac{1}{2}}
+	 \begin{pmatrix}
+	 1\\
+	 -1
+	 \end{pmatrix}
+	\end{equation*}
+	The state associated the eigenvalue $ \lambda_{4} $ is thus the two-dimensional linear combination
+	\begin{equation*}
+		\ket{\p_{4}} = \frac{1\cdot \ket{200} - 1\cdot \ket{210}}{\sqrt{2}}
+	\end{equation*}
+\end{itemize}
+	
+	
+\textbf{Quick Summary}: 
+\begin{itemize}
+	\item In the presence of the Coulomb-potential Hamiltonian
+	\begin{equation*}
+		H_{0} = \frac{p^{2}}{2m} - \frac{q^{2}}{4\pi \epsilon_{0}r}
+	\end{equation*}
+	a hydrogen atom's first excited state has energy degeneracy $ N = 8 $, and the corresponding energy eigenfunctions are any functions in the  $ 8 $-dimensional Hilbert space spanned by the 8 basis functions
+	\[
+	\begin{array}{ll}
+		\ket{200}\ket{\ua}, & \ket{200}\ket{\da}\\
+		\ket{211}\ket{\ua}, & \ket{211}\ket{\da}\\
+		\ket{210}\ket{\ua}, & \ket{210}\ket{\da}\\
+		\ket{21-1}\ket{\ua}, & \ket{21-1}\ket{\da}
+	\end{array}
+	\]
+	In other words, any linear combination of the 8 basis functions is an eigenfunction of $ H_{0} $ with the  same energy $ E^{(0)}_{2} = -\frac{\si{Ry}}{4} $.
+	
+	\item We then turn on a homogeneous electric field $ \E $, which adds a perturbation $ H' = -qz\E $ to the original \Ham $ H_{0} $. As a result, the originally eight-times degenerate energy $ E^{(0)}_{2} $ splits into
+	\begin{itemize}
+		\item  A four-times degenerate energy, unchanged relative to $ E^{(0)}_{2} $, corresponding to $ \lambda_{1} $ and $ \lambda_{2} $. The corresponding eigenfunctions come from the four-dimensional linear combination 
 		\begin{equation*}
-			\begin{pmatrix}
-			-3e_{0}\E r_{B} & -3e_{0}\E r_{B} \\
-			\cdots  & \cdots
-			\end{pmatrix}
-			\begin{pmatrix}
-				u_{4, 200}\\
-				u_{4, 210}
-			\end{pmatrix}
-			 = 0
+			\ket{\p_{1,2}} = a \ket{211}\ket{\ua} + b \ket{211}\ket{\da} + c \ket{21-1}\ket{\ua} + d \ket{21-1}\ket{\da}
 		\end{equation*}
-		So we have
+		where $ a^{2} + b^{2} + c^{2} + d^{2} = 1 $. 
+		
+		\item A two-times degenerate energy level
 		\begin{equation*}
-			\begin{pmatrix}
-				u_{4, 200}\\
-				u_{4, 210}
-			\end{pmatrix} 
-			 = \sqrt{\frac{1}{2}}
-			 \begin{pmatrix}
-			 1\\
-			 -1
-			 \end{pmatrix}
+			E^{(0)}_{2} + \lambda_{3} = E^{(0)}_{2} - 3 e_{0}\E r_{B}
 		\end{equation*}
-		And thus the state for $ \lambda_{4} $ is
+		lowered relative to $ E^{(0)}_{2} $ in proportion to the electric field $ \E $. The corresponding eigenfunctions come from the two-dimensional linear combination
 		\begin{equation*}
-			\frac{1\cdot \ket{200} - 1\cdot \ket{210}}{\sqrt{2}}
+			\ket{\p_{3}} = \frac{1\cdot \ket{200} + 1\cdot \ket{210}}{\sqrt{2}}
+		\end{equation*}
+			
+		\item A two-times degenerate energy level
+		\begin{equation*}
+			E^{(0)}_{2} + \lambda_{4} = E^{(0)}_{2} + 3 e_{0}\E r_{B}
+		\end{equation*}
+		raised relative to $ E^{(0)}_{2} $ in proportion to the electric field $ \E $. The corresponding eigenfunctions come from the two-dimensional linear combination
+		\begin{equation*}
+			\ket{\p_{4}} = \frac{1\cdot \ket{200} - 1\cdot \ket{210}}{\sqrt{2}}
 		\end{equation*}
 		
-		\item Review: start in the absence of an electric field with $ N = 8 $ degeneracy with $ 8 $-dimensional Hilbert space spanned by the 8 basis functions written above.
-		
-		Any linear combination of the 8 basis functions  is an eigenfunction of $ H_{0} $ with the  same energy $ E $.
-		
-		\item Turn on $ \E $ field. Results are...
-		
-		1 state (unchanged relative to $ E $, corresponding to $ \lambda_{1} $ and $ \lambda_{2} $) is four times degenerate.
-		
-		1 state (lowered relative to $ E $, corresponding to $ \lambda_{3} $) is two times degenerate
-		
-		2 state (raised relative to $ E $,  corresponding to $ \lambda_{4} $) is two times degenerate.
-		
-		These corrected energies are associated with new combinations of basis functions above---note that only 4 basis functions occur for the four-times degenerate state and only 2 for the two-times degenerate states. 
-		
-		In general, any linear combination of the 8 basis functions  is no longer an eigenfunction of $ H_{0} $ with energy $ E $.
+	\end{itemize}
 	
 \end{itemize}
 
