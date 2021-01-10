@@ -21,7 +21,6 @@
 \newcommand{\pert}{perturbation\xspace}
 \newcommand{\Ham}{Hamiltonian\xspace}
 
-
 \renewcommand{\vec}[1]{\bm{#1}} % for vectors
 \renewcommand{\op}[1]{\hat{#1}} % for operators
 \newcommand{\mat}[1]{\mathbf{#1}} % for matrices
@@ -53,7 +52,6 @@
 \newcommand{\bbraket}[2]{\big \langle {#1} \big | {#2} \big \rangle}  % for \big brakets
 \newcommand{\bmel}[3]{\big \langle {#1} \big | {#2} \big | {#3} \big \rangle}  % for matrix elements of fixed size
 
-
 \newcommand{\threebraket}[3]{\left \langle {#1} \left | {#2} \right | {#3} \right \rangle}  % braket with three terms, variable size
 \newcommand{\bthreebraket}[3]{\big \langle {#1} \big | {#2} \big | {#3} \big \rangle}  % braket with three terms, fixed \big size
 
@@ -65,11 +63,12 @@
 %\tableofcontents
 
 
+
 \begin{center}
 \textbf{About These Notes}
 \end{center}
 
-These are my notes from the Exercises portion of the class \textit{Kvanta Mehanika} (Quantum Mechanics), a required course for third-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. The exact problem sets herein are specific to the physics program at the University of Ljubljana, but the content is fairly standard for a late-undergraduate Quantum Mechanics course. I am making the notes publicly available in the hope that they might help others learning the same material.
+These are my notes from the Exercises portion of the class \textit{Kvanta Mehanika} (Quantum Mechanics), a required course for third-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. The exact problem sets herein are specific to the physics program at the University of Ljubljana, but the content is fairly standard for a late-undergraduate quantum mechanics course. I am making the notes publicly available in the hope that they might help others learning the same material.
 
 \vspace{2mm}
 \textit{Navigation}: For easier document navigation, the table of contents is ``clickable'', meaning you can jump directly to a section by clicking the colored section names in the table of contents. Unfortunately, \textit{the clickable links do not work in most online or mobile PDF viewers}; you have to download the file first.
@@ -3949,7 +3948,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 
 
 
-\subsection{Hydrogen Atom in a Homogeneous Electric Field (rough draft)}
+\subsection{Hydrogen Atom in a Homogeneous Electric Field}
 \textit{Consider a hydrogen atom placed in a homogeneous electric field of magnitude $ \E $. Analyze the resulting energy splitting of the first excited state.}
 \begin{itemize}
 	\item The system's \Ham is 
@@ -4018,7 +4017,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	
 	\item We now return to the $ 4 \cross 4 $ sub-matrix $ \mat{D} $ and choose a basis so that states with the same $ m $ are grouped together and sub-divide $ \mat{D} $ into blocks in which the $ m $ terms in the bra and ket terms are equal. We choose columns to run in the order $ \ket{200}, \ket{210}, \ket{211}, \ket{21-1} $ and rows to run in the order $ \bra{200}, \bra{210}, \bra{211}, \bra{21-1} $. In terms of $ \ket{lm} $ (dropping $ n = 2 $ from $ \ket{2lm} $ for conciseness) the matrix $ \mat{D} $ is then
 	\begin{equation*}
-		\mat{D} \propto
+		\mat{D} =
 		\begin{pmatrix}
 			\mel{00}{H'}{00} & \mel{00}{H'}{10} & \mel{00}{H'}{11} & \mel{00}{H'}{1-1}\\
 			\mel{10}{H'}{00} & \mel{10}{H'}{10} & \mel{10}{H'}{11} & \mel{10}{H'}{1-1}\\
@@ -4028,7 +4027,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\end{equation*}
 	We then apply the earlier result $ \mel{2lm}{H'}{2l'm'} = 0 $ if  $	m' \neq m  $, which simplifies the matrix to
 	\begin{equation*}
-		\mat{D} \propto
+		\mat{D} =
 		\begin{pmatrix}
 			\mel{00}{H'}{00} & \mel{00}{H'}{10} & 0 & 0\\
 			\mel{10}{H'}{00} & \mel{10}{H'}{10} & 0 & 0\\
@@ -4065,7 +4064,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	
 	\item We now return to matrix $ \mat{D} $, which read (using only $ \ket{lm} $ and not $ \ket{2lm} $ for shorthand)
 	\begin{equation*}
-		\mat{D} \propto
+		\mat{D} =
 		\begin{pmatrix}
 			\mel{00}{H'}{00} & \mel{00}{H'}{10} & 0 & 0\\
 			\mel{10}{H'}{00} & \mel{10}{H'}{10} & 0 & 0\\
@@ -4075,7 +4074,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\end{equation*}
 	We now apply the result $ (-1)^{l'} + (-1)^{l} \neq 0 \implies \mel{2lm}{H'}{2l'm'} = 0 $, which means that the diagonal matrix elements in the diagonal blocks are zero. The matrix simplifies further to
 	\begin{equation*}
-		\mat{D} \propto
+		\mat{D} =
 		\begin{pmatrix}
 			0 & \mel{200}{H'}{210} & 0 & 0\\
 			\mel{210}{H'}{200} & 0 & 0 & 0\\
@@ -4106,7 +4105,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	
 	\item Since $ \mel{210}{H'}{200} = \mel{200}{H'}{210}^{*} = (3q\E r_{B})^{*} = 3q\E r_{B}  $, the matrix $ \mat{D} $ is
 	\begin{equation*}
-		\mat{D} \propto
+		\mat{D} =
 		\begin{pmatrix}
 			0 & 3q\E r_{B} & 0 & 0\\
 			3q\E r_{B} & 0 & 0 & 0\\
@@ -4126,7 +4125,6 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\begin{equation*}
 		\lambda_{3} = 3q\E r_{B} = -3e_{0}\E r_{B} \eqtext{and} \lambda_{4} = -3q\E r_{B} = 3e_{0}\E r_{B}
 	\end{equation*}
-%	The energy eigenvalue $ \lambda_{3} $ and $ \lambda_{4} $ decrease and increase linearly with $ \E $, respectively, while the energy eigenvalues $ \lambda_{1} $ and $ \lambda_{2} $ have degeneracy 2.
 	
 	\item Finally, recall the original $ 8 \cross 8 $ perturbation matrix contains two identical $ 4 \cross 4 $ sub-matrices $ \mat{D} $ along its diagonal, so the degeneracy of $ \mat{D} $'s eigenvalues $ \lambda_{1} $, $ \lambda_{2} $, $ \lambda_{3} $ and $ \lambda_{4} $ are doubled when considering the original $ 8 \cross 8 $ perturbation matrix.
 	
@@ -4247,170 +4245,161 @@ These are the two linearly independent states spanning the isotropic harmonic os
 
 \subsection{Theory: First-Order Time-Dependent Perturbations}
 \begin{itemize}
-	\item Consider a \Ham
+	\item Consider a \Ham of the form
 	\begin{equation*}
 		H(t) = H_{0} + H'(t)
 	\end{equation*}
-	where $ H_{0} $ is analytically solveable and time-independent.
+	where $ H_{0} $ is analytically solvable and time-independent, while the time-dependent perturbation $ H'(t) $ is small relative to $ H_{0} $.
 	
-	\item We find the eigenstates and eigenvalues of $ H_{0} $. 
+	\item Assume the eigenstates and eigenvalues of $ H_{0} $ obey
 	\begin{equation*}
 		H_{0}\ket{n} = E_{n}\ket{n}
 	\end{equation*}
-	where $ \ket{n} $ is used generally to just indicate eigenstates.
+	where $ \ket{n} $ denotes $ H_{0} $'s (and not $ H $'s) energy eigenstates.
 	
-	\item Solve the time-dependent \Schro equation
+	\item We them aim to solve the time-dependent \Schro equation
 	\begin{equation*}
 		i \pdv{t} \ket{\p, t} = H(t)\ket{\p, t}
 	\end{equation*}
-	
-	\item We expand the wavefunction in terms of  the $ H_{0} $ eigenstates
+	First, we expand the wavefunction in the basis of $ H_{0} $ eigenstates $ \{\ket{n}\} $:
 	\begin{equation*}
-		\ket{\p, t} = \sum_{n}c_{n}(t)\ket{n, t}
+		\ket{\p, t} = \sum_{n}c_{n}(t) \ket{n, t} \quad \text{where} \quad \ket{n, t} = \ket{n}e^{-i\frac{E_{n}}{\hbar}t}
 	\end{equation*}
-	where 
-	\begin{equation*}
-		\ket{n, t} = \ket{n}e^{-i\frac{E_{n}}{\hbar}t}
-	\end{equation*}
-	Note both basis states and coefficients have time dependence. 
-	
-	\item Substitute ansatz into the time-dependent \Schro equation. Get a system of integral equations for the $ c_{n}(t) $
+	We then substitute the ansatz for $ \ket{\p, t} $ into the time-dependent \Schro equation, which results in a system of coupled integral equations for the coefficients $ c_{n}(t) $ of the form
 	\begin{equation*}
 		c_{n}(t) = c_{n}(t_{0}) - \frac{i}{\hbar}\int_{t_{0}}^{t}\diff t\ \mel{n, t'}{H'(t')}{m, t'}c_{m}(t')
 	\end{equation*}
-	We have one such equation for each eigenstate (for each $ m $), and the equations are coupled.
+	Note that up to this step we have not made any approximations---the above system of integral equations is equivalent to the time-dependent \Schro equation for $ \ket{\p, t} $.
 	
-	Note that up to here we have not made any approximations---the system of integral equations is equivalent to the time-dependent \Schro equation.
+	\item To proceed, we make the following approximation:
 	
-	\item We then make the first order approximation:
+	\begin{quote}
+		Assume $ H'(t) $ is weak enough that it doesn't drastically disturb $ \ket{\p, t} $ from the initial state $ \ket{\p, t_{0}} $, so that the coefficients $ c_{n}(t) $ don't change much from their initial values $ c_{n}(t_{0}) $
+	\end{quote}
+	Under the assumption $ c_{m}(t) \approx c_{m}(t_{0}) $, the coefficients $ c_{n}(t) $ become
+	\begin{align*}
+		c_{n}(t) & \approx c_{n}(t_{0}) - \frac{i}{\hbar}\int_{t_{0}}^{t}\diff t' \mel{n, t'}{H'(t')}{m, t'}c_{m}(t_{0})\\
+		& = c_{n}(t_{0}) - \frac{i}{\hbar}c_{m}(t_{0})\int_{t_{0}}^{t}\diff t'  \mel{n, t'}{H'(t')}{m, t'}
+	\end{align*}
 	
-	We assume $ H'(t) $ is weak enough that it doesn't drastically disturb $ \ket{\p, t} $ from the initial state $ \ket{\p, t_{0}} $ or that the coefficients $ c_{n}(t_{0}) $ don't change much:
+	\item To solve the problem, we solve for the coefficients $ c_{n}(t) $, and then find the perturbed eigenfunction with
 	\begin{equation*}
-		c_{n}(t) = c_{n}(t_{0}) - \frac{i}{\hbar}\int_{t_{0}}^{t}\diff t\ \mel{n, t'}{H'(t')}{m, t'}c_{m}(t_{0})
+		\ket{\p, t} = \sum_{n}c_{n}(t)\ket{n, t} = \sum_{n}c_{n}(t) \ket{n}e^{-i\frac{E_{n}}{\hbar}t}
 	\end{equation*}
-	Basically we replace $ c_{m}(t') $ with constant $ c_{m}(t_{0}) $.
-	
-	\item We then review to make sure that the $ c_{m} $ didn't actually change much---if they did, we need a higher-order approximation, which is beyond our scope.
+	where $ \ket{n} $ and $ E_{n} $ are the energy eigenfunctions and eigenvalues of the static \Ham $ H_{0} $. It is then best practice to retrospectively check that the coefficients $ c_{m} $ didn't actually change much---if they did, the approximation $ c_{m}(t) \approx c_{m}(t_{0}) $ would not hold and we would need a higher-order approximation, which is beyond the scope of this course.
 	
 \end{itemize}
 
-\subsection{Hydrogen Atom in an Electric Field Pulse}
+\subsection{Hydrogen Atom Exposed to an Electric Field Pulse}
 \textit{Consider an electron in a hydrogen atom in an electric field $ \E(t) $, with \Ham}
 \begin{equation*}
-	H = \frac{p^{2}}{2m} - \frac{q^{2}}{4 \pi \epsilon_{0} r} - q \E(t)z, \qquad \E(t) = \frac{\E_{0}}{1 + \left(\frac{t}{\tau}\right)^{2}}
+	H = \frac{p^{2}}{2m} - \frac{q^{2}}{4 \pi \epsilon_{0} r} - q \E(t)z, \qquad \E(t) = \frac{\E_{0}}{1 + \left(\frac{t}{\tau}\right)^{2}}.
 \end{equation*}
-\textit{Before the electric field is turned on (e.g. at $ t = - \infty $), the electron is in the ground state:}
+\textit{Before the electric field is turned on (at $ t \to - \infty $), the electron is in the ground state, i.e.}
 \begin{equation*}
-	\ket{\p, - \infty} = \ket{100}
+	\ket{\p, - \infty} = \ket{100}.
 \end{equation*}
-\textit{Find probability of finding the electron in a state with principle quantum number $ n = 2 $ when the electric field pulse ends at $ t = \infty $}.
+\textit{Determine the probability of finding the electron in the first excited state when the electric field pulse ends at $ t = \infty $}.
 
-\textit{Note:} Formally, a complete hydrogen atom eigenstate reads $ \ket{nlm_{l}m_{s}} $, but since spin terms doesn't occur in the \Ham, spin effects don't play a role in our problem and we'll leave out $ \ket{m_{s}} $ for conciseness and write the eigenstates as $ \ket{nlm} $.
+\vspace{2mm}
+\textit{Note:} Formally, a complete hydrogen atom eigenstate reads $ \ket{nlm_{l}m_{s}} $, but since spin terms don't occur in the \Ham, spin effects don't play a role in our problem and we'll leave out $ \ket{m_{s}} $ for conciseness and write the eigenstates as $ \ket{nlm} $.
 	
 	
 \begin{itemize}
-	\item We want to find: for each $ l, m $ probability of finding the particle at $ \ket{2lm} $ at $ t = \infty $. Possibilities are $ 200 $, $ 211 $, $ 210 $ and $ 21-1 $. 
-	
-	We define
+	\item The first excited state has principle quantum number $ n = 2 $, and the possible $ \ket{nlm} $ eigenfunctions in the first excited state are $ \ket{200} $, $ \ket{211} $, $ \ket{210} $ and $ \ket{21-1} $. We define the probability
 	\begin{equation*}
 		P_{2lm}(\infty) = \abs{c_{2lm}(\infty)}^{2}
 	\end{equation*} 
-	and want to find this $ P $ for the four possible $ nlm $.
-	
-	\item 
+	which is the probability of finding the electron in the state $ \ket{2lm} $ at time $ t \to \infty $. Our goal is to find this $ P_{2lm} $ for the four possible $ \ket{2lm} $ states, and then find the total probability of finding the electron in the first excited state with
 	\begin{equation*}
-		c_{2lm}(\infty) = c_{2lm}(-\infty) = 0
+		P_{2} = P_{200} + P_{211} + P_{210} + P_{21-1}
 	\end{equation*}
-	Since at the beginning in the initial state $ c_{100}(-\infty) = 1 $ (ground state)  and $ c_{nlm} = 0 $ for all $ n > 1 $. 
 	
-	\item Continuing
-	\begin{equation*}
-		c_{2lm}(\infty) = c_{2lm}(-\infty) - \frac{i}{\hbar} \int_{-\infty}^{\infty} \diff t' \mel{2lm, t'}{-q\E(t')z}{100, t'}c_{100}(-\infty)
-	\end{equation*}
-	where $ c_{100}(-\infty) = 1 $---note that only $ \ket{100} $ element remains.
-	
-	\item So we now apply definition of time-dependent eigenstates from earlier $ \ket{n, t} $
-	\begin{equation*}
-		c_{2lm}(\infty) = - \frac{i}{\hbar} \int_{-\infty}^{\infty} \diff t'  e^{i\frac{E_{2lm}t'}{\hbar}} \mel{2lm}{-q\E(t')z}{100}e^{-i\frac{E_{100}t'}{\hbar}}
-	\end{equation*}
-	Note the conjugation of energy moving into the bra term.
-	
-	\item Next $ E_{nlm} = E_{n} = \frac{Ry}{n^{2}} $
-	
-	\begin{equation*}
-		c_{2lm}(\infty) = - \frac{i}{\hbar} \int_{-\infty}^{\infty} \diff t'  e^{i\frac{(E_{2} - E_{1})t'}{\hbar}} \frac{-q \E_{0}}{1 + \left(\frac{t'}{\tau}\right)^{2}}\mel{2lm}{z}{100}
-	\end{equation*}
-	We have two integrals: one over time and one over position (i.e. the matrix element)
-	
-	\item Two intermediate steps: start with the matrix element $ \mel{2lm}{z}{100} $. We had a similar problem in the previous exercise set, just with difference values of $ n $. 
-	
-	Note that $ [z, L_{z}] = 0 $ which implies the quantum numbers corresponding to $ L_{z} $ must be equal on both sides of the matrix element if the mel is non-zero, which means $ m = 0 $ in the bra term, otherwise the matrix element is zero.
-	
-	Next recall the requirement $ \{z, p\} = 0 $ for a nonzero matrix element, which implies
-	\begin{equation*}
-		(-1)^{l} + (-1)^{0} = 0
-	\end{equation*}
-	which implies $ l = 1 $. 
-	
-	This means $ c_{200}(\infty) = c_{211}(\infty) = c_{21-1}(\infty) = 0 $ in the first order approximation. 
-	
-	We need only $ \mel{210}{z}{100} $.
-	
-	\item So let's do it! See the exact expressions for $ R $ and $ Y $ from the previous exercise set for reference. In terms of the radial and spherical harmonic (angular) eigenfunctions, in the coordinate representation, the matrix element is
+	\item In the electron's initial ground state $ \ket{\p, -\infty} = \ket{100} $, the corresponding coefficient $ c_{nlm} $ is $ c_{100}(-\infty) = 1 $, while $ c_{nlm}(-\infty) = 0 $ for all other $ n $, $ l $, and $ m $. The final coefficients $ c_{2lm}(t) $ at $ t \to \infty $ are thus
 	\begin{align*}
-		\mel{210}{z}{100} &= \int \diff \r R_{21}^{*}Y_{10}^{*}(\theta, \phi) z R_{10}(r)Y_{00}(\theta, \phi)\\
-		& = \int_{0}^{\infty}r^{2}\diff r \int_{-1}^{1}\diff [\cos \theta] \int_{0}^{2\pi} \diff \phi \left(\frac{1}{\sqrt{3}}\frac{1}{(2r_{B})^{3/2}}\frac{r}{r_{B}}e^{-\frac{r}{2a_{0}}}\right)\cdots\\
-		&{} \quad \cdots \sqrt{\frac{3}{4\pi}}\cos \theta(r\cos \theta)\left(\frac{2}{r_{B}^{3/2}}e^{-\frac{r}{r_{B}}}\right)\frac{1}{\sqrt{4\pi}}\\
+		c_{2lm}(\infty) &= c_{2lm}(-\infty) - \frac{i}{\hbar} \int_{-\infty}^{\infty} \diff t' \mel{2lm, t'}{H'(t)}{n'l'm', t'}c_{n'l'm'}(-\infty)\\
+		& = c_{2lm}(-\infty)  + \frac{i}{\hbar} \int_{-\infty}^{\infty} \diff t' \mel{2lm, t'}{-q\E(t')z}{100, t'}c_{100}(-\infty)\\
+		& = \frac{i}{\hbar} \int_{-\infty}^{\infty} \diff t' \mel{2lm, t'}{-q\E(t')z}{100, t'}
+	\end{align*}
+	where we have used $ c_{nlm}(\infty) = 0 $ for all $ (nlm) \neq (100) $ to simplify the system of equations in the first line to the single equation in the second line, and then $ c_{2lm}(-\infty) = 0 $ and $ c_{100}(-\infty) = 1 $ to get the third line.
+	
+	\item Next, we substitute in $ \ket{nlm, t} = \ket{nlm}e^{-i\frac{E_{n}}{\hbar}t} $ to get 
+	\begin{equation*}
+		c_{2lm}(\infty) = - \frac{i}{\hbar} \int_{-\infty}^{\infty} \diff t'  e^{i\frac{E_{2lm}}{\hbar}t'} \mel{2lm}{-q\E(t')z}{100}e^{-i\frac{E_{100}}{\hbar}t'}
+	\end{equation*}
+	Note that, as usual, we must take the complex conjugate of the exponent in the bra term. We then substitute in the Rydberg energy formula $ E_{nlm} = E_{n} = \frac{\si{Ry}}{n^{2}} $ to get
+	\begin{equation*}
+		c_{2lm}(\infty) = - \frac{i}{\hbar} \int_{-\infty}^{\infty} \diff t'  e^{i\frac{(E_{2} - E_{1})}{\hbar}t'} \frac{-q \E_{0}}{1 + \left(\frac{t'}{\tau}\right)^{2}}\mel{2lm}{z}{100}
+	\end{equation*}
+	We have two integrals: one over time and one over position (implicitly contained in the matrix element $ \mel{2lm}{z}{100} $).
+	
+	\item We begin by finding the matrix element $ \mel{2lm}{z}{100} $. We reuse a result from the previous exercise set: since $ [z, L_{z}] = 0 $, the matrix elements $ \mel{2lm}{z}{100} $ are diagonal with respect to $ L_{z} $'s quantum number $ n $. In other words, the matrix element is non-zero only if the $ m $ quantum numbers are equal on both sides of the braket, i.e.
+	\begin{equation*}
+		\mel{2lm}{z}{100} = \mel{2lm}{z}{100}\delta_{m, 0}
+	\end{equation*}
+	Next we note that $ \{z, \P \} = 0 $, which, again reusing a result from the previous exercise set, means that
+	\begin{equation*}
+		\mel{nlm}{z}{n'l'm'} = 0 \quad \text{if} \quad (-1)^{l'} + (-1)^{l} \neq 0 
+	\end{equation*}
+	In our case the matrix element $ \mel{2lm}{z}{100} $ is no zero only for $ l $ satisfying
+	\begin{equation*}
+		(-1)^{l} + (-1)^{0} = 0  \implies l = 1
+	\end{equation*}
+	Because of the above to results, i.e. $ l = 1 $ and $ \mel{2lm}{z}{100} = \mel{2lm}{z}{100}\delta_{m, 0} $, it follows that $ c_{200}(\infty) = c_{211}(\infty) = c_{21-1}(\infty) = 0 $. In other words, the probability of finding the electron in the first excited state at $ t \to \infty $ is simply
+	\begin{equation*}
+		P_{2} = P_{200} + P_{211} + P_{210} + P_{21-1} = 0 + 0 + P_{210} + 0 = \abs{c_{210}}^{2}
+	\end{equation*}
+	and we only need to calculate the single matrix element $ \mel{210}{z}{100} $.
+	
+	\item In terms of spherical coordinates and the radial and spherical harmonic eigenfunctions, which are given in the theory section opening the previous exercise set, the matrix element $ \mel{210}{z}{100} \equiv \mel{210}{r\cos \theta}{100} $ is
+	\begin{align*}
+		\mel{210}{z}{100} &= \int \diff \r R_{21}^{*}Y_{10}^{*}(\theta, \phi) r \cos \theta R_{10}(r)Y_{00}(\theta, \phi)\\
+		& = \int_{0}^{\infty}r^{2}\diff r \int_{-1}^{1}\diff [\cos \theta] \int_{0}^{2\pi} \diff \phi \left(\frac{1}{\sqrt{3}}\frac{1}{(2r_{B})^{3/2}}\frac{r}{r_{B}}e^{-\frac{r}{2a_{0}}}\right)\cdot\\
+		&{} \quad \cdot \left(\sqrt{\frac{3}{4\pi}}\cos \theta\right) r\cos \theta \left(\frac{2}{r_{B}^{3/2}}e^{-\frac{r}{r_{B}}}\right)\frac{1}{\sqrt{4\pi}}\\
 		& = \int_{0}^{\infty}\frac{r^{4}}{2^{3/2}r_{B}^{4}}e^{-\frac{3}{2}\frac{r}{r_{B}}}\diff r\int_{-1}^{1}\diff [\cos \theta] \cos^{2}\theta\\
-		& = \frac{1}{2^{3/2}r_{B}^{4}}\int \left(\frac{3}{2}\frac{r}{r_{B}}\right)^{4}\diff \left[\frac{3}{2}\frac{r}{r_{B}}\right]e^{-\frac{3}{2}\frac{r}{r_{B}}}\left(\frac{2r_{B}}{3}\right)^{5} \frac{\cos^{3}\theta}{3}\bigg |_{-1}^{1}\\
-		& = r_{B}\frac{2^{7/2}}{3^{5}} \left(4!\right) \cdot \left(\frac{2}{3}\right)\\
-		& = r_{B}\frac{2^{7/2}2^{3}\cdot3\cdot2}{3^{5}\cdot3} = r_{B}\frac{2^{15/2}}{3^{5}}
+		& = \frac{1}{2^{3/2}r_{B}^{4}} \int_{0}^{\infty} \left(\frac{2r_{B}}{3}\right)^{5} u^{4}e^{-u}\diff u \cdot \left[\frac{\cos^{3}\theta}{3}\right]_{\cos \theta = -1}^{1}\\
+		& = r_{B}\frac{2^{7/2}}{3^{5}}\cdot \frac{2}{3} \int_{0}^{\infty}u^{4}e^{-u}\diff u = r_{B}\frac{2^{7/2}}{3^{5}} \cdot \frac{2}{3} \cdot 4!\\
+		& = r_{B}\frac{2^{15/2}}{3^{5}}
 	\end{align*}
-	Use $ r/r_{B} $ for a new variable. Use the gamma function to evaluate the integral over $ u = r/r_{B}  $.
+	where we have introduced the new variables $ u = \frac{3r}{2r_{B}} $ and evaluated the integral over $ u $ with the gamma function.
 
-	\item We're left with
+	\item After substituting in the just-derived matrix element $ \mel{210}{z}{100} $, the coefficient $ c_{210}(\infty) $ simplifies to
 	\begin{equation*}
-		c_{210}(\infty) = - \frac{i}{\hbar}\int_{-\infty}^{\infty} \diff t' e^{i \frac{(E_{2} - E_{1})t'}{\hbar}} \frac{-q\E_{0}}{1 - \left(\frac{t'}{\tau}\right)^{2}} \cdot \left(r_{B}\frac{2^{15/2}}{3^{5}}\right) 
+		c_{210}(\infty) = - \frac{i}{\hbar}\int_{-\infty}^{\infty} \diff t' e^{i \frac{(E_{2} - E_{1})}{\hbar}t'} \frac{-q\E_{0}}{1 - \left(\frac{t'}{\tau}\right)^{2}} \cdot \left(r_{B}\frac{2^{15/2}}{3^{5}}\right) 
 	\end{equation*}
-	We now find the integral over time. We can interpret is as a Fourier transform of the Lorentz function, or use complex integration and residues, which we'll do.
-	
-	\item We'll put $ \Re t' $ and $ \Im t' $ in the complex plane. Note that our integral is only over the real line.
-	
-	In terms of explicit poles, the integral is
-	\begin{align*}
-		c_{210}(\infty) \propto \int_{-\infty}^{\infty} \frac{\tau^{2} e^{i\frac{(E_{2}-E_{1})t'}{\hbar}}(-q\E_{0})}{(t' + i \tau)(t' - i \tau)}
-	\end{align*}
-	\textit{Yo the sigma is a tau} We have two poles at $ \pm i \tau $. 
-	
-	We will close our integration loop in the upper complex plane, so that the exponential factor in the numerator of the integrand converges, because $ \Im t' > 0 $.
-	
-	\item So, using the residue theorem
-	
-	\begin{align*}
-		c_{210}(\infty) &\propto \oint \diff t' \frac{\tau^{2} e^{i\frac{(E_{2}-E_{1})t'}{\hbar}}(-q\E_{0})}{(t' + i \tau)(t' - i \tau)} = 2\pi i \operatorname{Res}_{t' = i \tau}(\cdots) \\
-		& = 2\pi i \frac{\tau^{2}e^{-\frac{E_{2} - E_{1}\tau}{\hbar}}(- q \E_{0})}{2i \tau} = - q \E_{0}\tau e^{-\frac{E_{2} - E_{1}}{\hbar}\tau} \pi
-	\end{align*}
-	
-	\item The coefficient is then
-	\begin{align*}
-		c_{210}(\infty) = \frac{i}{\hbar}q \E_{0}\tau r_{B} \frac{2^{15/2}}{3^{5}} e^{-\frac{E_{2} - E_{1}}{\hbar}\tau} \pi
-	\end{align*}
-	
-	The transition probability to $ \ket{210} $ is then
+	We now find the integral over time, which we will do with complex integration and the residue theorem. First, to make the complex poles more obvious, we rewrite the integral as
 	\begin{equation*}
-		P_{210}(\infty) = \abs{c_{210}(\infty)}^{2} = \frac{2^{15}\pi^{2}}{3^{10}}\left(\frac{q\E_{0}r_{B}}{\hbar}\right)^{2} \tau^{2}e^{-\frac{2(E_{2} - E_{1})}{\hbar}\tau}
+		c_{210}(\infty) \propto \int_{-\infty}^{\infty} \frac{\tau^{2} e^{i\frac{(E_{2}-E_{1})}{\hbar}t'}}{(t' + i \tau)(t' - i \tau)} \diff t'
 	\end{equation*}
-	Note that $ P_{210}(\infty)  \propto \E_{0} $. 
+	where we have dropped constant factors for conciseness.	We then interpret $ t' $ as a complex variable with $ \Re t' $ and $ \Im t' $ spanning the complex. We will close our complex integration contour as a semicircle in the upper complex plane, so that the exponential factor in the integrand's numerator of converges, since $ \Im t' > 0 $ in the upper complex plane. We then define the complex function
+	\begin{equation*}
+		f(z) = \frac{\tau^{2} e^{i\frac{(E_{2}-E_{1})}{\hbar}z}}{(z + i \tau)(z - i \tau)}
+	\end{equation*}
+	and apply the residue theorem at the complex pole $ t' = i \tau $. As the semicircular integration contour's radius approaches infinity, the integral approaches
+	\begin{align*}
+		\oint f(z) \diff z &\to 0 + \int_{-\infty}^{\infty} \frac{\tau^{2} e^{i\frac{(E_{2}-E_{1})}{\hbar}t'} }{(t' + i \tau)(t' - i \tau)} \diff t' = 
+		 2\pi i \operatorname{Res}(f(z); i \tau) \\[1mm]
+		& = 2\pi i \frac{\tau^{2}e^{-\frac{E_{2} - E_{1}}{\hbar}\tau}}{2i \tau} = \pi \tau e^{-\frac{E_{2} - E_{1}}{\hbar}\tau}
+	\end{align*}
+	Using the above integral, the coefficient $ c_{210}(\infty) $ is then
+	\begin{align*}
+		c_{210}(\infty) &= -\frac{i}{\hbar}\left(r_{B}\frac{2^{15/2}}{3^{5}}\right) (-q\E_{0}) \int_{-\infty}^{\infty} \frac{\tau^{2} e^{i\frac{(E_{2}-E_{1})}{\hbar}t'}}{(t' + i \tau)(t' - i \tau)} \diff t'\\
+		 & = \frac{i}{\hbar} r_{B} \frac{2^{15/2}}{3^{5}}q \E_{0} \pi \tau e^{-\frac{E_{2} - E_{1}}{\hbar}\tau}
+	\end{align*}
+	
+	\item With $ c_{210}(\infty) $ known, the probability $ P_{210} $ of the electron transition to the first excited state $ \ket{210} $, and thus the probability of transitioning to the first excited state in general, is
+	\begin{equation*}
+		P_{2}(\infty) = P_{210}(\infty) = \abs{c_{210}(\infty)}^{2} = \frac{2^{15}\pi^{2}}{3^{10}}\left(\frac{q\E_{0}r_{B}}{\hbar}\right)^{2} \tau^{2}e^{-\frac{2(E_{2} - E_{1})}{\hbar}\tau}
+	\end{equation*}
+	Note that $ P_{210}(\infty)  \propto \E_{0} $. This concludes the main portion of this problem.
 		
-	\item Finally, we ask what value of $ \tau $ at fixed $ \E_{0} $ will maximize this probability. We can ignore the constant factor and get
-	\begin{equation*}
-		\dv{\tau}P_{210}(\infty) = 2 \tau e^{-\frac{2(E_{2} - E_{1})}{\hbar}\tau} + \tau^{2}\left(-2\frac{E_{2}- E_{1}}{\hbar}\right)e^{-\frac{2(E_{2} - E_{1})}{\hbar}\tau} = 0
-	\end{equation*}
-	Cancel like terms and get
-	\begin{equation*}
-		1 - \tau \frac{E_{2}-E_{1}}{\hbar} = 0 \implies \tau = \frac{\hbar}{E_{2} - E_{1}}
-	\end{equation*}
-	In other words, the optimal pulse length is directly related to the energy difference between the excited states. 
+	\item As a final note, we ask what value of $ \tau $ at fixed electric field amplitude $ \E_{0} $ will maximize the probability $ P_{2}(\infty) $. We do this by finding the extrema of  $ P_{2}(\infty) $ with respect to $ \tau $, as in elementary single variable calculus. Ignoring the constant coefficients, the calculation reads
+	\begin{align*}
+		 0 \equiv \dv{\tau}P_{2}(\infty) & = 2 \tau e^{-\frac{2(E_{2} - E_{1})}{\hbar}\tau} + \tau^{2}\left(-2\frac{E_{2}- E_{1}}{\hbar}\right)e^{-\frac{2(E_{2} - E_{1})}{\hbar}\tau}\\
+		& = 1 - \tau \frac{E_{2}-E_{1}}{\hbar}\\
+		 \tau &= \frac{\hbar}{E_{2} - E_{1}}
+	\end{align*}
+	In other words, the pulse length maximizing the transition amplitude from the ground state to the first excited state is directly related to the energy difference between the two states. 
 	
 \end{itemize}
 
@@ -4419,29 +4408,31 @@ These are the two linearly independent states spanning the isotropic harmonic os
 \begin{equation*}
 	H = \mu_{B}\vec{\sigma}\cdot \vec{B}(t)
 \end{equation*}
-\textit{where $ \vec{\sigma} $ is written in terms of the Pauli spin matrices: $ \vec{\sigma} = (\sigma_{x}, \sigma_{y}, \sigma_{z}) $ and the magnetic field is}
+\textit{where $ \vec{\sigma} $ is written in terms of the Pauli spin matrices as $ \vec{\sigma} = (\sigma_{x}, \sigma_{y}, \sigma_{z}) $, and the magnetic field is}
 \begin{equation*}
 	\vec{B}(t) = \left(B_{x} \frac{t}{\tau}, 0, B_{z}\right), \qquad B_{x} \ll B_{z}
 \end{equation*}
-\textit{Find the particle's wavefunction $ \ket{\p, \tau} $ at $ t = \tau $.}
+\textit{Find the particle's wavefunction $ \ket{\p, \tau} $ at $ t = \tau $, and analyze the limiting cases of large and small $ \tau $.}
 \begin{itemize}
 
-	\item The terms of $ \vec{B} $'s components, the \Ham reads
+	\item The terms of the magnetic field $ \vec{B} $'s components, the \Ham reads
 	\begin{equation*}
-		H(t) = \mu_{B}\sigma_{z}B_{z} + \mu_{B}\sigma_{x}x\frac{t}{\tau}
+		H(t) = \mu_{B}\vec{\sigma}\cdot \vec{B}(t) = \mu_{B}\sigma_{z}B_{z} + \mu_{B}\sigma_{x}B_{x}\frac{t}{\tau}
 	\end{equation*}
-	The static \Ham is $ H_{0} = \mu_{B}\sigma_{z}B_{z} $ and the time-dependent perturbation term is $ H'(t) = \mu_{B}\sigma_{x}x\frac{t}{\tau} $.
+	Assuming $ B_{x} \ll B_{z} $, the static \Ham is $ H_{0} = \mu_{B}\sigma_{z}B_{z} $, while the time-dependent perturbation term is $ H'(t) = \mu_{B}\sigma_{x}B_{x}\frac{t}{\tau} $.
 	
-	The magnetic field component in the $ x $ direction increase from $ 0 $ to $ B_{x} $ as $ t $ increases from $ 0  $ to $ \tau $. In the initial state $ \ket{\p, 0} = \ket{\da} $, the particle's spin points in the opposite direction of the magnetic field. 
+	The magnetic field's $ x $ component $ B_{x} $ increase from $ 0 $ to $ B_{x} $ as $ t $ increases from $ 0  $ to $ \tau $. In the initial state $ \ket{\p, 0} = \ket{\da} $, the particle's spin points in the opposite direction of the magnetic field. 
+	
+	Since the particle has spin $ s = 1/2 $, the problem's eigenfunctions basis is spanned by the spin eigenfunctions $ \ket{\ua} $ and $ \ket{\da} $.
 
 
-	\item We start by finding the eigenstates of the static \Ham $ H_{0} $. Since $ H_{0} $ is proportional to $ L_{z} $ and the particle has $ s = 1/2 $, the eigenstates are $ \ket{\da} $ and $ \ket{\ua} $:
+	\item We start by finding the energy eigenvalues and eigenstates of the static \Ham $ H_{0} $. Since $ H_{0} $ is proportional to $ L_{z} $ and the particle has $ s = 1/2 $, the eigenstates are $ \ket{\da} $ and $ \ket{\ua} $:
 	\begin{equation*}
 		H_{0}\ket{\ua} = \mu_{B}B_{z} \ket{\ua} \eqtext{and} H_{0}\ket{\da} = -\mu_{B}B_{z} \ket{\da} 
 	\end{equation*}
-	Note that the initial state $ \ket{\p, 0} = \ket{\da} $ is a ground state of the initial Hamiltonian $ H(t = 0) = H_{0} $. 
+	while the corresponding eigenvalues are $ E_{\ua} = \mu_{B}B_{z} $ and $ E_{\da} = -\mu_{B}B_{z} $. Note that the initial state $ \ket{\p, 0} = \ket{\da} $ is a ground state of the initial Hamiltonian $ H(t = 0) = H_{0} $. 
 	
-	\item The eigenfunctions $ \ket{\ua} $ and $ \ket{\da} $ evolve in time as
+	\item Next, using the general expression $ \ket{n, t} = \ket{n} e^{-i\frac{E_{n}}{\hbar}t} $ together with the energy eigenvalues $ E_{\ua} = \mu_{B}B_{z} $ and $ E_{\da} = -\mu_{B}B_{z} $, it follows that the basis functions $ \ket{\ua} $ and $ \ket{\da} $ evolve in time as
 	\begin{equation*}
 		\ket{\ua, t} = \ket{\ua} e^{-i\frac{\mu_{B}B_{z}}{\hbar}t} \eqtext{and} \ket{\da, t} = \ket{\da} e^{i\frac{\mu_{B}B_{z}}{\hbar}t}
 	\end{equation*}
@@ -4450,7 +4441,11 @@ These are the two linearly independent states spanning the isotropic harmonic os
 		\ket{\p, \tau} = C_{\ua}(\tau) \ket{\ua, \tau} +  C_{\da}(\tau) \ket{\da, \tau} 
 	\end{equation*}
 	
-	\item We find the first coefficient $ C_{\ua}(\tau) $ with
+	\item We find the first coefficient $ C_{\ua}(\tau) $ using the general approximation
+	\begin{equation*}
+		c_{n}(t) \approx c_{n}(t_{0}) - \frac{i}{\hbar}\int_{t_{0}}^{t}\mel{n, t'}{H'(t')}{m, t'}c_{m}(t_{0}) \diff t'
+	\end{equation*}
+	In our case, with the two dimensional eigenbasis $ \{\ket{\ua}, \ket{\da}\} $, the expression reads
 	\begin{equation*}
 		C_{\ua}(\tau) = C_{\ua}(0) - \frac{i}{\hbar}\int_{0}^{\tau}\diff t \mel{\ua, t}{H'(t)}{\da, t}C_{\da}(0) - \frac{i}{\hbar}\int_{0}^{\tau}\diff t \mel{\ua, t}{H'(t)}{\ua, t}C_{\ua}(0)
 	\end{equation*}
@@ -4458,7 +4453,8 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\begin{equation*}
 		C_{\ua}(\tau) = - \frac{i}{\hbar}\int_{0}^{\tau}\diff t \mel{\ua, t}{H'(t)}{\da, t}
 	\end{equation*}
-	We find the second coefficient $ C_{\ua}(\tau) $ with
+
+	\item We find the second coefficient $ C_{\ua}(\tau) $ with
 	\begin{equation*}
 		C_{\da}(\tau) = C_{\da}(0) - \frac{i}{\hbar}\int_{0}^{\tau}\diff t \mel{\da, t}{H'(t)}{\da, t}C_{\da}(0) - \frac{i}{\hbar}\int_{0}^{\tau}\diff t \mel{\da, t}{H'(t)}{\ua, t}C_{\ua}(0)
 	\end{equation*}
@@ -4472,9 +4468,9 @@ These are the two linearly independent states spanning the isotropic harmonic os
 		& C_{\ua}(\tau) = - \frac{i}{\hbar}\int_{0}^{\tau} \diff t e^{i\frac{\mu_{B}B_{z}}{\hbar}t}\mel{\ua}{\mu_{B}B_{x}\frac{t}{\tau}\sigma_{x}}{\da} e^{i\frac{\mu_{B}B_{z}}{\hbar}t}\\
 		& C_{\da}(\tau) = - \frac{i}{\hbar}\int_{0}^{\tau} \diff t e^{-i\frac{\mu_{B}B_{z}}{\hbar}t}\mel{\da}{\mu_{B}B_{x}\frac{t}{\tau}\sigma_{x}}{\da} e^{i\frac{\mu_{B}B_{z}}{\hbar}t}
 	\end{align*}
-	Note the complex conjugations when moving the exponential factor out of the bra term.
+	Note the complex conjugations when moving the exponential factor out of the bra term. To find $ C_{\ua}(\tau) $ and $ C_{\da}(\tau) $, we have to calculate the two matrix elements $ \mel{\ua}{\sigma_{x}}{\da} $ and $ \mel{\da}{\sigma_{x}}{\da} $, which we'll find in spin basis $ \{\ket{\ua}, \ket{\da} \} $ using spinors.
 	
-	\item We have two matrix elements $ \mel{\ua}{\sigma_{x}}{\da} $ and $ \mel{\da}{\sigma_{x}}{\da} $ to calculate---we'll find then in the spin space. We first find $ \sigma_{x}\ket{\da} $ in terms of spinors:
+	We start by finding the ket term $ \sigma_{x}\ket{\da} $, which reads
 	\begin{equation*}
 		\sigma_{x}\ket{\da} \to 
 		\begin{pmatrix}
@@ -4492,36 +4488,38 @@ These are the two linearly independent states spanning the isotropic harmonic os
 		\end{pmatrix}
 		\to \ket{\ua}
 	\end{equation*}
-	Using  $ \sigma_{x}\ket{\da} = \ket{\ua} $ and applying the orthonormality of $ \ket{\ua} $ and $ \ket{da} $ gives
+	Using  $ \sigma_{x}\ket{\da} = \ket{\ua} $ and applying the orthonormality of $ \ket{\ua} $ and $ \ket{\da} $ gives
 	\begin{equation*}
 		\mel{\ua}{\sigma_{x}}{\da} = \braket{\ua}{\ua} = 1 \eqtext{and} \mel{\da}{\sigma_{x}}{\da} = \braket{\da}{\ua} = 0
 	\end{equation*}
+	Because $ \mel{\da}{\sigma_{x}}{\da} = 0 $, $ C_{\da}(\tau) = 0 $. 
 	
-	\item Because $ \mel{\da}{\sigma_{x}}{\da} = 0 $, $ C_{\da}(\tau) = 0 $. We find the remaining coefficient $ C_{\ua}(\tau) $ with
+	\item We find the remaining coefficient $ C_{\ua}(\tau) $ bt direct calculation:
 	\begin{align*}
-		C_{\ua}(0) &= - \frac{i}{\hbar}\int_{0}^{\tau} \diff t e^{i\frac{\mu_{B}B_{z}}{\hbar}t}\mel{\ua}{\mu_{B}B_{x}\frac{t}{\tau}\sigma_{x}}{\da} e^{i\frac{\mu_{B}B_{z}}{\hbar}t}\\
-		&- \frac{i}{\hbar}\int_{0}^{\tau} \diff t e^{2i\frac{\mu_{B}B_{z}}{\hbar}t} \mu_{B}B_{x}\frac{t}{\tau}
+		C_{\ua}(0) &= - \frac{i}{\hbar}\int_{0}^{\tau} e^{i\frac{\mu_{B}B_{z}}{\hbar}t}\mel{\ua}{\mu_{B}B_{x}\frac{t}{\tau}\sigma_{x}}{\da} e^{i\frac{\mu_{B}B_{z}}{\hbar}t} \diff t\\
+		& = - \frac{i}{\hbar}\int_{0}^{\tau} e^{2i\frac{\mu_{B}B_{z}}{\hbar}t} \mu_{B}B_{x}\frac{t}{\tau} \diff t
 	\end{align*}
 	where we've used $ \mel{\ua}{\sigma_{x}}{\da} = 1$. In terms of the new variable $ u = \frac{2\mu_{B}B_{z}}{\hbar}t $, the resulting integral, using integration by parts, evaluates to
 	\begin{align*}
 		C_{\ua}(\tau) &= - \frac{i}{\hbar}\frac{\mu_{B}B_{x}}{\tau} \int_{0}^{ \frac{2\mu_{B}B_{z}}{\hbar}\tau} \left(\frac{\hbar}{2\mu_{B}B_{z}}\diff u\right) e^{iu} \left(\frac{\hbar}{2\mu_{B}B_{z}}u\right) \\
 		& = - \frac{i}{\hbar}\frac{\mu_{B}B_{x}}{\tau} \left(\frac{\hbar}{2\mu_{B}B_{z}}\right)^{2} \int_{0}^{ \frac{2\mu_{B}B_{z}}{\hbar}\tau} ue^{iu}\diff u\\
-		& = - \frac{i}{\hbar}\frac{\mu_{B}B_{x}}{\tau} \left(\frac{\hbar}{2\mu_{B}B_{z}}\right)^{2}  \left(-iu + 1\right)e^{iu}\bigg |_{0}^{\frac{2\mu_{B}B_{z}}{\hbar}\tau}\\
+		& = - \frac{i}{\hbar}\frac{\mu_{B}B_{x}}{\tau} \left(\frac{\hbar}{2\mu_{B}B_{z}}\right)^{2}  \left(-iu + 1\right)e^{iu}\Big |_{0}^{\frac{2\mu_{B}B_{z}}{\hbar}\tau}\\
 		& = -\frac{iB_{x}}{2B_{z}} \frac{\hbar}{2\mu_{B}B_{z}\tau} \left[\left(1 - i \frac{2\mu_{B}B_{z}\tau}{\hbar}\right)e^{i\frac{2\mu_{B}B_{z}\tau}{\hbar}} - 1\right]
 	\end{align*}
-	In terms of $ C_{\ua}(\tau) $ the first-order approximation to the wavefunction $ \ket{\p, \tau} $ is then
+	
+	\item In terms of $ C_{\ua}(\tau) $ the first-order approximation to the wavefunction $ \ket{\p, \tau} $ is thus
 	\begin{equation*}
 		\ket{\p, \tau} = 1 \cdot \ket{\da, \tau} -\frac{iB_{x}}{2B_{z}} \frac{\hbar}{2\mu_{B}B_{z}\tau} \left[\left(1 - i \frac{2\mu_{B}B_{z}\tau}{\hbar}\right)e^{i\frac{2\mu_{B}B_{z}\tau}{\hbar}} - 1\right]\ket{\ua, \tau}
 	\end{equation*}
 \end{itemize}
 
-\textbf{Limit Cases}
+\textbf{Limit Case for Large $ \tau $}
 \begin{itemize}	
 	\item First, for shorthand, we define
 	\begin{equation*}
 		\alpha \equiv \frac{2\mu_{B}B_{z}\tau}{\hbar}
 	\end{equation*}
-	We begin with the limiting case $ \alpha \gg 1 $, which corresponds to large $ \tau $, i.e. turning on the $ x $ component of the magnetic field slowly. In the $ \alpha \gg 1 $ limit, we have
+	We start with the limit case $ \alpha \gg 1 $, which corresponds to large $ \tau $, i.e. turning on the $ x $ component of the magnetic field slowly. In the limit $ \alpha \gg 1 $, we have
 	\begin{equation*}
 		\frac{(1 - i\alpha)e^{i\alpha}-1}{\alpha} \approx - i e^{i\alpha}
 	\end{equation*}
@@ -4540,24 +4538,22 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\begin{equation*}
 		\ket{\p} = \cos \frac{\theta}{2}\ket{\ua} + \sin \frac{\theta}{2}e^{i\phi}\ket{\da}
 	\end{equation*}
-	We can then find the orientation $ (\phi, \theta) $ of the wavefunction's spin in space by matching $ \ket{p} $ to the above expression in terms of $ \phi $ and $ \theta $.
+	We can then find the spatial orientation $ (\phi, \theta) $ of the wavefunction's spin by matching the wavefunction to the above expression in terms of $ \phi $ and $ \theta $.
 	
 	\item Recall that a wavefunction is determined only up to a constant phase factor. With this in mind, we will first re-write the wavefunction $ \ket{\p, \tau} $ so that $ \cos \frac{\theta}{2} \in \mathbb{R}^{+} $, which will make it possible to compare $ \ket{\p, \tau} $ to the general form
 	\begin{equation*}
-		\ket{\p} = \cos \frac{\theta}{2}\ket{\ua} + \sin \frac{\theta}{2}e^{i\phi}\ket{\da}
+		\ket{\p} = \cos \frac{\theta}{2}\ket{\ua} + \sin \frac{\theta}{2}e^{i\phi}\ket{\da},
 	\end{equation*}
-	and thus determine the directions $ \phi $ and $ \theta $ of our particle's spin at $ t = \tau $.
-	
-	We factor out and then neglect a constant phase factor from $ \ket{\p, \tau} $ to get
+	and thus determine the directions $ \phi $ and $ \theta $ of our particle's spin at $ t = \tau $. We do this by factoring out and then neglecting a constant phase factor $ e^{i\frac{\mu_{B}B_{z}\tau}{\hbar}} $ from $ \ket{\p, \tau} $, which gives
 	\begin{equation*}
-		\ket{\p, \tau} = - e^{i\frac{\mu_{B}B_{z}\tau}{\hbar}}\left[\frac{1}{2}\frac{B_{x}}{B_{z}}\ket{\ua} - \ket{\da}\right] \equiv \frac{1}{2}\frac{B_{x}}{B_{z}}\ket{\ua} - \ket{\da}
+		\ket{\p, \tau} = - e^{i\frac{\mu_{B}B_{z}\tau}{\hbar}}\left[\frac{1}{2}\frac{B_{x}}{B_{z}}\ket{\ua} - \ket{\da}\right] \to \frac{1}{2}\frac{B_{x}}{B_{z}}\ket{\ua} - \ket{\da}
 	\end{equation*}
-	
-	\item We the compare $ \ket{\p, \tau} $ to $ \ket{\p} = \cos \frac{\theta}{2}\ket{\ua} + \sin \frac{\theta}{2}e^{i\phi}\ket{\da} $ to get
+	We then compare $ \ket{\p, \tau} $ to $ \ket{\p} = \cos \frac{\theta}{2}\ket{\ua} + \sin \frac{\theta}{2}e^{i\phi}\ket{\da} $ to get
 	\begin{equation*}
 		\cos \frac{\theta}{2} = \frac{1}{2}\frac{B_{x}}{B_{z}} \eqtext{and} \sin \frac{\theta}{2}e^{i\phi} = - 1
 	\end{equation*}
-	Because in the instructions we have $ B_{x} \ll B_{z} $ (needed to justify the perturbation approximation), we can write $ \theta = \pi - \epsilon $ for $ \epsilon \ll 1 $ and thus
+	
+	\item Because $ B_{x} \ll B_{z} $, we can write $ \theta = \pi - \epsilon $ for $ \epsilon \ll 1 $ and thus
 	\begin{equation*}
 		\cos \frac{\theta}{2} = \cos \left(\frac{\pi}{2} - \frac{\epsilon}{2}\right) = \sin \frac{\epsilon}{2} \approx \frac{\epsilon}{2} = \frac{B_{x}}{2B_{z}} \implies \epsilon = \frac{B_{x}}{B_{z}}
 	\end{equation*}
@@ -4565,8 +4561,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\begin{equation*}
 		\sin \frac{\theta}{2} = \sin \left(\frac{\pi - \epsilon}{2}\right) = \cos \frac{\epsilon}{2} \approx 1 + \mathcal{O}(\epsilon^{2}) \implies e^{i\phi} = -1 \implies \phi = \pi
 	\end{equation*} 
-	
-	\item These two angles mean spin forms an angle $ \epsilon $ with the minus $ z $ axis and points in the third quadrant because of $ \phi = \pi $. Finally, we note that in the small angle approximation we have $ \tan \epsilon \approx \epsilon = \frac{B_{x}}{B_{z}}$.
+	These two angles mean the spin forms an angle $ \epsilon $ with the $ -\uvec{z} $ axis and points in the third quadrant due to $ \phi = \pi $. Finally, we note that in the small angle approximation we have $ \tan \epsilon \approx \epsilon = \frac{B_{x}}{B_{z}}$.
 	
 %	\item The result is that spin points in the opposite direction of the final field. The particle is still in the fundamental state of the final Hamiltonian. The particle remains in the \Ham's ground state.
 
