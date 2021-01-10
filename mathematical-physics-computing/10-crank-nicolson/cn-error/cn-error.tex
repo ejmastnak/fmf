@@ -1,0 +1,94 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{mwe}
+%\usepackage[margin=3.5cm]{geometry}
+\usepackage[margin=3cm,bottom=3cm,top=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bm} % for bold vectors in math mode
+\usepackage{physics} % many useful physics commands
+\usepackage[separate-uncertainty=true]{siunitx} % for scientific notation and units
+
+\usepackage{graphicx}
+\graphicspath{{"figures/"}}
+\usepackage[section]{placeins} % to keep figures in their sections
+\usepackage[export]{adjustbox} % for subcaptionbox figures
+\usepackage{subcaption}  % for figures with subcaptions
+
+\usepackage[most, minted]{tcolorbox} % for displaying code
+
+\usepackage{xcolor}  % to color hyperref links
+\usepackage[colorlinks = true, allcolors=blue]{hyperref}
+
+\setlength{\parindent}{0pt} % to stop indenting new paragraphs
+\newcommand{\diff}{\mathop{}\!\mathrm{d}} % differential
+\newcommand{\eqtext}[1]{\qquad \text{#1} \qquad}
+\newcommand{\mat}[1]{\mathbf{#1}}
+
+\newcommand{\schro}{Schr\"{o}dinger\xspace}
+
+\newtcblisting{python}{%
+	listing engine=minted,
+	minted language=python,
+	listing only,
+	breakable,
+	enhanced,
+	minted options = {
+		linenos, 
+		breaklines=true, 
+		tabsize=2,
+		fontsize=\footnotesize, 
+		numbersep=2mm
+	},
+	overlay={%
+		\begin{tcbclipinterior}
+			\fill[gray!25] (frame.south west) rectangle ([xshift=4mm]frame.north west);
+		\end{tcbclipinterior}
+	}   
+}
+
+
+\begin{document}
+%\title{}
+%\author{Elijan Jakob Mastnak\\[1mm]\small{Student ID: 28181157}}
+%\date{December 2020}
+%\maketitle
+
+\begin{center}
+{\scshape \Large \textbf{Error with the Generalized Crank-Nicolson Method}\par}
+\vspace{2mm}
+{Elijan Jakob Mastnak\\[1mm]\small{Student ID: 28181157}}
+\end{center}
+\vspace{10mm}
+
+A quick case study in how the values of $ r $ and $ M $ (which determine the order of the time and position derivative approximation, respectively) used in the Crank-Nicolson method used to solve the 10th MFP report affect the accuracy of the numerical solution (see also Ref. \cite{vandijk}). The error plotted in Figures \ref{diff:fig:qho-error} and \ref{diff:fig:free-error} (below) is found according to
+\begin{equation}
+	\mathcal{E} = \int_{x_{0}}^{x_{j}} \abs{\psi(x, t_{N}) - \psi_{\text{analytic}}(x, t_{N})}^{2} \diff x \label{diff:eq:error}
+\end{equation}
+where $ \psi $ and $ \psi_{\text{analytic}} $ are the numerical and analytic wavefunction solutions, respectively, at the simulation end time $ t_{N} $. 
+
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=\linewidth]{qho-error}
+\caption{Error in the coherent state solution after a ten-period simulation as a function of $ r $ and $ M $---note the logarithmic scale. High $ M $ improves the solution more than high $ r $ (compare the curves at $ r \equiv 1$ and $ M \equiv 1 $. Found with $ \Delta t = 0.2\pi $; error is calculated according to Equation \ref{diff:eq:error}. Note also the onset of a plateau at $ r \gtrsim 7 $ and $ M \gtrsim 8 $ beyond which the error does not improve---this evidently corresponds to the regime of non-negligible floating point error, as investigated more thoroughly in the Airy function report.}
+\label{diff:fig:qho-error}
+\end{figure}
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=\linewidth]{free-error}
+\caption{Error in the numerical solution for the wave packet at $ a \approx 1.0 $ as a function of $ r $ and $ M $---note the logarithmic scale. Higher $ r $ improves the solution more than high $ M $ (compare the curves at $ r \equiv 1$ and $ M \equiv 1 $. Found with $ N = 500 $. Note that the solution does not improve for $ r \gtrsim 10 $ and $ M \gtrsim 4 $, corresponding to the regime of non-negligible floating point error.}
+\label{diff:fig:free-error}
+\end{figure}
+
+\begin{thebibliography}{}
+\setlength{\itemsep}{.2\itemsep} \setlength{\parsep}{.5\parsep}
+
+\bibitem{vandijk} W. van Dijk and F. M. Toyama. ``Accurate numerical solutions of the time-dependent \schro equation.'' Phys. Rev. E \textbf{75}, 036707 (2007). \url{https://arxiv.org/pdf/physics/0701150.pdf}
+\end{thebibliography}
+
+\end{document}
+
+
+
