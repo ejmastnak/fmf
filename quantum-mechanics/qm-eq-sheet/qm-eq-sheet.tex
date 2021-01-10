@@ -345,8 +345,6 @@ $ \ket{n} = \ket{n_{0}} + \tsum{m\neq n}\frac{\abs{\bra{m_{0}}H'\ket{n_{0}}}^{2}
 
 
 \newsec{Degenerate Perturbations}
-
-\subsection{Theory: Degenerate Perturbation Theory}
 $ H = H_{0} + H' $ \qquad $ H_{0} \ket{\psi}  = E^{(0)} \ket{\psi} $\\
 $ E^{(0)} $ is $ N $-times degenerate...\\[0.2em]
 \null \quad ... and $ \ket{\psi} = \sum_{i}^{N}c_{i}\ket{i} $ \qquad $ H\ket{i} = E^{(0)} \ket{i} \ \forall \ i $\\
@@ -360,6 +358,23 @@ $ \mat{P} =
 \end{pmatrix} $\\
 Diagonalize $ \mat{P} $; find eigenvalues $ \lambda_{j} $ and eigenvectors $ \vec{u}_{j} $.\\
 $ E_{j} = E^{(0)} + \lambda_{j}  $ \qquad and \qquad $ \ket{\psi_{j}} = \sum_{k=1}^{N}u_{j_{k}} \ket{k} $
+
+\newsec{Time-Dependent Perturbation}
+$ H(t) = H_{0} + H'(t) $
+
+$ H_{0}\ket{n} = E_{n}\ket{n} $
+	
+$ i \pdv{t} \ket{\psi, t} = H(t)\ket{\psi, t} $
+
+$ \ket{\psi, t} = \sum_{n}c_{n}(t) \ket{n, t} $  \qquad $ \ket{n, t} = \ket{n}e^{-i\frac{E_{n}}{\hbar}t} $
+
+$ c_{n}(t) \approx c_{n}(t_{0}) - \frac{i}{\hbar}\int_{t_{0}}^{t}\mel{n, t'}{H'(t')}{m, t'}c_{m}(t_{0}) \diff t' $
+
+
+\newsec{Useful Matrix Element Techniques}
+$ [\O, L_{z}] = 0 \implies \mel{nlm}{\mathcal{O}}{n'l'm'}  = \mel{nlm}{\mathcal{O}}{n'l'm'}\delta_{mm'} $\\
+$ \{\O, \mathcal{P}\} = 0 \implies  \mel{nlm}{\O}{n'l'm'} = 0 $ if $ (-1)^{l'} + (-1)^{l} \neq 0  $
+	
 
 
 \end{multicols}
