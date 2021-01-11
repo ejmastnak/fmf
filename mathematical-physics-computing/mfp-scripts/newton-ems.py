@@ -317,6 +317,11 @@ def create_ems_animation():
     # Attaching 3D axis to the figure
     fig = plt.figure()
     ax = axes3d.Axes3D(fig)
+
+    plt.rc('text', usetex=True)
+    plt.suptitle("The Earth-Moon-Sun Orbit", fontsize=21, x=0.52, y=0.92)
+    plt.rc('text', usetex=False)
+
     xlim, ylim, zlim = 1.5e11, 1.5e11, 1e8
     ax.set_xlim3d([-xlim, xlim])
     ax.set_ylim3d([-ylim, ylim])
@@ -330,6 +335,7 @@ def create_ems_animation():
 
     earth_scatter = ax.scatter(ems[0, 0:1], ems[0, 1:2], ems[0, 2:3], color=blue_dark, s=30)
     moon_scatter = ax.scatter(ems[0, 3:4], ems[0, 3:5], ems[0, 5:6], c="#999999", s=15)
+
     ems_animation = animation.FuncAnimation(fig, animate_ems_scatters, iterations,
                                             fargs=(ems, earth_scatter, moon_scatter, time_label, time_label_template, iterations, sim_years),
                                             interval=50, blit=True, repeat=True)
@@ -361,6 +367,11 @@ def create_em_animation():
     # Attaching 3D axis to the figure
     fig = plt.figure()
     ax = axes3d.Axes3D(fig)
+
+    plt.rc('text', usetex=True)
+    plt.suptitle("The Moon's Nodal Precession", fontsize=21, x=0.52, y=0.92)
+    plt.rc('text', usetex=False)
+
     xlim, ylim, zlim = 4e8, 4e8, 4e7
     ax.set_xlim3d([-xlim, xlim])
     ax.set_ylim3d([-ylim, ylim])
@@ -404,6 +415,6 @@ def practice():
 # plot_ems_orbits()
 # plot_em_orbits()
 # plot_nodal_precession()
-create_ems_animation()
-# create_em_animation()
+# create_ems_animation()
+create_em_animation()
 

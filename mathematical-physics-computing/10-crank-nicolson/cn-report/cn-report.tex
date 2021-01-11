@@ -65,7 +65,7 @@
 	\end{equation*}
 	in the harmonic potential $ V(x) = \frac{kx^{2}}{2} $, where $ k = \omega^{2} $ and $ \alpha = k^{1/4} $ and .
 	
-	Use the parameters $ \omega = 0.2 $ and $ a = 10 $. Use a position grid $ x \in [a, b] = [-40, 40] $ with $ N = 300 $ points. Choose a time step $ \Delta t $ suited to the oscillatory period $ T = \frac{2\pi}{\omega} $. Observe the time evolution over ten oscillatory periods.
+	Use the parameters $ \omega = 0.2 $ and $ a = 10 $. Use a position grid $ x \in [-40, 40] $ with $ N = 300 $ points. Choose a time step $ \Delta t $ suited to the oscillatory period $ T = \frac{2\pi}{\omega} $. Observe the time evolution over ten oscillatory periods.
 	
 	\item Analyze the time evolution of the initial Gaussian wave packet
 	\begin{equation*}
@@ -76,7 +76,7 @@
 	Use the position values $ x \in  [-0.5, 1.5] $ and a time step $ \Delta t = 2 \Delta x^{2} $. Observe the time evolution until the wave packet's center reaches $ x \approx 0.75 $. 
 	
 	
-	\item \textit{Optional}: Solve the same problems with a higher-order approximation of the position and time derivatives.
+	\item \textit{Optional}: Solve the same problems with a higher-order approximation of the position and time derivatives, as discussed in van Dijk \cite{vandijk}.
 \end{enumerate}
 \end{center}
 
@@ -97,7 +97,7 @@ Before flooding you with 9 pages of theory, here is a friendly, colorful picture
 
 \section{Theory} \label{diff:s:theory}
 \vspace{-2mm}
-\textit{To skip the introductory theory, see \hyperref[diff:s:solution]{Section \ref{diff:s:solution}}. To skip all theory completely and jump right to the results, see \hyperref[diff:s:coherent]{Section \ref{diff:s:coherent}}}.
+\textit{To skip the introductory theory, see \hyperref[diff:s:solution]{Section \ref{diff:s:solution}}. To skip preliminary solution steps and jump right to the results, see \hyperref[diff:s:coherent]{Section \ref{diff:s:coherent}}}.
 
 \vspace{2mm}
 
@@ -400,6 +400,7 @@ I use the parameters $ \sigma_{0} = \frac{1}{20} $, $ k_{0} = 50 \pi $ and $ a =
 
 \begin{figure}[htb!]
 \centering
+\vspace{8mm}
 \includegraphics[width=\linewidth]{qho-period-5-5}
 \caption{The coherent state's probability density over one period $ T_{0} $---the color gradient shows progression through time. Found with $ r = M = 5 $ and $ \Delta t = 0.1 \pi $.}
 \label{diff:fig:qho-period}
@@ -428,11 +429,9 @@ Figure \ref{diff:fig:qho-endpoint} shows the QHO's coherent state after a ten-pe
 \subsection{Accuracy}
 I chose to quantify the accuracy of the numerical solution with the error
 \begin{equation}
-	\mathcal{E} = \int_{x_{0}}^{x_{j}} \abs{\psi(x, t_{N}) - \psi_{\text{analytic}}(x, t_{N})}^{2} \diff x \label{diff:eq:error}
+	\mathcal{E} \equiv \int_{x_{0}}^{x_{j}} \abs{\psi(x, t_{N}) - \psi_{\text{analytic}}(x, t_{N})}^{2} \diff x \label{diff:eq:error}
 \end{equation}
-where $ \psi $ and $ \psi_{\text{analytic}} $ give the numerical and analytic wavefunction solutions, respectively, at the simulation end time $ t_{N} $. Figure \ref{diff:fig:qho-error} show a three-dimensional visualization of error $ \mathcal{E} $ versus $ M $ and $ r $ for a ten-period simulation with $ t_{N} = 10 T_{0} $ and a time step $ \Delta t = 0.2 \pi $. I found the enormous decrease in error (over 10 orders of magnitude) from $ r = M = 1 $ to the higher-order $ r = M = 8 $ quite impressive.
-
-
+where $ \psi $ and $ \psi_{\text{analytic}} $ give the numerical and analytic wavefunction solutions, respectively, at the simulation end time $ t_{N} $. Figure \ref{diff:fig:qho-error} show a three-dimensional visualization of error $ \mathcal{E} $ versus $ M $ and $ r $ for a ten-period simulation with $ t_{N} = 10 T_{0} $ and a time step $ \Delta t = 0.2 \pi $. I found the enormous decrease in error (over 10 orders of magnitude) from $ r = M = 1 $ to the higher-order $ r = M = 8 $ quite impressive. Note that accuracy does not improve beyond $ r = M \gtrsim 8 $, which likely corresponds to the onset of the regime of non-negligible floating-point arithmetic error.
 
 \begin{figure}[htb!]
 \centering
@@ -456,7 +455,7 @@ Figure \ref{diff:fig:free-endpoint} show the free wave packet's probability dens
 
 
 \subsection{Accuracy}
-I quantified the numerical solution's accuracy using the same definition of error (Eq. \ref{diff:eq:error}) as for the QHO coherent state. Figure \ref{diff:fig:free-error} show a three-dimensional visualization of error versus $ M $ and $ r $ after the wave packet's journey from $ a = 0.25 $ to $ a \approx 1.0 $ (corresponding to times in the range $ [t_{0}, t_{N}] = [0, 5\cdot 10^{-3}] $) using $ N = 500 $. As before, the enormous decrease in error with increasing approximation order is quite impressive. Interestingly, the results in Figure \ref{diff:fig:free-error} show that for the free wave packet, a better approximation of the position derivative (large $ r $) improves the solution more than a higher-order approximation in time (higher $ M $), which is the opposite of the trend seen with the QHO coherent state.
+I quantified the numerical solution's accuracy using the same definition of error (Eq. \ref{diff:eq:error}) as for the QHO coherent state. Figure \ref{diff:fig:free-error} show a three-dimensional visualization of error versus $ M $ and $ r $ after the wave packet's journey from $ a = 0.25 $ to $ a \approx 1.0 $ (corresponding to times in the range $ [t_{0}, t_{N}] = [0, 5\cdot 10^{-3}] $) using $ N = 500 $. As before, the enormous decrease in error with increasing approximation order is quite impressive. Interestingly, the results in Figure \ref{diff:fig:free-error} show that for the free wave packet, a better approximation of the position derivative (large $ r $) improves the solution more than a higher-order approximation in time (higher $ M $), which is the opposite of the trend seen with the QHO coherent state. Analogously to the harmonic oscillator, accuracy does not improve appreciably beyond $ r \gtrsim 8 $ or $ M \gtrsim 4 $, which is likely a consequence of floating-point arithmetic error.
 
 \begin{figure}[htb!]
 \centering
@@ -467,7 +466,7 @@ I quantified the numerical solution's accuracy using the same definition of erro
 
 
 \subsection{A Note on Efficiency and Computation Time}
-A complete analysis of the Crank-Nicolson method would consider the computation time needed to find a solution of a given accuracy for various values of $ r $, $ M $, $ J $ and $ N $. I ran out of time to present such a study in my report, although I certainly experimented with efficiency informally. I found that increasing $ r $ and $ M $ lowered computation dramatically when searching for a solution at a given error. This improvement in efficiency, like the improvement in accuracy in Figures \ref{diff:fig:qho-error} and \ref{diff:fig:free-error}, spanned many orders of magnitude. For lack of an original option, I would direct the reader to Tables III and IV on pages 7 and 8, respectively, of \cite{vandijk} for a formal study of efficiency.
+A complete analysis of the Crank-Nicolson method would consider the computation time needed to find a solution of a given accuracy for various values of $ r $, $ M $, $ J $ and $ N $. I ran out of time to present such a study in my report, although I certainly experimented with efficiency informally. I found that increasing $ r $ and $ M $ lowered computation dramatically when searching for a solution at a given error. This improvement in efficiency, like the improvement in accuracy in Figures \ref{diff:fig:qho-error} and \ref{diff:fig:free-error}, spanned many orders of magnitude. For lack of an original option, I would direct the reader to Tables III and IV on pages 7 and 8, respectively, of \cite{vandijk} for more on efficiency.
 
 \begin{thebibliography}{}
 \setlength{\itemsep}{.2\itemsep} \setlength{\parsep}{.5\parsep}
