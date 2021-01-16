@@ -1,12 +1,17 @@
-# Latex files #
+# Latex compilation-related files #
 ###################
 *.aux
 *.log
 *.out
 *.synctex.gz
 *.toc
+*.fls
+*.fdb_latexmk
 *.listing
 _minted**/
+
+# Vim swap files #
+*.swp
 
 # Figure directories #
 figures/
