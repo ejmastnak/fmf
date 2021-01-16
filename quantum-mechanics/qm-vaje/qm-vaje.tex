@@ -28,6 +28,8 @@
 \newcommand{\tvec}[1]{\tilde{\vec{#1}}} % for tilde vector quantities
 \newcommand{\uvec}[1]{\hat{\vec{#1}}} % for dotted vector quantity
 
+
+
 \renewcommand{\t}[1]{\tilde{#1}}
 
 \newcommand{\p}{\psi}  % time-independent wavefunction
@@ -2796,11 +2798,11 @@ These are the two linearly independent states spanning the isotropic harmonic os
 		\frac{\hbar^{2}k^{2}}{2m} - E & \frac{\lambda \hbar^{2}}{2i}ke^{-i\phi} \\[1mm]
 		-\frac{\lambda \hbar^{2}}{2i}ke^{i\phi} & \frac{\hbar^{2}k^{2}}{2m} - E
 		\end{bmatrix}
-		= \left( \frac{\hbar^{2}k^{2}}{2m} - E\right)^{2} - \left(\frac{\lambda \hbar^{2}k^{2}}{2}\right)^{2} 
+		= \left( \frac{\hbar^{2}k^{2}}{2m} - E\right)^{2} - \left(\frac{\lambda \hbar^{2}k}{2}\right)^{2} 
 	\end{equation*}	
 	We want to find the $ E $ such that $ p(E) = 0 $, i.e. solving
 	\begin{equation*}
-		\left( \frac{\hbar^{2}k^{2}}{2m} - E\right)^{2} = \left(\frac{\lambda \hbar^{2}k^{2}}{2}\right)^{2} 
+		\left( \frac{\hbar^{2}k^{2}}{2m} - E\right)^{2} = \left(\frac{\lambda \hbar^{2}k}{2}\right)^{2} 
 	\end{equation*}
 	Squaring both sides and solving for $ E $ gives
 	\begin{equation*}
@@ -4517,8 +4519,10 @@ These are the two linearly independent states spanning the isotropic harmonic os
 \begin{itemize}	
 	\item First, for shorthand, we define
 	\begin{equation*}
-		\alpha \equiv \frac{2\mu_{B}B_{z}\tau}{\hbar}
+        \alpha \equiv \frac{2\mu_{B}B_{z}\tau}{\hbar} = \frac{\Delta E}{\hbar}\tau 
 	\end{equation*}
+    where $ \Delta E $ is the energy difference between the energies $ E_{\da, \ua} = \pm \mu_{B}B_{z} $.
+
 	We start with the limit case $ \alpha \gg 1 $, which corresponds to large $ \tau $, i.e. turning on the $ x $ component of the magnetic field slowly. In the limit $ \alpha \gg 1 $, we have
 	\begin{equation*}
 		\frac{(1 - i\alpha)e^{i\alpha}-1}{\alpha} \approx - i e^{i\alpha}
@@ -4561,54 +4565,33 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\begin{equation*}
 		\sin \frac{\theta}{2} = \sin \left(\frac{\pi - \epsilon}{2}\right) = \cos \frac{\epsilon}{2} \approx 1 + \mathcal{O}(\epsilon^{2}) \implies e^{i\phi} = -1 \implies \phi = \pi
 	\end{equation*} 
-	These two angles mean the spin forms an angle $ \epsilon $ with the $ -\uvec{z} $ axis and points in the third quadrant due to $ \phi = \pi $. Finally, we note that in the small angle approximation we have $ \tan \epsilon \approx \epsilon = \frac{B_{x}}{B_{z}}$.
-	
-%	\item The result is that spin points in the opposite direction of the final field. The particle is still in the fundamental state of the final Hamiltonian. The particle remains in the \Ham's ground state.
+    Geometrically, the angles $ \theta = \pi - \epsilon $ where $ \epsilon = \frac{B_{x}}{B_{z}}  $ and $ \phi = \pi $ mean the particle's spin points in the third quadrant and makes an angle $ \epsilon $ with the $ -z $ axis. Physically, this means the particle's spin points opposite the total magnetic field $ \vec{B}(t) = (B_{x}(t), 0, B_{z} $ for the course of the perturbation for $ t \in [0, \tau] $. This orientation of time-dependent spin is analogous to the spin orientation in the initial ground state $ \ket{\da} $ (spin down), which pointed opposite the initial magnetic field $ \vec{B} = (0, 0, B_{z}) $.  
 
-% Note that $ \alpha $ encodes the energy gap between the ground and first excited state energy. This is why for small $ \alpha $ we stay in the ground state, because energy gap is large?
 \end{itemize}
 
 
-
-\section{Fifteenth Exercise Set}
-
-\textbf{Review from last exercise set}
+\textbf{Limit Case for Small $ \tau $ }
 \begin{itemize}
-	\item \Ham was
-	\begin{equation*}
-		H = \mu_{B} B_{z}\sigma_{z} + \mu_{B}B_{x}\frac{t}{\tau} \equiv H_{0} + H'(t)
-	\end{equation*}
-	Initial state was the ground state $ \ket{\p, 0} = \ket{\da} $ (i.e. spin down)
-	
-	\item We then wrote the time evolution as
-	\begin{equation*}
-		\ket{\p, t} = c_{\ua}\ket{\ua, t} + c_{\da}(t)\ket{\da, t}
-	\end{equation*}
-	Similarly, we wrote the time evolution of the basis states $ \ket{\ua, t} $ and $ \ket{\da, t} $. Energies are $ E_{\ua \da} = \pm \mu_{B}B_{z}$
-	
-	The end result for time evolved state was
-	\begin{equation*}
-		\ket{\p, \tau} = \ket{\da, \tau}-i\frac{B_{x}}{2B_{z}} \frac{(1 - i\alpha)e^{i\alpha} - 1}{\alpha}\ket{\ua, \tau}, \qquad \alpha = \frac{2\mu_{B}B_{z}\tau}{\hbar}
-	\end{equation*}
-	We then considered the first limit case $ \alpha \gg 1 $ or 
-	\begin{equation*}
-		\tau \gg \frac{\hbar}{2\mu_{B}B_{z}} = \frac{\hbar}{\Delta E}
-	\end{equation*}
-	In this limit the particle's wavefunction follows the model of the ground state in that spin always points opposite the total magnetic field $ \vec{B} = (0, B_{x}, B_{z}) $. This is adiabatic transition.
-	
-	\textbf{New material}
-	\item We now consider $ \tau \ll \frac{\hbar}{\Delta E} $. The intermediate case is $ \tau \approx \frac{\hbar}{\Delta E} $ where $ \Delta E $ is the energy difference between the states between which the particle transitions.
-	
-	In this case
+
+    % The intermediate case is $ \tau \approx \frac{\hbar}{\Delta E} $ where $ \Delta E $ is the energy difference between the states between which the particle transitions.
+	\item We now consider the opposite case, in which we turn on the field rapidly relative to the characteristic time $ \frac{\hbar}{\Delta E}  $. In this case we have $ \tau \ll \frac{\hbar}{\Delta E} $, which corresponds to $ \alpha \ll 1 $. 
+
+    \item To make the next step clearer, we write the time-evolved wavefunction in terms of $ \alpha $ as 
+    \begin{equation*}
+        \ket{\p, \tau} = e^{i \frac{\alpha}{2} }\ket{\da} - i \frac{B_{x}}{2B_{z}} \frac{(1 - i \alpha)e^{i\alpha} - 1}{\alpha} e^{i \frac{\alpha}{2} }\ket{\da}
+    \end{equation*}
+    We then expand the second term in the limit $ \alpha \ll 1 $ to get
 	\begin{equation*}
 		\frac{(1 - i\alpha)e^{i\alpha} - 1}{\alpha} \approx \frac{(1 - i \alpha)(1 + i \alpha + \cdots) - 1}{\alpha} \approx \frac{1 + \alpha^{2} + \cdots - 1}{\alpha} = \mathcal{O}(\alpha) \ll 1
 	\end{equation*}
-	The result, back to the time evolution $ \ket{\p, \tau} $ implies
+    This result, in terms of the time-dependent wavefunction $ \ket{\p, \tau} $, implies
 	\begin{equation*}
-		\ket{\p, \tau} \approx \ket{\da, \tau} = e^{i\frac{\alpha}{2}}\ket{\da}
+		\ket{\p, \tau} = e^{i\frac{\alpha}{2}}\ket{\da}
 	\end{equation*}
-	Since corrections are of order $ \mathcal{O}(\alpha) \ll 1 $. The result is that (for a rapidly turned on field) the particle's spin points in the same direction as in the initial state throughout the magnetic field turning on. Nothing happens because the field turns on too quickly. We generally have $ \tau \gtrsim \frac{\hbar}{\Delta E} $ for any notable change from the initial state.
+    In other words, for small $ \tau $, the particle's spin points in the same direction as the initial state $ \ket{\p, 0} = \ket\{\da\} $ throughout the entire perturbation. As a general rule, we expect $ \tau \gtrsim \frac{\hbar}{\Delta E} $ for any notable change in $ \ket{\p} $ from the initial state during the course of the perturbation.
 \end{itemize}
+
+\section{Fifteenth Exercise Set}
 
 \subsection{Rabi Oscillations} 
 \begin{itemize}
@@ -4864,6 +4847,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	
 	Note, however, that we could not solve the problem with perturbation theory, because time-dependent perturbation theory assumes a low probability of transition between states, but the probability for transition between states is large---even equal to one at resonance.
 	
+    
 	
 \end{itemize}
 
