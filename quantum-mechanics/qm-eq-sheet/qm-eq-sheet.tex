@@ -295,8 +295,8 @@ $ S_{-} \ket{sm_{s}} = \hbar \sqrt{s(s+1) - m_{s}(m_{s}-1)}\ket{s, m_{s}-1} $
 
 
 
-$ \vec{S} \cdot \uvec{e} \ket{\psi_{s}} = \frac{\hbar}{2}\ket{\psi_{s}} $ implies\\
-\null \quad $  \vec{S} \parallel \uvec{e} = (\cos \varphi \sin \theta, \sin \varphi \sin \theta, \cos \theta) $  \\
+$ \vec{S} \cdot \uvec{e} \ket{\psi_{s}} = \frac{\hbar}{2}\ket{\psi_{s}} $ implies $ \vec{S} \parallel \uvec{e} $ where\\
+\null \quad $ \uvec{e} = (\cos \varphi \sin \theta, \sin \varphi \sin \theta, \cos \theta) $  \\
 \null \quad $ \ket{\psi_{s}} = \cos \frac{\theta}{2} \ket{\ua} + \sin \frac{\theta}{2} e^{i\varphi} \ket{\da} $
 
 Useful:  $ \vec{k} = (k_{x}, k_{y}) $ to $ 	k_{x} + ik_{y} = ke^{i\phi}  $, $ k_{x} - ik_{y} = ke^{-i\phi} $
@@ -333,7 +333,7 @@ $ \abs{s_{1} - s_{2}} \leq s \leq s_{1} + s_{2}  $ \qquad $ m_{s} = -s, -s+1, \l
 
 
 \newsec{Time Reversal}
-\textbf{TODO}\\
+$ 	\braket{\mathcal{T}\psi_{1}}{\mathcal{T}\psi_{2}} = \braket{\psi_{1}}{\psi_{2}}^{*} $\\
 For spin $ s = 1/2  $ particles $ T = i\sigma_{y}K $; $ K: \psi \mapsto \psi^{*} $
 
 
@@ -341,7 +341,7 @@ For spin $ s = 1/2  $ particles $ T = i\sigma_{y}K $; $ K: \psi \mapsto \psi^{*}
 \newsec{Nondegenerate Perturbations}
 $ H = H_{0} + H' $ \qquad $ H_{0} \ket{n_{0}} = E^{(0)}_{n} \ket{n_{0}} $ \\
 $ E_{n} = E^{(0)}_{n} + \mel{n_{0}}{H'}{n_{0}} + \tsum{m\neq n}\frac{\abs{\mel{m_{0}}{H'}{n_{0}}}^{2}}{E^{(0)}_{n}-E^{(0)}_{m}}, $\\
-$ \ket{n} = \ket{n_{0}} + \tsum{m\neq n}\frac{\abs{\bra{m_{0}}H'\ket{n_{0}}}^{2}}{E^{(0)}_{n}-E^{(0)}_{m}} \ket{m_{0}} $
+$ \ket{n} = \ket{n_{0}} + \tsum{m\neq n}\frac{\abs{\bra{m_{0}}H'\ket{n_{0}}}^{2}}{E^{(0)}_{n}-E^{(0)}_{m}} \ket{m_{0}} $ 
 
 
 \newsec{Degenerate Perturbations}
@@ -375,7 +375,6 @@ $ c_{n}(t) \approx c_{n}(t_{0}) - \frac{i}{\hbar}\int_{t_{0}}^{t}\mel{n, t'}{H'(
 $ [\O, L_{z}] = 0 \implies \mel{nlm}{\mathcal{O}}{n'l'm'}  = \mel{nlm}{\mathcal{O}}{n'l'm'}\delta_{mm'} $\\
 $ \{\O, \mathcal{P}\} = 0 \implies  \mel{nlm}{\O}{n'l'm'} = 0 $ if $ (-1)^{l'} + (-1)^{l} \neq 0  $
 	
-
 
 \end{multicols}
 
