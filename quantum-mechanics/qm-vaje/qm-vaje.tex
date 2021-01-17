@@ -4594,140 +4594,121 @@ These are the two linearly independent states spanning the isotropic harmonic os
 \section{Fifteenth Exercise Set}
 
 \subsection{Rabi Oscillations} 
+\textit{Consider a particle with spin $ s = 1/2 $ in the initial state $ \ket{\p, 0} = \ket{\da} $ in the presence of the \Ham}
+\begin{equation*}
+    H = \frac{\Delta E}{2}\sigma_{z} + \lambda \cos (\omega t )\sigma_{x}
+\end{equation*}
+\textit{Find the particle's time-dependent wavefunciton $ \ket{\p, t} $.}
+
 \begin{itemize}
-	\item Similar from previous problem. We have
-	\begin{equation*}
-		H = \frac{\Delta E}{2}\sigma_{z} + \lambda \cos (\omega t )\sigma_{x}
-	\end{equation*}
-	Notation is slightly difference, but the structure is similar. The energy $ \Delta E $ corresponds to the magnetic field $ B_{z} $ in the previous problem, where $ E \sim B_{z} $. 
-	Previous notation:
-	\begin{equation*}
-		H = \mu_{B}B_{z}\sigma_{z} + \mu_{B}B_{x}\cos (\omega t) \sigma_{x}
-	\end{equation*}
-	The only difference is the time dependence: we now have an oscillatory $ x $ component of magnetic field.
-	
-	Ground state is $ \ket{\p, 0} = \ket{\da} $, the ground state of $ H_{0} $. Goal is to find $ \ket{\p, t} $. 
-	
+	\item First, we note that this \Ham is in fact nearly identical to the \Ham in the previous problem, where the \Ham was
+    \begin{equation*}
+        H(t) = \mu_{B}\sigma_{z}B_{z} + \mu_{B}\sigma_{x}B_{x}\frac{t}{\tau} \equiv \frac{\Delta E}{2} \sigma_{z} + \lambda \sigma_{x} \frac{t}{\tau} 
+    \end{equation*}
+    where we have defined $ \Delta E = 2\mu_{B}B_{z} $ and $ \lambda = \mu_{B}B_{x} $ to highlight the similarity. The only difference between our current problem and the previous problem is the time dependence---this was linear in the previous problem, but is sinusoidal in the current problem.
+
 %	\item Background: a particle with spin $ s = 1/2 $ in a homogeneous particle in an additional oscillatory electric field in a perpendicular direction
 	
 %	Also applies to an atom modeled as two-level system on which we shine light (which is oscillatory).
 
-	\item We won't assume a priori that $ \lambda \ll \Delta E $ and won't work in perturbation theory. We will try to solve the problem exactly. We need to solve
+	\item When solving the present problem, because of the time-dependent cosine term, we won't assume a priori that the probability for transition from the initial ground state to higher excited states is small. As a result, we cannot use the time-dependent perturbation approach from the previous section, which assumes transition probability is small. Instead, we will begin with the time-dependent \Schro equation
 	\begin{equation*}
 		H(t) \ket{\p, t} = i \hbar \pdv{t}\ket{\p, t}
 	\end{equation*}
-	We cannot use time evolution as we've done before because the \Ham is time-dependent---we must solve the \Schro equation directly.
+	Note that we cannot use the usual time-evolution approach because the \Ham is time-dependent---we must solve the \Schro equation directly.
 \end{itemize}
-\textbf{Attempt 1 (wont work, but useful as an intermediate step)}
+\textbf{Attempt 1 (won't work, but useful as an intermediate step)}
 \begin{itemize}
-	\item We write the final wave function as the linear combination
+	\item We begin our first attempt by writing the time-dependent wavefunction as the linear combination
 	\begin{equation*}
 		\ket{\p, t} = c_{\ua}(t)\ket{\ua} + c_{\da}(t)\ket{\da}
 	\end{equation*}
-	Substitute into \Schro equation. We first recall
-	\begin{equation*}
-		\sigma_{z} = 
-		\begin{pmatrix}
-		1 & 0\\
-		0 & -1
-		\end{pmatrix}
-		\eqtext{and}
-		\sigma_{x} = 
-		\begin{pmatrix}
-		0 & 1\\
-		1 & 0
-		\end{pmatrix}
-	\end{equation*}
-	Or, Dirac notation,
+    Next, recall that in Dirac notation, the spin matrices $ \sigma_{x} $ and $ \sigma_{z} $ are written
 	\begin{equation*}
 		\sigma_{z} = \ket{\ua}\bra{\ua} - \ket{\da}\bra{\da} \eqtext{and} \sigma_{x} = \ket{\ua}\bra{\da} + \ket{\da}\bra{\ua}
 	\end{equation*}
-	And substitute in and get
-	\begin{equation*}
-		\frac{\Delta E}{2}c_{\ua}\ket{\ua} - \frac{\Delta E}{2}c_{\da}\ket{\da} + \lambda \cos \omega t c_{\ua}\ket{\da} + \lambda \cos \omega t c_{\da}\ket{\ua} = i \hbar \dot{c}_{\ua}\ket{\ua} + i \hbar \dot{c}_{\da}\ket{\da}
-	\end{equation*}
-	Apply orthonormality to get for $ \ket{\ua} $
-	\begin{align*}
-		&\frac{\Delta E}{2}c_{\ua} + \lambda \cos \omega t c_{\da} = i \hbar \dot{c}_{\ua}\\
-		&-\frac{\Delta E}{2}c_{\da} + \lambda \cos \omega t c_{\ua} = i \hbar \dot{c}_{\da}
-	\end{align*}
-	This is a system of coupled differential equations, but it is not analytically solvable.
 	
-	\item We thus need an approximation. First-order perturbation theory won't work because we assumed $ \lambda \sim \Delta E $. And perturbation theory won't work because of the large transition probability between states.
+    \item We then subsitute the time-dependent wavefunction into the \Schro equation and apply the Dirac-notation definitions of the spin matrices to get
+	\begin{equation*}
+        \frac{\Delta E}{2}c_{\ua}\ket{\ua} - \frac{\Delta E}{2}c_{\da}\ket{\da} + \lambda \cos (\omega t) c_{\ua}\ket{\da} + \lambda \cos (\omega t) c_{\da}\ket{\ua} = i \hbar \dot{c}_{\ua}\ket{\ua} + i \hbar \dot{c}_{\da}\ket{\da}
+	\end{equation*}
+    where $ \dot{c} $ denotes the time-derivative of the coefficients $ c $.
+
+    \item Next, we apply the orthonormality of the basis states $ \ket{\da} $ and $ \ket{\ua} $ to get the system of equations
+	\begin{equation*}
+        \frac{\Delta E}{2}c_{\ua} + \lambda \cos(\omega t) c_{\da} = i \hbar \dot{c}_{\ua} \eqtext{and} -\frac{\Delta E}{2}c_{\da} + \lambda \cos (\omega t) c_{\ua} = i \hbar \dot{c}_{\da}
+	\end{equation*}
+    Unfortunately, this system of coupled differential equations for $ c_{\da} $ and $ c_{\ua} $ is not solveable because of the time-dependent coefficient $ \cos(\omega t) $. Evidently, we need to make an approximation. Since we have ruled out first-order time-dependent perturbation theory, we will need a novel approach.
 \end{itemize}
-\textbf{Trick: Second Approach}
+
+\textbf{Second Approach}
 \begin{itemize}
-	\item We move some of the time dependence of the coefficients $ c(t) $ into the basis states
+	\item We begin by moving some of the time dependence of the coefficients $ c(t) $ into the basis states, similar to the first steps in first-order perturbation-theory. This gives
 	\begin{equation*}
-		\ket{\p, t} = c_{\ua}(t)e^{-i\omega't} + c_{\da}(t)e^{i\omega't}\ket{\da}
+        \ket{\p, t} = c_{\ua}(t)e^{-i\omega't}\ket{\ua} + c_{\da}(t)e^{i\omega't}\ket{\da}
 	\end{equation*}
-	Analogous to first order time-dependent theory.
-	
-	\item Substitute into \Schro equation to get
+    where $ \hbar \omega' = \Delta E $. We then substitute $ \ket{\p, t} $ into the \Schro equation to get
 	\begin{align*}
-		&\frac{\Delta E}{2}c_{\ua}e^{-i\omega't}\ket{\ua} - \frac{\Delta E}{2}c_{\da}e^{i\omega't}\ket{\da} + \lambda \cos \omega t c_{\ua}e^{-i\omega't}\ket{\da} +  \lambda \cos \omega t c_{\da}e^{i\omega't}\ket{\ua} \\
+        &\frac{\Delta E}{2}c_{\ua}e^{-i\omega't}\ket{\ua} - \frac{\Delta E}{2}c_{\da}e^{i\omega't}\ket{\da} + \lambda \cos (\omega t) c_{\ua}e^{-i\omega't}\ket{\da} +  \lambda \cos(\omega t) c_{\da}e^{i\omega't}\ket{\ua} \\
 		&= i \hbar \dot{c}_{\ua}e^{-i\omega't}\ket{\ua} + i\hbar \dot{c}_{\da}e^{i\omega't} + \hbar \omega'c_{\ua}e^{-i\omega't} \ket{\ua} - \hbar \omega'c_{\da}e^{i\omega't}\ket{\da}
 	\end{align*}
-	We then apply orthonormality to get
+    
+    \item As before, we apply the orthonormality of the basis states $ \ket{\da} $ and $ \ket{\ua} $ to get the system of equations
 	\begin{align*}
-		& \frac{\Delta E}{2}c_{\ua}e^{-i\omega't} + \lambda \cos \omega t c_{\da}e^{i\omega't} = i\hbar \dot{c}_{\ua}e^{-i\omega't} + \hbar \omega' c_{\ua}e^{-i\omega't}\\
-		& -\frac{\Delta E}{2}c_{\da}e^{i\omega't} + \lambda \cos \omega t c_{\ua}e^{-i\omega't} = i\hbar \dot{c}_{\da}e^{i\omega't} - \hbar \omega' c_{\da}e^{i\omega't}
+        \frac{\Delta E}{2}c_{\ua}e^{-i\omega't} + \lambda \cos (\omega t) c_{\da}e^{i\omega't} &= i\hbar \dot{c}_{\ua}e^{-i\omega't} + \hbar \omega' c_{\ua}e^{-i\omega't}\\
+         -\frac{\Delta E}{2}c_{\da}e^{i\omega't} + \lambda \cos (\omega t) c_{\ua}e^{-i\omega't} &= i\hbar \dot{c}_{\da}e^{i\omega't} - \hbar \omega' c_{\da}e^{i\omega't}
 	\end{align*}
-	Again, we have a system of coupled differential equations. 
-	
-	\item We multiply the first by $ e^{i\omega' t} $ and the second by $ e^{-i\omega' t} $  and rearrange to get
+	Next, we multiply the first equation by $ e^{i\omega' t} $ and the second by $ e^{-i\omega' t} $  and then rearrange to get
 	\begin{align*}
-		&\left(\frac{\Delta E}{2} - \hbar \omega' \right) c_{\ua} + \lambda \cos \omega te^{2i\omega't}c_{\da} = i\hbar \dot{c}_{\ua}\\
-		&\left(-\frac{\Delta E}{2} + \hbar \omega' \right) c_{\da} + \lambda \cos \omega te^{-2i\omega't}c_{\ua} = i\hbar \dot{c}_{\da}
+        &\left(\frac{\Delta E}{2} - \hbar \omega' \right) c_{\ua} + \lambda \cos (\omega t) e^{2i\omega't}c_{\da} = i\hbar \dot{c}_{\ua}\\
+        &\left(-\frac{\Delta E}{2} + \hbar \omega' \right) c_{\da} + \lambda \cos (\omega t) e^{-2i\omega't}c_{\ua} = i\hbar \dot{c}_{\da}
 	\end{align*}
-	Our trick is now
+	Again, we have a system of coupled differential equations, but this one will be approximately solveable. Our trick is to write
 	\begin{equation*}
-		\cos \omega t e^{2i\omega't} = \frac{1}{2}\left[e^{i(\omega + 2\omega')t} + e^{i(-\omega + 2\omega')t}\right]
+        \cos (\omega t) e^{2i\omega't} = \frac{1}{2}\left[e^{i(\omega + 2\omega')t} + e^{i(-\omega + 2\omega')t}\right]
 	\end{equation*}
-	Note that $ \omega' $ doesn't have a priori physical meaning. We then choose $ \omega' $ such that $ 2 \omega' = \omega $, i.e. $ \omega' $ is half oscillation frequency of $ B_{x} $ we get
+    Note that $ \omega' $ doesn't have a priori physical meaning---it is related to the energy difference $ \Delta E $, which is a free parameter of our system. We now choose $ \omega' $ such that $ 2 \omega' = \omega $, i.e. $ \omega' $ is half the oscillation frequency of the $ x $-dependent perturbation term. With $ 2 \omega' = \omega $, the expression $ \cos (\omega t) e^{2i\omega't}$ simplifies to
 	\begin{equation*}
-		\cos \omega t e^{2i\omega't} = \frac{1}{2}(e^{2i\omega t} + 1)
+        \cos (\omega t) e^{2i\omega't} = \frac{1}{2}(e^{2i\omega t} + 1)
 	\end{equation*}
-	Similarly for the second equation for $ 2 \omega' = \omega $
+	Similarly, the analogous expression with a negative exponent reads
 	\begin{equation*}
-		\cos \omega t e^{-2i\omega't} = \frac{1}{2}(e^{-2i\omega t} + 1)
+        \cos (\omega t) e^{-2i\omega't} = \frac{1}{2}(e^{-2i\omega t} + 1)
 	\end{equation*}
+    In terms of these expressions, the system of equations for $ c_{\da} $ and $ c_{\ua} $ reads
+	\begin{align*}
+        &\left(\frac{\Delta E}{2} - \hbar \omega' \right) c_{\ua} +  \frac{\lambda}{2}(e^{2i\omega t} + 1) c_{\da} = i\hbar \dot{c}_{\ua}\\
+        &\left(-\frac{\Delta E}{2} + \hbar \omega' \right) c_{\da} +  \frac{\lambda}{2}(e^{-2i\omega t} + 1)c_{\ua} = i\hbar \dot{c}_{\da}
+	\end{align*}
 	
-	\item Assumption: We assume that oscillation in the final solution will be slow compared to $ 2\omega $, i.e. $ c_{\ua}(t) $ and $ c_{\da}(t) $ change slowly relative to $ 2\omega $, corresponding to the magnetic field. We will then check back to ensure the assumption is valid when we get our final solution. 
+	\item We now make an assumption: we assume any possible oscillation between the ground and excited states in the eventual solution will be small relative to the frequency $ \omega $ of the $ x $-dependent perturbation term. In other words, we assume $ c_{\ua}(t) $ and $ c_{\da}(t) $ change slowly relative to $ 2\omega $. We will then check back to ensure the assumption is valid when we get our final solution. 
 	
-	Under this assumption, we neglect the $ e^{\pm 2i\omega t} $ terms, since they will average out to zero. Idea is that time average of $ e^{\pm 2i\omega t} $ is zero, and $ \omega \gg  $ then frequency of the $ c $ coefficients. 
-	
-	The result is
-	\begin{equation*}
-		\cos \omega t e^{2i\omega't} \approx \frac{1}{2} \approx \cos \omega t e^{-2i\omega't}
-	\end{equation*}
-	
-	\item We then have the simpler system of equations
+	Under the assumption that $ c_{\ua}(t) $ and $ c_{\da}(t) $ change slowly relative to $ \omega $, we can neglect the $ e^{\pm 2i\omega t} $ terms in the coefficients of $ c_{\da} $ and $ c_{ua} $, which simplifies the system of equations for $ c_{\ua}(t) $ and $ c_{\da}(t) $ to
 	\begin{align*}
 		&\left(\frac{\Delta E}{2} - \frac{\hbar \omega}{2} \right) c_{\ua} + \frac{\lambda}{2}c_{\da} = i\hbar \dot{c}_{\ua}\\
 		&\left(-\frac{\Delta E}{2} + \frac{\hbar \omega}{2} \right) c_{\da} + \frac{\lambda}{2}c_{\ua} = i\hbar \dot{c}_{\da}\\
 	\end{align*}
-	where we have substituted in $ \omega' = \omega/2 $. This equation is now solvable, since the coefficients are now constant. 
+	where we have substituted in $ \omega' = \omega/2 $. This system of equations is now analytically solvable, since the coefficients are constant. 
 	
 	\item Recall the initial state is $ \ket{\p, 0} = \ket{\da} $, which corresponds to
 	\begin{equation*}
 		c_{\ua}(0) = 0 \eqtext{and} c_{\da}(0) = 1
 	\end{equation*}
-	We solve the coupled equations with the ansatz
+	With these initial coefficients in mind, we solve the coupled equations for $ c_{\da} $ and $ c_{\ua} $ with the ansatz
 	\begin{equation*}
 		c_{\ua}(t) = \alpha e^{-i\Omega t} \eqtext{and} c_{\da}(t) = \beta e^{-i\Omega t}
 	\end{equation*}
-	Substitute into the equations to get
+	Substituting this ansatz into the system of equations leads to
 	\begin{align*}
-		& -\frac{\hbar \omega - \Delta E}{2}\alpha + \frac{\lambda}{2}\beta = +\hbar \Omega \alpha\\
-		& \frac{\lambda}{2} \alpha + \frac{\hbar \omega - \Delta E}{2}\beta = \hbar \Omega \beta
+        -(\hbar \omega - \Delta E)\frac{\alpha}{2} + \frac{\lambda}{2}\beta &= +\hbar \Omega \alpha\\
+         \frac{\lambda}{2} \alpha + (\hbar \omega - \Delta E)\frac{\beta}{2} &= \hbar \Omega \beta
 	\end{align*}
-	Where we have already canceled out a exponential term.
+	where we have canceled out the common exponential term.
 	
-	\item In matrix form
+	\item In matrix form, the system of equations reads
 	\begin{equation*}
 		\begin{pmatrix}
-			-\frac{\hbar \omega - \Delta E}{2} - \hbar \Omega & \frac{\lambda}{2}\\
+            -\frac{\hbar \omega - \Delta E}{2} - \hbar \Omega & \frac{\lambda}{2}\\[1mm]
 			\frac{\lambda}{2} & \frac{\hbar \omega - \Delta E}{2} - \hbar \Omega
 		\end{pmatrix}
 		\begin{pmatrix}
@@ -4736,19 +4717,22 @@ These are the two linearly independent states spanning the isotropic harmonic os
 		\end{pmatrix}
 		= 0
 	\end{equation*}
-	We will two linearly independent solutions, and the final solution is a linear combination of the two.
-	
-	\item Go: require determinant is zero:
+    This $ (2 \cross 2) $ system will have two linearly independent solutions, and the final solution is a linear combination of the two. To solve the system for the eigenvalues $ \Omega $, we require the matrix's determinant is zero, which gives
 	\begin{align*}
-		&\left(-\frac{\hbar \omega - \Delta E}{2} - \hbar \Omega\right)\left(\frac{\hbar \omega - \Delta E}{2} - \hbar \Omega\right) - \left(\frac{\lambda}{2}\right)^{2} = 0\\
+		&\left(-\frac{\hbar \omega - \Delta E}{2} - \hbar \Omega\right)\left(\frac{\hbar \omega - \Delta E}{2} - \hbar \Omega\right) - \left(\frac{\lambda}{2}\right)^{2} \equiv 0\\
 		&(\hbar \Omega)^{2} - \left(\frac{\hbar \omega - \Delta E}{2}\right)^{2} - \left(\frac{\lambda}{2}\right)^{2} = 0\\
 		& \hbar \Omega = \pm \sqrt{\left(\frac{\hbar \omega - \Delta E}{2}\right)^{2} + \left(\frac{\lambda}{2}\right)^{2}} \equiv \pm \hbar \Omega_{0}
 	\end{align*}
-	The eigenvectors are, already skipping steps to the first row and equations
+    where we have defined
+    \begin{equation*}
+        \Omega_{0} = \frac{1}{\hbar} \sqrt{\left(\frac{\hbar \omega - \Delta E}{2}\right)^{2} + \left(\frac{\lambda}{2}\right)^{2}}
+    \end{equation*}
+    
+    \item With the eigenvalues $ \Omega = \pm \Omega_{0} $ known, the corresponding eigenvectors are
 	\begin{equation*}
 		\left(- \frac{\hbar \omega - \Delta E}{2} \mp \hbar \Omega_{0}\right)\alpha + \left(\frac{\lambda}{2}\right)\beta = 0
 	\end{equation*}
-	The second row would give equivalent results. We end up with
+    The coefficients $ \alpha $ and $ \beta $ in the ansatzes for $ c_{\da} $ and $ c_{\ua} $ are thus related by
 	\begin{equation*}
 		\begin{pmatrix}
 			\alpha\\
@@ -4756,45 +4740,45 @@ These are the two linearly independent states spanning the isotropic harmonic os
 		\end{pmatrix}
 		\propto
 		\begin{pmatrix}
-			\frac{\lambda}{2}\\
+            \frac{\lambda}{2}\\ [1mm]
 			\frac{\hbar \omega - \Delta E}{2} \pm \hbar \Omega_{0}
 		\end{pmatrix}
 	\end{equation*}
 	We leave off normalization for now---it turns out we won't need it.
 	
-	\item Solutions then are the linear combinations
+	\item The solutions for $ c_{\da} $ and $ c_{\ua} $ are thus the linear combinations
 	\begin{align*}
 		& c_{\ua}(t) = A\frac{\lambda}{2}e^{-i\Omega_{0}t} + B  \frac{\lambda}{2}e^{i\Omega_{0}t}\\
 		& c_{\da}(t) = A\left(\frac{\hbar \omega - \Delta E}{2} + \hbar \Omega_{0}\right)e^{-i\Omega_{0}t} + B\left(\frac{\hbar \omega - \Delta E}{2} - \hbar \Omega_{0}\right)e^{i\Omega_{0}t}
 	\end{align*}
-	
-	\item Initial conditions:
+	We find the coefficients $ A $ and $ B $ from the initial conditions
 	\begin{align*}
-		&c_{\ua}(0) = 0 = A\frac{\lambda}{2} + B\frac{\lambda}{2}\\
-		&c_{\da}(0) = 1 = A\left(\frac{\hbar \omega - \Delta E}{2} + \hbar \Omega_{0}\right) + B\left(\frac{\hbar \omega - \Delta E}{2} - \hbar \Omega_{0}\right)
+		&0 \equiv c_{\ua}(0) = A\frac{\lambda}{2} + B\frac{\lambda}{2}\\
+		&1 \equiv c_{\da}(0) = A\left(\frac{\hbar \omega - \Delta E}{2} + \hbar \Omega_{0}\right) + B\left(\frac{\hbar \omega - \Delta E}{2} - \hbar \Omega_{0}\right),
 	\end{align*}
-	The result is
+    which leads to
 	\begin{equation*}
 		2A \hbar \Omega_{0} = 1 \implies A = - B = \frac{1}{2\hbar \Omega_{0}}
 	\end{equation*}
-	The wavefunction is then
+	
+    \item In terms of $ c_{\da} $ and $ c_{\ua} $, the wavefunction $ \ket{\p, t} $ is then
 	\begin{align*}
 		\ket{\p, t} &= \frac{1}{2\hbar \Omega_{0}}\frac{\lambda}{2}\left(e^{-i \Omega_{0}t} - e^{i \Omega_{0}t} \right)e^{-i\frac{\omega}{2}t}\ket{\ua} + \\
 		& + \frac{1}{2\hbar \Omega_{0}}\left[\left(\frac{\hbar \omega - \Delta E}{2} + \hbar \Omega_{0} \right)e^{-i\Omega_{0}t} - \left(\frac{\hbar \omega - \Delta E}{2} - \hbar \Omega_{0} \right)e^{i\Omega_{0}t}\right]e^{i\frac{\omega}{2}t}\ket{\da}
 	\end{align*}
-	In terms of sines and cosines this reads
+	In terms of sines and cosines, the wavefunction reads
 	\begin{align*}
-		\ket{\p, t} = -\frac{i\lambda}{2\hbar \Omega_{0}} \sin \Omega_{0}te^{-i\frac{\omega}{2}t}\ket{\ua} + \left( -\frac{i(\hbar \omega - \Delta E)}{2\hbar \Omega_{0}}\sin \Omega_{0}t + \cos \Omega_{0}t\right)e^{i\frac{\omega}{2}t}\ket{\da}
+        \ket{\p, t} = -\frac{i\lambda}{2\hbar \Omega_{0}} \sin (\Omega_{0}t)e^{-i\frac{\omega}{2}t}\ket{\ua} + \left( -\frac{i(\hbar \omega - \Delta E)}{2\hbar \Omega_{0}}\sin \Omega_{0}t + \cos \Omega_{0}t\right)e^{i\frac{\omega}{2}t}\ket{\da}
 	\end{align*}
-	Somewhere is $ 2 \cos $ which cancels with 2 in denominator
+\end{itemize}
 	
+\textbf{Discussion of Resuls}
+\begin{itemize}
 	\item Interpretation: our system is a two-state system with energies $ \pm \frac{\Delta E}{2} $. 
 	
-	Assume a measurement at some time $ t > 0 $  to determine state in which our particle occurs. We could measure either energy or $ z $ component of spin, since spin and \Ham commute. 
+	We then consider a hypothetical measurement at some time $ t > 0 $  to determine our particle's state. In principle, we could measure either energy or $ z $ component of spin, since spin and \Ham commute. Since the pertrubation term $ \lambda \sigma_{x} \cos \omega t $ complicates an energy measurement, we choose to measure the $ z $ component of the particle's spin.
 	
-	Problem with measuring energy is the presence of the $ \sigma_{x} $ term in the total \Ham. We would have to ``turn off'' the $ \sigma_{x} $ term for a successful measurement. So we measure $ z $ component of spin. 
-	
-	Note that the state $ \ket{\p, t} $ is already written in the basis functions of $ S_{z} $.
+    The state $ \ket{\p, t} $ is already written in terms of $ S_{z} $'s basis functions $ \ket{\da} $ and $ \ket{\ua} $, and the possible measurement outcomes for $ S_{z} $ are
 	
 	\begin{center}
 		\begin{tabular}{c|c}
@@ -4805,49 +4789,45 @@ These are the two linearly independent states spanning the isotropic harmonic os
 		\end{tabular}
 	\end{center}
 	
-	The probability for spin up is
+	\item The probability $ P_{\ua} $ for spin up is
 	\begin{equation*}
 		P_{\ua}(t) = \abs{-\frac{i\lambda}{2\hbar \Omega_{0}} \sin \Omega_{0}t e^{-i\frac{\omega}{2}t}}^{2} = \left(\frac{\lambda}{2\hbar\Omega_{0}}\right)^{2}\sin^{2}\Omega_{0}t
 	\end{equation*}
-	And for spin down is
+	\item Meanhwile, the probability $ P_{\da} $ for spin up is
 	\begin{equation*}
 		P_{\da}(t) = \abs{\left(-i\frac{\hbar \omega - \Delta E}{2\hbar\Omega_{0}} \sin \Omega_{0}t + \cos \Omega_{0}t\right)e^{i\frac{\omega}{2}t} }^{2} = \left(\frac{\omega \omega - \Delta E}{2\hbar \Omega_{0}}\right)^{2}\sin^{2}\Omega_{0}t + \cos^{2}\Omega_{0}t
 	\end{equation*}
-	And rearranging gives
+    We then rearrange $ P_{\da} $ to get
 	\begin{equation*}
-		P_{\da}(t) = 1 - \sin^{2}\Omega_{0}t\left[1 - \left(\frac{\hbar \omega - \Delta E}{2\hbar \Omega_{0}}\right)^{2}\right] = 1 - \sin^{2}\Omega_{0}t\frac{(2\hbar \Omega_{0})^{2} - (\hbar \omega - \Delta E)^{2}}{(2\hbar \Omega_{0})^{2}}
+        P_{\da}(t) = 1 - \sin^{2}\Omega_{0}t\left[1 - \left(\frac{\hbar \omega - \Delta E}{2\hbar \Omega_{0}}\right)^{2}\right] = 1 - \sin^{2}(\Omega_{0}t)\frac{(2\hbar \Omega_{0})^{2} - (\hbar \omega - \Delta E)^{2}}{(2\hbar \Omega_{0})^{2}}
 	\end{equation*}
-	Substitute in definition of $ \Omega_{0} $ to get
+	Finally, we substitute in definition of $ \Omega_{0} $ to get
 	\begin{equation*}
-		P_{\da}(t) = 1 - \sin^{2}\Omega_{0}t\left(\frac{\lambda}{2\hbar \Omega_{0}}\right)^{2}
+        P_{\da}(t) = 1 - \sin^{2}(\Omega_{0}t)\left(\frac{\lambda}{2\hbar \Omega_{0}}\right)^{2}
 	\end{equation*}
-	The sum of probabilities $ P_{\ua}(t) + P_{\da}(t) $ is one, as it must be.
+	Note that the sum of probabilities $ P_{\ua}(t) + P_{\da}(t) $ is one, as it must be.
 	
-	\item Initial probability of spin up is zero and then oscillates with time from $ 0 $ to $ \left(\frac{\lambda}{2\hbar \Omega_{0}}\right)^{2} $. Initial probability of spin down is one and then oscillates with time from $ 1 $ to $ \left(\frac{\lambda}{2\hbar \Omega_{0}}\right)^{2} $.
+	\item The initial probability for detecting the particle with spin-up is zero; $ P_{\ua} $ then oscillates with time from $ 0 $ to $ \left(\frac{\lambda}{2\hbar \Omega_{0}}\right)^{2} $. Meanwhile, the initial probability for detecting the particle with spin down is one, and $ P_{\da} $  then oscillates with time from $ 1 $ to $ \left(\frac{\lambda}{2\hbar \Omega_{0}}\right)^{2} $.
 	
-	The frequency $ \Omega_{0} $ is the Rabi frequency. Take another look at the definition
+	\item The frequency $ \Omega_{0} $ is called the Rabi frequency---recall that it is defined as
 	\begin{equation*}
 		\hbar \Omega_{0} = \sqrt{\left(\frac{\hbar \omega - \Delta E}{2}\right)^{2} + \left(\frac{\lambda}{2}\right)^{2}}
 	\end{equation*}
-	Consider the resonant case $ \hbar \omega = \Delta E $, which gives
+	In the resonant case $ \hbar \omega = \Delta E $, the Rabi frequency simplifies to
 	\begin{equation*}
 		\hbar \Omega_{0} = \frac{\lambda}{2} \eqtext{and} \left(\frac{\lambda}{2\hbar \Omega_{0}}\right)^{2} = 1
 	\end{equation*}
 	In this case the amplitude of probability oscillations $ \left(\frac{\lambda}{2\hbar \Omega_{0}}\right)^{2} $ is exactly one.
 	
-	\item Finally assume validity of the initial assumption/approximation of 
+	\item Finally, we check the validity of the earlier assumption/approximation 
 	\begin{equation*}
-		e^{\pm 2i\omega t} \approx 0
+		e^{\pm 2i\omega t} \approx 0 \iff \Omega_{0} \ll 2 \omega
 	\end{equation*}
-	The requirement is $ \Omega_{0} \ll 2 \omega $. At resonance, with $ 	\hbar \Omega_{0} = \frac{\lambda}{2} $, we require
+	At resonance, where $ \hbar \Omega_{0} = \frac{\lambda}{2} $, this condition reads
 	\begin{equation*}
-		\frac{\lambda}{2} \ll 2 \omega = 2 \Delta E
+		\frac{\lambda}{2} \ll 2 \omega = 2 \Delta E \implies \lambda \ll \Delta E
 	\end{equation*}
-	We still end up with the requirement $ \lambda \ll \Delta E $, like for perturbation theory so far.
-	
-	Note, however, that we could not solve the problem with perturbation theory, because time-dependent perturbation theory assumes a low probability of transition between states, but the probability for transition between states is large---even equal to one at resonance.
-	
-    
+	The requirement $ \lambda \ll \Delta E $ is consistent with the perturbation theory examples we have studied so far. Note, however, that we could not solve the problem with perturbation theory---time-dependent perturbation theory assumes a low probability of transition between states, but the probability for transition between states is large---even equal to one at resonance.
 	
 \end{itemize}
 
