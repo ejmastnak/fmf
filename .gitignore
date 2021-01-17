@@ -1,3 +1,6 @@
+# Generic ignore-me directory #
+ignore*
+
 # Latex compilation-related files #
 ###################
 *.aux
