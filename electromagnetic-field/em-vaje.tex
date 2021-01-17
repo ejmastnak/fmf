@@ -13,7 +13,6 @@
 \graphicspath{{"figures/"}} 
 \usepackage{wrapfig}
 
-
 \usepackage[normalem]{ulem}  % for underline with line wrapping
 \usepackage[margin=3cm]{geometry}
 \usepackage[colorlinks = true, allcolors=blue]{hyperref}
@@ -54,7 +53,7 @@
 \renewcommand{\laplacian}{\nabla^{2}}
 
 \begin{document}
-\title{Electromagnetism Exercise Notes}
+\title{Electromagnetic Field Exercise Notes}
 \author{Elijan Mastnak}
 \date{Winter Semester 2020-2021}
 \maketitle
@@ -2944,13 +2943,13 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	
 \end{itemize}
 
-\section{Fourteenth Exercise Set (rough draft)}
+\section{Fourteenth Exercise Set}
 
 \subsection{Cylindrical Waveguide}
-\textit{Consider a waveguide with a circular cross section of radius $ a $. Find the electric and magnetic field in the waveguide, and the dispersion relation, for both TM and TE propagation modes.}
+\textit{Consider a waveguide with a circular cross section of radius $ a $. Find the time-dependent solution for the electric and magnetic field in the waveguide, along with the dispersion relation, for both TM and TE propagation modes.}
 
 \begin{itemize}
-	\item Recall the wave equation for either $ E_{z} $ or $ H_{z} $ in a pipe-like waveguide is
+	\item We begin with the wave equation for either $ E_{z} $ or $ H_{z} $ in a pipe-like waveguide:
 	\begin{equation*}
 		\left[\laplacian_{\perp} + \kappa^{2}\right]
 		\begin{Bmatrix}
@@ -2959,31 +2958,24 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 		\end{Bmatrix}
 		 = 0
 	\end{equation*}
-	
-	\item First we write the Laplacian in cylindrical coordinates---perpendicular now means the coordinates perpendicular to the propagation direction $ z $. 
+	Next, we write the Laplacian in cylindrical coordinates---in cylindrical geomatry, the coordinates perpendicular to the propagation direction $ z $ are $ r $ and $ \phi $. The Laplacian reads:
 	\begin{equation*}
 		\laplacian_{\perp} = \frac{1}{r}\pdv{r}\left(r \pdv{r}\right) + \frac{1}{r^{2}} \pdv[2]{}{\phi}
 	\end{equation*}
-	We then have
+
+    \item We begin with TM mode, in which we have $ H_{z} = 0 $ and solve for $ E_{z} $. We find $ E_{z} $ with separation of variables, using the ansatz
 	\begin{equation*}
-		E_{z}(r, \phi) = R(r) \Phi(\phi)
+        E_{z}(r, \phi) = R(r) \Phi(\phi) 
 	\end{equation*}
-	
-	
-	\item For TM: Substitute into wave equation and get
+	We substitute this ansatz into wave equation and get
 	\begin{equation*}
 		\frac{1}{r}\left(rR'\right)'\Phi + \frac{1}{r^{2}}R\Phi'' + \kappa^{2}R\Phi = 0
 	\end{equation*}
-	Rearrange and get
+	We then rearrange and get
 	\begin{equation*}
-		\frac{rR' + r^{2}R''}{R} + \frac{\Phi''}{\Phi} + \kappa^{2}r^{2} = 0
+		\frac{rR' + r^{2}R''}{R} + \frac{\Phi''}{\Phi} + \kappa^{2}r^{2} = 0 \implies \frac{r^{2}R'' + rR' + \kappa^{2}r^{2}R}{R} = -\frac{\Phi''}{\Phi} = m^{2}
 	\end{equation*}
-	Or
-	\begin{equation*}
-		\frac{r^{2}R'' + rR' + \kappa^{2}r^{2}R}{R} = -\frac{\Phi''}{\Phi} = m^{2}
-	\end{equation*}
-	
-	\item Then set equal to separation constants
+	Where, following the usual separation of variables recipe, we have set the $ r $ and $ \phi $-dependent terms equal to the separation constant $ m^{2} $. The two equations are
 	\begin{equation*}
 		\Phi'' + m^{2}\Phi = 0
 	\end{equation*}
@@ -2992,117 +2984,158 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 		r^{2}R'' + rR' + (\kappa^{2}r^{2} - m^{2})R = 0
 	\end{equation*}
 	
-	\item First equation is solved with sines and cosines
+	\item The equation for $ \Phi $ has a sinusoidal solution, which we write in the form
 	\begin{equation*}
 		\Phi(\phi) \propto \sin(m \phi + \phi_{m})
 	\end{equation*}
-	Where we've written a phase shift instead of a linear combination.
+	Note that we've written the solution with a phase shift $ \phi_{m} $ instead of as a linear combination of sine and cosine terms.
 	
-	\item The radial equation is a Bessel equation and is solved by the Bessel functions. The options are either
+	\item The radial equation is a Bessel equation and is solved by the Bessel functions $ J_{m} $ and the Neumann functions $ N_{m} $. The general solution is a linear combination of the form
 	\begin{equation*}
-		R(r) \propto J_{m}(\kappa r) \eqtext{or} R(r) \propto N_{m}(\kappa r) 
+		R(r) \propto J_{m}(\kappa r) + N_{m}(\kappa r) 
 	\end{equation*}
-	The second option are the Neumann functions. General solution is a linear combination of the two. We will work with the Bessel functions. 
-	
-	Neumann functions apply in situations with divergence near the origin (e.g. a coaxial cable), and the Bessel functions for convergence near the origin. That's why we'll use only the Bessel function. 
-	
-	\item The general solution is 
+    The Neumann functions apply in situations with divergence near the origin (e.g. a coaxial cable), and the Bessel functions for convergence near the origin. Our problem is free of divergence near the origin, so we will use only the Bessel functions. In this case, the general solution for $ E_{z} = \Phi R $ is
 	\begin{equation*}
-		E_{z}(r, \phi) = \sum_{m = 0}^{\infty}A_{m}J_{m}(\kappa r)\sin(m \phi + \phi_{m})
+        E_{z}(r, \phi) = \sum_{m = 0}^{\infty}A_{m}J_{m}(\kappa_{m} r)\sin(m \phi + \phi_{m})
 	\end{equation*}
+    where $ m $ indexes the Bessel functions.
 	
-	\item We now consider boundary conditions. The condition for electric field in waveguides is
+	\item We now consider boundary conditions. The electric field in waveguides must satisfy
 	\begin{equation*}
-		E_{\parallel} = 0
+		E_{\parallel} \big|_{\partial} = 0
 	\end{equation*}
-	where $ E_{\parallel} $ is the component of electric field tangent (parallel) to the waveguide's surface. For our cylindrical geometry both $ E_{z} $ and $ E_{\phi} $ are tangent; we'll use $ E_{z} $ since we can get useful information from that.
-	
-	We then get
+    where $ E_{\parallel} $ is the component of electric field tangent (parallel) to the waveguide's surface and $ \partial $ denotes the boundary surface. For our cylindrical geometry both $ E_{z} $ and $ E_{\phi} $ are tangent, and the boundary corresponds to $ r = a $. We apply the condition to $ E_{z} $ to get
 	\begin{equation*}
-		E_{z}(a, \phi) = 0
+        E_{z}(a, \phi) = \sum_{m = 0}^{\infty}A_{m}J_{m}(\kappa a)\sin(m \phi + \phi_{m}) \equiv 0  
 	\end{equation*}
 	This implies $ \kappa $ must satisfy
 	\begin{equation*}
-		J_{m}(\kappa r) = 0 \implies \kappa a = \xi_{m, n}
+		J_{m}(\kappa a) = 0 \implies \kappa a = \xi_{m, n}
 	\end{equation*}
-	Where $ m $ indexes the Bessel function and $ n $ is the index of the zero (e.g. first zero, second zero, etc...)
-	
-	The solution for $ \kappa $ is then
+    where $ m = 0, 1, 2, \ldots $ indexes the Bessel functions and $ n = 1, 2, 3, \ldots $ indexes the zero of the $ m $-th Bessel function. The solution for $ \kappa $ is then
 	\begin{equation*}
 		\kappa = \frac{\xi_{mn}}{a}
 	\end{equation*}
-	where the zeros $ \xi_{mn} $ are tabulated in the table below \textbf{TODO}
+	where the zeros $ \xi_{mn} $ are tabulated in the table below. As such, the general solution for $ E_{z} $ is more appropriately written with two indices in the form
+    \begin{equation*}
+        E_{z}(r, \phi) = \sum_{n=1}^{\infty}\sum_{m = 0}^{\infty}A_{mn}J_{m}\left( \xi_{mn} \frac{r}{a} \right)\sin(m \phi + \phi_{mn})
+    \end{equation*}
+    where $ m $ indexes the Bessel functions and $ n $ indexes the zeros of a given Bessel function.
+
 	
-	\item Next, with $ \kappa $ known, we find the dispersion relation
+\begin{table}[htb!]
+    \centering
+    \begin{tabular}{c|c|c|c|c|c|c}
+        $ n $ & $ J_0(x) $ & $ J_1(x) $ & $ J_2(x) $ & $ J_3(x) $ & $ J_4(x) $ & $ J_5(x) $ \\
+        \hline 
+        1 & 2.4048 & 3.8317 & 5.1356 & 6.3802 & 7.5883 & 8.7715\\
+        2 & 5.5201 & 7.0156 & 8.4172 & 9.7610 & 11.0647 & 12.3386\\
+        3 & 8.6537 & 10.1735 & 11.6198 & 13.0152 & 14.3725 & 15.7002\\
+        4 & 11.7915 & 13.3237 & 14.7960 & 16.2235 & 17.6160 & 18.9801\\
+        5 & 14.9309 & 16.4706 & 17.9598 & 19.4094 & 20.8269 & 22.2178\\
+    \end{tabular}
+    \caption{The first 5 zeros $ \xi_{mn} $ of the first 6 Bessel functions $ J_{m}(x) $.}
+\end{table}
+
+	\item With $ \kappa $ known, we find the dispersion relation via
 	\begin{equation*}
 		\kappa^{2} = \frac{\omega^{2}}{c_{0}^{2}} - k^{2} \implies \omega = c_{0}\sqrt{k^{2} + \frac{\xi_{mn}^{2}}{a^{2}}}
 	\end{equation*}
-	We can then draw different branches for various zeros. We find the waveguide's bandwidth from comparing the lowest zeros.
-	
-	We start with setting $ k = 0 $ and finding lowest zeros:
+    We then find the waveguide's bandwidth from the difference between the lowest two frequency modes, which occur for the smallest two zeros $ \xi_{mn} $ when $ k = 0 $, where the dispersion relation simplifies to
 	\begin{equation*}
 		\omega(k = 0) = \frac{c_{0}}{a} \xi_{mn}
 	\end{equation*}
-	The bandwidth is the difference between the $ \omega $ with the two smallest values of $ \xi_{mn} $:
+	The bandwidth is then the difference between the two smallest possible frequencies $ \omega $, which occur for the two smallest values of $ \xi_{mn} $. These are:
 	\begin{equation*}
-		\Delta \omega = \frac{c_{0}}{a} (\xi_{11} - \xi_{10}) \approx \frac{c_{0}}{a}(5.83 - 2.40)
+        \Delta \omega = \frac{c_{0}}{a} (\xi_{11} - \xi_{10}) \approx \frac{c_{0}}{a}(3.8317 - 2.4048) = 1.47 \cdot \frac{c_{0}}{a} 
 	\end{equation*}
 	
 \end{itemize}
 
 \textbf{TE Mode}
 \begin{itemize}
-	\item Next, TE mode. Similar, but we solve for $ H_{z} $. 
-	
+    \item In TE mode we have $ E_{z} = 0 $ and solve for $ H_{z} $. As in TM, we use separation of variables with the ansatz
 	\begin{equation*}
 		H_{z}(r, \phi) = R(r)\Phi(\phi)
 	\end{equation*}
-	and then general solution
+	Following an analogous separation of variables procedure as in TM mode produces the general solution
 	\begin{equation*}
 		H_{z}(r, \phi) = \sum_{m = 0}^{\infty} A_{m}J_{m}(\kappa r)\sin(m\phi + \phi_{m})
 	\end{equation*}
 	
-	\item The boundary condition changes and reads
+	\item In TE mode, we boundary condition applies to $ H_{\perp} $ and reads 
 	\begin{equation*}
-		H_{\perp}\big |_{r = a} = 0
+		H_{\perp}\big |_{\partial} = 0
 	\end{equation*}
-	In other words the component of $ H $ perpendicular to the surface must be zero. 
-	
-	In cylindrical geometry $ H_{\perp} = H_{r}$ and we find $ H_{r} $ with
+	meaning the component of $ H $ perpendicular to the surface $ \partial $ must be zero. In cylindrical geometry the radial coordinate is perpendicular to the surface, meaning $ H_{\perp} = H_{r}$. We find $ H_{r} $ with
 	\begin{equation*}
-		H_{r} = \pdv{H_{z}}{r} \implies \pdv{H_{z}}{r}(a, \phi) = 0
+        H_{r} = r\pdv{H_{z}}{r} \eqtext{and} H_{r}\big |_{\partial} = 0 \implies a\pdv{H_{z}}{r} (a, \phi) = 0
 	\end{equation*}
 	
 	\item Applying this boundary condition to the general solution for $ H_{z} $ gives
 	\begin{equation*}
 		J'_{m}(\kappa a) = 0 \implies \kappa = \frac{\xi'_{mn}}{a}
 	\end{equation*}
-	where $ \xi'_{mn} $ are the zeros of the Bessel function derivatives, which are tabulated.
+	where $ \xi'_{mn} $ are the zeros of the Bessel function derivatives, tabulated below.
 	
-	\item Dispersion relation is
+\begin{table}[htb!]
+    \centering
+    \begin{tabular}{c|c|c|c|c|c|c}
+        $ n $ & $ J_{0}' (x) $ & $ J_{1}'(x) $ & $ J_{2}'(x) $ & $ J_{3}'(x) $ & $ J_{4}'(x) $ & $ J_{5}'(x) $  \\
+       \hline
+       1 & 3.8317 & 1.8412 & 3.0542 & 4.2012 & 5.3175 & 6.4156\\
+       2 & 7.0156 & 5.3314 & 6.7061 & 8.0152 & 9.2824 & 10.5199\\
+       3 & 10.1735 & 8.5363 & 9.9695 & 11.3459 & 12.6819 & 13.9872\\
+       4 & 13.3237 & 11.7060 & 13.1704 & 14.5858 & 15.9641 & 17.3128\\
+       5 & 16.4706 & 14.8636 & 16.3475 & 17.7887 & 19.1960 & 20.5755 \\
+    \end{tabular}
+    \caption{The first 5 zeros $ \xi_{mn} $ of the first 6 Bessel function derivatives $ J_{m}'(x) $.}
+\end{table}
+    
+    The correct general solution for $ H_{z} $ is written with two indices in the form
+    \begin{equation*}
+        H_{z}(r, \phi) = \sum_{n=1}^{\infty}\sum_{m = 0}^{\infty}A_{mn}J_{m}\left( \xi'_{mn} \frac{r}{a} \right)\sin(m \phi + \phi_{mn})
+    \end{equation*}
+    where $ m $ indexes the Bessel functions and $ n $ indexes the zeros of the Bessel function derivatives $ \xi'_{mn} $.
+
+
+	\item With $ \kappa $ known, the dispersion relation in TE mode is
 	\begin{equation*}
 		\kappa^{2} = \frac{\omega^{2}}{c_{0}^{2}} - k^{2} \implies \omega = c_{0}\sqrt{k^{2} + \frac{(\xi'_{mn})^{2}}{a^{2}}}
 	\end{equation*}
-	
-	\item We then find the bandwidth analogously to TM mode, we just use new zeros. The difference between the lowest two frequencies is
+	We find the bandwidth analogously to TM mode, we just using the new zeros $ \xi'_{mn} $ instead. The difference between the lowest two frequencies is
 	\begin{equation*}
-		\Delta \omega = \frac{c_{0}}{a} (\xi'_{21} - \xi_{11}) \approx \frac{c_{0}}{a}(3.05 - 1.84)
+		\Delta \omega = \frac{c_{0}}{a} (\xi'_{21} - \xi_{11}) \approx \frac{c_{0}}{a}(3.0542 - 1.8412) \approx 1.21 \cdot \frac{c_{0}}{a} 
 	\end{equation*}
 	
 \end{itemize}
 
 
-\textbf{Note: Other Geometries}
+\subsection{Overview: Waveguide with a Quarter-Circle Cross Section}
 \begin{itemize}
-	\item For a semicircular waveguide or quarter circle.
+	\item We briefly sketch the typical problem solving procedure for a waveguide with a quarter-circle cross section. As for a circular cross section, we work in cylindrical coordinates and use separation of variables with the ansatzes
+    \begin{equation*}
+        E_{z}(r, \phi) = R(r)\Phi(\phi) \eqtext{or, in TE mode,} H_{z}(r, \phi) = R(r)\Phi(\phi)
+    \end{equation*}
+
+    \item Substituing these ansatzes into the waveguide wave equation leads to the familiar general solutions
+	\begin{equation*}
+        \begin{Bmatrix}
+            E_{z}(r, \phi) \\
+            H_{z}(r, \phi)
+        \end{Bmatrix}
+          = \sum_{m = 0}^{\infty} A_{m}J_{m}(\kappa r)\sin(m\phi + \phi_{m})
+	\end{equation*}
+\end{itemize}
+
+\textbf{Boundary Conditions in TM Mode}
+\begin{itemize}
+    
+	\item A waveguide with quarter-circular cross section has two additional flat boundaries, in addition to its circular boundary. In TM mode, we require $ E_{z}(\phi = 0, r) = 0 $ along the bottom flat surface and $ E_{z}(\phi = \pi/2, r) = 0 $ along the vertical flat surface. 
 	
-	Separation of variables and general solution as before.
-	
-	\item We now consider boundary conditions along the two straight edges, and get more boundary conditions.
-	
-	In TM mode for a quarter circle, we require $ E_{z}(\phi = 0, r) = 0 $ for the bottom flat surface and $ E_{z}(\phi = \pi/2, r) = 0 $. 
-	
-	This applies to the angular component $ \sin (m \phi + \phi_{m}) $. The first condition requires $ \phi_{m} = 0 $ and the second leaves us with
+    The boundary conditions along the flat surfaces, which are conditions involving the coordinate $ \phi $, apply to the angular component of the general solution, i.e. $ \sin (m \phi + \phi_{m}) $. The first condition, $ E_{z}(0, r) = 0 $ requires $ \phi_{m} = 0 $. 
+
+    The second condition, $ E_{z}(\pi/2, r) = 0 $, leads to
 	\begin{equation*}
 		\sin\left(m \frac{\pi}{2} \right) = 0
 	\end{equation*}
@@ -3110,69 +3143,56 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	\begin{equation*}
 		m = 2, 4, 6, \cdots 
 	\end{equation*}
-	Basically not all $ m $ are allowed. Note that $ m = 0 $ gives a trivial solution.
-	
-	\item The radial component is similar to a full circle, just finding zeros of Bessel functions. 
+	In other words, only even values of $ m $ are allowed.
+
+    Finding the radial component of the general solution is analogous to the procedure for a circular cross section and involves finding zeros of the Bessel functions.
 \end{itemize}
 
-\textbf{TE Mode}
+\textbf{Boundary Conditions in TE Mode}
 \begin{itemize}
-	\item Similar, just work in terms of $ H_{z} $ and the derivative $ H_{r} = \pdv{H_{z}}{r} $ at the boundary. End result that for a quarter circle not all $ m $ are allowed, as before. 
+    \item In TE mode, the relavant boundary condition involves the perpendicular magnetic field $ H_{\perp} $. Along the circular surface, the perpendicular magnetic field is $ H_{r} = r\pdv{H_{z}}{r} $. Requiring $ H_{\perp} = 0 $ leads to the condition $ m = 0, 2, 4, 6, \ldots $, as in TE mode.
 	
-	
-	\item We require the normal derivative is zero. For the bottom flat surface this is 
+    \item Along the bottom flat surface at $ \phi = 0 $, the perpendicular component of magnetic field is
 	\begin{equation*}
-		H_{\perp} = \pdv{H_{z}}{\phi} (\phi = 0, r) = 0
+		H_{\perp} = \pdv{H_{z}}{\phi} (\phi = 0, r) 
 	\end{equation*} 
-	This requires solutions are cosines.
-	
-	And at the vertical flat surface
+    and the boundary condition $ H_{\perp} = 0 $ requires the angular solutions are cosine terms. Along the vertical flat surface at $ \phi = \pi/2 $, the boundary condition reads
 	\begin{equation*}
 		H_{\perp} = \pdv{H_{z}}{\phi}\left(\frac{\phi}{2}, r\right) = 0
 	\end{equation*}
-	This conditions gives, when taking the derivative of the solutions, which are cosines, we again get
-	\begin{equation*}
-		\sin \left(\frac{\pi}{2}m\right) = 0 \implies m = 2n
-	\end{equation*}
-	In this case $ m = 0 $ is valid because the cosine term is constant but the radial Bessel functions are still nontrivial and we get a valid solution. So end result is $ m = 0, 2, 4, \cdots $, including the zero.
+    as for the bottom flat surface, this condition requires the angular solutions are cosine terms.
+	
+    In TE mode, the case $ m = 0 $ is valid because the angular cosine solutions are constant and thus non-trivial, at $ m = 0 $. Similarly, the radial Bessel functions are nontrivial for $ m = 0 $, and we get a valid solution. In TE mode for a quarter-circle cross section, the valid values of $ m $ are thus $ m = 0, 2, 4, \ldots $.
 	
 \end{itemize}
 
-\textbf{Note:} The correct general solution actually contains two indexes, included the zeros of the Bessel functions
-\begin{equation*}
-	E_{z}(r, \phi) = \sum_{n = 1}^{\infty}\sum_{m = 0}^{\infty}A_{mn}J_{m}(\kappa_{mn} r)\sin(m \phi + \phi_{mn})
-\end{equation*}
-Because the constants depend also on the zeros of the Bessel functions. 
-
-Analogous for $ H_{z} $. We can ignore this general solution because we always restrict ourselves to the lowest bandwidth.
-
-
-\subsection{TEM Waves in Waveguides}
+\subsection{Theory: TEM Waves in Waveguides}
 \begin{itemize}
-	\item In this case we have both $ E_{z} = 0 $ and $ H_{z} = 0 $, which is more strict than either condition individually.
+    \item In TEM (transverse electric and transverse magnetic) mode we have both $ E_{z} = 0 $ and $ H_{z} = 0 $, which is a more strict condition than either TE or TM mode individually. In TEM mode both $ \E $ and $ \H $ are perpendicular to the direction of wave propagation, i.e. both $ \E $ and $ \B $ are perpendicular to the wave vector $ \vec{k} $. We now $ \E \perp \vec{k} $ and $ \B \perp \vec{k} $ is satisified for EM waves in empty space, and it turns out this condition is also possible is specialized waveguides, which we consider in this section.
 	
-	In this case both $ \E $ and $ \H $ are perpendicular to the direction of wave propagation, i.e. both $ \E $ and $ \B $ are perpendicular to $ \vec{k} $.
-	
-	This requirement corresponds to EM waves in empty space.
-	
-	\item Is TEM possible in waveguides? We discuss this now... Assume a waveguide-style ansatz
+	\item We begin the analysis of TEM waves in waveguides with the familiar ansatz
 	\begin{equation*}
 		\E(\r) = \E(\vec{\rh})e^{i(kz - \omega t)}
 	\end{equation*}
-	First step is to show $ \curl \E $ and $ \curl \H $ obey
+    which assumes $ \E $ propages through the waveguide in the $ z $ direction. 
+\end{itemize}
+
+\textbf{First Step}
+\begin{itemize}
+    \item Our first step is to show $ \curl \E $ and $ \curl \H $ obey the relationships
 	\begin{equation*}
 		\curl \E = i \vec{k} \cross \E \eqtext{and} \curl \H = i \vec{k} \cross \H
 	\end{equation*}
-	
-	We start with 
+	We begin the proof with the intermediate calculation
 	\begin{equation*}
 		\curl \E(\r) = \curl \big[\E(\vec{\rh}) e^{i(kz - \omega t)}\big] = \curl \E(\rh) e^{i(kz - \omega t)} + \grad e^{i(kz - \omega t)} \cross  \E(\vec{\rh})
 	\end{equation*}
-	where the second equation holds because the exponent term is a scalar. Next:
+	where the second equation holds because the exponent term is a scalar quantity. Next, we make the calculation
 	\begin{equation*}
 		\grad e^{i(kz - \omega t)}  = i\vec{k}e^{i(kz - \omega t)}  \implies \grad e^{i(kz - \omega t)} \cross  \E(\vec{\rh}) = i \vec{k} \cross \E(\r)
 	\end{equation*}
-	We now just need to show the first term is zero. Nothing that $ \rh = (x, y, 0) $ i.e. the $ z $ term is zero and also that $ E_{z} \equiv 0 $ in TEM mode, we have
+    
+    \item To show $ \curl \E(\r) = 0 $, we just need to show that the term $ \curl \E(\rh) e^{i(kz - \omega t)} $ equals zero. Noting that $ \rh = (x, y, 0) $ i.e. the $ \rho_{z} = 0 $, and also that $ E_{z} \equiv 0 $ in TEM mode, we have
 	\begin{align*}
 		\curl \E(\rh)e^{i(kz - \omega t)} &= 
 		\begin{bmatrix}
@@ -3207,37 +3227,44 @@ Analogous for $ H_{z} $. We can ignore this general solution because we always r
 	\begin{equation*}
 		\big[\curl \E(\r)\big]_{z} = \mm \pdv{H_{z}}{t} \equiv 0
 	\end{equation*}
-	Because $ H_{z} = 0 $ in TEM mode. The result is
+	since $ H_{z} = 0 $ in TEM mode. The result is the desired equality
 	\begin{equation*}
 		\curl \E = i \vec{k} \cross \E
 	\end{equation*}
-	where I suppose $ \vec{k} = (0, 0, k) $. 
+	where $ \vec{k} = (0, 0, k) $. 
 	
-	Proving $ \curl \H = i \vec{k} \cross \H $ analogous; left as an exercise to the reader.
+	\item Proving $ \curl \H = i \vec{k} \cross \H $ analogous; left as an exercise to the reader i.e. I'm too lazy to type it out right now.
+\end{itemize}
 	
-	
-	\item Next, we aim to prove that TEM mode has the dispersion relation $  \omega = c_{0}k $
+\textbf{Second Step}
+\begin{itemize}
+	\item Next, we aim to prove that TEM mode has the dispersion relation $  \omega = c_{0}k $. We begin with the just-derivaed equality $ \curl \E = i \vec{k} \cross \E $ and proceed with
 	\begin{equation*}
 		i\vec{k} \cross \E  = \curl \E = - \mm \pdv{\H}{t} = + i\mm \omega \H \implies \vec{k} \cross \E =  \mm \omega \H
 	\end{equation*}
-	And then analogously
+    Analogously, using $ \curl \H = i \vec{k} \cross \H  $, we get
 	\begin{equation*}
 		i\vec{k} \cross \H  = \curl \H = \ee \pdv{\E}{t} = - i \ee \omega \E \implies \vec{k} \cross \H =  - \ee \omega \E
 	\end{equation*}
-	We then do
+	
+    \item Next, we take the cross product of the above equations with $ \vec{k} $ to get
 	\begin{equation*}
 		\vec{k} \cross (\vec{k} \cross \E) = \mm \omega \vec{k} \cross \H = - \ee \mm \omega^{2} \E
 	\end{equation*}
-	And the left hand side is
+    The left hand side $ \vec{k} \cross ( \vec{k} \cross \E) $ evaluates to
 	\begin{equation*}
 		\vec{k} \cross (\vec{k} \cross \E) = \vec{k}(\vec{k} \cdot \E) - k^{2}\E = 0 - k^{2}\E
 	\end{equation*}
-	since in TEM mode $ \vec{k} \cdot \E = 0 $. The result is
+	since $ \vec{k} \cdot \E = 0 $ in TEM mode. Using $ \vec{k} \cross (\vec{k} \cross \E) = - \ee \mm \omega^{2} \E $ leads to
 	\begin{equation*}
-		\E\left(k^{2} - \frac{\omega^{2}}{c_{0}^{2}}\right) = 0 \implies \omega = c_{0}k
+        -k^{2}\E = - \ee \mm \omega^{2}\E \implies \E\left(k^{2} - \frac{\omega^{2}}{c_{0}^{2}}\right) = 0 \implies \omega = c_{0}k
 	\end{equation*}
-	
-	\item One more step: Start with the waveguide wave equation
+    In other words, we have proven that TEM mode has the dispersion relation $ \omega = c_{0}k $
+\end{itemize}
+
+\textbf{Last Step}
+\begin{itemize}
+	\item We begin with the waveguide wave equation, which reads
 	\begin{equation*}
 		\left[\laplacian_{\perp} + \left(\frac{\omega^{2}}{c_{0}^{2}} - k^{2}\right)\right]
 		\begin{Bmatrix}
@@ -3246,7 +3273,7 @@ Analogous for $ H_{z} $. We can ignore this general solution because we always r
 		\end{Bmatrix}
 		 = 0
 	\end{equation*}
-	Because of the dispersion relation $ \omega = ck $, we simply
+	Because of the dispersion relation $ \omega = ck $, the equation simplies to
 	\begin{equation*}
 		\laplacian_{\perp} 
 		\begin{Bmatrix}
@@ -3255,86 +3282,76 @@ Analogous for $ H_{z} $. We can ignore this general solution because we always r
 		\end{Bmatrix}
 		 = 0
 	\end{equation*}
-	This is equivalent to $ \omega = 0 $ and $ k = 0 $, which corresponds to a static situation. In other words, TEM wave propagation reduces to solving a static (time-independent) Laplace equation. Standing waves? 
+	This equation corresponds to a solution with $ \omega = 0 $ and $ k = 0 $, which corresponds to a static electromagnetic wave. Mathematically, this means TEM wave propagation reduces to solving a static (time-independent) Laplace equation.
 	
-	We then consider e.g. $ \E $. The boundary condition for waveguides reads $ \E_{\parallel}\big|_{\partial} = 0 $. We can write the wave equation $ \laplacian_{\perp}\E = 0 $ as simply
+    \item As an example, we consider the electric field $ \E $. Since $ \laplacian_{\perp}\E = 0 $, (which applies to the entire electric field), we can also consider only the component $ E_{\parallel} $ and write
 	\begin{equation*}
 		\laplacian_{\perp}E_{\parallel} = 0
 	\end{equation*}
-	So: the Laplacian of $ E_{\parallel} $ is zero everywhere along the waveguide cross section, and the function itself is zero along the boundary. 
+    Meanwhile, the boundary condition for waveguides reads $ E_{\parallel}\big|_{\partial} = 0 $. The Laplace equation for $ E_{\parallel} $ requires that the Laplacian of $ E_{\parallel} $ is zero everywhere along the waveguide cross section, while the boundary condition requires that $ E_{\parallel} $ itself is zero along the boundary. The only possible solution for simple\footnote{By simple surface, we refer to a surface enclosed by a single boundary. For example, a circle would be a simple surface, but an annulus, which has two boundaries, is not.} surfaces is $ E_{\parallel} = 0 $.
 	
-	The solution, at least for simple surfaces the result is $ E_{\parallel} = 0 $. I think simple is, formally, a surface enclosed by a single boundary. But not sure here. 
-	
-	Anyway, for e.g. a coaxial cable with an annular (not simple) cross section, we can have $ E_{\parallel} \neq 0 $. 
-	
-	An alternate non-simple waveguide with the potential for a non-trivial solution is a parallel-plate waveguide, in which the plates extend to infinity.
+    However, for e.g. a coaxial cable with an annular (not simple) cross section, $ E_{\parallel} \neq 0 $ (and thus TEM mode) is a valid solution. Another possible waveguide that allows for TEM mode is a parallel-plate waveguide in which the plates extend to infinity, meaning the ``infinite'' cross sectino is not a simple surface. In general, only waveguides with non-simple cross sections can carry TEM waves.
 	
 \end{itemize}
 
 \subsection{TEM Waves in a Coaxial Waveguide}
-\textit{Consider a coaxial waveguide with an inner conductor of radius $ a $ and an other sheath of radius $ b $. To spice things up, we fill the interior with a material with the same dielectric constant as cold plasma} (see \hyperref[ss:cold-plasma]{Subsection \ref{ss:cold-plasma}}). \textit{Find the dispersion relation and impedance for TEM waves.}
+\textit{Consider a coaxial waveguide with an inner conductor of radius $ a $ and an outer sheath of radius $ b $. To spice things up, we fill the interior with a material with the same dielectric constant as the cold plasma} in \hyperref[ss:cold-plasma]{Subsection \ref{ss:cold-plasma}}. \textit{Find the dispersion relation and impedance for TEM waves in the coaxial waveguide.}
 \begin{itemize}
-	\item In our case, because the waveguide is filled with a dielectric material, the wave speed is $ c < c_{0} $, and the dispersion relation is
+	\item Because the waveguide is filled with a dielectric material, the wave speed is $ c < c_{0} $, and the dispersion relation is
 	\begin{equation*}
 		\omega = c k
 	\end{equation*}
-	The two speeds are related by
+    The wave speeds $ c $ and $ c_{0} $ are related by
 	\begin{equation*}
 		c = \frac{c_{0}}{\sqrt{\epsilon}} \implies \omega = \frac{c_{0}k}{\sqrt{\epsilon}}
 	\end{equation*}
 	
-	\item We then substitute in the dispersion relation of cold plasma to get
+	\item We then substitute in the dielectric constant of cold plasma to get
 	\begin{equation*}
 		\omega = \frac{c_{0}k}{\sqrt{1 - \frac{\omega_{\text{p}}^{2}}{\omega^{2}}}} \implies \omega = \sqrt{c_{0}^{2}k^{2} + \omega_{\text{p}}^{2}}
 	\end{equation*}
-	Note that this is the same dispersion relation as for cold plasma, even though the plasma problem was solved in unbounded space.
+	Note that this is the same dispersion relation as for cold plasma, even though the plasma problem was solved in unbounded space, while the coaxial waveguide has bounded geometry.
 \end{itemize}
 
 \textbf{Impedance}
 \begin{itemize}
-	\item We find impedance with $ Z = \frac{U}{I} $. In TEM mode, the EM field is static, which simplifies finding $ U $ and $ I $. 
+	\item We find the waveguide's impedance with the relationship $ Z = \frac{U}{I} $ where $ U $ and $ I $ are the potential difference between the inner and outer sheath and the current through the conductor, respectively, corresponding to TEM waves in the waveguide. In TEM mode, the EM field is static, which simplifies finding $ U $ and $ I $. 
 	
-	Assume the coaxial cable carries a hypothetical current $ I $. A current $ I $ in the inner conductor causes a magnetic field encircling the inner conductor. Ampere's law gives
+	We assume the coaxial cable carries a hypothetical current $ I $. Using Ampere's law, the current through the inner conductor leads to a tangential magnetic field $ H_{\phi} $ of the form
 	\begin{equation*}
 		I = H_{\phi} \cdot 2\pi r  \implies H_{\phi} = \frac{I}{2\pi r}
 	\end{equation*}
-	where $ H_{\phi} $ is the $ \phi $ component of $ H $ (tangential to the circular cross section). 
+	where $ H_{\phi} $ is the $ \phi $ component of $ H $ (tangential to the waveguide's circular cross section). 
 	
-	\item Next, assume a potential difference $ U $ between the inner and outer conductors. We use Gauss's law to get
+	\item Next, assume a potential difference $ U $ between the inner and outer conductors. We find the associated radial electric field $ E_{r} $ using Gauss's law:
 	\begin{equation*}
-		q = \ee \e \cdot 2\pi r l \cdot E_{r} \implies E_{r} = \frac{q}{2\pi \ee \e l r}
+		Q = \ee \e \cdot 2\pi r l \cdot E_{r} \implies E_{r} = \frac{Q}{2\pi \e \ee l r}
 	\end{equation*}
-	where $ E_{r} $ is the radial component of electric field. 
-	
-	In fact, $ \E $ has only a radial component and $ \H $ has only a tangential component---just look at the geometry.
-	
-	\item We find potential difference with 
+	where $ q $ is the charge on the inner conductor. Note that because of the coaxial conductor's concentric geometry, $ \E $ has only a radial component and $ \H $ has only a tangential component. With $ E_{r} $ known, we find the associated potential difference with 
 	\begin{equation*}
-		U = \int_{a}^{b}E_{r}\diff r = \frac{q}{w\pi \ee \e l}\int_{a}^{b}\frac{\diff r}{r} \implies U = \frac{q}{2\pi \ee \e l}\ln\frac{b}{a}
+		U = \int_{a}^{b}E_{r}\diff r = \frac{q}{w\pi \e \ee l}\int_{a}^{b}\frac{\diff r}{r} \implies U = \frac{q}{2\pi \e \ee l}\ln\frac{b}{a}
 	\end{equation*}
 	We can relate $ U $ and $ E_{r} $ with
 	\begin{equation*}
 		U = E_{r}r \ln \frac{b}{a}
 	\end{equation*}
 	
-	\item We substitute $ U $ and $ I $ into the impedance equation to get
+	\item Next, we substitute $ U $ and $ I $ into the impedance equation to get
 	\begin{equation*}
 		Z = \frac{U}{I} = \frac{1}{2\pi}\frac{E_{r}}{H_{\phi}}\ln \frac{b}{a}
 	\end{equation*}
-	We can relate $ E_{r} $ and $ H_{\phi} $ with the earlier theoretical result (for TEM waves)
+	We can relate $ E_{r} $ and $ H_{\phi} $ with the earlier theoretical TEM result 
 	\begin{equation*}
 		\H = \frac{\vec{k}}{\omega \mm} \cross \E
 	\end{equation*}
-	Recall $ \E = (E_{r}, 0, 0) $ and $ \H = (0, H_{\phi}, 0) $ are perpendicular, so the above vector equation simplifies to
+	Since $ \E = (E_{r}, 0, 0) $ and $ \H = (0, H_{\phi}, 0) $ are perpendicular, the above vector equation simplifies to
 	\begin{equation*}
 		H_{\phi} = \frac{k}{\omega \mm}E_{r} = \frac{1}{c\mm} E_{r} = \sqrt{\frac{\e \ee \mm}{\mm^{2}}}E_{r} =  \frac{\sqrt{\e}}{Z_{0}} E_{r}
 	\end{equation*}
-	We substitute this result for $ H_{\phi} $ into $ Z $ to get
+    where $ Z_{0} = \frac{1}{\sqrt{\ee\mm}} $ is the impedance of free space. We substitute this result for $ H_{\phi} $ in terms of $ E_{r} $ into the impedance equation to get
 	\begin{equation*}
 		Z = \frac{Z_{0}}{2\pi \sqrt{\e}} \ln \frac{b}{a} = \frac{1}{2\pi}\frac{Z_{0}}{\sqrt{1 - \frac{\omega_{\text{p}}^{2}}{\omega^{2}}}}\ln \frac{b}{a}
 	\end{equation*}
-	
-
 	
 \end{itemize}
 
