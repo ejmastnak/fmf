@@ -54,9 +54,6 @@
 \newcommand{\bbraket}[2]{\big \langle {#1} \big | {#2} \big \rangle}  % for \big brakets
 \newcommand{\bmel}[3]{\big \langle {#1} \big | {#2} \big | {#3} \big \rangle}  % for matrix elements of fixed size
 
-\newcommand{\threebraket}[3]{\left \langle {#1} \left | {#2} \right | {#3} \right \rangle}  % braket with three terms, variable size
-\newcommand{\bthreebraket}[3]{\big \langle {#1} \big | {#2} \big | {#3} \big \rangle}  % braket with three terms, fixed \big size
-
 \makeatletter
 \newenvironment{widebmatrix}
   {\left[\mkern2.5mu\env@matrix}
@@ -75,14 +72,14 @@
 \textbf{About These Notes}
 \end{center}
 
-These are my notes from the Exercises portion of the class \textit{Kvanta Mehanika} (Quantum Mechanics), a required course for third-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. The exact problem sets herein are specific to the physics program at the University of Ljubljana, but the content is fairly standard for a late-undergraduate quantum mechanics course. I am making the notes publicly available in the hope that they might help others learning similar material.
+These are my notes from the Exercises portion of the class \textit{Kvanta Mehanika} (Quantum Mechanics), a required course for third-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. The exact problem sets herein are specific to the physics program at the University of Ljubljana, but the content is fairly standard for a late-undergraduate quantum mechanics course. I am making the notes \href{https://github.com/ejmastnak/fmf/tree/main/quantum-mechanics/qm-vaje}{\underline{publicly available}}  in the hope that they might help others learning similar material.
 
 \vspace{2mm}
 \textit{Navigation}: For easier document navigation, the table of contents is ``clickable'', meaning you can jump directly to a section by clicking the colored section names in the table of contents. Unfortunately, \textit{the clickable links do not work in most online or mobile PDF viewers}; you have to download the file first.
 
 \vspace{2mm}
 \textit{On Authorship:} 
-The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has curated the problem sets and guides us through the solutions. Accordingly, credit for the problems in these notes goes to Prof. Rejec. I have merely typeset the problems and provided additional explanations where I saw fit.
+The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has assembled the problem sets and guides us through the solutions. Accordingly, credit for the problems in these notes goes to Prof. Rejec. I have merely typeset the problems and provided additional explanations where I saw fit.
 
 \vspace{2mm}
 \textit{Disclaimer:} Mistakes---both trivial typos and legitimate errors---are likely. Keep in mind that these are the notes of an undergraduate student in the process of learning the material himself---take what you read with a grain of salt. If you find mistakes and feel like telling me, by \href{https://github.com/ejmastnak/fmf}{\underline{Github}} pull request, \href{mailto:ejmastnak@gmail.com}{\underline{email}} or some other means, I'll be happy to hear from you, even for the most trivial of errors.
@@ -3679,11 +3676,11 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\end{align*}
 	Since the coefficients in $ x^{2} \ket{n} $ are real, making complex conjugation redundant, we have $ \bra{x^{2}n} = x^{2} \ket{n} $. Using orthonormality of the states $ \ket{n} $ produces
 	\begin{align*}
-		\threebraket{x^{2}n}{x^{2}}{n} &= \frac{x_{0}^{4}}{4}\big[n(n-1) + (2n+1)^{2} + (n+1)(n+2)\big]\\
+		\mel{x^{2}n}{x^{2}}{n} &= \frac{x_{0}^{4}}{4}\big[n(n-1) + (2n+1)^{2} + (n+1)(n+2)\big]\\
 		&= \frac{x_{0}^{4}}{4}\big[6n^{2} + 6n + 3\big].
 	\end{align*}
 	
-	\item Using the just-calculated matrix element $ \threebraket{x^{2}n_{0}}{x^{2}}{n_{0}} = \threebraket{n_{0}}{x^{4}}{n_{0}} $, the perturbed \Ham's energy to first order in perturbation theory is
+	\item Using the just-calculated matrix element $ \mel{x^{2}n_{0}}{x^{2}}{n_{0}} = \mel{n_{0}}{x^{4}}{n_{0}} $, the perturbed \Ham's energy to first order in perturbation theory is
 	\begin{equation*}
 		E_{n} = E^{(0)}_{n} + \lambda \frac{3x_{0}^{4}}{4}(2n^{2} + 2n + 1).
 	\end{equation*}
@@ -3719,7 +3716,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	
 	\item To first order, the perturbed \Ham's energy eigenvalues are
 	\begin{equation*}
-		E_{n} = E^{(0)}_{n} + \threebraket{n_{0}}{\lambda x^{3}}{n_{0}}.
+		E_{n} = E^{(0)}_{n} + \mel{n_{0}}{\lambda x^{3}}{n_{0}}.
 	\end{equation*}
 	In the coordinate wavefunction representation the expectation value reads
 	\begin{equation*}
@@ -3735,7 +3732,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\end{equation*}
 	Temporarily dropping the subscript $ _{0} $ for conciseness and referring to the unperturbed eigenfunctions $ \ket{n_{0}} $ as $ \ket{n} $, the expectation value can be simplified to
 	\begin{equation*}
-		\threebraket{m}{H'}{n} = \threebraket{m}{\lambda x^{3}}{n} = \lambda \threebraket{xm}{x^{2}}{n}.
+		\mel{m}{H'}{n} = \mel{m}{\lambda x^{3}}{n} = \lambda \mel{xm}{x^{2}}{n}.
 	\end{equation*}
 	As in the previous problem, we assemble the expectation value piece by piece. Reusing the previous problem's result of $ x^{2}\ket{n} $, the ket term is
 	\begin{equation*}
@@ -3748,30 +3745,30 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\end{align*}
 	where the real coefficients make complex conjugation redundant. Applying the orthonormality of the states $ \ket{n} $, the braket is thus
 	\begin{align*}
-		\threebraket{xm}{x^{2}}{n} = \frac{x_{0}^{3}}{\sqrt{8}}\Big[&\sqrt{m}\sqrt{n(n-1)} \delta_{m-1,n-2} + \sqrt{m}(2n+1)\delta_{m-1,n}\\
+		\mel{xm}{x^{2}}{n} = \frac{x_{0}^{3}}{\sqrt{8}}\Big[&\sqrt{m}\sqrt{n(n-1)} \delta_{m-1,n-2} + \sqrt{m}(2n+1)\delta_{m-1,n}\\
 		& + \sqrt{m}\sqrt{(n+1)(n+2)}\delta_{m-1,n+2} + \sqrt{m+1}\sqrt{n(n-1)}\delta_{m+1,n-2}\\
 		& + \sqrt{m+1}(2n+1)\delta_{m+1,n} + \sqrt{m+1}\sqrt{(n+1)(n+2)}\delta_{m+1,n+2} \Big].
 	\end{align*}
 	Re-shifting indexes on the Kronecker deltas (just for clarity, e.g. $ \delta_{m-1,n-2} \equiv \delta_{m, n-1} $ or $ \delta_{m+1, n-2} \equiv \delta_{m, n-3} $) gives
 	\begin{align*}
-		\threebraket{xm}{x^{2}}{n} = \frac{x_{0}^{3}}{\sqrt{8}}\Big[&\sqrt{m}\sqrt{n(n-1)} \delta_{m,n-1} + \sqrt{m}(2n+1)\delta_{m,n+1}\\
+		\mel{xm}{x^{2}}{n} = \frac{x_{0}^{3}}{\sqrt{8}}\Big[&\sqrt{m}\sqrt{n(n-1)} \delta_{m,n-1} + \sqrt{m}(2n+1)\delta_{m,n+1}\\
 		& + \sqrt{m}\sqrt{(n+1)(n+2)}\delta_{m,n+3} + \sqrt{m+1}\sqrt{n(n-1)}\delta_{m,n-3}\\
 		& + \sqrt{m+1}(2n+1)\delta_{m,n-1} + \sqrt{m+1}\sqrt{(n+1)(n+2)}\delta_{m,n+1} \Big].
 	\end{align*}	
 	Writing $ m $ in terms of $ n $ with reference to the $ \delta_{mn} $ (e.g. $ m \to n -1 $ for $ \delta_{m, n-1} $) gives
 	\begin{align*}
-			\threebraket{xm}{x^{2}}{n} = \frac{x_{0}^{3}}{\sqrt{8}} \Big[& \sqrt{n}(n-1) \delta_{m, n-1} + \sqrt{n+1}(2n+1)\delta_{m, n+1} \\
+			\mel{xm}{x^{2}}{n} = \frac{x_{0}^{3}}{\sqrt{8}} \Big[& \sqrt{n}(n-1) \delta_{m, n-1} + \sqrt{n+1}(2n+1)\delta_{m, n+1} \\
 			& + \sqrt{(n+1)(n+2)(n+3)}\delta_{m, n+3}  + \sqrt{n(n-1)(n-2)}\delta_{m, n-3} \\
 			& + \sqrt{n}(2n+1)\delta_{m, n-1} + (n+2)\sqrt{n+1}\delta_{m, n+1}\Big].
 	\end{align*}
 	Finally, combining like terms and putting the $ \delta_{mn} $ in order produces
 	\begin{align*}
-		\threebraket{xm}{x^{2}}{n} = \frac{x_{0}^{3}}{\sqrt{8}} \Big[&\sqrt{n(n-1)(n-2)}\delta_{m, n-3} + 3n\sqrt{n}\delta_{m, n-1}\\
+		\mel{xm}{x^{2}}{n} = \frac{x_{0}^{3}}{\sqrt{8}} \Big[&\sqrt{n(n-1)(n-2)}\delta_{m, n-3} + 3n\sqrt{n}\delta_{m, n-1}\\
 		& + 3(n+1)\sqrt{n+1}\delta_{m, n+1} + \sqrt{(n+1)(n+2)(n+3)}\delta_{m, n+3}\Big].
 	\end{align*}
 	Switching back to subscript notation for the unperturbed eigenstates, with $ \mel{xm}{x^{2}}{n} \equiv \mel{xm_{0}}{x^{2}}{n_{0}} $ known, we just multiply by $ \lambda $ to find matrix element
 	\begin{equation*}
-		\mel{m_{0}}{H'}{n_{0}} = \lambda \threebraket{xm_{0}}{x^{2}}{n_{0}},
+		\mel{m_{0}}{H'}{n_{0}} = \lambda \mel{xm_{0}}{x^{2}}{n_{0}},
 	\end{equation*}
  	needed to find the perturbed energy $ E_{n} $.
 	
