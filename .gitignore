@@ -11,6 +11,7 @@ ignore*
 *.fls
 *.fdb_latexmk
 *.listing
+*-log.txt
 _minted**/
 
 # Vim swap files #
