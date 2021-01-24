@@ -51,6 +51,8 @@
 \newcommand{\da}{\downarrow}  % for spin down states
 \renewcommand{\r}{\vec{r}}  % position vector
 \renewcommand{\L}{\vec{L}}  % angular momentum
+\renewcommand{\S}{\vec{S}}  % spin
+\newcommand{\J}{\vec{J}}  % angular momentum
 
 % particle in an electromagnetic field
 \newcommand{\A}{\vec{A}}  % magnetic vector potential
@@ -2322,7 +2324,7 @@ We will now use the just-derived relations $ [L_{z}, L_{\pm}] = \pm \hbar L_{\pm
 		\laplacian \frac{1}{4\pi \epsilon_{0}r} = \delta^{3}(\r)
 	\end{equation*}
 	
-	\textbf{TODO:} so this step here I'm not sure about. The above implies that $ \p(\r) $ solves the equation
+	\textbf{TODO:} This step here I'm not sure about. The above seems to imply that $ \p(\r) $ solves the equation
 	\begin{equation*}
 		\laplacian \p(\r) = - 4 \pi D_{0} \delta^{3}(\r)
 	\end{equation*}
@@ -3236,7 +3238,884 @@ We will now use the just-derived relations $ [L_{z}, L_{\pm}] = \pm \hbar L_{\pm
 	Interpretation: the electron current $ I_{\text{B}} $ oscillates in an interference pattern as a function of a magnetic field that occurs only in a region the electrons don't travel through!
 \end{itemize}
 
+\section{Spin}
+\begin{itemize}
+	\item We will denote the spin operator by $ \S = (S_{x}, S_{y}, S_{z}) $. The spin operator, like the angular momentum operator, obeys the fundamental commutation relations
+	\begin{equation*}
+		[S_{\alpha}, S_{\beta}] = i \hbar \epsilon_{\alpha \beta \gamma}S_{\gamma} \eqtext{or, in vector form,} \S \cross \S = i \hbar \S
+	\end{equation*}
+	
+	\item Like for the angular momentum ladder operators, we introduce the spin ladder operators
+	\begin{equation*}
+		S_{+} = S_{x} + iS_{y} \eqtext{and} S_{-} = S_{x} - i S_{y}
+	\end{equation*}
+	The ladder operators are not \Herm, and instead obey $ S_{\pm} = S_{\mp}^{\dagger} $. 
+	
+	When applied to the angular momentum basis states $ \ket{sm_{s}} $, the spin ladder operators produces
+	\begin{equation*}
+		S_{\pm_{s}} \ket{sm_{s}} = \hbar \sqrt{s(s+1) - m_{s}(m_{s} \pm 1)}\ket{s, m_{s} \pm 1}
+	\end{equation*}
+	We recover $ S_{x} $ and $ S_{y} $ from the ladder operators via
+	\begin{equation*}
+		S_{x} = \frac{1}{2}(S_{+} + S_{-}) \eqtext{and} S_{y} = \frac{1}{2i}(S_{+} - S_{-}) 
+	\end{equation*}
+	
+	\item Spin corresponds to angular momentum with half-integer eigenvalues $ s = \frac{1}{2}, \frac{3}{2}, \ldots $, which do not lead to continuous solutions of the \Schro equation. As a result, the spin eigenvectors do not have a coordinate representation of the form $ \r \ket{sm_{s}} $. 
+	
+	Instead, we represent the spin eigenstates with \textit{spinors}, which are $ (2s+1) $-tuples in the complex vector space $ \mathbb{C}^{2s + 1} $. 
+	
+	\item The spin states $ \ket{sm_{s}} $ are eigenstates of both the $ S^{2} $, the squared magnitude of spin, and of $ S_{z} $, the projection of spin onto the $ z $ axis. The relevant eigenvalue relations are
+	\begin{equation*}
+		S_{z}\ket{sm_{s}} = m_{s}\hbar \ket{sm_{s}} \eqtext{and} S^{2}\ket{sm_{s}} = s(s+1) \hbar^{2} \ket{sm_{s}}
+	\end{equation*}
+	As for $ l $ and $ m_{l} $, the spin quantum numbers $ s $ and $ m_{s} $ can take on the values
+	\begin{equation*}
+		s \in \{0, 1, 2, \ldots\} \eqtext{and} m_{s} \in \{-s, -s+1, \ldots, s-1, s\}
+	\end{equation*}
+	Of course, states with $ s = 0 $ have no spin, and we consider only $ s \geq 1 $ in this chapter.
+	
+	
+\end{itemize}
+
+\subsection{Spin 1/2}
+\begin{itemize}
+	\item Keep in mind that $ m_{l} $ and $ m_{s} $ are different quantum numbers, and correspond to the operators $ L_{z} $ and $ S_{z} $. When it is clear from context whether we're referring to $ m_{l} $ or $ m_{s} $, we only write $ m $ and drop the subscript, which we will periodically do in the remainder of this section for $ m_{s} \equiv m $. 
+	
+	\item We give states with spin $ s = 1/2 $ special attention. We write these states
+	\begin{equation*}
+		\ket{sm} = \ket{\tfrac{1}{2} m} \equiv \ket{\chi_{m_{s}}}
+	\end{equation*}
+	When $ s = 1/2 $, $ m $ can be either $ -1/2 $ or $ 1/2 $, and we often abbreviate the two possible $ \ket{sm} $  states with arrows:
+	\begin{equation*}
+		\ket{\tfrac{1}{2}\tfrac{1}{2}} \equiv \ket{\ua} \eqtext{and} \ket{\tfrac{1}{2}-\tfrac{1}{2}} \equiv \ket{\da}
+	\end{equation*}
+	to indicate ``spin up'' or ``spin down''. These states may also be written as the spinors
+	\begin{equation*}
+		\ket{\ua}  \equiv \chi_{\ua} = 
+		\begin{pmatrix}
+			1\\
+			0
+		\end{pmatrix}
+		\eqtext{and}
+		\ket{\da}  \equiv \chi_{\da} = 
+		\begin{pmatrix}
+			0\\
+			1
+		\end{pmatrix}
+	\end{equation*}
+	The states $ \ket{\ua} $ and $ \ket{\da} $ form an orthonormal basis spanning the space of eigenstates for particles with spin $ s = 1/2 $.
+	
+	As a side note, keep in mind that behind the arrow notation is the definition
+	\begin{equation*}
+		\ket{\tfrac{1}{2}\tfrac{1}{2}} \equiv \ket{\ua} \eqtext{and} \ket{\tfrac{1}{2}-\tfrac{1}{2}} \equiv \ket{\da}
+	\end{equation*}
+	relating the arrows to the actual values of $ s $ and $ m $.
+	
+	\item The spin ladder operators act on the states $ \ket{\ua} $ and $ \ket{\da} $ according to
+	\begin{equation*}
+		S_{+}\ket{\da} = \hbar \ket{\ua} \eqtext{and} S_{-}\ket{\ua} = \hbar \ket{\da}
+	\end{equation*}
+	In matrix form, in the $ \{\ket{\ua}, \ket{\da}\} $ basis, the ladder operators thus read
+	\begin{align*}
+		&S_{+} = 
+		\begin{pmatrix}
+			\mel{\ua}{S_{+}}{\ua} & \mel{\ua}{S_{+}}{\da}\\
+			\mel{\da}{S_{+}}{\ua} & \mel{\da}{S_{+}}{\da}
+		\end{pmatrix}
+		= \hbar
+		\begin{pmatrix}
+			0 & 1\\
+			0 & 0
+		\end{pmatrix}\\
+		&S_{-} = 
+		\begin{pmatrix}
+			\mel{\ua}{S_{-}}{\ua} & \mel{\ua}{S_{-}}{\da}\\
+			\mel{\da}{S_{-}}{\ua} & \mel{\da}{S_{-}}{\da}
+		\end{pmatrix}
+		= \hbar
+		\begin{pmatrix}
+			0 & 0 \\
+			1 & 0
+		\end{pmatrix}
+	\end{align*}
+	Note that the matrices maintain the relationship $ S_{\pm} = S_{\mp}^{\dagger} $.
+	
+	\item In matrix form, the spin components $ S_{x} $ and $ S_{y} $, which we can construct directly from the $ S_{+} $ and $ S_{-} $ matrices, are
+	\begin{align*}
+		& S_{x} = \frac{1}{2}(S_{+} + S_{-}) = \frac{\hbar}{2}
+		\begin{pmatrix}
+			0 & 1\\
+			1 & 0
+		\end{pmatrix}
+		\\
+		& S_{y} = \frac{1}{2i}(S_{+} - S_{-}) = \frac{\hbar}{2}
+		\begin{pmatrix}
+			0 & - i\\
+			i & 0
+		\end{pmatrix}
+	\end{align*}
+	We find the $ z $ component $ S_{z} $ with direct calculation:
+	\begin{equation*}
+		S_{+} = 
+		\begin{pmatrix}
+			\mel{\ua}{S_{z}}{\ua} & \mel{\ua}{S_{z}}{\da}\\
+			\mel{\da}{S_{z}}{\ua} & \mel{\da}{S_{z}}{\da}
+		\end{pmatrix}
+		= \frac{\hbar}{2}
+		\begin{pmatrix}
+			\braket{\ua}{\ua} & - \braket{\ua}{\da}\\
+			\braket{\da}{\ua} & - \braket{\da}{\da}
+		\end{pmatrix}
+		= \frac{\hbar}{2}
+		\begin{pmatrix}
+			1 & 0\\
+			0 & -1
+		\end{pmatrix}
+	\end{equation*}
+	The corresponding eigenvectors (spinors) for $ S_{x} $, $ S_{y} $ and $ S_{z} $ are
+	\begin{equation*}
+		\chi_{x} = \frac{1}{\sqrt{2}}
+		\begin{pmatrix}
+			1\\
+			\pm 1
+		\end{pmatrix} \qquad 
+		\chi_{y} = \frac{1}{\sqrt{2}}
+		\begin{pmatrix}
+			1\\
+			\pm i
+		\end{pmatrix} \qquad
+		\chi_{z} =
+		\begin{pmatrix}
+			1\\
+			0
+		\end{pmatrix}
+		\text{ and }
+		\begin{pmatrix}
+			1\\
+			0
+		\end{pmatrix}
+	\end{equation*}
+	
+	
+	\item For $ \alpha \in \{x, y, z\} $, the squared components $ S_{\alpha}^{2} $ read
+	\begin{equation*}
+		S_{\alpha}^{2} = \frac{\hbar^{2}}{4}
+		\begin{pmatrix}
+			1 & 0\\
+			0 & 1
+		\end{pmatrix}
+	\end{equation*}
+	The squared components obey the commutation relations
+	\begin{equation*}
+		[S_{\alpha}, S_{\beta}^{2}] = 0 \eqtext{an} [S_{\alpha}^{2}, S_{\beta}^{2}] = 0
+	\end{equation*}
+	Finally, the squared spin operator $ S^{2} $ acts on the states $ \ket{\chi_{m}} \equiv \ket{\tfrac{1}{2}m} $ according to
+	\begin{equation*}
+		S^{2}\ket{\chi_{m}} = \sum_{\alpha}S_{\alpha}^{2} \ket{\chi_{m}} = \frac{3}{4}\hbar^{2} \ket{\chi_{m}}
+	\end{equation*}
+	
+	\item As a final note, for larger spins $ s = \frac{3}{2}, \frac{5}{2}, \ldots $, we write the spin wavefunction $ \ket{\p} $ by expanding $ \ket{\p} $ in the $ \{\ket{sm}\} $ basis:
+	\begin{equation*}
+		\ket{\p} = \sum_{s = 1/2}^{\infty}\sum_{m = -s}^{s}c_{sm}\ket{sm}, \qquad c_{sm} = \braket{sm}{p}
+	\end{equation*}
+	
+\end{itemize}
+
+\subsubsection{The Pauli Spin Matrices}
+\begin{itemize}
+	\item We often analyze states with spin $ s = 1/2 $ using the Pauli spin matrices $ \sigma_{x} $, $ \sigma_{y} $ and $ \sigma_{z} $, which read
+	\begin{equation*}
+		\sigma_{x} = 
+		\begin{pmatrix}
+			0 & 1\\
+			1 & 0
+		\end{pmatrix} \qquad 
+		\sigma_{y} = 
+		\begin{pmatrix}
+			0 & -i\\
+			i & 0
+		\end{pmatrix} \qquad 
+		\sigma_{x} = 
+		\begin{pmatrix}
+			1 & 0\\
+			0 & -1
+		\end{pmatrix}
+	\end{equation*}
+	Together with the $ 2 \cross 2 $ identity matrix $ \II $, the Pauli matrices provide a convenient basis in which to expand an arbitrary $ 2 \cross 2 $ matrix. 
+	
+	\item In terms of the Pauli spin matrices, the spin operator reads
+	\begin{equation*}
+		\S = \frac{\hbar}{2}\vec{\sigma} \eqtext{where} \vec{\sigma} = (\sigma_{x}, \sigma_{y}, \sigma_{z})
+	\end{equation*}
+
+	\item The Pauli spin matrices are Hermitian, and obey the following properties:
+	\begin{equation*}
+		\sigma_{\alpha} = \sigma_{\alpha}^{\dagger} \qquad \sigma_{\alpha}^{2} = \II \qquad \det \sigma_{\alpha} = -1 \qquad \tr \sigma_{\alpha} = 0
+	\end{equation*}
+	Each of the spin matrices has eigenvalues $ \lambda_{\pm} = \pm 1 $---note that the eigenvalues must be equal and opposite to satisfy $ \tr \sigma_{\alpha} = 0 $.
+	
+	\item The product of two spin matrices obeys the general formula
+	\begin{equation*}
+		\sigma_{\alpha}\sigma_{\beta} = \delta_{\alpha \beta} \II + i \epsilon_{\alpha \beta \gamma}\sigma_{\gamma}
+	\end{equation*}
+	
+	\item The commutation relations between the spin matrices are analogous to the spin operator commutation relations, and read
+	\begin{equation*}
+		[\sigma_{\alpha}, \sigma_{\beta}] = 2i \epsilon_{\alpha \beta \gamma} \sigma_{\gamma}
+	\end{equation*}
+	More so, we use matrix multiplication to derive the anti-commutator relation
+	\begin{equation*}
+		\{\sigma_{\alpha}, \sigma_{\beta}\} = \sigma_{\alpha}\sigma_{\beta} + \sigma_{\beta}\sigma_{\alpha} = 2 \delta_{\alpha \beta} \II
+	\end{equation*}
+	
+	\item Finally, in terms of the spin matrices, an arbitrary vector $ \vec{a} \in \mathbb{R}^{3} $ can be written 
+	\begin{equation*}
+		 \vec{a} \cdot \vec{\sigma} = \sum_{\alpha}a_{\alpha}\sigma_{\alpha} = (\vec{a} \cdot \vec{\sigma})^{\dagger} 
+	\end{equation*}
+	Note that $ \sigma_{\alpha} $ is a $ 2 \cross 2 $ matrix, while $ a_{\alpha} $ is a scalar. Meanwhile, for two vectors $ \vec{a}, \vec{b} \in \mathbb{R}^{2} $ we have
+	\begin{align*}
+		(\vec{a} \cdot \vec{\sigma})(\vec{b} \cdot \vec{\sigma}) &= \sum_{\alpha, \beta} a_{\alpha}\sigma_{\alpha}b_{\beta}\sigma_{\beta} = \vec{a}\cdot \vec{b}\II + i \sum_{\alpha, \beta} \epsilon_{\alpha \beta \gamma}a_{\alpha}b_{\beta} \sigma_{\gamma}\\
+		& = (\vec{a}\cdot \vec{b})\II + i(\vec{a}\cross \vec{b})\cdot \vec{\sigma}
+	\end{align*}
+	Again, we stress that $ \sigma_{\alpha} $  and $ \II$ are $ 2 \cross 2 $ matrices, while $ a_{\alpha} $ and $ b_{\alpha} $ are scalars.
+	
+%	TODO: quaternions?
+	
+\end{itemize}
+
+\subsection{Rotation of Spinors}
+\begin{itemize}
+	\item For particles with spin $ s = 1/2 $, spinors, which describe general spin states, are determined by $ 2s + 1 = 2 $ coordinates, e.g. $ a, b \in \mathbb{C} $, that satisfy the normalization condition $ \abs{a}^{2} + \abs{b}^{2} = 1 $. Some notation:
+	\begin{equation*}
+		\chi = 
+		\begin{pmatrix}
+			a\\
+			b
+		\end{pmatrix}
+		= a \chi_{\ua} + b\chi_{\da} \qquad \ket{\chi} = a \ket{\ua} + b \ket{\da}
+	\end{equation*}
+	The product of two spinor states reads
+	\begin{equation*}
+		\braket{\chi_{1}}{\chi_{2}} = \big(a_{1}^{*} \, \ b_{1}^{*}\big)\cdot 
+		\begin{pmatrix}
+			a_{2}\\
+			b_{2}
+		\end{pmatrix}
+		= a_{1}^{*}a_{2} + b_{1}^{*}b_{2}
+	\end{equation*}
+	
+	\item The expectation values of the Pauli spin matrices in a given spin state $ \ket{\chi} $ are
+	\begin{align*}
+		& \ev{\sigma_{x}} = \mel{\chi}{\sigma_{x}}{\chi} = \big(a^{*} \, \ b^{*}\big) 
+		\begin{pmatrix}
+			0 & 1\\
+			1 & 0
+		\end{pmatrix}
+		\begin{pmatrix}
+			a\\
+			b
+		\end{pmatrix}
+			= \big(a^{*} \, \ b^{*}\big)\cdot 
+		\begin{pmatrix}
+			b\\
+			a
+		\end{pmatrix}
+		= 2 \Re \big[a^{*}b\big]\\
+		& \ev{\sigma_{y}} = \mel{\chi}{\sigma_{y}}{\chi} = \big(a^{*} \, \ b^{*}\big) 
+		\begin{pmatrix}
+			0 & -i\\
+			i & 0
+		\end{pmatrix}
+		\begin{pmatrix}
+			a\\
+			b
+		\end{pmatrix}
+			= \big(a^{*} \, \ b^{*}\big)\cdot 
+		\begin{pmatrix}
+			-ib\\
+			ia
+		\end{pmatrix}
+		= 2 \Im \big[a^{*}b\big]\\
+		& \ev{\sigma_{z}} = \mel{\chi}{\sigma_{z}}{\chi} = \big(a^{*} \, \ b^{*}\big) 
+		\begin{pmatrix}
+			1 & 0\\
+			0 & -1
+		\end{pmatrix}
+		\begin{pmatrix}
+			a\\
+			b
+		\end{pmatrix}
+			= \big(a^{*} \, \ b^{*}\big)\cdot 
+		\begin{pmatrix}
+			a\\
+			-b
+		\end{pmatrix}
+		= \abs{a}^{2} - \abs{b}^{2}
+	\end{align*}
+	
+	\item We rotate a spinor by the angle $ \phi $ about the axis $ \uvec{n} $ with the unitary rotation operator
+	\begin{equation*}
+		U(\phi \uvec{n})\ket{\chi} = \exp \left(-i\phi \frac{\uvec{n}\cdot \S}{\hbar}\right) \ket{\chi}
+	\end{equation*}
+	We begin by writing the rotation operator as a Taylor series in terms of the spin matrix vector $ \vec{\sigma} $:
+	\begin{equation*}
+		U(\phi \uvec{n}) = \exp \left(-i\phi \frac{\uvec{n}\cdot \S}{\hbar}\right) = \exp \left(-\frac{i\phi}{2}\uvec{n}\cdot \vec{\sigma}\right) = \sum_{k = 0}^{\infty}\frac{1}{k!}\left(-\frac{i\phi}{2}\uvec{n}\cdot \vec{\sigma}\right)^{k}
+	\end{equation*}
+	We then write $ \uvec{n} \cdot \vec{\sigma} $ in the form
+	\begin{equation*}
+		(\uvec{n} \cdot \vec{\sigma} )^{k} = 
+		\begin{cases}
+		\II & k \text{ even}\\
+		\uvec{n} \cdot \vec{\sigma} & k \text{ odd}
+		\end{cases}
+	\end{equation*} 
+	The rotation operator then reduces to the linear function
+	\begin{align*}
+		U(\phi \uvec{n}) = \sum_{k = 0}^{\infty}\frac{1}{k!}\left(-\frac{i\phi}{2}\uvec{n}\cdot \vec{\sigma}\right)^{k} = &\left[1 - \frac{1}{2!}\left(\frac{\phi}{2}\right)^{2} + \frac{1}{4!}\left(\frac{\phi}{2}\right)^{4} \mp \cdots \right]\II \\
+		& - i\left[\frac{\phi}{2} - \frac{1}{3!}\left(\frac{\phi}{2}\right)^{3} + \frac{1}{5!}\left(\frac{\phi}{2}\right)^{5} \mp \cdots \right]\uvec{n} \cdot \vec{\sigma}
+	\end{align*}
+	Using the power series definitions of the sine and cosine function, this becomes
+	\begin{equation*}
+		U(\phi \uvec{n}) = \cos \left(\frac{\phi}{2}\right)\II - i \sin \left(\frac{\phi}{2}\right)\uvec{n} \cdot \vec{\sigma}
+	\end{equation*}
+	Note that rotating a spinor by an angle $ \phi = 2\pi $ corresponds to multiplication by $ -\II $, and not simply the identity $ \II $. We must rotate a spinor around ``twice'', by an angle of $ 4\pi $, to reach its original orientation.
+	
+	\item We can parameterize an arbitrary spinor $ \ket{\chi} $ with two angles. We begin by rotating a spin-up state $ \ket{\ua} $ by an angle $ \theta $ about the $ y $ axis, followed by a rotation by the angle $ \phi $ about the $ z $ axis. The result is
+	\begin{align*}
+		\ket{\chi} &= U(\phi \uvec{e}_{z})U(\theta \uvec{e}_{y})\ket{\ua} = e^{-i\frac{\phi}{2}\sigma_{z}} e^{-i\frac{\theta}{2}\sigma_{y}}\ket{\ua}\\
+		& = e^{-i\frac{\phi}{2}}\left[\cos \left(\frac{\theta}{2}\right)\ket{\ua} + e^{i \phi} \sin \left(\frac{\theta}{2}\right)\ket{\da}\right]
+	\end{align*}
+	Since a wavefunction is determined only up to a constant phase factor, we can neglect the coefficient $ e^{-i\frac{\phi}{2}} $ go get
+	\begin{equation*}
+		\ket{\chi(\theta, \phi)} = \cos \left(\frac{\theta}{2}\right)\ket{\ua} + e^{i \phi} \sin \left(\frac{\theta}{2}\right)\ket{\da}
+	\end{equation*}
+	
+	\item As an example, if we rotate the spinor only about the $ y $ axis, we have
+	\begin{equation*}
+		U(\theta \uvec{e}_{y}) = e^{-i\frac{\theta}{2}\sigma_{y}} = 
+		\begin{pmatrix}
+			\cos \frac{\theta}{2} & - \sin \frac{\theta}{2} \\
+			\sin \frac{\theta}{2} & \cos \frac{\theta}{2} 
+		\end{pmatrix}
+	\end{equation*}
+	Note that if we rotate $ \ket{\ua} \equiv \ket{\chi_{z}} $, which is an eigenstate of $ S_{z} $, by an angle $ \pi/2 $ in the $ x $ direction, we end up with an eigenstate of the operator $ S_{x} $:
+	\begin{equation*}
+		U\left(\frac{\pi}{2}\uvec{e}_{y} \right) 
+		\begin{pmatrix}
+			1\\
+			0
+		\end{pmatrix}
+		= \frac{1}{\sqrt{t}} 
+		\begin{pmatrix}
+			1\\
+			1
+		\end{pmatrix}
+		= \chi_{x}
+	\end{equation*}
+	since $ S_{x}\ket{\chi_{x}} = \frac{\hbar}{2}\ket{\chi_{x}} $. 
+	
+	\item We then repeat the procedure, rotating the $ S_{z} $ eigenstate $ \ket{\ua} \equiv \ket{\chi_{z}} $ by an arbitrary angle $ \theta $ to get
+	\begin{equation*}
+		U(\theta \uvec{e}_{y})
+		\begin{pmatrix}
+			1\\
+			0
+		\end{pmatrix}
+		=
+		\begin{pmatrix}
+			\cos \frac{\theta}{2}\\
+			\sin \frac{\theta}{2}
+		\end{pmatrix}
+		= \chi_{x}
+	\end{equation*}
+	The resulting state is an eigenstate of the projection of spin in the direction of the vector $ \uvec{n}_{0} = \cos \theta \uvec{e}_{x} + \sin \theta \uvec{e}_{z} $, since
+	\begin{align*}
+		(\uvec{n}_{0}\cdot \vec{S})\ket{\chi_{z}(\theta)} &= (\sin \theta \sigma_{x} + \cos \theta \sigma_{z})\ket{\chi_{z}(\theta)} = \frac{\hbar}{2}
+		\begin{pmatrix}
+			\cos \theta & \sin \theta\\
+			\sin \theta & - \cos \theta
+		\end{pmatrix}
+		\ket{\chi_{z}(\theta)}\\
+		& = \frac{\hbar}{2}\ket{\chi_{z}(\theta)}
+	\end{align*}
+	The above unit vector was constructed with $ \phi = 0 $. For a more general direction $ \uvec{n} = (\cos \phi \sin \theta, \sin \phi \sin \theta, \cos \theta) $, we have
+	\begin{equation*}
+		\uvec{n}(\theta, \phi) \cdot \S \ket{\chi(\theta, \phi)} = \frac{\hbar}{2} \ket{\chi(\theta, \phi)}
+	\end{equation*}
+	
+	\item Finally, we can recover the direction $ \uvec{n} $ via
+	\begin{equation*}
+		\mel{\chi(\theta, \phi)}{\vec{\sigma}}{\chi(\theta, \phi)} = \uvec{n}(\theta, \phi)
+	\end{equation*}
+	We prove this by components. Starting with $ \sigma_{x} $, we have
+	\begin{align*}
+		\mel{\chi(\theta, \phi)}{\vec{\sigma}}{\chi(\theta, \phi)} &= \left(\cos\frac{\theta}{2}, \, e^{-i\phi}\sin \frac{\theta}{2}\right)
+		\begin{pmatrix}
+			0 & 1\\
+			1 & 0
+		\end{pmatrix}
+		\begin{pmatrix}
+			\cos \frac{\theta}{2}\\
+			e^{i\phi}\sin \frac{\theta}{2}
+		\end{pmatrix}\\
+		& = \left(\cos\frac{\theta}{2}, \, e^{-i\phi}\sin \frac{\theta}{2}\right)
+		\begin{pmatrix}
+			e^{i\phi}\sin \frac{\theta}{2}\\
+			\cos \frac{\theta}{2}
+		\end{pmatrix}\\
+		& = \sin \theta \cos \phi = \uvec{n}\cdot \uvec{e}_{x}
+	\end{align*}
+	The calculation for $ \sigma_{y} $ and $ \sigma_{z} $ is analogous.
+	
+\end{itemize}
+
+\subsection{Time Reversal of Spinors}
+\begin{itemize}
+	\item Recall from the symmetry chapter that the time reversal operator for a particle with spin $ s = 1/2 $ is 
+	\begin{equation*}
+		\T = i \sigma_{y} KT \equiv \tau KT, \qquad \tau = i \sigma_{y} =
+		\begin{pmatrix}
+			0 & 1\\
+			-1 & 1
+		\end{pmatrix}
+	\end{equation*}
+	where $ K $ is the complex conjugation operator and $ T $ changes the sign of time. We begin by confirming the commutator and anti-commutator relations
+	\begin{align*}
+		&\{\sigma_{x}, \tau\} = \{\sigma_{z}, \tau\} = 0 \eqtext{and} [\sigma_{y}, \tau] = 0\\
+		&[\sigma_{x}, K] = [\sigma_{z}, K] = 0 \eqtext{and} \{\sigma_{y}, \tau\} = 0
+	\end{align*}
+	From these relations, it follows that $ \T $ reverses spin, which we show with the components of $ \vec{\sigma} = (\sigma_{x}, \sigma_{y}, \sigma_{z}) $:
+	\begin{equation*}
+		\begin{pmatrix}
+			0 & 1\\
+			-1 & 0
+		\end{pmatrix}
+		K T \sigma_{\alpha} = - \sigma_{\alpha}
+		\begin{pmatrix}
+			0 & 1\\
+			-1 & 0
+		\end{pmatrix}
+		KT
+		\implies \T \S = - \S \T
+	\end{equation*}
+	
+	\item The matrix elements of $ \vec{\sigma} $ ovey
+	\begin{align*}
+		\mel{\T \chi_{1}}{\vec{\sigma}}{\T \chi_{2}} &= \mel{i\sigma_{y}KT\chi_{1}}{\vec{\sigma}i \sigma_{y}K}{T\chi_{2}} = - \mel{i\sigma_{y}KT\chi_{1}}{i \sigma_{y}K \vec{\sigma}}{T\chi_{2}} \\
+		& - \mel{KT\chi_{1}}{K \vec{\sigma}}{T\chi_{2}} = -\mel{T\chi_{1}}{\vec{\sigma}}{T\chi_{2}}^{*}\\
+		& -\mel{\chi_{1}(-t)}{\vec{\sigma}}{\chi_{2}(-t)}^{*}
+	\end{align*}
+	The above result implies
+	\begin{equation*}
+		\mel{\T \chi}{\vec{\sigma}}{\T \chi} = -\mel{\chi(-t)}{\vec{\sigma}}{\chi(-t)}
+	\end{equation*}
+	
+	\item Time-dependent spinors $ \chi(t) $ transform under time reversal according to
+	\begin{equation*}
+		\T\chi(t) = \T
+		\begin{pmatrix}
+		a(t)\\
+		b (t)
+		\end{pmatrix}
+		=
+		\begin{pmatrix}
+		b^{*}(-t) \\
+		-a^{*}(-t)
+		\end{pmatrix}
+	\end{equation*}
+	
+	\item Finally, we write the time-reversed state as
+	\begin{equation*}
+		\T \ket{\chi(\theta, \phi)} = \ket{\chi(\theta + \pi, \phi)} = \ket{\t{\chi}(\theta, \phi)}
+	\end{equation*}
+	This state is a second eigenstate of the earlier equation $ \uvec{n}(\theta, \phi) \cdot \S \ket{\chi(\theta, \phi)} = \frac{\hbar}{2} \ket{\chi(\theta, \phi)} $
+	\begin{equation*}
+		\uvec{n}(\theta, \phi) \cdot \S \ket{\T\chi(\theta, \phi)} = -\frac{\hbar}{2} \ket{\T \chi(\theta, \phi)}
+	\end{equation*}
+	
+\end{itemize}
+
+\subsection{Changing the Axis of Quantization}
+\begin{itemize}
+	\item The basis states $ \ket{\ua} $ and $ \ket{\da} $ correspond to a choice of the $ z $ axis as the axis of quantization. 
+	
+	More generally, recall that the states $ \ket{\chi(\theta, \phi)}  $ and $ \ket{\T \chi(\theta, \phi)}  $ are eigenstates of the projection of spin $ \vec{S} $ onto the direction
+	\begin{equation*}
+		\uvec{n} = (\cos \phi \sin \theta, \sin \phi \sin \theta, \cos \theta)
+	\end{equation*}
+	We can use these states as basis vectors with respect to the new quantization axis $ \uvec{n} $. This this cases the basis vectors are
+	\begin{equation*}
+		\ket{\chi_{m}(\uvec{n})} = 
+		\begin{cases}
+			\cos \theta \ket{\ua} + e^{i\phi} \sin \theta \ket{\da} & m = \frac{1}{2}\\
+			\sin \theta \ket{\ua} - e^{i\phi} \cos \theta \ket{\da} & m = -\frac{1}{2}
+		\end{cases}
+	\end{equation*}
+	
+	\item In terms of the new basis vectors $ \ket{\chi_{m}(\uvec{n})} $, we can write an arbitrary spin state $ \ket{\p} $ as
+	\begin{equation*}
+		\ket{\p} = \sum_{m} c_{m}\ket{\chi_{m}(\uvec{n})}, \qquad c_{m} =  \braket{\chi_{m}(\uvec{n})}{\p}
+	\end{equation*}
+	
+\end{itemize}
+
+\subsection{Coupling of Spin and and Electromagnetic Field}
+\begin{itemize}
+	\item We define the spin magnetic moment
+	\begin{equation*}
+		\m_{S} = \frac{ge}{2m} \S
+	\end{equation*}
+	where, for an electron, $ g = 2 $. The above magnetic moment corresponds to the anomalous Zeeman coupling of a spin $ s = 1/2 $ particle with a magnetic field:
+	\begin{equation*}
+		H_{\text{anomalous}} = - \m_{S} \cdot \B
+	\end{equation*}
+	
+	\item Next, we consider a semi-classical picture of an electron orbiting a hydrogen nucleus. The electron feels both an electric interaction due to the Coulomb force, and, in its own coordinate system, a magnetic field 
+	\begin{equation*}
+		\B = -\frac{1}{c^{2}}(\vec{v} \cross \vec{\mathcal{E}})
+	\end{equation*}
+	which arises because in the electron's coordinate system, the positively-charged proton orbits the electron at speed $ \uvec{v} $, which leads to a magnetic force via the Lorentz interaction.
+	
+	\item In a spherically-symmetric potential $ V = V(r) $ we have
+	\begin{equation*}
+		\vec{\mathcal{E}} = - \frac{1}{q}\grad V(r) = \frac{1}{q}\pdv{V}{r} \frac{\r}{r}
+	\end{equation*}
+	The corresponding magnetic field reads
+	\begin{equation*}
+		\B = -\frac{1}{qc^{2}}\left(\vec{v} \cross \pdv{V}{r}\frac{\r}{r}\right) = \frac{1}{qmc^{2}}\frac{1}{r}\pdv{V}{r}\L
+	\end{equation*}
+	
+	\item We then apply the quantum-mechanical properties of the angular momentum operator $ \L $ and use the result in the Zeeman formula with $ \m = \m_{S} $. The resulting effective Hamiltonian is
+	\begin{equation*}
+		H_{\text{LS}} = \frac{1}{m^{2}c^{2}}\frac{1}{r}\pdv{V}{r} \L \cdot \S
+	\end{equation*}
+	This heuristically-derived result is too large by a factor of two with respect to the correct result derived from the Dirac equation for relativistic particles, which is beyond the scope of this course. 
+	
+	\item Finally, we mention the coupling of spin to angular momentum for a particle moving in a plane that is orthogonal to a homogeneous electric field. As before, we use the Lorentz expression for magnetic field $ \B = -\frac{1}{c^{2}}(\vec{v} \cross \vec{\mathcal{E}}) $ and the Zeeman coupling. The result is
+	\begin{equation*}
+		\m \cdot (\vec{v} \cross \vec{\mathcal{E}}) \implies \vec{\sigma} \cdot (\vec{p} \cross \vec{\mathcal{E}}) = (\vec{\sigma} \cross \vec{p}) \cdot \vec{\mathcal{E}}
+	\end{equation*}
+	This expression results in the Rashba coupling term
+	\begin{equation*}
+		H_{\text{Rashba}} = \alpha (\vec{\sigma} \cross \vec{p}) \cdot \uvec{e}_{z}
+	\end{equation*}
+\end{itemize}
+
+
+\subsection{More on the Pauli Formalism}
+\begin{itemize}
+	\item  We now consider a spin wavefunction $ \P $ whose components are both time-dependent spinors:
+	\begin{equation*}
+		\P(\r, t) = 
+		\begin{pmatrix}
+			\p_{\ua}(\r, t)\\
+			\p_{\da}(\r, t)
+		\end{pmatrix}
+	\end{equation*}
+	The two components encode the probability amplitudes of detecting the particle with either spin up or spin down near the location $ \vec{r} $ at the time $ t $---the respective amplitudes are
+	\begin{equation*}
+		\rho_{\ua}(\r, t) = \abs{\p_{\ua}(\r, t)}^{2} \eqtext{and} \rho_{\da}(\r, t) = \abs{\p_{\da}(\r, t)}^{2}
+	\end{equation*}
+	
+	\item The total probability density is $ \rho = \rho_{\ua} + \rho_{\da} $ and must satisfy the normalization condition
+	\begin{equation*}
+		\int \rho(\r, t)\dr \equiv 1
+	\end{equation*}
+	
+	\item We can parameterize the state $ \P $ at a position $ (\r, t) $ using four dependent real functions $ \rho, \delta, \theta $ and $ \phi $, in the form
+	\begin{equation*}
+		\P = \p
+		\begin{pmatrix}
+			\cos \frac{\theta}{2}\\
+			e^{i\phi}\sin \frac{\theta}{2}
+		\end{pmatrix},
+		\qquad
+		\p = e^{i\delta}\sqrt{\rho}
+	\end{equation*}
+	We then write the state as the product of the position-dependent state $ \ket{\p} $ and the normalized spin state $ \ket{\chi} $:
+	\begin{equation*}
+		\ket{\P} = \ket{\p(\r, t)} \otimes \ket{\chi(\theta(\r, t), \phi(\r, t))}
+	\end{equation*}
+	
+	\item In the corresponding \Schro equation
+	\begin{equation*}
+		i \hbar \pdv{t} \P = H \P
+	\end{equation*}
+	the \Ham is written as a $ 2 \cross 2 $ matrix. For example, in the presence of a magnetic field and homogeneous electric field, and taking into account Zeeman and Rashba coupling:
+	\begin{align*}
+		H = &\left(\frac{p^{2}}{2m} + V(r) - \frac{q}{2m}\L \cdot \B\right)\II\\
+		& - \frac{qe}{2m}\S \cdot \B + \frac{1}{m^{2}c^{2}}\frac{1}{r}\pdv{V}{r} \L \cdot \S + \alpha (\vec{\sigma}\cross \vec{p})\cdot \uvec{e}_{z}
+	\end{align*}
+	This corresponds to an expansion of the \Ham operator in the basis of Pauli spin matrices $ \{\sigma_{x}, \sigma_{y}, \sigma_{z}, \II\} $:
+	\begin{equation*}
+		H = E_{0}\II + \sum_{\alpha}E_{\alpha}\sigma_{\alpha}
+	\end{equation*}
+	The first three terms, involving $ p^{2} $, $ V(r) $ and $ \L \cdot \B $, correspond to the energy $ E_{0} $, while the remaining coupling terms are higher-order corrections.
+	
+\end{itemize}
+
+
+\section{Addition of Angular Momentum}
+
+\subsection{Particles With Spin $ s = 1/2 $}
+\begin{itemize}
+	\item We now consider the possibility of a quantum system consisting of multiple particles, each with their own angular momentum. For the majority of this section we will focus on simple system: a hydrogen atom with an electron in the ground state with angular momentum quantum number $ l = 0 $. The second particle is of course the proton in the nucleus. Both particles have spin $ s_{i} = 1/2 $. The spin operators and basis vectors for each particle are
+	\begin{equation*}
+		S_{i}^{2} = s_{i}(s_{i} + 1)\hbar^{2}\ket{s_{i}m_{i}} \eqtext{and} S_{z_{i}}\ket{s_{i}m_{i}} = m_{i}\hbar \ket{s_{i}}\ket{m_{i}}
+	\end{equation*}
+	where $ i = 1 $ corresponds to the electron and $ i = 2 $ to the proton. 
+	
+	\item The electron's and proton's angular momentum operators commute with each other, which is summarized in the commutation relation
+	\begin{equation*}
+		\big[S_{\alpha_{i}}, S_{\beta_{j}}\big] = i \hbar \delta_{ij}\epsilon_{\alpha \beta \gamma}S_{\gamma_{j}}, \qquad \alpha \in \{x, y, z\}
+	\end{equation*}
+	Both sets of spin operators can be written in terms of the Pauli spin matrices as
+	\begin{equation*}
+		\vec{S}_{i} = \frac{\hbar}{2}\vec{\sigma}, \qquad \vec{\sigma} = \left(\sigma_{x}, \sigma_{y}, \sigma_{z}\right)
+	\end{equation*}
+	
+	\item We expect the hydrogen atom's total spin $ \vec{S} $ is the sum of the spins of the constituent electron and proton. More generally, for a system of $ N $ particles each with spin $ \S_{i} $, we expect the total spin $ \S $ to be
+	\begin{equation*}
+		\S = \sum_{i}^{N}\S_{i}
+	\end{equation*}
+	Similarly, we expect the total system's spin expectation value to obey
+	\begin{equation*}
+		\mel{\P}{\S}{\P} = \sum_{i}\mel{\chi_{i}}{\S_{i}}{\chi_{i}}
+	\end{equation*}
+	where $ \P $ is the system's complete wavefunction and $ \ket{\chi_{i}} $ are the spin states of the constituent particles. 
+	
+	\item For these definitions to hold, the operators $ \S_{i} $ of each constituent particle act only the spin basis states $ \ket{s_{i}m_{i}} $ corresponding to that particular particle. With this requirement in mind, we define the total spin of a two particle system as
+	\begin{equation*}
+		\S = \S_{1}\otimes \II_{2} + \II_{1} \otimes \, \S_{2}
+	\end{equation*}
+	where $ \II_{i} $ is the identity operator for the spin subspace spanned by the $ i $th particle's spin basis states $ \ket{\{s_{i}m_{i}\}} $. Similarly, the total spin state $ \ket{s_{1}s_{2}m_{1}m_{2}} $ is written
+	\begin{equation*}
+		\ket{s_{1}s_{2}m_{1}m_{2}}  = \ket{s_{1}m_{1}} \otimes \ket{s_{2}m_{2}} 
+	\end{equation*}
+	\textit{Shorthand Notation}: Since the spins $ s_{1} $ and $ s_{2} $ are both fixed at the constant values $ s_{1,2} = 1/2 $, we can leave the $ s_{i} $ terms implicit and write the spin state simply as
+    \begin{equation*}
+        \ket{s_{1}s_{2}m_{1}m_{2}} \equiv \ket{m_{1}} \otimes \ket{m_{2}} 
+    \end{equation*}
+        
+    \item In the $ \ket{m_{1}m_{2}} $ notation, the total spin operator $ S_{z} $ acts on the basis state as
+    \begin{align*}
+        S_{z}\ket{m_{1}m_{2}} &= (S_{z_{1}}\otimes \II_{2} + \II_{1}\otimes S_{z_{2}})\ket{m_{1}} \otimes \ket{m_{2}}\\
+        &= m_{1}\hbar \ket{m_{1}} \otimes \ket{m_{2}} + \ket{m_{1}}\otimes m_{2}\hbar \ket{m_{2}}\\
+        &=(m_{1} + m_{2}) \hbar \ket{m_{1}m_{2}}
+    \end{align*}
+    In other words---the total spin operator $ S_{z} $ has the expected property of an angular momentum operator in that it has the eigenvalue $ m_{1} + m_{2}F $ when acting on the state $ \ket{m_{1}m_{2}} $. 
+
+    \item As any angular momentum quantity, the total spin operator $ \vec{S} $ obeys the usual angular momentum commutation relations, which we can derive as follows:
+    \begin{align*}
+        [S_{\alpha}, S_{\beta}] &= \big[ S_{\alpha_{1}} \otimes \II_{2} + I_{1} \otimes S_{\alpha_{2}}, S_{\beta_{1}}\otimes \II_{2} + I_{1}\otimes S_{\beta_{2}} \big]\\
+        & = [S_{\alpha_{1}} \otimes \II_{2}, S_{\beta_{1}}\otimes\II_{2}] + [\II_{2} \otimes S_{\alpha_{2}}, \II_{1} \otimes S_{\beta_{2}}]\\
+        & = [S_{\alpha_{1}}, S_{\beta_{1}}] \otimes \II_{2} + \II_{1} \otimes [S_{\alpha_{2}}, S_{\beta_{2}}]\\
+        & = i \hbar \epsilon_{\alpha\beta\gamma}S_{\gamma},
+    \end{align*}
+    where the last equality uses the identities $ [S_{\alpha_{i}}, S_{\beta_{i}}] = i \hbar \epsilon_{\alpha\beta\gamma}S_{\gamma_{i}} $. Note also the use of $ [S_{\alpha_{1}} \otimes \II_{2}, \II_{1} \otimes S_{\beta_{2}}] = 0 $, which follows from $ \big[S_{\alpha_{i}}, S_{\beta_{j}}\big] = i \hbar \delta_{ij}\epsilon_{\alpha \beta \gamma}S_{\gamma_{j}} $ (a result of $ S_{i} $ and $ S_{j} $ acting on independent Hilbert spaces).
+    
+    \item The total spin operator $ \S $ is often analyzed in terms of ladder operators, just like the spin operator for a single particle. The total ladder operators are defined as
+    \begin{equation*}
+        S_{\pm} = S_{x} \pm iS_{y} = S_{\pm_{1}} \otimes \II_{2} + \II_{1} \otimes S_{\pm_{2}}.
+    \end{equation*}
+
+    \item The basis states $ \{\ket{m_{1}m_{2}}\} $ span the system's total spin vector space and are eigenstates of the total angular momentum operator $ S_{z} $, individual operators $ S_{z_{i}} $ and individual operators $ S_{i}^{2} $. 
+
+    Note, however, that the states $ \ket{m_{1}m_{2}} $ are not eigenstates of the total angular momentum operator $ S^{2} $---only the states $ \ket{sm} $ are eigenstates of $ S^{2} $. The states $ \ket{sm} $ obey
+    \begin{equation*}
+        S^{2}\ket{sm} = s(s+1)\hbar^{2}\ket{sm} \qquad \text{and} \qquad S_{z}\ket{sm} = m\hbar \ket{sm}
+    \end{equation*}
+    
+    \item Although $ \ket{m_{1}m_{2}} $ are not directly eigenstates of $ S^{2} $, we can expand the eigenstates $ \ket{sm} $ in the $ \ket{m_{1}m_{2}} $ basis in the form
+    \begin{equation*}
+        \ket{sm} = \sum_{m_{1}m_{2}} s_{m_{1}m_{2}}\ket{m_{1}m_{2}}
+    \end{equation*}
+    where we sum over all $ m_{i} = \pm 1/2 $ obeying the condition $ m = m_{1} + m_{2} $. 
+    
+    \item Next, we introduce the earlier arrow notation, which generalizes to a two-particle system with states $ \ket{m_{1}m_{2}}  $ as follows:
+    \begin{align*}
+        \ket{\tfrac{1}{2}\tfrac{1}{2}} &= \ket{\ua} \otimes \ket{\ua} \equiv \ket{\ua\ua}\\
+        \ket{-\tfrac{1}{2}\tfrac{1}{2}} &= \ket{\da} \otimes \ket{\ua} \equiv \ket{\da\ua}\\
+        \ket{\tfrac{1}{2}-\tfrac{1}{2}} &= \ket{\ua} \otimes \ket{\da} \equiv \ket{\ua\da}\\
+        \ket{-\tfrac{1}{2}-\tfrac{1}{2}} &= \ket{\da} \otimes \ket{\da} \equiv \ket{\da\da}
+    \end{align*}
+    Don't forget that the state $ \ket{m_{1}m_{2}} $ is short for the state $ \ket{s_{1}m_{2}s_{2}m_{2}} $---the $ s_{i} $ are left out for conciseness but are still implicitly there. Note also that we have left tensor product $ \otimes $ implicit in the last equality of each line. Leaving the tensor product implicit in multi-particle spin systems in conventional, just like leaving the hat on operators implicit. The need for the tensor product is usually clear from context.
+
+    \item The largest possible value of $ m $ for the state $ \ket{\ua \ua} $ is $ m = \tfrac{1}{2} + \tfrac{1}{2} = 1 $. The corresponding $ \ket{sm} $ state for $ m = 1 $, i.e. $ \ket{sm} = \ket{11} $ is also an eigenstate of $ S^{2} $, as shown below:
+    \begin{equation*}
+        S^{2}\ket{sm} = S^{2}\ket{11} = 1(1 + 1)\hbar^{2}\ket{11} = 2\hbar^{2}\ket{\ua\ua}.
+    \end{equation*}
+    
+    \item Next, we applyg the ladder operator $ S_{-} $ to the state $ \ket{11} $, which gives
+    \begin{equation*}
+        S_{-}\ket{11} = \hbar \sqrt{1(1+1) - 1(1-1)} \ket{10} = \sqrt{2}\hbar \ket{10},
+    \end{equation*}
+    which we can also write in the form
+    \begin{align*}
+        S_{-}\ket{11} & = \big( S_{-_{1}}\II_{2} + \II_{1} S_{-_{2}} \big)\ket{\ua\ua} = \hbar \ket{\da\ua} + \hbar \ket{\ua\da}\\
+        &= \hbar \big( \ket{\da\ua} + \ket{\ua\da} \big)
+    \end{align*}
+    In other words, we have derived the identity
+    \begin{equation*}
+        \sqrt{2}\hbar \ket{10} = \hbar \big( \ket{\da\ua} + \ket{\ua\da} \big) \implies \ket{10} = \frac{\hbar}{\sqrt{2}} \big( \ket{\da\ua} + \ket{\ua\da} \big)
+    \end{equation*}
+    Following a similar procedure with $ s = 1 $ and $ m = -1 $, we could derive the identity
+    \begin{equation*}
+        \ket{1, -1} = \ket{\da\da}.
+    \end{equation*}
+    The above three states $ \ket{sm} = \ket{1m} $ with $ m = -1, 0, 1 $ are called the \textit{triplet} states for a two-particle spin system with individual spins $ s_{1,2} = 1/2 $.
+
+    \item The fourth possible state for the two-particle spin $ 1/2 $ system is the \textit{singlet} state $ \ket{sm} = \ket{00} $ with $ s = 0 $ and $ m = 0 $. We cannot construct the single state using the ladder operators, since the ladder operators preserve the quantum number $ s $, and we have no way of generating $ s = 0 $ from a $ s = 1 $ state. 
+
+    Instead, we generate the singlet state by expanding the state $ \ket{sm} = \ket{00} $ in the $ \ket{m_{1}m_{2}} $ basis:
+    \begin{equation*}
+        \ket{00} = c_{\tfrac{1}{2},-\tfrac{1}{2}} \ket{\ua\da} + c_{-\tfrac{1}{2}, \tfrac{1}{2}}\ket{\da \ua}
+    \end{equation*}
+    Because the states $ \ket{10} $ and $ \ket{00} $ have different values of $ s $, they are orthogonal and obey $ \braket{10}{00} = 0 $, which implies
+    \begin{equation*}
+        c_{-\tfrac{1}{2}, \tfrac{1}{2}} = - c_{\tfrac{1}{2}, -\tfrac{1}{2}}
+    \end{equation*}
+    The complete of triplet and singlet states is thus
+    \begin{align*}
+        \ket{1m} &= 
+        \begin{cases}
+            \ket{\ua\ua} & m = 1\\
+            \tfrac{1}{\sqrt{2}} \big( \ket{\ua\da} + \ket{\da\ua} \big) & m = 0\\
+            \ket{\da\da} & m = -1
+        \end{cases}\\
+        \ket{00} &= \tfrac{1}{\sqrt{2}} \big( \ket{\ua\da} - \ket{\da \ua} \big)
+    \end{align*}
+   
+
+    \item \textit{Note on notation}: From here forward, in addition to leaving out the tensor product symbol $ \otimes $, we will also leave the identity operator implicit when writing the product of independent operators. Here is an example:
+    \begin{equation*}
+        S^{2} = S_{1}^{2}\otimes\II_{2} + \II_{1} \otimes S_{2}^{2} \to S^{2} = S_{1}^{2} + S_{2}^{2}
+    \end{equation*}
+    The implicit presence of the tensor product and relevant identity operators are understood from context.
+	
+\end{itemize}
+
+\textbf{Heisenberg Coupling}
+\begin{itemize}
+    \item The Heisenberg coupling involves two particles with spin $ s_{i} = 1/2 $ and reads
+    \begin{equation*}
+        H = J_{0} \S_{1} \cdot \S_{2}
+    \end{equation*}
+    where $ J_{0} $ is called the exchange coupling constant. When $ J_{0} < 0 $, system's spins $ \S_{1} $ and $ \S_{2} $ are aligned in the ground state (ferromagnetic coupling). When $ J_{0} > 0 $, the spins $ \S_{1} $ and $ \S_{2} $ are oppositely oriented in the ground state (anti-ferromagnetic coupling). 
+
+    \item Next, we use the identity
+    \begin{equation*}
+        S^{2} = \S \cdot \S = (\S_{1} + \S_{2}) \cdot (\S_{1} + \S_{2}) = S_{1}^{2} + S_{2}^{2} + 2 \S_{1} \cdot \S_{2}
+    \end{equation*}
+    to write the Heisenberg coupling term in the form
+    \begin{equation*}
+        H = \frac{J_{0}}{2}\left( S^{2} - \frac{3}{2} \hbar^{2} \right).
+    \end{equation*}
+    
+    \item Note that the coupling term is rotationally invariant, which implies the commutation relation $ [\S, H] = 0 $. Because of the relation $ [\S, H] = 0 $, the quantities $ S^{2} $ and $ S_{z} $ are conserved, and the singlet and triplet states are eigenstates of the equation
+    \begin{equation*}
+        H \ket{sm} = \frac{J_{0}\hbar^{2}}{2} \left( s(s + 1) - \frac{3}{2} \right)\ket{sm}
+    \end{equation*}
+    with corresponding energy eigenvalues
+    \begin{equation*}
+        E_{s} = J_{0}\hbar^{2} 
+        \begin{cases}
+            \frac{1}{4} & s = 1 \quad \text{(triplet)}\\
+            -\frac{3}{4} & s = 0 \quad \text{(singlet)}
+        \end{cases}
+    \end{equation*}
+    The ground state (with lowest energy) is thus the singlet state, while the triplet states are triply degenerate with energy $ \Delta E = J_{0}\hbar^{2} $ above the ground state.
+
+\end{itemize}
+
+\subsection{Addition of Angular Momenta with the Clebsch Gordan Coefficients}
+\begin{itemize}
+    \item In the previous section, we consider addition of angular momentum operators $ \S_{1} $ and $ S_{2} $ corresponding to particles with spins $ s_{1} = s_{2} = 1/2 $. In this section, we will generalize the addition of angular momenta to arbitrary operators $ \J_{1} $ and $ \J_{2} $ that obey the usual angular momentum commutation relations
+    \begin{align*}
+        \big[ J_{\alpha_{i}}, J_{\beta_{j}} \big] = i \hbar \delta_{ij}\epsilon_{\alpha\beta\gamma}J_{\gamma_{j}} 
+    \end{align*}
+    
+    \item Leaving the tensor product and identity operators implicit, the total angular momentum operator $ \J $ and corresponding basis states are
+    \begin{equation*}
+        \ket{j_{1}m_{1}j_{2}m_{2}} = \ket{j_{1}m_{1}}\ket{j_{2}m_{2}} \qquad \text{and} \qquad \J = \J_{1} + \J_{2}.
+    \end{equation*}
+    
+    \item By making the substitution $ J_{\alpha_{i}} \to S_{\alpha_{i}} $ and $ (j_{i}, j) \to (s_{i}, s) $, we can reuse most of the identities related to addition of angular momentum that were derived in the previous section.
+
+    Be begin by expanding the eigenstatates of the operators $ \J^{2} $ and $ J_{z} $ in the basis $ \big\{ \ket{j_{1}m_{1}j_{2}m_{2}} \big\} $ in the form
+    \begin{equation*}
+        \ket{j_{1}j_{2}jm} = \sum_{m_{1} = - j_{1}}^{j_{1}}\sum_{m_{2} = - j_{2}}^{j_{2}} \braket{j_{1}m_{1}j_{2}m_{2}}{jm} \ket{j_{1}m_{1}j_{2}m_{2}}
+    \end{equation*}
+    The coefficients $ \braket{j_{1}m_{1}j_{2}m_{2}}{jm} $ in the expansion are called the Clebsch-Gordon coefficients and encode the transformation between the total angular momentum basis $ \ket{jm} $ and the product basis $ \ket{m_{1}m_{2}} $. 
+
+    \item Finally, we note that just like in the addition of spins, when adding angular momenta the total quantum number $ m $ must obey $ m = m_{1} + m_{2} $ and that the values of $ j $ must satisfy the corresponding inequality
+    \begin{equation*}
+        \abs{j_{1} + j_{2}} \leq j \leq j_{1} + j_{2}
+    \end{equation*}
+
+\end{itemize}
+
+% A state with ``good'' angular momentum is an eigenstate of the total angular momentum operator J^{2}
+\subsubsection{Example: Addition of Angular Momenta in the Case $ l \cross 1/2 $}
+\begin{itemize}
+    \item As an exercise in the addition of angular momentum, we will find the total angular momentum basis representation of an electron in the first excited state of a hydrogen atom. The excited electron has angular momentum $ \J_{1} = \L $ and basis states $ \{\ket{lm_{l}}\} $ while the proton in the hydrogen nucleus has angular momentum $ \J_{2} = \S $ and basis states $ \{\ket{\ua}, \ket{\da}\} $. 
+
+    The total angular momentum is $ \J = \L + \S $, and the corresponding basis is
+    \begin{equation*}
+        \{ \ket{j_{1}j_{2}jm} \} \equiv \{\ket{lsjm}\} = \left\{ \ket{l \tfrac{1}{2}jm} \right\}
+    \end{equation*}
+    where the spin $ 1/2 $ proton's angular momentum $ j_{2} $ is fixed at $ j_{2} \equiv s = 1/2 $. For $ l = 0 $ and $ l= 1 $, the electron's basis states are the spherical harmonics
+    \begin{equation*}
+        Y_{lm_{l}}(\theta, \phi) = \braket{\r}{lm_{l}}
+    \end{equation*}
+    Finally, recall that the angular momentum quantum numbers must satisfy
+    \begin{equation*}
+        \abs{s + l} \leq j \leq s + l
+    \end{equation*}
+    
+
+    \item We begin with the ground state $ l = 0 $ and $ s = 1/2 $, in which case the total angular momentum quantum number can be only $ j = 1/2 $. The corresponding states in the total angular momentum $ \ket{lsmj} $ and product $ \ket{lm_{l}sm_{s}} $ bases are
+    \begin{equation*}
+        \ket{0 \tfrac{1}{2} \tfrac{1}{2} \tfrac{1}{2}} = \ket{00}\ket{\ua} \qquad \text{and} \qquad \ket{0 \tfrac{1}{2} \tfrac{1}{2} -\tfrac{1}{2}}  = \ket{00}\ket{\da}
+    \end{equation*}
+    
+    \item We now consider the first excited electron state with $ l = 1 $, for which we can have both $ j = 3/2 $ and $ j = 1/2 $. Here is the plan: We will begin with the state with the largest value of $ m $, which occurs for $ j = 3/2 $, and generate the $ j = 3/2 $ states with lower $ m $ using the ladder operator $ J_{-} $. Finally, we find the $ j = 1/2 $ state using the orthonormality of the basis states. 
+
+    \item The state with the largest possible value of $ m $ is $ \ket{1 \tfrac{1}{2} \tfrac{3}{2} \tfrac{3}{2}} = \ket{11}\ket{\ua} $. We then apply the ladder operator $ J_{-} = S_{-} + L_{-} $ to determine the state with $ \ket{jm} = \ket{\tfrac{3}{2}\tfrac{1}{2}} $. This reads:
+    \begin{align*}
+        J_{-} \ket{1 \tfrac{1}{2} \tfrac{3}{2}\tfrac{3}{2}} &= \hbar \sqrt{3} \ket{1 \tfrac{1}{2} \tfrac{3}{2} \tfrac{1}{2}}\\
+        (L_{-} + S_{-}) \ket{11}\ket{\ua} &= \hbar \sqrt{2} \ket{10}\ket{\ua} + \hbar \ket{11} \ket{\da}\\
+        \ket{1 \tfrac{1}{2}\tfrac{3}{2}\tfrac{1}{2}} &= \sqrt{\tfrac{2}{3}}\ket{10}\ket{\ua} + \sqrt{\tfrac{1}{3}} \ket{11}\ket{\da}
+    \end{align*}
+    
+    \item We then repeat the procedure to generate the state with $ \ket{jm} = \ket{\tfrac{3}{2}-\tfrac{1}{2}} $. This reads
+    \begin{align*}
+        J_{-}\ket{1 \tfrac{1}{2}\tfrac{3}{2}\tfrac{1}{2}} &= 2 \hbar \ket{1 \tfrac{1}{2}\tfrac{3}{2}-\tfrac{1}{2}}\\
+        (L_{-} + S_{-})\ket{10}\ket{\ua} &= \sqrt{2}\hbar \ket{1-1}\ket{\ua} + \hbar \ket{10}\ket{\da}\\
+        (L_{-} + S_{-}) \ket{11}\ket{\da} &= \sqrt{2}\hbar \ket{10}\ket{\da} + 0\\
+        \ket{1 \tfrac{1}{2}\tfrac{3}{2}-\tfrac{1}{2}} & = \sqrt{\tfrac{1}{3}} \ket{1-1}\ket{\ua} + \sqrt{\tfrac{2}{3}} \ket{10}\ket{\da}
+    \end{align*}
+
+    \item On more application of the ladder operator leads to the state with $ \ket{jm} = \ket{\tfrac{3}{2}-\tfrac{3}{2}} $, which is
+    \begin{equation*}
+        \ket{1 \tfrac{1}{2}\tfrac{3}{2} -\tfrac{3}{2}} = \ket{1-1}\ket{\da}
+    \end{equation*}
+    
+    \item Finally, we determine the states with $ j = 1/2 $ and $ \ket{jm} = \ket{\tfrac{1}{2} \pm \tfrac{1}{2}} $ with the orthogonality condition
+    \begin{equation*}
+        \braket{1 \tfrac{1}{2}\tfrac{3}{2}\pm \tfrac{1}{2}}{1 \tfrac{1}{2}\tfrac{1}{2}\pm \tfrac{1}{2}} = 0,
+    \end{equation*}
+    since these two states have different values of $ j $. The desired states are then
+    \begin{align*}
+        \ket{1 \tfrac{1}{2}\tfrac{1}{2}\tfrac{1}{2}} &= \sqrt{\tfrac{2}{3}}\ket{10} \ket{\ua} - \sqrt{\tfrac{1}{3}} \ket{11}\ket{\da}\\
+        \ket{1 \tfrac{1}{2}\tfrac{1}{2}-\tfrac{1}{2}} &= -\sqrt{\tfrac{2}{3}}\ket{1-1} \ket{\ua} - \sqrt{\tfrac{1}{3}} \ket{10}\ket{\da}\\
+    \end{align*}
+\end{itemize}
+
+\subsubsection{TODO: Table of Clebsch-Gordan Coefficients}
+
+
+
 
 \end{document}
-
 
