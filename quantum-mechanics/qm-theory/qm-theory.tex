@@ -39,10 +39,6 @@
 
 \renewcommand{\t}[1]{\tilde{#1}}
 
-\newcommand{\tev}{e^{-i\frac{H}{\hbar}t}}  % time evolution operator
-\newcommand{\tevp}{e^{i\frac{H}{\hbar}t}}  % time evolution operator with positive exponent
-
-
 \newcommand{\F}[1]{\widehat{#1}} % fourier transform
 
 
@@ -53,20 +49,26 @@
 \renewcommand{\L}{\vec{L}}  % angular momentum
 \renewcommand{\S}{\vec{S}}  % spin
 \newcommand{\J}{\vec{J}}  % angular momentum
+\newcommand{\Q}{\vec{Q}}  % parameter vector for adiabatic transitions
+\newcommand{\gq}{\grad_{\mspace{-3mu}Q}\mspace{1mu}} 
+
 
 % particle in an electromagnetic field
 \newcommand{\A}{\vec{A}}  % magnetic vector potential
 \newcommand{\B}{\vec{B}}  % magnetic field
 \newcommand{\m}{\vec{\mu}}  % magnetic dipole moment
 
+% various operator quantities
 \renewcommand{\O}{\mathcal{O}}  % script operator quantity
 \newcommand{\II}{\operatorname{I}}  % non-bold identity operator
 \newcommand{\T}{\mathcal{T}}  % time reversal operator
 \newcommand{\Par}{\mathcal{P}}  % parity operator
+\newcommand{\tev}{e^{-i\frac{H}{\hbar}t}}  % time evolution operator
+\newcommand{\tevp}{e^{i\frac{H}{\hbar}t}}  % time evolution operator with positive exponent
+
 
 \newcommand{\p}{\psi}  % time-independent wavefunction
 \renewcommand{\P}{\Psi}  % time-dependent wavefunction
-
 
 
 % \big braket-style commands
@@ -1132,7 +1134,7 @@ Consider an operator $ \O $ and an orthonormal basis $ \{\ket{n}\} $.
 
 \end{itemize}
 
-\subsection{Time Evolution}
+\subsection{Time Evolution} \label{ss:time-ev}
 \begin{itemize}
 	\item Expanding in basis formed of the energy eigenstates $ \{\ket{\phi_{n}}\} $ of the \Ham operator $ H $ reads
 	\begin{equation*}
@@ -4113,6 +4115,814 @@ We will now use the just-derived relations $ [L_{z}, L_{\pm}] = \pm \hbar L_{\pm
 \end{itemize}
 
 \subsubsection{TODO: Table of Clebsch-Gordan Coefficients}
+
+\section{Perturbation Theory}
+
+\subsection{The Rayleigh-\Schro Method for a Non-Degenerate Spectrum}
+\begin{itemize}
+    \item We consider quantum system with a \Ham of the form 
+    \begin{equation*}
+        H = H_{0} + H',
+    \end{equation*}
+    where the term $ H_{0} $ is a good approximation for the system, while the term $ H' $ is a \textit{perturbation} term with a secondary effecto on the system. We assume we are able to analytically solve the stationary \Schro equation for $ H_{0} $, which reads
+    \begin{equation*}
+        H_{0} = \ket{n_{0}} = E_{n}^{(0)} \ket{n_{0}}.
+    \end{equation*}
+    More so, we assume $ H_{0} $'s eigenstates are orthonormal and obey $ \braket{m_{0}}{n_{0}} = \delta_{mn} $, and that the energy eigenvalues $ E_{n}^{(0)} $ are non-degenerate. 
+
+    We write the perturbation term in the form $ H' = \lambda V $ where $ V $ has units of energy and $ \lambda $ is a dimensional parameter encoding the strength of the perturbation. 
+
+    \item Our goal is to solve the stationary \Schro equation for the \textit{total} \Ham $ H = H_{0} + H' $, which reads
+    \begin{equation*}
+        H \ket{n} = E_{n}\ket{n}.
+    \end{equation*}
+    Our first step is to expand the desired eigenstates $ \ket{n} $ and energy eigenvalues $ E_{n} $ in powers of the perturbation parameter $ \lambda $ in the form
+    \begin{align*}
+        &E_{n} = E_{n}^{(0)} + \lambda E_{n}^{(1)} + \lambda^{2} E_{n}^{(2)} + \cdots\\
+        &\ket{n} = \ket{n_{0}} + \lambda \ket{n_{1}} + \lambda^{2} \ket{n^{2}} + \cdots,
+    \end{align*}
+    where $ E_{n}^{(j)} $ and $ \ket{n_{j}} $ are progressively higher-order corrections to the total \Ham $ H $'s $ n $-th eigenvalue $ E_{n} $ and eigenstate $ \ket{n} $, respectively.
+
+    \item We proceed by multipliying the equation for $ \ket{n} $ by $ \bra{n_{0}} $, which gives
+    \begin{equation*}
+        \braket{n_{0}}{n} = 1 + \lambda \braket{n_{0}}{n_{1}} + \lambda^{2}\braket{n_{0}}{n_{2}} + \cdots
+    \end{equation*}
+    We then make an important assumption: we assume the complete solution for $ \ket{n} $ is well approximated by the lowest-order approximation $ \ket{n_{0}} $, allowing us to temporarily assume $ \braket{n_{0}}{n} = 1 $. Under this assumption, the above equation simplifies to
+    \begin{equation*}
+        \lambda \braket{n_{0}}{n_{1}} + \lambda^{2}\braket{n_{0}}{n_{2}} + \cdots = 0,
+    \end{equation*}
+    which is satisfied by all $ \ket{n_{j}} $ only if $ \braket{n_{0}}{n_{j}} = \delta_{0j} $ for all $ j \in \mathbb{N} $.
+
+    \item We then subsitute the expressions for $ H $, $ \ket{n} $ and $ E_{n} $ into the stationary \Schro equation $ H \ket{n} = E_{n} \ket{n} $ to get
+    \begin{equation*}
+        (H_{0} + \lambda V)\big( \ket{n_{0}} + \lambda \ket{n_{1}}  + \cdots \big) = \big( E_{n}^{(0)} + \lambda E_{n}^{(1)} + \cdots \big)\big( \ket{n_{0}} + \lambda \ket{n_{1}} + \cdots \big).
+    \end{equation*}
+    We then equate then equate the coefficients of each power of $ \lambda $. The result up to $ \lambda^{j} = \lambda^{3} $ is
+    \begin{equation*}
+        \begin{array}{l|r c l}
+            \lambda^{0} & H_{0} \ket{n_{0}} & = & E_{n}^{(0)} \ket{n_{0}}\\
+            \lambda^{1} & H_{0}\ket{n_{1}} + V \ket{n_{0}} & = & E_{n}^{(0)}\ket{n_{1}} + E_{n}^{(1)}\ket{n_{0}}\\
+            \lambda^{2} & H_{0}\ket{n_{2}} + V \ket{n_{1}} & = & E_{n}^{(0)}\ket{n_{2}} + E_{n}^{(1)}\ket{n_{1}} + E_{n}^{(2)}\ket{n_{0}}\\
+            \lambda^{3} & H_{0}\ket{n_{3}} + V \ket{n_{2}} & = & E_{n}^{(0)}\ket{n_{3}} + E_{n}^{(1)}\ket{n_{2}} + E_{n}^{(2)}\ket{n_{1}} + E_{n}^{(3)}\ket{n_{1}}
+        \end{array}
+    \end{equation*}
+    The first equation is trivial and represents the known eigenvalue relation for the \Ham $ H_{0} $. 
+
+    The second equation with $ \lambda^{1} $ is more useful. We first multiply the equation by $ \bra{n_{0}} $ to get
+    \begin{equation*}
+        E_{n}^{(0)} \braket{n_{0}}{n_{1}} + \mel{n_{0}}{V}{n_{0}} = E_{n}^{(0)}\braket{n_{0}}{n_{1}} + E_{n}^{(1)}\braket{n_{1}}{n_{1}}.
+    \end{equation*}
+     We then apply the orthonormality condition $ \braket{n_{0}}{n_{j}} = \delta_{0j} $ to get 
+     \begin{equation*}
+         E_{n}^{(1)} = \mel{n_{0}}{V}{n_{0}} = V_{nn}.
+     \end{equation*}
+
+     \item We can perform an analogous procedure with the equations for higher powers $ \lambda^{j} $ to get expressions for the higher-order corrections $ E_{n}^{(1)} $. For example, using the equation for $ \lambda^{2} $ and multiplying by $ \bra{n_{0}} $ as before gives
+    \begin{equation*}
+        E_{n}^{(0)} \braket{n_{0}}{n_{2}} + \mel{n_{0}}{V}{n_{1}} = E_{n}^{(0)}\braket{n_{0}}{n_{2}} + E_{n}^{(1)}\braket{n_{0}}{n_{1}} + E_{n}^{(2)}\braket{n_{0}}{n_{0}}, 
+    \end{equation*}
+    which produces $ E_{n}^{(2)} = \mel{n_{0}}{V}{n_{1}}$ after applying $ \braket{n_{0}}{n_{j}} = \delta_{0j} $. 
+
+    In general, the expression for the $ j $-th correction to the energy $ E_{n} $ is
+    \begin{equation*}
+        E_{n}^{(j)} = \mel{n_{0}}{V}{n_{j-1}}.
+    \end{equation*}
+    
+    \item Recall that we have assumed we can solve the stationary \Schro equation $ H \ket{n} = E_{n} \ket{n} $, which means we can diagonalize the \Ham $ H_{0} $. Working in the $ H_{0} $ basis, we can write the identity operator in the form
+    \begin{equation*}
+        \II = \sum_{m}\ket{m_{0}}\bra{m_{0}}.
+    \end{equation*}
+    We can then expand each higher-order correction $ \ket{n_{j}} $ in the $ H_{0} $ basis to get
+    \begin{equation*}
+        \ket{n_{j}} = \sum_{m \neq n}\ket{m_{0}}\braket{m_{0}}{n_{j}}
+    \end{equation*}
+    Note that the term $ \ket{n_{0}} $ is left out of the sum, which corresponds to the identity $ \braket{n_{0}}{n_{j}} = 0 $. 
+
+    With this expression for $ \ket{n_{j}} $ in the $ H_{0} $ in mind, we multiply the earlier equation of $ \lambda^{1} $ by $ \ket{m_{0}} $ and then apply $ \ket{n_{1}} = \sum_{m \neq n}\ket{m_{0}}\braket{m_{0}}{n_{1}} $ to get
+    \begin{equation*}
+        \left( E_{n}^{(0)} - E_{m}^{(0)} \right)\braket{m_{0}}{n_{1}} = \mel{m_{0}}{V}{n_{0}} = V_{mn}
+    \end{equation*}
+    The coefficients in the expansion of $ \ket{n_{1}} $ are thus
+    \begin{equation*}
+        \braket{m_{0}}{n_{1}} = \frac{V_{mn}}{E_{n}^{(0)} - E_{m}^{(0)}},
+    \end{equation*}
+    which implies the first-order correction $ \ket{n_{1}} $ to the state $ \ket{n} $ is
+    \begin{equation*}
+        \ket{n_{1}} = \sum_{m\neq n} = \frac{V_{mn}}{E_{n}^{(0)} - E_{m}^{(0)}} \ket{m_{0}}.
+    \end{equation*}
+
+    \item Using the just-derived result for $ \ket{n_{1}} $, the second-order energy correction $ E_{n}^{(2)} $ is then
+    \begin{equation*}
+        E_{n}^{(2)} = \mel{n_{0}}{V}{n_{1}} = \sum_{m \neq n} \frac{\abs{V_{mn}}^{2}}{E_{n}^{(0)} - E_{m}^{(0)}}.
+    \end{equation*}
+    Note that in practice, the second-order energy correction $ E_{n}^{(2)} $ and the first-order wavefunction correction $ \ket{n_{1}} $ usually lead to satisfactory approximations of the exact quantities $ E_{n} $ and $ \ket{n} $.
+
+    \item Next, as an exercise in the Rayleigh-\Schro method, we will determine the second-order wavefunction correction $ \ket{n_{2}} $, which will also reveal the third-order energy correction $ E_{n}^{(3)} $. 
+
+    We begin by multiplying the earlier equation for $ \lambda^{2} $ by $ \bra{m_{0}} $, which gives
+    \begin{align*}
+        \mel{m_{0}}{H_{0}}{n_{2}} + \mel{m_{0}}{V}{n_{1}} = E_{n}^{(0)} \braket{m_{0}}{n_{2}} + E_{n}^{(1)} \braket{m_{0}}{n_{1}} + E_{n}^{(2)}\braket{m_{0}}{n_{0}}
+    \end{align*}
+    This equation, after substituting in the results derived earlier in this section, comes out to, in order,
+    \begin{equation*}
+        E_{m}^{(0)}\braket{m_{0}}{n_{2}} + \sum_{l \neq n}\frac{V_{ml}V_{ln}}{E_{n}^{(0)} - E_{l}^{(0)}} = E_{n}^{(0)}\braket{m_{0}}{n_{2}} + E_{n}^{(1)} \frac{V_{mn}}{E_{n}^{(0)} - E_{m}^{(0)}} + E_{n}^{(2)}\cdot 0.
+    \end{equation*}
+    We then substitute in $ E_{n}^{(1)} = V_{nn} $ and rearrange to get
+    \begin{equation*}
+        \sum_{l \neq n} \frac{V_{ml}V_{ln}}{E_{n}^{(0)} - E_{l}^{(0)}} = \left( E_{n}^{(0)} - E_{m}^{(0)} \right)\braket{m_{0}}{n_{2}} + \frac{V_{nn}V_{mn}}{E_{n}^{(0)} - E_{m}^{(0)}}
+    \end{equation*}
+    The coefficients $ \braket{m_{0}}{n_{2}} $ in the expansion of $ E_{n}^{(3)} $ are thus
+    \begin{equation*}
+        \braket{m_{0}}{n_{2}} = \sum_{n \neq l} \frac{V_{ml}V_{ln}}{\big( E_{n}^{(0)} - E_{m}^{(0)} \big)\big( E_{n}^{(0)} - E_{l}^{(0)} \big)} - \frac{V_{mn}v_{nn}}{\big( E_{n}^{(0)} - E_{m}^{(0)} \big)^{2}},
+    \end{equation*}
+    and the second-order wavefunction correction is
+    \begin{equation*}
+        \ket{n_{2}} = \sum_{m \neq n} \left[ \sum_{n \neq l} \frac{V_{ml}V_{ln}}{\big( E_{n}^{(0)} - E_{m}^{(0)} \big)\big( E_{n}^{(0)} - E_{l}^{(0)} \big)} - \frac{V_{mn}V_{nn}}{\big( E_{n}^{(0)} - E_{m}^{(0)} \big)^{2}}  \right] \ket{m_{0}}
+    \end{equation*}
+
+    \item In terms of the just-derived $ \ket{n_{2}} $, the third-order energy correction $ E_{n}^{(3)} $ is
+    \begin{equation*}
+        E_{n}^{(3)} = \sum_{m \neq n} \braket{m_{0}}{n_{2}} V_{nm},
+    \end{equation*}
+    where the expression for for $ \ket{n_{2}} $ is left out for conciseness.
+    
+    
+    \item Finally, we consider the normalization of the $ \ket{n} $ states. Up to the first-order correction in $ \lambda $, the $ \ket{n} $ are already normalized, since
+    \begin{align*}
+        \braket{n}{n} &= \big( \ket{n_{0}} + \lambda \ket{n_{1}} \big)\big( \ket{n_{0}} + \lambda \ket{n_{1}} \big)\\
+        &= \braket{n_{0}}{n_{0}} + \lambda \braket{n_{0}}{n_{1}} + \lambda \braket{n_{1}}{n_{0}} + \mathcal{O}(\lambda^{2})\\
+        & = 1 + \mathcal{O}(\lambda^{2})
+    \end{align*}
+    However, the $ \ket{n} $ are not normalized in the second-order correction, in which case we have
+    \begin{align*}
+        \braket{n}{n} &= \braket{n_{0}}{n_{0}} + \lambda^{2} \braket{n_{1}}{n_{1}} + \mathcal{O}(\lambda^{3})\\
+        & = 1 + \lambda^{2} \sum_{m \neq n} \frac{\abs{V_{nm}}^{2}}{\big( E_{n}^{(0)} - E_{m}^{(0)} \big)^{2}} + \mathcal{O}(\lambda^{3})
+    \end{align*}
+    If we want the $ \ket{n} $ states to be normalized we have two options:
+    \begin{enumerate}
+        \item Renormalize the entire $ \ket{n} $ state into
+        \begin{equation*}
+           \ket{n} \to \bigg[ \sum_{j} \braket{n_{j}}{n_{j}} \bigg]^{-1/2} \ket{n}
+        \end{equation*}
+        
+        \item Renormalize only the second-order correction via
+        \begin{equation*}
+            \ket{n_{2}} \to \ket{n_{2}} - \frac{\lambda}{2} \sum_{m \neq n} \frac{\abs{V_{nm}}^{2}}{\big( E_{n}^{(0)} - E_{m}^{(0)} \big)^{2}}\ket{n_{0}}.
+        \end{equation*}
+        In terms of this renormalization, the product $ \braket{n}{n} $ comes out to
+        \begin{equation*}
+            \braket{n}{n} = 1 + \mathcal{O}(\lambda^{3}).
+        \end{equation*}
+        
+    \end{enumerate}
+    
+\end{itemize}
+
+\textbf{Example: The Anharmonic Oscillator: TODO}
+
+\subsection{Degenerate Perturbation Theory}
+
+\begin{itemize}
+    \item As in the previous subsection, we again consider a \Ham of the form
+    \begin{equation*}
+        H = H_{0} + \lambda V.
+    \end{equation*}
+    This time, however, we assume the energy eigenvalues of the unperturbed \Ham $ H_{0} $ are degenerate. As before, our goal is to solve the stationary \Schro equation
+    \begin{equation*}
+        H \ket{n} = E \ket{n}
+    \end{equation*}
+    for the \Ham $ H $'s eigenstates $ \ket{n} $ and eigenvalues $ E_{n} $. 
+\end{itemize}
+
+\subsubsection{Example: Doubly Degenerate Energies}
+\begin{itemize}
+    \item We begin with a concrete example: when $ H_{0} $'s eigenstates are doubly degenerate. The beginning steps of the analysis are the same as for a non-degenerate spectrum. We first expand $ H $'s eigenstates and eigenvalues in the form
+    \begin{align*}
+        &E_{n} = E_{n}^{(0)} + \lambda E_{n}^{(1)} + \lambda^{2} E_{n}^{(2)} + \cdots\\
+        &\ket{n} = c_{1}\bket{n_{0}^{(1)}} + c_{1}\bket{n_{0}^{(2)}} + \lambda \ket{n_{1}} +  \cdots.
+    \end{align*}
+    Note that because the unperturbed \Ham $ H_{0} $'s energy levels are doubly degenerate, the zeroth-order energy $ E_{n}^{(0)} $ (which is associated to $ H_{0} $) corresponds to two linear independent wavefunction corrections, which we have written as the linear combination $ c_{1}\bket{n_{0}^{(1)}} + c_{1}\bket{n_{0}^{(2)}} $. 
+
+    \item Next, working only up to first order in $ \lambda $, we substitute the expansions for $ \ket{n} $ and $ E_{n} $ into the stationary \Schro equation and equate the coefficients for $ \lambda^{0} $ and $ \lambda^{1} $ to get the three equations
+    \begin{align*}
+        H_{0} \bket{n_{0}^{(1)}} &= E_{n}^{(0)} \bket{n_{0}^{(1)}}\\
+        H_{0} \bket{n_{0}^{(2)}} &= E_{n}^{(0)} \bket{n_{0}^{(2)}}\\
+        H_{0}\ket{n_{1}} + c_{1}V \bket{n_{0}^{(1)}} + c_{2}V \bket{n_{0}^{(2)}} &= E_{n}^{(0)} \ket{n_{1}} + E_{n}^{(1)} \big( c_{1}\bket{n_{0}^{(1)}} + c_{2}\bket{n_{0}^{(2)}} \big).
+    \end{align*}
+    
+    \item Next, we multiply the last equation through by $ \bket{n_{0}^{(1)}} $ to get an equation for the coefficients $ c_{1} $ and $ c_{2} $:
+    \begin{align*}
+        \bmel{n_{0}^{(1)}}{H_{0}}{n_{1}} + c_{1}\bmel{n_{0}^{(1)}}{V}{n_{0}^{(1)}} &+ c_{2}\bmel{n_{0}^{(1)}}{V}{n_{0}^{(2)}} \\
+        & = E_{n}^{(0)} \bbraket{n_{0}^{(1)}}{n_{1}} + E_{n}^{(1)}\big( c_{1}\bbraket{n_{0}^{(1)}}{n_{0}^{(1)}} + c_{2} \bbraket{n_{0}^{(1)}}{n_{0}^{(2)}} \big).
+    \end{align*}
+    Applying the orthonormality of the $ \ket{n_{j}} $ states simplifies this to
+    \begin{equation*}
+        0 + c_{1}V_{11} + c_{2}V_{12} = 0 + E_{n}^{(0)}(c_{1} + 0).
+    \end{equation*}
+    We then perform a similar procedure in which we multiply the last equation through by $ \bket{n_{0}^{(2)}} $ to get a second equation for the coefficients $ c_{1} $ and $ c_{2} $. In one place, the first and second equations are
+    \begin{align*}
+        & c_{1}V_{11} + c_{2}V_{12} = E_{n}^{(0)} c_{1}\\
+        & c_{1}V_{21} + c_{2}V_{22} = E_{n}^{(1)} c_{2}.
+    \end{align*}
+    This system of equations is a $ 2 \cross 2 $ eigenvalues problem of the form
+    \begin{equation*}
+        \begin{bmatrix}
+            V_{11} & V_{12}\\
+            V_{21} & V_{22}
+        \end{bmatrix}
+        \begin{bmatrix}
+            c_{1}\\
+            c_{2}
+        \end{bmatrix}
+        = E_{n}^{(1)}
+        \begin{bmatrix}
+            c_{1}\\
+            c_{2}
+        \end{bmatrix}.
+    \end{equation*}
+    Solving this eigenvalue problem determines the desired first-order perturbation theory correction---the eigenvalues are the two first-order energy corrections $ E_{n_{1}}^{(1)} $ and $ E_{n_{2}}^{(1)} $ and the eigenvectors determine the coefficients $ c_{1} $ and $ c_{2} $ of the eigenstate corrections $ \bket{n_{0}^{(1)}} $ and $ \bket{n_{0}^{(2)}} $. 
+\end{itemize}
+
+\subsubsection{The General $ N $-Times Degenerate Case}
+\begin{itemize}
+    \item The procedure for an $ N $-times degenerate energy level is a generalization of the $ N = 2 $ case and leads to a corresponding $ N \cross N $ eigenvalue problem with matrix elements $ V_{ij} $ given by
+    \begin{equation*}
+        V_{ij} = \bmel{n_{0}^{(i)}}{V}{n_{0}^{(j)}}
+    \end{equation*}
+    Solving the $ N \cross N $ eigenvalue problem's corresponding characteristic polynomial
+    \begin{equation*}
+        \det \big[ V_{ij} - E_{n}^{(1)}\delta_{ij} \big] = 0
+    \end{equation*}
+    leads to the energy eigenvalue corrections $ E_{n_{l}}^{(1)} $ where $ l = 1, 2, \ldots N $. 
+
+    Solving the associated eigenvector problem leads to the coefficients $ c_{i_{l}} $ for the eigenstate corrections $ \bket{n_{0}^{(i)}} $.
+    
+    \item To final notes: In the above case, the energy corrections $ E_{n_{l}}^{(1)} $ and the diagonal matrix elements $ V_{ii} $ obey the relationship
+    \begin{equation*}
+        \sum_{l = 1}^{N} E_{n_{l}}^{(1)} = \sum_{i = 1}^{N}V_{ii}.
+    \end{equation*}
+    
+    Second, when the matrix elements $ \bmel{n_{0}^{(i)}}{V}{n_{0}^{(j)}} $ are small (e.g. much less than one), it is also important to consider transitions between excited states with different values of $ n $ and $ m $. In this case, we redefine the matrix elements to be
+    \begin{equation*}
+        V_{ij} \to V_{ij} + \sum_{m\neq n} \frac{V_{im}V_{mj}}{E_{n}^{(0)} - E_{m}^{(0)}},
+    \end{equation*}
+    where we leave out the case $ m = n $ to avoid a zero in the denominator.
+    
+\end{itemize}
+
+\subsection{Time-Dependent Perturbation Theory}
+
+\begin{itemize}
+    \item We now consider a quantum system described by a time-dependent \Ham of the form
+    \begin{equation*}
+        H(t) = H_{0} + \lambda V(t),
+    \end{equation*}
+    where $ H_{0} $, as before, is a time-independent, diagonalizable \Ham that reasonably approximates the system, while $ V(t) $ is a time-dependent perturbation term of secondary influence and $ \lambda $ parameterizes the perturbation's strength. In time dependent perturbation theory, the goal is to solve for the system's time-dependent wavefunction $ \ket{\psi(t)} $ given an initial state $ \ket{\psi(0)} $.
+
+    \item We write the known eigenvalue relation for $ H_{0} $ in the form
+    \begin{equation*}
+        H_{0} \ket{n} = E_{n} \ket{n}
+    \end{equation*}
+    and assume the orthonormality relation $ \braket{m}{n} = \delta_{mn} $. We then begin our analysis by writing the initial state in the $ H_{0} $ basis:
+    \begin{equation*}
+        \ket{\p(0)} = \sum_{n}c_{n}(0)\ket{n}.
+    \end{equation*}
+    Similarly, we can write the time-dependent wavefunction in $ H_{0} $ basis in the general form
+    \begin{equation*}
+        \ket{\psi(t)} = \sum_{n}c_{n}(t)e^{-i \frac{E_{n}}{\hbar}t}\ket{n},
+    \end{equation*}
+    where the coefficients $ c_{n}(t) $ are time-dependent, since $ H(t) $ is time-dependent. 
+
+    \item We then substitute the general expression for $ \ket{\p(t)} $ into the \Schro equation,
+    \begin{equation*}
+        i \hbar \pdv{t}\ket{\psi(t)} = H \ket{\psi(t)},
+    \end{equation*}
+    which leads to
+    \begin{equation*}
+        i \hbar \sum_{n}\left( \pdv{c_{n}(t)}{t}e^{-i \frac{E_{n}}{\hbar}t} - i \frac{E_{n}}{\hbar}c_{n}(t)e^{-i \frac{E_{n}}{\hbar}t} \right)\ket{n} = \sum_{n}\big( E_{n} + \lambda V(t) \big)c_{n}(t)e^{-i \frac{E_{n}}{\hbar}t} \ket{n}.
+    \end{equation*}
+    We then multiply the equation by the basis vector $ \bra{m} $, apply $ \braket{m}{n} = \delta_{mn} $, and cancel like terms to get
+    \begin{equation*}
+        i \hbar \pdv{c_{m}(t)}{t}e^{-i \frac{E_{m}}{\hbar}t} = \lambda \sum_{n} \mel{m}{V(t)}{n}e^{-i \frac{E_{n}}{\hbar}t} c_{n}(t).
+    \end{equation*}
+    This is a system of coupled differential equations $ c_{n}(t) $.
+
+    \item Alternatively, we can write the above system of equations in the matrix form
+    \begin{equation*}
+        i \hbar \pdv{t} 
+        \begin{pmatrix}
+            c_{1}(t)\\
+            c_{2}(t)\\
+            \vdots\\
+            c_{m}(t)\\
+            \vdots
+        \end{pmatrix}
+        = \lambda
+        \begin{pmatrix}
+            V_{11}(t) & V_{12}(t) & \cdots & V_{1n}(t) & \cdots \\
+            V_{21}(t) & V_{22}(t) & \cdots & V_{2n}(t) & \cdots \\
+            \vdots & \vdots & \ddots & \vdots & \cdots \\
+            V_{m1}(t) & V_{m2}(t) & \cdots & V_{mn}(t) & \cdots \\
+            \vdots & \vdots &  & \vdots & \ddots 
+        \end{pmatrix}
+        \begin{pmatrix}
+            c_{1}(t)\\
+            c_{2}(t)\\
+            \vdots\\
+            c_{m}(t)\\
+            \vdots
+        \end{pmatrix},
+    \end{equation*}
+    or the more compact equation
+    \begin{equation*}
+        i \hbar \pdv{t} \vec{c}(t) = \lambda \mat{V}(t) \vec{c}(t).
+    \end{equation*}
+    The time-dependent matrix elements $ V_{mn}(t) $ are given by
+    \begin{equation*}
+        V_{mn}(t) = \mel{m}{V(t)}{n} e^{-i \frac{E_{n} - E_{m}}{\hbar}t},
+    \end{equation*}
+    where $ E_{n} $ and $ E_{m} $ are $ H_{0} $'s energy eigenvalues. This formalism is called the interaction or Dirac picture, and the system's quantum state is determined by the vector $ \vec{c}(t) $.
+
+    Finally, note that the entire time-dependent theory discussed so far is exact---we will only make perturbation approximations in later sections.
+    
+\end{itemize}
+
+\subsubsection{Two-State System and Rabi Oscillations}
+\begin{itemize}
+    \item As a simple example of the time-dependent formalism, we consider a two-state system corresponding to the two quantum states $ \ket{1} $ and $ \ket{2} $ and  $ 2\cross 2 $ Hamiltonian $ H_{0} $. We take our time-dependent perturbation term to be a harmonic oscillation of the form $ V(t) \sim e^{-i\omega t} $. A physical example of such a state would be an atom with two energy levels upon which we shine monochromatic light.
+
+    \item We begin by writing the two state system's Hamiltonian in the form
+    \begin{equation*}
+        H = H_{0} + V(t),
+    \end{equation*}
+    where $ H_{0} $ and $ V(t) $ are given by
+    \begin{equation*}
+        H_{0} = 
+        \begin{pmatrix}
+            E_{1} & 0\\
+            0 & E_{2}
+        \end{pmatrix}
+        \qquad \text{and} \qquad 
+        V(t) = \hbar
+        \begin{pmatrix}
+            0 & \Delta e^{i\omega t}\\
+            \Delta e^{-i\omega t} & 0
+        \end{pmatrix}.
+    \end{equation*}
+
+    \item The system's time-dependent \Schro equation reads
+    \begin{equation*}
+        i \hbar 
+        \begin{pmatrix}
+            \dot{c}_{1}(t)\\
+            \dot{c}_{2}(t)
+        \end{pmatrix}
+        = \hbar
+        \begin{pmatrix}
+            0 & \Delta e^{i(\omega - \tilde{\omega})t}\\
+            \Delta e^{i(\omega - \tilde{\omega})t} & 0
+        \end{pmatrix}
+        \begin{pmatrix}
+            c_{1}(t)\\
+            c_{2}(t)
+        \end{pmatrix}
+    \end{equation*}
+    where we have defined $ \hbar \tilde{\omega} = E_{2} - E_{1} $.
+    
+    \item We assume the system's initial state is the ground state $ \ket{\psi(0)} = \ket{1} $, which implies
+    \begin{equation*}
+        c_{1}(0) = 1 \qquad \text{and} \qquad c_{2}(t) = 0.
+    \end{equation*}
+    In this case, the probabilities $ P_{2} $ and $ P_{1} $ of the system occupying the states $ \ket{2} $ and $ \ket{1} $, respectively, oscillate according to
+    \begin{equation*}
+        P_{2}(t) = \frac{\Delta^{2}}{\Omega}\sin^{2}\Omega t \qquad \text{and} \qquad P_{1} = 1 - P_{2},
+    \end{equation*}
+    where we have defined the Rabi frequency $ \Omega $ according to
+    \begin{equation*}
+        \Omega = \sqrt{\Delta^{2} + \tfrac{1}{4}(\omega - \tilde{\omega})^{2}}.
+    \end{equation*}
+    The sinusoidal oscillations of the occupation probabilities $ P_{1} $ and $ P_{2} $ are called Rabi oscillations, and have maximum amplitude, exactly equal to one, when $ \omega = \tilde{\omega} $.
+    
+\end{itemize}
+
+\subsubsection{Time-Dependent Perturbation Approach}
+\begin{itemize}
+    \item We now consider a perturbation that begins at the time $ t = 0 $, of the form
+    \begin{equation*}
+        V(t) = 
+        \begin{cases}
+            0 & t < 0\\
+            V(t) & t \geq = 0
+        \end{cases}
+    \end{equation*}
+    As before, we work with the \Ham $  H = H_{0} + \lambda V(t) $, where $ H_{0} $ is time-independent and diagonalizable. 
+
+    \item We begin by assuming the system occurs in one of the $ H_{0} $ eigenstates, i.e. 
+    \begin{equation*}
+        \ket{\psi(0)} = \ket{m}, \qquad \text{and thus} \qquad  c_{k}^{(0)}(0) = \delta_{km}.
+    \end{equation*}
+    We then substitute this expression into the time-dependent \Schro equation to get
+    \begin{equation*}
+        i \hbar \pdv{t}c_{k}^{(1)}(t) = \sum_{n} V_{kn}(t)c_{n}^{(0)}(t) = V_{km}(t).
+    \end{equation*}
+    The coefficients in the first-order perturbation approximation are then 
+    \begin{equation*}
+        c_{k}^{(1)}(t) = \frac{1}{i \hbar} \int_{0}^{t}V_{km}(t')\diff t'.
+    \end{equation*}
+    
+    \item Using the just-derived $ c_{k}^{(1)} $, the state $ \ket{\psi(t)} $ is given to first-order in $ \lambda $ as
+    \begin{equation*}
+        \ket{\psi(t)} = \sum_{k}\left[ c_{k}^{(0)}(t) + \lambda c_{k}^{(1)}(t) + \mathcal{O}(\lambda^{2})\right]e^{-i \frac{E_{k}}{\hbar}t}\ket{k}.
+    \end{equation*}
+    The first-order approximation is valid in the regime $ \big| c_{k}^{(1)}(t) \big| \ll 1 $. In practice, the first-order approximation gives an acceptable result for many physical problems.
+    
+    
+\end{itemize}
+
+\subsubsection{Fermi's Golden Rule}
+\begin{itemize}
+    \item We now consider a step-like perturbation of the form
+    \begin{equation*}
+        V(t) = 
+        \begin{cases}
+            0 & t < 0\\
+            V & t \geq 0
+        \end{cases}.
+    \end{equation*}
+    As before, we work with the general \Ham $ H = H_{0} + \lambda V(t) $ where $ H_{0} $ is time-independent and diagonalizable with eigenstates $ \ket{n} $.
+
+    \item We assume our system is in the initital state $ \ket{\psi(0)} = \ket{m} $ (i.e. in an $ H_{0} $ eigenstate). We then aim to determine the probability of finding the system in the final state $ \ket{k} $ as a function of time.
+
+    Since $ V $ is constant, the matrix elements $ V_{km} = \mel{k}{V}{m} $ are also constant, and the coefficients in the first-order perturbation approximation are
+    \begin{equation*}
+        c_{k}^{(1)}(t) = \frac{1}{i \hbar} \int_{0}^{t} V_{km}e^{-i \frac{E_{m} - E_{k}}{\hbar}t'} \diff t' = \frac{V_{km}}{i \hbar} \frac{e^{i\omega_{mk}t} - 1}{- i \omega_{mk}},
+    \end{equation*}
+    where we have defined $ \hbar \omega = E_{k} - E_{m} $. 
+
+    \item In terms of $ c_{k}^{(1)}(t) $ and $ \omega_{mk} $, the probability of a transition from $ \ket{m} $ to $ \ket{k} $ is
+    \begin{align*}
+        P_{km} &= \abs{c_{k}^{(1)}}^{2} = \frac{\abs{V_{km}}^{2}}{\hbar^{2}} \frac{\abs{e^{-i\omega_{mk}t} - 1}^{2}}{\omega^{2}_{mk}} = \frac{\abs{V_{km}}^{2}}{\hbar^{2}} \frac{\sin^{2}\left( \tfrac{1}{2} \omega_{mk}t \right)}{\left( \tfrac{1}{2}\omega_{mk} \right)^{2}}\\
+        & \equiv \frac{2\pi}{\hbar}\abs{V_{km}}^{2} \delta_{t}(E_{k} - E_{m})t,
+    \end{align*}
+    where we have defined the function
+    \begin{equation*}
+        \delta_{t}(x) \equiv \frac{1}{\pi} \frac{\sin^{2}(xt)}{x^{2}t}.
+    \end{equation*}
+    
+    \item Interpretation: note that $ \delta_{t} $ approaches the Dirac delta function in the limit $ t \gg \frac{\hbar}{\abs{E_{k} - E_{m}}} $. In this regime, there is appreciable likelihood only for transitions two states with energies in a neighborhood of the initial energy $ E_{m} $.
+
+    Meanwhile, for $  t \ll \frac{\hbar}{\abs{E_{k} - E_{m}}}  $, the function $ \delta_{t} $ is very wide, which corresponds to appreciable probability for transitions to states with energies in the range $ E_{m} \pm \frac{\hbar}{t} $.
+
+    In general, the width of the function $ \delta_{t}(E_{k} - E_{m}) $ decreases with time according to
+    \begin{equation*}
+        \Delta E \sim \frac{\hbar}{t}.
+    \end{equation*}
+    
+    \item Finally, we stress that this analysis of the transition probability $ P_{km} $, which uses the first-order time-dependent perturbation theory, rests on the assumption $ P_{km}(t) \ll 1 $, which is necessary for the first-order approximation to hold.
+
+    \item Next, we consider the special case in which our system transitions from the intial $ H_{0} $ eigenstate $ \ket{m} $ to a final state $ \ket{k} $ for there are many states with energies very close to $ E_{k} $. We describe the densely-spaced states using the concept of a density of states (as in e.g. thermodynamics), which we define as
+    \begin{equation*}
+        \rho(E_{k}) = \dv{N}{E_{k}},
+    \end{equation*}
+    where $ \diff N $ represents the states available in a small energy band $ \diff E_{k} $ centered around $ E_{k} $. 
+
+    \item The total probability for a transition to any state in the neighborhood of $ E_{k} $ is an integral over $ E_{k} $ of the form
+    \begin{equation*}
+        P(t) = \int P_{km}(t)\rho(E_{k})\diff E_{k}.
+    \end{equation*}
+    For large $ t \gg \frac{\hbar}{\abs{E_{k} - E_{m}}} $, the transition probability increases with time as
+    \begin{equation*}
+        P(t) = \frac{2\pi}{\hbar} \abs{V_{km}}^{2}\rho(E_{m})t.
+    \end{equation*}
+    The rate of change of probability with respect to time, which we will denote $ w_{km} $, is thus constant and obeys
+    \begin{equation*}
+        w_{m \to k} \equiv \dv{P(t)}{t} = \frac{2\pi}{\hbar} \abs{V_{km}}^{2}\rho(E_{m})
+    \end{equation*}
+    This important result is called Fermi's golden rule.
+    
+\end{itemize}
+
+\textbf{Example: The Fermi Golden Rule and Radioactive Decay}
+\begin{itemize}
+    \item We consider the decay of $ N $ radioactive nuclei, where we expect that at a time $ t $ after their creation, $ \diff N $ nuclei decay in the time interval $ \diff t $, which we write in terms of the transition rate $ w(t) $ as
+    \begin{equation*}
+        - \diff N = N \diff P = N w(t) \diff t.
+    \end{equation*}
+    In general, a nucleus can decay according to different modes (e.g. $ \alpha $ decay, $ \beta $ decay, etc...), which case the total decay rate $ w $ is the sum of the decay rate for each individual mode, i.e. $ w = \sum_{i} w_{i} $, which leads to the familiar radioactive decay law
+    \begin{equation*}
+        N = N_{0} e^{-t/\tau}, \qquad \tau = \frac{1}{w}.
+    \end{equation*}
+    
+    \item For a quantum system with discretely spaced energy levels, the coefficients $ c_{k}(t) $, for small times in the regime $ t \ll \frac{\hbar}{\abs{E_{k} - E_{m}}} $, are proportional to $ t $, which corresponds to a decay rate 
+    \begin{equation*}
+        w(t) = \frac{4}{\hbar} \abs{V_{km}}^{2}t.
+    \end{equation*}
+    The corresponding dependence of the number of nuclei $ N $ is 
+    \begin{equation*}
+        - \dv{N}{t} = \frac{4}{\hbar}\abs{V_{km}}^{2}t N \implies N(t) = N_{0} e^{-\frac{2}{\hbar}\abs{V_{km}}^{2}t^{2}}.
+    \end{equation*}
+    
+\end{itemize}
+
+\subsection{Time Evolution Operator for a Time-Dependent \Ham}
+\begin{itemize}
+    \item Recall from the section time evolution that for a time-independent \Ham $ H_{0} $, the time evolution operator reads
+    \begin{equation*}
+        U(t) = e^{-i \frac{H_{0}}{\hbar}t}.
+    \end{equation*}
+    In this section, we will generalize this result and define a time-evolution operator applicable to the time-dependent \Ham $ H = H_{0} + V(t) $. 
+
+    \item We begin with the \Schro equation 
+    \begin{equation*}
+        i \hbar \pdv{t} \vec{c}(t) = \lambda \mat{V}(t) \vec{c}(t).
+    \end{equation*}
+    We then solve the equation iteratively for the coefficients $ c_{k}(t) $ by substituting in the first-order approximation
+    \begin{equation*}
+        c_{k}^{(1)}(t) = \frac{1}{i \hbar} \int_{0}^{t}V_{km}(t')\diff t'.
+    \end{equation*}
+    We write $ c_{k}(t) $ as the power series $ c_{k}(t) = \sum_{j}\lambda^{j}c_{k}^{(j)}(t) $, and use the first order approximation to find the second-order term via
+    \begin{equation*}
+        i \hbar \pdv{t} c_{k}^{(2)}(t) = \sum_{n} V_{kn} (t) c_{n}^{(1)}(t) = \frac{1}{i \hbar}\sum_{n}V_{kn}(t)\int_{0}^{t}V_{nm}(t')\diff t'.
+    \end{equation*}
+    We repeat the process iteratively, which leads to the series expression
+    \begin{align*}
+        c_{k}(t) = \delta_{km} &+ \lambda \frac{1}{ i \hbar} \int_{0}^{t} V_{km}(t')\diff t'\\
+        & + \lambda^{2} \left( \frac{1}{i \hbar} \right)^{2} \sum_{n}\int_{0}^{t} \left[ \sum_{n} V_{kn}(t') \int_{0}^{t'} V_{nm}(t'')\diff t'' \right]\diff t' + \cdots.
+    \end{align*}
+    If we set $ \lambda = 1 $, this gives an exact, if not particularly practical, solution to the time-dependent wavefunction
+    \begin{equation*}
+        \ket{\psi(t)} = \sum_{n}c_{n}(t)e^{-i \frac{E_{n}}{\hbar}t}\ket{n}.
+    \end{equation*}
+    
+    \item We can write the above results more compactly in terms of a generalized time operator in the form
+    \begin{equation*}
+        \vec{c}(t) = U(t)\vec{c}(0),
+    \end{equation*}
+    where the time-operator is defined as
+    \begin{equation*}
+        U(t) = \II + \sum_{n = 1}^{\infty} \left( \frac{1}{i \hbar} \right)^{n} \int_{0}^{t}V(t_{1}) \int_{0}^{t_{1}}V(t_{2}) \cdots \int_{0}^{t_{n-1}} V(t_{n} - 1)\diff t_{n-1} \cdots \diff t_{2} \diff t_{1}.
+    \end{equation*}
+    The potential energy operators $ V(t) $ are applied in the given order for the times
+    $ 0 \leq t_{n-1} \leq \cdots \leq t_{2} \leq t_{1} \leq t $, which we can write yet more concisely by defining a time operator $ \operatorname{T} $ via
+    \begin{equation*}
+        U(t) = \operatorname{T} \left\{ \exp \left[ \frac{1}{i \hbar} \int_{0}^{t}V(t')\diff t'\right] \right\}.
+    \end{equation*}
+    The thus-defined time-evolution operator $ U(t) $ is unitary and an appropriate generalization of the expression
+    \begin{equation*}
+        U(t) = e^{-i \frac{H_{0}}{\hbar}t}
+    \end{equation*}
+    for a time-dependent \Ham $ H_{0} $.
+    
+\end{itemize}
+
+\subsection{Adiabatic Transistions and Quantum Phases}
+\begin{itemize}
+    \item We now consider a quantum system described by a time-varying parameter $ \lambda(t) $, and thus, implicitly, a time-varying \Ham $ H(\lambda(t)) $. As a concrete example, consider a particle in the ground state of an infinite potential well with time-varying width $ l(t) $, initially equal to $ l_{0} $ at $ t = 0 $. 
+
+    Adiabatic transitions are those transitions in which the system parameter changes slowly enough that the system remains in the ground state throughout the transition. 
+
+    \item Note that a quantitative analysis of the condition ``changes slowly enough'' is beyond the scope of this course; we consider only the qualitative condition, that the reate of change of the paratemeter with respect to time is small relative to the energy level between the system's states, i.e.
+    \begin{equation*}
+        \dv{\lambda}{t} \ll \frac{\abs{E_{m} - E_{n}}}{\hbar} \lambda(t).
+    \end{equation*}
+    This condition ensures that the probability for transitions to excited states is negligible, meaning the particle is likely to stay in its ground state, as required for an adiabatic transition.
+
+    \item In the more general case, we consider a system described by $ n $ time-parameters $ \Q(t) = (q_{1}(t), q_{2}(t), \cdots, q_{n}(t)) $, with a corresponding implicitly time-dependent \Ham $ H = H(\Q(t)) $. 
+
+    Let $ \ket{\psi_{n}(\Q)} $ denote the system's eigenstates for a given value of the parameters $ \Q $, with corresponding energy eigenvalue relation
+    \begin{equation*}
+        H(\Q) \ket{\psi_{n}(\Q)} = E_{n}(\Q) \ket{\psi_{n}(\Q)}.
+    \end{equation*}
+    The parameters, and thus the eigenstate $ \ket{\psi_{n}(\Q)} $, change with time, so that the exact value of $ \ket{\psi_{n}(\Q)} $ is different at each value of $ t $. As a result, the wavefunction $ \Psi_{n}^{(0)}(\r, t) = \braket{\r}{\psi_{n}(\Q)} $ is not in general of the time-dependent \Schro equation, i.e.
+    \begin{equation*}
+        i \hbar \pdv{t} \ket{\Psi_{n}^{(0)}} \neq H(\Q) \ket{\Psi_{n}^{(0)}(\r, t)},
+    \end{equation*}
+    since the stationary states themselves change with time.
+    
+    \item We now assume the parameters change adiabatically, which means the system remains in the $ n $-th eigenstate $ \ket{\psi_{n}(\Q)} $ of the \Ham $ H(\Q) $ throughout the change. Although the stationary state $ \ket{\psi_{n}(\Q)} $ is constant, we allow for a potentially-changing global phase $ \phi_{n}(t) $, and thus solve the time-dependent \Schro equation with the ansatz
+    \begin{equation*}
+        \ket{\P_{n}} = e^{i\phi_{0}(t)} \ket{\Psi_{n}^{(0)}},
+    \end{equation*}
+    which we substitute into the \Schro equation $ i \hbar \pdv{t} \ket{\P_{n}} = H \ket{\Psi_{n}} $ to get
+    \begin{equation*}
+        i \hbar \left( i \dv{\phi_{n}}{t} e^{i\phi_{n}}\ket{\Psi_{n}^{(0)}} + e^{i\phi_{n}}\pdv{t}\ket{\Psi_{n}^{(0)}}\right) = H e^{i\phi_{n}}\ket{\Psi_{n}^{(0)}} = E_{n}e^{i\phi_{n}} \ket{\Psi_{n}^{(0)}}.
+    \end{equation*}
+    Note that all quantities are dependent on $ \Q(t) $ and thus implicitly on time, which we have left implicit for conciseness.
+
+    \item Next, we multiply the equation through by $ \bbra{\Psi_{n}^{(0)}} $ to get
+    \begin{equation*}
+        i \hbar \left( i \dv{\phi_{n}}{t}\braket{\Psi_{n}^{(0)}}{\Psi_{n}^{(0)}} + \mel{\Psi_{n}^{(0)}}{\pdv{t}}{\Psi_{n}^{(0)}} \right) = E_{n} \braket{\Psi_{n}^{(0)}}{\Psi_{n}^{(0)}},
+    \end{equation*}
+    where we assume the state $ \Psi_{n}^{(0)} $ is normalized at every time $ t $.
+
+    \item Next, we separate the phase $ \phi_{n} $ into two components $ \phi_{n} = \gamma_{n} + \theta_{n} $, chosen such that
+    \begin{equation*}
+        i \hbar \left( i \dv{\gamma_{n}}{t} + \mel{\Psi_{n}^{(0)}}{\pdv{t}}{\Psi_{n}^{(0)}} \right) = \underbrace{\left( E_{N} + \hbar \dv{\theta_{n}}{t} \right)}_{0},
+    \end{equation*}
+    which implies
+    \begin{equation*}
+        \theta_{n} = -\frac{1}{\hbar} \int_{0}^{t}E_{n}(t')\diff t' \qquad \text{and} \qquad \dv{\gamma_{n}}{t} = i \mel{\Psi_{n}^{(0)}}{\pdv{t}}{\Psi_{n}^{(0)}}.
+    \end{equation*}
+
+    \item Next, keeping the $ q_{i}(t) $ parameters' time dependence in mind, we rewrite the wavefunction's time derivative as
+    \begin{equation*}
+        \pdv{\P_{n}^{(0)}}{t} = \sum_{i} \pdv{\Psi_{n}^{(0)}}{q_{i}}\dot{q}_{i} \equiv (\gq\psi_{n}) \cdot \dot{\Q}.
+    \end{equation*}
+    In terms of this notation for $ \Psi_{n}^{(0)} $'s time derivative, the phase term $ \gamma_{n}(t) $ is given by
+    \begin{align*}
+        \gamma_{n}(t) &= i \int \mel{\Psi_{n}^{(0)}}{\pdv{t}}{\Psi_{n}^{(0)}} \diff t = i\int_{0}^{t} \braket{\psi_{n}}{\gq \psi_{n}} \cdot \dot{\Q} \diff t\\
+        & = i\int_{\Q(0)}^{\Q(t)} \braket{\psi_{n}}{\gq\psi_{n}} \cdot \diff \Q.
+    \end{align*}
+    We have thus separated the phase $ \phi_{n} $ into two parts:
+    \begin{equation*}
+        \phi_{n}(t) = \theta_{n} + \gamma_{n} = - \frac{1}{\hbar}\int_{0}^{t}E_{n}(t')\diff t' + \int_{\Q(0)}^{\Q(t)} i \braket{\psi_{n}}{\gq \psi_{n}} \cdot \diff \Q.
+    \end{equation*}
+    The first component $ \theta_{n} $ is called the dynamic phase and the component $ \gamma_{n} $ is called the geometric or Berry phase. In the adiabatic limit, the Berry phase does not depend explicitly on time, but instead on the path $ \Q $ traced out by the system in the parameter space.
+
+    The matrix element $ \mathcal{A}_{n}(\Q) = i \braket{\psi_{n}}{\gq \psi_{n}}$  is called the Berry connection or Berry potenial. Note that the Berry potential is real-valued, which follows from
+    \begin{equation*}
+        \gq \big[ \braket{\psi_{n}}{\psi_{n}} \big] = \gq [1] = 0 = \braket{\gq \psi_{n}}{\psi_{n}} + \braket{\psi_{n}}{\gq \psi_{n}} = 2 \Re \braket{\psi_{n}}{\gq \psi_{n}}.
+    \end{equation*}
+    Evidently, $ \mathcal{A}_{n} = 0 $ for real functions $ \psi_{n} $. 
+
+    \item Next, assume the trajectory $ \mathcal{C} $ traced out by the parameters $ \Q $ in parameter space is closed at the time $ t_{0} $. In this case, the \Ham operator returns to its initial form: $ H(\Q(t_{0})) = H(\Q(0)) $, and the corresponding state at time $ t_{0} $ is multiplied by both the dynamic phase $ \theta $, and the Berry phase
+    \begin{equation*}
+        \gamma_{\text{Berry}}(t_{0}) = \oint_{\mathcal{C}} \mathcal{A}_{n}(\Q) \cdot \diff \Q.
+    \end{equation*}
+    In a three-dimensional parameter space, in which $ \Q = (q_{1}, q_{2}, q_{3}) $, the can also define a Berry-curvature
+    \begin{equation*}
+        \Omega_{n}(\Q) = \gq \cross \mathcal{A}_{n}(\Q).
+    \end{equation*}
+    Then, using Stokes' theorem, we can write the Berry phase in terms of an integral over the surface $ \mathcal{S} $ defined by the closed curve $ \mathcal{C} $, in the form
+    \begin{equation*}
+        \gamma_{n} = \iint_{\mathcal{S}}\Omega_{n}(\Q)\cdot \diff \vec{S}.
+    \end{equation*}
+    Without derivation, we note that if the surface $ \mathcal{S} $ is closed, the Berry phase is a multiple of $ 2\pi $, and the multiple is called a Chern number.
+    
+\end{itemize}
+
+\subsection{The WKB Approximation}
+    In the context of quantum mechanics WKB method is an expansion in terms of $ \hbar $, which represents an expansion with respect to the classical limit $ \hbar \to 0 $. 
+\begin{itemize}
+
+    \item We begin by writing the system's wavefunction $ \Psi $ with the ansatz 
+    \begin{equation*}
+        \Psi(\r, t) = e^{\frac{i}{\hbar}S(\r, t)}, \qquad S(\r, t) \in \mathbb{C}.
+    \end{equation*}
+    We then substitute this ansatz into the \Schro equation,
+    \begin{equation*}
+        i \hbar \pdv{\Psi}{t} = i \frac{\hbar^{2}}{2m}\laplacian \Psi + V \Psi,
+    \end{equation*}
+    which leads to the partial differential equation
+    \begin{equation*}
+        - \pdv{S}{t}\Psi = \left( \frac{1}{2m}(\grad S)^{2} - i \frac{\hbar^{2}}{2m} \laplacian S + V \right)\Psi.
+    \end{equation*}
+    Assuming $ \Psi \neq 0 $, we can then divide through by $ \Psi $ to get
+    \begin{equation*}
+        -\pdv{S}{t} = \frac{1}{2m}(\grad S)^{2} + V - i \frac{\hbar^{2}}{2m}\laplacian S.
+    \end{equation*}
+    
+    \item Next, we note that in the limit $ \hbar \to 0 $, the above equation reduces to
+    \begin{equation*}
+        \pdv{S}{t} = \frac{1}{2m}(\grad S)^{2} + V,
+    \end{equation*}
+    which is a classical Hamilton-Jacobi equation for the principle Hamiltonian function $ S $ for a classical particle with velocity $ \vec{v} = \frac{1}{m}\grad S $. From classical mechanics, we know that Hamilton-Jacobi theory is equivalent to the formalism of Newton's second law, so the limit $ \hbar \to 0 $ essentially recovers classical mechanics.
+    
+    \item We proceed with the WKB method by expanding $ S $ in powers of $ \hbar $, in the form
+    \begin{equation*}
+        S = S_{0} + \hbar S_{1} + \hbar^{2}S_{2} + \cdots,
+    \end{equation*}
+    where the zero-th order expansion in $ \hbar $ produces the aforementioned classical equation
+    \begin{equation*}
+        \pdv{S}{t} = \frac{1}{2m}(\grad S)^{2} + V,
+    \end{equation*}
+    while the first order in $ \hbar $ corresponds to a first-order quantum correction
+    \begin{equation*}
+        - \pdv{S_{1}}{t} = \frac{1}{2m} \big( 2 \grad S_{0} \cdot \grad S_{1} - i \laplacian S_{0} \big).
+    \end{equation*}
+    Analysis in the regime of this first-order approximation is called the WKB or semi-classical approximation.
+
+    \item As an example, we consider the one-dimensional stationary states
+    \begin{equation*}
+        \Psi(x, t) = e^{-i \frac{E}{\hbar}t} \psi(x).
+    \end{equation*}
+    We will write $ S $ and $ \psi $ as the time-independent functions
+    \begin{equation*}
+        S(x) S_{0}(x) + \hbar S_{1}(x) + \mathcal{O}(\hbar^{2}) \qquad \text{and} \qquad e^{\frac{i}{\hbar}S(x)}.
+    \end{equation*}
+    
+    \item We begin by solving for $ S_{0}(x) $ using the zero-order classical equation, which gives
+    \begin{equation*}
+        E = \frac{1}{2m}\left( \dv{S_{0}(x)}{x} \right)^{2} + V(x)
+    \end{equation*}
+    and
+    \begin{equation*}
+        S_{0}(x) = \pm \int_{x_{0}}^{x} \sqrt{2m \big[ E - V(x') \big]}\diff x' \equiv \pm \int_{x_{0}}^{x}p(x')\diff x',
+    \end{equation*}
+    where we have defined $ p(x) = \sqrt{2m [E - V(x)]} $. We then use this expression for $ S_{0}(x) $ to solve for $ S_{1} $ via
+    \begin{equation*}
+        2 \dv{S_{0}(x)}{x} \dv{S_{1}(x)}{x} = i \dv[2]{S_{0}(x)}{x},
+    \end{equation*}
+    which leads to
+    \begin{equation*}
+        S_{1}(x) = \frac{i}{2} \int_{x_{0}}^{x}\frac{S''_{0}(\tilde{x})}{S'_{0}(\tilde{x})} \diff \tilde{x} = \frac{i}{2} \ln \frac{p(x)}{p(x_{0})}.
+    \end{equation*}
+    The approximate solution for the wavefunction in the WKB approximation is thus
+    \begin{equation*}
+        \psi_{\text{wkb}}(x, t) = \frac{C}{\sqrt{p(x)}}\exp \left[ -i \frac{E}{\hbar}t \pm \frac{i}{\hbar}\int_{x}^{x_{0}} p(x')\diff x' \right].
+    \end{equation*}
+    This solution takes the form of a modulated wave, with a position-dependent wave vector
+    \begin{equation*}
+        k(x) = \frac{p(x)}{\hbar}.
+    \end{equation*}
+    The plus/minus sign in the exponent encodes the wave's direction, just like in a plane wave, and depends on the problem's concrete boundary conditions. The constants $ C $ and $ x_{0} $ are determed by normalization and boundary conditions, respectively.
+
+    Finally, we note that the WKB approximation does not hold in the neighborhood of classical turning points where $ p(x) = 0 $, since this produces a singularity in the denominator. We analyze such turning points using complex-valued connection formulas, but this is beyond the scope of this course.
+    
+    
+\end{itemize}
+
+\subsection{The Variational Method}
+\begin{itemize}
+    \item We consider a \Ham with orthornormalized but otherwise unknown eigenstates and eigenvalues satisfying
+    \begin{equation*}
+        H \ket{n} = E_{n}\ket{n}, \qquad \braket{m}{n} = \delta_{mn}.
+    \end{equation*}
+    We then expand an arbitrary wavefunction $ \ket{\psi} $ in the $ \big\{ \ket{n} \big\} $ basis in the form
+    \begin{equation*}
+        \ket{\psi} = \sum_{n} c_{n}\ket{n} = \sum_{n} \braket{n}{\p}\ket{n}.
+    \end{equation*}
+    
+    \item The energy expectation value $ \ev{H} $ for the state $ \ket{\psi} $ is
+    \begin{align*}
+        \mel{\psi}{H}{\psi} &= \mel{\sum_{m} \braket{m}{\p}\bra{m}}{H}{\sum_{n} \braket{n}{\p}\ket{n}}\\
+        & = \braket{\sum_{m} \braket{m}{\p}\bra{m}}{\sum_{n} \braket{n}{\p}E_{n}\ket{n}}\\
+        &= \sum_{n} E_{n}\abs{c_{n}}^{2}.
+    \end{align*}
+    We can bound this result from above according to
+    \begin{equation*}
+        E_{0}\sum_{n} \abs{c_{n}}^{2} \leq \sum_{n} E_{n}\abs{c_{n}}^{2},
+    \end{equation*}
+    where $ E_{0} $ is the ground state energy, which obeys $ E_{0} \leq E_{1} \leq \cdots \leq E_{n} \leq \cdots $. This upper bound implies
+    \begin{equation*}
+        \mel{\psi}{H}{\psi} \geq E_{0} \sum_{n}\abs{c_{n}}^{2} = E_{0} \braket{\psi}{\psi},
+    \end{equation*}
+    which we finally rearrange to get the important result
+    \begin{equation*}
+        E_{0} \leq \frac{\mel{\psi}{H}{\psi}}{\braket{\psi}{\psi}}.
+    \end{equation*}
+    In other words, the $ H $ ground state energy $ E_{0} $ is smaller than the energy expectation value for any state $ \ket{\psi} $ expanded in the $ H $ basis $ \big\{ \ket{n} \big\} $.
+    
+    \item The just-derived inequality forms the basis for a variational method of ground state energy calculation of some \Ham $ H $. The variational method proceeds as follows:
+    \begin{enumerate}
+        \item First, we choose $ \ket{\psi} $ to be as good an approximation as possible to the \Ham's ground state, and require that $ \ket{\psi} $ has the same symmetry properties as $ H $. 
+
+        \item We then parametrize $ \psi $ with $ n $ variational parameters $ \alpha_{i} $ in the form $ \psi = \psi(\alpha_{1}, \alpha_{2}, \ldots, \alpha_{n}; x) $. 
+
+        Using this trial function, we then calculate the expectation value 
+        \begin{equation*}
+            \mel{\psi}{H}{\psi} = \mathcal{E}(\alpha_{1}, \ldots, \alpha_{n}).
+        \end{equation*}
+
+        \item Next, by varying the parameteris $ \alpha_{i} $, we determine the minimum energy $ \mathcal{E}_{\text{min}} $, which is the best approximation to the ground state within the space of trial functions generated by the parameters $ \alpha_{1}, \ldots, \alpha_{n} $. 
+        
+        \item Because of the earlier inequality, $ \mathcal{E}_{\text{min}} $ must obey
+        \begin{equation*}
+            E_{0} \leq \mathcal{E}_{\text{min}},
+        \end{equation*}
+        which theoretically allows us to arbitrarily increase the number of parameters and trial functions, and repeat the process of finding the minimum energy expectation value $ \mathcal{E}_{\text{min}} $ until $ \mathcal{E}_{\text{min}} $ is an arbitrarily close approximation of $ E_{0} $. Keep in mind that $ E_{0} \leq \mathcal{E}_{\text{min}} $ gaurantees we will never drop below $ E_{0} $ when decreasing $ \mathcal{E}_{\text{min}} $, which is why we can be sure we will get an arbitrarily close approximation of $ E_{0} $ instead.
+    \end{enumerate}
+    
+    \item As an example of the variational method, we return to Rayleigh-\Schro method for solving a \Ham of the form
+    \begin{equation*}
+        H = H_{0} + \lambda V,
+    \end{equation*}
+    where $ \lambda V $ is a secondary perturbation term and $ H_{0} $ has the known eigenvalue relation
+    \begin{equation*}
+        H_{0} \ket{\varphi_{n}^{(0)}} = E_{n}^{(0)}\ket{\varphi_{n}^{(0)}}.
+    \end{equation*}
+    We then calculate the expectation value $ \ev{H} $ to first order in $ \lambda $, which reads
+    \begin{equation*}
+        \ev{H} = \mel{\psi}{H}{\psi} = E_{0}^{(0)} + \lambda \bmel{\varphi_{0}^{(0)}}{V}{\varphi_{0}^{(0)}} + \mathcal{O}(\lambda^{2}) = E_{0}^{(0)} + E_{0}^{(1)} + \mathcal{O}(\lambda^{2})
+    \end{equation*}
+    The inequality underlying the variational principle gaurantees $ E_{0} \leq \ev{H} $, which implies
+    \begin{equation*}
+        E_{0} \leq E_{0}^{(0)} + E_{0}^{(1)}.
+    \end{equation*}
+    In other words, the \Ham $ H $'s true ground state energy $ E_{0} $ is less than the sum of the first two perturbative energy corrections $ E_{0}^{(0)} $ and $ E_{0}^{(1)} $.
+    
+    
+    
+    
+
+
+
+    
+    
+    
+    
+    
+\end{itemize}
 
 
 
