@@ -69,7 +69,7 @@ These are my notes are from the Exercises portion of the class \textit{Elektroma
 
 \vspace{2mm}
 \textit{On Authorship:} 
-The exercises are led by Asst. Prof. Martin Klanj\v{s}ek, who has curated the problem sets and guides us through the solutions. Accordingly, credit for the problems in these notes goes to Prof. Klanj\v{s}ek. I take credit for nothing beyond typesetting the notes, translating to English, and adding an additional comment or two where I saw fit. The original exercises in Slovene (without solutions) can be found on the \href{https://www-f5.ijs.si/emp-2020-2021.html}{\underline{course website}}. 
+The exercises are led by Asst. Prof. Martin Klanj\v{s}ek, who has assembled the problem sets and guides us through the solutions. Accordingly, credit for the problems in these notes goes to Prof. Klanj\v{s}ek. I take credit for nothing beyond typesetting the notes, translating to English, and adding an additional comment or two where I saw fit. The original exercises in Slovene (without solutions) can be found on the \href{https://www-f5.ijs.si/emp-2020-2021.html}{\underline{course website}}. 
 
 \vspace{2mm}
 \textit{Disclaimer:} Mistakes---both trivial typos and legitimate errors---are likely. Keep in mind that these are the notes of an undergraduate student in the process of learning the material himself---take what you read with a grain of salt. If you find mistakes and feel like telling me, by \href{https://github.com/ejmastnak/fmf}{\underline{GitHub}} pull request, \href{mailto:ejmastnak@gmail.com}{\underline{email}} or some other means, I'll be happy to hear from you, even for the most trivial of errors.
@@ -86,12 +86,12 @@ The exercises are led by Asst. Prof. Martin Klanj\v{s}ek, who has curated the pr
 \subsection{Background Theory: Electric Field of a Charge Distribution}
 The electric field of a spatial charge distribution with volume charge density $ \rho(\r) $ is
 \begin{equation*}
-	\vec{E}(\vec{r}) = \frac{1}{4\pi \ee}\int \frac{\rho(\tvec{r}) \diff^{3}\tvec{r} }{\abs{\vec{r} - \tvec{r}}^{2}} \frac{\vec{r} - \tvec{r}}{\abs{\vec{r} - \tvec{r}}},
+	\vec{E}(\vec{r}) = \frac{1}{4\pi \ee}\iiint \frac{\rho(\tvec{r}) \diff^{3}\tvec{r} }{\abs{\vec{r} - \tvec{r}}^{2}} \frac{\vec{r} - \tvec{r}}{\abs{\vec{r} - \tvec{r}}},
 \end{equation*}
-where $ \tvec{r} $ is a placeholder variable for integration, $ \rho(\tvec{r}) \diff^{3}\tvec{r} $ is an infinitesimal element of charge at the position $ \tvec{r} $, and $ \vec{r} - \tvec{r} $ is the position of each charge.
+where $ \tvec{r} $ is a placeholder variable for integration, $ \rho(\tvec{r}) \diff^{3}\tvec{r} $ is an infinitesimal element of charge at the position $ \tvec{r} $.
 
 \subsection{Charged Disk}
-\textit{A charged disk has surface charge density $ \sigma $ and radius $ a $. What is the disk's electric field $ E(z) $ along an axis through the disk's center and normal to the disk? Analyze the limit behavior of $ E(z) $ for small and large $ z $.}
+\textit{A charged disk has surface charge density $ \sigma $ and radius $ a $. Find the disk's electric field $ E(z) $ along an axis through the disk's center and normal to the disk. Analyze the limit behavior of $ E(z) $ for small and large $ z $.}
 \begin{itemize}
 	\item We begin by breaking the disk into concentric rings and integrating over the contributions $ \diff E $ of each ring, where $ r $ and $ \diff r $ represent the radius and thickness of a ring, respectively. We then further divide each ring into infinitesimal segments with area $ r \diff \phi \diff r $. Along the perpendicular $ z $ axis through the disk's center each, a single such segment contributes the electric field
 	\begin{equation*}
@@ -194,25 +194,25 @@ where $ \tvec{r} $ is a placeholder variable for integration, $ \rho(\tvec{r}) \
 	
 	\item First, we briefly review the Fourier transform, which we can think of as an expansion over a basis of plane waves of the form $ e^{i \vec{k} \cdot \r} $. The expression $ U(\vec{k}) $ plays the role of a weight function and determines how much each wave contributes to the expansion
 	\begin{equation*}
-		U(\r) = \int \diff^{3}k U(\vec{k}) e^{i \vec{k}\cdot \r},
+		U(\r) = \iiint \diff^{3}k U(\vec{k}) e^{i \vec{k}\cdot \r},
 	\end{equation*}
 	where $ U(\vec{k}) $ is the amplitude of the plane wave with wave vector $ \vec{k} $. To find $ U(\vec{k}) $ we take the inner product of both sides of the above equation with the basis function $ e^{-i \tvec{k}\cdot\r} $, which gives 
 	\begin{equation*}
-		\int U(\r) e^{-i \tvec{k}\cdot \r} \diff^{3}r = \int \int \diff^{3}k \diff^{3}r U(\vec{k}) e^{i (\vec{k} - \tvec{k})\cdot \r}.
+		\iiint U(\r) e^{-i \tvec{k}\cdot \r} \diff^{3}r = \iiint \iiint \diff^{3}k \diff^{3}r U(\vec{k}) e^{i (\vec{k} - \tvec{k})\cdot \r}.
 	\end{equation*}
 	The integral over $ \r $ on the right-hand side is in fact a delta function, because the orthogonal plane waves cancel out over all space except at the origin, where they constructively interfere to infinity. Recognizing the delta function simplifies the equation to
 	\begin{equation*}
-		\int U(\r) e^{-i \tvec{k}\cdot \r} \diff^{3}r = (2\pi)^{3} \int U(\vec{k}) \delta (\vec{k} - \tvec{k}) \diff^{3}k = (2\pi)^{3} U(\tvec{k}).
+		\iiint U(\r) e^{-i \tvec{k}\cdot \r} \diff^{3}r = (2\pi)^{3} \iiint U(\vec{k}) \delta (\vec{k} - \tvec{k}) \diff^{3}k = (2\pi)^{3} U(\tvec{k}).
 	\end{equation*}
 	The delta function suppresses the integral everywhere except at $ (\vec{k} - \tvec{k}) $, which leads to the expression for the amplitude $ U(\tvec{k}) $ of a wave vector $ \tvec{k} $:
 	\begin{equation*}
-		U(\tvec{k}) = \frac{1}{(2\pi)^{3}} \int U(\r) e^{-i\vec{k}\cdot \r} \diff^{3}r.
+		U(\tvec{k}) = \frac{1}{(2\pi)^{3}} \iiint U(\r) e^{-i\vec{k}\cdot \r} \diff^{3}r.
 	\end{equation*}
 	This expression can also be interpreted as an inverse Fourier transform, used to recover $ U(\vec{k}) $ from $ U(\r) $.
 
     \item As an intermediate step, we analyze the behavior of the gradient operator under the Fourier transform. Since the gradient acts only on $ \r $, applying the gradient to the earlier expression for $ U(\r) $ gives
 	\begin{equation*}
-		\grad U(\r) = \int \diff^{3}k U(\vec{k}) \grad e^{i \vec{k}\cdot \r}.
+		\grad U(\r) = \iiint \diff^{3}k U(\vec{k}) \grad e^{i \vec{k}\cdot \r}.
 	\end{equation*}
 	Evaluating the gradient over $ (x, y, z) $ components gives
 	\begin{equation*}
@@ -226,19 +226,19 @@ where $ \tvec{r} $ is a placeholder variable for integration, $ \rho(\tvec{r}) \
 	\end{equation*}
     The expression for $ \grad U(\r) $ is thus
 	\begin{equation*}
-		\grad U(\r) = \int \diff^{3}k U(\vec{k}) \grad e^{i \vec{k}\cdot \r} = \int \diff^{3}k U(\vec{k})i \vec{k} e^{i \vec{k}\cdot \r},
+		\grad U(\r) = \iiint \diff^{3}k U(\vec{k}) \grad e^{i \vec{k}\cdot \r} = \iiint \diff^{3}k U(\vec{k})i \vec{k} e^{i \vec{k}\cdot \r},
 	\end{equation*}
 	which is a Fourier transform of the function $ U(\vec{k})i \vec{k} $. In other words, the gradient operator $ \grad $ transforms to multiplication by $ i\vec{k} $ under the Fourier transform. Analogously, the Laplacian $ \nabla^{2} $ transform into multiplication by $ (i\vec{k})^{2} = - k^{2} $. 
 	
 	\item Finally, we consider the behaviour of the delta function under the Fourier transform. Let $ \delta(\vec{k}) $ denote the amplitude in the expansion of $ \delta(\r) $, analogous to the relationship between $ U(\vec{k}) $ and $ U(\r) $. Using the inverse Fourier transform and the integral properties of the delta function produces
 	\begin{equation*}
-		\delta (\vec{k}) = \frac{1}{(2\pi)^{3}} \int \delta(\r) e^{-i\vec{k}\cdot\r}\diff^{3}r = \frac{1}{(2\pi)^{3}} e^{-i\vec{k}\cdot 0} = \frac{1}{(2\pi)^{3}}.
+		\delta (\vec{k}) = \frac{1}{(2\pi)^{3}} \iiint \delta(\r) e^{-i\vec{k}\cdot\r}\diff^{3}r = \frac{1}{(2\pi)^{3}} e^{-i\vec{k}\cdot 0} = \frac{1}{(2\pi)^{3}}.
 	\end{equation*}
     In other words, the delta function transforms to $ 1/(2\pi)^{3} $ in Fourier space.
 	
 	\item \textbf{Recipe:} We now state the recipe for solving the Poisson equation in Fourier space. Take the Fourier transform the Poisson equation from $ \r $ into $ \vec{k} $ space (where the Laplacian operator $ \laplacian $ simplifies to $ -ik^{2} $ under the Fourier transform) and solve for the amplitude $ U(\vec{k}) $ of each plane wave $ e^{-i\vec{k}\cdot \r} $. Substitute $ U(\vec{k}) $ into the Fourier transform,
 	\begin{equation*}
-		U(\r) = \int \diff^{3}k U(\vec{k}) e^{i \vec{k}\cdot \r},
+		U(\r) = \iiint \diff^{3}k U(\vec{k}) e^{i \vec{k}\cdot \r},
 	\end{equation*}
 	and evaluate the integral---typically in spherical coordinates---to find find $ U(\r) $. 
 	
@@ -264,7 +264,7 @@ where $ \tvec{r} $ is a placeholder variable for integration, $ \rho(\tvec{r}) \
 	
 	\item Next, we find $ U(\r) $ using a second Fourier transform
 	\begin{equation*}
-		U(\r) = \int \diff^{3} k \frac{q e^{i\vec{k}\cdot \r}}{k^{2}\ee(2\pi)^{3}} = \frac{q}{(2\pi)^{3}\ee} \int \frac{e^{i\vec{k}\cdot \r}}{k^{2}} \diff^{3}k.
+		U(\r) = \iiint \diff^{3} k \frac{q e^{i\vec{k}\cdot \r}}{k^{2}\ee(2\pi)^{3}} = \frac{q}{(2\pi)^{3}\ee} \iiint \frac{e^{i\vec{k}\cdot \r}}{k^{2}} \diff^{3}k.
     \end{equation*}
 	
     \item To solve the integral, we introduce an angle $ \theta $ between $ \r $ and $ \vec{k} $ and transform to spherical coordinates to get
@@ -303,15 +303,15 @@ where $ \tvec{r} $ is a placeholder variable for integration, $ \rho(\tvec{r}) \
 \begin{itemize}
 	\item We just solved the Poisson equation for the simple case $ \rho(\r) = \delta(\r) $. Can we use this result to solve the general case $ \rho = \rho(\r) $? The answer is yes, if we expand $ \rho(\r) $ over a basis of delta functions, as follows:
 	\begin{equation*}
-		\rho(\r) = \int \diff^{3}\tilde{r} \rho(\tvec{r}) \delta(\r - \tvec{r}).
+		\rho(\r) = \iiint \diff^{3}\tilde{r} \rho(\tvec{r}) \delta(\r - \tvec{r}).
 	\end{equation*}
 	In this case, the solution of $ U(\r) $ to the Poisson equation is
 	\begin{equation*}
-		U(\r) = \int \diff^{3}\tilde{r}\rho(\tvec{r}) \frac{1}{4\pi \ee\abs{\r - \tvec{r}}} = \frac{1}{4\pi \ee} \int\frac{\diff^{3}\tilde{r}\rho(\tvec{r})}{\abs{\r - \tvec{r}}}.
+		U(\r) = \iiint \diff^{3}\tilde{r}\rho(\tvec{r}) \frac{1}{4\pi \ee\abs{\r - \tvec{r}}} = \frac{1}{4\pi \ee} \iiint\frac{\diff^{3}\tilde{r}\rho(\tvec{r})}{\abs{\r - \tvec{r}}}.
 	\end{equation*}
 	This result is quite powerful---by solving the Poisson equation for a delta function and then expanding an arbitrary $ \rho(\r) $ in terms of the delta function, we now have the solution to the Poisson equation for any $ \rho(\r) $. We find the corresponding electric field with
 	\begin{equation*}
-		\vec{E} = - \grad U = \frac{1}{4\pi \ee} \int\frac{\diff^{3}\tilde{r}\rho(\tvec{r})}{\abs{\r - \tvec{r}}^{2}} \frac{\r - \tvec{r}}{\abs{r - \tvec{r}}},
+		\vec{E} = - \grad U = \frac{1}{4\pi \ee} \iiint\frac{\diff^{3}\tilde{r}\rho(\tvec{r})}{\abs{\r - \tvec{r}}^{2}} \frac{\r - \tvec{r}}{\abs{r - \tvec{r}}},
 	\end{equation*}
 	which agrees with the equation quoted in the previous exercise set.
 \end{itemize}
@@ -741,7 +741,7 @@ Often $ \rho(\r) = 0 $ in places we're solving for the electric potential. In th
 	\end{equation*}
 	We qualitatively expect $ \vec{p}_{e} $ to point upward (from the negative to the positively charged hemisphere), and confirm this analytically. By spherical symmetry, only the $ z $ component of $ \vec{p}_{e} $ is non-zero; this is
 	\begin{equation*}
-		p_{e_{z}} = \int \tilde{z} \diff q = \int (a \cos \theta) \cdot (\sigma \diff S) = \int( a \cos \theta) \cdot (3 \ee E_{0} \cos \theta) \cdot \diff S.
+		p_{e_{z}} = \int \tilde{z} \diff q = \iint (a \cos \theta) \cdot (\sigma \diff S) = \iint( a \cos \theta) \cdot (3 \ee E_{0} \cos \theta) \cdot \diff S.
 	\end{equation*}
 	To find $ \diff S $, we find the area of a small band of width $ \diff a $ around the sphere's surface. The band's area is $ 2\pi r \diff a = 2\pi (a \sin \theta ) (a \diff \theta) $. The dipole moment $ p_{e_{z}} $ is then
 	\begin{align*}
@@ -871,7 +871,7 @@ Often $ \rho(\r) = 0 $ in places we're solving for the electric potential. In th
 	
 	\item With surface charge density $ \sigma $ known, we then ask what is the total charge on the plane. Integrating the plane over rings with area $ \diff S = 2\pi \rho \diff \rho $, we have
 	\begin{equation*}
-		q_{\text{plane}} = \int \sigma \diff S = - \int_{0}^{\infty} \frac{qd}{2\pi(\rho^{2}+d^{2})^{3/2}} (2\pi \rho \diff \rho).
+		q_{\text{plane}} = \iint \sigma \diff S = - \int_{0}^{\infty} \frac{qd}{2\pi(\rho^{2}+d^{2})^{3/2}} (2\pi \rho \diff \rho).
 	\end{equation*}
 	In terms of the new variable $ u = \rho^{2} + d^{2} $, the integral evaluates to
 	\begin{equation*}
@@ -885,7 +885,7 @@ Often $ \rho(\r) = 0 $ in places we're solving for the electric potential. In th
 \textbf{Theory: Electrostatic Force}\\[2mm]
 The total electrostatic force $ \vec{F} $ acting on the charges enclosed in a region of space $ V $ permeated with an electric field $ \E $ is
 \begin{equation*}
-	\vec{F} = \ee \oint_{\partial V} \left[\E(\E \cdot \uvec{n}) - \frac{1}{2}E^{2}\uvec{n}\right]\diff S,
+	\vec{F} = \ee \oiint_{\partial V} \left[\E(\E \cdot \uvec{n}) - \frac{1}{2}E^{2}\uvec{n}\right]\diff S,
 \end{equation*}
 where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the charges. Like with Gauss's law, a good choice of the boundary surface, usually taking advantage of the problem's symmetries, tends to simplify the problem. Alternatively, if the electric field vanishes at infinity, we choose a surface that closes at infinity. 
 
@@ -896,7 +896,7 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 	\end{equation*}
 	For the part of the surface running parallel to the plane, the normal to the surface $ \uvec{n} $ points perpendicularly into the plane, parallel to the electric field. The force equation for the bottom half of the surface reads 
 	\begin{equation*}
-		\vec{F}_{e} = \ee \oint \left[E^{2}\uvec{n}- \frac{1}{2}E^{2}\uvec{n}\right]\diff S = \frac{\ee}{2}\uvec{n}\int E_{\perp}^{2}\diff S.
+		\vec{F}_{e} = \ee \iint_{\text{bottom}} \left[E^{2}\uvec{n}- \frac{1}{2}E^{2}\uvec{n}\right]\diff S = \frac{\ee}{2}\uvec{n}\iint_{\text{bottom}} E_{\perp}^{2}\diff S.
 	\end{equation*}
 	In fact, the contribution from the upper half of the surface is zero---the upper half extends to infinity, where the electric field vanishes. We only need to integrate over the bottom of the surface, running parallel to the plane. Writing $ \diff S = 2\pi \rho \diff \rho $ and substituting in the expression for $ E_{\perp} $, the force reads
 	\begin{align*}
@@ -916,7 +916,7 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 \subsection{Theory: Electrostatic Force}
 Recall the total electrostatic force $ \vec{F} $ acting on the charges enclosed in a region of space $ V $ permeated with an electric field $ \E $ is
 \begin{equation*}
-	\vec{F}_{e} = \ee \oint_{\partial V}\left[\E(\E\cdot \uvec{n}) - \frac{1}{2}E^{2} \uvec{n}\right] \diff S,
+	\vec{F}_{e} = \ee \oiint_{\partial V}\left[\E(\E\cdot \uvec{n}) - \frac{1}{2}E^{2} \uvec{n}\right] \diff S,
 \end{equation*}
 where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the charges.
 
@@ -937,7 +937,7 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 	
 	\item We then have $ \E \cdot \uvec{n} = E $ and $ \E( \E \cdot \uvec{n}) = E^{2}\uvec{n} $. The contribution to the force on along the sphere's outside surface is
 	\begin{equation*}
-		\vec{F}_{e} = \ee \int \frac{1}{2} E^{2} \uvec{n} \diff S.
+		\vec{F}_{e} = \ee \iint_{\text{outer}} \frac{1}{2} E^{2} \uvec{n} \diff S.
 	\end{equation*}
 	The contribution from the hemisphere plane through the sphere zero, since $ \E = 0 $ inside the sphere. 
 	
@@ -947,7 +947,7 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 	\end{equation*}
 	Inserting $ E $ into the force equation gives
 	\begin{equation*}
-		\vec{F}_{e} = \ee \int \frac{1}{2}\big(3E_{0} \cos \theta\big)^{2} \uvec{n} \diff S.
+		\vec{F}_{e} = \ee \iint \frac{1}{2}\big(3E_{0} \cos \theta\big)^{2} \uvec{n} \diff S.
 	\end{equation*}
 	In spherical coordinates, the unit normal $ \uvec{n} $ to the sphere's surface is $ \uvec{n} = (\sin \theta \cos \phi, \sin \theta \sin \phi, \cos \theta) $. The surface element $ \diff S $ at the surface $ r = a $ is (just like in the previous exercise sets) $ \diff S = a^{2} \diff \phi \sin \theta \diff \theta $. The force on the sphere's upper half is then
 	\begin{equation*}
@@ -999,11 +999,11 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 	
 	\item We find the dipole moment with 
 	\begin{equation*}
-		\vec{p} = \int  \diff^{3} \tilde{r} \rho(\tvec{r}) \tvec{r}.
+		\vec{p} = \iiint  \diff^{3} \tilde{r} \rho(\tvec{r}) \tvec{r}.
 	\end{equation*}
 	We find the quadrupole moment by components:
 	\begin{equation*}
-		\mathrm{Q}_{ij} = \int  \diff^{3} \tilde{r} \rho(\tvec{r}) \big( 3\tilde{r}_{i}\tilde{r}_{j} - \delta_{ij}\tilde{r}^{2} \big).
+		\mathrm{Q}_{ij} = \iiint  \diff^{3} \tilde{r} \rho(\tvec{r}) \big( 3\tilde{r}_{i}\tilde{r}_{j} - \delta_{ij}\tilde{r}^{2} \big).
 	\end{equation*}
 	The discrete analog a configuration of $ N $ charges reads
 	\begin{equation*}
@@ -1090,11 +1090,11 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 	\end{equation*}
 	where $ \vec{j} $ is the current density vector. This equation is a vector analog of the Poisson equation $ \laplacian U = - \frac{\rho}{\ee} $ from electrostatics. Similarly to how the electrostatic potential $ U $ at a point $ \r $ in region of space with charge density $ \rho $ is found with
 	\begin{equation*}
-		U = \frac{1}{4 \pi \ee} \int \frac{\rho(\tvec{r})\diff^{3}\tilde{r}}{\abs{\r - \tvec{r}}}.
+		U = \frac{1}{4 \pi \ee} \iiint \frac{\rho(\tvec{r})\diff^{3}\tilde{r}}{\abs{\r - \tvec{r}}}.
 	\end{equation*}
 	The magnetic potential at a point $ \r $ in region of space with current density $ \vec{j} $ is
 	\begin{equation*}
-		\A(\r) = \frac{\mu_{0}}{4 \pi} \int \frac{\vec{j}(\tvec{r})\diff^{3}\tilde{r}}{\abs{\r - \tvec{r}}}.
+		\A(\r) = \frac{\mu_{0}}{4 \pi} \iiint \frac{\vec{j}(\tvec{r})\diff^{3}\tilde{r}}{\abs{\r - \tvec{r}}}.
 	\end{equation*}
 	
 	\item In problems involving one-dimensional conductors, where $ \vec{j} $ is non-zero only along the conductor, the expression for $ \vec{j}(\tvec{r})\diff^{3}\tilde{r} $ simplifies to
@@ -1187,7 +1187,7 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 \begin{itemize}
 	\item We choose a coordinate system so the disk lies in the $ x, y $ plane and the rotation axis coincides with the $ z $ axis, so $ \bm{\omega} = (0, 0, \omega) $. Start with the general Biot-Savart law
 	\begin{equation*}
-		\B (\r) = \frac{\mu_{0}}{4\pi}\int \frac{\vec{j}(\tvec{r}) \cross (\r - \tvec{r})}{\abs{\r - \tvec{r}}^{3}} \diff^{3}\tilde{r},
+		\B (\r) = \frac{\mu_{0}}{4\pi}\iiint \frac{\vec{j}(\tvec{r}) \cross (\r - \tvec{r})}{\abs{\r - \tvec{r}}^{3}} \diff^{3}\tilde{r},
 	\end{equation*}
 	and, like in the previous problem, find expressions for each vector quantity in the equation. The expression for $ \r $ along the $ z $ axis is simply $ \r = (0, 0, z) $, while the expression for $ \tvec{r} $, which lies in the disk in the $ x, y $ plane, is
 	\begin{equation*}
@@ -1225,7 +1225,7 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 	\end{equation*}
 	Substituting $ \vec{j}(\tvec{r}) \cross (\r - \tvec{r}) $ and $  \abs{\r - \tvec{r}} $ into the Biot-Savart law gives
 	\begin{equation*}
-		\B(z) = \frac{\mu_{0}}{4 \pi} \int \frac{j \diff^{3} \t{r}}{\big(\tilde{r}^{2} + z^{2}\big)^{3/2}} 
+		\B(z) = \frac{\mu_{0}}{4 \pi} \iiint \frac{j \diff^{3} \t{r}}{\big(\tilde{r}^{2} + z^{2}\big)^{3/2}} 
 		\begin{bmatrix}
 			z \cos \t{\phi}\\
 			z \sin \t{\phi}\\
@@ -1303,7 +1303,7 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 
 The magnetic force $ \vec{F} $ on the matter contained in the region of space enclosed in the region $ V $ and permeated by the magnetic field $ \B $ is
 \begin{equation*}
-	\vec{F} = \frac{1}{\mu_{0}}\oint_{\partial V}\left [\B(\B \cdot \uvec{n}) - \frac{1}{2}\B^{2}\uvec{n}\right ] \diff S,
+	\vec{F} = \frac{1}{\mu_{0}}\oiint_{\partial V}\left [\B(\B \cdot \uvec{n}) - \frac{1}{2}\B^{2}\uvec{n}\right ] \diff S,
 \end{equation*}
 where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 
@@ -1321,17 +1321,17 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	\end{equation*}
 	Outside the conductor, the net current enclosed by a circular path encircling both the outer sheath and inner wire is zero, and the Ampere's law reads
 	\begin{equation*}
-		\int \vec{B} \cdot \diff \bm{l} = \mu_{0} (+I - I) = 0 \implies B = 0.
+		\oint \vec{B} \cdot \diff \bm{l} = \mu_{0} (+I - I) = 0 \implies B = 0.
 	\end{equation*}
 	In other words, there is no magnetic field outside the conductor.
 	
 	\item With the coaxial cable's magnetic field known, we now find the magnetic force $ \vec{F}_{m} $ on a semi-circular half of the outer sheath.
 	\begin{equation*}
-		\vec{F}_{m} = \frac{1}{\mu_{0}}\oint_{\partial V}\left [\B(\B \cdot \uvec{n}) - \frac{1}{2}B^{2}\uvec{n}\right ] \diff S.
+		\vec{F}_{m} = \frac{1}{\mu_{0}}\oiint_{\partial V}\left [\B(\B \cdot \uvec{n}) - \frac{1}{2}B^{2}\uvec{n}\right ] \diff S.
 	\end{equation*}
 	We choose an integration surface tightly hugging the half-sheath and work in cylindrical coordinates $ r, \phi $. Outside the sheath, the magnetic field is zero and there is no contribution to $ \bm{F}_{m} $. Inside the sheath, the magnetic field is tangent to the semicircle, so $ \vec{B}\cdot \uvec{n} = 0 $, and the force integral reads
 	\begin{equation*}
-		\vec{F}_{m} = \frac{1}{\mu_{0}} \int \big[0 - \frac{1}{2}B^{2}\uvec{n}\big] \diff S .
+		\vec{F}_{m} = \frac{1}{\mu_{0}} \iint \big[0 - \frac{1}{2}B^{2}\uvec{n}\big] \diff S .
 	\end{equation*}
 	The magnetic field at along the sheath (where $ r = a $) is constant and equal to $ B = \frac{\mu_{0}I}{2\pi a} $ and can be moved outside the integral. The normal vector in cylindrical coordinates reads 
 	\begin{equation*}
@@ -1373,7 +1373,7 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	
 	\item Consider a semicircular half of a single inductor coil. As in the previous problem, the magnetic force with magnitude $ F_{m} $ acts upwards on the top of the semicircle, while two ``surface tension'' forces $ F_{1} = \frac{F_{m}}{2} $ act downward at the semicircle's two ends. As usual, we find the magnetic force $ \vec{F}_{m} $ using
 	\begin{equation*}
-		\vec{F}_{m} = \frac{1}{\mu_{0}}\oint_{\partial V}\left [\B(\B \cdot \uvec{n}) - \frac{1}{2}B^{2}\uvec{n}\right ] \diff S.
+		\vec{F}_{m} = \frac{1}{\mu_{0}}\oiint_{\partial V}\left [\B(\B \cdot \uvec{n}) - \frac{1}{2}B^{2}\uvec{n}\right ] \diff S.
 	\end{equation*}
 	For the integration surface (awkward to describe, best to see a picture) we choose a surface that looks like a a coin cut in half, basically a thin three-dimensional extension of a semicircle enclosing the coil's semicircular upper half. We split the surface into four parts: the left and right semicircular faces, the circular ribbon along the surface's outer radius, and the thin rectangular plane along the surface's bottom. 
 	
@@ -1385,7 +1385,7 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	\end{equation*}
 	The magnetic field $ \vec{B} $ points along the toroid's longitudinal axis (into the plane of a cross-sectional coil) and is perpendicular to the normal $ \uvec{n} $ to the planar integration surface, so $ \uvec{B} \cdot \uvec{n} = 0 $. The magnetic force simplifies to
 	\begin{align*}
-		\vec{F}_{m} &= \frac{1}{\mu_{0}}\left [0 - \frac{1}{2}B^{2}\uvec{n}\right ] \diff S = - \frac{1}{2\mu_{0}} \left(\frac{\mu_{0}NI}{2\pi r_{1}}\right)^{2} \uvec{n} \int \diff S \\
+		\vec{F}_{m} &= \frac{1}{\mu_{0}}\left [0 - \frac{1}{2}B^{2}\uvec{n}\right ] \diff S = - \frac{1}{2\mu_{0}} \left(\frac{\mu_{0}NI}{2\pi r_{1}}\right)^{2} \uvec{n} \iint \diff S \\
 		&= - \frac{1}{2\mu_{0}} \left(\frac{\mu_{0}NI}{2\pi r_{1}}\right)^{2} \uvec{n} \left (r_{2} \frac{2\pi r_{1}}{N}\right ) = - \frac{\mu_{0}NI^{2}}{2\pi}\frac{r_{2}}{r_{1}} \uvec{n}.
 	\end{align*}
 	The unit vector $ \uvec{n} $ points downward, so $ -\uvec{n} $ and thus $ \vec{F}_{m} $ point upward and pull the coil apart. The magnitude of the tension on the coil is then
@@ -1449,7 +1449,7 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	\end{equation*}
 	We find the total current $ I $ from the current density via
 	\begin{equation*}
-		I = \int j_{t} \diff S = \int_{r_{1}}^{r_{2}} \left(\frac{\sigma U_{0}}{\pi r}\right) \cdot h \diff r = \frac{\sigma U_{0} h}{\pi} \ln \frac{r_{2}}{r_{1}},
+		I = \iint j_{t} \diff S = \int_{r_{1}}^{r_{2}} \left(\frac{\sigma U_{0}}{\pi r}\right) \cdot h \diff r = \frac{\sigma U_{0} h}{\pi} \ln \frac{r_{2}}{r_{1}},
 	\end{equation*}
 	where $ h $ is the plate's thickness. The electrical resistance is then
 	\begin{equation*}
@@ -1502,7 +1502,7 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	
 	\item We find magnetic flux with $ \Phi = \int \B \cdot \diff \vec{S} $; the dot product drops because $ \B $ is parallel to the frame's cross section $ \diff \vec{S} $. The square frame's surface element is $ \diff S = 2y\diff y $ (the frame's width is 2y), and the magnetic flux through the square frame is
 	\begin{align*}
-		\Phi_{1} &= \int B \diff S = 2\int_{0}^{d/2} \frac{\mm I_{2}d}{2\pi}  \frac{2y\diff y}{y(d-y)} = -\frac{2\mm I_{2}d}{\pi} \ln(d-y)\big |_{0}^{d/2}\\
+		\Phi_{1} &= \iint B \diff S = 2\int_{0}^{d/2} \frac{\mm I_{2}d}{2\pi}  \frac{2y\diff y}{y(d-y)} = -\frac{2\mm I_{2}d}{\pi} \ln(d-y)\big |_{0}^{d/2}\\
 		& =  \frac{2\mm I_{2}d}{\pi} \left[\ln d - \ln\frac{d}{2}\right] =  \frac{2\mm d \ln 2}{\pi}  I_{2}.
 	\end{align*}
 	Note the use of symmetry---we integrate only from $ 0 $ to $ d/2 $ and multiply by two.
@@ -1564,7 +1564,7 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	\end{equation*}
 	The field and surface are parallel, so $ \vec{B} \cdot \diff \vec{S} = B \diff S $, and the magnetic flux is
 	\begin{equation*}
-		\Phi_{2} = \int B \diff S = \frac{\mm I_{2} l d}{2 \pi}\int_{a}^{d-a}\left(\frac{1}{y} + \frac{1}{d-y}\right)\diff y,
+		\Phi_{2} = \iint B \diff S = \frac{\mm I_{2} l d}{2 \pi}\int_{a}^{d-a}\left(\frac{1}{y} + \frac{1}{d-y}\right)\diff y,
 	\end{equation*}
 	where $ a $ is the wire's radius. The integral evaluates to
 	\begin{equation*}
@@ -1611,7 +1611,7 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	
 	\item The magnetic flux $ \Phi $ through the loop, using $  \diff S = 2\pi \rho \diff \rho $, is
 	\begin{align*}
-		\Phi &= \int B_{\perp} \diff S = \frac{\mm g d}{2} \int_{0}^{a} \frac{\rho \diff \rho}{(\rho^{2} + d^{2})^{3/2}} = \frac{\mm g d}{4}(-2)\frac{1}{\sqrt{\rho^{2} + d^{2}}}\bigg |_{0}^{a}\\
+		\Phi &= \iint B_{\perp} \diff S = \frac{\mm g d}{2} \int_{0}^{a} \frac{\rho \diff \rho}{(\rho^{2} + d^{2})^{3/2}} = \frac{\mm g d}{4}(-2)\frac{1}{\sqrt{\rho^{2} + d^{2}}}\bigg |_{0}^{a}\\
 		& = \frac{\mm g}{2}\left(1 - \frac{d}{\sqrt{a^{2} + d^{2}}}\right).
 	\end{align*}
 	
@@ -1639,7 +1639,7 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	\begin{equation*}
 		\iint_{S} (\curl \E)\diff \vec{S} = - \pdv{t}\iint_{S} \B \cdot \diff \vec{S} - \mm \iint_{S} \vec{j}_{\text{m}}\diff S.
 	\end{equation*}
-	We then apply Stokes' law, which leads to
+	We then apply Stokes' theorem, which leads to
 	\begin{equation*}
 		\oint \E \cdot \diff \vec{l} = U_{i} = - \dot{\Phi} - \mm I_{\text{m}},
 	\end{equation*}
@@ -1694,7 +1694,7 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	\begin{equation*}
 		\curl (\curl \E) = \grad (\div \E) - \laplacian \E  = - \pdv{t} \curl \B.
 	\end{equation*}
-	We then apply $ \div \E = 0 $ and $ \curl \B = \mm \j = \mm (\sigma \E) $ to get
+	We then apply $ \div \E = 0 $ and $ \curl \B = \mm \vec{j} = \mm (\sigma \E) $ to get
 	\begin{equation*}
 		- \laplacian \E = - \pdv{t} \mm \sigma \E.
 	\end{equation*}
@@ -1758,7 +1758,7 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	
 	\item With potential difference known, we find the current through the conductor with
 	\begin{equation*}
-		I = \int j \diff S = \int (\sigma E_{z}) \diff S = \frac{\sigma E_{0}}{\cosh \frac{ka}{2}} \int_{-a/2}^{a/2} \cosh(kx) (b \diff x),
+		I = \iint j \diff S = \iint (\sigma E_{z}) \diff S = \frac{\sigma E_{0}}{\cosh \frac{ka}{2}} \int_{-a/2}^{a/2} \cosh(kx) (b \diff x),
 	\end{equation*}
 	where we have written the surface element $ \diff S = b \diff x $ in terms of the conductor's height $ b $. The integral evaluates to
 	\begin{align*}
@@ -1819,7 +1819,7 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	
 	\item In integral form for a region of space $ V $, the energy equation reads
 	\begin{equation*}
-		\pdv{t}\int_{V}w \diff V + \int_{\partial V} \S \cdot  \diff \vec{S} + \int_{V} \vec{j}\cdot \E \diff V = 0,
+		\pdv{t}\iiint_{V}w \diff V + \oiint_{\partial V} \S \cdot  \diff \vec{S} + \iiint_{V} \vec{j}\cdot \E \diff V = 0,
 	\end{equation*}
 	where we have used the divergence theorem to convert the Poynting vector term to a surface integral.
 	\begin{itemize}
@@ -1870,7 +1870,7 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	
 	\item The electromagnetic power through the cross section is thus
 	\begin{align*}
-		P &= \int \S \cdot \diff \vec{S} = \int \SS \diff S = \int_{a}^{b}\left(\frac{UI}{2 \pi \ln \frac{b}{a}r^{2}}\right)(2\pi r \diff r)\\
+		P &= \iint \S \cdot \diff \vec{S} = \iint \SS \diff S = \int_{a}^{b}\left(\frac{UI}{2 \pi \ln \frac{b}{a}r^{2}}\right)(2\pi r \diff r)\\
 		& = \frac{UI}{\ln \frac{b}{a}} \int_{a}^{b} \frac{\diff r}{r} =	\frac{UI}{\ln \frac{b}{a}}\ln \frac{b}{a} = UI,
 	\end{align*}
 	where $ \S \cdot \diff \vec{S} = \SS \diff S $ because $ \S $ is parallel to coaxial cable's cross section.
@@ -1901,7 +1901,7 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	
 	\item We find electromagnetic power by integrating $ \SS $ over the cylinder's lateral surface (not the cross section!). The power through a lateral surface at radius $ r $ is
 	\begin{equation*}
-		P(r) = \int_{S_{\text{lat}}} \S \cdot \diff \vec{S} = \int_{S_{\text{lat}}} \SS \diff S =  \left(\frac{UI}{2\pi a^{2}l}r\right) (2\pi r l) = \frac{UIr^{2}}{a^{2}}.
+		P(r) = \iint_{S_{\text{lat}}} \S \cdot \diff \vec{S} = \iint_{S_{\text{lat}}} \SS \diff S =  \left(\frac{UI}{2\pi a^{2}l}r\right) (2\pi r l) = \frac{UIr^{2}}{a^{2}}.
 	\end{equation*}
 	The power through the entire conductor's lateral surface occurs at $ r = a $, which produces the familiar result
 	\begin{equation*}
@@ -1910,15 +1910,15 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	
 	\item Next, we consider the conductor's energy balance
 	\begin{equation*}
-		- \pdv{t}\int_{V}w \diff V = \int_{\partial V} \S \cdot \diff \vec{S} + \int_{V} \vec{j} \cdot \E \diff V =  P + \int_{V} \vec{j} \cdot \E \diff V.
+		- \pdv{t}\iiint_{V}w \diff V = \oiint_{\partial V} \S \cdot \diff \vec{S} + \iiint_{V} \vec{j} \cdot \E \diff V =  P + \iiint_{V} \vec{j} \cdot \E \diff V.
 	\end{equation*}
 	Because the situation is stationary we have $ \pdv{w}{t} = 0$, and thus
 	\begin{equation*}
-		P + \int_{V} \vec{j} \cdot \E \diff V \equiv P + P_{\text{loss}} = 0 \implies P_{\text{loss}} = -P = -UI.
+		P + \iiint_{V} \vec{j} \cdot \E \diff V \equiv P + P_{\text{loss}} = 0 \implies P_{\text{loss}} = -P = -UI.
 	\end{equation*}
 	Note that Ohmic losses amount to $ P_{\text{loss}} = -UI $, which is the familiar expression from e.g. high school physics. The energy balance reads
 	\begin{equation*}
-		P + \int \vec{j} \cdot \E \diff V =  P + P_{\text{loss}} = UI - UI = 0,
+		P + \iiint \vec{j} \cdot \E \diff V =  P + P_{\text{loss}} = UI - UI = 0,
 	\end{equation*}
 	and energy is conserved, at it must be. 
 	
@@ -1942,7 +1942,7 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	\end{equation*}
 	Note that $ \mm \vec{j} = 0 $ inside the slit, since there's no free current. We integrate the equation over the conductor's cross-sectional surface $ S $ to get
 	\begin{equation*}
-		\int_{S} \curl \B \cdot \diff \vec{S} = \oint \B \cdot \diff \vec{l}  = \ee \mm \pdv{t}\int_{S}\E\cdot \diff S =  \ee \mm \pdv{\E}{t} \cdot (\pi r^{2}).
+		\iint_{S} \curl \B \cdot \diff \vec{S} = \oint \B \cdot \diff \vec{l}  = \ee \mm \pdv{t}\iint_{S}\E\cdot \diff \vec{S} =  \ee \mm \pdv{\E}{t} \cdot (\pi r^{2}).
 	\end{equation*}
 	We evaluate the line integral over the surface's boundary and substitute in electric field to get
 	\begin{equation*}
@@ -1954,7 +1954,7 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	
 	\item Since $ \E $ points along the conductor's longitudinal axis and $ \B $ is tangent to the lateral surface, $ \S = \E \cross \B $ points along the radial direction. Because $ \B \perp \S$, the power through the lateral surface is simply
 	\begin{equation*}
-		P = \int_{S_{\text{lat}}} \SS \diff S = \frac{1}{\mm}\int_{S_\text{lat}} EB \diff S = \frac{1}{\mm} \int_{S_{\text{lat}}}  \left(\frac{I}{\ee S}t\right)\left(\frac{\mm I}{2S} r\right) \diff S.
+		P = \iint_{S_{\text{lat}}} \SS \diff S = \frac{1}{\mm}\iint_{S_\text{lat}} EB \diff S = \frac{1}{\mm} \iint_{S_{\text{lat}}}  \left(\frac{I}{\ee S}t\right)\left(\frac{\mm I}{2S} r\right) \diff S.
 	\end{equation*}
 	We set $ r = a $ at the lateral surface to get
 	\begin{equation*}
@@ -1964,7 +1964,7 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	
 	\item  Finally we consider the conductor's energy balance. If we neglect Ohmic losses, the energy balance reads
 	\begin{equation*}
-		\pdv{t}\int_{V}w \diff V + \int_{\partial V} \S \cdot \diff \vec{S} = \pdv{W_{\text{EM}}}{t} + P = 0,
+		\pdv{t}\iiint_{V}w \diff V + \oiint_{\partial V} \S \cdot \diff \vec{S} = \pdv{W_{\text{EM}}}{t} + P = 0,
 	\end{equation*}
 	where $ W_{\text{EM}} = W_{\text{E}} + W_{\text{B}} $ is the sum of magnetic and electric field energy. Note that $ B = B(r)$  and thus magnetic energy $ W_{\text{B}} $ is independent of time. It follows that
 	\begin{equation*}
@@ -2006,7 +2006,7 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	
 	\item To relate surface and volume charge density, we integrate $ \rho_{\text{b}} = - \div \P $ over the sphere's volume and apply the divergence theorem
 	\begin{equation*}
-		\int_{V} \rho_{\text{b}}\diff V = q_{\text{b}} = - \int_{V}\div \P \diff V = - \int_{S}\P \cdot \diff \vec{S} = - \P \cdot \vec{S} \big |_{\text{in}}^{\text{out}},
+		\iiint_{V} \rho_{\text{b}}\diff V = q_{\text{b}} = - \iiint_{V}\div \P \diff V = - \iint_{S}\P \cdot \diff \vec{S} = - \P \cdot \vec{S} \big |_{\text{in}}^{\text{out}},
 	\end{equation*}
 	where the last step writes $ \vec{S} = \uvec{n}S $ and notes that polarization is zero outside the sphere. The bound surface charge density is then
 	\begin{equation*}
@@ -2020,7 +2020,7 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	
 	\item We find total bound charge from $ \rho_{\text{b}} $ and $ \sigma_{\text{b}} $ by integrating both volume and surface charge densities:
 	\begin{equation*}
-		q_{\text{b}} = \int_{V} \rho_{\text{b}} \diff V + \int_{S} \sigma_{\text{b}} \diff S = - 3k \frac{4}{3}\pi a^{3} + ka 4\pi a^{2} = 0.
+		q_{\text{b}} = \iiint_{V} \rho_{\text{b}} \diff V + \iint_{S} \sigma_{\text{b}} \diff S = - 3k \frac{4}{3}\pi a^{3} + ka 4\pi a^{2} = 0.
 	\end{equation*} 
 	We should expect total charge to be zero, since all dipoles within the sphere should cancel out.
 \end{itemize}	
@@ -2189,9 +2189,9 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	\begin{equation*}
 		\curl \E = - \pdv{\B}{t}.
 	\end{equation*}
-	In our static case we have $ \pdv{\B}{t} = 0 $. We integrate the equation over a surface hugging the boundary and apply Stokes' law to get 
+	In our static case we have $ \pdv{\B}{t} = 0 $. We integrate the equation over a surface hugging the boundary and apply Stokes' theorem to get 
 	\begin{equation*}
-		\int_{S}\curl \E \cdot \div \vec{S} = \oint \E \cdot \diff \vec{l} = 0,
+		\iint_{S}\curl \E \cdot \div \vec{S} = \oint \E \cdot \diff \vec{l} = 0,
 	\end{equation*}
 	where the line integral runs over a rectangular path thinly hugging a capacitor plate. Because the path thinly hugs the plate, the integral registers only the component of $ \E $ parallel to the plates:
 	\begin{equation*}
@@ -2260,7 +2260,7 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 			
 	\item Next, we use the boundary condition on the $ \D $ field to find the charge $ q $ on the plates. We derive the relevant boundary condition, we apply Gauss's law to a thin region tightly enclosing a capacitor plate. For the $ \D $ field, which obeys $ \div \D = \rho_{\text{f}} $, Gauss's law reads
 	\begin{equation*}
-		\int_{V} \rho_{\text{f}} \diff V = \int_{S} \D \cdot \diff \vec{S} \implies q_{\text{f}} = \left[D_{\text{out}}^{(\perp)} - D_{\text{in}}^{(\perp)} \right] S.
+		\iiint_{V} \rho_{\text{f}} \diff V = \iint_{S} \D \cdot \diff \vec{S} \implies q_{\text{f}} = \left[D_{\text{out}}^{(\perp)} - D_{\text{in}}^{(\perp)} \right] S.
 	\end{equation*}
 	In our case, where $ D_{\text{out}}^{(\perp)} = 0 $ and $ D_{\text{out}}^{(\perp)} = D_{y} $ the charge on the capacitor plates (up to a minus sign depending on the definition of the surface normal) is
 	\begin{equation*}
