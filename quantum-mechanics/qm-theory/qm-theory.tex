@@ -15,6 +15,7 @@
 \setlength{\parindent}{0pt} % to stop indenting new paragraphs
 \newcommand{\diff}{\mathop{}\!\mathrm{d}} % differential
 \newcommand{\dr}{\diff^{3} \r}  % d^3 r
+\newcommand{\ddp}{\diff^{3} \vec{p}}  % d^3 p (\dp is a TeX primitive)
 
 
 \renewcommand{\div}{\nabla \cdot}
@@ -22,11 +23,14 @@
 \renewcommand{\grad}{\nabla}
 \renewcommand{\laplacian}{\nabla^{2}}
 
+\newcommand{\minus}{\mspace{0.5mu}\scalebox{0.9}{-}}
+\newcommand{\plus}{\scalebox{0.95}{+}}
 
 \newcommand{\eqtext}[1]{\qquad \text{#1} \qquad}
 \newcommand{\Schro}{Schr\"{o}dinger\xspace}
 \newcommand{\Ham}{Hamiltonian\xspace}
 \newcommand{\Herm}{Hermitian\xspace}
+\newcommand{\Mol}{M\o ller\xspace}
 
 \newcommand{\CG}{Clebsch-Gordan}
 
@@ -38,7 +42,6 @@
 \newcommand{\uvec}[1]{\hat{\vec{#1}}}  % for dotted vector quantity
 
 \renewcommand{\t}[1]{\tilde{#1}}
-
 \newcommand{\F}[1]{\widehat{#1}} % fourier transform
 
 
@@ -52,6 +55,9 @@
 \newcommand{\Q}{\vec{Q}}  % parameter vector for adiabatic transitions
 \newcommand{\gq}{\grad_{\mspace{-3mu}Q}\mspace{1mu}} 
 
+\renewcommand{\SS}{\mat{S}}  % scattering matrix
+\newcommand{\M}{\mat{M}}  % transfer matrix
+\newcommand{\MM}{\mathrm{M}}  % transfer matrix
 
 % particle in an electromagnetic field
 \newcommand{\A}{\vec{A}}  % magnetic vector potential
@@ -4911,19 +4917,787 @@ We will now use the just-derived relations $ [L_{z}, L_{\pm}] = \pm \hbar L_{\pm
     \end{equation*}
     In other words, the \Ham $ H $'s true ground state energy $ E_{0} $ is less than the sum of the first two perturbative energy corrections $ E_{0}^{(0)} $ and $ E_{0}^{(1)} $.
     
-    
-    
-    
+\end{itemize}
 
+\section{Scattering}
 
+\subsection{Scattering in One Dimension}
+\begin{itemize}
+    \item We first consider one-dimensional scattering problems involving a \Ham of the form
+    \begin{equation*}
+        H = - \frac{\hbar^{2}}{2m}\dv[2]{}{x} + V(x).
+    \end{equation*}
+    In the absence of a potential, i.e. for $ V(x) = 0 $, the \Ham $ H $'s stationary states are plane waves with wavefunctions and energies of the form
+    \begin{equation*}
+        \braket{x}{\psi} \sim e^{\pm i kx} \qquad \text{with} \qquad E_{p} = \frac{p^{2}}{2m} > 0.
+    \end{equation*}
+    Each energy eigenvalue $ E_{p} $ is doubly degerate, since the linearly independent states with momenta $ \pm p = \pm \hbar k $ have the same energy.
 
+    \item In scattering problems we have $ V(x) \neq 0 $; however, we assume the potential is nonzero only in a finite region $ x \in [x_{a}, x_{b}] $. More so, we assume the potential does not allow for bound states. In such situations, we write stationary scattering states in the form
+    \begin{equation*}
+        \psi(x) = 
+        \begin{cases}
+            A_{1} e^{ikx} + B_{1} e^{-ikx} & x < x_{a}\\
+            \psi_{ab}(x) & x \in [x_{a}, x_{b}]\\
+            A_{2} e^{-ikx} + B_{2} e^{ikx} & x > x_{a}.
+        \end{cases}
+    \end{equation*}
+    In other words, we assume the wavefunction is a linear superposition of plane waves in the region of zero potential and some wavefunction $ \psi_{ab} $ in the region with non-zero potential $ V(x), x \in [x_{a}, x_{b}] $. The $ A $ coefficients denote waves moving toward the potential barrier and the $ B $ coefficients denote waves moving away from the barrier.
+
+    \item Next, we introduce two two-dimensional column vectors, $ \Psi_{\text{in}} $ and $ \Psi_{\text{out}} $, which encode the waves moving toward and moving away from the potential, respectively. The vectors are:
+    \begin{align*}
+        & \Psi_{\text{in}} = 
+        \begin{pmatrix}
+            A_{1}\\
+            A_{2}
+        \end{pmatrix}
+        && \Psi_{\text{out}} = 
+        \begin{pmatrix}
+            B_{1} \\
+            B_{2}
+        \end{pmatrix}\\
+        & \Psi_{\text{in}}^{\dagger} = \big( A_{1}^{*}, A_{2}^{*} \big)
+        && \Psi_{\text{out}}^{\dagger} = \big( B_{1}^{*}, B_{2}^{*} \big).
+    \end{align*}
+
+    \item The system's associated probability current density is constant and equal to
+    \begin{equation*}
+        j_{a} = \frac{\hbar k}{m} \big( \abs{A_{1}}^{2} - \abs{B_{1}}^{2} \big) = j_{b} = \frac{\hbar k}{m} \big( \abs{B_{2}}^{2} - \abs{A_{2}}^{2} \big),
+    \end{equation*}
+    from which follows the fundamental relationship between the coefficients $ A $ and $ B $, namely:
+    \begin{equation*}
+        \abs{A_{1}}^{2} + \abs{A_{2}}^{2} = \abs{B_{1}}^{2} + \abs{B_{2}}^{2}.
+    \end{equation*}
+    In other words, the sum of the currents entering the potential equals the sum of the currents leaving the potential, which may also be written
+    \begin{equation*}
+        \Psi_{\text{out}}^{\dagger} \Psi_{\text{out}}^{\dagger} = \Psi_{\text{in}}^{\dagger} \Psi_{\text{in}}^{\dagger}.
+    \end{equation*}
     
+\end{itemize}
+
+\subsubsection{The Scattering Matrix}
+\begin{itemize}
+    \item The coefficient vectors $ \Psi_{\text{in}} $ and $ \Psi_{\text{out}} $ are related by a scattering matrix $ \SS $ via
+    \begin{equation*}
+        \Psi_{\text{out}} = \SS \Psi_{\text{in}}.
+    \end{equation*}
+    The scattering matrix is unitary, which we can prove via
+    \begin{equation*}
+        \Psi_{\text{out}}^{\dagger} \Psi_{\text{out}} = \Psi_{\text{out}}^{\dagger} \SS \Psi_{\text{in}} = \Psi_{\text{in}}^{\dagger} \SS^{\dagger} \SS \Psi_{\text{in}}
+    \end{equation*}
+    Since $ \Psi_{\text{out}}^{\dagger} \Psi_{\text{out}}^{\dagger} = \Psi_{\text{in}}^{\dagger} \Psi_{\text{in}}^{\dagger} $, it follows that $ \SS^{\dagger} \SS = \mathbf{I} $ and thus $ \SS^{\dagger} = \SS^{-1} $, which means $ \SS $ is indeed unitary.
+
+    \item We will parameterize the scattering matrix in the form
+    \begin{equation*}
+        \SS = 
+        \begin{pmatrix}
+            r & t'\\
+            t & r'
+        \end{pmatrix} \in \mathbb{C}^{2 \cross 2},
+    \end{equation*}
+    from which follow the relationships
+    \begin{equation*}
+        \begin{pmatrix}
+            r\\
+            t
+        \end{pmatrix} 
+        = \SS
+        \begin{pmatrix}
+            1\\
+            0
+        \end{pmatrix}
+        \qquad \text{and} \qquad 
+        \begin{pmatrix}
+            t'\\
+            r'
+        \end{pmatrix}
+        = \SS
+        \begin{pmatrix}
+            0\\
+            1
+        \end{pmatrix}.
+    \end{equation*}
+    The parameters $ t $ and $ t' $, which are in general complex numbers, encode the probability for a wave packet to pass through the potential (to transmit, hence the letter $ t $), while the parameters $ r $ and $ r' $ encode the probability for a wave packet to reflect off the potential barrier.
     
+    \item The scattering matrix parameters are related according to
+    \begin{equation*}
+        \SS^{\dagger} \SS = \mathbf{I} \iff 
+        \begin{cases}
+            1 = \abs{t}^{2} + \abs{r}^{2} = \abs{t'}^{2} + \abs{r'}^{2}\\
+            0 = r^{*} t' + t^{*} r' = (t')^{*} r + (r')^{*}t.
+        \end{cases} 
+    \end{equation*}
+    Additionally, the fact that the scattering matrix is unitary produces the following, perhaps less obvious relationships
+    \begin{equation*}
+        \SS \SS^{\dagger} = \mathbf{I} \iff 
+        \begin{cases}
+            1 = \abs{t'}^{2} + \abs{r}^{2} = \abs{t}^{2} + \abs{r'}^{2}\\
+            0 = r^{*}t + (t')^{*}r' = t*r + (r')^{*}t'.
+        \end{cases}  
+    \end{equation*}
     
+    \item The scattering matrix is parameterized by four complex numbers, $ t $, $ t' $, $ r $ and $ r' $, which corresponds to eight independent real-valued parameters. However, because of the condition that $ \S $ is unitary creates certain restrictions on the parameters, namely:
+    \begin{equation*}
+        \abs{t} = \abs{t'} \qquad \abs{r} = \abs{r'} \qquad r' = -r^{*}\frac{t'}{t^{*}}.
+    \end{equation*}
+    These three relationships between the parameters imply that $ \SS $ is fact described by five real-valued parameters instead of eight. With these relationships in mind, the scattering matrix may be written
+    \begin{equation*}
+        \SS = 
+        \begin{pmatrix}
+            r & t'\\
+            t & r'
+        \end{pmatrix}
+        = 
+        \begin{pmatrix}
+            r & t'\\
+            t & - r^{*}\frac{t'}{t^{*}}
+        \end{pmatrix}
+        = 
+        \begin{pmatrix}
+            r & e^{i\phi}t^{*}\\
+            t & - e^{i\phi}r^{*}
+        \end{pmatrix},
+    \end{equation*}
+    where $ \det \SS = -e^{i\phi} $.
     
     
 \end{itemize}
 
+\subsubsection{Time-Reversal Invariance}
+\begin{itemize}
+    \item We now consider a system invariant under time inversion, using the simple example of a free-particle. In this case, for any $ \psi $ solving the stationary \Schro equation in the regions $ x < x_{a} $ and $ x > x_{b} $, the time-transformed wavefunction
+    \begin{equation*}
+        \T \psi(x) = \psi^{*}(x) = 
+        \begin{cases}
+            A^{*}_{1} e^{-ikx} + B^{*}_{1} e^{ikx} & x < x_{a}\\
+            A^{*}_{2} e^{ikx} + B^{*}_{2} e^{-ikx} & x > x_{a}
+        \end{cases}
+    \end{equation*}
+    also solves the stationary \Schro equation. Time invariance thus switches and conjugates the ingoing and outgoing vectors via
+    \begin{equation*}
+        \T \Psi_{\text{in}} = 
+        \begin{pmatrix}
+            B_{1}^{*}\\
+            B_{2}^{*}\\
+        \end{pmatrix}
+        = \Psi^{*}_{\text{out}}
+        \qquad \text{and} \qquad 
+        \T \Psi_{\text{out}} = 
+        \begin{pmatrix}
+            A_{1}^{*}\\
+            A_{2}^{*}\\
+        \end{pmatrix}
+        = \Psi^{*}_{\text{in}}.
+    \end{equation*}
+
+    \item Since the time-reversed states also solve the \Schro equation, the scattering matrix must be symmetric. To prove this, we begin with the relationship $ \Psi_{\text{out}} = \SS \Psi_{\text{in}} $. We then replace $ \Psi $ with the equivalent solution $ \T \Psi $ and apply the above transformation rules of $ \P_{\text{in}} $ and $ \Psi_{\text{out}} $ under $ \T $ to get
+    \begin{equation*}
+        \T \Psi_{\text{out}} = \SS \T \Psi_{\text{in}} \implies \Psi_{\text{in}}^{*} = \SS \Psi_{\text{out}}^{*}.
+    \end{equation*}
+    We then multiply the equation from the left by $ \SS^{\dagger} $, apply the unitary identity $ \SS^{\dagger}\SS = \mat{I} $, and take the equation's complex conjugate to get
+    \begin{equation*}
+        \SS^{\dagger}\Psi_{\text{in}}^{*} = \SS^{\dagger}\SS \Psi_{\text{out}}^{*} = \Psi_{\text{out}} \implies (\SS^{\dagger})^{*} \Psi_{\text{in}} \equiv \SS^{T}\Psi_{\text{in}} = \Psi_{\text{out}}.
+    \end{equation*}
+    Comparing this to the original relationship $ \SS \Psi_{\text{in}} = \Psi_{\text{out}} $ implies $ \SS = \SS^{T} $, i.e. the scattering matrix is symmetric.
+
+    \item The symmetry condition $ \SS = \SS^{T} $ implies $ t = t' $, which allows us to write the scattering matrix in the form
+    \begin{equation*}
+        \SS = 
+        \begin{pmatrix}
+            r & t\\
+            t & r'
+        \end{pmatrix}
+        = 
+        \begin{pmatrix}
+            r & t\\
+            t & - r^{*}\frac{t'}{t^{*}}
+        \end{pmatrix}
+        = 
+        \begin{pmatrix}
+            r & \abs{t}e^{i\frac{\phi}{2}}\\
+            \abs{t}e^{i\frac{\phi}{2}} & - e^{i\phi}r^{*}
+        \end{pmatrix}, \qquad \det \SS = -e^{i\phi}.
+    \end{equation*}
+    In passing, we note that in the presence of an external magnetic field, the \Ham for a charged particle is no longer invariant under time reversal, which case the scattering matrix obeys $ \SS_{-\B} = \SS_{\B}^{T} $.
+
+\end{itemize}
+
+\subsubsection{Parity Invariance}
+\begin{itemize}
+    \item We now consider systems that are invariant under parity transformation. Such systems obey $ V(-x) = V(x) $ and thus $ x_{a} = - x_{b} $. In this case, for any $ \psi $ solving the stationary \Schro equation in the regions $ x < x_{a} $ and $ x > x_{b} $, the parity-transformed wavefunction
+    \begin{equation*}
+        \Par \psi(x) = \psi(-x) = 
+        \begin{cases}
+            B_{2} e^{-ikx} + A_{2} e^{ikx} & x < x_{a}\\
+            B_{1} e^{ikx} + A_{1} e^{-ikx} & x > \abs{x_{a}}
+        \end{cases}
+    \end{equation*}
+    also solves the stationary \Schro equation. The parity operator thus transforms the roles of the coefficients in the form $ A_{1,2} \longleftrightarrow B_{1,2} $. As a result, the parity operator transforms the ingoing and outgoing vectors in the form
+    \begin{equation*}
+        \Par \Psi_{\text{in}} = \sigma_{x} \Psi_{\text{in}} \qquad \text{and} \qquad \Par \Psi_{\text{out}} = \sigma_{x}\Psi_{\text{out}},
+    \end{equation*}
+    where $ \sigma_{x} = \begin{pmatrix}
+        0 & 1\\
+        1 & 0
+    \end{pmatrix} $ is the first Pauli spin matrix. As an example, we consider the transformation of $ \Psi_{\text{in}} $:
+    \begin{equation*}
+        \Par \Psi_{\text{in}} = \Par
+        \begin{pmatrix}
+            A_{1}\\
+            A_{2}
+        \end{pmatrix}
+        = 
+        \begin{pmatrix}
+            A_{2}\\
+            A_{1}
+        \end{pmatrix}
+        = 
+        \begin{pmatrix}
+            0 & 1\\
+            1 & 0
+        \end{pmatrix}
+        \begin{pmatrix}
+            A_{1}\\
+            A_{2}
+        \end{pmatrix}
+        = \sigma_{x} \Psi_{\text{in}}.
+    \end{equation*}
+    
+    \item The parity-transformed states are related by the scattering matrix according to
+    \begin{equation*}
+        \sigma_{x} \Psi_{\text{out}} = \SS \sigma_{x} \Psi_{\text{in}} \implies \sigma_{x}^{2} \Psi_{\text{out}} \equiv \mat{I} \Psi_{\text{out}} = \sigma_{x}\SS \sigma_{x} \Psi_{\text{in}}.
+    \end{equation*}
+    Comparing the last equality to the general relationship $ \Psi_{\text{out}} = \SS \Psi_{\text{in}} $ implies $ \sigma_{x} \SS \sigma_{x} $, which in turn implies
+    \begin{equation*}
+        \sigma_{x} \SS \sigma_{x} = \sigma_{x}
+        \begin{pmatrix}
+            r & t'\\
+            t & r'
+        \end{pmatrix}
+        \sigma_{x} = 
+        \begin{pmatrix}
+            r' & t\\
+            t' & r
+        \end{pmatrix}
+        \SS = 
+        \begin{pmatrix}
+            r & t'\\
+            t & r'
+        \end{pmatrix},
+    \end{equation*}
+    or, in other words, $ r = r' $ and $ t = t' $. This condition on $ r $ and $ t $ implies the scattering matrix for a parity-invariant system is symmetric with respect to both diagonals and can be written in the form
+    \begin{equation*}
+        \SS = 
+        \begin{pmatrix}
+            r & t\\
+            t & r
+        \end{pmatrix} 
+        = - e^{i\tau}
+        \begin{pmatrix}
+            i \abs{r} & \abs{t}\\
+            \abs{t} & i \abs{r}
+        \end{pmatrix}, 
+        \qquad t = e^{i\tau}\abs{t}.
+    \end{equation*}
+    
+    
+\end{itemize}
+
+\subsubsection{Multiple Scattering Channels}
+\begin{itemize}
+    \item We now consider a system with additional degrees of freedom that can change after scattering, for example a particle with spin $ s = 1/2 $ whose projection can reverse after scattering. In this case, the ingoing and outgoing vectors $ \Psi_{\text{in}} $ and $ \Psi_{\text{out}} $ are formed of $ 2N $ components, while the scattering matrix becomes a $ 2N \cross 2N $ block-diagonal matrix whose block diagonal elements are $ 2 \cross 2 $ matrices corresponding to the scattering matrix for each individual scattering channel.
+
+    \item In passing, we mention the possibility of a particle changing effective mass from e.g. $ m_{1} $ to $ m_{2} $ when passing through different regions. In this case, the scattering coefficients change according to
+    \begin{equation*}
+        \begin{Bmatrix}
+            A_{1}\\
+            B_{1}
+        \end{Bmatrix}
+        \to \sqrt{\frac{m_{1}}{p_{1}}}
+        \begin{Bmatrix}
+            A_{1}\\
+            B_{1}
+        \end{Bmatrix} 
+        \qquad \text{and} \qquad 
+        \begin{Bmatrix}
+            A_{2}\\
+            B_{2}
+        \end{Bmatrix}
+        \to \sqrt{\frac{m_{2}}{p_{2}}}
+        \begin{Bmatrix}
+            A_{2}\\
+            B_{2}
+        \end{Bmatrix}
+    \end{equation*}
+    where we have defined $ p_{1,2} = \sqrt{2m_{1,2}(E - V_{1,2})} $.
+
+\end{itemize}
+
+\subsubsection{The Transfer Matrix}
+\begin{itemize}
+    \item In addition to the scattering matrix approach, we often analyze one-dimensional systems in terms of transfer matrices, which we discuss in this section. Scattering matrices relate the waves on one side of a potential barrier to the waves on the other side in the form
+    \begin{equation*}
+        \begin{pmatrix}
+            A_{1}\\
+            B_{1}
+        \end{pmatrix}
+        = \M
+        \begin{pmatrix}
+            A_{2}\\
+            B_{2}
+        \end{pmatrix}
+        \qquad \text{where} \qquad \M = 
+        \begin{pmatrix}
+            \MM_{11} & \MM_{12}\\
+            \MM_{21} & \MM_{22}
+        \end{pmatrix}.
+    \end{equation*}
+    
+    \item To relate the scattering matrix $ \SS $ to the transfer matrix $ \M $, we begin with
+    \begin{equation*}
+        \begin{pmatrix}
+            r\\
+            t
+        \end{pmatrix} 
+        = \SS
+        \begin{pmatrix}
+            1\\
+            0
+        \end{pmatrix}
+        \qquad \text{and} \qquad 
+        \begin{pmatrix}
+            t'\\
+            r'
+        \end{pmatrix}
+        = \SS
+        \begin{pmatrix}
+            0\\
+            1
+        \end{pmatrix}.
+    \end{equation*}
+    Meanwhile, the scattering matrix obeys 
+    \begin{equation*}
+        \begin{pmatrix}
+            1 \\
+            r
+        \end{pmatrix}
+        = \M
+        \begin{pmatrix}
+            t\\
+            0
+        \end{pmatrix}
+        \qquad \text{and} \qquad 
+        \begin{pmatrix}
+            0\\
+            t'
+        \end{pmatrix}
+        = \M
+        \begin{pmatrix}
+            r'\\
+            1
+        \end{pmatrix},
+    \end{equation*}
+    from which follows the relationship
+    \begin{equation*}
+        \M = 
+        \begin{pmatrix}
+            \frac{1}{t} & - \frac{r'}{t}\\
+            \frac{r}{t} & t' - \frac{rr'}{t}
+        \end{pmatrix}
+        \qquad \text{where} \qquad \det \M = \frac{t'}{t}.
+    \end{equation*}
+    Under the condition $ t = t' $, the relationship between $ \SS $ and $ \M $ simplifies to
+    \begin{equation*}
+        \M = 
+        \begin{pmatrix}
+            \frac{1}{t} & \frac{r^{*}}{t^{*}}\\[0.5mm]
+            \frac{r}{t} & \frac{1}{t^{*}}
+        \end{pmatrix}
+        \qquad \text{and} \qquad \SS = \frac{1}{\MM_{11}}
+        \begin{pmatrix}
+            \MM_{21} & 1\\
+            1 & - \MM_{21}^{*}
+        \end{pmatrix}.
+    \end{equation*}
+    
+    \item The transfer matrix approach is well-suited to systems involving a series of  multiple (e.g. $ N $) potential barriers, with endpoints at the positions $ x_{1}, x_{2}, \ldots, x_{2N}$. In this case, we define the wave amplitudes $ A $ and $ B $ with respect to the shifted plane waves $ e^{\pm i k(x - x_{i})} $, split the $ x $ axis into $ 2N + 1 $ regions, and calculate the $ 2N - 1 $ transfer matrices $ \M_{ij} = \M_{12}, \M_{23}, \ldots, \M_{(2N-1) 2N} $ connecting the regions. In this case, the transfer matrix for the entire $ x $ axis is simply the product
+    \begin{equation*}
+        \M_{1(2N)} = \M_{12}\M_{23} \cdots \M_{(2N-1)2N}.
+    \end{equation*}
+    We can then use the total transfer matrix together with the equations in the previous bullet point to calculate the corresponding total transfer matrix $ \SS_{1(2N)} $.
+
+\end{itemize}
+
+\subsection{Scattering States}
+\begin{itemize}
+    \item We now consider solutions of the stationary \Schro equation of the form
+    \begin{equation*}
+        H_{0} \ket{\psi_{\vec{p}}^{(0)}} = E_{p}\ket{\psi_{\vec{p}}^{(0)}} \qquad \text{and} \qquad \hat{p} \ket{\psi_{\vec{p}}^{(0)}} = \vec{p}\ket{\psi_{\vec{p}}^{(0)}}.
+    \end{equation*}
+    The vectors $ \ket{\psi_{\vec{p}}^{(0)}} $ don't directly represent physical states, but instead form a basis for expanding wave packets encoding the system's actual quantum state. The energies $ E_{p} $ are degenerate with respect to the choice of direction of momentum. 
+
+%TODO come back and review this (begining of chapter 11.2 in book)
+    \item We often analyze eigenstates in terms of a Fourier transform to momentum space, using the fact that the momentum operator is self-adjoint. As an example, we consider a one-dimensional system that obeys
+    \begin{equation*}
+        \braket{x}{p} = \psi_{p}^{0}(x) = Ce^{i \frac{p}{\hbar}x}
+    \end{equation*}
+    with the periodic boundary conditions
+    \begin{equation*}
+        \psi_{p}(x + L) = \psi_{p}(x) \implies p_{n} = \frac{2\pi \hbar}{L}, \quad n = 0, 1, 2, \ldots
+    \end{equation*}
+    and orthogonal eigenstates
+    \begin{equation*}
+        \braket{m}{n} = \frac{e^{2 \pi i(n - m)} - 1}{2\pi i (n-m)}L \abs{C}^{2} \quad \text{for } n \neq m.
+    \end{equation*}
+    For a choice of normalization constant $ C = L^{-1/2} $, the eigenstates are normalized and obey $ \braket{m}{n} = \delta_{mn} $. Although the energy spectrum is discrete, in the limit of large $ L $ the spacing between energy levels grows arbitrarily small. 
+
+    \item Alternatively, we can normalize states in terms of the Dirac delta function:
+    \begin{equation*}
+        \braket{x}{p} = \psi_{p}^{0}(x) = \frac{1}{\sqrt{2\pi \hbar}} e^{i \frac{p}{\hbar}x},
+    \end{equation*}
+    where the eigenstates obey $ \braket{p_{1}}{p_{2}} = \delta(p_{1} - p_{2}) $ and the identity operator is written
+    \begin{equation*}
+        \II = \int_{-\infty}^{\infty} \ket{p} \bra{p} \diff p.
+    \end{equation*}
+    This notation allows for orthogonal eigenstates in the case of a continuous spectrum, with momentum eigenvalues $ p \in \mathbb{R} $. 
+    
+    \item Regardless of the choice of normalization, in the presence of the potential barrier $ V $ we define scattering states $ \ket{\psi_{\vec{p}}^{+}} $ according to
+    \begin{equation*}
+        (H_{0} + V) \ket{\psi_{\vec{p}}^{+}} = E_{\vec{p}}\ket{\psi_{\vec{p}}^{+}},
+    \end{equation*}
+    which we choose so that in the limit of a vanishing potential $ V(\vec{r}) \to 0 $ the scattering states approach plane waves $ \ket{\psi_{\vec{p}}^{0}} $. 
+
+    \item For a one-dimensional system, a scattering state is written in the form
+    \begin{equation*}
+        \psi_{p}^{+}(x) = C
+        \begin{cases}
+            e^{i \frac{p}{\hbar} x} + r e^{-i \frac{p}{\hbar} x} & x < x_{a}\\
+            \psi_{ab}(x) & x \in [x_{a}, x_{b}]\\
+            t e^{i \frac{p}{\hbar}x} & x > x_{b},
+        \end{cases}
+    \end{equation*}
+    where $ r $ and $ t $ are parameters from the scattering matrix $ \SS $ and encode reflection and transmission, respectively. In the presence of a potential, momentum is in general not conserved, i.e. $ [\vec{p}, H] \neq 0 $. However, the energy eigenvalues $ E_{\vec{p}} $ are still degenerate, since each plane wave $ \psi_{\vec{p}}^{0}(x) $ correponds to a scattering state $ \psi_{\vec{p}}^{+}(x) $ with equal energy.
+
+    \item A one dimensional system has two degenerate states, corresponding to the momentum eigenvalues $ \pm \abs{p} $. This double denegeracy motives the definition of a quantum number $ \eta = \pm 1$ encoding the direction of wave propagation. The corresponding states, i.e.
+    \begin{equation*}
+        \bket{\abs{p}, \eta} = \ket{p}, \quad \text{with eigenvalues} \quad p = \eta \abs{p},
+    \end{equation*}
+    are eigenstates of the system's Hamiltonian and can thus be described in terms of the eigenvalue $ E $ instead of $ p $. As a result, we can write the completeness relation in two equivalent forms:
+    \begin{equation*}
+        \II = \sum_{\eta} \int_{0}^{\infty} \ket{p, \eta} \bra{p, \eta} \diff p = \sum_{\eta} \int_{0}^{\infty} \ket{E, \eta} \bra{E, \eta} \diff E,
+    \end{equation*}
+    where the bases $ \{\ket{p, \eta}\} $ and $ \{E, \eta\} $ differ only in the normalization of the basis vectors. The state $ \ket{E, \eta} $ is normalized according to
+    \begin{equation*}
+        \braket{E_{1}, \eta_{1}}{E_{2}, \eta_{2}} = \delta_{\eta_{1}\eta_{2}}\delta(E_{1} -E_{2}).
+    \end{equation*}
+
+    \item For momentum eigenvalues $ p_{i} \sqrt{2mE_{i}} > 0 $ we rewrite the Dirac delta function as follows
+    \begin{align*}
+        \delta(E_{1} - E_{2}) &= \delta \left( \frac{p_{1}^{2}}{2m} - \frac{p_{2}^{2}}{2m} \right) = 2m \delta \big[ (p_{1} - p_{2})(p_{1} + p_{2}) \big] = \frac{2m}{p_{1} + p_{2}}\delta(p_{1} - p_{2})\\
+        & = \frac{m}{p_{1}} \delta(p_{1} - p_{2}),
+    \end{align*}
+    where we have used the delta function properties $ \delta(ax) = \frac{1}{\abs{a}}\delta(x) $ and $ f(x)\delta(x-a) = f(a)\delta(x-a)^{3} $. In terms of the above expression for the delta function, we have
+    \begin{equation*}
+        \braket{x}{E, \eta} = \sqrt{\frac{m}{p}} \braket{x}{p, \eta} = \frac{1}{\sqrt{2\pi \hbar}} \left( \frac{m}{2E} \right)^{1/4} \exp \left( i\eta \sqrt{\frac{2m E}{\hbar^{2}}} \right),
+    \end{equation*}
+    which is a third way to normalize a plane wave. An analogous normalization relationship holds between the corresponding scattering scates $ \psi_{E\eta}^{+} = \sqrt{\frac{m}{p}} \psi_{p\eta}^{+} $.
+
+\end{itemize}
+
+\subsubsection{Formal Scattering Theory and the \Mol Operator}
+\begin{itemize}
+    \item A particle is in the initial asymptotic incident state $ \ket{\psi_{\vec{p}_{0}}^{0}} $, which approaches a plane wave with momentum $ \vec{p}_{0} $ at $ t \to -\infty $. 
+
+    At the time $ t \sim 0 $, the particle (wave packet) occurs in the region of the potential barrier and occurs in the scattering state $ \ket{\psi_{\vec{p}_{0}}^{0}} $, where the scattering state is a superposition of all possible \textit{final} asymptotic states $ \ket{\psi_{\vec{p}}^{0}} $. 
+
+    \item We can describe the quantum scattering process in terms of the \Mol operator $ \Omega_{+} $. First, the \Mol operator applies the time evolution operator $ e^{-i H_{0} t} $ to the asymptotic incidence state $ \ket{\psi_{\vec{p}_{0}}^{0}} $, which maps the state back in time to $ t \to -\infty $. At time $ t \to \infty $, the asymptotic state $ \ket{\psi_{\vec{p}_{0}}^{0}} $ equals the the particle's initial state $ \ket{\psi_{\vec{p}_{0}}^{+}} $. 
+
+    Then, we apply the time evolution operator $ e^{iHt} $, using the \Ham $ H = H_{0} + V $, to return the particle to the present:
+    \begin{equation*}
+        \ket{\psi_{\vec{p}_{0}}^{+}} = \lim_{t \to - \infty} e^{iHt}e^{-iH_{0}t} \ket{\psi_{\vec{p}_{0}}^{0}} = \Omega_{+} \ket{\psi_{\vec{p}_{0}}^{0}}.
+    \end{equation*}
+
+    Meanwhile, the operator $ \Omega_{-} $ transfers the asymptotic state $ \ket{\psi_{\vec{p}}^{0}} $ to the scattering state $ \ket{\psi_{\vec{p}_{0}}^{-}} $, via
+    \begin{equation*}
+        \ket{\psi_{\vec{p}}^{-}} = \lim_{t \to \infty} e^{iHt}e^{-iH_{0}t}\ket{\psi_{\vec{p}}^{0}} = \Omega_{-} \ket{\psi_{\vec{p}}^{0}}.
+    \end{equation*}
+    The state $ \ket{\psi_{\vec{p}}^{0}} $ is a second possible scattering state, which approaches the asymptotic state $ \ket{\psi_{\vec{p}}^{0}} $ in the limit $ t \to \infty $. 
+
+    \item The asymptotic states are related by the scattering operator $ S $, which is represented by the scattering matrix. The operator's matrix elements
+    \begin{equation*}
+        S_{\vec{p}\vec{p}_{0}} = \mel{\psi_{\vec{p}}^{0}}{S}{\psi_{\vec{p}_{0}}^{0}}
+    \end{equation*}
+    are the probability amplitudes $ P_{\vec{p}\vec{p}_{0}} = \abs{S_{\vec{p}\vec{p}_{0}}}^{2} $ of detecting a particle in one of the asymptotic states $ \ket{\psi_{\vec{p}}^{0}} $. 
+
+    The scattering states, like the asymptotic states, thus form a complete system of basis vectors so that we can expand the state $ \ket{\psi_{\vec{p}_{0}}^{0}} $ in the basis $ \{\ket{\psi_{\vec{p}}^{0}}\} $ to get
+    \begin{equation*}
+        \ket{\psi_{\vec{p}_{0}}^{+}} = \int \ket{\psi_{\vec{p}}^{-}} \braket{\psi_{\vec{p}}^{-}}{\psi_{\vec{p}_{0}}^{+}}\ddp  = \Omega_{+} \ket{\psi_{\vec{p}_{0}}^{0}}.
+    \end{equation*}
+    As time approaches $ t \to \infty $, the state $ \ket{\psi_{\vec{p}}^{-}} $ uniquely evolves into the asymptotic state $ \ket{\psi_{\vec{p}}^{0}} $. As a result, the probability amplitude $ \braket{\psi_{\vec{p}}^{-}}{\psi_{\vec{p}_{0}}^{+}} $ equals $ S_{\vec{p}\vec{p}_{0}} $, i.e.
+    \begin{equation*}
+        S_{\vec{p}\vec{p}_{0}} = \mel{\psi_{\vec{p}}^{0}}{S}{\psi_{\vec{p}_{0}}^{0}} = \braket{\psi_{\vec{p}}^{-}}{\psi_{\vec{p}_{0}}^{+}} = \mel{\psi_{\vec{p}}^{0}}{\Omega_{-}^{\dagger}\Omega_{+}}{\psi_{\vec{p}_{0}}^{0}}.
+    \end{equation*}
+    As a result, the scattering operator can be written in terms of the \Mol operator as
+    \begin{equation*}
+        S = \Omega_{-}^{\dagger}\Omega_{+}.
+    \end{equation*}
+    
+    \item Finally, we note that the matrix elements $ S_{\vec{p}\vec{p}_{0}} $ can be decomposed into a component that preserves the momentum of the asymptotic states and a component that preserves only energy; the decomposition reads
+    \begin{equation*}
+        S_{\vec{p}\vec{p}_{0}} = \braket{\psi_{\vec{p}}^{0}}{\psi_{\vec{p}_{0}}^{0}} - 2\pi i \delta(E_{p} - E_{p_{0}})\mel{\psi_{\vec{p}}^{0}}{V}{\psi_{\vec{p}_{0}}^{+}},
+    \end{equation*}
+    where we can write the matrix element $ \mel{\psi_{\vec{p}}^{0}}{V}{\psi_{\vec{p}_{0}}^{+}} = \mel{\psi_{\vec{p}}^{0}}{T}{\psi_{\vec{p}_{0}}^{0}} $ in terms of the operator $ T = V\Omega_{+} $.
+    
+    
+\end{itemize}
+
+\subsubsection{Example: A Gaussian Wave Packet}
+\begin{itemize}
+    \item We consider scattering on a narrow, repulsive potential, which we model with a delta function with a positive coefficient:
+    \begin{equation*}
+        V(x) = \lambda \delta(x), \quad \lambda > 0.
+    \end{equation*}
+    The transmission and reflection amplitudes are given by
+    \begin{equation*}
+        t_{\lambda}(p) = \frac{p}{p + ip_{\lambda}} \qquad \text{and} \qquad r_{\lambda}(p) = \frac{-ip_{\lambda}}{p + ip_{\lambda}},
+    \end{equation*}
+    where $ p_{\lambda} = \lambda m $ and $ m $ is the scattered particle's mass. Note that because the potential is even, the problem is invariant under parity transformations and thus obeys $ t'_{\lambda} = t_{\lambda} $ and $ r'_{\lambda} = r_{\lambda} $.
+
+    \item We represent the scattered particle with a Gaussian wavepacket moving along the $ x $ axis from left to right with group velocity $ v_{\text{g}} = \frac{\ev{p}}{m} $ and thus central position value $ \ev{x} = x_{0} + v_{\text{g}}t $. The corresponding wavefunction is
+    \begin{equation*}
+        \ket{\psi^{+}(t)} = \int \F{\psi}(p) e^{-i \frac{p^{2}}{2m \hbar}t } \ket{\psi_{p}^{+}} \diff p,
+    \end{equation*}
+    where the scattering basic vector $ \ket{p_{p}^{+}} $ is given by 
+    \begin{equation*}
+        \psi_{p}^{+}(x) = C
+        \begin{cases}
+            e^{i \frac{p}{\hbar} x} + r e^{-i \frac{p}{\hbar} x} & x < x_{a}\\
+            \psi_{ab}(x) & x \in [x_{a}, x_{b}]\\
+            t e^{i \frac{p}{\hbar}x} & x > x_{b}.
+        \end{cases}
+    \end{equation*}
+    
+    \item Without a detailed derivation, we qualitatively consider four regimes:
+    \begin{enumerate}
+        \item At early times, the particle is modeled by a standard Gaussian wave packet with a sigmoid shape. 
+
+        \item As the particle approaches the potential barrier at $ x = 0 $ the wave packet begines to deform. 
+
+        \item Once the wave packet's center reaches the potential barrier, the reflected and incident waves temporarily interfere to create a typical interference pattern on the left of the barrier. 
+
+        \item After the wave packet's center has pass the barrier, both the reflected and transmitted waves are on their way towards the left and right, respectively, and the interference pattern loses its resolution. 
+
+        \item At time well after the wave packet's center reached the barrier, the transmitted and reflected waves travel in their respective directions as essentially free wave packets, and begin to approach the asymptotic plane wave states $ \psi_{\pm p_{0}}^{0} \propto e^{\pm i \frac{p_{0}}{\hbar} x} $ as $ t \to \infty $.
+    \end{enumerate}
+    
+\end{itemize}
+
+\subsubsection{Example: Alpha Decay}
+\begin{itemize}
+    \item We now consider the example of radioactive alpha decay. The alpha particle initially occurs in a ground state between two potential barriers, encoded by the potential
+    \begin{equation*}
+        V(x) = \lambda(t)\delta(x) + \lambda_{\infty}\delta(x - L),
+    \end{equation*}
+    where the two constants $ \lambda $ and $ \lambda $ are very large, i.e. $ \lambda, \lambda_{\infty} \to \infty $, corresponding to a large potential barrier.
+
+    \item At $ t = 0 $, the barrier $ \lambda(t) $ at $ x = 0 $ rapidly decreases to its final value $ \lambda(t) \to \lambda_{0} $. The scattering basis vector is zero for $ x \geq L $, since any waves reflect off the steep barrier $ \lambda_{\infty} $ at $ x = L $, and thus obeys
+    \begin{equation*}
+        \psi_{p}^{+}(x) = C
+        \begin{cases}
+            e^{i \frac{p}{\hbar} x} + B_{1} e^{-i \frac{p}{\hbar} x} & x < 0 \\
+            \psi_{0_{L}}(x) & x \in [0, L]\\
+            0 & x > L.
+        \end{cases}
+    \end{equation*}
+    where we write the wavefunction in the region $ x \in [0, L] $ with the ansatz
+    \begin{equation*}
+        \Psi_{0_{L}} = A_{2} e^{-i \frac{p}{\hbar}x} + B_{2} e^{i \frac{p}{\hbar}x}.
+    \end{equation*}
+    The coefficients at $ x = 0 $ are related by the same symmetric scattering matrix from the Gaussian example via
+    \begin{equation*}
+        \begin{pmatrix}
+            B_{1}\\
+            B_{2}
+        \end{pmatrix}
+        = \SS
+        \begin{pmatrix}
+            1\\
+            A_{2}
+        \end{pmatrix},
+    \end{equation*}
+    and can be determined from the equation
+    \begin{equation*}
+        B_{2} e^{i \frac{p}{\hbar} L} = - A_{2} e^{-i \frac{p}{\hbar}L},
+    \end{equation*}
+    which follows from the continuity condition $ \psi_{0_{L}} = 0 $ at the boundary $ x = L $.
+
+    \item We write the initial state at $ t = 0 $ in the basis of scattering states, where the time evolution proceeds according to the earlier equation
+    \begin{equation*}
+        \ket{\psi^{+}(t)} = \int \F{\psi}(p) e^{-i \frac{p^{2}}{2m \hbar}t } \ket{\psi_{p}^{+}} \diff p.
+    \end{equation*}
+    When the left barrier $ \lambda(t) $ at $ x = 0 $ decreases to its final value at $ t = 0 $, a probability current $ j_{x} < 0 $ begins to flow to the left, and the probability for finding the particle between the potential barriers begins to decrease. 
+
+    \item We now return to the alpha particle's scattering state $ \psi_{p}^{+} $. Because all incident waves are reflected from the right barrier $ \lambda_{\infty} $ at $ x = 0 $, the components of the particle's wavepacket reflecting from $ \lambda_{\infty} $ also scatter off $ \lambda_{0}x $. The scattering matrix is thus relevant only for the region $ x < 0 $, to the left of the first barrier, where a scattering state is described by the reflection coefficient $ B_{1} $ via
+    \begin{equation*}
+        \psi_{p}^{+}(x) \big|_{x < 0} = C \left( e^{i \frac{p}{\hbar}x} + B_{1} e^{- i \frac{p}{\hbar}x} \right).
+    \end{equation*}
+    As a result, the scattering matrix $ \SS $ reduces to a scalar value $ \mathrm{S}_{11} $ relating the incident and reflected wave. This relationship reads 
+    \begin{equation*}
+        \mathrm{S}_{11} = e^{2 i \delta} = 1 + \left( e^{2i \delta} - 1 \right) = 1 + 2ie^{i\delta}sin \delta,
+    \end{equation*}
+    which is a scalar analog of the earlier matrix equation
+    \begin{equation*}
+        S_{\vec{p}\vec{p}_{0}} = \braket{\psi_{\vec{p}}^{0}}{\psi_{\vec{p}_{0}}^{0}} - 2\pi i \delta(E_{p} - E_{p_{0}})\mel{\psi_{\vec{p}}^{0}}{V}{\psi_{\vec{p}_{0}}^{+}}.
+    \end{equation*}
+    
+\end{itemize}
+
+\subsection{Scattering in Three Dimensions}
+\begin{itemize}
+    \item First, we give an overview of the scattering process:
+    \begin{itemize}
+        \item An incident quantum particle, described by a wave packet, approaches a scatterer (a target or potential barrier) and scatters from the target in a given spatial direction, where we then detect the particle.
+
+        \item The incident wave packet must initially be wide enough that its width does not increase dramatically (with respect to the initial width) over the course of the scattering process. The wavepacket must be large with respect to the target and small with respect to the dimensinos of the laboratory---the second condition ensures the wave packet does not simultaneously cover the scatterer and the detector. 
+
+        The wavepacket's width is determed by the cross-sectional width (cross-sectional area) of the beam of incident particles. 
+
+        \item After the scattering interaction between incident particle and the target, we observe two wave packets: one continues past the target in the original direction of incidence, and one continues at an angle with respect to the direction of incidents and corresponds to the scattered particles. 
+
+        \item The scattering cross section is the fundamental measurable quantity used to analyze scattering processes, and represents the number of particles scattered in a given element of solid angle per unit time per unit incident current.
+
+    \end{itemize}
+
+    \item We will work with particles expanded in a plane wave basis
+    \begin{equation*}
+        \psi_{k}(\r) = C e^{i \vec{k} \cdot \r},
+    \end{equation*}
+    where the constant $ C $ is independent of the choice of orthonormalization of the basis vectors. The probability current density for these plane waves is given by
+    \begin{equation*}
+        \vec{j}_{0} = j_{} \frac{\vec{p}}{p}, \qquad j_{0} = \frac{p}{m} \abs{C}^{2},
+    \end{equation*}
+    where $ j_{0} $ encodes the probability of a particle being incident on the surface $ S_{0} $ in the time interval $ \Delta t $. In this case we can choose the normaliation constant 
+    \begin{equation*}
+        \abs{C}^{2} = \frac{m}{pS_{0}\Delta t},
+    \end{equation*}
+    which represents a fourth possible means of naormalizing plane waves. 
+
+    \item A typical scattering experiment involves a beam of incident particles with cross section $ S_{0} $ moving along the $ z $ axis and described by the probability current density $ j_{N} = \frac{N}{S_{0} \Delta t} = N j_{0} $.
+    
+\end{itemize}
+
+\subsubsection{Expansion In Terms of Spherical Waves}
+
+\begin{itemize}
+    \item We consider the scattering state $ \psi_{k}^{+}(\r) $, which, in the limit of a vanishing scattering potential, approaches the plane wave $ \psi_{k}(\r) = Ce^{i k z} $. We begin our analysis by writing the plane wave in a spherical wave basis, i.e. 
+    \begin{equation*}
+        e^{ikz} = e^{ikr \cos \theta} = \sum_{l = }^{\infty} (2l + 1)i^{l}j_{l}(kr)P_{l}(\cos \theta),
+    \end{equation*}
+    where $ j_{l}(x) $ are the spherical Bessel functions and $ P_{l}(x) $ are the Legendre polynomials. 
+
+    Next, we expand the spherical wave representation in the limit of large distance of the particle from the target, in which case the the Bessel function approaches the asymptotic limit $ j_{l}(x) \sim \frac{1}{x} \sin \big( x - l \frac{\pi}{2} \big) $. In this limit, the plane wave becomes
+    \begin{equation*}
+        \psi_{k}^{0} \equiv Ce^{ikz} \to C \sum_{l = 0}^{\infty} (2l + 1)\frac{i^{l}}{2ikr}\left[ e^{i(kr - l \frac{\pi}{2})} - e^{-i(kr - l \frac{\pi}{2})} \right]P_{l}(\cos \theta).
+    \end{equation*}
+    
+    \item We assume the potential is spherically symmetric, in which case the problem's angular momentum is conserved, meaning we can expand the scattering state $ \lambda_{k}^{+} $ in terms of the angular momentum eigenstates analogously to the expansion of the plane wave $ \psi_{k}^{0} $. However, when expanding the scattering states in the angular momentum basis, we must also account for the scattering amplitude $ S_{l}(k) $. With the consideration of $ S_{l}(k) $ in mind, the expansion of the scattering states reads
+    \begin{equation*}
+        \psi_{k}^{+}(\r) \to C \sum_{l = 0}^{\infty} (2l + 1)\frac{i^{l}}{2ikr}\left[ S_{l}(k)e^{i(kr - l \frac{\pi}{2})} - e^{-i(kr - l \frac{\pi}{2})} \right]P_{l}(\cos \theta).
+    \end{equation*}
+    
+    \item Expansion in terms of spherical waves is needed in three dimensions because, in three dimensions, a particle can scatter in any spatial direction. Every partial wave has an associated reflection amplitude in the radial direction. 
+
+    For a given $ l $, a scattering state has the same structure as a wave reflected from an infinite potential barrier in the previous section, i.e. 
+    \begin{equation*}
+        \psi_{k}^{+}(\r) = C \left( e^{i \vec{k} \cdot \r} + B_{1} e^{- i \vec{k} \cdot \r} \right).
+    \end{equation*}
+    where the origin $ r = 0 $ corresponds to the infinite potential barrier. 
+    
+    \item In elastic scattering, probability is conserved in each scattering channel and the problem's scattering matrix is thus unitary, which allows us to introduce the phase term $ \delta_{l}(k) $ and write the scattering matrix components as
+    \begin{equation*}
+        \mathrm{S}_{l}(k) = e^{2i \delta_{l}(k)} = 1 + 2i e^{i \delta_{l}(k)} \sin \delta_{l}(k), \qquad \abs{S_{l}(k)} = 1.
+    \end{equation*}
+    We then decompose the scattering states into a non-scattered plane wave, which continues in the initial direction of incidence, and a scattered spherical wave. This decomposition reads
+    \begin{align*}
+        \psi_{\vec{k}}^{+}(\r) &\to C e^{ikz} + C \left[ \sum_{l = 0}^{\infty} (2l + 1) \frac{S_{l}(k) - 1}{2ik} P_{l}(\cos \theta) \right]\frac{e^{ikr}}{r}\\
+        & = C \left( e^{ikz} + \frac{f(\theta, \phi)}{r} e^{ikr} \right),
+    \end{align*}
+    where we have defined the scattering amplitude
+    \begin{equation*}
+        f(\theta, \phi) = \frac{1}{k} \sum_{l = 0}^{\infty} (2l + 1)e^{i\delta_{l}(k)} \sin \delta_{l}(k) P_{l}(\cos \theta).
+    \end{equation*}
+    For a spherically symmetric potential, the scattering amplitude depends only on the polar angle because of rotational invariance about the $ z $ axis. 
+
+    \item Finally, we note: the symbol $ + $ in the scattering state $ \psi_{\vec{k}}^{+} $ denotes the outgoing waves $ \frac{f}{r}e^{ikr} $, while the scattering state $ \psi_{\vec{k}}^{-} $ corresponds to the incident wave $ \frac{f}{r}e^{-ikr} $. The scattering amplitude $ f $ is porportional to the problem's $ T $ operator, which we defined in the section on the \Mol operator as $ T = V \Omega_{+} $, where $ \Omega_{+} $ is the \Mol operator.
+
+    
+\end{itemize}
+
+\subsubsection{Scattering Cross Section}
+\begin{itemize}
+    \item Consider a beam of incident particles in a scattering experiment, where $ N $ particles in the beam pass through the beam's cross section $ S_{0} $ in the time $ \Delta t $, of which 
+    \begin{equation*}
+        N_{\text{s}} = P N
+    \end{equation*}
+    are scattered, where $ P $ is the probability of a given particle in the incident beam scattering off the target in any spatial direction. 
+
+    The scattering cross section is defined as the ratio between the number of scattered particles per unit time and the number current density of incoming particles, defined as $ j_{N} = \frac{N}{S_{0}\Delta t}$. In equation form, the scattering cross section is denoted by $ \sigma $ and is defined as
+    \begin{equation*}
+        \sigma = \frac{1}{j_{N}}  \frac{N_{\text{s}}}{\Delta t} = \frac{1}{j_{0}} \frac{N_{\text{s}}}{N} \frac{1}{\Delta t} = \frac{1}{j_{0}} \frac{P}{\Delta t},
+    \end{equation*}
+    where $ j_{N} = N j_{0} $. Alternatively, we can write the scattering cross section in the form
+    \begin{equation*}
+        \sigma = \frac{N_{\text{s}}}{N}S_{0} = P S_{0},
+    \end{equation*}
+    which we interpret as a surface, with surface area $ \sigma $, through which a particle that has passed through the beam cross section $ S_{0} $ passes through with probability $ P = \frac{N_{\text{s}}}{N} = \frac{\sigma}{S_{0}}$.
+
+    \item Next, we define the probability $ \diff P(\r) $ of a particle scattering into the element of solid angle $ \diff \Omega $ in the time interval $ \Delta t $. This probability is defined as
+    \begin{equation*}
+        \diff P(\r) = j_{\r} \diff S \Delta t = j_{0} \abs{f(\theta, \phi)}^{2} \diff \Omega \Delta t,
+    \end{equation*}
+    where $ j_{\r} $ is the probability current density in the direction $ \uvec{r} = \r /r $ and $ \diff S = r^{2} \diff \Omega $. We have related the current $ j_{\r} $ to the scattering amplitude $ f(\theta, \phi) $via
+    \begin{equation*}
+        j_{\r}(\theta, \phi) = \vec{j}(\r) \cdot \uvec{r} \stackrel{r \to \infty}{\longrightarrow} j_{0} \frac{\abs{f(\theta, \phi)}^{2}}{r^{2}}.
+    \end{equation*}
+
+    \item The differential cross section, denoted by $ \diff \sigma $, is defined as
+    \begin{equation*}
+        \diff \sigma = \frac{1}{j_{N}} \frac{\diff N_{\text{s}}}{\Delta t} = \frac{1}{j_{0}} \frac{\diff P}{\Delta t} = \abs{f(\theta, \phi)}^{2} \diff \Omega.
+    \end{equation*}
+    The differential cross section is independent of the scattering state normalization constant $ C $, and is related to the scattering amplitude via
+    \begin{equation*}
+        \frac{\diff \sigma}{\diff \Omega} = \abs{f(\theta, \phi)}^{2}.
+    \end{equation*}
+    Note that the expression is not a derivative of $ \sigma $ with respect to $ \Omega $---all of $ \frac{\diff \sigma}{\diff \Omega}  $ together is the differential cross section. The total and differential cross section are related by
+    \begin{equation*}
+        \sigma = \iint \frac{\diff \sigma}{\diff \Omega} \diff \Omega,
+    \end{equation*}
+    which should be read as an integral of the differential cross section over the entire solid angle. 
+    
+    \item The probability $ P $ of a particle scattering in any spatial direction in the time interval $ \Delta t $ is determined by the total cross section
+    \begin{align*}
+        \frac{1}{j_{0}}\frac{P}{\Delta t} = \sigma &= \iint \frac{\diff \sigma}{\diff \Omega} \diff \Omega = \int_{0}^{2\pi}\int_{0}^{\pi} \abs{f(\theta, \phi)}^{2} \sin \theta \diff \theta \diff \phi \\
+        & = \int_{0}^{2\pi}\int_{0}^{\pi} \abs{\frac{1}{k} \sum_{l = 0}^{\infty} (2l + 1)e^{i\delta_{l}(k)} \sin \delta_{l}(k) P_{l}(\cos \theta)}^{2} \sin \theta \diff \theta \diff \phi \\
+        & = \frac{4\pi}{k^{2}} \sum_{l = 0}^{\infty} (2l + 1) \sin^{2}\delta_{l}(k),
+    \end{align*}
+    where we have evaluated the integral using the orthogonality of the Legendre polynomials, i.e.
+    \begin{equation*}
+        \iint P_{l}(\cos \theta) P_{l'}(\cos \theta) \diff \Omega = \frac{4 \pi}{2l + 1}\delta_{ll'},
+    \end{equation*}
+    and the Legendre polynomial identity $ P_{l}(1) = 1 $.
+
+    \item Because the total number of particles is conserved in scattering processes, the number of particles continuing passed the scatterer in the original direction of incident is naturally less than the number in the incident beam, which is encoded in the unitary nature of the scattering matrix in the relationship $ \abs{S_{l}(k)} = 1 $. 
+
+    The scattering amplitude for scattering in the forward direction is described by
+    \begin{align*}
+        \Im \big[ f(\theta, \phi)\big |_{\theta = 0} \big] &= \frac{1}{k} \sum_{l = 0}^{\infty} (2l + 1) \Im \big[ e^{i\delta_{l}(k)} \big] \sin \delta_{l}(k) \\
+        & = \frac{1}{k} \sum_{l = 0}^{\infty} (2l + 1) \sin^{2} \delta_{l}(k)\\
+        &= \frac{k}{4\pi} \sigma.
+    \end{align*}
+    This result, which is derived using the Legendre polynomial identity $ P_{l}(1) = 1 $, is known as the optical theorem. 
+    
+    
+\end{itemize}
 
 
 
