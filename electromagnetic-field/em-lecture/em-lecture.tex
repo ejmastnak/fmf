@@ -78,7 +78,7 @@
     \textbf{About These Notes}
 \end{center}
 
-These are my lecture notes from the course \textit{Elektromagnetno polje} (Electromagnetic Field), a required course for third-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. The course covers electro- and magnetostatics, quasistatic fields, dynamic electromagnetic fields, the Maxwell equations in free space and in matter, and concludes with brief chapters on the integration of electromagnetism with the Hamiltonian formalism and special relativity. The exact material herein is specific to the physics program at the University of Ljubljana, but the content is fairly standard for a late-undergraduate course in electromagnetism. I am making the notes publicly available in the hope that they might help others learning the same material---the most recent version can be found on \href{https://github.com/ejmastnak/fmf/electromagnetic-field}{\underline{GitHub}}.
+These are my lecture notes from the course \textit{Elektromagnetno polje} (Electromagnetic Field), a required course for third-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. The course covers electro- and magnetostatics, quasistatic fields, dynamic electromagnetic fields, the Maxwell equations in free space and in matter, and concludes with brief chapters on the integration of electromagnetism with the Hamiltonian formalism and special relativity. The exact material herein is specific to the physics program at the University of Ljubljana, but the content is fairly standard for a late-undergraduate course in electromagnetism. I am making the notes publicly available in the hope that they might help others learning the same material---the most recent version can be found on \href{https://github.com/ejmastnak/fmf/tree/main/electromagnetic-field}{\underline{GitHub}}.
 
 \vspace{2mm}
 \textit{Navigation}: For easier document navigation, the table of contents is ``clickable'', meaning you can jump directly to a section by clicking the colored section names in the table of contents. Unfortunately, the \textit{clickable links do not work in most online or mobile PDF viewers}; you have to download the file first.
@@ -2371,9 +2371,7 @@ By convention, the quasi-static approximation to electromagnetic fields adds the
 \section{Electromagnetic Field in Matter}
 In this chapter, we analyze how a material responds to the presence of an external electromagnetic field, and discuss how Maxwell's equations change and why they change. 
 
-\subsection{Eleventh Lecture}
-
-\subsubsection{Electric Field in Matter}
+\subsection{Electric Field in Matter}
 
 \subsubsection{Bound Charge}
 \begin{itemize}
@@ -2434,8 +2432,36 @@ In this chapter, we analyze how a material responds to the presence of an extern
     In general, in a material with homogeneous polarization, bound charge occurs only along the boundaries.
 \end{itemize}
 
-\subsubsection{TODO: Constitutive Relation for Electric Field}
-Looks like 45 minutes are missing from the lecture recording containing this material.
+\subsubsection{The Constitive Relation for Electric Field in Matter}
+\begin{itemize}
+	\item Polarization in matter depends on the $ \D $ field according to the general relationship
+	\begin{equation*}
+		\P = \P(\D),
+	\end{equation*}
+	which we call the constitutive relation. In general, the constitutive relationship is nonlinear and may be quite complicated. However, in an isotropic, homogeneous material, we can expand the relation to first order in $ \D $ to get
+	\begin{equation*}
+		\P(\D) \approx \chi_{\text{E}} \D + \mathcal{O}(\D^{2}),
+	\end{equation*}
+    where we have introduced electric susceptibility $ \chi_{\text{E}} $. Electric susceptibility is often defined in terms of electric permittivity $ \epsilon $ (the dielectric constant) via
+	\begin{equation*}
+        \chi_{\text{E}} = 1 - \frac{1}{\epsilon}.
+	\end{equation*}
+	
+	\item In terms of $ \chi_{\text{E}} $ and $ \epsilon $, the linear constitutive relation reads
+	\begin{equation*}
+        \D = \ee \E + \P \approx \ee \E + \chi_{\text{E}} \D = \ee \E + \left( 1 - \frac{1}{\epsilon} \right) \D 
+	\end{equation*}
+	Thus, with a little algebra, the $ \E $ and $ \D $ fields are related to first order by
+	\begin{equation*}
+        \D = \epsilon \ee \E.
+	\end{equation*}
+    In terms of the relationship $ \D = \epsilon \ee \E $, the relationship between polarization and the $ \E $ field is
+	\begin{equation*}
+        \P = \D - \ee \E \approx \ee (\epsilon - 1)\E.
+	\end{equation*}
+    \textit{Important:} we stress that the relationships between $ \E $, $ \D $ and $ \P $ given in this last bullet point are not general. They hold only for an isotropic, homogeneous material in the regime of a first-order approximation of the constitutive relation $ \P = \P(\D) $.
+	
+\end{itemize}
 
 \subsubsection{Dielectrics and Conductors}
 \begin{itemize}
@@ -2522,7 +2548,7 @@ Looks like 45 minutes are missing from the lecture recording containing this mat
 	The surface currents shadow the magnetic field in the material, analogously to how surface charge shadows electric field in conductors.
 \end{itemize}
 
-\subsubsection{The Constitive Relation for Magnetic Field in Materials}
+\subsubsection{The Constitive Relation for Magnetic Field in Matter}
 \begin{itemize}
 	\item Magnetization depends on external magnetic field $ \H $ according to the general relationship
 	\begin{equation*}
@@ -2534,13 +2560,13 @@ Looks like 45 minutes are missing from the lecture recording containing this mat
 	\end{equation*}
     where we have introduced magnetic susceptibility $ \chi_{\text{M}} $. Magnetic susceptibility is often defined in terms of magnetic permeability $ \mu $ via
 	\begin{equation*}
-		\chi_{\text{M}} = \mu - 1,
+		\chi_{\text{M}} = \mu - 1.
 	\end{equation*}
     For most materials $ \chi_{\text{M}} $ is close to zero and $ \mu $ is close to one. Magnetic permeability $ \mu $ is the magnetic analog of electric permittivity $ \epsilon $, i.e. the dielectric constant.
 	
 	\item In terms of $ \chi_{\text{M}} $ and $ \mu $, the linear constitutive relation reads
 	\begin{equation*}
-		\H = \frac{\B}{\mm} + \chi_{\text{M}} \H = \frac{\B}{\mm} + (\mu - 1)\H.
+        \H = \frac{\B}{\mm} - \M \approx \frac{\B}{\mm} - \chi_{\text{M}} \H = \frac{\B}{\mm} - (\mu - 1)\H.
 	\end{equation*}
 	Thus, to first order, the $ \B $ and $ \H $ fields are related by:
 	\begin{equation*}
@@ -2591,7 +2617,7 @@ Looks like 45 minutes are missing from the lecture recording containing this mat
 	\item Paramagnetic materials have $ \mu > 1 $, and an external magnetic field increase the magnetization in the material. Paramagentic materials behave like magnets in an external magnetic field, but demagnetize in the absence of an external field. 
 \end{itemize}
 
-\subsection{Maxwell's Equations in Materials}
+\subsection{Maxwell's Equations in Matter}
 \begin{itemize}
 	\item The complete set of Maxwell's equations in materials is is
 	\begin{align*}
@@ -2628,7 +2654,7 @@ Looks like 45 minutes are missing from the lecture recording containing this mat
 	
 \end{itemize}
 
-\subsubsection{Electric Field Energy in Material}
+\subsubsection{Electric Field Energy in Matter}
 \begin{itemize}
     \item We now consider how electric field energy in a region of empty space changes when we place an dielectric material (with $ \epsilon \neq 1 $) in the region.
 	
@@ -2668,9 +2694,9 @@ Looks like 45 minutes are missing from the lecture recording containing this mat
 	
     \item The difference in electric field energies, using the linear constitutive relation to relate $ \E $ and $ \D $ along with the just-derived result $ I = 0 $, is then
 	\begin{align*}
-		W - W_{0}  &= \frac{1}{2}\int_{V}(\E \cdot \D_{0} - \E_{0}\cdot\D)\dr\\
-		& = - \frac{1}{2}\int_{V} \ee(\epsilon - 1)\E_{0}\E \dr\\
-		& = -\frac{1}{2}\int_{V}\P \cdot \E_{0}\dr,
+		W - W_{0}  &= \frac{1}{2}\iiint_{V}(\E \cdot \D_{0} - \E_{0}\cdot\D)\dr\\
+		& = - \frac{1}{2}\iiint_{V} \ee(\epsilon - 1)\E_{0}\E \dr\\
+		& = -\frac{1}{2}\iiint_{V}\P \cdot \E_{0}\dr,
 	\end{align*}
 	where $ \P $ is the electric polarization in the dielectric material and $ \E_{0} $ is the electric field that would be present in the region of space in the absence of the material.
 	
@@ -2679,7 +2705,7 @@ Looks like 45 minutes are missing from the lecture recording containing this mat
 \end{itemize}
 
 
-\subsubsection{Magnetic Field Energy in Material}
+\subsubsection{Magnetic Field Energy in Matter}
 \begin{itemize}
 	\item We now consider how magnetic field energy in a region of empty space changes when we place an magnetically active material with $ \mu \neq 1 $ inside the material. The derivation is analogous to the above derivation for electric field energy, so we will proceed at a faster pace.
 	
@@ -2762,7 +2788,7 @@ Looks like 45 minutes are missing from the lecture recording containing this mat
     \end{enumerate}
     Under these assumptions, the first integral vanishes and the force on the nonhomogeneous dielectric simplifies to
 	\begin{equation*}
-		\vec{F}_{\text{E}} = - \frac{1}{2}\int_{V}(\grad \e(\r))\ee E^{2}\dr.
+		\vec{F}_{\text{E}} = - \frac{1}{2}\iiint_{V}(\grad \e(\r))\ee E^{2}\dr.
 	\end{equation*}
 	In other words, $ \vec{F} $ at a given point depends on the gradient of $ \e $. 
 	
@@ -2909,7 +2935,7 @@ Consider a boundary between two materials with different electromagnetic propert
 	\end{equation*}
     where $ k $ is the magnitude of the surface current density. Alternatively, in terms of the normal vectors to the materials, the boundary condition reads
 	\begin{equation*}
-		(\uvec{n}_{1} \cross \H_{1}) - (\uvec{n}_{2}\cross \H_{2}) = \vec{k}
+		(\uvec{n}_{1} \cross \H_{1}) - (\uvec{n}_{2}\cross \H_{2}) = \vec{k},
 	\end{equation*}
     where $ \uvec{k} = k \uvec{n}_{S} $.
 \end{itemize}
