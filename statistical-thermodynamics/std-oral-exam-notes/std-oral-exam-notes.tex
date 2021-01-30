@@ -2,7 +2,6 @@
 \usepackage[T1]{fontenc}
 \usepackage{mwe}
 \usepackage[margin=3.5cm]{geometry}
-\usepackage[normalem]{ulem}  % for underline with line wrapping
 
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -39,14 +38,28 @@
 \begin{center}
 \textbf{About These Notes}
 \end{center}
-These notes give the answers to common questions from the oral exam needed to pass the course \textit{Statisti\v{c}na Termodinamika} (Statistical Thermodynamics), given to second-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. I wrote the notes when studying for the exam and am making them publicly available in the hope that they might help others learning the same material. Although the exact oral exam questions are specific to the the physics program at the University of Ljubljana, the content is fairly standard for an undergraduate statistical physics course and might be useful to others learning similar material.
+These notes provide answers to typical questions\footnote{The questions come directly from a list of 60 sample theoretical exam questions from a document compiled in the academic year 2008-2009. These original questions, in Slovene, are included in the \href{https://github.com/ejmastnak/fmf/tree/main/statistical-thermodynamics/std-oral-exam-notes}{\underline{GitHub directory}} containing these notes.} from the oral exam needed to pass the course \textit{Statisti\v{c}na Termodinamika} (Statistical Thermodynamics), a required course in thermodynamics and statistical physics for second-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. I wrote the notes when studying for the exam and am making them publicly available in the hope that they might help others learning similar material. The most recent version of the these notes can be found on \href{https://github.com/ejmastnak/fmf/tree/main/statistical-thermodynamics}{\underline{GitHub}}.
 
 \vspace{2mm}
-\textit{Navigation}: For easier document navigation, the table of contents is ``clickable'', meaning you can jump directly to a section by clicking the colored section names in the table of contents. Unfortunately, \uline{the clickable links do not work in most online or mobile PDF viewers}; you have to download the file first.
+\textit{Navigation}: For easier document navigation, the table of contents is ``clickable'', meaning you can jump directly to a section by clicking the colored section names in the table of contents. Unfortunately, \textit{the clickable links do not work in most online or mobile PDF viewers}; you have to download the file first.
+
+\vspace{2mm}
+\textit{On Authorship}: The material herein is far from original---it is primarily a combination of Professor David Tong's \href{http://www.damtp.cam.ac.uk/user/tong/statphys.html}{\underline{lectures on Statistical Physics}} and Professor Primo\v{z} Ziherl's lectures at the University of Ljubljana. I take credit only for compiling the common exam material in one place and for typesetting the notes.
 
 \vspace{2mm}
 \textit{Disclaimer:} Mistakes---both trivial typos and legitimate errors---are likely. Keep in mind that these are the notes of an undergraduate student in the process of learning the material himself---take what you read with a grain of salt. If you find mistakes and feel like telling me, by \href{https://github.com/ejmastnak/fmf}{Github} pull request, \href{mailto:ejmastnak@gmail.com}{email} or some other means, I'll be happy to hear from you, even for the most trivial of errors.
 
+\vspace{5mm}
+\textbf{How to use these notes}
+\begin{itemize}
+    \item The sections and subsections follow the order in which the course material was taught.
+
+    \item Each subsection begins with a \texttt{Common Questions} subsubsection, which lists the common questions for the material in that subsection.
+
+    \item  Each question is answered in a dedicated subsubsection, where the question is written in italics at the beginning of the subsubsection.
+\end{itemize}
+
+\newpage
 
 \tableofcontents	
 
@@ -139,9 +152,22 @@ Viscosity and transport coefficients
 \fi
 \newpage
 
-\section{Answers to Oral Exam Questions: Thermodynamics}
+\section{Thermodynamics}
 
 \subsection{Equations of State in Thermodynamics}
+\subsubsection{Common Questions}
+\begin{enumerate}
+    \item Discuss thermodynamic equilibrium, the zeroth law of thermodynamics and the relationship between the two. Discuss the role of temperature in this dynamic. 
+    \item Explain the gas thermometer temperature scale. What empirical gas law does the scale rely on?
+
+    \item Explain how the Carnot cycle provides a canonical choice for a thermodynamic temperature scale.
+
+    \item What are thermodynamic state variables? What is a function of state? What are intensive and extensive variables? What is an equation of state? Include examples of each.
+
+    \item State and discuss the ideal gas equation of state. In what regime is the ideal gas equation valid, and what is the microscopic interpretation of an ideal gas? Discuss the isotherms of an ideal gas, mentioning their shape and temperature dependence. Which empirical gas laws are combined to form the ideal gas equation?
+
+    \item Give an example of an equation of state for a real gas and discuss the corresponding isotherms. What region of the isotherm corresponds to a gaseous state and which to a fluid state? Discuss which parts of the isotherm represent meta-stable states and which parts represent non-physical states.
+\end{enumerate}
 
 \subsubsection{Thermodynamic Equilibrium and the Zeroth Law}
 \textit{Discuss thermodynamic equilibrium, the zeroth law of thermodynamics and the relationship between the two. Discuss the role of temperature in this dynamic.}
@@ -321,7 +347,8 @@ Viscosity and transport coefficients
 \subsubsection{Real Gas Equation of State}
 \textit{Give an example of an equation of state for a real gas (van der Waals equation!) and discuss the corresponding isotherms. What region of the isotherm corresponds to a gaseous state and which to a fluid state? Discuss which parts of the isotherm represent meta-stable states and which parts represent non-physical states.}
 
-\textit{Note: the van der Waals equation is discussed in more detail in the section on statistical mechanics and interacting gases.}
+\vspace{2mm}
+\textit{Note}: the van der Waals equation is discussed in more detail in the section on statistical mechanics and interacting gases.
 \begin{itemize}
 	\item Real gases account for the interaction between gas particles, so the behavior of real gases deviates from ideal gases; this effect is most prominent at high densities where interactions are more frequent. The classic example of a real gas equation of state is the van der Waals equation
 	\begin{equation*}
@@ -387,6 +414,20 @@ Viscosity and transport coefficients
 
 
 \subsection{The First Law of Thermodynamics}
+
+\subsubsection{Common Questions}
+\begin{enumerate}
+    \item Discuss the first law of thermodynamics and state its associated equation in macroscopic and differential form. State the differential form of work for a gas, rod, magnetic, and dielectric thermodynamic system.
+
+    \item What is enthalpy? Explain the mathematics behind the derivation process, making sure to discuss the role of the Legendre transformation. In which situations is enthalpy a preferred quantity to internal energy? What is the difference in internal energy and enthalpy in the evaporation of water?
+
+    \item What are heat capacity and specific heat capacity? What are the definitions of heat capacity for a gas at constant volume and at constant temperature?
+
+    \item Explain the process of Joule expansion (aka Hirn's experiment at UL FMF). What does the process tell us about the properties of an ideal gas?
+
+    \item Explain the Joule-Kelvin (Joule-Thomson) effect and the associated experiment. Derive the Joule-Kelvin coefficient.
+\end{enumerate}
+
 
 \subsubsection{Statement of the First Law}
 \textit{Discuss the first law of thermodynamics and state its associated equation in macroscopic and differential form. State the differential form of work for a gas, rod, magnetic, and dielectric thermodynamic system.}
@@ -497,7 +538,7 @@ Viscosity and transport coefficients
 \end{itemize}
 
 \subsubsection{Heat Capacity}
-\textit{What are heat capacity and specific heat capacity? What are the definitions of heat capacity for a gas at constant volume and at constant temperature? }
+\textit{What are heat capacity and specific heat capacity? What are the definitions of heat capacity for a gas at constant volume and at constant temperature?}
 \begin{itemize}
 	\item A thermodynamic system's heat capacity $ C $ is defined as
 	\begin{equation*}
@@ -625,7 +666,27 @@ Viscosity and transport coefficients
 
 \subsection{Second Law of Thermodynamics}
 
-\subsubsection{Some Terminology: Quasi-Static, Reversible and Irreversible Processes}
+\subsubsection{Common Questions}
+\begin{enumerate}
+    \item State and explain the second law of thermodynamics.
+    
+    \item Explain the Carnot cycle and how the cycle is reversible by construction.
+
+    \item Explain how the Carnot cycle provides a canonical choice for a thermodynamic temperature scale.
+
+    \item What is entropy and how is it derived? Discuss the relationship between entropy and the second law of thermodynamics.
+
+    \item State some implications of the second law of thermodynamics (of the definition of entropy). Show that the second law requires heat to flow from hot regions to cold regions and not vice versa.
+
+    \item Derive the dependence of the entropy of an ideal gas on temperature and pressure and the dependence on temperature and volume.
+
+\end{enumerate}
+
+\subsubsection{Terminology: Quasi-Static, Reversible and Irreversible Processes}
+\textit{Note}: This subsubsection is not a question. I decided to include it to clear up some terminology that will be used when discussing the second law of thermodynamics in the following questions.
+
+\vspace{2mm}
+
 A \textit{thermodynamic process} is a way of getting a system between thermodynamic states. Here are some important classes of thermodynamic processes:
 \begin{itemize}
 	\item A \textit{quasi-static} process is a thermodynamic process in which energy transfers to or from a system slowly and gently enough that the system effectively remains in equilibrium and is well defined by its state variables throughout the entire process. 
@@ -658,9 +719,8 @@ These two statements of the second law allow the definition of the quantity and 
 \smallskip 
 If the Kelvin formulation were invalid the Clausius formulation would also be invalid. If Kelvin were invalid, we could perform a process who only result would be to transfer heat from a heat reservoir completely into work. We could then (e.g. with friction) completely transform this work back into heat and use the heat to arbitrarily increase the temperature of some given body. We could keep this up until the temperature of the body increased beyond the temperature of the heat reservoir. Once the $ T_{2} > T_{1} $ sole effect of the process is the transfer of heat from a colder body to a hotter body, in violation of Clausius's formulation. 
 
-\subsubsection{Carnot Cycle}
-\textit{Explain the Carnot cycle and how the cycle is reversible by construction.}
 \subsubsection{The Carnot Cycle}
+\textit{Explain the Carnot cycle and how the cycle is reversible by construction.}
 \begin{itemize}
 	\item The Carnot cycle is a theoretical series of four reversible process running in a continuous cycle. The system operates between two heat reservoirs: a hot reservoir with temperature $ T_{H} $ and a cold reservoir with temperature $ T_{C} $. The four steps are
 	\begin{enumerate}
@@ -692,7 +752,7 @@ If the Kelvin formulation were invalid the Clausius formulation would also be in
 	\begin{quote}
 	 	Of all engines operating between two heat reservoirs, a reversible Carnot engine is the most efficient. More so, all reversible engines have the same efficiency $ \eta = \eta (T_{H}, T_{C}) $, which depends only on the temperatures of the reservoirs $ T_{H} $ and $ T_{C} $.
 	\end{quote}
-	Carnot's theorem can be proved with Clausius formulation of the second law. I have a proof in the accompanying theory notes but left if out here, since it is not a part of the UL FMF curriculum.
+	Carnot's theorem can be proved with the Clausius formulation of the second law. I have a proof in the accompanying theory notes but left if out here, since it is not a part of the UL FMF curriculum.
 \end{itemize}
 	
 	
@@ -864,8 +924,21 @@ If the Kelvin formulation were invalid the Clausius formulation would also be in
 
 \subsection{Thermodynamic Potentials}
 
+\subsubsection{Common Questions}
+\begin{enumerate}
+    \item How do we derive the expression for Helmholtz free energy? What is the physical meaning of Helmholtz free energy, and how does the free energy change as a system approaches thermodynamic equilibrium?
+
+    \item What is Gibbs free energy? How do we derive the expression for Gibbs free energy? How does Gibbs free energy change as a system approaches equilibrium?
+
+    \item State and derive Maxwell's relations for an ideal gas. How do the relations change for other thermodynamic systems?
+
+    \item How do Maxwell's relations apply to a $ (p, V, T) $ system's coefficients of compressibility and thermal expansion? Derive the expression for the difference in heat capacities for an ideal gas using Maxwell's relations. Compare the order of magnitudes of the  difference of heat capacities for a gas and for a fluid.
+
+\end{enumerate}
+
+
 \subsubsection{Helmholtz Free Energy}
-\textit{How do we derive the expression for Helmholtz free energy? What is the physical meaning of Helmholtz free energy, and how does the free energy change as a system approaches thermodynamic equilibrium? }
+\textit{How do we derive the expression for Helmholtz free energy? What is the physical meaning of Helmholtz free energy, and how does the free energy change as a system approaches thermodynamic equilibrium?}
 
 \begin{itemize}
 	\item \textit{Helmholtz free energy} is defined as
@@ -1101,6 +1174,21 @@ Maxwell's relations are useful relationships between the thermodynamic potential
 
 
 \subsection{Phase Changes}
+
+\subsubsection{Common Questions}
+\begin{enumerate}
+    \item What is a phase change? Give examples of properties of matter that change during phase transitions and can distinguish different phases.
+
+    \item Discuss the van der Waals equation as pertains to the liquid-gas phase change. Draw the corresponding isotherms and explain which region corresponds to a gas state and which to a liquid state. Explain which regions are metastable and which are non-physical.
+
+    \item What are the conditions for phase equilibrium? Explain and derive the Maxwell construction for phase changes.
+
+    \item Explain the difference between continuous and non-continuous phase changes. Discuss how enthalpy, Gibbs free enthalpy and specific heat at constant pressure change during both types of phase changes and explain the differences in behavior.
+
+    \item Explain and derive the Clausius-Clapeyron equation. What is saturated vapor pressure, and what saturated vapor pressure does the equation predict for temperatures far below the critical temperature? 
+
+\end{enumerate}
+
 
 \subsubsection{Introduction to Phase Changes}
 \textit{What is a phase change? Give examples of properties of matter that change during phase transitions and can distinguish different phases.}
@@ -1342,6 +1430,17 @@ Maxwell's relations are useful relationships between the thermodynamic potential
 
 \subsection{Transport Phenomena}
 
+\subsubsection{Common Questions}
+\begin{enumerate}
+    \item What is diffusion? How do we analyze diffusion in a binary mixture? Derive the continuity and diffusion equation for diffusion of matter.
+
+    \item Derive the continuity and diffusion equations for heat.
+
+    \item What are cross transport phenomena? Explain the thermoelectric effect and the Peltier effect.
+
+\end{enumerate}
+
+
 \subsubsection{Diffusion of Matter}
 \textit{What is diffusion? How do we analyze diffusion in a binary mixture? Derive the continuity and diffusion equation for diffusion of matter.} 
 
@@ -1480,12 +1579,28 @@ Maxwell's relations are useful relationships between the thermodynamic potential
 
 \newpage
 
-\section{Answers to Oral Exam Questions: Statistical Physics}
+\section{Statistical Physics}
 
 \subsection{Introduction to Statistical Physics}
+\subsubsection{Common Questions}
+\begin{enumerate}
+    \item What is a phase space? Discuss the phase space of a system of free point particles. How is the time evolution of a system described in terms of the phase space?
+
+    \item What are microstates? What are probability density and equilibrium in statistical physics? What conditions must hold for a given probability density to be stationary?
+
+    \item How is entropy defined in statistical physics? What is the Boltzmann entropy formula?
+
+    \item What is the microcanonical ensemble? What kind of system does it describe and what is the associated probability distribution?
+
+    \item Derive the second law of thermodynamics using a statistical approach.
+
+    \item How is temperature defined in statistical physics? Discuss the relationship between temperature and the zeroth law.
+
+\end{enumerate}
+
 
 \subsubsection{Phase Space}
-\textit{ What is a phase space? Discuss the phase space of a system of free point particles. How is the time evolution of a system described in terms of the phase space?}
+\textit{What is a phase space? Discuss the phase space of a system of free point particles. How is the time evolution of a system described in terms of the phase space?}
  \begin{itemize}
 	 \item The system's \textit{phase space} is a $ 3N $ dimensional space consisting of the system's possible states. A single point in phase space contains all the information needed to uniquely specify the state of the system; each state variable needed to uniquely specify the system's state is assigned a single coordinate. Because most macroscopic systems are incredibly complex, we need many variables to uniquely specify the systems state, and the dimensionality of the phase space is absurdly large. 
 	 
@@ -1539,8 +1654,8 @@ Maxwell's relations are useful relationships between the thermodynamic potential
 \subsubsection{Entropy at Fixed Energy} \label{sss:entropy_fixed_E}
 \textit{How is entropy defined in statistical physics? What is the Boltzmann entropy formula?}
 
-\smallskip
-\textit{Note: Entropy is introduced much later in the UL FMF curriculum, but I have put the basic Boltzmann definition of entropy right at the beginning. Introducing entropy earlier makes the derivation of the canonical ensemble, in my opinion, more elegant and intuitive. It also allows us to derive the second law from statistical considerations.}
+\vspace{2mm}
+\textit{Note}: Entropy is introduced much later in the UL FMF curriculum, but I have put the basic Boltzmann definition of entropy right at the beginning. Introducing entropy earlier makes the derivation of the canonical ensemble, in my opinion, more elegant and intuitive. It also allows us to derive the second law from statistical considerations.
 \begin{itemize}
 	\item The \textit{entropy} of a system at energy $ E $ is defined as
 	\begin{equation*}
@@ -1659,7 +1774,8 @@ Maxwell's relations are useful relationships between the thermodynamic potential
 	Mathematically, the energy flows from higher to lower temperature because $ \pdv{S}{E} $ is a monotonically decreasing function of temperature.
 \end{itemize}
 
-\subsubsection{Example: The Two State System in the Microcanonical Ensemble} \label{sss:two_state_mce}
+\subsubsection{Example: The Two-State System in the Microcanonical Ensemble} \label{sss:two_state_mce}
+This is subsubsection is not a question in itself, but the two-state system is referenced a few other times in other questions, so I have included a discussion here.
 \begin{itemize}
 	\item Our so-called two state system is a system of $ N $ non-interacting particles, each fixed in position so that the system's volume is constant. Each individual particle can occupy one of two possible states, e.g. spin up $ \ket{\uparrow} $ or spin down $ \ket{\downarrow} $. 
 	
@@ -1711,6 +1827,24 @@ Maxwell's relations are useful relationships between the thermodynamic potential
 
 
 \subsection{Canonical Ensemble}
+\subsubsection{Common Questions}
+\begin{enumerate}
+    \item What is the canonical ensemble and what kind of system does it describe?  Derive the associated probability distribution for the canonical ensemble.
+
+    \item What is a partition function for the canonical ensemble? How do we define the average of a quantity in statistical physics? Derive the expression for average energy in the canonical ensemble.
+
+    \item Derive the expression for energy fluctuations in the canonical ensemble. Show that the ratio of energy fluctuation to the system's average energy is negligible in a macroscopic system.
+
+    \item State and derive Gibbs formula for entropy and discuss its scope.
+
+    \item Discuss the relationship between the Gibbs and Boltzmann entropy formulas for the microcanonical ensemble. Derive an expression for entropy in terms of the canonical partition function.
+
+    \item How is Helmholtz free energy defined in statistical physics? What is the expression for free energy in the canonical ensemble?
+
+    \item Discuss and derive the equipartition principle. How is the equipartition principle used to predict the specific heat of monatomic and diatomic gases?
+
+\end{enumerate}
+
 
 \subsubsection{Canonical Ensemble}
 \textit{What is the canonical ensemble and what kind of system does it describe?  Derive the associated probability distribution for the canonical ensemble.}
@@ -2055,6 +2189,19 @@ Maxwell's relations are useful relationships between the thermodynamic potential
 
 \subsection{Equations of State and the Virial Expansion}
 
+\subsubsection{Common Questions}
+\begin{enumerate}
+    \item Derive the ideal gas partition function.
+
+    \item How do we calculate the pressure of a gas with statistical physics? Derive the ideal gas law from the canonical ideal gas partition function.
+
+    \item What is the virial equation of state and what is the second virial coefficient? What are some common models for inter-particle potentials? How is the second virial coefficient related to the potential energy interaction between neighboring particles in a canonical ensemble?
+
+    \item Derive the second virial coefficient for a system of spherical particles described by a hard-core potential. Show how the expression can be used to derive the van der Waals equation of state.
+
+\end{enumerate}
+
+
 \subsubsection{Ideal Gas Partition Function} \label{sss:ideal_gas_part_func}
 \textit{Derive the ideal gas partition function.}
 \begin{itemize}
@@ -2312,6 +2459,23 @@ Maxwell's relations are useful relationships between the thermodynamic potential
 
 \subsection{Quantum Statistical Physics}
 
+\subsubsection{Common Questions}
+\begin{enumerate}
+    \item Discuss symmetry and anti-symmetry of multi-particle equations of state under particle exchange. Which symmetry applies to bosons and which to fermions? How do we construct a properly behaving multi-particle equation of state from single particle equations of state?
+
+    \item How do we normalize probability density in quantum statistical physics?
+
+    \item What is density of states and how is it used in quantum statistical physics?
+
+    \item Derive the expression for the occupation number of a quantum harmonic oscillator as a function of temperature.
+
+    \item Discuss the analysis of heat capacity of a diatomic ideal gas with quantum statistical physics.
+
+    \item What is the Einstein model of solids? Discuss the model's predictions for heat capacity.
+
+    \item What is the Debye model? How are the lattice oscillations of a solid described in terms of the Debye model? What are the Debye frequency and temperature? Discuss the low-temperature behavior of a solid's heat capacity as predicted by the Debye model and the law of Dulong and Petit.
+
+\end{enumerate}
 
 
 \subsubsection{Multi-Particle Wave Functions}
@@ -2795,7 +2959,21 @@ where $ m $ is the mass of the gas molecule
 
 
 \subsection{Grand Canonical Ensemble}
-\subsubsection{Basics}
+
+\subsubsection{Common Questions}
+\begin{enumerate}
+    \item What is the grand canonical ensemble? Discuss how it is introduced and derived. Discuss and derive the thermodynamical significance of the grand potential.
+
+    \item Discuss and derive the probability distributions (expected number of particles in a given energy state) in Bose-Einstein statistics.
+
+    \item Discuss and derive the probability distributions (expected number of particles in a given energy state) in Fermi-Dirac statistics.
+
+    \item Calculate the chemical potential of a gas of free electrons in a metal at absolute zero. Discuss why the result still applies acceptably even at room temperatures.
+
+\end{enumerate}
+
+
+\subsubsection{Basic Concepts: The Grand Canonical Ensemble}
 \textit{What is the grand canonical ensemble? Discuss how it is introduced and derived. Discuss and derive the thermodynamical significance of the grand potential.}
 
 \smallskip
@@ -3086,8 +3264,17 @@ where $ m $ is the mass of the gas molecule
 
 \subsection{Magnetism and Quantum Statistical Physics}
 
+\subsubsection{Common Questions}
+\begin{enumerate}
+    \item Discuss the effect of an external magnetic field on atoms with nonzero angular momentum. Calculate the susceptibility of gas atoms with spin $ \frac{1}{2} $ in the high temperature limit. Discuss and derive Curie's law from a statistical physics approach.
+
+    \item What is the Ising model? How to we analyze solids using the Ising model and the mean field approximation? What notable behavior does this analysis predict?
+
+\end{enumerate}
+
+
 \subsubsection{Aside: Polylogarithms and Fermi Gases} \label{sss:polylog}
-\textit{Note: this is an optional section. I added the discussion of polylogarithms because they are an elegant machinery for handling magnetism in the next section.}
+\textit{Note}: this is an optional section. I added the discussion of polylogarithms because they are an elegant machinery for handling magnetism in the next section.
 \begin{itemize}
 	\item We will use something called a \textit{polylogarithm function} to concisely express the $ \expval{N} $ and $ \expval{E} $ for a Fermi gas. The polylogarithm functions are a family of parameter-dependent integrals that occur frequently in quantum statistics. The polylogarithms are given by
 	\begin{equation*}
@@ -3394,6 +3581,22 @@ where $ m $ is the mass of the gas molecule
 
 
 \subsection{Kinetic Theory of Gases}
+
+\subsubsection{Common Questions}
+\begin{enumerate}
+    \item Discuss and derive the Boltzmann distribution.
+
+    \item How is the mean speed of gas molecules defined in the kinetic theory of gases? What is a typical order of magnitude? How is the mean free path of gas molecules defined in the kinetic theory of gases? On what quantities does the mean free path depend, and what is a typical order of magnitude?
+
+    \item Derive the ideal gas equation using kinetic theory.
+
+    \item State and derive the diffusion constant of an ideal gas.
+
+    \item What is the microscopic interpretation of the viscosity of a gas in terms of kinetic theory? How do we estimate the magnitude the viscosity in planar geometry? Discuss the behavior of viscosity in the limit in which container separation is much smaller than mean free path.
+
+    \item Derive the expression for the thermal conduction of an ideal gas. In what regime of density does the expression apply? What is the thermal conductivity of a thin layer of a low-density gas in which the mean free path is larger than distance between the hot and cold reservoirs?
+
+\end{enumerate}
 
 
 \subsubsection{Boltzmann Distribution}
