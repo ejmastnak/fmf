@@ -2,7 +2,6 @@
 \usepackage[T1]{fontenc}
 \usepackage{mwe}
 \usepackage[margin=3cm]{geometry}
-\usepackage[normalem]{ulem}  % for underline with line wrapping
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{bm} % for bold vectors in math mode
@@ -46,22 +45,34 @@
 \author{Elijan Mastnak}
 \date{2019-2020 Summer Semester}
 \maketitle
-
 \begin{center}
 \textbf{About These Notes}
 \end{center}
-These notes give the answers to common questions from the oral exam required to pass the course \textit{Klasi\v{c}na Mehanika} (Classical Mechanics), given to second-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. I wrote the notes when studying for the exam and am making them publicly available in the hope that they might help others learning the same material. Although the exact oral exam questions are specific to the the physics program at the University of Ljubljana, the content is fairly standard for an undergraduate classical mechanics course and might be useful to others learning similar material.
+These notes give the answers to typical questions\footnote{The oral exam questions are taken from the course website, included in the \href{https://github.com/ejmastnak/fmf/tree/main/classical-mechanics/classical-mechanics-oral-study-guide}{\underline{GitHub directory}} containing these notes, and at the time of writing are publically available at \href{http://www-f1.ijs.si/~ramsak/KlasMeh/Izpitna.pdf}{\underline{this link}}.} from the oral exam required to pass the course \textit{Klasi\v{c}na Mehanika} (Classical Mechanics), a required course for second-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. I wrote the notes when studying for the exam and am making them publicly available in the hope that they might help others learning the same material. Although the exact oral exam questions are specific to the the physics program at the University of Ljubljana, the content is fairly standard for an undergraduate classical mechanics course and might be useful to others learning similar material. The most recent version can be found on \href{https://github.com/ejmastnak/fmf/tree/main/classical-mechanics}{\underline{GitHub}}.
 
 \vspace{2mm}
-\textit{Navigation}: For easier document navigation, the table of contents is ``clickable'', meaning you can jump directly to a section by clicking the colored section names in the table of contents. Unfortunately, the \uline{clickable links do not work in most online or mobile PDF viewers}; you have to download the file first.
+\textit{Navigation}: For easier document navigation, the table of contents is ``clickable'', meaning you can jump directly to a section by clicking the colored section names in the table of contents. Unfortunately, the \textit{clickable links do not work in most online or mobile PDF viewers}; you have to download the file first.
 
 \vspace{2mm}
-\textit{On Content}: The material herein is far from original---it is primarily a combination of Professor David Tong's \href{http://www.damtp.cam.ac.uk/user/tong/dynamics.html}{Lectures on Classical Dynamics} and Goldstein's canonical \textit{Classical Mechanics}. I take credit for nothing beyond compiling and typesetting the notes.
+\textit{On Authorship}: The material herein is far from original---it is primarily a combination of Professor David Tong's \href{http://www.damtp.cam.ac.uk/user/tong/dynamics.html}{\underline{lectures on Classical Dynamics}}, Professor Anton Ram\v{s}ak's lectures at the University of Ljubljana, and Goldstein's canonical \textit{Classical Mechanics}. I take credit only for compiling the common exam material in one place and for typesetting the notes.
 
 \vspace{2mm}
 \textit{Disclaimer:} Mistakes---both trivial typos and legitimate errors---are likely. Keep in mind that these are the notes of an undergraduate student in the process of learning the material himself---take what you read with a grain of salt. If you find mistakes and feel like telling me, by \href{https://github.com/ejmastnak/fmf}{Github} pull request, \href{mailto:ejmastnak@gmail.com}{email} or some other means, I'll be happy to hear from you, even for the most trivial of errors.
 
 
+\vspace{5mm}
+\textbf{How to use these notes}
+\begin{itemize}
+    \item The sections follow the order in which the course material was taught.
+
+    \item Each typical exam question is answered in a dedicated subsection, where the question is written in italics at the beginning of the subsection.
+    
+    \item Each question subsection may potentially be further divided into subsubsections to better organize the answer material.
+
+
+\end{itemize}
+
+\newpage
 
 \tableofcontents
 
@@ -489,7 +500,7 @@ We will now analyze each term in the generalized second law
 \section{Lagrangian Mechanics}
 
 \subsection{Constraints and Generalized Coordinates}
-\textit{Explain the role of constrains and generalized coordinates in Lagrangian mechanics.}
+\textit{Explain the role of constraints and generalized coordinates in Lagrangian mechanics.}
 
 \subsubsection{Holonomic Constraints and Generalized Coordinates} \label{sssec:lag:hol_const}
 
@@ -1179,6 +1190,7 @@ Here is a very brief run-through of how the common quantities of Lagrangian mech
 	
 \end{itemize}
 
+\newpage 
 
 \section{Central Forces}
 \subsection{One-Body Central Force Problem and Basic Equations of Orbit}
@@ -1762,6 +1774,7 @@ The LRL vector gives us a neat way of deriving the orbit equation for the Kepler
 	In other words, the eccentricity of the orbit is the magnitude of the LRL vector.
 \end{itemize}
 
+\newpage
 \section{Motion of Rigid Bodies}
 
 \subsection{Euler Angles and the Orientation of a Rigid Body}
@@ -2402,7 +2415,7 @@ A heavy top is a top acted on by gravity. Symmetric means that two of the princi
 \end{itemize}
 
 
-
+\newpage
 
 \section{Small Oscillations}
 
@@ -2823,6 +2836,8 @@ We want to show $ \mat{F} $'s eigenvalues are real as long as $ \mat{F} $ is der
 
 \end{itemize}
 
+\newpage
+
 \section{Hamiltonian Mechanics}
 
 \subsection{The Hamiltonian Formalism}
@@ -2963,7 +2978,7 @@ We return briefly to two of conservation laws and associated constants of motion
 	so $ p_{q} $ is a constant of motion.
 \end{itemize}
 
-\subsubsection{Principle of Least Action \'{a} la Hamilton}
+\subsubsection{Principle of Least Action \`{a} la Hamilton}
 \begin{itemize}
 	\item In Lagrangian mechanics we defined action as 
 	\begin{equation*}
