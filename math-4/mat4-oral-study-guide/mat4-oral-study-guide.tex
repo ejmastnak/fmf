@@ -2,7 +2,6 @@
 \usepackage[T1]{fontenc}
 \usepackage{mwe}
 \usepackage[margin=3.5cm]{geometry}
-\usepackage[normalem]{ulem}  % for underline with line wrapping
 
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -50,14 +49,28 @@
 \begin{center}
 \textbf{About These Notes}
 \end{center}
-These notes give the answers to common questions from the theoretical exam required to pass the course \textit{Matemtika 4} (Mathematics 4), given to second-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. The course covers complex analysis, harmonic functions, and differential equations. I wrote the notes when studying for the exam and am making them publicly available in the hope that they might help others learning the same material. Although the exact exam questions are specific to the the physics program at the University of Ljubljana, the content is fairly standard for an undergraduate course in complex analysis and differential equations and might be useful to others learning similar material.
+These notes provide answers to typical questions\footnote{The questions are compiled from the past 5 years' worth of past theoretical exams, which at the time of writing can be found on the \href{https://www.fmf.uni-lj.si/~magajna/Matematika4FIZ/osnovna.htm}{\underline{course website}}.} from the theoretical exam required to pass the course \textit{Matemtika 4} (Mathematics 4), a required course for second-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. The course covers complex analysis, harmonic functions, and ordinary and partial differential equations. I wrote the notes when studying for the exam and am making them publicly available in the hope that they might help others learning the same material. Although the exact exam questions are specific to the the physics program at the University of Ljubljana, the content is fairly standard for an undergraduate course in complex analysis and differential equations, and I am making the notes publically available in the hope that they might be useful to others learning similar material. The most recent version can be found on \href{https://github.com/ejmastnak/fmf/tree/main/math-4}{\underline{GitHub}}.
+
 
 \vspace{2mm}
-\textit{Navigation}: For easier document navigation, the table of contents is ``clickable'', meaning you can jump directly to a section by clicking the colored section names in the table of contents. Unfortunately, \uline{the clickable links do not work in most online or mobile PDF viewers}; you have to download the file first.
+\textit{Navigation}: For easier document navigation, the table of contents is ``clickable'', meaning you can jump directly to a section by clicking the colored section names in the table of contents. Unfortunately, \textit{the clickable links do not work in most online or mobile PDF viewers}; you have to download the file first.
 
 
 \vspace{2mm}
 \textit{Disclaimer:} Mistakes---both trivial typos and legitimate errors---are likely. Keep in mind that these are the notes of an undergraduate student in the process of learning the material himself---take what you read with a grain of salt. If you find mistakes and feel like telling me, by \href{https://github.com/ejmastnak/fmf}{Github} pull request, \href{mailto:ejmastnak@gmail.com}{email} or some other means, I'll be happy to hear from you, even for the most trivial of errors.
+
+\vspace{5mm}
+\textbf{How to use these notes}
+\begin{itemize}
+    \item The sections and subsections follow the order in which the course material was taught.
+
+    \item Each subsection begins with a \texttt{Common Questions} subsubsection, which lists the common questions for the material in that subsection.
+
+    \item  Each question is answered in a dedicated subsubsection, where the question is written in italics at the beginning of the subsubsection.
+\end{itemize}
+
+
+\newpage
 
 \tableofcontents
 
@@ -622,7 +635,7 @@ Consider the two open regions $ U, V \in \C $.
 		for some $ \alpha \in D(0, 1) $ and $ w \in \C $ such that $ \abs{w} = 1 $.
 \end{itemize}
 
-
+\newpage
 \section{Harmonic Functions}
 
 \subsection{Harmonic Functions in the Plane}
@@ -903,6 +916,7 @@ Consider the \textit{open} subset $ U \subset \R^{3} $ and the \textit{compact} 
 \end{itemize}
 
 
+\newpage 
 \section{Fourier Analysis}
 \subsection{Convolutions}
 
@@ -1140,6 +1154,7 @@ Consider the function  $ f \in L^{1}(\R) $ for which $ \widehat{f}  \in L^{1}(\R
 	\item \textit{Plancherel Theorem:} The Fourier transform in $ \mathcal{S}(\R) $ preserves the $ \norm{\cdot}_{2} $ norm and can be uniquely extended to a unitary operator on the space $ L^{2}(\R) $ . For background and proof, see lecture notes.
 \end{itemize}
 
+\newpage
 
 \section{Differential Equations}
 
