@@ -993,36 +993,36 @@ We dedicate a brief section to review electric current, since we will be working
 	
 	% We are interested in the relationship between $ \curl \B $ and $ \j $. 
 	
-	We being the analysis by finding the magnetic circulation along the curve $ C $. Using the Biot-Savart to express $ \B $, the circulation $ \Gamma_{\text{M}} $ is
+	We being the analysis by finding the magnetic circulation along the curve $ C $. Using the Biot-Savart to express $ \B $, the circulation $ \Gamma_{\text{B}} $ is
 	\begin{equation*}
-		\Gamma_{\text{M}} = \oint_{C} \B \cdot \diff \vec{l} = \oint_{C}\left[ - \frac{\mm I}{4 \pi} \oint_{C'}\diff \vec{l}' \cross \grad \left(\frac{1}{\abs{\r(l) - \r(l')}}\right) \right] \cdot \diff \vec{l},
+		\Gamma_{\text{B}} = \oint_{C} \B \cdot \diff \vec{l} = \oint_{C}\left[ - \frac{\mm I}{4 \pi} \oint_{C'}\diff \vec{l}' \cross \grad \left(\frac{1}{\abs{\r(l) - \r(l')}}\right) \right] \cdot \diff \vec{l},
 	\end{equation*}
 	where we've written the integrand in the second equality with a reverse-engineered gradient. 
 
     \item The integrand then takes the form of a scalar triple product, which we can rearrange to get
 	\begin{equation*}
-		\Gamma_{\text{M}} =  - \frac{\mm I}{4\pi} \oint_{C} \oint_{C'} (\diff \vec{l} \cross \diff \vec{l}') \cdot \grad \left(\frac{1}{\abs{\r(l) - \r(l')}}\right).
+		\Gamma_{\text{B}} =  - \frac{\mm I}{4\pi} \oint_{C} \oint_{C'} (\diff \vec{l} \cross \diff \vec{l}') \cdot \grad \left(\frac{1}{\abs{\r(l) - \r(l')}}\right).
 	\end{equation*}
 	Note that $ \diff \vec{l} \cross \diff \vec{l}' $ corresponds to a surface element---we'll call it $ \diff \vec{S} $. We then calculate the gradient and evaluate the dot product to get
 	\begin{align*}
-		\Gamma_{\text{M}} =  - \frac{\mm I}{4\pi} \oint \diff \vec{S}\cdot \grad \left(\frac{1}{\abs{\r(l) - \r(l')}}\right) \\
+		\Gamma_{\text{B}} =  - \frac{\mm I}{4\pi} \oint \diff \vec{S}\cdot \grad \left(\frac{1}{\abs{\r(l) - \r(l')}}\right) \\
 		= +  \frac{\mm I}{4\pi} \oint  \frac{\diff S \cos \theta}{\abs{\r(l) - \r(l')}^{2}},
 	\end{align*}
 	where $ \theta $ is the angle between $ \diff \vec{S} $ and the gradient. 
 
     \item Next, we recognize the integrand is precisely the differential of the solid angle element $ \diff \Omega $. In terms of $ \diff \Omega $, the magnetic circulation becomes
 	\begin{equation*}
-		\Gamma_{\text{M}} = \frac{\mm I}{4\pi} \oint \diff \Omega =  \frac{\mm I}{4\pi}  \cdot 4 \pi = \mm I.
+		\Gamma_{\text{B}} = \frac{\mm I}{4\pi} \oint \diff \Omega =  \frac{\mm I}{4\pi}  \cdot 4 \pi = \mm I.
 	\end{equation*}
 	This result is Ampere's law, which, in terms of magnetic circulation, reads
 	\begin{equation*}
-		\Gamma_{\text{M}} = \mm I.
+		\Gamma_{\text{B}} = \mm I.
 	\end{equation*}
     In words, Ampere's law states that the magnetic circulation in a loop (our $ C $) enclosing a current-carrying loop with current $ I $ (our $ C' $) is proportional to the current $ I $ through the $ C' $.
 	
 	\item Finally, we will combine Ampere's law with the definition of magnetic circulation. To review, the two relationships are
 	\begin{equation*}
-		\Gamma_{\text{M}} = \oint \B \cdot \diff \vec{S} = \iint \curl \B \cdot \diff \vec{S} \eqtext{and} \Gamma_{\text{M}} = \mm I = \mm \iint \j \cdot \diff \vec{S}.
+		\Gamma_{\text{B}} = \oint \B \cdot \diff \vec{S} = \iint \curl \B \cdot \diff \vec{S} \eqtext{and} \Gamma_{\text{B}} = \mm I = \mm \iint \j \cdot \diff \vec{S}.
 	\end{equation*}
     Combining the two relationships produces the important result
 	\begin{equation*}
@@ -1048,7 +1048,7 @@ We dedicate a brief section to review electric current, since we will be working
 	
 	\item Magnetic flux is written in terms of $ \A $ using Stokes' theorem according to
 	\begin{equation*}
-		\Phi_{\text{M}} \equiv \iint_{S}\B \cdot \diff \vec{S} = \iint_{S} (\curl \A) \cdot \diff \vec{S} = \oint_{\partial S} \A \cdot \diff \r.
+		\Phi_{\text{B}} \equiv \iint_{S}\B \cdot \diff \vec{S} = \iint_{S} (\curl \A) \cdot \diff \vec{S} = \oint_{\partial S} \A \cdot \diff \r.
 	\end{equation*}
 	In other words, the magnetic flux through a surface equals the circulation of the magnetic potential $ \A $ around the surface's boundary $ \partial S $.
 
@@ -1068,17 +1068,17 @@ We dedicate a brief section to review electric current, since we will be working
 	
 	The magnetic flux through the surface $ S $ is then
 	\begin{equation*}
-		\Phi_{\text{M}} = \iint_{S} \B \cdot \diff \vec{S} = \B_{0} (\pi a^{2}).
+		\Phi_{\text{B}} = \iint_{S} \B \cdot \diff \vec{S} = \B_{0} (\pi a^{2}).
 	\end{equation*}
     Note that only the porition of $ S $ inside the inductor (for $ r < a $) contributes non-zero magnetic flux, since $ \B = 0 $ outside the inductor.
 	
 	Next, we recall the general definition of flux in terms of vector potential, which reads
 	\begin{equation*}
-		\Phi_{\text{M}} = \iint_{S} \B \cdot \diff \vec{S} = \oint_{\partial S} \A \cdot \diff \r.
+		\Phi_{\text{B}} = \iint_{S} \B \cdot \diff \vec{S} = \oint_{\partial S} \A \cdot \diff \r.
 	\end{equation*}
-    Comparing this general definition to our just-derived result $ \Phi_{\text{M}} = \pi a^{2}\B_{0} $ gives
+    Comparing this general definition to our just-derived result $ \Phi_{\text{B}} = \pi a^{2}\B_{0} $ gives
 	\begin{equation*}
-		\oint_{\partial S} \A \cdot \diff \r = \Phi_{\text{M}} = \B_{0} (\pi a^{2}) \neq 0  \implies \A \neq 0.
+		\oint_{\partial S} \A \cdot \diff \r = \Phi_{\text{B}} = \B_{0} (\pi a^{2}) \neq 0  \implies \A \neq 0.
 	\end{equation*}
     In other words, the vector potential $ \A $ is non-zero outside the inductor, even though $ \B $ is zero in the same region.
 	
@@ -1086,9 +1086,9 @@ We dedicate a brief section to review electric current, since we will be working
 	\begin{equation*}
 		\A = C \B_{0} \cross \frac{\r}{r^{2}},
 	\end{equation*}
-	where $ C $ is a constant. Using this expression for $ \A $, the magnetic flux $ \Phi_{\text{M}} $ through the loop $ \partial S $ comes out to
+	where $ C $ is a constant. Using this expression for $ \A $, the magnetic flux $ \Phi_{\text{B}} $ through the loop $ \partial S $ comes out to
 	\begin{equation*}
-		\Phi_{\text{M}} = \oint_{\partial S} \A \cdot \diff \r  = \oint_{\partial S} C\left(\B_{0} \cross \frac{\r}{r^{2}}\right) \diff \r = \cdots = 2\pi C B_{0}
+		\Phi_{\text{B}} = \oint_{\partial S} \A \cdot \diff \r  = \oint_{\partial S} C\left(\B_{0} \cross \frac{\r}{r^{2}}\right) \diff \r = \cdots = 2\pi C B_{0}
 	\end{equation*}
 	The result of the integral is quoted without derivation. Combining the above result with the earlier equality $ \Phi_{M} = B_{0}\pi a^{2} $ gives
 	\begin{equation*}
@@ -1207,14 +1207,13 @@ We dedicate a brief section to review electric current, since we will be working
 \end{itemize}
 
 \subsection{Magnetic Energy}
+ Our analysis of magnetostatic energy will proceed analogously to the analysis of electrostatic energy, in that we will first consider the magnetic energy of a current distribution an external magnetic field (whose source we take for granted and otherwise ignore), and then use that result to find the total energy of current distribution in a magnetic field where we will include the field's source.
+
+\subsubsection{Magnetic Field Energy in an External Field}
 \begin{itemize}
-    \item Our analysis of magnetostatic energy will proceed analogously to the analysis of electrostatic energy, in that we will first consider the magnetic energy of a current distribution an external magnetic field (whose source we take for granted and otherwise ignore), and then use that result to find the total energy of current distribution in a magnetic field where we will include the field's source.
-	
 	\item We begin by considering a current loop $ C $ carrying current $ I $ in an external magnetic field $ \B $. We stress that we don't consider the source of the field $ \B $---we simply take its existence for granted. 
 	
-    Note also that we will work in the quasi-static regime of electromagnetism meaning we take currents to be nonzero but constant with respect to time, ie. $ I \neq 0 $ and $ \dot{I} = 0 $.
-
-    Finally, for use in the next bullet, recall that the magnetic force on a current carrying-conductor is
+    Note also that we will work in the quasi-static regime of electromagnetism meaning we take currents to be nonzero, but constant with respect to time, ie. $ I \neq 0 $ and $ \dot{I} = 0 $. Finally, for use in the next bullet, recall that the magnetic force on a current carrying-conductor is
 	\begin{equation*}
 		\vec{F} = \oint_{C} I \diff \vec{l} \cross \B = I \oint_{C} \uvec{t} \cross \B \diff l,
 	\end{equation*}
@@ -1222,12 +1221,12 @@ We dedicate a brief section to review electric current, since we will be working
 	
 	\item We then consider moving the loop by the infinitesimal displacement $ \diff \r $---in which case we do work $ W $ against the magnetic field force, which is related to the desired magnetic energy $ W_{\mathrm{B}} $ by the work-energy theorem. The work $ W $ associated with the displacement $ \diff \r $ is
 	\begin{align*}
-		W &= - \vec{F} \cdot \diff \r =  -I \oint_{C} \uvec{t} \cross \B \diff l \cdot \diff \r\\
+		\diff W &= - \vec{F} \cdot \diff \r =  -I \oint_{C} \uvec{t} \cross \B \diff l \cdot \diff \r\\
 		& = - I \oint_{C}\diff \r \cdot (\uvec{t} \cross \B) \diff l.
 	\end{align*}
     The last result is a scalar triple product, which we rearrange to get
 	\begin{equation*}
-		W = - I \oint_{C} (\diff \r \cross \uvec{t})\cdot \B \diff l.
+		\diff W = - I \oint_{C} (\diff \r \cross \uvec{t})\cdot \B \diff l.
 	\end{equation*}
 	Next, we recognize that quantity $ (\diff \r \cross \uvec{t}) \diff l $ is the surface element $ \diff \vec{S} $  of the loop during the displacement $ \diff \r $. In terms of $ \diff \vec{S} $, the work reads
 	\begin{equation*}
@@ -1235,7 +1234,7 @@ We dedicate a brief section to review electric current, since we will be working
 	\end{equation*}
     We stress that the magnetic flux in the above expression is the flux arising from the external field $ \B $ only, and is unrelated to the current distribution.
 	
-	Note also that if $ \B $ is homogeneous and the quantity $ \B \cdot \vec{S} $ does not change through time, the magnetic flux $ \Phi_{\text{M}} $ and thus the magnetic work $ W $ is zero.
+	Note also that if $ \B $ is homogeneous and the quantity $ \B \cdot \vec{S} $ does not change through time, the magnetic flux $ \Phi_{\text{B}} $ and thus the magnetic work $ W $ is zero.
 	
     \item Next, we use $ \B = \curl \A $ to write the magnetic work in terms of the magnetic potential:
 	\begin{equation*}
@@ -1257,7 +1256,7 @@ We dedicate a brief section to review electric current, since we will be working
 	\begin{equation*}
 		W \equiv W_{\mathrm{B}}^{(1)} - W_{\mathrm{B}}^{(2)} = - \iiint_{V_{2}} \j_{2}(\r) \A(\r) \cdot \dr + \iiint_{V_{1}} \j_{1}(\r) \A(\r) \cdot \dr
 	\end{equation*}
-    where the $ (2) $ terms correspond to quantities after the displacement $ \diff \r $ and the $ (1) $ terms to quantities before the displacement $ \diff \r $. The magnetostatic energy $ W_{\text{M}} $ of a charge distribution $ \j $ in an \textit{external} magnetic field $ \B $ is thus
+    where the $ (2) $ terms correspond to quantities after the displacement $ \diff \r $ and the $ (1) $ terms to quantities before the displacement $ \diff \r $. The magnetostatic energy $ W_{\text{B}} $ of a charge distribution $ \j $ in an \textit{external} magnetic field $ \B $ is thus
 	\begin{equation*}
 		W_{\mathrm{B}} = - \iiint_{V}\j(\r) \A(\r) \dr,
 	\end{equation*}
@@ -1281,15 +1280,81 @@ We dedicate a brief section to review electric current, since we will be working
 	\end{equation*}
 \end{itemize}
 
-\subsubsection{TODO:} Last hour of 6th lecture missing. Topics missing include:
+\subsubsection{Total Magnetic Field Energy}
 \begin{itemize}
-	\item Total energy in a magnetic field
-	\item Energy in a magnetic field, included energy needed to maintain currents
-	
+    \item We now consider the total magnetic field energy associatd with the field $ \B $ described by the vector potential $ \A $ and arising from the current distribution $ \j $. 
+
+    \item Following the same procedure as for total electric field energy, we introduce a parameter $ \alpha \in [0, 1] $, which controls ``turning on'' the total magnetic field. As $ \alpha $ increases from $ 0 $ to $ 1 $, the distribution's current density correspondingly increases from $ 0 $ to $ \j $.
+
+    \item We begin by writing $ \diff \j = \j \diff \alpha $. The energy is
+    \begin{equation*}
+        \diff W_{\text{B}_{0}} = - \iiint_{V} \diff j \A(\r) \dr = - \iiint_{V} \j \alpha \A(\r) \diff \alpha \dr,
+    \end{equation*}
+    where the reason for using the subscript $ 0 $ in $ W_{\text{B}_{0}} $ will become clear in the following bullet points. Note also that the transition between the two integrals relies on the linearity of the vector Poisson equation, i.e. $ \laplacian[\alpha \A] = - \mm \alpha \j $.
+
+    \item Next, integrate over $ \alpha $ to ``turn on'' the current distribution
+    \begin{equation*}
+        W_{\text{B}_{0}}  = - \int_{0}^{1} \alpha \diff \alpha \iiint_{V} \j(\r)\A(\r)\dr = - \frac{1}{2} \iiint_{V} \j(\r) \cdot \A(\r) \dr.
+    \end{equation*}
+    This expression is the field energy assuming the current distribution $ \j $ already exists. Note that $ \A $ in the above expression is the magnetic vector potential formed by $ \j $.
+    
+    \item The above expression does not account for an important fact: creating and maintaining the currents associociated with the distribution $ \j $ requires energy in itself. 
+
+    This situation does not have an electrostatic analog, where the field source, i.e. charge, is a static quantity. A magnetic field only arises from current, i.e. moving charge, and moving that charge requires energy.
+    
+    Maintaining the current distribution thus requires a power input:
+    \begin{align*}
+        P &= - UI = -I \oint_{C} \E \cdot \diff \r = - I \iint_{S} \curl \E \cdot \diff \vec{S} = - I \iint_{S} \left( - \pdv{\B}{t} \right) \cdot \diff \vec{S}\\
+        &= I \pdv{t} \iint_{S} \B \cdot \diff \vec{S},
+    \end{align*}
+    where the line integral runs over the curve(s) carrying the current. We then combine this result with the earlier expression $ W = + I \iint_{S} \B \cdot \vec{S} $ to get the expected result
+    \begin{equation*}
+        P = \pdv{W}{t} = I \pdv{t} \iint_{S} \B \cdot \diff \vec{S}.
+    \end{equation*}
+    Note that we have used a plus sign because the earlier expression involving work involved the force doing positive work on a charged particle. Now we consider dissipitative power, and the sign is reversed.
+
+    \item Putting the pieces from the last two equations together gives
+    \begin{equation*}
+        W_{\j} = \pm \iint_{S} \B \cdot \diff \vec{S} = I \iint_{S} \curl \A \cdot \diff \vec{S} = \oint_{C} I \A \cdot \diff \r = 1 \cdot \iiint_{V} \j \cdot \A \dr.
+    \end{equation*}
+    where the last term is the expression for the energy required to create the current distribution.
+    
+    \item The total energy associated with the total magnetic field of a current distribution is then
+    \begin{equation*}
+        W_{\text{B}} = W_{\text{B}_{0}} + W_{\vec{j}} = \left( -\frac{1}{2} + 1 \right) \iiint_{V} \j \cdot \A \dr = + \frac{1}{2} \iiint_{V} \j \cdot \A \dr.
+    \end{equation*}
+    This is the total energy associated with the magnetic field generated by the current distribution $ \j $, and includes the energy required to create and sustain the current distribution.
+    
+\end{itemize}
+
+\subsubsection{Magnetic Field Energy Density}
+\begin{itemize}
+    \item We now aim to write the total magnetic field energy derived in the previous section in terms of only the magnetic field $ \B $. We begin by substituting Ampere's law $ \curl \B = \mm \j $ into the just-derived expression for total magnetic field energy $ W_{\text{B}} $ to get
+    \begin{equation*}
+        W_{\text{B}} = \frac{1}{2} \iiint_{V} \j(\r) \A(\r) \dr = \frac{1}{2\mm}\iiint_{V}(\curl \B) \A \dr.
+    \end{equation*}
+    Next, we reverse-engineer the vector identity $ \div (\B \cross \A) = - \B (\curl \A) + \A (\curl \B) $ to get
+    \begin{equation*}
+        W_{\text{B}} = \frac{1}{2\mm} \iiint_{V} \B(\curl \A)\dr + \frac{1}{2\mm} \iiint_{V} \div (\B \cross \A) \dr.
+    \end{equation*}
+    Using $ \B = \curl \A $, the first integrand simplifies to $ B^{2} $, while the second can be rewritten using the divergence theorem. The result is
+    \begin{equation*}
+        W_{\text{B}} = \frac{1}{2\mm} \iiint_{V} B^{2} \dr + \oiint_{\partial V} (\B \cross \A) \diff \S.
+    \end{equation*}
+    Using an similar argument as in the analogous treatment of electric field energy, the second term vanishes for large $ \r $. Here's why: the surface term $ \diff \S $ grows as $ \sim r^{2} $, the field term $ \B $ falls as $ \sim 1/r $, and the potential term $ \A $ falls as $ \sim 1/r^{2} $. The result is that the entire integrand falls as $ 1/r $, which vanishes for large $ r $, i.e. for a large enough volume $ V $ containing the charge distribution. In this limit, the magnetic field energy reduces to
+    \begin{equation*}
+        W_{\text{B}} = \frac{1}{2\mm} \iiint_{V}B^{2}(\r)\dr.
+    \end{equation*}
+    The corresponding expression for magnetic energy density is thus
+    \begin{equation*}
+        w_{\text{B}} = \frac{1}{2\mm} B^{2}.
+    \end{equation*}
+    
+    
 \end{itemize}
 
 
-\subsubsection{Magnetic Force and the Stress-Energy Tensor}
+\subsection{Magnetic Force and the Stress-Energy Tensor}
 
 \subsubsection{Magnetic Force as a Function of Magnetic Field}
 
@@ -1298,7 +1363,7 @@ We dedicate a brief section to review electric current, since we will be working
 	
 	\item In general, the magnetic force on a current distribution is
 	\begin{equation*}
-		\vec{F}_{\text{M}} = \iiint_{V}\j \cross \B \dr,
+		\vec{F}_{\text{B}} = \iiint_{V}\j \cross \B \dr,
 	\end{equation*}
 	where $ V $ is the region of space containing the current distribution $ \j $ and $ \B $ is the total magnetic field, including the ``internal'' field generated by the current distribution itself. 
 
@@ -1306,22 +1371,22 @@ We dedicate a brief section to review electric current, since we will be working
 
     For a simple current loop, we could show that the internal field contributes zero force by substituting in the Biot-Savart law for $ \B $ and applying $ \j \cross \j = 0 $. 
 	
-    \item Next, we write $ \j $ in terms of $ \B $ using Ampere's law $ \curl \B = \mm \j $. The resulting expression for $ \vec{F}_{\text{M}} $ is
+    \item Next, we write $ \j $ in terms of $ \B $ using Ampere's law $ \curl \B = \mm \j $. The resulting expression for $ \vec{F}_{\text{B}} $ is
 	\begin{equation*}
-		\vec{F}_{\text{M}} = \iiint_{V}\j \cross \B \dr = \frac{1}{\mm}\iiint (\curl \B) \cross \B \dr.
+		\vec{F}_{\text{B}} = \iiint_{V}\j \cross \B \dr = \frac{1}{\mm}\iiint (\curl \B) \cross \B \dr.
 	\end{equation*}
 	Next, we use the general vector identity
 	\begin{equation*}
 		\B \cross (\curl \B) = \frac{1}{2}\grad B^{2} - \div (\B \otimes \B) + \B(\div \B),
 	\end{equation*}
-	which simplifies in our case because $ \div \B = 0 $ (absence of magnetic monopoles). The expression for $ \vec{F}_{\text{M}} $ becomes
+	which simplifies in our case because $ \div \B = 0 $ (absence of magnetic monopoles). The expression for $ \vec{F}_{\text{B}} $ becomes
 	\begin{equation*}
-		\vec{F}_{\text{M}} = \frac{1}{\mm}\iiint_{V} \div (\B \otimes \B)\dr - \frac{1}{2\mm}\iiint_{V} \grad B^{2}\dr.
+		\vec{F}_{\text{B}} = \frac{1}{\mm}\iiint_{V} \div (\B \otimes \B)\dr - \frac{1}{2\mm}\iiint_{V} \grad B^{2}\dr.
 	\end{equation*}
 	
-	\item Next, we want to write $ \vec{F}_{\text{M}} $ in terms of a surface integral---this is easier to measure than a volume integral. We do this with the divergence theorem:
+	\item Next, we want to write $ \vec{F}_{\text{B}} $ in terms of a surface integral---this is easier to measure than a volume integral. We do this with the divergence theorem:
 	\begin{equation*}
-		\vec{F}_{\text{M}} = \frac{1}{\mm}\oiint_{\partial V}\left(\B \otimes \B - \frac{1}{2}B^{2}\mat{I}\right)\diff \vec{S},
+		\vec{F}_{\text{B}} = \frac{1}{\mm}\oiint_{\partial V}\left(\B \otimes \B - \frac{1}{2}B^{2}\mat{I}\right)\diff \vec{S},
 	\end{equation*}
 	where $ \mat{I} $ is the identity matrix and $ \partial V $ is the surface of the region containing the original current distribution $ \j $. Note that the quantity $ \B $, which is the total field, now implicitly contains the current distribution $ \j $.
 \end{itemize}
@@ -1331,7 +1396,7 @@ We dedicate a brief section to review electric current, since we will be working
 \begin{itemize}
 	\item We write the magnetostatic force in terms of the magnetostatic stress tensor, using Einstein summation notation, as
 	\begin{equation*}
-		F_{\text{M}_{i}} = \oiint_{\partial V} \TT_{ik} \hat{n}_{k}\diff S,
+		F_{\text{B}_{i}} = \oiint_{\partial V} \TT_{ik} \hat{n}_{k}\diff S,
 	\end{equation*}
 	where $ \hat{n}_{k} $ is the normal to the surface $ \partial V $ and $ \mat{T} $ is the $ (3 \cross 3) $ magnetostatic stress tensor with components given by
 	\begin{equation*}
@@ -1340,9 +1405,9 @@ We dedicate a brief section to review electric current, since we will be working
 	
 	\item We can also write the force as a volume integral in the form
 	\begin{equation*}
-		F_{\text{M}_{i}} = \iiint_{V}\pdv{\TT_{ik}}{x_{k}}\dr \equiv \iiint_{V}f_{\text{M}_{i}} \dr,
+		F_{\text{B}_{i}} = \iiint_{V}\pdv{\TT_{ik}}{x_{k}}\dr \equiv \iiint_{V}f_{\text{B}_{i}} \dr,
 	\end{equation*} 
-	where we have introduced the volume force density $ f_{\text{M}} $, motivated by the fact that $ \pdv{\TT_{ik}}{x_{k}} $ has units $ \si{\newton \, m^{-3}} $.
+	where we have introduced the volume force density $ f_{\text{B}} $, motivated by the fact that $ \pdv{\TT_{ik}}{x_{k}} $ has units $ \si{\newton \, m^{-3}} $.
 	
 \end{itemize}
 
@@ -1545,17 +1610,17 @@ We dedicate a brief section to review electric current, since we will be working
 \begin{itemize}
 	\item In this section, we aim to find an expression for the force on a magnetic dipole in an external magnetic field. We begin with the general relationship between force and energy:
 	\begin{equation*}
-		\diff W_{\text{M}} = - \vec{F}_{\text{M}} \cdot \diff \r,
+		\diff W_{\text{B}} = - \vec{F}_{\text{B}} \cdot \diff \r,
 	\end{equation*}
 	and take $ \diff \r $ to be a small displacement of a current distribution $ \j $ in an \textit{external} magnetic field.
 	
-    \item Combining the expression for a magnetic dipole's energy, i.e. $ W_{\text{M}} = - \B(\r) \cdot \m $, with the relationship $ \vec{F}_{\text{M}} = - \grad W_{\text{M}}  $ gives
+    \item Combining the expression for a magnetic dipole's energy, i.e. $ W_{\text{B}} = - \B(\r) \cdot \m $, with the relationship $ \vec{F}_{\text{B}} = - \grad W_{\text{B}}  $ gives
     \begin{equation*}
-        \vec{F}_{\text{M}} = - \grad W_{\text{M}} = \grad \big[ \m \cdot \B(\r) \big].
+        \vec{F}_{\text{B}} = - \grad W_{\text{B}} = \grad \big[ \m \cdot \B(\r) \big].
     \end{equation*}
-    Combining this result with $ \diff W_{\text{M}} = - \vec{F}_{\text{M}} \cdot \diff \r $ gives
+    Combining this result with $ \diff W_{\text{B}} = - \vec{F}_{\text{B}} \cdot \diff \r $ gives
 	\begin{equation*}
-		\diff W_{\text{M}} = - \grad\big[\m \cdot \B(\r)\big] \cdot \diff \r.
+		\diff W_{\text{B}} = - \grad\big[\m \cdot \B(\r)\big] \cdot \diff \r.
 	\end{equation*}
 	The gradient evaluates to 
 	\begin{equation*}
@@ -1585,11 +1650,11 @@ We dedicate a brief section to review electric current, since we will be working
 	\end{equation*}
 	and thus
 	\begin{equation*}
-		\diff W_{\text{M}} = - \grad\big[\m \cdot \B(\r)\big]\cdot  \diff \r \approx - \big[ (\m \cdot \grad)\B\big]\cdot \diff \r.
+		\diff W_{\text{B}} = - \grad\big[\m \cdot \B(\r)\big]\cdot  \diff \r \approx - \big[ (\m \cdot \grad)\B\big]\cdot \diff \r.
 	\end{equation*}
-	Comparing this to the general force-energy relation $ \diff W_{\text{B}} = - \vec{F}_{\text{M}}\diff \r $ produces
+	Comparing this to the general force-energy relation $ \diff W_{\text{B}} = - \vec{F}_{\text{B}}\diff \r $ produces
 	\begin{equation*}
-		\vec{F}_{\text{M}} = (\m \cdot \grad)\B(\r).
+		\vec{F}_{\text{B}} = (\m \cdot \grad)\B(\r).
 	\end{equation*}
 	In other words, the magnetic force on a magnetic dipole in an external magnetic field is the directional derivative of $ \B $ in the direction of $ \m $.
 \end{itemize}
@@ -1600,24 +1665,24 @@ We dedicate a brief section to review electric current, since we will be working
 
     We begin with the general torque-energy relation
 	\begin{equation*}
-		\diff W_{\text{M}} = - \vec{M}_{\text{B}}\cdot \diff \vec{\phi}
+		\diff W_{\text{B}} = - \vec{M}_{\text{B}}\cdot \diff \vec{\phi}
 	\end{equation*}
 	
 	\item A small rotation of a magnetic dipole in an external magnetic field reads
 	\begin{equation*}
 		\diff \vec{m} = \diff \vec{\phi} \cross \m,
 	\end{equation*}
-	and the corresponding change in the dipole's energy because of this rotation, using $ W_{\text{M}} = - \m \cdot \B $, is
+	and the corresponding change in the dipole's energy because of this rotation, using $ W_{\text{B}} = - \m \cdot \B $, is
 	\begin{equation*}
-		\diff W_{\text{M}} = - \diff \m \cdot \diff \B = - (\diff \vec{\phi} \cross \m)\cdot \B.
+		\diff W_{\text{B}} = - \diff \m \cdot \diff \B = - (\diff \vec{\phi} \cross \m)\cdot \B.
 	\end{equation*}
 	This is a scalar triple product, which we can rearrange to get
 	\begin{equation*}
-		\diff W_{\text{M}} = - \diff \vec{\phi}(\m \cross \B).
+		\diff W_{\text{B}} = - \diff \vec{\phi}(\m \cross \B).
 	\end{equation*}
-	Comparing this expression to the general relation $ \diff W_{\text{M}} = - \vec{M}_{\text{M}}\cdot \diff \vec{\phi} $ produces the desired expression for magnetic torque:
+	Comparing this expression to the general relation $ \diff W_{\text{B}} = - \vec{M}_{\text{B}}\cdot \diff \vec{\phi} $ produces the desired expression for magnetic torque:
 	\begin{equation*}
-		\vec{M}_{\text{M}} = \m \cross \B.
+		\vec{M}_{\text{B}} = \m \cross \B.
 	\end{equation*}
 	This is the torque on a magnetic dipole in an external magnetic field. We are familiar with this result from introductory electromagnetism, and now we have derived it from fundamental principles.
 \end{itemize}
@@ -1855,7 +1920,7 @@ By convention, the quasi-static approximation to electromagnetic fields adds the
 
 \subsubsection{Energy Dissipation}
 \begin{itemize}
-    \item In general a charge distribution experiences two forces---the electric and magnetic forces. The magnetic force $ \vec{F}_{\text{M}} = q \vec{v} \cross \B  $ is perpendicular to velocity and cannot do work, and we thus expect that the magnetic force cannot contribute to dissipative forces. 
+    \item In general a charge distribution experiences two forces---the electric and magnetic forces. The magnetic force $ \vec{F}_{\text{B}} = q \vec{v} \cross \B  $ is perpendicular to velocity and cannot do work, and we thus expect that the magnetic force cannot contribute to dissipative forces. 
 	
 	\item More formally, the dissipative power associated with a charge carrier in terms of electromagnetic force density $ \vec{f} $ is
 	\begin{equation*}
@@ -1951,49 +2016,49 @@ By convention, the quasi-static approximation to electromagnetic fields adds the
 	
 	\item We first find the system's total magnetic field energy. We begin with the definition
 	\begin{equation*}
-		W_{\text{M}} = \frac{1}{2}\iiint_{V}\j \cdot \A \dr,
+		W_{\text{B}} = \frac{1}{2}\iiint_{V}\j \cdot \A \dr,
 	\end{equation*}
 	where we integrate over the volume with non-zero current density $ \j $. We then rewrite the current in the form $ \j \dr = I \diff \vec{l} $ and consider all $ N $ loops together to get
 	\begin{equation*}
-		W_{\text{M}} = \frac{1}{2}\sum_{i}I_{i}\oint_{C_{i}} \A \cdot \diff \vec{l}_{i}
+		W_{\text{B}} = \frac{1}{2}\sum_{i}I_{i}\oint_{C_{i}} \A \cdot \diff \vec{l}_{i}
 	\end{equation*}
 	where the current $ I_{i} $ in the $ i $-th conductor is constant along the conductor's curve $ C_{i} $, and thus moves out of the integral.
 	
 	\item Finally, we write the integrand in terms of magnetic flux, for which we use Stokes's theorem:
 	\begin{align*}
-        W_{\text{M}} &= \frac{1}{2}\sum_{i}I_{i}\oint_{C_{i}} \A \cdot \diff \vec{l}_{i} = \frac{1}{2}\sum_{i}I_{i}\iint_{S_{i}} \curl \A \cdot \diff \vec{S}_{i} \\
-        &= \frac{1}{2}\sum_{i}I_{i}\iint_{S_{i}} \B \cdot \diff \vec{S}_{i} = \frac{1}{2}\sum_{i}I_{i} \Phi_{\text{M}_{i}}.
+        W_{\text{B}} &= \frac{1}{2}\sum_{i}I_{i}\oint_{C_{i}} \A \cdot \diff \vec{l}_{i} = \frac{1}{2}\sum_{i}I_{i}\iint_{S_{i}} \curl \A \cdot \diff \vec{S}_{i} \\
+        &= \frac{1}{2}\sum_{i}I_{i}\iint_{S_{i}} \B \cdot \diff \vec{S}_{i} = \frac{1}{2}\sum_{i}I_{i} \Phi_{\text{B}_{i}}.
 	\end{align*}
 	
-	\item We will now find the same magnetic field energy with a second approach. We will then equate the two results for $ W_{\text{M}} $ to get a generalized expression for inductance. As before, we begin with the general definition
+	\item We will now find the same magnetic field energy with a second approach. We will then equate the two results for $ W_{\text{B}} $ to get a generalized expression for inductance. As before, we begin with the general definition
 	\begin{equation*}
-		W_{\text{M}} = \frac{1}{2}\iiint_{V} \j \cdot \A \dr.
+		W_{\text{B}} = \frac{1}{2}\iiint_{V} \j \cdot \A \dr.
 	\end{equation*}
 	We then express $ \A $ in terms of $ \j $ via
 	\begin{equation*}
 		\A(\r) = \frac{\mm}{4\pi}\iiint_{V}\frac{\j(\t{\r})}{\abs{\r - \t{\r}}}\dtr,
 	\end{equation*}
-    and substitute this expression for $ \A(\r) $ into $ W_{\text{M}} $ to get
+    and substitute this expression for $ \A(\r) $ into $ W_{\text{B}} $ to get
 	\begin{equation*}
-		W_{\text{M}} = \frac{\mm}{8\pi}\iiint_{V} \left(\iiint_{V}\frac{\j(\r)\j(\t{\r})}{\abs{\r - \t{\r}}}\dtr\right)\dr.
+		W_{\text{B}} = \frac{\mm}{8\pi}\iiint_{V} \left(\iiint_{V}\frac{\j(\r)\j(\t{\r})}{\abs{\r - \t{\r}}}\dtr\right)\dr.
 	\end{equation*}
 	Finally, we convert $ \j \dr $ to current, $ I \diff \vec{l} $, and sum over all loop pairs to get
 	\begin{equation*}
-		W_{\text{M}} = \frac{\mm}{8\pi}\sum_{i, k}I_{i}I_{k}\oint_{C_{i}}\oint_{C_{k}}\frac{\diff \vec{l}_{i}\diff \vec{l}_{k}}{\abs{\r(l_{1}) - \r(l_{k})}},
+		W_{\text{B}} = \frac{\mm}{8\pi}\sum_{i, k}I_{i}I_{k}\oint_{C_{i}}\oint_{C_{k}}\frac{\diff \vec{l}_{i}\diff \vec{l}_{k}}{\abs{\r(l_{1}) - \r(l_{k})}},
 	\end{equation*}
 	where $ C_{i} $ and $ C_{k} $ are the space curves associated with the $ i $th and $ k $th conducting loops.
 	
-	\item We then equate the two expressions for $ W_{\text{M}} $ to get
+	\item We then equate the two expressions for $ W_{\text{B}} $ to get
 	\begin{equation*}
-		\frac{1}{2}\sum_{i}I_{i}\Phi_{\text{M}_{i}} = \frac{\mm}{8\pi}\sum_{i, k}I_{i}I_{k}\oint_{C_{i}}\oint_{C_{k}}\frac{\diff \vec{l}_{i}\diff \vec{l}_{k}}{\abs{\r(l_{1}) - \r(l_{k})}}.
+		\frac{1}{2}\sum_{i}I_{i}\Phi_{\text{B}_{i}} = \frac{\mm}{8\pi}\sum_{i, k}I_{i}I_{k}\oint_{C_{i}}\oint_{C_{k}}\frac{\diff \vec{l}_{i}\diff \vec{l}_{k}}{\abs{\r(l_{1}) - \r(l_{k})}}.
 	\end{equation*}
     This relationship motivates the definition of inductance $ L_{ik} $ as
 	\begin{equation*}
 		L_{ik} = \frac{\mm}{4\pi}\oint_{C_{i}}\oint_{C_{k}}\frac{\diff \vec{l}_{i}\diff \vec{l}_{k}}{\abs{\r(l_{1}) - \r(l_{k})}},
 	\end{equation*}
-    in terms of which the relationship between the two forms of $ W_{\text{M}} $ simplifies to
+    in terms of which the relationship between the two forms of $ W_{\text{B}} $ simplifies to
 	\begin{equation*}
-		\sum_{i}I_{i}\Phi_{\text{M}_{i}} = \sum_{i, k}I_{i}I_{k} L_{ik}.
+		\sum_{i}I_{i}\Phi_{\text{B}_{i}} = \sum_{i, k}I_{i}I_{k} L_{ik}.
 	\end{equation*}
 	
 	\item A few final remarks on inductance:
@@ -2004,7 +2069,7 @@ By convention, the quasi-static approximation to electromagnetic fields adds the
 
         \item In general, the magnetic flux through the $ i $th loop is
         \begin{equation*}
-            \Phi_{\text{M}_{i}} = \sum_{i} L_{ik}I_{k}.
+            \Phi_{\text{B}_{i}} = \sum_{i} L_{ik}I_{k}.
         \end{equation*}
     \end{itemize}
     
@@ -2556,17 +2621,17 @@ In this chapter, we analyze how a material responds to the presence of an extern
 	\end{equation*}
 	which we call the constitutive relation. In general, the constitutive relationship is nonlinear and may be quite complicated. However, in an isotropic, homogeneous material, we can expand the relation to first order in $ \H $ to get
 	\begin{equation*}
-		\M(\H) \approx \chi_{\text{M}} \H + \mathcal{O}(\H^{2}),
+		\M(\H) \approx \chi_{\text{B}} \H + \mathcal{O}(\H^{2}),
 	\end{equation*}
-    where we have introduced magnetic susceptibility $ \chi_{\text{M}} $. Magnetic susceptibility is often defined in terms of magnetic permeability $ \mu $ via
+    where we have introduced magnetic susceptibility $ \chi_{\text{B}} $. Magnetic susceptibility is often defined in terms of magnetic permeability $ \mu $ via
 	\begin{equation*}
-		\chi_{\text{M}} = \mu - 1.
+		\chi_{\text{B}} = \mu - 1.
 	\end{equation*}
-    For most materials $ \chi_{\text{M}} $ is close to zero and $ \mu $ is close to one. Magnetic permeability $ \mu $ is the magnetic analog of electric permittivity $ \epsilon $, i.e. the dielectric constant.
+    For most materials $ \chi_{\text{B}} $ is close to zero and $ \mu $ is close to one. Magnetic permeability $ \mu $ is the magnetic analog of electric permittivity $ \epsilon $, i.e. the dielectric constant.
 	
-	\item In terms of $ \chi_{\text{M}} $ and $ \mu $, the linear constitutive relation reads
+	\item In terms of $ \chi_{\text{B}} $ and $ \mu $, the linear constitutive relation reads
 	\begin{equation*}
-        \H = \frac{\B}{\mm} - \M \approx \frac{\B}{\mm} - \chi_{\text{M}} \H = \frac{\B}{\mm} - (\mu - 1)\H.
+        \H = \frac{\B}{\mm} - \M \approx \frac{\B}{\mm} - \chi_{\text{B}} \H = \frac{\B}{\mm} - (\mu - 1)\H.
 	\end{equation*}
 	Thus, to first order, the $ \B $ and $ \H $ fields are related by:
 	\begin{equation*}
@@ -2606,13 +2671,13 @@ In this chapter, we analyze how a material responds to the presence of an extern
 
 \subsubsection{Classifying Materials By Their Magnetic Field Response}
 \begin{itemize}
-	\item We classify materials based on the value of their magnetic susceptibility $ \chi_{\text{M}} $. 
+	\item We classify materials based on the value of their magnetic susceptibility $ \chi_{\text{B}} $. 
 	
 	\item Ferromagnetic materials have a permanent nonzero magnetization independent of the external magnetic field. However, the magnetization in ferromagnetic materials has a strong temperature dependence, and ferromagnetic materials demagnetize above the so-called Curie temperature (more on this in solid state physics).
 	
-    \item Diamagnetic materials have a magnetization only in the presence of an external electric field. Typical values of susceptibility are $ \chi_{\text{M}} \lesssim 0 $, i.e. slightly less than zero.
+    \item Diamagnetic materials have a magnetization only in the presence of an external electric field. Typical values of susceptibility are $ \chi_{\text{B}} \lesssim 0 $, i.e. slightly less than zero.
 	
-	A superconductor is an ideal diamagnetic and has $ \chi_{\text{M}} = -1 $---magnetic field is completely expelled from the material.
+	A superconductor is an ideal diamagnetic and has $ \chi_{\text{B}} = -1 $---magnetic field is completely expelled from the material.
 	
 	\item Paramagnetic materials have $ \mu > 1 $, and an external magnetic field increase the magnetization in the material. Paramagentic materials behave like magnets in an external magnetic field, but demagnetize in the absence of an external field. 
 \end{itemize}
@@ -2799,7 +2864,7 @@ In this chapter, we analyze how a material responds to the presence of an extern
 \begin{itemize}
     \item The analysis of the magnetic force on a nonhomogeneous material with $ \mu = \mu(\r) $ is analogous to the above derivation for electric force on a material with $ \e = \e(\r) $, so we only briefly skecthed it in lecture. The procedure reads: assume a linear constitutive relation $ \H = \mu \mm \B $ and write the magnetic stress-energy tensor in component form. Write the term $ \pdv[2]{B}{x_{i}} $ and magnetic force in vector form. Assume $ \curl \H = 0 $ (absence of free currents) and use $ \div \B = 0 $ to get
 	\begin{equation*}
-		\vec{F}_{\text{M}} = -\frac{1}{2}\iiint_{V} (\grad \mu(\r))\mm H^{2}\dr.
+		\vec{F}_{\text{B}} = -\frac{1}{2}\iiint_{V} (\grad \mu(\r))\mm H^{2}\dr.
 	\end{equation*}
 \end{itemize}
 
