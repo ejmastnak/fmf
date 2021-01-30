@@ -2,7 +2,6 @@
 \usepackage[T1]{fontenc}
 \usepackage{mwe}
 \usepackage[margin=3.5cm]{geometry}
-\usepackage[normalem]{ulem}  % for underline with line wrapping
 
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -49,16 +48,18 @@
 	\textbf{About These Notes}
 \end{center}
 
-These are my theory notes from the course \textit{Klasi\v{c}na Mehanika} (Classical Mechanics), given to second-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. The content is a medley of Professor Anton Ram\v{s}ak's lectures at the University of Ljubljana and Professor David Tong's excellent \href{http://www.damtp.cam.ac.uk/user/tong/dynamics.html}{lecture notes on Classical Dynamics}, generously made freely available on \href{http://www.damtp.cam.ac.uk/user/tong/teaching.html}{his website}.  The content in these notes is fairly standard for an undergraduate Classical Dynamics course, so I am making the notes publicly available in the hope that they might help others learning the same material.
+These are my theory notes from the course \textit{Klasi\v{c}na Mehanika} (Classical Mechanics), a required course for second-year physics students at the Faculty of Math and Physics (FMF) in Ljubljana, Slovenia. The content is a medley of  Professor David Tong's \href{http://www.damtp.cam.ac.uk/user/tong/dynamics.html}{\underline{lecture notes on Classical Dynamics}}, generously made freely available on \href{http://www.damtp.cam.ac.uk/user/tong/teaching.html}{\underline{his website}}, and Professor Anton Ram\v{s}ak's lectures at the University of Ljubljana.  The content in these notes is fairly standard for an undergraduate course in classical mechanics, and I am making the notes publically available in the hope they might help others learning similar material. The most recent version can be found on \href{https://github.com/ejmastnak/fmf/tree/main/classical-mechanics}{\underline{GitHub}}.
 
 \vspace{2mm}
-\textit{Navigation}: For easier document navigation, the table of contents is ``clickable'', meaning you can jump directly to a section by clicking the colored section names in the table of contents. Unfortunately, \uline{the clickable links do not work in most online or mobile PDF viewers}; you have to download the file first.
+\textit{Navigation}: For easier document navigation, the table of contents is ``clickable'', meaning you can jump directly to a section by clicking the colored section names in the table of contents. Unfortunately, \textit{the clickable links do not work in most online or mobile PDF viewers}; you have to download the file first.
 
 \vspace{2mm}
-\textit{On Authorship:} All credit for the content in these notes goes to Professors Anton Ram\v{s}ak and David Tong, and I make no claim whatsoever to originality or authorship. 
+\textit{On Authorship:} Credit for the content in these notes goes to Professors Tong and Ram\v{s}ak. I take credit for nothing more than typesetting the notes and aligning the material with the progression of the course \textit{Klasi\v{c}na Mehanika} at FMF.
 
 \vspace{2mm}
-\textit{Disclaimer:} Mistakes---both trivial typos and legitimate errors---are likely. Keep in mind that these are the notes of an undergraduate student in the process of learning the material himself---take what you read with a grain of salt. If you find mistakes and feel like telling me, by \href{https://github.com/ejmastnak/fmf}{Github} pull request, \href{mailto:ejmastnak@gmail.com}{email} or some other means, I'll be happy to hear from you, even for the most trivial of errors.
+\textit{Disclaimer:} Mistakes---both trivial typos and legitimate errors---are likely. Keep in mind that these are the notes of an undergraduate student in the process of learning the material himself---take what you read with a grain of salt. If you find mistakes and feel like telling me, by \href{https://github.com/ejmastnak/fmf}{\underline{Github}} pull request, \href{mailto:ejmastnak@gmail.com}{\underline{email}} or some other means, I'll be happy to hear from you, even for the most trivial of errors.
+
+\newpage
 
 \tableofcontents
 
@@ -2017,7 +2018,7 @@ We want to show $ \mat{F} $'s eigenvalues are real as long as $ \mat{F} $ is der
 
 \newpage
 \section{Dynamics of Central Force Motion}
-The section analyzes the motion of particles in a central force potential in three spatial dimensions. We will start with Newtonian mechanics and use some Lagrangian mechanics later on.
+The chapter is dedicated to the motion of particles in a central force potential in three spatial dimensions. We will begin with Newtonian mechanics and use the Lagrangian formalism later in the chapter.
 
 \subsection{The Central Force Problem}
 
@@ -3508,6 +3509,8 @@ We apply the chain rule, write the area differential as $ \diff A = \frac{1}{2} 
 	\dv{A}{t} = \dv{A}{\phi} \dv{\phi}{t} = \frac{1}{2} \frac{r^2 \diff \phi}{\diff \phi} \dot{\phi} = \frac{1}{2} r^2 \left(\frac{L_0}{\mu r^2}\right) = \frac{L_0}{2\mu} 
 \end{align*}
 \fi
+
+\newpage
 
 \section{Hamiltonian Mechanics} \label{sec:hamilton}
 
