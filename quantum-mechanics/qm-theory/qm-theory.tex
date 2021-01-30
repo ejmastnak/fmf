@@ -5699,7 +5699,438 @@ We will now use the just-derived relations $ [L_{z}, L_{\pm}] = \pm \hbar L_{\pm
     
 \end{itemize}
 
+\section{Quantum Measurements}
+\subsection{Stern-Gerlach Experiment}
 
+\begin{itemize}
+    \item Recall the axiom: that after a quantum measurement, the system occurs in an eigenstate of the operator being measured, and we measure an eigenvalue.
+
+    \item Note that the Stern-Gerlach experiment occured before the evolution of the new quantum mechanics in 1925. 
+
+    \item Two states. See picture
+
+    Oven with silver at 1050 celsius. 
+
+    Beam of silver atoms in $ y $ direction through two filters.
+
+    Through a large magnet---nonhomogeneous. 
+
+    All inside a box in a vacuum. 
+
+    \item In the absence of a magnetic field expect a single dot on the screen. 
+
+    Instead get a funny-looking pattern of order 0.1 millimeter. Without a field is a straight line. 
+
+    \item This device allows measurement of both spin and momentum. 
+
+    \item Inside the magnet the spins split apart and get different momenta. 
+\end{itemize}
+
+\subsection{Stern-Gerlach SemiClassical}
+\begin{itemize}
+    \item Nonhomog magnetic momentum, assuming $ \curl \B = 0 $ and $ \m = \text{constant} $.
+    \begin{equation*}
+        \vec{F} = (\vec{\mu} \cdot \grad)\B(\r) = \grad (\m \cdot \B(\r)) = - \grad H_{\text{Zeeman}}
+    \end{equation*}
+    Recall
+    \begin{equation*}
+        H_{\text{Zeeman}} = - \m \cdot \B(\r)
+    \end{equation*}
+    although correct $ H_{\text{Z}}  $ is only for a homogeneous field.
+
+    So that's the force on our particle.
+
+    \item Assume nonhomog field
+    \begin{equation*}
+        \B(\r) = \B_{0} + \sum_{a} \pdv{\B}{x_{\alpha}}\bigg |_{0} x_{\alpha} + \cdots
+    \end{equation*}
+    Assume $ \B = B \uvec{e}_{z} $. 
+
+
+    \item The field points occurs in the $ (x, z) $ plane. 
+    
+    And then $ \div \cdot \B  = 0 $ and so
+    \begin{equation*}
+        \pdv{B_{x}}{x} + \pdv{B_{z}}{z} = 0
+    \end{equation*}
+    
+    \item Recall the beam is very small relative to the device dimensions. 
+
+    We assume the force on the particle is
+    \begin{equation*}
+        F = + \mu \pdv{B_{z}}{z} \bigg |_{z = 0}
+    \end{equation*}
+    The force on the particle in the magnetic depends on the orientation of its magnetic moment---the particle will either bend up or down.
+
+    Particle is in the magnet for the time
+    \begin{equation*}
+        \tau \sim \frac{L}{v_{y}}, \qquad m v_{z} = F \tau.
+    \end{equation*}
+    Second expression is impulse. For $ \mu B_{z} > 0 $, the force is $ F > 0 $ ie. upward. 
+
+    We then have $ z_{\ua \da} = \pm v_{z} t $
+    
+    \item Assume particle enters magnet in quantum state $ \ket{\chi} $:
+    \begin{equation*}
+        \chi = 
+        \begin{pmatrix}
+            \cos \frac{\theta}{2}\\
+            \sin \frac{\theta}{2}
+        \end{pmatrix}
+    \end{equation*}
+    
+    Probability for up is 
+    \begin{equation*}
+        P_{\ua} = \abs{\braket{\ua}{\chi}}^{2} = \cos^{2}\frac{\theta}{2} \qquad \text{and} \qquad P_{\da} = \abs{\braket{\da}{\chi}}^{2} = \sin^{2} \frac{\theta}{2} = 1 - P_{\da}
+    \end{equation*}
+    Expected value of $ \sigma_{z} $ is
+    \begin{equation*}
+        \ev{\sigma_{z}} = \mel{\chi}{\sigma_{z}}{\chi} = 
+        \left( \cos \frac{\theta}{2}, \sin \frac{\theta}{2} \right) 
+        \begin{pmatrix}
+            1 & 0\\
+            0 & -1
+        \end{pmatrix}
+        \begin{pmatrix}
+            \cos \frac{\theta}{2}\\
+            \sin \frac{\theta}{2}
+        \end{pmatrix}
+        = P_{\ua} - P_{\da} = \cos \theta
+    \end{equation*}
+    
+    
+\end{itemize}
+
+\subsection{Quantum Stern-Gerlach Experiment}
+\begin{itemize}
+    \item Goal is to find time evolution of the Stern-Gerlach wavepacket. 
+
+    Using anomolous Zeeman
+    \begin{equation*}
+        H = - \frac{\hbar^{2}}{2m}\laplacian - \frac{q}{m}\S \cdot \B
+    \end{equation*}
+    Energy and force, two constants
+    \begin{equation*}
+        E_{0} = \frac{q \hbar}{2m} B_{0} \qquad F = \frac{q \hbar}{2m} \pdv{B_{z}}{z} \bigg |_{z = 0}
+    \end{equation*}
+
+    and so
+    \begin{equation*}
+        H = H_{0} - E_{0} \sigma_{z} - F z \sigma_{z}
+    \end{equation*}
+    Note $ -\grad F z \sigma_{z} = F\sigma_{z} $.
+
+    Write this as $ H = H_{0} + H_{\text{interaction}} $.
+    
+    The coordinate $ z $ is macroscopically measurable, we call it a pointer. 
+
+    The $ H_{\text{int}} $ connects the measurable pointer and the quantum operator quantities.
+
+    \item Magnet at $ y = 0 $. Wavepacket travels along $ y $ axis with speed $ v_{y} $:
+    \begin{equation*}
+        \frac{1}{m} \ev{p} = v_{y}. 
+    \end{equation*}
+    Speed is large, so the wp doesn't widen significantly in the magnet. 
+
+
+    At time $ t = 0 $ the wp is just before the magnet at $ y \sim \frac{L}{2} $. 
+
+    \begin{equation*}
+        \Psi(\r, 0) = \psi(\r, 0)\chi = \psi(\r, 0) 
+        \begin{pmatrix}
+            \cos \frac{\theta}{2}\\
+            \sin \frac{\theta}{2}
+        \end{pmatrix}
+    \end{equation*}
+    Work in the spinor formalism. 
+
+    Factor according to 
+    \begin{equation*}
+        \Psi(\r, t) = \psi_{0}(x, y, t) 
+        \begin{pmatrix}
+            \psi_{\ua}(z, t)\\
+            \psi_{\da}(z, t)
+        \end{pmatrix}
+    \end{equation*}
+    The $ x, y $ components don't affect the experiment. The spinor contains the probabilities for the incident particle occurring in either spin up or spin down.
+    
+    \item After wp passes through magnet, it splits into two wps. 
+
+    Now consider $ \psi(\r, t) $
+    \begin{equation*}
+        \p(\r, t) = \psi_{0}(x, y, t) \int_{-\infty}^{\infty} \tilde{\psi}e^{i \frac{p}{\hbar}z - i \frac{E_{p}}{\hbar}t}\diff p 
+    \end{equation*}
+    where $ E_{p} = \frac{p^{2}}{qm} $. The integrand is $ \psi_{z}(z, t) $. Note that $ \ev{p} = 0 $ and $ p = p_{z} $.
+
+
+    Assume system is exposed to interaction only briefly and that $ B $ is very strong. $ \tau = \frac{L}{v_{y}} $. 
+    
+    We thus consider only $ H_{\text{int}} $, since $ H_{0} $ is negligible. 
+
+    \Schro equation for $ z $ dynamics
+    \begin{equation*}
+        i \hbar \pdv{t} 
+        \begin{pmatrix}
+            \psi_{\ua}(z, t)\\
+            \psi_{\da}(z, t)
+        \end{pmatrix}
+        = - \left( \frac{\hbar^{2}}{2m}\pdv[2]{}{z} + E_{0}\sigma_{z} \pm F z \sigma_{z} \right)
+        \begin{pmatrix}
+            \psi_{\ua}(z, t)\\
+            \psi_{\da}(z, t)
+        \end{pmatrix}
+    \end{equation*}
+    At $ t = 0 $ we have
+    \begin{equation*}
+        \psi_{\ua}(z, t) = \p_{z}(z, t) \cos^{2}\frac{\theta}{2}
+    \end{equation*}
+
+
+    At later times
+    \begin{equation*}
+        \Psi(\r, t) = U \Psi(\r, 0) = e^{-i \frac{H_{\text{int}}}{\hbar}\tau}\Psi(\r, 0)
+    \end{equation*}
+    We leave out $ H_{0} $. 
+    \begin{equation*}
+        U = U_{\text{SG}} = e^{i \delta\phi \sigma_{z}} e^{i \frac{\delta\psi}{\hbar} \sigma_{z}z} 
+    \end{equation*}
+    where
+    \begin{equation*}
+        \delta\phi = \frac{E_{0}}{\hbar} \tau \qquad \text{and} \qquad \delta p = F\tau
+    \end{equation*}
+
+
+    Stress short time so leave out $ H_{0} $
+    \item Now consider time evolutoin
+    \begin{equation*}
+        U_{\text{SG}}e^{\pm i \frac{p}{\hbar}z} \to e^{i \delta\phi} e^{i \frac{p + \delta p }{\hbar}z}
+    \end{equation*}
+    and so
+    \begin{equation*}
+        \begin{pmatrix}
+            \psi_{\ua}(z, \tau)\\
+            \psi_{\da}(z, \tau)
+        \end{pmatrix}
+        = \int_{-\infty}^{\infty} \tilde{\psi(p)}
+        \begin{pmatrix}
+            e^{i \delta \phi} e^{i \frac{p + \delta p}{\hbar}z}e^{-i \frac{E_{p+ \delta p}}{\hbar}\tau} \cos \frac{\theta}{2}\\
+            e^{-i \delta \phi} e^{i \frac{p - \delta p}{\hbar}z}e^{-i \frac{E_{p - \delta p}}{\hbar}\tau} \sin \frac{\theta}{2}
+        \end{pmatrix}
+        \diff p
+    \end{equation*}
+    And then define new variable $ \tilde{p} = p + \delta p $ and $ p = \tilde{p} - \delta p $ to get
+    \begin{equation*}
+        \begin{pmatrix}
+            \psi_{\ua}(z, \tau)\\
+            \psi_{\da}(z, \tau)
+        \end{pmatrix}
+        = \int_{-\infty}^{\infty}
+        \begin{pmatrix}
+            \tilde{\psi}(p - \delta p) e^{i \delta\phi} \cos \frac{\theta}{2}\\
+            \tilde{\psi}(p + \delta p) e^{-i \delta\phi} \sin \frac{\theta}{2}
+        \end{pmatrix}
+        e^{i \frac{p}{\hbar}z - i \frac{E_{p}}{\hbar}\tau} \diff p
+    \end{equation*}
+    And then send $ \tau \to 0 $. This is the wavefunction just after the interaction. 
+
+    And one more notation of two lines up with energy written more clearly---note that this energy from $ H_{0} $ vanishes anyway as $ \tau \to 0 $. 
+    \begin{equation*}
+        \begin{pmatrix}
+            \psi_{\ua}(z, \tau)\\
+            \psi_{\da}(z, \tau)
+        \end{pmatrix}
+        = \int_{-\infty}^{\infty}
+        \begin{pmatrix}
+            \tilde{\psi}(p - \delta p) e^{i \delta\phi} \cos \frac{\theta}{2} e^{- i \frac{(p + \delta p)^{2}}{2m \hbar}\tau}\\
+            \tilde{\psi}(p + \delta p) e^{-i \delta\phi} \sin \frac{\theta}{2}e^{- i \frac{(p + \delta p)^{2}}{2m \hbar}\tau}
+        \end{pmatrix}
+        e^{i \frac{p}{\hbar}z} \diff p
+    \end{equation*}
+    
+    \item And then consider probability density
+    \begin{equation*}
+        \rho(z, t) = \rho_{\ua}(z, t) + \rho_{\da}(z, t)
+    \end{equation*}
+    The result is a curve $ N(z) $ corresponding to particle detection along the $ z $ axis of the detector. It has one peak at positive $ z $, on at negative $ z $, and a gap in between. The relative sizes of the peaks correspond to the initial probabilities in the inputted spin wavefunction $ \chi(0) $.
+    
+    Stress the macroscopic measurement is measuring the coordinate $ z $ of where particles are detected. 
+
+    Okay then
+    \begin{equation*}
+        \Psi = \psi_{0}(x, y, t)
+        \begin{pmatrix}
+            \psi_{\ua}\\
+            0
+        \end{pmatrix}
+    \end{equation*}
+    So basically wavefunction collapse in that we either detect in spin up or down only. 
+    \begin{equation*}
+        \begin{pmatrix}
+            \psi_{\ua}\\
+            \psi_{\da}
+        \end{pmatrix}
+        \to 
+        \frac{1}{\sqrt{\int_{-\infty}^{\infty} \abs{\psi_{\ua} (z, t)}^{2}\diff z}}
+        \begin{pmatrix}
+            \psi_{\ua}\\
+            0
+        \end{pmatrix}
+        = \frac{1}{\sqrt{\cos^{2}\frac{\theta}{2}}}
+        \begin{pmatrix}
+            \psi_{\ua}\\
+            0
+        \end{pmatrix}
+    \end{equation*}
+    This is non-unitary time evolution because of wavefunction collapse. 
+    
+\end{itemize}
+
+\subsection{General Quantum Measurement}
+\begin{itemize}
+    \item Classical measurement: determine property of a system that the system intrinsically has, whether we see the property or not.
+
+    \item Bell: quantum mechanics can only predict the result of an experiment. It does not predict the system's property in the classical sense. 
+
+    Over the process of the experiment, the system assumes a value that we then detect.
+
+    \item VN or strong measurement: particle initially described by a linear superposition of all possible states, collapses into a single eigenstate. 
+
+    But this is not really correct, we cannot say even that the particle is in a linear superposition of states, we in fact don't know anything about the particle's intrinsic properties. 
+
+    All QM allows us to measure is the statistical probability with which we will detect outcomes from a large number of experiments. 
+
+    However, after the measurement outcome, we can be sure the particle has the property we measured. We just know nothing about the particle's property before the measurement.
+
+\end{itemize}
+
+\subsubsection{VM Measurement}
+
+\begin{itemize}
+    \item Assume system with $ H = H_{0} + H_{\text{int}}(q, \hat{p}, t) $ where $ q $ and $ \hat{p} $ are position and momentum operators. 
+
+    Short time $ \tau $ and some operator. Example of coupling of operator with momentum
+    \begin{equation*}
+        H_{\text{int}} = \frac{g}{\tau} \hat{A} \hat{p}
+    \end{equation*}
+
+    $ A $ has a basis
+    \begin{equation*}
+        \hat{A}\ket{n} = a_{n}\ket{n}
+    \end{equation*}
+    
+    Initial state $ \ket{\Psi(0)} = \ket{\psi} \otimes \ket{\phi} $. The second state is supporting state
+    \begin{equation*}
+        \ket{\Psi(0)} = \sum_{n}\ket{n}\braket{n}{\psi} \otimes \ket{\phi(q)}
+    \end{equation*}
+    where $ c_{n} \braket{n}{\psi} $.
+    
+    Assume $ H_{\text{int}} $ turns on only for a short time, like a small pulse.
+
+
+    \begin{equation*}
+        \ket{\Psi(\tau)} = e^{-i \frac{H}{\hbar}\tau} \ket{\Psi(0)} = e^{-ig \hat{A}\hat{p}} \ket{\Psi(0)} \equiv U \ket{\Psi(0)}
+    \end{equation*}
+    and so 
+    \begin{equation*}
+        \to \sum_{N} e^{-ig \hat{A}\hat{p}} c_{n}\ket{n} \otimes \ket{\phi(q)} = \sum_{n}c_{n}\ket{n}\otimes e^{i g a_{n} \hat{p}}\ket{\phi(q)} = \sum_{n}c_{n}\ket{n} \otimes \ket{\phi(q - ga_{n})} 
+    \end{equation*}
+    e.g. for spin
+    \begin{equation*}
+        = c_{\ua}\ket{\ua} \phi(q - ga_{\ua}) + c_{\da}\ket{\da}\phi(q - ga_{\ua})
+    \end{equation*}
+    and for $ t > \tau $ after the interaction
+    \begin{equation*}
+        \ket{\psi(t)} = e^{-i \frac{H_{0}}{\hbar}(t- \tau)} \ket{\psi(\tau)}
+    \end{equation*}
+    
+    \item We now consider coupling with a coordinate
+    \begin{equation*}
+        H_{\text{int}} = - \frac{g}{\tau}\hat{A} q
+    \end{equation*}
+    and then
+    \begin{align*}
+        \ket{\psi(0)} &= \sum_{n}c_{n}\ket{n} \otimes \int \tilde{\phi}(p)\ket{p}\diff p
+    \end{align*}
+    and $ U = e^{+ig \hat{A}q} $ and then
+    \begin{align*}
+        \ket{\Psi(\tau)} & = \sum_{n}c_{n}\ket{n} \otimes \int \tilde{\phi}(p)e^{ig \frac{a_{n}}{\hbar}q} \ket{p} \diff p \\
+        & = \sum_{_{n}c_{n}}\ket{n} \otimes \int \tilde{\phi}(p - ga_{n})\ket{p} \diff p
+    \end{align*}
+    supposedly we called $ ga_{n} \delta p_{n} $ in spin.
+
+    and then expect
+    \begin{equation*}
+        \ev{q}_{n} = \frac{g a_{n}}{m}t, \qquad  \ev{p} = ga_{n}
+    \end{equation*}
+    This is unitary so far.
+    
+    \item And to measure $ \hat{A} $ we have
+    \begin{equation*}
+        \ket{\Psi(t_{0})} = e^{-i \frac{H_{0}}{\hbar}(t_{0} - \tau)}\ket{\Psi(\tau)}
+    \end{equation*}
+    This cgoes into a quantum system regime, then a few interactions $ H_{\text{int}} $, $ H_{\text{int}_{1}} $, $ H_{\text{int}_{2}} $ and so on...
+
+    And in the end we measure position, the pointer. The series of interactions progressively brings the quantities in the experiment closer to the macroscopically measurable quantity. The interactions are all unitary in the quantum regime. 
+
+    And then the wavefunction ends up in our macroscopic detector, and we detect it, and it is normalized. 
+
+    We have 
+    \begin{equation*}
+        \ket{\psi} \to \ket{n}
+    \end{equation*}
+    i.e. some superposed $ \ket{\psi} $ to a single eigenstate $ \ket{n} $, where the probability for detecting that $ \ket{n} $ is $ P_{n} = \abs{c_{n}}^{2} $, e.g. in the SG experiment these were the $ \cos^{2}\frac{\theta}{2} $ and $ \sin^{2}\frac{\theta}{2} $ terms. 
+    
+    % \item In general, we note that there exists a measurement operator $ M_{n} $ e.g. a projector $ \ket{n}\bra{n} = P_{n} $ which we normalize so something like
+    % \begin{equation*}
+    %     \ket{\psi} \stackrel{M_{n}}{\longrightarrow} \frac{M_{n}\ket{\psi}}{\sqrt{\mel{\psi}{M_{n}^{\dagger}M_{n}}{\psi}}}
+    % \end{equation*}
+    % if $ M_{n} = P \to \ket{n} $ but idk wtf this means lol.
+    
+\end{itemize}
+\textbf{What Comes Out of the SG Oven?}
+\begin{itemize}
+    \item Consider concept of a pure state, for which we have
+    \begin{equation*}
+        \ket{\chi} = \sum_{n} c_{n}\ket{n}
+    \end{equation*}
+    Expected value
+    \begin{align*}
+        \ev{A} &= \mel{\chi}{A}{\chi} = \sum_{mn}c_{n}^{*}c_{m}\mel{n}{A}{m}  \\
+        \equiv & = \sum_{mn} \rho_{mn}A_{nm} = \tr \rho A
+    \end{align*}
+    where we have defined the operator
+    \begin{equation*}
+        \rho = \sum_{mn}\rho_{mn}\ket{m}\ket{n}
+    \end{equation*}
+    We can also write $ \rho = \ket{\chi}\bra{\chi} = P_{\chi} $. 
+
+    We call this a density matrix for a pure state.
+    
+    \item And now a mixed state. A box with two particles, together described by
+    \begin{equation*}
+        \ket{\Psi} = \sum_{m m_{1}} c_{mm_{1}} \ket{m}\otimes \ket{m_{1}}
+    \end{equation*}
+    
+    \item Idea: One particle exits the box.
+
+    We write density matrix for what is outside of the box, i.e. a mixed-state density matrix.
+    \begin{equation*}
+        \ev{A} = \tr(\rho A) 
+    \end{equation*}
+    And then we speak of quantum entanglement I think of the particle inside and outside of the box. 
+
+
+    \item In SG we have not one but $ \sim 10^{23} $ particles in the box and a few particles flying out, and these particles are coupled to all of the $ \sim 10^{23} $ left in the box.
+    
+    
+    
+    
+    
+    
+    
+    
+    
+\end{itemize}
 
 \end{document}
 
