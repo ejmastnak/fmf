@@ -40,19 +40,18 @@
 \begin{center}
 \textbf{About These Notes}
 \end{center}
-These are my lecture notes from the lecture portion of the course \textit{Numeri\v{c}ne Metode} (Numerical Methods), an introductory-level elective course offered to second-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. The exact material herein is specific to the physics program at the University of Ljubljana, but the content is fairly standard for an introductory numerical methods course. I am making the notes publicly available in the hope that they might help others learning the same material.
+These are my lecture notes from the course \textit{Numeri\v{c}ne Metode} (Numerical Methods), an introductory-level elective course offered to second-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. The course serves as an introduction to a wide range of numerical methods, including systems of linear equations, root-finding algorithms for non-linear equations, the linear least squares problem, eigenvalues, polynomial interpolation and numerical methods for ODEs. The exact material is specific to the physics program at the University of Ljubljana, but the content is fairly standard for an introductory numerical methods course. I am making the notes publicly available in the hope that they might help others learning the same material---the most recent version can be found on \href{https://github.com/ejmastnak/fmf/tree/main/intro-numerical-methods}{\underline{GitHub}}.
 
 \vspace{2mm}
-\textit{Navigation}: For easier document navigation, the table of contents is ``clickable'', meaning you can jump directly to a section by clicking the colored section names in the table of contents. Unfortunately, \uline{the clickable links do not work in most online or mobile PDF viewers}; you have to download the file first.
+\textit{Navigation}: For easier document navigation, the table of contents is ``clickable'', meaning you can jump directly to a section by clicking the colored section names in the table of contents. Unfortunately, \textit{the clickable links do not work in most online or mobile PDF viewers}; you have to download the file first.
 
 \vspace{2mm}
-\textit{On Authorship:} These lecture were given by Professor Emil \v{Z}agar, who accordingly deserves credit for the content herein. I have merely typeset the notes and provided additional comments where I saw fit.
-
-% If applicable: The lecture notes for the course (in Slovene) can be found as of \today \href{URL}{this website}.
+\textit{On Authorship:} The material herein comes directly from the lectures given by Professor Emil \v{Z}agar, who accordingly deserves credit for the content in these notes. I take credit for nothing more than typesetting the notes, translating to English, and perhaps adding a additional comment or two for clarity.
 
 \vspace{2mm}
 \textit{Disclaimer:} Mistakes---both trivial typos and legitimate errors---are likely. Keep in mind that these are the notes of an undergraduate student in the process of learning the material himself---take what you read with a grain of salt. If you find mistakes and feel like telling me, by \href{https://github.com/ejmastnak/fmf}{Github} pull request, \href{mailto:ejmastnak@gmail.com}{email} or some other means, I'll be happy to hear from you, even for the most trivial of errors.
 
+\newpage
 
 \tableofcontents
 
@@ -187,7 +186,7 @@ Every square matrix $ \mat{A} \in \R^{n \cross n} $ has an associated scalar val
 	\item The determinant of the identity matrix $ \mathbf{I} $ is one. Each switch of $ \mathbf{I} $'s rows or columns multiplies the determinant of the resulting matrix by one.
 \end{itemize}
 
-
+\newpage
 
 \section{Systems of Linear Equations}
 
@@ -701,9 +700,9 @@ These methods are mostly beyond the scope of this course; we take only a brief l
 	\item Formal conditions for convergence of the higher-dimensional Newton's method exist, but are hard to verify in practice. Instead, we settle for a good initial guess and usually things work out.
 \end{itemize}
 
+\newpage
 
 \section{Linear Least Squares}
-
 
 Given many data points and a model function described by a few parameters (much fewer than the number of data points), find the values of the parameters for which the function best models the data points. Our actors are: 
 \begin{itemize}
@@ -1082,6 +1081,8 @@ Just an example from vaje.
 \end{enumerate}
 \fi
 
+\newpage
+
 \section{Eigenvalues and Eigenvectors}
 
 \subsection{Some Eigenvalue Theory}
@@ -1380,8 +1381,7 @@ Eigenvalue methods for symmetric methods make use of the principle that every sy
 	
 \end{itemize}
 
-
-
+\newpage
 
 \section{Polynomial Interpolation}
 
@@ -1556,6 +1556,7 @@ Note that the $ f''(x) $ term vanishes because of $ \pm h $.
 
 The Taylor error is $ \propto A h^2 $ and the numerical rounding error (given/told) adds a term to the error $ \propto \frac{u}{h} $ where $ u \approx 10^{-16} $ is the rounding error. The total error in the numerical approach is then $ \propto Ah^2 + \frac{u}{h} $. This is minimized not as $ h \to 0 $ but for an intermediate value.
 
+\newpage
 
 \section{Numerical Methods for Ordinary Differential Equations}
 \subsection{First Order}
@@ -1638,8 +1639,8 @@ There is a large range of Runge-Kutta methods. The example below is the fourth-o
 	\item Starting with $ y(x_{0}) = y_{0}$, calculate the coefficients 
 	\begin{align*}
 		 k_{1} &= hf(x_{i}, y_{i}) \\
-		 k_{2} &= hf(x_{i} + \frac{1}{2}h, y_{i} + \frac{1}{2} k_{1}) \\
-		 k_{3} &= hf(x_{i} + \frac{1}{2}h, y_{i} + \frac{1}{2} k_{2}) \\
+		 k_{2} &= hf \big (x_{i} + \tfrac{1}{2}h, y_{i} + \tfrac{1}{2} k_{1} \big ) \\
+		 k_{3} &= hf \big (x_{i} + \tfrac{1}{2}h, y_{i} + \tfrac{1}{2} k_{2} \big ) \\
 		 k_{4} &= hf(x_{i} + h, y_{i} + k_{3})
 	\end{align*}
 	and calculate the next term with the formula
