@@ -2,6 +2,8 @@
 \usepackage[T1]{fontenc}
 \usepackage{mwe}
 \usepackage[margin=3.5cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{truncate}
 
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -36,6 +38,15 @@
 	/Subject (Mathematics)
 }
 
+% begin header configuration
+\fancypagestyle{headerstyle}{
+\fancyhf{}  % clear default settings from header and footer; create blank slate
+\fancyhead[R]{\href{https://github.com/ejmastnak/fmf}{\small{\texttt{github.com/ejmastnak/fmf}}}}  % link in upper right
+\fancyhead[L]{\textit{\truncate{0.65\headwidth}{\rightmark}}}  % subsection name; truncate long names
+\fancyfoot[C]{\thepage}  % centered page number in footer
+\renewcommand{\headrulewidth}{0.1pt}
+}
+% end header configuration
 
 \begin{document}
 \title{Matematika 4 Lecture Notes}
@@ -69,6 +80,7 @@ Finally, keep in mind that these notes generally do not include proofs of the pr
 
 \newpage
 
+\pagestyle{headerstyle}
 \section{Complex Analysis}
 
 \subsection{Introduction to the Complex Plane}

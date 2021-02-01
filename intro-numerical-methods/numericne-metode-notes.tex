@@ -2,7 +2,9 @@
 \usepackage[T1]{fontenc}
 \usepackage{mwe}
 \usepackage[margin=3.5cm]{geometry}
-\usepackage[normalem]{ulem}  % for underline with line wrapping
+
+\usepackage{fancyhdr}
+\usepackage{truncate}
 
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -11,7 +13,7 @@
 \usepackage{physics} % many useful physics commands
 \usepackage[separate-uncertainty=true]{siunitx} % for scientific notation and units
 \usepackage{xcolor}  % to color hyperref links
-\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[colorlinks = true, allcolors=blue]{hyperref}
 
 \setlength{\parindent}{0pt} % to stop indenting new paragraphs
 \newcommand{\eqtext}[1]{\qquad \text{#1} \qquad}
@@ -23,12 +25,15 @@
 %\newcommand{\mat{R}}{\mathbf{R}} % shorthand for matrix
 \newcommand{\mat}[1]{\mathbf{#1}} % shorthand for matrices
 
-\pdfinfo{
-	/Title (Numericne Metode Notes)
-	/Author (Elijan Mastnak)
-	/Subject (Mathematics)
+% begin header configuration
+\fancypagestyle{headerstyle}{
+\fancyhf{}  % clear default settings from header and footer; create blank slate
+\fancyhead[R]{\href{https://github.com/ejmastnak/fmf}{\small{\texttt{github.com/ejmastnak/fmf}}}}  % link in upper right
+\fancyhead[L]{\textit{\truncate{0.65\headwidth}{\rightmark}}}  % subsection name; truncate long names
+\fancyfoot[C]{\thepage}  % centered page number in footer
+\renewcommand{\headrulewidth}{0.1pt}
 }
-
+% end header configuration
 
 
 \begin{document}
@@ -57,9 +62,11 @@ These are my lecture notes from the course \textit{Numeri\v{c}ne Metode} (Numeri
 
 \newpage
 
-\section{Introduction and Linear Algebra Review}
+\pagestyle{headerstyle}
 
-\subsection{Quick Summary of Floating Point Numbers}
+\section{Introduction and Review of Linear Algebra}
+
+\subsection{Brief Summary of Floating Point Numbers}
 \begin{itemize}
 	\item In numerical calculations, floating point numbers are represented $ x = \pm s b^{e} $
 	\begin{itemize}
@@ -351,16 +358,9 @@ LU decomposition is the process of decomposing an arbitrary matrix $ \mat{A} \in
 	\begin{enumerate}
 		\item Find $ \mat{A} $'s LU decomposition
 		
-		\item Write the system in column form:
-		\begin{equation*}
-			\mat{A} [\bm{x}_1, \bm{x}_{2}, \dots, \bm{x}_n] = [\bm{b}_1, \bm{b}_{2}, \dots, \bm{b}_n] 
-		\end{equation*}
+        \item Write the system in column form, i.e. $ \mat{A} [\bm{x}_1, \bm{x}_{2}, \dots, \bm{x}_n] = [\bm{b}_1, \bm{b}_{2}, \dots, \bm{b}_n]  $.
 		
-		\item Solve the $ p $ vector systems 
-		\begin{equation*}
-			\mat{A} \bm{x}_{j} = \bm{b}_{j}; \qquad j = 1, 2, \dots, p
-		\end{equation*}
-		using the technique for solving vector systems in the previous section.
+        \item Solve the $ p $ vector systems $ \mat{A} \bm{x}_{j} = \bm{b}_{j}, j = 1, 2, \ldots, p $ using the technique for solving vector systems in the previous section.
 		
 	\end{enumerate}
 	
@@ -1559,7 +1559,7 @@ The Taylor error is $ \propto A h^2 $ and the numerical rounding error (given/to
 \newpage
 
 \section{Numerical Methods for Ordinary Differential Equations}
-\subsection{First Order}
+\subsection{First Order Differential Equations}
 
 \subsubsection{Overview}
 \begin{itemize}
@@ -1844,12 +1844,4 @@ on the interval $ [a, b] $ with the boundary conditions $ y(a) = \alpha, y(b) = 
 \end{itemize}
 
 \end{document}	
-
-
-
-
-
-
-
-
 

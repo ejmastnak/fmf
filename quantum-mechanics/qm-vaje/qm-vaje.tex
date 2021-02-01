@@ -11,6 +11,8 @@
 \usepackage[separate-uncertainty=true]{siunitx}
 
 \usepackage[margin=3cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{truncate}
 \usepackage[normalem]{ulem}  % for underline with line wrapping
 \usepackage[colorlinks = true, allcolors=blue]{hyperref}
 
@@ -54,10 +56,23 @@
 \newcommand{\bbraket}[2]{\big \langle {#1} \big | {#2} \big \rangle}  % for \big brakets
 \newcommand{\bmel}[3]{\big \langle {#1} \big | {#2} \big | {#3} \big \rangle}  % for matrix elements of fixed size
 
+% bmatrix with more spacing between columns to accomodate \tilde quantities
 \makeatletter
 \newenvironment{widebmatrix}
   {\left[\mkern2.5mu\env@matrix}
   {\endmatrix\mkern3.5mu\right]}
+
+
+% begin header configuration
+\fancypagestyle{headerstyle}{
+\fancyhf{}  % clear default settings from header and footer; create blank slate
+\fancyhead[R]{\href{https://github.com/ejmastnak/fmf}{\small{\texttt{github.com/ejmastnak/fmf}}}}  % link in upper right
+\fancyhead[L]{\textit{\truncate{0.65\headwidth}{\rightmark}}}  % subsection name; truncate long names
+\fancyfoot[C]{\thepage}  % centered page number in footer
+\renewcommand{\headrulewidth}{0.1pt}
+}
+% end header configuration
+
 
 \begin{document}
 \title{Quantum Mechanics Exercises Notes}
@@ -72,7 +87,7 @@
 \textbf{About These Notes}
 \end{center}
 
-These are my notes from the Exercises portion of the class \textit{Kvanta Mehanika} (Quantum Mechanics), a required course for third-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. The exact problem sets herein are specific to the physics program at the University of Ljubljana, but the content is fairly standard for a late-undergraduate quantum mechanics course. I am making the notes \href{https://github.com/ejmastnak/fmf/tree/main/quantum-mechanics/qm-vaje}{\underline{publicly available}}  in the hope that they might help others learning similar material.
+These are my notes from the Exercises portion of the class \textit{Kvanta Mehanika} (Quantum Mechanics), a required course for third-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. The exact problem sets herein are specific to the physics program at the University of Ljubljana, but the content is fairly standard for a late-undergraduate quantum mechanics course. I am making the notes publically available in the hope that they might help others learning similar material---the most recent version can be found on \href{https://github.com/ejmastnak/fmf/tree/main/quantum-mechanics/qm-vaje}{\underline{GitHub}}.
 
 \vspace{2mm}
 \textit{Navigation}: For easier document navigation, the table of contents is ``clickable'', meaning you can jump directly to a section by clicking the colored section names in the table of contents. Unfortunately, \textit{the clickable links do not work in most online or mobile PDF viewers}; you have to download the file first.
@@ -90,6 +105,7 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has assembled the prob
 
 \newpage
 
+\pagestyle{headerstyle}
 \section{First Exercise Set}
 
 \subsection{Theory: Basic Concepts in Quantum Mechanics}

@@ -16,6 +16,8 @@
 
 \usepackage[normalem]{ulem}  % for underline with line wrapping
 \usepackage[margin=3cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{truncate}
 \usepackage[colorlinks = true, allcolors=blue]{hyperref}
 
 \setlength{\parindent}{0pt} % to stop indenting new paragraphs
@@ -53,6 +55,16 @@
 \renewcommand{\grad}{\nabla}
 \renewcommand{\laplacian}{\nabla^{2}}
 
+% begin header configuration
+\fancypagestyle{headerstyle}{
+\fancyhf{}  % clear default settings from header and footer; create blank slate
+\fancyhead[R]{\href{https://github.com/ejmastnak/fmf}{\small{\texttt{github.com/ejmastnak/fmf}}}}  % link in upper right
+\fancyhead[L]{\textit{\truncate{0.65\headwidth}{\leftmark}}}  % subsection name; truncate long names
+\fancyfoot[C]{\thepage}  % centered page number in footer
+\renewcommand{\headrulewidth}{0.1pt}
+}
+% end header configuration
+
 \begin{document}
 \title{Electromagnetic Field Exercise Notes}
 \author{Elijan Mastnak}
@@ -62,7 +74,7 @@
 \begin{center}
 \textbf{About These Notes}
 \end{center}
-These are my notes are from the Exercises portion of the class \textit{Elektromagnetno Polje} (Electromagnetic Field), given to third-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. The exact problem sets herein are specific to the physics program at the University of Ljubljana, but the content is fairly standard for a late-undergraduate electromagnetism course. I am making the notes publicly available in the hope that they might help others learning the same material.
+These are my notes from the Exercises portion of the class \textit{Elektromagnetno Polje} (Electromagnetic Field), a required course for third-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. The exact problem sets herein are specific to the physics program at the University of Ljubljana, but the content is fairly standard for a late-undergraduate electromagnetism course. I am making the notes publicly available in the hope that they might help others learning similar material---the latest version can be found on \href{https://github.com/ejmastnak/fmf/tree/main/electromagnetic-field}{\underline{GitHub}}.
 
 \vspace{2mm}
 \textit{Navigation}: For easier document navigation, the table of contents is ``clickable'', meaning you can jump directly to a section by clicking the colored section names in the table of contents. Unfortunately, \textit{the clickable links do not work in most online or mobile PDF viewers}; you have to download the file first.
@@ -81,6 +93,7 @@ The exercises are led by Asst. Prof. Martin Klanj\v{s}ek, who has assembled the 
 \newpage
 
 
+\pagestyle{headerstyle}
 \section{First Exercise Set}
 
 \subsection{Background Theory: Electric Field of a Charge Distribution}
@@ -88,7 +101,7 @@ The electric field of a spatial charge distribution with volume charge density $
 \begin{equation*}
 	\vec{E}(\vec{r}) = \frac{1}{4\pi \ee}\iiint \frac{\rho(\tvec{r}) \diff^{3}\tvec{r} }{\abs{\vec{r} - \tvec{r}}^{2}} \frac{\vec{r} - \tvec{r}}{\abs{\vec{r} - \tvec{r}}},
 \end{equation*}
-where $ \tvec{r} $ is a placeholder variable for integration, $ \rho(\tvec{r}) \diff^{3}\tvec{r} $ is an infinitesimal element of charge at the position $ \tvec{r} $.
+where $ \tvec{r} $ is a placeholder variable for integration and $ \rho(\tvec{r}) \diff^{3}\tvec{r} $ is an infinitesimal element of charge at the position $ \tvec{r} $.
 
 \subsection{Charged Disk}
 \textit{A charged disk has surface charge density $ \sigma $ and radius $ a $. Find the disk's electric field $ E(z) $ along an axis through the disk's center and normal to the disk. Analyze the limit behavior of $ E(z) $ for small and large $ z $.}
@@ -3356,30 +3369,6 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 \end{itemize}
 
 \end{document}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

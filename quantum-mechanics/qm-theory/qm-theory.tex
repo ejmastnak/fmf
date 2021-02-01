@@ -2,7 +2,8 @@
 \usepackage[T1]{fontenc}
 \usepackage{mwe}
 \usepackage[margin=3cm]{geometry}
-\usepackage[normalem]{ulem}  % for underline with line wrapping
+\usepackage{fancyhdr}
+\usepackage{truncate}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{esint}
@@ -91,12 +92,15 @@
 \renewcommand{\k}[1]{\ket{#1}}
 \newcommand{\bk}[1]{\bket{#1}}
 
-\pdfinfo{
-	/Title (Quantum Mechanics Oral Study Guide)
-	/Author (Elijan Mastnak)
-	/Subject (Physics)
+% begin header configuration
+\fancypagestyle{headerstyle}{
+\fancyhf{}  % clear default settings from header and footer; create blank slate
+\fancyhead[R]{\href{https://github.com/ejmastnak/fmf}{\small{\texttt{github.com/ejmastnak/fmf}}}}  % link in upper right
+\fancyhead[L]{\textit{\truncate{0.65\headwidth}{\rightmark}}}  % subsection name; truncate long names
+\fancyfoot[C]{\thepage}  % centered page number in footer
+\renewcommand{\headrulewidth}{0.1pt}
 }
-
+% end header configuration
 
 \begin{document}
 \title{Quantum Mechanics Lecture Notes}
@@ -111,7 +115,7 @@ These are my lecture notes from the course \textit{Kvanta Mehanika} (Quantum Mec
 
 
 \vspace{2mm}
-\textit{Navigation}: For easier document navigation, the table of contents is ``clickable'', meaning you can jump directly to a section by clicking the colored section names in the table of contents. Unfortunately, the \uline{clickable links do not work in most online or mobile PDF viewers}; you have to download the file first.
+\textit{Navigation}: For easier document navigation, the table of contents is ``clickable'', meaning you can jump directly to a section by clicking the colored section names in the table of contents. Unfortunately, the \textit{clickable links do not work in most online or mobile PDF viewers}; you have to download the file first.
 
 \vspace{2mm}
 \textit{On Content}: The material herein is far from original---it comes almost exclusively from Professor Anton Ram\v{s}ak's lecture notes on quantum mechanics at the University of Ljubljana. I take credit for nothing beyond translating the notes to English and typesetting.
@@ -125,6 +129,7 @@ These are my lecture notes from the course \textit{Kvanta Mehanika} (Quantum Mec
 
 \newpage
 
+\pagestyle{headerstyle}
 \section{Fundamentals of Wave Quantum Mechanics}
 
 \subsection{Understanding the \Schro Equation} 
@@ -5711,6 +5716,8 @@ We will now use the just-derived relations $ [L_{z}, L_{\pm}] = \pm \hbar L_{\pm
 
     Oven with silver at 1050 celsius. 
 
+    Stress that the silver is chosen so the atoms are neutral and don't move in the magnetic field like a classical charged particle. 
+
     Beam of silver atoms in $ y $ direction through two filters.
 
     Through a large magnet---nonhomogeneous. 
@@ -6093,23 +6100,37 @@ We will now use the just-derived relations $ [L_{z}, L_{\pm}] = \pm \hbar L_{\pm
     \begin{equation*}
         \ket{\chi} = \sum_{n} c_{n}\ket{n}
     \end{equation*}
-    Expected value
+
+
+    \item We have assumed so far for a beam particle
+    \begin{equation*}
+        \chi = 
+        \begin{pmatrix}
+            c_{\ua}\\
+            c_{\da}
+        \end{pmatrix}
+    \end{equation*}
+    But really this a pure state---actually more complicated. Because of entanglement with everything else in the oven. 
+
+
+    \item Expected value
     \begin{align*}
         \ev{A} &= \mel{\chi}{A}{\chi} = \sum_{mn}c_{n}^{*}c_{m}\mel{n}{A}{m}  \\
         \equiv & = \sum_{mn} \rho_{mn}A_{nm} = \tr \rho A
     \end{align*}
     where we have defined the operator
     \begin{equation*}
-        \rho = \sum_{mn}\rho_{mn}\ket{m}\ket{n}
+        \rho = \sum_{mn}\rho_{mn}\ket{m}\bra{n}
     \end{equation*}
     We can also write $ \rho = \ket{\chi}\bra{\chi} = P_{\chi} $. 
 
     We call this a density matrix for a pure state.
     
-    \item And now a mixed state. A box with two particles, together described by
+    \item And now a mixed state. A hypothetical box with two particles, together described by
     \begin{equation*}
         \ket{\Psi} = \sum_{m m_{1}} c_{mm_{1}} \ket{m}\otimes \ket{m_{1}}
     \end{equation*}
+    where $ \ket{m_{1}} $ is the basis of the first particle. Note that this $ \ket{\Psi} $ is a complicated state---it is a big linear combination. It is not a pure state.
     
     \item Idea: One particle exits the box.
 
@@ -6121,16 +6142,245 @@ We will now use the just-derived relations $ [L_{z}, L_{\pm}] = \pm \hbar L_{\pm
 
 
     \item In SG we have not one but $ \sim 10^{23} $ particles in the box and a few particles flying out, and these particles are coupled to all of the $ \sim 10^{23} $ left in the box.
+
+    
+    \item And then
+    \begin{equation*}
+        \rho = \sum_{mn} \rho_{mn} \ket{m}\bra{n}
+    \end{equation*}
+    As earlier. 
     
     
+\end{itemize}
+
+\textbf{More on Mixed States}
+\begin{itemize}
+    \item Particle in box with $ \ket{m_{1}} $ and particle out with $ \ket{m} $. Total state
+    \begin{equation*}
+        \ket{\Psi} = \sum_{mm_{1}}c_{mm_{1}} \ket{m}\otimes \ket{m_{1}}
+    \end{equation*}
+    consider some Operator $ A = A\otimes \II $. Find expval for total system
+    \begin{equation*}
+        \ev{A} = \mel{\Psi}{A\otimes \II}{\Psi} = \sum_{} c_{nn_{1}}^{*}c_{mm_{1}}\mel{n}{A}{m} \braket{n_{1}}{m_{1}}
+    \end{equation*}
+    Everything with index 1 is in the box and orthonormal and $ \braket{n_{1}}{m_{1}} = \delta_{m_{1}n_{1}} $.
+    \begin{equation*}
+        \ev{A} = \sum_{nm n_{1}} c_{nm_{1}}^{*} c_{mm_{1}} A_{nm}
+    \end{equation*}
+    We then write the sum in the form
+    \begin{equation*}
+        \ev{A} = \sum_{nm}\sum_{m_{1}} c_{nm_{1}}^{*} c_{mm_{1}}A_{nm}
+    \end{equation*}
+    We call $ \rho_{mn} = c_{nm_{1}}^{*} c_{mm_{1}} $, index order is important, and get
+    \begin{equation*}
+        \ev{A} = \sum_{mn}\rho_{mn}A_{nm} = \tr \big[\rho A \big]
+    \end{equation*}
+    and note density matrix for the mixed state is
+    \begin{equation*}
+        \rho_{mn} = \sum_{m_{1}}c_{nm_{1}}^{*} c_{mm_{1}}
+    \end{equation*}
+    
+
     
     
+\end{itemize}
+
+\textbf{Properties of the Density Matrix}
+\begin{itemize}
+    \item Used for systems of many particles. 
+
+    $ N $ particles in box, one flies out. Total psi
+    \begin{equation*}
+        \ket{\Psi} = \sum_{m} \sum_{m_{1}m_{2}\cdots} c_{m m_{1}\cdots m_{N}} \ket{m} \otimes \big( \ket{m_{1}}\otimes \cdots \otimes \ket{m_{N}} \big)
+    \end{equation*}
+    Find expavale of operator for the outer particle, assuming the $ c $ are known. 
+    \begin{equation*}
+        \ev{A} = \mel{\Psi}{A}{\Psi}
+    \end{equation*}
+    Density matrix is
+    \begin{equation*}
+        \rho_{mn} = \sum_{m_{1} \cdots m_{N}} c_{n n_{1}n_{N}}^{*} c_{m m_{1}m_{N}}^{*}= \sum \abs{c_{m m_{1}m_{N}}^{*} }^{2}
+    \end{equation*}
+    And then in eigenbasis:
+    \begin{equation*}
+        \rho = 
+        \begin{pmatrix}
+            p_{1} & 0\\
+            0 & p_{2}
+        \end{pmatrix}
+        \qquad p_{1}, p_{2} \geq 0
+    \end{equation*}
+    And then
+    \begin{equation*}
+        \rho \ket{k} = p_{k}\ket{k} \qquad \rho = \sum_{k} p_{k} \ket{k}\bra{k}
+    \end{equation*}
+    From before $ \tr \rho = p_{1} + p_{2} \equiv 1 $ and so 
+    \begin{equation*}
+        \sum_{k} p_{k} = 1
+    \end{equation*}
+    and $ 0 \leq p_{k} \leq 1 $. 
+
+    \item in the eigenbasis, the expval for the measured operator is
+    \begin{equation*}
+        \ev{A} = \tr \rho A = \sum_{k} p_{k} \mel{k}{A}{k} = \sum_{k}p_{k}A_{kk}
+    \end{equation*}
+    I think we've assumed $ A $ is spin-like and hence the two by two matrix. 
+
+    \item The trace obeys
+    \begin{equation*}
+        \tr \rho^{2} = \sum_{k} p_{k}^{2} \leq \sum_{k} p_{k} = \tr \rho
+    \end{equation*}
+    So the sruaed trace is always less than or equal the normal trace. They're equal if $ p_{k} = \delta_{kk_{0}} $ but what is that?
+    
+
+    \item Assume two particle box system. $ m_{1} $ in box with mutual $ \ket{\Psi} $ for both. As usual expval of operator is
+    \begin{equation*}
+        \ev{A} = \tr \rho A 
+    \end{equation*}
+    and $ \rho^{2} = \rho $ for a pure state and $ \rho = \ket{\chi}\bra{\chi} $. 
+
+    And then
+    \begin{equation*}
+        \ket{\Psi} = \ket{\chi} \otimes \ket{\chi_{1}}
+    \end{equation*}
+    And now we're assuming what we measure outside the box is uncoupled from the particle in the box, so we're dealing with a pure state now wut lol. Oh I thinks its once we measure $ \ev{A} $ that we get a pure state.
+    
+\end{itemize}
+
+\textbf{Back to SG System}
+\begin{itemize}
+    \item So $ N \sim 10^{23} $ particles in oven. We assume they are independent wherever its convenient. What's the density matrix for a particle that flies out of the box. 
+
+    \item In analogy with statistical physics. Assume thermodynamic equilibrium in the box. Use ansatz
+    \begin{equation*}
+        \rho = \frac{1}{Z} e^{-\beta H} \qquad \beta = \frac{1}{k_{B}T}
+    \end{equation*}
+    where $ H $ is \Ham operator. Assume magnetic field coupling
+    \begin{equation*}
+        H = - \frac{\hbar^{2}}{2m}\laplacian - \m \cdot \B \equiv H_{0} - \m \cdot \B
+    \end{equation*}
+
+    \item Next step is to find $ \rho $ and $ \ev{A} $.
+
+    eigenbasis of $ \rho $ is of $ H $
+    \begin{equation*}
+        H \ket{k} = E_{k}\ket{k}
+    \end{equation*}
+    and then
+    \begin{equation*}
+        \rho = \frac{1}{Z} \sum_{k} e^{-\beta E_{k}} \ket{k}\bra{k}, 
+    \end{equation*}
+    Trace is one. 
+    \begin{equation*}
+        Z = \sum_{k} e^{-\beta E_{k}}
+    \end{equation*}
+
+
+    \item Example with spin in $ \ket{\ua} $ and $ \ket{\da} $ basis:
+    \begin{equation*}
+        \rho = \frac{1}{e^{+\beta E_{B}} + e^{-\beta E_{B}}} \left( e^{\beta E_{B}} \ket{\ua} \bra{\ua} + e^{-\beta E_{B}} \ket{\da}\bra{\da} \right)
+    \end{equation*}
+    where $ E_{B} = - \mu B $.
+
+    And then suppose we want to find $ \sigma_{Z} = \ket{\ua} \bra{\ua} - \ket{\da} \bra{\da}  $.
+
+    As usual formula
+    \begin{equation*}
+        \ev{\sigma_{z}} = \tr \rho \sigma_{z} = \mel{\ua}{\rho\sigma_{z}}{\ua} + \mel{\da}{\rho \sigma_{z}}{\da} = \frac{e^{\beta E_{B}} - e^{-\beta E_{B}}}{e^{\beta E_{B}} + e^{-\beta E_{B}}} = - \tanh \frac{\mu B_{0}}{k_{B} T}
+    \end{equation*}
+    In other words, the average spin orientation $ \ev{\sigma_{z}} $ depends on the value of $ \frac{\mu B_{0}}{k_{B} T} $, which can be controlled with temperature or $ B_{0} $.
+    
+\end{itemize}
+
+\textbf{Two Particles}
+\begin{itemize}
+    \item Wavefunction 
+    \begin{equation*}
+        \ket{\Psi} = c \ket{\ua} \otimes \left( a \ket{\da} + b \ket{\ua} \right)
+    \end{equation*}
+    Which is a product of pure states. Density matrix is then $ \rho = \ket{\ua}\bra{\ua} $. 
+
+    \item Example: mixed
+    \begin{equation*}
+        \ket{\Psi} = a \ket{\ua} \otimes \ket{\ua} + b \ket{\ua} \otimes \ket{\da}
+    \end{equation*}
+    This is a mixed state. The particle outside the hypothetical box is in a mixed state and has 
+    \begin{equation*}
+        \rho = \abs{a}^{2} \ket{\ua} \bra{\ua} + \abs{b}^{2} \ket{\ua}\ket{\da} + \cdots 
+    \end{equation*}
+    Just in passing...
+    
+    
+\end{itemize}
+
+\subsubsection{Decoherence: More on SG Experiment}
+\begin{itemize}
+    \item We consider the second quantum approach with two splitting wave packets. 
+
+    Decoherence involves the transition from the quantum to the macroscopic regime, e.g. when we observe the outcome of a measurement.
+
+    \item Recall
+    \begin{equation*}
+        \Psi(\r, t) = \psi_{0}(x, y, t) \left( c_{1}
+        \begin{pmatrix}
+            1\\
+            0
+        \end{pmatrix}\phi_{\ua}(z, t)
+        + c_{2}
+        \begin{pmatrix}
+            0\\
+            1
+        \end{pmatrix}
+        \phi_{\da}(z, t) \right)
+    \end{equation*}
+    where
+    \begin{equation*}
+        \phi_{\ua, \da} (z, t) \sim e^{-i \frac{\delta p}{\hbar} (z \mp vt)} \phi_{0}(z \mp vt)
+    \end{equation*}
+    These two functions encode probability amplitudes for spin up or down. 
+    
+    The real and imaginary components of $ \phi{\ua \da} $ oscillate in $ z $ space. They have wavelength much less than the characteristic dimensions of the experiment, e.g. the spacing $ \Delta z $ on the measurement screen. 
+
+    Example: for $ \Delta z \sim \SI{0.1}{\milli \meter} $ there are $ \sim 10^{6} $ wavelengths in one $ \Delta z $ in the SG experiment.
+    
+    \item Measure $ \ev{\sigma_{z}} $ and get
+    \begin{equation*}
+        \ev{\sigma_{z}}  = \int \abs{c_{1}^{2} \phi_{0} (z - vt)}a - \abs{c_{2} \phi_{0} (z + vt)}^{2} \diff z = \abs{c_{1}}^{2} - \abs{c_{2}}^{2} = P_{\ua} - P_{\da}
+    \end{equation*}
+
+    \item The idea for decoherence seems to be that for e.g. $ \ev{\sigma_{x}} $ which varies largely with $ z $, then idk something wierd happens haha 
+   
+    
+\end{itemize}
+
+\subsection{Quantum Entanglement}
+\begin{itemize}
+    \item Two particles. Describe with wavefunction such that distance $ l $ between particles is known e.g.
+    \begin{equation*}
+        \psi(x_{1}, x_{2}) = \exp \left[ - \frac{(x_{1} - x_{2} - l)^{2}}{4 \Delta x^{2}} \right]
+    \end{equation*}
+    assume $ \frac{\Delta x}{l} \ll 1 $. Problem is say, we detect particle 1 somewhere. Then the location of particle 2 is already known from the wavefunction, which raises questions of sort of instantaneous communication between the particles.
+    
+    \item EPR paradox. We encode the two particles with the mixed state
+    \begin{equation*}
+        \ket{\psi} = a \ket{\ua} \otimes \ket{\da} + b \ket{\da} \otimes \ket{\ua} = \frac{1}{\sqrt{2}} \big( \ket{\ua}\ket{\da} - \ket{\da}\ket{\ua} \big)\psi(\r_{1}, \r_{2})
+    \end{equation*}
+    Confine the two particles in a small enclosure at $ t = 0 $. Open the box at $ t = 0^{+} $. 
+
+    No magnetic field. Total spin of system is zero---particles then must have opposite spin. Idea is once we detect spin of one particle, we immediately know the spin projection of the second particle. 
+
+    Wavefunction after measurement and detecting particle 1 in e.g. spin up simplifies to
+    \begin{equation*}
+        \ket{\Psi} = \ket{\ua}\ket{\da}
+    \end{equation*}
+    We immediately know the second particle is spin $ \ket{\da} $, even if it is an arbitrary distance from the first particle. So information seems to travel instantaneously. 
     
     
     
     
     
 \end{itemize}
+
 
 \end{document}
 

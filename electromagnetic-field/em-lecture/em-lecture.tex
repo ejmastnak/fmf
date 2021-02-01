@@ -12,6 +12,8 @@
 
 \usepackage[normalem]{ulem}  % for underline with line wrapping
 \usepackage[margin=3cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{truncate}
 \usepackage[colorlinks = true, allcolors=blue]{hyperref}
 
 \setlength{\parindent}{0pt} % to stop indenting new paragraphs
@@ -68,6 +70,16 @@
 \newcommand{\gradp}{\nabla'}
 \newcommand{\laplacianp}{\nabla^{2}}
 
+% begin header configuration
+\fancypagestyle{headerstyle}{
+\fancyhf{}  % clear default settings from header and footer; create blank slate
+\fancyhead[R]{\href{https://github.com/ejmastnak/fmf}{\small{\texttt{github.com/ejmastnak/fmf}}}}  % link in upper right
+\fancyhead[L]{\textit{\truncate{0.65\headwidth}{\rightmark}}}  % subsection name; truncate long names
+\fancyfoot[C]{\thepage}  % centered page number in footer
+\renewcommand{\headrulewidth}{0.1pt}
+}
+% end header configuration
+
 \begin{document}
 \title{Electromagnetic Field Lecture Notes}
 \author{Elijan Mastnak}
@@ -84,7 +96,7 @@ These are my lecture notes from the course \textit{Elektromagnetno polje} (Elect
 \textit{Navigation}: For easier document navigation, the table of contents is ``clickable'', meaning you can jump directly to a section by clicking the colored section names in the table of contents. Unfortunately, the \textit{clickable links do not work in most online or mobile PDF viewers}; you have to download the file first.
 
 \vspace{2mm}
-\textit{On Authorship:} These content of these notes is far from original. The lectures were given by Professor Miha Ravnik and, to the best of my knowledge, draw from the content of the textbook \textit{Elektromagnetno polje} by Rudolf Podgornik and Andrej Vilfan, published by FMF's publishing house DMFA in 2012. Accordingly, credit for the material in these notes goes to Professors Ravnik, Podgornik and Vilfan; I have merely typeset the notes, translated to English and provided an additional explanation or two where I saw fit.
+\textit{On Authorship:} These content of these notes is far from original. The lectures were given by Professor Miha Ravnik and, to the best of my knowledge, draw from the content of the textbook \textit{Elektromagnetno polje} by Rudolf Podgornik and Andrej Vilfan, published by FMF's publishing house DMFA in 2012. Accordingly, credit for the material in these notes goes to Professors Ravnik, Podgornik and Vilfan; I have simply typeset the notes, translated to English and provided an additional explanation or two where I saw fit.
 
 \vspace{2mm}
 \textit{Disclaimer:} Mistakes---both trivial typos and legitimate errors---are likely. Keep in mind that these are the notes of an undergraduate student in the process of learning the material himself---take what you read with a grain of salt. If you find mistakes and feel like telling me, by \href{https://github.com/ejmastnak/fmf}{\underline{GitHub}} pull request, \href{mailto:ejmastnak@gmail.com}{\underline{email}} or some other means, I'll be happy to hear from you, even for the most trivial of errors.
@@ -94,7 +106,7 @@ These are my lecture notes from the course \textit{Elektromagnetno polje} (Elect
 \newpage
 
 
-
+\pagestyle{headerstyle}
 \section{Electrostatics}
 Electrostatics is the study of static (time-independent) charge distributions.
 

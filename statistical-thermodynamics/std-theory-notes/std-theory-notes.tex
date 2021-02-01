@@ -2,7 +2,8 @@
 \usepackage[T1]{fontenc}
 \usepackage{mwe}
 \usepackage[margin=3.5cm]{geometry}
-\usepackage[normalem]{ulem}  % for underline with line wrapping
+\usepackage{fancyhdr}
+\usepackage{truncate}
 
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -27,6 +28,16 @@
 	/Subject (Physics)
 }
 
+% begin header configuration
+\fancypagestyle{headerstyle}{
+\fancyhf{}  % clear default settings from header and footer; create blank slate
+\fancyhead[R]{\href{https://github.com/ejmastnak/fmf}{\small{\texttt{github.com/ejmastnak/fmf}}}}  % link in upper right
+\fancyhead[L]{\textit{\truncate{0.65\headwidth}{\rightmark}}}  % subsection name; truncate long names
+\fancyfoot[C]{\thepage}  % centered page number in footer
+\renewcommand{\headrulewidth}{0.1pt}
+}
+% end header configuration
+
 
 \begin{document}
 \title{Statistical Thermodynamics Theory Notes}
@@ -37,21 +48,23 @@
 \begin{center}
 \textbf{About These Notes}
 \end{center}
-These notes are my plebeian interpretation of Professor David Tong's excellent \href{http://www.damtp.cam.ac.uk/user/tong/statphys.html}{lecture notes on Statistical Physics}, generously made freely available on \href{http://www.damtp.cam.ac.uk/user/tong/teaching.html}{his website}. I wrote my own copy while studying for the similar course \textit{Statistical Thermodynamics} at the University of Ljubljana because I found actively typing up notes---instead of just passively reading someone else's---supercharged my understanding and retention. 
+These notes are my plebeian interpretation of Professor David Tong's excellent lecture notes on \href{http://www.damtp.cam.ac.uk/user/tong/statphys.html}{Statistical Physics}, generously made freely available on \href{http://www.damtp.cam.ac.uk/user/tong/teaching.html}{\underline{his website}}. I wrote my own copy while studying for the similar course \textit{Statistical Thermodynamics} at the University of Ljubljana because I found actively typing up notes---instead of just passively reading someone else's---supercharged my understanding and retention. 
 
-I'm making these notes available in the hope they might help others, but I enthusiastically recommend that you first check out Professor Tong's notes instead. I don't think my version does anything that Tong's notes don't already do better.
+I'm making these notes available in the hope they might help others, but I enthusiastically recommend that you first check out Professor Tong's notes instead. I doubt my version does anything that Tong's notes don't already do better.
 
 \vspace{2mm}
-\textit{Navigation}: For easier document navigation, the table of contents is ``clickable'', meaning you can jump directly to a section by clicking the colored section names in the table of contents. Unfortunately, \uline{the clickable links do not work in most online or mobile PDF viewers}; you have to download the file first.
+\textit{Navigation}: For easier document navigation, the table of contents is ``clickable'', meaning you can jump directly to a section by clicking the colored section names in the table of contents. Unfortunately, \textit{the clickable links do not work in most online or mobile PDF viewers}; you have to download the file first.
 
 \vspace{2mm}
 \textit{On Authorship:} All credit for the content in these notes goes entirely to Professor David Tong, and I make no claim whatsoever to originality or authorship. If you're not already familiar with them, I encourage you to check out \href{http://www.damtp.cam.ac.uk/user/tong/teaching.html}{Professor Tong's notes}. They're awesome.
 
+\newpage
 
 \tableofcontents
 
 \newpage
 
+\pagestyle{headerstyle}
 \section{Statistical Physics}
 
 \subsection{The Microcanonical Ensemble}

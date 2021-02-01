@@ -2,6 +2,8 @@
 \usepackage[T1]{fontenc}
 \usepackage{mwe}
 \usepackage[margin=3.5cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{truncate}
 
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -39,9 +41,18 @@
 	/Subject (Mathematics)
 }
 
+% begin header configuration
+\fancypagestyle{headerstyle}{
+\fancyhf{}  % clear default settings from header and footer; create blank slate
+\fancyhead[R]{\href{https://github.com/ejmastnak/fmf}{\small{\texttt{github.com/ejmastnak/fmf}}}}  % link in upper right
+\fancyhead[L]{\textit{\truncate{0.65\headwidth}{\rightmark}}}  % subsection name; truncate long names
+\fancyfoot[C]{\thepage}  % centered page number in footer
+\renewcommand{\headrulewidth}{0.1pt}
+}
+% end header configuration
 
 \begin{document}
-\title{Matematika 4 Theoretical Exam Study Guide}
+\title{Mathematics 4 Theoretical Exam Study Guide}
 \author{Elijan Mastnak}
 \date{2019-2020 Summer Semester}
 \maketitle
@@ -49,7 +60,7 @@
 \begin{center}
 \textbf{About These Notes}
 \end{center}
-These notes provide answers to typical questions\footnote{The questions are compiled from the past 5 years' worth of past theoretical exams, which at the time of writing can be found on the \href{https://www.fmf.uni-lj.si/~magajna/Matematika4FIZ/osnovna.htm}{\underline{course website}}.} from the theoretical exam required to pass the course \textit{Matemtika 4} (Mathematics 4), a required course for second-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. The course covers complex analysis, harmonic functions, and ordinary and partial differential equations. I wrote the notes when studying for the exam and am making them publicly available in the hope that they might help others learning the same material. Although the exact exam questions are specific to the the physics program at the University of Ljubljana, the content is fairly standard for an undergraduate course in complex analysis and differential equations, and I am making the notes publically available in the hope that they might be useful to others learning similar material. The most recent version can be found on \href{https://github.com/ejmastnak/fmf/tree/main/math-4}{\underline{GitHub}}.
+These notes provide answers to typical questions\footnote{The questions are compiled from past theoretical exams from the years 2015 to 2020, which, at the time of writing, can be found on the \href{https://www.fmf.uni-lj.si/~magajna/Matematika4FIZ/osnovna.htm}{\underline{course website}}.} from the theoretical exam required to pass the course \textit{Matemtika 4} (Mathematics 4), a required course for second-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. The course covers complex analysis, harmonic functions, and ordinary and partial differential equations. I wrote the notes when studying for the exam and am making them publicly available in the hope that they might help others learning the same material. Although the exact exam questions are specific to the the physics program at the University of Ljubljana, the content is fairly standard for an undergraduate course in complex analysis and differential equations, and I am making the notes publically available in the hope that they might be useful to others learning similar material. The most recent version can be found on \href{https://github.com/ejmastnak/fmf/tree/main/math-4}{\underline{GitHub}}.
 
 
 \vspace{2mm}
@@ -75,6 +86,7 @@ These notes provide answers to typical questions\footnote{The questions are comp
 \tableofcontents
 
 \newpage
+\pagestyle{headerstyle}
 \section{Complex Analysis}
 
 \subsection{Holomorphic Functions and the Cauchy Riemann Equations}

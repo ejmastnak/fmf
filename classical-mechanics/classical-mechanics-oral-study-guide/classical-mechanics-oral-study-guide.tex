@@ -2,6 +2,8 @@
 \usepackage[T1]{fontenc}
 \usepackage{mwe}
 \usepackage[margin=3cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{truncate}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{bm} % for bold vectors in math mode
@@ -39,6 +41,15 @@
 	/Subject (Physics)
 }
 
+% begin header configuration
+\fancypagestyle{headerstyle}{
+\fancyhf{}  % clear default settings from header and footer; create blank slate
+\fancyhead[R]{\href{https://github.com/ejmastnak/fmf}{\small{\texttt{github.com/ejmastnak/fmf}}}}  % link in upper right
+\fancyhead[L]{\textit{\truncate{0.65\headwidth}{\rightmark}}}  % subsection name; truncate long names
+\fancyfoot[C]{\thepage}  % centered page number in footer
+\renewcommand{\headrulewidth}{0.1pt}
+}
+% end header configuration
 
 \begin{document}
 \title{Classical Mechanics Oral Exam Study Guide}
@@ -78,6 +89,7 @@ These notes give the answers to typical questions\footnote{The oral exam questio
 
 \newpage
 
+\pagestyle{headerstyle}
 \section{Newtonian Mechanics}
 
 \subsection{Newtonian Dynamics for a Single of Particle}
