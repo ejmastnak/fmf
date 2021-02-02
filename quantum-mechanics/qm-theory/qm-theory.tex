@@ -179,7 +179,7 @@ as desired. However, the energy relation requirement $ E = \frac{p^{2}}{2m} $ ho
 \subsection{Probability Interpretation of the Wavefunction}
 
 \begin{itemize}
-	\item The wavefunction encodes the probability of finding a quantum particle in a region of space. We use the wavefunction to define the probability density
+	\item The wavefunction encodes the probability of detecting a quantum particle in a region of space. We use the wavefunction to define the probability density
 	\begin{equation*}
 		\rho (\r, t) = \abs{\P(\r, t)}^{2}
 	\end{equation*}
@@ -189,7 +189,7 @@ as desired. However, the energy relation requirement $ E = \frac{p^{2}}{2m} $ ho
 	\end{equation*}
 	Logically, the probability of finding the particle somewhere in all of space $ V $ is one:
 	\begin{equation*}
-		\int_{V} \abs{\P(\r, t)}^{2}\dr \equiv
+		\int_{V} \abs{\P(\r, t)}^{2}\dr \equiv 1.
 	\end{equation*}
 	The above relation is called the normalization condition on the wavefunction.
 	
@@ -333,9 +333,9 @@ as desired. However, the energy relation requirement $ E = \frac{p^{2}}{2m} $ ho
 	\begin{equation*}
 		\frac{1}{\psi(x)} \dv[2]{\p(x)}{x} = \frac{2m}{\hbar^{2}}\big[V(x) - E\big].
 	\end{equation*}
-	We see by observing the sign of $ \psi''(x) $ based on the value of $ E $, we see that $ \p $ is concave where $ E > V $ and convex where $ E < V $. 
+	By observing the sign of $ \psi''(x) $ based on the value of $ E $, we see that $ \p $ is concave where $ E > V $ and convex where $ E < V $. 
 	
-	\item Points of inflection (zeros of $ \psi'' $) occur at the classically-expected turning points where $ E = V $. The wavefunction must be smooth at the turning points to satisfy the continuity condition's on $ \p $ and $ \p' $. 
+	\item Points of inflection (zeros of $ \psi'' $) occur at the classically-expected turning points where $ E = V $. The wavefunction must be smooth at the turning points to satisfy the continuity conditions on $ \p $ and $ \p' $. 
 \end{itemize}
 
 \subsection{Degeneracy and the Nondegeneracy Theorem}
@@ -346,7 +346,7 @@ as desired. However, the energy relation requirement $ E = \frac{p^{2}}{2m} $ ho
 	\end{equation*}
 	An energy eigenvalue $ E $ is called \textit{degenerate} if their exist multiple linearly independent eigenfunctions, e.g. $ \psi_{1}, \psi_{2} $, with the same energy eigenvalue $ E $. The nondegeneracy theorem states that the energy eigenvalue spectrum $ \{E_{n}\} $ of a one-dimensional system is nondegenerate, as long as the wavefunctions $ \psi_{n} $ vanish at $ \pm \infty $.
 	
-	\item The stationary \Schro equation for the two  eigenfunctions read
+	\item The stationary \Schro equation for the two eigenfunctions reads
 	\begin{align*}
 		& -\frac{\hbar^{2}}{2m}\psi_{1}''(x) + \big[V(x) - E\big]\p_{1}(x) = 0\\
 		& -\frac{\hbar^{2}}{2m}\psi_{2}''(x) + \big[V(x) - E\big]\p_{2}(x) = 0
@@ -356,7 +356,7 @@ as desired. However, the energy relation requirement $ E = \frac{p^{2}}{2m} $ ho
 		\p_{1}\dv[2]{\p_{2}}{x} - \p_{2}\dv[2]{\p_{1}}{x} = 0
 	\end{equation*}
 	
-	\item \textit{Mathematical aside}: the Wronskian determinant of the wavefunctions $ \p_{1} $ and $ \p_{2} $ is
+	\textit{Mathematical aside}: the Wronskian determinant of the wavefunctions $ \p_{1} $ and $ \p_{2} $ is
 	\begin{equation*}
 		W_{12} \equiv \det 
 		\begin{pmatrix}
@@ -372,7 +372,7 @@ as desired. However, the energy relation requirement $ E = \frac{p^{2}}{2m} $ ho
 	\end{equation*}
 	which implies the Wronskian is constant with respect to $ x $. 
 	
-	\item Next, we apply the condition $ \p_{1, 2} \to 0 $ and $ \p'_{1, 2} \to 0 $ as $ \abs{x} \to \infty $, which implies $ W_{12} = 0 $ as $ \abs{x} \to \infty  $. This implies $ W_{12} = 0 $ for all $ x $, since $ W $ is constant with respect to $ x $. The result $ W_{12} = 0 $ implies
+	\item Next, we apply the condition $ \p_{1, 2} \to 0 $ and $ \p'_{1, 2} \to 0 $ as $ \abs{x} \to \infty $, which implies $ W_{12} \to 0 $ as $ \abs{x} \to \infty  $. This implies $ W_{12} = 0 $ for all $ x $, since $ W $ is constant with respect to $ x $. The result $ W_{12} = 0 $ implies
 	\begin{equation*}
 		\p_{1}\dv{\p_{2}}{x} = \p_{2}\dv{\p_{1}}{x} \implies \frac{1}{\p_{1}} \dv{\p_{1}}{x} - \frac{1}{\p_{2}} \dv{\p_{2}}{x} = \dv{x}(\ln \p_{1} - \ln \p_{2}) = 0.
 	\end{equation*}
@@ -448,7 +448,7 @@ as desired. However, the energy relation requirement $ E = \frac{p^{2}}{2m} $ ho
 \begin{itemize}
 	\item In quantum mechanics, every measurable quantity---called an \textit{observable}---is assigned a corresponding operator. Some common operators are
 	\begin{equation*}
-		\hat{x} \to x \mathrm{I} \qquad \hat{\r} \to \r \mat{I} \qquad \hat{V} = V(\r, t)\mathrm{I},
+		\hat{x} \to x \mathrm{I} \qquad \hat{\r} \to \r \mat{I} \qquad \hat{V} \to V(\r, t)\mathrm{I},
 	\end{equation*}
 	where $ \mat{I} $ is the identity operator. We typically leave the identity operator implicit and write e.g. $ \hat{x} \to x $. 
 	
@@ -596,7 +596,7 @@ as desired. However, the energy relation requirement $ E = \frac{p^{2}}{2m} $ ho
 	\begin{equation*}
 		\Delta A \Delta B \geq \frac{1}{2} \big | \evb{[A, B]} \big |.
 	\end{equation*} 
-	\textbf{TODO:} consider adding proof from Exercises.
+	\textbf{TODO:} consider adding derivation from Exercises.
 	
 	This inequality, using the commutator $ [x, p] = i \hbar $, is responsible for the famous Heisenberg uncertainty principle
 	\begin{equation*}
@@ -624,13 +624,13 @@ as desired. However, the energy relation requirement $ E = \frac{p^{2}}{2m} $ ho
 	Substituting these expressions into the time derivative of $ \ev{\O, t} $ gives
 	\begin{align*}
 		\dv{\ev{O, t}}{t} &= \ev{\pdv{\O}{t}} + \frac{1}{i \hbar} \int_{V} \big[- (H\P)^{*}\O \P + \P^{*}\O H \P \big] \dr\\
-		& = \ev{\pdv{\O}{t}} + \frac{1}{i \hbar} \int_{V} (\P^{*}\O H \P - \P^{*}H A \P) \dr
+		& = \ev{\pdv{\O}{t}} + \frac{1}{i \hbar} \int_{V} (\P^{*}\O H \P - \P^{*}H \O \P) \dr
 	\end{align*}
 	where we have used $ (H \P)^{*} = \P^{*}H^{*} $ and applied the Hermitian identity $ H^{*} = H $. 
 	
 	Finally, we use a commutator to compactly write the above result for time derivative of $ \ev{\O, t} $ in the form
 	\begin{equation*}
-		\dv{\ev{O, t}}{t} =  \ev{\pdv{\O}{t}} + \frac{1}{i\hbar}\ev{[A, H]}.
+		\dv{\ev{O, t}}{t} =  \ev{\pdv{\O}{t}} + \frac{1}{i\hbar}\ev{[\O, H]}.
 	\end{equation*}
 	Note the similarity to an analogous result from classical mechanics for a function $ f(p, q) $ of the canonical coordinates, in terms of Poisson brackets, which reads 
 	\begin{equation*}
@@ -642,7 +642,7 @@ as desired. However, the energy relation requirement $ E = \frac{p^{2}}{2m} $ ho
 \begin{itemize}
 	\item The Ehrenfest theorem can be interpreted as an quantum-mechanical analog of Newton's second law. We start the derivation of the Ehrenfest theorem by considering the time-dependent expectation value of the position operator $ x $.  Using the above result 
 	\begin{equation*}
-		\dv{\ev{O, t}}{t} =  \ev{\pdv{\O}{t}} + \frac{1}{i\hbar}\ev{[A, H]}
+		\dv{\ev{O, t}}{t} =  \ev{\pdv{\O}{t}} + \frac{1}{i\hbar}\ev{[\O, H]}
 	\end{equation*}
 	with $ \O = x $ and the identity $ \pdv{x}{t} = 0 $ produces the relationship
 	\begin{align*}
@@ -736,6 +736,7 @@ as desired. However, the energy relation requirement $ E = \frac{p^{2}}{2m} $ ho
  	\end{equation*}
 \end{itemize}
 
+\newpage
 \section{The Formalism of Quantum Mechanics}
 \subsection{The Copenhagen Interpretation}
 \begin{enumerate}
@@ -1097,12 +1098,12 @@ Consider an operator $ \O $ and an orthonormal basis $ \{\ket{n}\} $.
 		U =  \sum_{n}\bket{\t{\p}_{n}}\bra{\p_{n}} = \sum_{n}\left(\sum_{m}\ket{\p_{m}}\bra{\p_{m}}\right)\bket{\t{\p}_{n}}\bra{\p_{n}} = \sum_{mn}\ket{\p_{m}}U_{mn}\bra{\p_{n}}
 	\end{equation*}
 	
-	\item \textbf{TODO} The identity operator takes the same form in the original basis $ \{\ket{\p_{n}}\} $ and the transformed basis $ \{\bket{\t{\p}_{n}}\} $:
+	\item The identity operator takes the same form in the original basis $ \{\ket{\p_{n}}\} $ and the transformed basis $ \{\bket{\t{\p}_{n}}\} $:
 	\begin{equation*}
 		UU^{\dagger} = \sum_{mn} \bket{\t{\p}_{m}} \braket{\p_{m}}{\p_{n}} \bbra{\t{\p}_{n}} = \sum_{n}\bket{\t{\p}_{n}}\bbra{\t{\p}_{n}}
 	\end{equation*}
 	
-	\item In a unitary change of basis $ \{\ket{\p_{n}}\} \to \{\bket{\t{\p}_{n}}\} $, the coefficients transform according to
+	\item In a unitary change of basis $ \{\ket{\p_{n}}\} \to \{\bket{\t{\p}_{n}}\} $, the coefficients transform as
 	\begin{equation*}
 		\ket{\phi} = \sum_{n}c_{n}\ket{\p_{n}} = \sum_{mn}\bket{\t{\p}_{m}}\bmel{\t{\p}_{m}}{c_{n}}{\p_{n}} = \sum_{n}d_{n}\bket{\tilde{\p}_{n}}
 	\end{equation*}
@@ -1118,19 +1119,43 @@ Consider an operator $ \O $ and an orthonormal basis $ \{\ket{n}\} $.
 		&\t{\O} = \bket{\t{\p}_{n}} = \lambda_{n} \bket{\t{\p}_{n}}
 	\end{align*}
 	
-	\item If $ k $ is \Herm, then $ U = e^{iK} $ is unitary by the Baker-Campbell-Hausdorff formula, i.e. $ UU^{\dagger} = e^{iK}e^{-iK} = \II $.
+	\item If $ K $ is \Herm, then $ U = e^{iK} $ is unitary by the Baker-Campbell-Hausdorff formula, i.e. $ UU^{\dagger} = e^{iK}e^{-iK} = \II $.
 	
 	\item Every single-parameter unitary operator $ U(s) $, where $ s \in \mathbb{R} $ is a real constant, can be written in the form 
 	\begin{equation*}
 		U(s) = e^{isK}
 	\end{equation*}
-	where $ K $ is a self-adjoint operator called the \textit{generator} of the unitary operator $ U $. 
-	
-	\textbf{TODO} derivation on page 35 of KvaMeh notes.
-	
-	
+    where $ K $ is a self-adjoint operator called the \textit{generator} of the unitary operator $ U $. Often, for infinitesimal parameters $ s \to 0 $, we work in the first-order approximation $ U(s) \approx \II + isK $.
 	
 \end{itemize}
+
+\textbf{Derivation:}
+\begin{itemize}
+    \item To derive the expression $ U(s) = e^{isK} $, we first expand an arbitarary unitary operator $ U $ in powers of $ s $ for vanishingly small $ s \to 0 $, which gives
+    \begin{equation*}
+        U(s) = \II + \dv{U}{s}s + \mathcal{O}(s^{2}) \qquad \text{and} \qquad U^{\dagger}(s) = \II + \dv{U^{\dagger}}{s} + \mathcal{O}(s^{2}).
+    \end{equation*}
+    We then write $ U $ in terms of the identity operator, i.e.
+    \begin{equation*}
+        UU^{\dagger} = \II + \left( \dv{U}{s} + \dv{U^{\dagger}}{s} \right)s + \mathcal{O}(s^{2}).
+    \end{equation*}
+    To satisfy the unitary identity $ UU^{\dagger} \equiv \II $ to first order in $ s $, the quantity in parentheses must equal zero, i.e.
+    \begin{equation*}
+        \dv{U^{\dagger}}{s} = \left( \dv{U}{s} \right)^{\dagger} = -\dv{U}{s}.
+    \end{equation*}
+    Using the above result, we can write $ \dv{U}{s} $ in the form
+    \begin{equation*}
+        \dv{U}{s} = i K,
+    \end{equation*}
+    where $ K $ is a \Herm operator.
+
+    \item Next, we divide the parameter $ s $ into $ N \to \infty $ equal subintervals and apply the operator $ U(\tfrac{s}{N}) $ $ N $ times, which produces the desired result
+    \begin{equation*}
+        U(s) = \lim_{N \to \infty} U \left(\frac{s}{N}\right) U\left(\frac{s}{N}\right) \cdots U\left(\frac{s}{N}\right) = \lim_{N \to \infty} \left( \II + i K \frac{s}{N} \right)^{N} = e^{isK}
+    \end{equation*}
+    
+\end{itemize}
+    
 \textbf{Anti-Unitary Operator}: 
 \begin{itemize}
 	\item An anti-unitary operator $ U $ obeys the relationship
@@ -1161,7 +1186,7 @@ Consider an operator $ \O $ and an orthonormal basis $ \{\ket{n}\} $.
 	\end{equation*}
 	where we have defined the time evolution operator $ U(t) \equiv e^{-i\frac{H}{\hbar}t} $.
 	
-	\item As the notation $ U(t) $ suggests, the time evolution operator is unitary with generator $ H $. Because $ U $ is unitary, it preserves the inner product.
+	\item As the notation $ U(t) $ suggests, the time evolution operator is unitary, with generator $ H $. Because $ U $ is unitary, it preserves the inner product.
 	
 	\item Applying $ U(t) $ to an infinitesimal time step $ \diff t $ in the evolution of a wavefunction $ \ket{\p} $ gives
 	\begin{equation*}
@@ -1169,15 +1194,206 @@ Consider an operator $ \O $ and an orthonormal basis $ \{\ket{n}\} $.
 	\end{equation*}
 	``Dividing'' by $ \diff t $ and rearranging produces the \Schro equation
 	\begin{equation*}
-		i \hbar \frac{\ket{\psi(t + \diff t)} - \ket{\p(t)}}{\diff t} = i \hbar = \dv{t}\ket{\psi(t)} = H \ket{\psi(t)}
+		i \hbar \frac{\ket{\psi(t + \diff t)} - \ket{\p(t)}}{\diff t} = i \hbar \dv{t}\ket{\psi(t)} = H \ket{\psi(t)}.
 	\end{equation*}
 \end{itemize}
 
 \subsection{Momentum Eigenfunction Representation} 
 % see Schwabl preview page 176
 
+\begin{itemize}
+    \item Review: for rapidly falling functions $ f(x) $, the function and its Fourier transform $ \F{f} $ are related by
+    \begin{equation*}
+        f(x) = \int_{-\infty}^{\infty} \F{f}(k)e^{ikx}\diff k \qquad \text{and} \qquad \F{f}(k) = \frac{1}{2\pi}\int_{-\infty}^{\infty}f(x)e^{-ikx}\diff x.
+    \end{equation*}
+    Next, we note the relationship
+    \begin{align*}
+        f(x) &= \int_{-\infty}^{\infty}\left( \frac{1}{2\pi} \int_{-\infty}^{\infty}f(x')e^{-ikx'}\diff x; \right)e^{ikx}\diff k \\
+        &= \int_{-\infty}^{\infty}\left( \frac{1}{2\pi}\int_{-\infty}^{\infty}e^{ik(x'-x)}\diff k \right) f(x')\diff x'\\
+        & = \int_{-\infty}^{\infty}\delta(x' - x)f(x')\diff x',
+    \end{align*}
+    where we have used the integral definition of the delta function, i.e.
+    \begin{equation*}
+        \delta(x) = \frac{1}{2\pi}\int_{-\infty}^{\infty}e^{ikx}\diff k.
+    \end{equation*}
+    Finally, for use later in this section, we quote the following delta function properties:
+    \begin{itemize}
+        \item $ \delta(ax) = \frac{1}{\abs{a}} \delta(x) $,
+        \item $ x\delta(x) = 0 $,
+        \item $ x \delta(x - y) = y \delta(x - y) $, \quad and
+        \item $ \int_{-\infty}^{\infty}\delta(x - y)\delta(x - z)\diff x  = \delta(y - z)$.
+    \end{itemize}
+    
+\end{itemize}
+
+\textbf{Plane Wave Expansion}
+\begin{itemize}
+    \item We begin with the \Schro equation for a free particle, which reads
+    \begin{equation*}
+        i \hbar \dv{t}\ket{\psi(t)} = \frac{\hat{p}^{2}}{2m} \ket{\psi(t)}.
+    \end{equation*}
+    The eigenstates of the momentum operator $ \hat{p} $ are plane waves, and the eigenvalue equation reads
+    \begin{equation*}
+        \hat{p}\ket{\varphi_{p}} = p \ket{\varphi_{p}},
+    \end{equation*}
+    where $ p \in \mathbb{R} $ denotes a momentum eigenvalue. 
+
+    The momentum eigenstates $ \ket{\varphi_{p}} $ are simultaneously eigenstates of the stationary \Schro equation, in which case the eigenvalue equation reads
+    \begin{equation*}
+        \frac{\hat{p}^{2}}{2m}\ket{\varphi_{p}} = E \ket{\varphi_{p}}, \qquad E = \frac{p^{2}}{2m}.
+    \end{equation*}
+    
+    \item Because the momentum eigenstates $ \ket{\varphi_{p}} $ solve the \Schro equation, they form a convenient basis in which to find the time evolution of an arbitrary state $ \ket{t} $.
+\end{itemize}
+
+\subsubsection{Eigenvalues and Eigenstates of the Momentum Operator}
+\begin{itemize}
+    \item We now consider the wave functions corresponding to an eigenstate $ \ket{\varphi_{0}} $ with eigenvalue $ p_{0} $. For such a state, the momentum eigenvalue equation $ \hat{p}\ket{\varphi_{p}} = p \ket{\varphi_{p}} $ and its simple exponential solution are
+    \begin{equation*}
+        \hat{p}\ket{\varphi_{0}} \to - i \hbar \dv{x} \varphi_{p_{0}}(x) = p_{0}\varphi_{p_{0}}(x) \implies \varphi_{p_{0}}(x) = C e^{i \frac{p_{0}}{\hbar}x}.
+    \end{equation*}
+    Note that a plane wave is not normalizable in the usual sense, i.e. $ \int_{-\infty}^{\infty} \abs{\psi}^{2}\diff x \equiv 1 $, since the integral would diverge. Instead, we normalize plane wave momentum eigenfunctions in the form
+    \begin{equation*}
+        \int_{-\infty}^{\infty}\abs{\varphi_{p_{0}}}^{2} \diff x = \int_{-\infty}^{\infty}\varphi^{*}_{p_{0}} \varphi_{p_{0}}\diff x \equiv \delta(p - p_{0}).
+    \end{equation*}
+    This normalization convention implies a normalization constant of the form $ C = \frac{1}{\sqrt{2\pi \hbar}} $ and is derived from the integral definition of the delta function, together with the identity $ \delta(ax) = \frac{1}{\abs{a}} \delta(x) $.
+
+    \item Since the momentum operator has a continuous spectrum of eigenvalues $ p \in \mathbb{R} $, the corresponding momentum eigenbasis $ \{\varphi_{p}\} $ is infinite-dimensional. As a result (i.e. because the basis is continuous), we expand an arbitrary function $ \psi(x) $ in the momentum eigenbasis using an integral instead of a sum. The expansion in the momentum basis reads
+    \begin{equation*}
+        \psi(x) = \int_{-\infty}^{\infty}\F{\psi}(p)\varphi_{p}(x)\diff p, \quad \text{where} \quad \F{\psi}(p) = \int_{-\infty}^{\infty}\psi(x)\varphi_{p}^{*} \diff x.
+    \end{equation*}
+    Note that $ \F{\psi}(p) $ is a Fourier transform of the wave function $ \psi(x) $ from the position domain to the momentum domain. 
+
+    The wavefunction $ \psi $ may be normalized using the Parseval equality, which reads
+    \begin{equation*}
+        \int_{-\infty}^{\infty}\abs{\psi(x)}^{2} \diff x = \int_{-\infty}^{\infty}\abs{\F{\psi}(p)}^{2}\diff p.
+    \end{equation*}
+    
+    \item The momentum eigenfunctions $ \varphi_{p} $ are related to the delta function by the following completeness relation:
+    \begin{equation*}
+        \int_{-\infty}^{\infty} \varphi_{p}^{*}(x')\varphi_{p}(x)\diff p = \delta(x' - x),
+    \end{equation*}
+    where the integral represents a ``sum'' over all possible momentum eigenfunctions.
+    
+    \item Finally, note that when a particle occurs in an external potential with $ V(x) \neq 0 $, the momentum eigenstates $ \ket{\varphi_{p}} $ are no longer stationary states of the stationary \Schro equation. However, even for $ V(x) \neq 0 $, the momentum eigenstates still form a valid basis in which to expand an arbitrary wave function $ \psi(x) $.
+    
+    
+    \item To summarize the results so far, it is possible to describe a quantum particle in terms of a position-domain wave function $ \psi(x) $ or, equivalently, in terms of the momentum-domain wave function $ \F{\psi}(p) $, which is a Fourier transform of $ \psi(x) $ to the $ p $ domain. 
+
+    The action of the momentum operator $ \hat{p} $ on the function $ \psi(x) $ in the position domain is equivalent to multiplication of $ \F{\psi}{p} $ by the eigenvalue $ p $ in the momentum domain, i.e.
+    \begin{equation*}
+        \hat{p} \psi(x) = - i \hbar \dv{x} \psi(x) = \int_{-\infty}^{\infty}\F{\psi}(p) \left( -i \hbar \dv{x} \varphi_{p}(x) \right)\diff p = \int_{-\infty}^{\infty}\left( p \F{\psi}(p) \right) \varphi_{p}(x)\diff p.
+    \end{equation*}
+    This relationship generalizes to higher-order derivatives according to
+    \begin{equation*}
+        (- i \hbar)^{n}\dv[n]{}{x} \psi(x) \iff p^{n} \F{\psi}(p).
+    \end{equation*}
+    
+    \item Analogously, multiplying the position-domain wave function by $ x $ corresponds to differentiation of $ \F{\psi}(p) $, which we show as follows:
+    \begin{align*}
+        \hat{x}\psi(x) = x \psi(x) &= \int_{-\infty}^{\infty}\F{\psi}(p)x \varphi_{p}(x)\diff p = \int_{-\infty}^{\infty}\F{\psi}(p) \left( -i \hbar \dv{p}\varphi_{p}(x) \right)\diff p\\
+        & = \int_{-\infty}^{\infty}\left( i \hbar \dv{p}\F{\psi}(p) \right)\varphi_{p}(x)\diff p.
+    \end{align*}
+    The result is
+    \begin{equation*}
+        x^{n}\psi(x) \iff (i \hbar)^{n} \dv[n]{}{p}\F{\psi}(p).
+    \end{equation*}
+    This result also implies the relationship
+    \begin{equation*}
+        V(x) \psi(x) \iff V \left( i \hbar \dv{p} \right) \F{\psi}(p).
+    \end{equation*}
+    
+\end{itemize}
+
+\subsubsection{Eigenvalues and Eigenstates of the Position Operator}
+\begin{itemize}
+    \item We now consider the position operator $ \hat{x} $, for which the eigenvalue relation reads
+    \begin{equation*}
+        \hat{x}\psi_{0}(x) = x_{0} \psi_{0}(x),
+    \end{equation*}
+    where $ x_{0} \in \mathbb{R} $ is the position eigenvalue. Transferring to momentum space and using the fact that multiplication by $ x $ in $ x $ space corresponds to applying $ i \hbar \dv{p} $ in $ p $ space produces
+    \begin{align*}
+        \hat{x} \psi_{0}(x) &\to x \int_{-\infty}^{\infty}\F{\psi}_{0}(p)\varphi_{p}(x)\diff p = \int_{-\infty}^{\infty} \left( i \hbar \dv{p}\F{\psi}_{0}(p) \right)\varphi_{p}(x) \diff p \\ & = x_{0} \int_{-\infty}^{\infty}\F{\psi}_{0}(p)\varphi_{p}(x)\diff p 
+    \end{align*}
+    Comparaing the last equality implies the position eigenfunctions $ \psi_{0} $ obey the relationship
+    \begin{equation*}
+        i \hbar \dv{p} \F{\psi}_{0}(p) = x_{0} \F{\psi}_{0}(p) \implies \F{\psi}_{0}(p) = \frac{1}{\sqrt{2\pi \hbar}} e^{i \frac{p}{\hbar}x_{0}} = \varphi_{p}^{*}(x_{0}).
+    \end{equation*}
+    Since the position eigenfunction's Fourier transform $ \F{\psi_{0}}(p) $ is a plane wave, the position eigenfunctions themselves must be the inverse Fourier transform of a plance wave, which is precisely a delta function:
+    \begin{equation*}
+        \psi_{0}(x) = \int_{-\infty}^{\infty}\varphi_{p}^{*}(x_{0}) \varphi_{p}(x) \diff p = \delta(x - x_{0}).
+    \end{equation*}
+    Physically, we can interpret $ \psi_{0}(x) $ as a localized function centered at the eigenvalue $ x = x_{0} $. 
+
+    In terms of the delta function, the position eigenvalue equation $ \hat{x}\psi_{0}(x) = x_{0} \psi_{0}(x) $ reads
+    \begin{equation*}
+        \hat{x} \delta(x - x_{0}) = x_{0} \delta(x - x_{0}).
+    \end{equation*}
+    
+\end{itemize}
+
+\subsubsection{Example: Particle in a Gravitational Potential}
+\textbf{TODO}
+
+\subsection{The Probability Amplitudes $ \braket{p}{\psi} $ and $ \braket{x}{\psi} $}
+\begin{itemize}
+    \item Dirac braket notation allows to represent a system's quantum state $ \ket{p} $ as an abstract vector, separate from the coordinate representations $ \psi(x) $ or $ \F{p}(p) $ in position and momentum space.
+
+    This is useful---we can denote a system's state with the abstract vector $ \ket{\psi} $, and only later decide which representation---$ x $ or $ p $---suits the problem better.
+
+    \item In braket notation, we denote an operator's eigenstates with the eigenvalue, for example we write the momentum eigenstates as $ \ket{p} $, where $ \ket{p} $ is the momentum eigenstates with eigenvalue $ p $. In this notation, we expand an arbitrary state encoded by the wavefunction $ \psi $ in the form
+    \begin{equation*}
+        \ket{\psi} = \int_{-\infty}^{\infty}\F{\psi}(p)\ket{p}\diff p.
+    \end{equation*}
+    We say we have written $ \ket{\psi} $ in the momentum eigenbasis $ \{\ket{p}\} $. 
+
+    Next, we multiply the equation $ \ket{\psi} = \int_{-\infty}^{\infty}\F{\psi}(p)\ket{p}\diff p $ by $ \bra{p'} $ and apply the orthogonal identity $ \braket{p}{p'} = \delta(p - p') $ to get the important result
+    \begin{equation*}
+        \F{\psi}(p) = \braket{p}{\psi}.
+    \end{equation*}
+    
+    \item Analogously, we can expand an arbitrary state $ \ket{\psi} $ in the position eigenbasis via
+    \begin{equation*}
+        \ket{\psi} = \int_{-\infty}^{\infty}\psi(x) \ket{x_{0}} \diff x,
+    \end{equation*}
+    where $ \ket{x_{0}} $ denotes a position eigenstate with eigenvalue $ x_{0} $, which corresponds to the function $ \delta(x - x_{0}) $ in the $ x $ representation. 
+
+    \item We then multiply the equation through by $ \bra{x_{0}} $, which produces
+    \begin{equation*}
+        \braket{x_{0}}{\psi} = \int_{-\infty}^{\infty}\F{\psi}(p)\braket{x_{0}}{p}\diff p = \int_{-\infty}^{\infty}\F{\psi}(p) \varphi_{p}(x_{0})\diff p = \psi(x_{0}),
+    \end{equation*}
+    where we have substituted in $ \braket{x_{0}}{p} = \varphi_{p}(x) $, which follows from
+    \begin{equation*}
+        \braket{x_{0}}{p} = \int_{-\infty}^{\infty}\delta(x - x_{0}) \varphi_{p}(x)\diff x = \varphi_{p}(x_{0}).
+    \end{equation*}
+    The relationship $ \braket{x_{0}}{\psi} = \psi(x_{0}) $ leads us to the general relationship
+    \begin{equation*}
+        \psi(x) = \braket{x}{\psi},
+    \end{equation*}
+    which corresponds to the above position eigenbasis expansion
+    \begin{equation*}
+        \ket{\psi} = \int_{-\infty}^{\infty}\psi(x) \ket{x_{0}} \diff x,
+    \end{equation*}
+    
+    \item The position eigenstates are orthonormalized in terms of the delta function via $ \braket{x_{0}}{x} = \delta(x - x_{0}) $, which implies
+    \begin{equation*}
+        \ket{x_{0}} = \int_{-\infty}^{\infty}\delta(x - x_{0})\ket{x}\diff x.
+    \end{equation*}
+    Next, we multiply the above equation through by $ \bra{x_{1}} $, which produces
+    \begin{equation*}
+        \int_{-\infty}^{\infty}\delta(x - x_{0})\delta(x - x_{1}) \diff x = \delta(x_{0} - x_{1}).
+    \end{equation*}
+    
+    \item In terms of the position and momentum eigenstates, the identity operator is written
+    \begin{equation*}
+        \II = \int_{-\infty}^{\infty}\ket{p}\bra{p}\diff p = \int_{-\infty}^{\infty}\ket{x}\bra{x}\diff x.
+    \end{equation*}
+    
+    
+\end{itemize}
 
 
+\newpage
 \section{Examples of Quantum Systems}
 
 \subsection{Quantum Harmonic Oscillator}
@@ -1561,7 +1777,7 @@ Consider an operator $ \O $ and an orthonormal basis $ \{\ket{n}\} $.
 \subsection{Time Evolution of the Dirac Delta Function}
 \textbf{TODO:} Optional material, add as time permits.
 
-
+\newpage
 \section{Symmetries}
 
 
@@ -1834,6 +2050,7 @@ We consider active rotations of a wavefunction $ \psi $ about an axis in the dir
 \end{itemize}
 
 
+\newpage
 \section{Angular Momentum}
 \begin{itemize}
 	\item Angular momentum is associated with the angular momentum operator $ \vec{L} $. The operator $ \vec{L} $ is \Herm (so angular momentum is a physically observable quantity) and obeys
@@ -2195,6 +2412,7 @@ We will now use the just-derived relations $ [L_{z}, L_{\pm}] = \pm \hbar L_{\pm
 \end{itemize}
 
 
+\newpage
 \section{Central Potential}
 \begin{itemize}
 	\item We consider a particle in the time-independent central potential $ V = V(r) $ with \Ham 
@@ -2732,6 +2950,7 @@ We will now use the just-derived relations $ [L_{z}, L_{\pm}] = \pm \hbar L_{\pm
 	
 \end{itemize}
 
+\newpage
 \section{Charged Particle in a Magnetic Field}
 \begin{itemize}
 	\item We analyze a particle of charge $ q $ and mass $ m $ in an electric field in terms of the electric potential $ \phi $ and magnetic potential $ \A $:
@@ -3251,6 +3470,7 @@ We will now use the just-derived relations $ [L_{z}, L_{\pm}] = \pm \hbar L_{\pm
 	Interpretation: the electron current $ I_{\text{B}} $ oscillates in an interference pattern as a function of a magnetic field that occurs only in a region the electrons don't travel through!
 \end{itemize}
 
+\newpage
 \section{Spin}
 \begin{itemize}
 	\item We will denote the spin operator by $ \S = (S_{x}, S_{y}, S_{z}) $. The spin operator, like the angular momentum operator, obeys the fundamental commutation relations
@@ -3868,6 +4088,7 @@ We will now use the just-derived relations $ [L_{z}, L_{\pm}] = \pm \hbar L_{\pm
 \end{itemize}
 
 
+\newpage
 \section{Addition of Angular Momentum}
 
 \subsection{Particles With Spin $ s = 1/2 $}
@@ -4127,6 +4348,7 @@ We will now use the just-derived relations $ [L_{z}, L_{\pm}] = \pm \hbar L_{\pm
 
 \subsubsection{TODO: Table of Clebsch-Gordan Coefficients}
 
+\newpage
 \section{Perturbation Theory}
 
 \subsection{The Rayleigh-\Schro Method for a Non-Degenerate Spectrum}
@@ -4924,6 +5146,7 @@ We will now use the just-derived relations $ [L_{z}, L_{\pm}] = \pm \hbar L_{\pm
     
 \end{itemize}
 
+\newpage
 \section{Scattering}
 
 \subsection{Scattering in One Dimension}
@@ -5704,6 +5927,7 @@ We will now use the just-derived relations $ [L_{z}, L_{\pm}] = \pm \hbar L_{\pm
     
 \end{itemize}
 
+\newpage
 \section{Quantum Measurements}
 \subsection{Stern-Gerlach Experiment}
 
