@@ -1226,8 +1226,10 @@ Consider an operator $ \O $ and an orthonormal basis $ \{\ket{n}\} $.
     
 \end{itemize}
 
-\textbf{Plane Wave Expansion}
+
+\subsubsection{Eigenvalues and Eigenstates of the Momentum Operator}
 \begin{itemize}
+
     \item We begin with the \Schro equation for a free particle, which reads
     \begin{equation*}
         i \hbar \dv{t}\ket{\psi(t)} = \frac{\hat{p}^{2}}{2m} \ket{\psi(t)}.
@@ -1244,10 +1246,6 @@ Consider an operator $ \O $ and an orthonormal basis $ \{\ket{n}\} $.
     \end{equation*}
     
     \item Because the momentum eigenstates $ \ket{\varphi_{p}} $ solve the \Schro equation, they form a convenient basis in which to find the time evolution of an arbitrary state $ \ket{t} $.
-\end{itemize}
-
-\subsubsection{Eigenvalues and Eigenstates of the Momentum Operator}
-\begin{itemize}
     \item We now consider the wave functions corresponding to an eigenstate $ \ket{\varphi_{0}} $ with eigenvalue $ p_{0} $. For such a state, the momentum eigenvalue equation $ \hat{p}\ket{\varphi_{p}} = p \ket{\varphi_{p}} $ and its simple exponential solution are
     \begin{equation*}
         \hat{p}\ket{\varphi_{0}} \to - i \hbar \dv{x} \varphi_{p_{0}}(x) = p_{0}\varphi_{p_{0}}(x) \implies \varphi_{p_{0}}(x) = C e^{i \frac{p_{0}}{\hbar}x}.
@@ -1392,6 +1390,97 @@ Consider an operator $ \O $ and an orthonormal basis $ \{\ket{n}\} $.
     
 \end{itemize}
 
+\subsection{Mutually Commuting Operators}
+\begin{itemize}
+    \item Consider a one-dimensional plane wave $ \ket{p} $ with momentum $ p \in \mathbb{R} $. This state is double degenerate, since two linear independent states, $ \ket{\pm \abs{p}} $, have the same energy $ E = \frac{p^{2}}{2m} $. 
+
+    As a result, the state of a plane wave is not uniquely determined with its energy alone. We have to include a second quantity, such as momentum, to uniquely characterize a plane wave. In this case, the uniquely determined state would be written $ \ket{E, p} $. In this case, the energy operator $ H $ (the \Ham) and the momentum operator $ \hat{p} $ are mutually commuting operators, i.e. $ [H, p] = 0 $. 
+
+    \item More generally, if the eigenvalue spectrum of some operator $ A $ is degenerate (in the above example this was $ \hat{p} $), there exists some operator $ B $ ($ H $ in the above example), such that $ [A, B] = 0 $. More so, since $ A $ and $ B $ commute, they have the same basis. The reverse is also true---if two operators have the same basis, then the two operators commute.
+
+    \item In fact, any number of operators sharing the same basis are mutually commuting, and their eigenvalues serve as quantum numbers that uniquely determine a system's quantum state. For example, we uniquely characterized a plane wave as $ \ket{p, E} $, using the eigenvalues of the mutually commuting operators $ \hat{p} $ and $ H $. More generally, we could describe a state in terms of the mutually commuting operators $ A $, $ B $, $ C, \ldots $ with eigenvalues $ a $, $ b $ and $ c, \ldots $ in the basis $ \{\ket{a, b, c, \ldots}\} $.
+
+    \item We now show that two commuting operators $ A $ and $ B $ have the same eigenvectors. We begin with the commutation and eigenvalue relations $ [A, B] = 0 \implies AB = BA $ and $ A \ket{a} = a \ket{a} $. We then multiply the eigenvalue equation by $ B $ and apply $ AB = BA $ to get
+    \begin{equation*}
+        BA \ket{a} = A \big( B \ket{a}\mspace{-3mu}\big) = a \big( B \ket{a} \mspace{-3mu}\big).
+    \end{equation*}
+    In other words, $ B \ket{a} $ is an eigenstate of the operator $ A $. This leaves two options:
+    \begin{enumerate}
+        \item A non-degenerate case, in which the eigenvalue $ a $ corresponds to only one eigenvector $ \ket{a} $, which thus differs from $ B \ket{a} $ by only a constant factor, implying the eigenvalue equation $ B \ket{a} = b \ket{a} $.  In other words, $ \ket{a} $ is an eigenvector of both $ A $ and $ B $, or
+
+        \item A degenerate case---we will consider double degeneracy as a concrete example---in which case there exist two linearly independent vectors $ \ket{a_{1}} $ and $ \ket{a_{2}} $ with the same eigenvalue $ a $. We consider this case in the following section.
+    \end{enumerate}
+\end{itemize}
+
+\textbf{The Degenerate Case}
+
+\begin{itemize}
+    
+   \item In the degenerate case, every linear combination of the form
+    \begin{equation*}
+        \ket{\psi} = c_{1} \ket{a_{1}} + c_{2} \ket{a_{2}}
+    \end{equation*}
+    is an eigenvector of $ A $ with eigenvalue $ a $, but not necessarily an eigenvector of $ B $. However, it is possible to create a linear combination of the form
+    \begin{equation*}
+        B \big( c_{1} \ket{a_{1}} + c_{2} \ket{a_{2}}\big) = b \big( c_{1} \ket{a_{1}} + c_{2} \ket{a_{2}} \big)
+    \end{equation*}
+    that is an eigenvector of $ B $. Multiplying the above equation through by $ \ket{a_{1}} $ and $ \ket{a_{2}} $ and applying the (assumed, without loss of generality) orthonormality of $ \ket{a_{1}} $ and $ \ket{a_{2}} $ produces the system of equations
+    \begin{align*}
+        & B_{11} c_{1} + B_{12} c_{2} = bc_{1}\\
+        & B_{21} c_{2} + B_{22} c_{2} = bc_{2},
+    \end{align*}
+    where $ B_{ij} = \mel{a_{i}}{B}{a_{j}} $. 
+
+    \item Next, we write the above system of equations in the matrix form
+    \begin{equation*}
+        \begin{pmatrix}
+            B_{11} & B_{12}\\
+            B_{21} & B_{22}
+        \end{pmatrix}
+        \begin{pmatrix}
+            c_{1}\\
+            c_{2}
+        \end{pmatrix}
+        = b
+        \begin{pmatrix}
+            c_{1}\\
+            c_{2}
+        \end{pmatrix} \iff \mat{B} \vec{c} = b \vec{c}
+    \end{equation*}
+    and impose the condition
+    \begin{equation*}
+        \det 
+        \begin{pmatrix}
+            B_{11} - b & B_{12}\\
+            B_{21} & B_{22} - b
+        \end{pmatrix} 
+        = 0,
+    \end{equation*}
+    which is equivalent to requiring the system has a nontrivial solution. If the two roots $ b_{1} $ and $ b_{2} $ of the above characteristic polynomial are different, their associated eigenvectors are linearly independent, in which case $ B $ removes the degeneracy from the operator $ A $.
+
+    It is also possible that the polynomial's two roots are equal, i.e. $ b_{1} = b_{2} \equiv b $. In this case, we must continue introducing commuting operators until the system's degeneracy is removed. Intepreted physically, more operators serve as more observable quantities needed to uniquely determine the system's state, just like we needed to introduce the energy operator $ H $ in addition to the momentum operator $ \hat{p} $ to uniquely determine a plane wave.
+    
+\end{itemize}
+
+\textbf{A Few More Notes}
+\begin{itemize}
+    \item If two operators $ A $ and $ B $ with eigenvalues $ a_{n} $ and $ b_{n} $ share the same basis $ \{\varphi_{n}\} $, then the operators commute. This follows from
+    \begin{equation*}
+        [A, B] \ket{\varphi_{n}} = (AB - BA)\ket{\varphi_{n}} = (a_{n}b_{n} - b_{n}a_{n})\ket{\varphi_{n}} = 0,
+    \end{equation*}
+    which implies $ [A, B] \ket{\psi} = 0 $ for an arbitrary wavefunction $ \ket{\psi} $, which in turn implies $ [A, B] = 0 $.
+
+    \item Keep in mind that two operators sharing a single eigenvector does not imply the operators commute---they must share an entire eigenbasis. As an example, the angular momentum operators $ L_{x} $ and $ L_{y} $ (discussed further in a future chapter) share the spherical harmonic ground state $ Y_{0}^{0}(\theta, \phi) $, but the two operators do not commute.
+
+    \item Consider an operator $ C $ of the form $ C = A + B $, where $ C $ has eigenvalues $ \{c_{l}\} $ and $ A $ and $ B $ have eigenvalues $ \{a_{m}\} $ and $ \{b_{n}\} $. 
+
+    If $ A $ and $ B $ commute, then $ C $'s eigenvalues are the sum of $ A $ and $ B $'s eigenvalues, i.e.
+    \begin{equation*}
+        c_{l} = a_{n} + b_{m}.
+    \end{equation*}
+    This relationship does not hold if $ A $ and $ B $ do not commute.
+    
+\end{itemize}
 
 \newpage
 \section{Examples of Quantum Systems}
