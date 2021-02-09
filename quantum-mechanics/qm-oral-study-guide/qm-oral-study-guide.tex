@@ -35,7 +35,8 @@
 \newcommand{\Herm}{Hermitian\xspace}
 \newcommand{\Mol}{M\o ller\xspace}
 
-\newcommand{\CG}{Clebsch-Gordan}
+\newcommand{\CG}{Clebsch-Gordan\xspace}
+\newcommand{\SG}{Stern-Gerlach\xspace}
 
 \renewcommand{\vec}[1]{\bm{#1}}  % for vectors
 \renewcommand{\op}[1]{\hat{#1}}  % for operators
@@ -176,7 +177,7 @@ These notes provide answers to typical questions from the oral exam required to 
 
 \section{Fundamentals of Quantum Mechanics}
 \subsection{The \Schro Equation}
-\textit{What is the \Schro equation? }
+\textit{What is the \Schro equation? Explain why the \Schro equation (and not some other differential equation) forms the basis of quantum mechanics.}
 
 \begin{itemize}
     \item In three dimensions, the \Schro equation reads
@@ -2984,7 +2985,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 
 
 \begin{itemize}
-    \item In the limit $ r \to \infty $, assuming a vanishing potential, the radials solutions are
+    \item In the limit $ r \to \infty $, assuming a vanishing potential, the solutions to the radial equaiton are
     \begin{equation*}
         u(r) = 
         \begin{cases}
@@ -3491,7 +3492,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 \end{itemize}
 
 
-\subsection{The Normal Zeeman Effect}
+\subsection{The Normal Zeeman Effect} \label{ss:zeeman}
 \textit{Define and interpret the magnetic dipole moment operator and the Bohr magneton. Discuss the coupling of magnetic moment to a homogeneous external magnetic field, defined the Zeeman coupling term, and show that in a homogeneous field the quadratic coupling term is usually negligible in comparison to the Zeeman term. Explain and discuss the normal Zeeman effect.}
 
 \begin{itemize}
@@ -3632,7 +3633,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
     \end{equation*}
     and the cyclotron frequency $ \omega $, magnetic length $ \xi $, wave vector $ k = p_{x}/\hbar $ and displacement $ y_{k} $, which are defined as
     \begin{equation*}
-        w = \frac{q B}{m} \qquad \xi = \sqrt{\frac{\hbar}{qB}} \qquad y_{k} = - \xi^{2}k.
+        \omega = \frac{q B}{m} \qquad \xi = \sqrt{\frac{\hbar}{qB}} \qquad y_{k} = - \xi^{2}k.
     \end{equation*}
 
 	\item In absence of an electric potential, the solutions for $ \chi $ are simply the eigenstates of a displaced harmonic oscillator, i.e.
@@ -3646,7 +3647,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 
     \item The corresponding energy eigenvalues
 	\begin{equation*}
-        E_{n} = \left(n + \tfrac{1}{2}\right)\hbar \omega, \qquad w = \frac{qB}{m},
+        E_{n} = \left(n + \tfrac{1}{2}\right)\hbar \omega, \qquad \omega = \frac{qB}{m},
 	\end{equation*}
 	are called Landau levels. These energy eigenvalues are highly degenerate, since a continuum of linearly independent eigenstates $ \P_{nk} $, which can exist for any $ k \in \mathbb{R} $, will have the same energy eigenvalue $ E_{n} $. 
 
@@ -4601,6 +4602,343 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 	
 \end{itemize}
 
+\subsection{Stern-Gerlach Experiment}
+
+\textit{Explain the outcome of the Stern-Gerlach experiment, including a formal derivation. Explain the implications of the experiment's results on quantization of magnetic moment and spin.}
+
+\begin{figure}[htb!]
+    \centering
+    \includegraphics[width=\linewidth]{stern-gerlach}
+    \caption{Schematic for understanding the Stern-Gerlach experiment. Silver atoms are ejected from a heated oven (i) in the $ y $ direction and pass through a collimator (ii) before entering a magnet with an nonhomogeneous magnetic field $ \B(\r) $, which exerts a magnetic torque on the atoms' magnetic dipole moments. The atoms correspondingly deflect in the $ z $ direction before hitting the detection plate (iv). Screen (a) shows the ideal result and screen (b) shows the actual result; in both cases the distribution along the $ z $ direction is discrete, demonstrating quantization of magnetic moment, which is an effect of the atoms' intrinsic spin.}
+    \label{fig:stern-gerlach}
+\end{figure}
+
+\begin{itemize}
+    \item Figure \ref{fig:stern-gerlach} and the associated caption summarize the Stern-Gerlach experiment. The discrete distribution of detected particles along the $ z $ axis, which is different from the classically expected result (i.e. a continuous distribution along the $ z $ axis) implies the atoms passing through the \SG magnet have quantized magnetic dipole moment. The measured quantum of magnetic dipole moment in the \SG experiment is the Bohr magneton
+    \begin{equation*}
+        \mu_{B} = \frac{e_{0}\hbar}{2m_{\text{e}}},
+    \end{equation*}
+    in agreement with the quantization of magnetic moment discussed in \hyperref[ss:zeeman]{\underline{Subsection \ref{ss:zeeman}}}
+    
+    \item Subsections \ref{sss:sg-semi-classical} and \ref{sss:sg-quantum} immediately below give a semi-classical and quantum-mechanical analysis, respectively, of the Stern-Gerlach experiment.
+
+\end{itemize}
+
+\subsubsection{Semi-Classical Analysis} \label{sss:sg-semi-classical}
+\textbf{Homogeneous Magnetic Field}
+\begin{itemize}
+
+    \item Consider a silver atom of mass $ m $ exiting the Stern-Gerlach oven. The silver atom's shells are fully closed up to $ 4 \mathrm{d}^{10} $, with a single electron in the $ 5 \mathrm{s} $ shell.
+
+    The electron in the $ 5 \mathrm{s} $ shell has magnetic dipole moment $ \m $.
+
+    \item The atom flies through a region with a homogeneous magnetic field $ \B_{0} = (0, 0, B_{0}) $. The electron's magnetic momentum $ \m $ interacts with the magnetic field to produce a torque
+    \begin{equation*}
+        \vec{M} = \m \cross \B_{0}.
+    \end{equation*}
+
+    \item We assume a simplified model in which the atom moves with uniform speed $ v_{y} $ in the $ y $ direction through the Stern-Gerlach apparatus in a precisely defined spin state
+    \begin{equation*}
+        \chi(0) = 
+        \begin{pmatrix}
+            \cos \frac{\theta}{2}\\[1mm]
+            \sin \frac{\theta}{2}
+        \end{pmatrix},
+    \end{equation*}
+    which is determined by the electron in the $ 5 \mathrm{d} $ orbital.
+
+    \item The angle $ \theta $ with respect to the $ z $ axis determines the spin's orientation in the $ xz $ plane. The associated spin orientation, in terms of the spin matrix operator $ \vec{\sigma} $, is
+    \begin{equation*}
+        \uvec{n}_{0} = \mel{\chi}{\vec{\sigma}}{\chi} = (\sin \theta, 0, \cos \theta).
+    \end{equation*}
+
+    \item In the presence of a homogeneous magnetic field $ \B_{0} $, the atom would travel in an uninterrupted trajectory straight through the Stern-Gerlach apparatus. However, because of the torque $ \vec{M} = \mu \cross \B_{0} $ on the atom's magnetic dipole moment, the orientation of the atom's spin would rotate about the $ z $ axis by an angle $ \delta\phi $ given by
+    \begin{equation*}
+        \delta \phi = \omega_{0} \tau = \omega_{0} \frac{L}{v_{y}},
+    \end{equation*}
+    where $ L $ is then length of the \SG apparatus, $ \tau $ is the (short) flight time through the apparatus, and $ \omega_{0} = \frac{\mu B_{0}}{\hbar} $ is the Larmor frequency.
+
+   After passing through the \SG apparatus, the silver atom continues along the $ y $ axis in the rotated spin state
+    \begin{equation*}
+        \chi(\tau) = 
+        \begin{pmatrix}
+            e^{\frac{i}{2}\delta\phi}\cos \frac{\theta}{2}\\[1mm]
+            e^{-\frac{i}{2}\delta\phi}\sin \frac{\theta}{2}
+        \end{pmatrix}.
+    \end{equation*}
+    The new spin orientation is given by
+    \begin{equation*}
+        \uvec{n}(\tau) = \mel{\chi(\tau)}{\vec{\sigma}}{\chi(\tau)} = (\sin \theta \cos \delta \phi, - \sin \theta \sin \delta \phi, \cos \theta).
+    \end{equation*}
+    
+\end{itemize}
+
+\textbf{Nonhomogeneous Magnetic Field}
+\begin{itemize}
+    \item The true \SG apparatus contains a magnetic with a nonhomogeneous magnetic field of the form
+    \begin{equation*}
+        \B = (B_{x}, 0, B_{z}).
+    \end{equation*}
+    In the presence of this magnetic field, a neutral particle with magnetic dipole moment $ \m $ experiences a force
+    \begin{equation*}
+        \vec{F} = (\vec{\mu} \cdot \grad)\B(\r) = \grad (\m \cdot \B(\r)).
+    \end{equation*}
+   
+
+    The expression for force rests on the assumption that $ \m $ is constant and $ \curl \B = 0 $, and is derived via
+    \begin{equation*}
+        \grad (\m \cdot \B) = (\m \cdot \grad)\B + (\B \cdot \grad)\m + \m \cross (\curl \B) + \B \cross (\curl \m) = (\m \cdot \grad)\B.
+    \end{equation*}
+    
+    \item Next, we expand the magnetic field to linear order in $ \B $, which reads
+    \begin{equation*}
+        \B(\r) = \B_{0} + \sum_{a} \pdv{\B}{x_{\alpha}}x_{\alpha} + \cdots,
+    \end{equation*}
+    Along the direction of travel along $ y $ axis, where $ x \sim 0 $ and $ z \sim 0 $, we can neglect the force in the $ x $ direction, and the resulting force on the atom is then
+    \begin{equation*}
+        \vec{F} = F_{z}\uvec{e}_{z} = \mu \pdv{B_{z}}{z}\bigg |_{z=0} \uvec{e}_{z}.
+    \end{equation*}
+    
+    \item Assuming the atom's magntic moment $ \m $ is parallel to the magnetic field in the $ z $ direction, then after passing through the \SG apparatus in time $ \tau $, the atom experiences an impulse $ \pm F_{z} \tau $, and its speed changes according to
+    \begin{equation*}
+        m v_{z} = \pm F_{z} \tau = \pm F_{z} \frac{L}{v_{y}},
+    \end{equation*}
+    where the sign depends on whether the magnetic moment is parallel or antiparallel to the magnetic field.
+
+    The particle is thus incident on the detection screen either above or below the $ z $ axis, corresponding to either ``up'' or ``down'' states. By measuring the distribution of atoms on the detection screen, we can determine the probabilities $ P_{\ua} $ and $ P_{\da} $ for an up or down outcome. In terms of these probabilities, the expected value of spin in the $ z $ direction, i.e. $ \ev{\sigma_{z}} = \cos \theta $ is found with
+    \begin{equation*}
+        \ev{\sigma_{z}} = \cos \theta = P_{\ua} - P_{\da}.
+    \end{equation*}
+    \begin{quote}
+        \textit{Derivation}: Finally, we derive the relationship $ \ev{\sigma_{z}} = \cos \theta $. We begin by writing the atom's spin state $ \ket{\chi} $ in the form
+        \begin{equation*}
+            \chi = 
+            \begin{pmatrix}
+                \cos \frac{\theta}{2}\\[1mm]
+                \sin \frac{\theta}{2}
+            \end{pmatrix}.
+        \end{equation*}
+        The probabilities for detecting the particle with spin up or spin down are
+        \begin{equation*}
+            P_{\ua} = \abs{\braket{\ua}{\chi}}^{2} = \cos^{2}\frac{\theta}{2} \qquad \text{and} \qquad P_{\da} = \abs{\braket{\da}{\chi}}^{2} = \sin^{2} \frac{\theta}{2} = 1 - P_{\ua},
+        \end{equation*}
+        while the expectation value of $ \sigma_{z} $, using the definition $ \ev{\sigma_{z}} = \mel{\chi}{\sigma_{z}}{\chi} $, is
+        \begin{align*}
+            \ev{\sigma_{z}} &= \mel{\chi}{\sigma_{z}}{\chi} = 
+            \left( \cos \tfrac{\theta}{2}, \sin \tfrac{\theta}{2} \right) 
+            \begin{pmatrix}
+                1 & 0\\
+                0 & -1
+            \end{pmatrix}
+            \begin{pmatrix}
+                \cos \frac{\theta}{2}\\[1mm]
+                \sin \frac{\theta}{2}
+            \end{pmatrix}\\
+            & = \cos^{2} \frac{\theta}{2} - \sin^{2} \frac{\theta}{2} \equiv P_{\ua} - P_{\da} = 2 \cos^{2} \frac{\theta}{2} - 1\\
+            & = \cos \theta.
+        \end{align*}
+ 
+    \end{quote}
+    
+                
+    
+\end{itemize}
+
+\subsubsection{Quantum Stern-Gerlach Experiment} \label{sss:sg-quantum}
+\begin{itemize}
+    \item The goal in this analysis is to find the time evolution $ \ket{\Psi(\r, t)} $ of a wavefunction encoding a silver atom passing through the \SG apparatus, and then use the wavefunction to determine the spin expectation values $ \ev{\sigma_{x}} $, $ \ev{\sigma_{y}} $ and $ \ev{\sigma_{z}} $.
+
+    \item We begin by assigning the silver atom of mass $ m $ passing through the \SG apparatus a \Ham of the form
+    \begin{equation*}
+        H = - \frac{\hbar^{2}}{2m}\laplacian - \frac{q}{m_{\text{e}}}\S \cdot \B \equiv H_{0} - \frac{q}{m_{\text{e}}} \S \cdot \B,
+    \end{equation*}
+    where $ H_{0} $ is the kinetic term and $ - \frac{q}{m_{\text{e}}} \S \cdot \B $ represents the anomolous Zeeman coupling of the $ 5 \mathrm{s} $ electron to the external magnetic field.
+
+    \item Both energy and force are constants of motion, and we define them as
+    \begin{equation*}
+        2 E_{0} \equiv \hbar \omega_{0} = \frac{q \hbar}{m_{\text{e}}} B_{0} \qquad \text{and} \qquad F = \frac{q \hbar}{2m_{\text{e}}} \pdv{B_{z}}{z} \bigg |_{z = 0},
+    \end{equation*}
+    where we have assumed the magnetic field has only a $ z $ component. In terms of the energy and force terms, the silver atom's \Ham reads
+    \begin{equation*}
+        H = H_{0} - \frac{1}{2}\hbar \omega_{0} \sigma_{z} - F z \sigma_{z} = H_{0} - E_{0} \sigma_{z} - F z \sigma_{z},
+    \end{equation*}
+    where the force term is constructed so as to satisfy $ - \grad F z \sigma_{z} = F\sigma_{z} $.
+    
+    \item Just before the atom enters the \SG apparatus (before experiencing the magnetic field), which we define to occur at $ t = 0 $, we describe the atom with the wave packet
+    \begin{equation*}
+        \Psi(\r, 0) = \psi_{0}(x, y, 0) \phi_{0}(z)
+        \begin{pmatrix}
+            c_{1}\\
+            c_{2}
+        \end{pmatrix},
+    \end{equation*}
+    where the initial wavefunction $ \phi(z, t = 0) \equiv \phi_{0}(z) $ is given in the momentum eigenbasis by
+    \begin{equation*}
+        \phi_{0}(z) = \int_{-\infty}^{\infty}\F{\phi}(p)e^{i \frac{p}{\hbar}z}\diff p.
+    \end{equation*}
+    The wavefunction $ \phi_{0}(z) $ encodes motion along the $ z $ axis. The coefficients $ c_{1} = \cos \frac{\theta}{2} $ and $ c_{2} = \sin \frac{\theta}{2} $ are the spinor coefficients encoding the atom's initial spin state.
+    \begin{equation*}
+        \ket{\chi(0)} = 
+        \begin{pmatrix}
+            \cos \frac{\theta}{2}\\
+            \sin \frac{\theta}{2}
+        \end{pmatrix}
+        \equiv
+        \begin{pmatrix}
+            c_{1}\\
+            c_{2}
+        \end{pmatrix}.
+    \end{equation*}
+    The wavefunction $ \psi_{0} $ corresponds to motion in the $ xy $ plane with speed
+    \begin{equation*}
+        v_{y} = \frac{1}{m}\ev{p_{y}}.
+    \end{equation*}
+    We assume the speed $ v_{y} $ is large, so the initial wave packet doesn't widen significantly in the magnet. At later times, the wavefunction is determined by
+    \begin{equation*}
+        \Psi(\r, t) = \psi_{0}(z, y, t)
+        \begin{pmatrix}
+            \phi_{\ua}(z, t)\\
+            \phi_{\da}(z, t)
+        \end{pmatrix}.
+    \end{equation*}
+    
+    \item The time evolution of $ \psi_{0} $, which encodes motion in the $ xy $ plane, is simply uniform motion along the $ y $ axis and is unrelated to dynamics of spin in the experiment, which is confined to the $ z $ axis and represented by the wavefunction $ \phi $.
+
+    \item The time evolution of the spin wavefunction is given by the \Schro equation
+    \begin{equation*}
+        i \hbar \pdv{t} 
+        \begin{pmatrix}
+            \phi_{\ua}(z, t)\\
+            \phi_{\da}(z, t)
+        \end{pmatrix}
+        = - 
+        \left( \frac{\hbar^{2}}{2m}\pdv[2]{}{z} + \frac{1}{2}\hbar\omega_{0} \sigma_{z} + F z \sigma_{z} \right)
+        \begin{pmatrix}
+            \sigma_{\da}(z, t)\\
+            \sigma_{\ua}(z, t)
+        \end{pmatrix}.
+    \end{equation*}
+
+    The initial wavefunction $ \phi_{0} $ has a unitary time evolution given by
+    \begin{equation*}
+        e^{-i \frac{H}{\hbar}\tau}
+        \begin{pmatrix}
+            c_{1}\\
+            c_{2}
+        \end{pmatrix}
+        e^{i \frac{p}{\hbar}z}
+        = 
+        \begin{pmatrix}
+            e^{\frac{i}{2}\delta\varphi + i \frac{\delta p}{\hbar}z}c_{1}\\
+            e^{-\frac{i}{2}\delta\varphi - i \frac{\delta p}{\hbar}z}c_{2}
+        \end{pmatrix}
+        e^{i \frac{p}{\hbar}z - i \frac{E_{p}}{\hbar}\tau},
+    \end{equation*}
+    where $ e^{i \frac{H}{\hbar}t} $ is the unitary time evolution operator, and we have defined
+    \begin{equation*}
+        E_{p} = \frac{p^{2}}{2m} \qquad \tau \sim \frac{L}{v_{y}} \qquad \delta \varphi = \omega_{0} \tau \qquad \delta p = m v = F \tau.
+    \end{equation*}
+
+    \item We denote the state immediately after exiting the magnet as
+    \begin{equation*}
+        \Psi(\r, 0^{+}) \equiv \Psi(\r, \tau) = e^{i \frac{H}{\hbar}\tau}\Psi(\r, 0).
+    \end{equation*}
+
+    \item The solution to the spin \Schro equation is
+    \begin{equation*}
+        \begin{pmatrix}
+            \phi_{\ua}(z, 0^{+})\\
+            \phi_{\da}(z, 0^{+})
+        \end{pmatrix}
+        = \int_{-\infty}^{\infty}
+        \begin{pmatrix}
+            e^{\frac{i}{2}\delta\varphi + i \frac{p + \delta p}{\hbar}z}c_{1}\\
+            e^{-\frac{i}{2}\delta\varphi - i \frac{p - \delta p}{\hbar}z}c_{2}
+        \end{pmatrix}
+        \F{\phi}(p)\diff p
+        = \int_{-\infty}^{\infty}
+        \begin{pmatrix}
+            e^{\frac{i}{2}\delta\varphi}\F{\phi}(p - \delta p)c_{1}\\
+            e^{-\frac{i}{2}\delta\varphi}\F{\phi}(p + \delta p)c_{1}
+        \end{pmatrix} 
+        e^{i \frac{p}{\hbar}z}\diff p,
+    \end{equation*}
+    where the spin wave packet has experienced an impulse $ \pm \delta p $ and transformed as
+    \begin{equation*}
+        \phi_{0}(z) \to \phi(z, 0^{+}) = e^{\pm i \frac{\delta p}{\hbar}z}\phi_{0}(z).
+    \end{equation*}
+    
+    \item Assuming the speed $ v_{y} $ through the \SG apparatus is large and the wavepacket does not appreciably spread out from its initial state, we can write the spin wavefunction at later times as
+    \begin{equation*}
+        \phi(z, t) = e^{ i \frac{(\delta p)^{2}}{2m \hbar}t} \phi(z - vt, 0^{+}) = \phi_{0}(z - vt)e^{i \frac{\delta p}{\hbar}\big( z - \frac{1}{2}vt \big)},
+    \end{equation*}
+    and the solution for the complete wave packet's time evolution is
+    \begin{equation*}
+        \Psi(\r, t) = \psi_{0}(x, y, t)
+        \begin{pmatrix}
+            e^{\frac{i}{2}\delta \varphi}\phi_{0}(z - vt)e^{i \frac{\delta p}{\hbar}\big( z - \frac{1}{2}vt \big)c_{1}}\\
+            e^{-\frac{i}{2}\delta \varphi}\phi_{0}(z + vt)e^{i \frac{\delta p}{\hbar}\big( z + \frac{1}{2}vt \big)c_{2}}
+        \end{pmatrix}.
+    \end{equation*}
+    
+\end{itemize}
+
+\textbf{Expected Value of Spin}
+\begin{itemize}
+    \item We assume an initial spin state
+    \begin{equation*}
+        \chi(0) = 
+        \begin{pmatrix}
+            \cos \frac{\theta}{2}\\[1mm]
+            \sin \frac{\theta}{2}
+        \end{pmatrix},
+    \end{equation*}
+    and write the time-dependent spin state in the form
+    \begin{equation*}
+        \ket{\chi(z, t)} = \phi_{\ua}(z, t) \ket{\ua} + \phi_{\da}(z, t)\ket{\da},
+    \end{equation*}
+    where the coefficients $ \phi_{\ua} $ and $ \phi_{\da} $ are time-dependent.
+
+    \item The expected value of spin in the $ z $ direction is
+    \begin{align*}
+        \ev{\sigma_{z}} &= \int_{-\infty}^{\infty}\left( \abs{\phi_{ua}(z, t)}^{2} - \abs{\phi_{ua}(z, t)}^{2} \right)\diff z\\
+        & = \int_{-\infty}^{\infty} \left( \cos^{2} \frac{\theta}{2} \abs{\phi_{0}(z - vt)}^{2} - \sin^{2}\frac{\theta}{2} \abs{\phi_{0}(z + vt)}^{2} \right)\diff z\\
+        = P_{\ua} - P_{\da} = \cos \theta,
+    \end{align*}
+    in agreement withthe semi-classical result.
+    
+    \item Next, we calculate spin expectation value in the $ x $ direction, which reads
+    \begin{equation*}
+        \ev{\sigma_{x}} = 2 \Re \int_{-\infty}^{\infty}\phi_{\ua}^{*}(z, t)\phi_{\da}(z, t)\diff z
+    \end{equation*}
+    We begin by making the auxiliary calculation 
+    \begin{align*}
+        I & \equiv \int_{-\infty}^{\infty}\phi_{0}\left( z - \frac{\delta p}{m}t \right)\phi_{0}\left( z + \frac{\delta p}{m}t \right)e^{2i \frac{\delta p}{\hbar}z}\diff z\\
+        & = \exp \left[ - \frac{(\delta p)^{2}}{2 \sigma_{p}^{2}} \left( 1 + \frac{4 \sigma_{p}^{4}t^{2}}{m^{2}\hbar^{2}} \right) \right]
+         = \exp \left[ - \left( \frac{(\delta p)^{2}}{2\sigma_{p}^{2}} + \frac{2 \sigma_{p}^{2} (\delta p)^{2}}{m^{2} \hbar^{2}}t^{2} \right) \right]\\
+        &\equiv \exp \left[ - \left( \frac{(\delta p)^{2}}{2\sigma_{p}^{2}} + \lambda t^{2} \right) \right],
+    \end{align*}
+    where we have defined the constant
+    \begin{equation*}
+        \lambda \equiv \frac{2 \sigma_{p}^{2}(\delta p)^{2}}{m^{2}\hbar^{2}}.
+    \end{equation*}
+    For large times, the exponent and integral approach
+    \begin{equation*}
+        \frac{(\delta p)^{2}}{2\sigma_{p}^{2}} + \lambda t^{2} \to \lambda t^{2} \implies I \to e^{- \lambda t^{2}}.
+    \end{equation*}
+
+    \item Next, we combine the result of the integral $ I \to e^{-\lambda t^{2} } $ with the expression for $ \ev{\sigma_{x}} $. Without proof, the result is
+    \begin{equation*}
+        \ev{\sigma_{x}} = e^{-\lambda t^{2}} \sin \theta \cos \delta \varphi.
+    \end{equation*}
+    Again without proof, a similar derivation for $ \ev{\sigma_{y}} $ results in
+    \begin{equation*}
+        \ev{\sigma_{y}} = - e^{-\lambda t^{2}} \sin \theta \sin \delta \varphi.
+    \end{equation*}
+    Note that both $ \ev{\sigma_{x}} $ and $ \ev{\sigma_{y}} $ approach zero for large times, in agreement with the semi-classical result.
+    
+\end{itemize}
+
 
 \newpage
 \section{Addition of Angular Momentum}
@@ -4928,17 +5266,14 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
     since these two states have different values of $ j $. The desired states are then
     \begin{align*}
         \ket{1 \tfrac{1}{2}\tfrac{1}{2}\tfrac{1}{2}} &= \sqrt{\tfrac{2}{3}}\ket{10} \ket{\ua} - \sqrt{\tfrac{1}{3}} \ket{11}\ket{\da}\\
-        \ket{1 \tfrac{1}{2}\tfrac{1}{2}-\tfrac{1}{2}} &= -\sqrt{\tfrac{2}{3}}\ket{1-1} \ket{\ua} - \sqrt{\tfrac{1}{3}} \ket{10}\ket{\da}\\
+        \ket{1 \tfrac{1}{2}\tfrac{1}{2}-\tfrac{1}{2}} &= -\sqrt{\tfrac{2}{3}}\ket{1-1} \ket{\ua} - \sqrt{\tfrac{1}{3}} \ket{10}\ket{\da}.
     \end{align*}
 \end{itemize}
 
 % TODO how to use a CG table
 
-
-\subsection{TODO: Stern-Gerlach Experiment}
-\textit{Discuss the role of spin and magnetic moment in the Stern-Gerlach experiment.}
-
-
+    
+    
 \newpage
 \section{Perturbation Theory}
 
