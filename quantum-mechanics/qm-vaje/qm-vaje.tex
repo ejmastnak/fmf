@@ -5,7 +5,7 @@
 \usepackage{mathtools}
 \usepackage{graphicx}
 \graphicspath{{"figures/"}}
-\usepackage{xcolor}
+\usepackage[svgnames]{xcolor}
 \usepackage{bm} % for bold vectors in math mode
 \usepackage{physics} % for differential notation, etc...
 \usepackage[separate-uncertainty=true]{siunitx}
@@ -15,6 +15,8 @@
 \usepackage{truncate}
 \usepackage[normalem]{ulem}  % for underline with line wrapping
 \usepackage[colorlinks = true, allcolors=blue]{hyperref}
+
+\newcommand{\dmath}[1]{\textcolor{Maroon}{#1}}  % to differentiate math inside questions, where the regular text is italicized. Requires xcolor with svgnames
 
 \setlength{\parindent}{0pt} % to stop indenting new paragraphs
 \newcommand{\diff}{\mathop{}\!\mathrm{d}} % differential
@@ -168,7 +170,7 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has assembled the prob
 \end{itemize}
 
 \subsection{Bound States in a Finite Potential Well}
-\textit{Find the energy eigenvalues of the bound states of a particle with energy $ E $ in a finite potential well of depth $ V_{0} > 0 $ and width $ a $. Assume $ \abs{E} < V_{0} $; note that bound states have negative energies.}
+\textit{Find the energy eigenvalues of the bound states of a particle with energy $ \dmath{E} $ in a finite potential well of depth $ \dmath{V_{0} > 0} $ and width $ \dmath{a} $. Assume $ \dmath{\abs{E} < V_{0}} $; note that bound states have negative energies.}
 \begin{itemize}
 	\item Split the $ x $ axis into three regions: to the left of the well, inside the well, and to the right of the well, e.g. regions 1, 2 and 3, respectively. The potential energy is
 	\begin{equation*}
@@ -297,7 +299,7 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has assembled the prob
 
 
 \subsection{Finite Potential Well, Second Approach}
-\textit{Continued from the previous problem: find the energy eigenvalues of the bound states of a particle with energy $ E $ in a finite potential well of depth $ V_{0} > 0 $ and width $ a $.}
+\textit{Continued from the previous problem: find the energy eigenvalues of the bound states of a particle with energy $ \dmath{E} $ in a finite potential well of depth $ \dmath{V_{0} > 0} $ and width $ \dmath{a} $.}
 \begin{itemize}
 	\item Here's how to proceed: First, note the problem has reflection symmetry if we place the center of the well at the origin. The well then spans from $ x = -\frac{a}{2} $ to $ x = \frac{a}{2} $. In this case $ V(x) = V(-x) $, i.e. the potential is an even function of $ x $. 
 	
@@ -390,7 +392,7 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has assembled the prob
 \section{Second Exercise Set}
 
 \subsection{Bound States in a Delta Potential Well}
-\textit{Find the energies and wave functions of the bound states of a quantum particle of mass $ m $ in a delta function potential well by reusing the results from a finite potential well}. 
+\textit{Find the energies and wave functions of the bound states of a quantum particle of mass $ \dmath{m} $ in a delta function potential well by reusing the results from a finite potential well}. 
 \begin{itemize}
 	\item We will reuse our results from the previous problem set by interpreting a delta potential as a finite potential well in the limit 
 	\begin{equation*}
@@ -473,7 +475,7 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has assembled the prob
 \end{itemize}
 
 \subsection{Bound States in a Delta Potential, Second Approach}
-\textit{Find the energies and wave functions of the bound states of a quantum particle of mass $ m $ in a delta function potential well using a plane wave ansatz and appropriate boundary conditions}. 
+\textit{Find the energies and wave functions of the bound states of a quantum particle of mass $ \dmath{m} $ in a delta function potential well using a plane wave ansatz and appropriate boundary conditions}. 
 \begin{itemize}
 	\item Write the potential well in the form $ V(x) = - \lambda \delta (x) $. The stationary \Schro equation for the potential reads
 	\begin{equation*}
@@ -654,7 +656,7 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has assembled the prob
 \end{itemize}
 
 \subsection{Scattering From a Delta Potential}
-\textit{Analyze a quantum particle scattering off of a delta function potential.}
+\textit{Analyze a quantum particle scattering from a delta function potential.}
 \begin{itemize}	
  	\item We consider a particle of energy $ E $ scattering off the potential $ V(x) = \lambda \delta(x) $. We'll divide the problem into two separate cases. First, we'll assume the particle is incident on the potential barrier only from the left, so the incident amplitude vector reads $ \vec{A} = (1, 0) $. In this case, the scattering matrix equation reads
 	\begin{equation*}
@@ -960,7 +962,7 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has assembled the prob
 \end{itemize}
 
 \subsection{Wave Function Minimizing the Uncertainty Product}
-\textit{Find all wave functions with the minimum position-momentum uncertainty product allowed by the Heisenberg uncertainty principle, i.e. find all wave functions for which $ \Delta x \Delta p = \frac{\hbar}{2} $}.
+\textit{Find all wave functions with the minimum position-momentum uncertainty product allowed by the Heisenberg uncertainty principle, i.e. find all wave functions for which $ \dmath{\Delta x \Delta p = \frac{\hbar}{2}} $}.
 \begin{itemize}
 	\item To solve this problem, we need a wavefunction for which both inequalities in the above theory section are strict equalities. First, the Cauchy-Schwartz inequality is an equality for two linearly dependent vectors.
 	\begin{equation*}
@@ -1197,7 +1199,7 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has assembled the prob
 
 
 \subsection{Time Evolution of the Gaussian Wave Packet}
-\textit{Given a Gaussian wave function $ \psi(x, 0) $ and the time-independent Hamiltonian $ H = \frac{p^{2}}{2m} + V(x) $, find the initial wavefunction's time evolution $ \psi(x, t) $.}
+\textit{Given a Gaussian wave function $ \dmath{\psi(x, 0)} $ and the time-independent Hamiltonian $ \dmath{H = \frac{p^{2}}{2m} + V(x)} $, find the initial wavefunction's time evolution $ \dmath{\psi(x, t)} $.}
 
 \begin{itemize}
 	\item We'll work in the potential $ V(x) = 0$. Because the basis functions of a free particle are continuous, and $ n $ is traditionally used to index discrete quantities, we'll index the basis functions with $ k $. For a particle in a constant potential, the eigenfunctions are plane waves. We have
@@ -1465,7 +1467,7 @@ In our case (for a harmonic oscillator), the theorem reads
 \begin{equation*}
 	\ket{\psi, 0} = \frac{1}{\sqrt{2}}\ket{0} + \frac{1}{\sqrt{2}}\ket{1}.
 \end{equation*}
-\textit{Compute the wavefunction's time evolution $ \ket{\psi, t} $ the time-dependent expectation values $ \ev{x, t} $ and $ \ev{p, t} $ and use this to determine the validity of the Ehrenfest theorem. Finally, determine the product of uncertainties $ \Delta x(t) \Delta p(t) $}.
+\textit{Compute the wavefunction's time evolution $ \dmath{\ket{\psi, t}} $ the time-dependent expectation values $ \dmath{\ev{x, t}} $ and $ \dmath{\ev{p, t}} $ and use this to determine the validity of the Ehrenfest theorem. Finally, determine the product of uncertainties $ \dmath{\Delta x(t) \Delta p(t)} $}.
 
 \begin{itemize}
 	\item First, we find the wavefunction's time evolution. This is relatively simple, since the initial wavefunction is a linear combination of the Hamiltonian's eigenstates. We just have to add the time-dependent phase factors $ e^{-i\frac{E_{n}}{\hbar}t} $. Substituting in the energies for a particle in a harmonic oscillator, the result is
@@ -1853,7 +1855,7 @@ In our case (for a harmonic oscillator), the theorem reads
 \end{itemize}
 
 \subsection{Harmonic Oscillator in an Electric Field}
-\textit{Consider a particle of mass $ m $ and charge $ q $ at the equilibrium position $ x_{0} $ of a spring with spring constant $ k $ constrained to oscillate along the $ x $ axis. At time $ t = 0 $, we turn on an external electric field $ \mathcal{E} $ in the positive $ x $ direction. Solve for the particle's motion using quantum mechanics. }
+\textit{Consider a particle of mass $ \dmath{m} $ and charge $ \dmath{q} $ at the equilibrium position $ \dmath{x_{0}} $ of a spring with spring constant $ \dmath{k} $ constrained to oscillate along the $ \dmath{x} $ axis. At time $ \dmath{t = 0} $, we turn on an external electric field $ \dmath{\mathcal{E}} $ in the positive $ \dmath{x} $ direction. Solve for the particle's motion using quantum mechanics. }
 
 \begin{itemize}
 	\item First, we find the classical solution with Newton's law to get a feel for the solution. Newton's law reads:
@@ -2070,7 +2072,7 @@ In our case (for a harmonic oscillator), the theorem reads
 \end{itemize}
 
 \subsection{Two-Dimensional Isotropic Harmonic Oscillator} \label{qmv:ss:2dqho}
-\textit{Consider a two-dimensional isotropic harmonic oscillator. Within the subspace of energy eigenstates with energy $ E = 2\hbar \omega $, find those states that are also eigenstates of the $ z $-component of angular momentum $ L_{z} $.}
+\textit{Consider a two-dimensional isotropic harmonic oscillator. Within the subspace of energy eigenstates with energy $ \dmath{E = 2\hbar \omega} $, find those states that are also eigenstates of the $ \dmath{z} $-component of angular momentum $ \dmath{L_{z}} $.}
 \begin{itemize}
 	\item The energy $ E = 2\hbar \omega $ corresponds to the isotropic oscillator's first two excited states $ \ket{10} $ and $ \ket{01} $. These states have degeneracy two, meaning the subspace is spanned by two linearly independent states. The subspace is formed of all normalized linear combinations of $ \ket{01} $ and $ \ket{10} $, i.e. all $ \ket{\psi} $ for which
 	\begin{equation*}
@@ -2332,7 +2334,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 
 
 \subsection{Larmor Precession}
-\textit{Analyze the motion of a quantum-mechanical particle with magnetic moment $ \vec{\mu} $ and angular momentum quantum number $ l = 1 $ in an external magnetic field $ \vec{B} = B\uvec{z} $, where $ \vec{\mu} $ forms an initial angle $ \theta $ with $ \vec{B} $ at $ t = 0 $.}
+\textit{Analyze the motion of a quantum-mechanical particle with magnetic moment $ \dmath{\vec{\mu}} $ and angular momentum quantum number $ \dmath{l = 1} $ in an external magnetic field $ \dmath{\vec{B} = B\uvec{z}} $, where $ \dmath{\vec{\mu}} $ forms an initial angle $ \dmath{\theta} $ with $ \dmath{\vec{B}} $ at $ \dmath{t = 0} $.}
 
 \begin{itemize}
 	\item We consider a particle in an external magnetic field $ \vec{B} = B\uvec{z} $ whose magnetic moment $ \vec{\mu} $ makes an initial angle $ \theta $ with the magnetic field. The particle's Hamiltonian is
@@ -2525,7 +2527,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 
 \section{Ninth Exercise Set}
 \subsection{Larmor Precession (continued)}
-\textit{Analyze the motion of a quantum-mechanical particle with magnetic moment $ \mu $ and angular momentum quantum number $ l = 1 $ in an external magnetic field $ \vec{B} = B\uvec{z} $, where $ \mu $ forms an initial angle $ \theta $ with $ \vec{B} $ at $ t = 0 $.}
+\textit{Analyze the motion of a quantum-mechanical particle with magnetic moment $ \dmath{\mu} $ and angular momentum quantum number $ \dmath{l = 1} $ in an external magnetic field $ \dmath{\vec{B} = B\uvec{z}} $, where $ \dmath{\mu} $ forms an initial angle $ \dmath{\theta} $ with $ \dmath{\vec{B}} $ at $ \dmath{t = 0} $.}
 \begin{itemize}
 	\item In the last exercise set we found the particle's time-dependent wave function
 	\begin{equation*}
@@ -2614,11 +2616,11 @@ These are the two linearly independent states spanning the isotropic harmonic os
 % We'll get practice with a wavefunction that exists both in position
 % and spin angular momentum space at once
 \subsection{Rashba Coupling}
-\textit{Consider a particle in the two-dimensional $ x, y $ plane with magnitude of spin $ s = 1/2 $ and Hamiltonian}
+\textit{Consider a particle in the two-dimensional $ \dmath{x, y} $ plane with magnitude of spin $ \dmath{s = 1/2} $ and Hamiltonian}
 \begin{equation*}
 	H = \frac{p^{2}}{2m} + \lambda (p_{x}S_{y} - p_{y}S_{x}),
 \end{equation*}
-\textit{where $ \vec{p} = (p_{x}, p_{y}, 0) $ and $ \vec{S} = (S_{x}, S_{y}, S_{z}) $ are the momentum and spin operators and $ \lambda $ is a constant.\footnote{The term $ \lambda (p_{x}S_{y} - p_{y}S_{x}) $ is called the \textit{Rashba coupling term}, which gives this problem its name.} Find the Hamiltonian $ H $'s eigenfunctions and eigenvalues.}
+\textit{where $ \dmath{\vec{p} = (p_{x}, p_{y}, 0)} $ and $ \dmath{\vec{S} = (S_{x}, S_{y}, S_{z})} $ are the momentum and spin operators and $ \dmath{\lambda} $ is a constant.\footnote{The term $ \dmath{\lambda (p_{x}S_{y} - p_{y}S_{x})} $ is called the \textit{Rashba coupling term}, which gives this problem its name.} Find the Hamiltonian $ \dmath{H} $'s eigenfunctions and eigenvalues.}
 
 \vspace{2mm}
 \textbf{Spin and Momentum States}
@@ -2928,11 +2930,11 @@ These are the two linearly independent states spanning the isotropic harmonic os
 \section{Tenth Exercise Set}
 
 \subsection{Rashba Coupling with Pauli Spin Matrices}
-\textit{Use the Pauli spin matrices to find the energy eigenvalues and eigenfunctions of a particle in the two-dimensional $ x, y $ plane with magnitude of spin $ s = 1/2 $ and Hamiltonian}
+\textit{Use the Pauli spin matrices to find the energy eigenvalues and eigenfunctions of a particle in the two-dimensional $ \dmath{x, y} $ plane with magnitude of spin $ \dmath{s = 1/2} $ and Hamiltonian}
 \begin{equation*}
 	H = \frac{p^{2}}{2m} + \lambda (p_{x}S_{y} - p_{y}S_{x}),
 \end{equation*}
-\textit{where $ \vec{p} = (p_{x}, p_{y}) $ and $ \vec{S} = (S_{x}, S_{y}, S_{z}) $ are the momentum and spin operators and $ \lambda $ is a constant.}
+\textit{where $ \dmath{\vec{p} = (p_{x}, p_{y})} $ and $ \dmath{\vec{S} = (S_{x}, S_{y}, S_{z})} $ are the momentum and spin operators and $ \dmath{\lambda} $ is a constant.}
 
 
 \vspace{2mm}
@@ -3118,7 +3120,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 \begin{equation*}
 	H = \frac{p^{2}}{2m} + \frac{\lambda\hbar}{2} (p_{x}\sigma_{y} - p_{y}\sigma_{x}),
 \end{equation*}
-\textit{using the formalism of time-reversal symmetry for a particle with spin $ s = 1/2 $}.
+\textit{using the formalism of time-reversal symmetry for a particle with spin $ \dmath{s = 1/2} $}.
 
 \begin{itemize}	
 	\item First, we will show the problem's Hamiltonian is invariant under time reversal, i.e. $ [H, \T] = 0 $. We can rewrite the commutation condition in the form $ H\T = \T H $ and multiply by $ \T^{-1} $ from the left to get
@@ -3238,11 +3240,11 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	
 	
 \subsection{Scattering on a Spin-Dependent Delta Function}
-\textit{Consider a spin-dependent scattering problem with two particles: particle 1 with spin $ s_{1} = 1/2 $ in the state $ \ket{\ua} $ and particle $ 2 $ with spin $ s_{2} = 1 $ in the state $ \ket{10} $. The particles have the Hamiltonian}
+\textit{Consider a spin-dependent scattering problem with two particles: particle 1 with spin $ \dmath{s_{1} = 1/2} $ in the state $ \dmath{\ket{\ua}} $ and particle $ \dmath{2} $ with spin $ \dmath{s_{2} = 1} $ in the state $ \dmath{\ket{10}} $. The particles have the Hamiltonian}
 \begin{equation*}
 	H = \frac{p_{1}^{2}}{2m} - \frac{\lambda}{\hbar^{2}}\vec{S}_{1}\cdot \vec{S}_{2}\delta(x).
 \end{equation*}
-\textit{Particle $ 2 $ is fixed at the origin at $ x = 0 $ and particle $ 1 $ approaches and scatters off particle $ 2 $ from the region $ x \to -\infty $. Determine the particle's spins after the collision.}
+\textit{Particle $ \dmath{2} $ is fixed at the origin at $ \dmath{x = 0} $ and particle $ \dmath{1} $ approaches and scatters off particle $ \dmath{2} $ from the region $ \dmath{x \to -\infty} $. Determine the particle's spins after the collision.}
 
 
 \begin{itemize}
@@ -3280,11 +3282,11 @@ These are the two linearly independent states spanning the isotropic harmonic os
 \section{Eleventh Exercise Set}
 
 \subsection{Scattering on a Spin-Dependent Delta Function (continued)}
-\textit{Consider a spin-dependent scattering problem with two particles: particle 1 with spin $ s_{1} = 1/2 $ in the state $ \ket{\ua} \equiv \ket{\tfrac{1}{2}, \tfrac{1}{2}} $ and particle $ 2 $ with spin $ s_{2} = 1 $ in the state $ \ket{10} $. The particles have the Hamiltonian}
+\textit{Consider a spin-dependent scattering problem with two particles: particle 1 with spin $ \dmath{s_{1} = 1/2} $ in the state $ \dmath{\ket{\ua} \equiv \ket{\tfrac{1}{2}, \tfrac{1}{2}}} $ and particle $ \dmath{2} $ with spin $ \dmath{s_{2} = 1} $ in the state $ \dmath{\ket{10}} $. The particles have the Hamiltonian}
 \begin{equation*}
 	H = \frac{p_{1}^{2}}{2m} - \frac{\lambda}{\hbar^{2}}\vec{S}_{1}\cdot \vec{S}_{2}\delta(x).
 \end{equation*}
-\textit{Particle $ 2 $ is fixed at the origin at $ x = 0 $ and particle $ 1 $ approaches and hits particle $ 2 $ from the region $ x \to -\infty $. Determine the particle's spins after the collision.}
+\textit{Particle $ \dmath{2} $ is fixed at the origin at $ \dmath{x = 0} $ and particle $ \dmath{1} $ approaches and hits particle $ \dmath{2} $ from the region $ \dmath{x \to -\infty} $. Determine the particle's spins after the collision.}
 
 
 \begin{itemize}
@@ -3653,7 +3655,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 \begin{equation*}
 	H = \frac{p^{2}}{2m} + \frac{1}{2}kx^{2} + \lambda x^{4}, \qquad \lambda > 0,
 \end{equation*}
-\textit{which contains the quartic perturbation term $ \lambda x^{4} $.}
+\textit{which contains the quartic perturbation term $ \dmath{\lambda x^{4}} $.}
 
 \begin{itemize}
 	
@@ -3714,7 +3716,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 \begin{equation*}
 	H = \frac{p^{2}}{2m} + \frac{1}{2}kx^{2} + \lambda x^{3}, \qquad \lambda > 0,
 \end{equation*}
-\textit{which contains the cubic perturbation term $ \lambda x^{3} $.}
+\textit{which contains the cubic perturbation term $ \dmath{\lambda x^{3}} $.}
 \begin{itemize}
 	\item As in the previous problem, the unperturbed Hamiltonian $ H_{0} $ is the familiar quantum harmonic oscillator
 	\begin{equation*}
@@ -3967,7 +3969,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 
 
 \subsection{Hydrogen Atom in a Homogeneous Electric Field}
-\textit{Consider a hydrogen atom placed in a homogeneous electric field of magnitude $ \E $. Analyze the resulting energy splitting of the first excited state.}
+\textit{Consider a hydrogen atom placed in a homogeneous electric field of magnitude $ \dmath{\E} $. Analyze the resulting energy splitting of the first excited state.}
 \begin{itemize}
 	\item The system's \Ham is 
 	\begin{equation*}
@@ -4309,11 +4311,11 @@ These are the two linearly independent states spanning the isotropic harmonic os
 \end{itemize}
 
 \subsection{Hydrogen Atom Exposed to an Electric Field Pulse}
-\textit{Consider an electron in a hydrogen atom in an electric field $ \E(t) $, with \Ham}
+\textit{Consider an electron in a hydrogen atom in an electric field $ \dmath{\E(t)} $, with \Ham}
 \begin{equation*}
 	H = \frac{p^{2}}{2m} - \frac{q^{2}}{4 \pi \epsilon_{0} r} - q \E(t)z, \qquad \E(t) = \frac{\E_{0}}{1 + \left(\frac{t}{\tau}\right)^{2}}.
 \end{equation*}
-\textit{Before the electric field is turned on (at $ t \to - \infty $), the electron is in the ground state, i.e.}
+\textit{Before the electric field is turned on (at $ \dmath{t \to - \infty} $), the electron is in the ground state, i.e.}
 \begin{equation*}
 	\ket{\p, - \infty} = \ket{100}.
 \end{equation*}
@@ -4422,18 +4424,18 @@ These are the two linearly independent states spanning the isotropic harmonic os
 \end{itemize}
 
 \subsection{Spin 1/2 Particle in a Time-Varying Magnetic Field }
-\textit{Consider a particle with spin $ s = 1/2 $ in the initial state $ \ket{\p, 0} = \ket{\da} $ and \Ham}
+\textit{Consider a particle with spin $ \dmath{s = 1/2} $ in the initial state $ \dmath{\ket{\p, 0} = \ket{\da}} $ and \Ham}
 \begin{equation*}
 	H = \mu_{B}\vec{\sigma}\cdot \vec{B}(t),
 \end{equation*}
-\textit{where $ \vec{\sigma} $ is written in terms of the Pauli spin matrices as $ \vec{\sigma} = (\sigma_{x}, \sigma_{y}, \sigma_{z}) $, and the magnetic field is}
+\textit{where $ \dmath{\vec{\sigma}} $ is written in terms of the Pauli spin matrices as $ \dmath{\vec{\sigma} = (\sigma_{x}, \sigma_{y}, \sigma_{z})} $, and the magnetic field is}
 \begin{equation*}
 	\vec{B}(t) = \left(B_{x} \frac{t}{\tau}, 0, B_{z}\right), \qquad B_{x} \ll B_{z}.
 \end{equation*}
-\textit{Find the particle's wavefunction $ \ket{\p, \tau} $ at $ t = \tau $, and analyze the limiting cases of large and small $ \tau $.}
+\textit{Find the particle's wavefunction $ \dmath{\ket{\p, \tau}} $ at $ \dmath{t = \tau} $, and analyze the limiting cases of large and small $ \dmath{\tau} $.}
 \begin{itemize}
 
-	\item The terms of the magnetic field $ \vec{B} $'s components, the \Ham reads
+	\item In terms of the magnetic field $ \vec{B} $'s components, the \Ham reads
 	\begin{equation*}
 		H(t) = \mu_{B}\vec{\sigma}\cdot \vec{B}(t) = \mu_{B}\sigma_{z}B_{z} + \mu_{B}\sigma_{x}B_{x}\frac{t}{\tau}.
 	\end{equation*}
@@ -4610,11 +4612,11 @@ These are the two linearly independent states spanning the isotropic harmonic os
 \section{Fifteenth Exercise Set}
 
 \subsection{Rabi Oscillations} 
-\textit{Consider a particle with spin $ s = 1/2 $ in the initial state $ \ket{\p, 0} = \ket{\da} $ in the presence of the \Ham}
+\textit{Consider a particle with spin $ \dmath{s = 1/2} $ in the initial state $ \dmath{\ket{\p, 0} = \ket{\da}} $ in the presence of the \Ham}
 \begin{equation*}
     H = \frac{\Delta E}{2}\sigma_{z} + \lambda \cos (\omega t )\sigma_{x}.
 \end{equation*}
-\textit{Find the particle's time-dependent wavefunciton $ \ket{\p, t} $.}
+\textit{Find the particle's time-dependent wavefunciton $ \dmath{\ket{\p, t}} $.}
 
 \begin{itemize}
 	\item First, we note that this \Ham is in fact nearly identical to the \Ham in the previous problem, where the \Ham was
