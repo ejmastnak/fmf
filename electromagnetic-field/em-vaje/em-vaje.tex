@@ -4,7 +4,6 @@
 \usepackage{amssymb}
 \usepackage{esint}
 \usepackage{mathtools}
-\usepackage{graphicx}
 \usepackage{xcolor}
 \usepackage{bm} % for bold vectors in math mode
 \usepackage{physics} % for differential notation, etc...
@@ -23,6 +22,9 @@
 \setlength{\parindent}{0pt} % to stop indenting new paragraphs
 \newcommand{\diff}{\mathop{}\!\mathrm{d}} % differential
 \newcommand{\eqtext}[1]{\qquad \text{#1} \qquad}
+
+% \newcommand{\dmath}[1]{\color{blue}#1}  % to differentiate math inside questions, where the regular text is italicized.
+\newcommand{\dmath}[1]{\textcolor{blue}{#1}}  % to differentiate math inside questions, where the regular text is italicized.
 
 \renewcommand{\vec}[1]{\bm{#1}} % for vectors
 \newcommand{\uvec}[1]{\hat{\vec{#1}}} % for vectors
@@ -55,14 +57,60 @@
 \renewcommand{\grad}{\nabla}
 \renewcommand{\laplacian}{\nabla^{2}}
 
-% begin header configuration
-\fancypagestyle{headerstyle}{
-\fancyhf{}  % clear default settings from header and footer; create blank slate
-\fancyhead[R]{\href{https://github.com/ejmastnak/fmf}{\small{\texttt{github.com/ejmastnak/fmf}}}}  % link in upper right
-\fancyhead[L]{\textit{\truncate{0.65\headwidth}{\leftmark}}}  % subsection name; truncate long names
-\fancyfoot[C]{\thepage}  % centered page number in footer
-\renewcommand{\headrulewidth}{0.1pt}
+% This environment is used for questions with an accompanying figure. Minipages are used for side-by-side text and figure. 
+% Normally one would use the wrapfig package, but this does not work nicely near itemize environments
+% \NewDocumentEnvironment (together with the xparse package) is used instead of \newenvironment to allow for the parameter #1 to be used in the environment end code.
+% Parameters:
+% - figure file name (e.g. coolfigure.jpg)
+% - width of question text as fraction of total page width (e.g. 0.45)
+% - width of figure as fraction of total page width (e.g. 0.45)
+\NewDocumentEnvironment{figurequestion}{mmm}
+{    
+\hspace*{\leftmargin}
+\begin{minipage}[c]{#2\textwidth}  % minipage to hold question text
+\em % emphasize the question text
+{}\quad  % quad is used to indent the question
 }
+{
+\end{minipage}
+\hspace{2mm}
+\begin{minipage}{#3\textwidth}  % minipage to hold figure
+    \centering
+    \includegraphics[width=\linewidth]{#1}
+\end{minipage}
+}
+\newcommand{\defaultQuestionWidth}{0.55}
+\newcommand{\defaultGraphicsWidth}{0.40}
+
+% begin header configuration
+\pagestyle{fancy}
+
+% Header and footer on non-section pages (default style)
+\fancyhf{}
+\fancyhead[R]{\href{https://github.com/ejmastnak/fmf}{\small{\texttt{github.com/ejmastnak/fmf}}}} 
+\fancyhead[L]{\textit{\truncate{0.65\headwidth}{\rightmark}}}
+\fancyfoot[C]{\thepage} 
+\renewcommand{\headrulewidth}{0.1pt}
+
+% Header and footer on section pages---identical to default style, but must be explicitly included
+\fancypagestyle{plain}{
+    \fancyhf{}  
+    \fancyhead[R]{\href{https://github.com/ejmastnak/fmf}{\small{\texttt{github.com/ejmastnak/fmf}}}}  
+    \fancyhead[L]{\textit{\truncate{0.65\headwidth}{\rightmark}}} 
+    \fancyfoot[C]{\thepage}  % centered page number in footer
+    \renewcommand{\headrulewidth}{0.1pt}
+}
+
+\renewcommand{\sectionmark}[1]{%
+  \markboth{\sectionname \thesection}
+  {\noexpand\firstsubsectiontitle}}
+\renewcommand{\sectionmark}[1]{}
+
+\renewcommand{\subsectionmark}[1]{%
+  \markright{\thesubsection\ \, #1}\gdef\firstsubsectiontitle{#1}}
+
+\newcommand\firstsubsectiontitle{}
+
 % end header configuration
 
 \begin{document}
@@ -71,29 +119,32 @@
 \date{Winter Semester 2020-2021}
 \maketitle
 
+\thispagestyle{empty}  % remove headers from introductory page
+
 \begin{center}
 \textbf{About These Notes}
 \end{center}
-These are my notes from the Exercises portion of the class \textit{Elektromagnetno Polje} (Electromagnetic Field), a required course for third-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. The exact problem sets herein are specific to the physics program at the University of Ljubljana, but the content is fairly standard for a late-undergraduate electromagnetism course. I am making the notes publicly available in the hope that they might help others learning similar material---the latest version can be found on \href{https://github.com/ejmastnak/fmf/tree/main/electromagnetic-field}{\underline{GitHub}}.
+These are my notes from the Exercises portion of the class \textit{Elektromagnetno Polje} (Electromagnetic Field), a required course for third-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. The exact problem sets herein are specific to the physics program at the University of Ljubljana, but the content is fairly standard for a late-undergraduate electromagnetism course. I am making the notes publicly available in the hope that they might help others learning similar material---the most up-to-date version can be found on \href{https://github.com/ejmastnak/fmf/tree/main/electromagnetic-field}{\underline{GitHub}}.
 
 \vspace{2mm}
 \textit{Navigation}: For easier document navigation, the table of contents is ``clickable'', meaning you can jump directly to a section by clicking the colored section names in the table of contents. Unfortunately, \textit{the clickable links do not work in most online or mobile PDF viewers}; you have to download the file first.
 
 \vspace{2mm}
 \textit{On Authorship:} 
-The exercises are led by Asst. Prof. Martin Klanj\v{s}ek, who has assembled the problem sets and guides us through the solutions. Accordingly, credit for the problems in these notes goes to Prof. Klanj\v{s}ek. I take credit for nothing beyond typesetting the notes, translating to English, and adding an additional comment or two where I saw fit. The original exercises in Slovene (without solutions) can be found on the \href{https://www-f5.ijs.si/emp-2020-2021.html}{\underline{course website}}. 
+The exercises are led by Asst. Prof. Martin Klanj\v{s}ek, who has assembled the problem sets and guides us through the solutions. Accordingly, credit for all problems and figures in these notes goes to Prof. Klanj\v{s}ek. I take credit only for typesetting the notes, translating to English, and perhaps an additional comment or two for clarity. The original exercises in Slovene (without solutions) can be found on the \href{https://www-f5.ijs.si/emp-2020-2021.html}{\underline{course website}}. 
 
 \vspace{2mm}
 \textit{Disclaimer:} Mistakes---both trivial typos and legitimate errors---are likely. Keep in mind that these are the notes of an undergraduate student in the process of learning the material himself---take what you read with a grain of salt. If you find mistakes and feel like telling me, by \href{https://github.com/ejmastnak/fmf}{\underline{GitHub}} pull request, \href{mailto:ejmastnak@gmail.com}{\underline{email}} or some other means, I'll be happy to hear from you, even for the most trivial of errors.
 
 \newpage
 
+\pagestyle{empty}  % no header in table of contents
 \tableofcontents
 
 \newpage
 
+\pagestyle{fancy}  % turn on headers for remainder of document
 
-\pagestyle{headerstyle}
 \section{First Exercise Set}
 
 \subsection{Background Theory: Electric Field of a Charge Distribution}
@@ -104,7 +155,7 @@ The electric field of a spatial charge distribution with volume charge density $
 where $ \tvec{r} $ is a placeholder variable for integration and $ \rho(\tvec{r}) \diff^{3}\tvec{r} $ is an infinitesimal element of charge at the position $ \tvec{r} $.
 
 \subsection{Charged Disk}
-\textit{A charged disk has surface charge density $ \sigma $ and radius $ a $. Find the disk's electric field $ E(z) $ along an axis through the disk's center and normal to the disk. Analyze the limit behavior of $ E(z) $ for small and large $ z $.}
+\textit{A charged disk has surface charge density $ \dmath{\sigma} $ and radius $ \dmath{a} $. Find the disk's electric field $ \dmath{E(z)} $ along an axis through the disk's center and normal to the disk. Analyze the limit behavior of $ \dmath{E(z)} $ for small and large $ \dmath{z} $.}
 \begin{itemize}
 	\item We begin by breaking the disk into concentric rings and integrating over the contributions $ \diff E $ of each ring, where $ r $ and $ \diff r $ represent the radius and thickness of a ring, respectively. We then further divide each ring into infinitesimal segments with area $ r \diff \phi \diff r $. Along the perpendicular $ z $ axis through the disk's center, a single such segment contributes the electric field
 	\begin{equation*}
@@ -147,7 +198,10 @@ where $ \tvec{r} $ is a placeholder variable for integration and $ \rho(\tvec{r}
 
 
 \subsection{Charged Plate with a Slit}
-\textit{We take an infinitely large charged rectangular plate with surface charged density $ \sigma $ and remove a slit of width $ a $ from the plate. Determine the electric field $ E $ in the plane perpendicular to the plate and passing through the center of the slit as a function of the vertical distance $ z $ from the plate. Analyze the limit behavior of $ E(z) $ for small and large $ z $.}
+\begin{figurequestion}{1-2}{\defaultQuestionWidth}{\defaultGraphicsWidth}
+    We take a large, rectangular charged plate with surface charged density $ \dmath{\sigma} $ and remove a slit of width $ \dmath{a} $ from the plate. Determine the electric field $ \dmath{E} $ in the plane perpendicular to the plate and passing through the center of the slit as a function of the vertical distance $ \dmath{z} $ from the plate. Analyze the limit behavior of $ \dmath{E(z)} $ for small and large $ \dmath{z} $.
+\end{figurequestion}
+
 \begin{itemize}
 	\item We begin by breaking the plate into thin ribbons and integrating over the contributions $ \diff E $ of each ribbon, where $ r $ and $ \diff r $ will represent the orthogonal distance from the slit and the thickness of each ribbon, respectively.
 	
@@ -185,6 +239,7 @@ where $ \tvec{r} $ is a placeholder variable for integration and $ \rho(\tvec{r}
 \end{itemize} 
 
 
+\newpage
 \section{Second Exercise Set}
 \subsection{Theory: The Poisson Equation and the Fourier Transform}
 
@@ -265,7 +320,7 @@ where $ \tvec{r} $ is a placeholder variable for integration and $ \rho(\tvec{r}
 \begin{equation*}
 	\nabla^{2}U(\r) = - \frac{q}{\ee} \delta (\r).
 \end{equation*}
-\textit{Solve the equation for $ U(\r) $.}
+\textit{Solve the equation for $ \dmath{U(\r)} $.}
 \begin{itemize}
 	
 	\item The plan is to transform into $ \vec{k} $ space, solve for $ U(\vec{k}) $, then transform back to $ U(\r) $. 
@@ -312,7 +367,7 @@ where $ \tvec{r} $ is a placeholder variable for integration and $ \rho(\tvec{r}
 	
 \end{itemize}
 
-\subsection{Theoretical Interlude: Electric Field of a General Charge Distribution}
+\subsection{Theoretical Interlude: Electric Field of a Charge Distribution}
 \begin{itemize}
 	\item We just solved the Poisson equation for the simple case $ \rho(\r) = \delta(\r) $. Can we use this result to solve the general case $ \rho = \rho(\r) $? The answer is yes, if we expand $ \rho(\r) $ over a basis of delta functions, as follows:
 	\begin{equation*}
@@ -334,7 +389,7 @@ where $ \tvec{r} $ is a placeholder variable for integration and $ \rho(\tvec{r}
 \begin{equation*}
 	U(\r) = \frac{q}{4\pi \ee} \frac{e^{-\alpha r}}{r}\left(1 + \frac{\alpha r}{2}\right), \qquad \alpha = \frac{2}{r_{B}}.
 \end{equation*}
-\textit{Find the charge density $ \rho(\r) $ that generates this potential.}
+\textit{Find the charge density $ \dmath{\rho(\r)} $ that generates this potential.}
 \begin{itemize}
 	\item We use the Poisson equation, which connects $ U $ and $ \rho $ via
 	\begin{equation*}
@@ -380,6 +435,7 @@ where $ \tvec{r} $ is a placeholder variable for integration and $ \rho(\tvec{r}
 	
 \end{itemize}
 
+\newpage
 \section{Third Exercise Set}
 
 \subsection{Theory: The Laplace Equation}
@@ -390,7 +446,9 @@ Just a quick review from the last exercise set: the Poisson equation used to sol
 Often $ \rho(\r) = 0 $ in places we're solving for the electric potential. In this case $ \laplacian U(\r) = 0 $. This equation is called a \textit{Laplace equation}.
 
 \subsection{Conducting Ribbon in a Parallel-Plate Capacitor}
-\textit{We place a long, thin conducting ribbon between the plates of a large parallel-plate capacitor, perpendicularly to the plates; the ribbon almost touches both plates with a little bit of air/insulation between the ribbon edges and the plates. The ribbon height and distance between the plates is $ a $. We ground both plates and set the ribbon potential to $ U_{0} $. What is the electric potential inside the capacitor?}
+\begin{figurequestion}{3-1}{\defaultQuestionWidth}{\defaultGraphicsWidth}
+    We place a long, thin conducting ribbon between the plates of a large parallel-plate capacitor, perpendicularly to the plates; the ribbon almost touches both plates with a little bit of air/insulation between the ribbon edges and the plates. The ribbon height and distance between the plates is $ \dmath{a} $. We ground both plates and set the ribbon potential to $ \dmath{U_{0}} $. What is the electric potential inside the capacitor?
+\end{figurequestion}
 
 \begin{itemize}
 	\item First, decide on a coordinate system. Choose Cartesian coordinates since the problem has rectangular symmetry. I will try to describe the axes, but you basically need to see a picture. Here's my attempt: we drew a 2D projection on lined paper where the capacitor plates run from left to right along the page and are separated vertically by the distance $ a $; the ribbon is a vertical line between the top and bottom plates. In this case, the $ y $ axis runs vertically upward along the ribbon (connecting the top and bottom plates), the $ x $ axis runs left to right along the page, and the $ z $ axis points out of the page. 
@@ -518,7 +576,9 @@ Often $ \rho(\r) = 0 $ in places we're solving for the electric potential. In th
 \end{itemize}
 
 \subsection{A Halved Conducting Cylinder}
-\textit{Consider a long cylinder of radius $ a $ cut in half along a plane running along the cylinder's longitudinal axis. We separate the two cylinder halves by an arbitrarily small amount (so the halves are insulated) and apply a potential difference $ U_{0} $ between the two halves. The halved cylinder acts as a capacitor. Find the electric potential inside the cylinder.}
+\begin{figurequestion}{3-2}{\defaultQuestionWidth}{\defaultGraphicsWidth}
+Consider a long cylinder of radius $ \dmath{a} $ cut in half along a plane running along the cylinder's longitudinal axis. We separate the two cylinder halves by an arbitrarily small amount (so the halves are insulated) and apply a potential difference $ \dmath{U_{0}} $ between the two halves. The halved cylinder acts as a capacitor. Find the electric potential inside the cylinder.
+\end{figurequestion}
 
 \begin{itemize}
 	\item Decide on a coordinate system: we use cylindrical coordinates because our problem has cylindrical symmetry. Let the $ z $ axis run along the cylinder's longitudinal axis. Because of translational symmetry along the $ z $ axis, $ U $ is independent of $ z $. 
@@ -572,6 +632,7 @@ Often $ \rho(\r) = 0 $ in places we're solving for the electric potential. In th
 
 	\end{itemize}
 	
+\newpage
 \section{Fourth Exercise Set}
 
 \subsection{A Halved Conducting Cylinder (continued)}
@@ -670,7 +731,7 @@ Often $ \rho(\r) = 0 $ in places we're solving for the electric potential. In th
 
 
 \subsection{Conducting Sphere in a Uniform Electric Field}
-\textit{A conducting sphere of radius $ a $ is placed in a uniform electric field $ E_{0} $ pointing in the $ z $ direction. Find the electric potential $ U $ inside and outside the sphere.} 
+\textit{A conducting sphere of radius $ \dmath{a} $ is placed in a uniform electric field $ \dmath{E_{0}} $ pointing in the $ \dmath{z} $ direction. Find the electric potential $ \dmath{U} $ inside and outside the sphere.} 
 
 \begin{itemize}
 	\item Use spherical coordinates to take advantage of spherical symmetry. This means we want $ U(r, \phi, \theta) $. Because of the problem's rotational symmetry, the solution will be independent of $ \phi $. We need only $ U(r, \theta) $. 
@@ -726,6 +787,7 @@ Often $ \rho(\r) = 0 $ in places we're solving for the electric potential. In th
 \end{itemize}
 
 
+\newpage
 \section{Fifth Exercise Set}
 
 \subsection{Conducting Sphere in a Uniform Electric Field (continued)}
@@ -764,7 +826,7 @@ Often $ \rho(\r) = 0 $ in places we're solving for the electric potential. In th
 \end{itemize}
 
 \subsection{Electric Dipole in a Conducting Spherical Shell}
-\textit{We place an electric dipole with dipole moment $ \pe $ in the center of a conducting spherical shell of radius $ a $. What is the electric potential inside the shell?}
+\textit{We place an electric dipole with dipole moment $ \dmath{\pe} $ in the center of a conducting spherical shell of radius $ \dmath{a} $. What is the electric potential inside the shell?}
 
 \begin{itemize}
 	\item We use spherical coordinates, which are best suited to the problem's spherical symmetry. By rotational symmetry, the potential depends only on the coordinates $ r $ and $ \theta $, not $ \phi $. Besides at the center, the charge density inside the sphere is zero, so we solve the Laplace equation
@@ -835,7 +897,7 @@ Often $ \rho(\r) = 0 $ in places we're solving for the electric potential. In th
 \end{itemize}
 
 \subsection{Point Charge Above a Conducting Plane}
-\textit{Consider a positive point charge $ q $ a distance $ d $ above a large, grounded conducting plane. What is the electric potential in space due to the charge-plane system?}
+\textit{Consider a positive point charge $ \dmath{q} $ a distance $ \dmath{d} $ above a large, grounded conducting plane. What is the electric potential in space due to the charge-plane system?}
 \begin{itemize}
 	\item We will use a trick called the \textit{method of images} to solve the problem. 
 %	Currently, the electric field below the plane is zero---the field from the upper charge is perpendicularly incident on and vanishes into the grounded plate. 
@@ -924,6 +986,7 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 	
 \end{itemize}
 
+\newpage
 \section{Sixth Exercise Set}
 
 \subsection{Theory: Electrostatic Force}
@@ -935,7 +998,7 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 
 
 \subsection{Force on a Conducting Spherical Shell}
-\textit{We place a conducting sphere of radius $ a $ in a homogeneous electric field $ E_{0} $. Find the electrostatic force on the upper half of the sphere.}
+\textit{We place a conducting sphere of radius $ \dmath{a} $ in a homogeneous electric field $ \dmath{E_{0}} $. Find the electrostatic force on the upper half of the sphere.}
 
 \begin{itemize}
 	\item Suppose the field points in the $ z $ direction. Recall from the previous exercise set that the potential from the sphere and electric field is
@@ -996,7 +1059,7 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 \end{itemize}
 
 \subsection{Point Charge Between Two Conducting Plates}
-\textit{We place two large conducting plates at a right angle to each other, so that the plates come close together but just barely do not touch. We then place a point charge $ q $ along the line bisecting the right angle between the plates, at a perpendicular distance $ a $ from each plate. Both plates are grounded. What is the electric potential in the region bounded by the plates at large distances from the plates' intersection?}
+\textit{We place two large conducting plates at a right angle to each other, so that the plates come close together but just barely do not touch. We then place a point charge $ \dmath{q} $ along the line bisecting the right angle between the plates, at a perpendicular distance $ \dmath{a} $ from each plate. Both plates are grounded. What is the electric potential in the region bounded by the plates at large distances from the plates' intersection?}
 \begin{itemize}
 	\item Assume $ r = 0 $ along the line connecting the two plates. For a single plate, we could solve the problem with the method of images---see the previous exercise set. With two plates we proceed analogously, with a mirror image for each plate. Because of the two reflections from the two plates, we end up with three imaginary charges plus the one original one in a quadrupole arrangement. (This is hard to describe in words, it is best to see a picture). For large $ r $, the charge arrangement will have the field of an electric quadrupole. Solving the problem thus reduces to a multipole expansion of the electric potential to the quadrupole term.  
 \end{itemize}	
@@ -1072,6 +1135,7 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 \end{itemize}
 
 
+\newpage
 \section{Seventh Exercise Set}
 
 \subsection{Theory: Magnetic Vector Potential and the Biot-Savart Law}
@@ -1128,7 +1192,7 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 \end{itemize}
 
 \subsection{Magnetic Field of a Circular Current Loop}
-\textit{A closed conducting loop of radius $ a $ carries current $ I $. What is the magnetic vector potential far from the conducting loop?}
+\textit{A closed conducting loop of radius $ \dmath{a} $ carries current $ \dmath{I} $. What is the magnetic vector potential far from the conducting loop?}
 \begin{itemize}
 	\item Our starting point is the vector potential of a one-dimensional conductor from the theory section, i.e.
 	\begin{equation*}
@@ -1196,7 +1260,7 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 \end{itemize}
 
 \subsection{Magnetic Field of a Rotating Charged Disk}
-\textit{Consider a charged, insulating disk with uniform surface charge density $ \sigma $ and radius $ a $. The disk rotates uniformly about an axis through its center with constant angular speed $ \omega $. Find the magnetic field along the axis of rotation.}
+\textit{Consider a charged, insulating disk with uniform surface charge density $ \dmath{\sigma} $ and radius $ \dmath{a} $. The disk rotates uniformly about an axis through its center with constant angular speed $ \dmath{\omega} $. Find the magnetic field along the axis of rotation.}
 \begin{itemize}
 	\item We choose a coordinate system so the disk lies in the $ x, y $ plane and the rotation axis coincides with the $ z $ axis, so $ \bm{\omega} = (0, 0, \omega) $. Start with the general Biot-Savart law
 	\begin{equation*}
@@ -1310,6 +1374,7 @@ where $ \uvec{n} $ is the normal to the surface $ \partial V $ enclosing the cha
 	
 \end{itemize}
 
+\newpage
 \section{Eighth Exercise Set}
 
 \textbf{Theory: Magnetic Force}\vspace{2mm}
@@ -1321,7 +1386,7 @@ The magnetic force $ \vec{F} $ on the matter contained in the region of space en
 where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 
 \subsection{Magnetic Force in a Coaxial Cable}
-\textit{A long coaxial cable consists of a thin inner wire and outer sheath with radius $ a $. The inner wire carries a current $ I $, and we connect the sheath to the inner wire at the cable's ends so that the current $ I $ returns along the outer sheath in the opposite direction as the current along the inner wire. Find the magnetic force per unit length on the outer sheath.}
+\textit{A long coaxial cable consists of a thin inner wire and outer sheath with radius $ \dmath{a} $. The inner wire carries a current $ \dmath{I} $, and we connect the sheath to the inner wire at the cable's ends so that the current $ \dmath{I} $ returns along the outer sheath in the opposite direction as the current along the inner wire. Find the magnetic force per unit length on the outer sheath.}
 
 \begin{itemize}
 	\item There are two contributions to the magnetic force on the sheath: the repulsive, radially outward force between the sheath and the inner wire and an attractive ``surface tension'' force distributed across the sheath's surface, which carries uniformly distributed current $ I $ (think of the sheath as a collection of parallel conducting wires, which attract each other).
@@ -1373,7 +1438,7 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 
 
 \subsection{Tension in a Toroidal Inductor}
-\textit{A toroidal inductor with $ N $ coils radius $ r_{1} $ and cross-sectional radius $ r_{2} $ carries a current $ I $. Find the tension force on a single coil if $ r_{1} \gg r_{2} $.}
+\textit{A toroidal inductor with $ \dmath{N} $ coils radius $ \dmath{r_{1}} $ and cross-sectional radius $ \dmath{r_{2}} $ carries a current $ \dmath{I} $. Find the tension force on a single coil if $ \dmath{r_{1} \gg r_{2}} $.}
 \begin{itemize}
 	\item First, we find the magnetic field inside the inductor with Ampere's law using a closed circular path of radius $ r \in (r_{1}, r_{1} + r_{2}) $ in the inductor's equatorial plane. Ampere's law reads
 	\begin{equation*}
@@ -1409,7 +1474,9 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 \end{itemize}
 
 \subsection{Resistance of a Thin Conducting Plate}
-\textit{Consider a conducting plate is half of a thin annulus with inner radius $ r_{1} $, outer radius $ r_{2} $, thickness $ h $ and conductivity $ \sigma $ with electrodes at each end.  Find the plate's electric resistance $ R $ when we establish a potential difference $ U_{0}$ between the electrodes at the plate's ends.}
+\begin{figurequestion}{8-3}{\defaultQuestionWidth}{0.25}
+Consider a conducting plate is half of a thin annulus with inner radius $ \dmath{r_{1}} $, outer radius $ \dmath{r_{2}} $, thickness $ \dmath{h} $ and conductivity $ \dmath{\sigma} $ with electrodes at each end.  Find the plate's electric resistance $ \dmath{R} $ when we establish a potential difference $ \dmath{U_{0}}$ between the electrodes at the plate's ends.
+\end{figurequestion}
 
 \begin{itemize}
 	\item We first find the current density in the conducting plate using Ohm's law
@@ -1470,6 +1537,7 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	\end{equation*}
 \end{itemize}
 
+\newpage
 \section{Ninth Exercise Set}
 
 \textbf{Theory: Inductance}
@@ -1493,10 +1561,9 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 
 
 \subsection{Mutual Inductance}
-
-
-\textit{Consider two long, parallel wires of length $ l $ separated by a distance $ d \ll l $ and connected at their endpoints to form a long conducting loop. We place a square frame with side length $ \sqrt{2}d $ between the wires and supply the frame with an alternating current source $ I_{1} = I_{1_{0}}\sin \omega t $. Find the system's mutual inductivity and the induced current in the wires. Neglect Ohmic losses, and assume $ a \ll d $ where $ a $ is the wires' radius.}
-
+\begin{figurequestion}{9-1}{\defaultQuestionWidth}{0.35}
+Consider two long, parallel wires of length $ \dmath{l} $ separated by a distance $ \dmath{d \ll l} $ and connected at their endpoints to form a long conducting loop. We place a square frame with side length $ \dmath{\sqrt{2}d} $ between the wires and supply the frame with an alternating current source $ \dmath{I_{1} = I_{1_{0}}\sin \omega t} $. Find the system's mutual inductivity and the induced current in the wires. Neglect Ohmic losses, and assume $ \dmath{a \ll d} $ where $ \dmath{a} $ is the wires' radius.
+\end{figurequestion}
 
 
 \vspace{2mm}
@@ -1603,7 +1670,7 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 \end{itemize}
 
 \subsection{Cabrera Experiment---Magnetic Monopoles}
-\textit{Consider a superconducting current loop with non-zero inductance $ L$, radius $ a $ and a built-in ammeter. Assume a magnetic monopole passes through the loop along the axis of symmetry. Find the resulting current pulse in the loop.}
+\textit{Consider a superconducting current loop with non-zero inductance $ \dmath{L} $, radius $ \dmath{a} $ and a built-in ammeter. Assume a magnetic monopole passes through the loop along the axis of symmetry. Find the resulting current pulse in the loop.}
 \begin{itemize}
 	\item First, the magnetic field of a hypothetical monopole is
 	\begin{equation*}
@@ -1686,10 +1753,13 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 \end{itemize}
 
 
+\newpage
 \section{Tenth Exercise Set}
 
 \subsection{Skin Effect in a Ribbon-Like Conductor}
-\textit{Consider a long conducting ribbon of conductivity $ \sigma $, width $ a $, height $ b $ and length $ l $ where $ l \gg b \gg a $. We place ideal electrodes at each end of the ribbon, and connect the electrodes to an alternating voltage source with frequency $ \omega $. Find the dependence of the conductor's impedance on frequency and investigate the high and low-frequency limits.}
+\begin{figurequestion}{10-1}{\defaultQuestionWidth}{0.3}
+Consider a long conducting ribbon of conductivity $ \dmath{\sigma} $, width $ \dmath{a} $, height $ \dmath{b} $ and length $ \dmath{l} $ where $ \dmath{l \gg b \gg a} $. We place ideal electrodes at each end of the ribbon, and connect the electrodes to an alternating voltage source with frequency $ \dmath{\omega} $. Find the dependence of the conductor's impedance on frequency and investigate the high and low-frequency limits.
+\end{figurequestion}
 
 \begin{itemize}
 	\item Our plan is to solve for the electric field $ \E(t) $ in the ribbon, use $ \E $ to find the potential difference $ U $, and finally use $ U $ to find the ribbon's impedance. We start with the relevant Maxwell equations, which are
@@ -1848,9 +1918,9 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 \subsection{Power in a Coaxial and Cylindrical Conductor}
 \textit{Find the electromagnetic energy flow (power) through:}
 \begin{enumerate}
-	\item \textit{The cross section of a coaxial cable with inner and outer radii $ a $ and $ b $, respectively, and carrying current $ I $, of length $ l $, with potential difference $ U $ between the inner and outer conductor. Neglect resistive losses.}
+    \item \textit{The cross section of a coaxial cable with inner and outer radii $ \dmath{a} $ and $ \dmath{b} $, respectively, and carrying current $ \dmath{I} $, of length $ \dmath{l} $, with potential difference $ \dmath{U} $ between the inner and outer conductor. Neglect resistive losses.}
 	
-	\item \textit{The lateral surface of a long, straight cylindrical conductor of radius $ a $, length $ l $, conductivity $ \sigma $ and carrying a current $ I $ with a potential difference $ U $ between the cylinder ends.}
+    \item \textit{The lateral surface of a long, straight cylindrical conductor of radius $ \dmath{a} $, length $ \dmath{l} $, conductivity $ \dmath{\sigma} $ and carrying a current $ \dmath{I} $ with a potential difference $ \dmath{U} $ between the cylinder ends.}
 \end{enumerate}
 
 \textbf{Lossless Coaxial Conductor}
@@ -1939,10 +2009,12 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 \end{itemize}
 
 \subsection{Cylindrical Conductor with a Slit}
-\textit{Consider a long cylindrical conductor of radius $ a $ carrying a current $ I $. We cut a narrow slit of width $ d \ll r $ through the conductor's cross section. Find the energy flow through the slit's lateral surface.}
+\begin{figurequestion}{11-1}{\defaultQuestionWidth}{0.2}
+Consider a long cylindrical conductor of radius $ \dmath{a} $ and cross-sectional area $ \dmath{S} $ carrying a current $ \dmath{I} $. We cut a narrow slit of width $ \dmath{d \ll a} $ through the conductor in a plane parallel to the circular cross section. Determine the magnitude and direction of the electric and magnetic fields in the slit, then calculate the energy flow through the slit's lateral surface and confirm the validity of Poynting's theorem for conservation of electromagnetic energy.
+\end{figurequestion}
 
 \begin{itemize}
-	\item Because of the current $ I $, positive charge accumulates on one surface of the slit and negative charge on the other. Because $ d \ll r $, we can thus treat the two surfaces of the slit as parallel-plate capacitor. 
+	\item Because of the current $ I $, positive charge accumulates on one surface of the slit and negative charge on the other. Because $ d \ll a $, we can thus treat the two surfaces of the slit as parallel-plate capacitor. 
 	
 	\item The charge accumulating on the slit is $ q(t) = It $, and, using the model of a parallel-plate capacitor, the corresponding electric field is
 	\begin{equation*}
@@ -1994,10 +2066,11 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	Up to a negative sign (depending on the direction of current), $ \pdv{W_{\text{EM}}}{t} $ and $ P $ are equal, indicating that energy is conserved, as it must be.
 \end{itemize}
 
+\newpage
 \section{Eleventh Exercise Set}
 
 \subsection{A Radially Polarized Sphere}
-\textit{Consider a radially polarized sphere of radius $ a $ in which electric polarization points in the radial direction and grows with increasing radius as $ \P(\r) = k \r $ where $ k $ is a constant. Find the volume density of bound charges, the surface density of bound charges, and the total bound charge. Finally, find the electric field due to the polarized sphere.}
+\textit{Consider a radially polarized sphere of radius $ \dmath{a} $ in which electric polarization points in the radial direction and grows with increasing radius as $ \dmath{\P(\r) = k \r} $ where $ \dmath{k} $ is a constant. Find the volume density of bound charges, the surface density of bound charges, and the total bound charge. Finally, find the electric field due to the polarized sphere.}
 
 \begin{itemize}
 	\item Polarization and bound charge density $ \rho_{\text{b}} $ are related by
@@ -2061,7 +2134,7 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 \end{itemize}
 
 \subsection{A Halved Polarized Sphere}
-\textit{Consider a sphere of radius $ a $ with homogeneous (uniform) polarization $ \P $ pointing in the $ z $ direction. Find the electric field inside and outside the sphere. We then cut the sphere in half in a plane perpendicular to the direction of polarization and slightly separate the halves to form a capacitor. Find the electric field in the slit between the halves.}
+\textit{Consider a sphere of radius $ \dmath{a} $ with homogeneous (uniform) polarization $ \dmath{\P} $ pointing in the $ \dmath{z} $ direction. Find the electric field inside and outside the sphere. We then cut the sphere in half in a plane perpendicular to the direction of polarization and slightly separate the halves to form a capacitor. Find the electric field in the slit between the halves.}
 
 \begin{itemize}
 	\item First, we find volume density of bound charges, which is
@@ -2185,7 +2258,7 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 \end{itemize}
 
 \subsection{Parallel-Plate Capacitor with an Anisotropic Dielectric}
-\textit{Consider a parallel-plate capacitor with plate separation $ d $, plate surface area $ S $, and the intra-plate space filled with a dielectric insulator. whose dielectric tensor has components $ \e_{1} $, $ \e_{2} $ and $ \e_{2} $. The principle axes corresponding to $ \e_{1} $ and $ \e_{3} $ are parallel to the capacitor plates, but the principle axis corresponding to $ \e_{2} $ makes an angle $ \phi $ with the normal to the plates. Find the capacitor's capacitance $ C $.}
+\textit{Consider a parallel-plate capacitor with plate separation $ \dmath{d} $, plate surface area $ \dmath{S} $, and the intra-plate space filled with a dielectric insulator. whose dielectric tensor has components $ \dmath{\e_{1}} $, $ \dmath{\e_{2}} $ and $ \dmath{\e_{2}} $. The principle axes corresponding to $ \dmath{\e_{1}} $ and $ \dmath{\e_{3}} $ are parallel to the capacitor plates, but the principle axis corresponding to $ \dmath{\e_{2}} $ makes an angle $ \dmath{\phi} $ with the normal to the plates. Find the capacitor's capacitance $ \dmath{C} $.}
 
 % Work in a two-dimensional coordinate system in which the $ y $ axis coincides with the vertical separation between the capacitor plates.
 
@@ -2300,9 +2373,10 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 
 
 
+\newpage
 \section{Twelfth Exercise Set}
 \subsection{Point Dipole in a Spherical Dielectric Cavity}
-\textit{Consider an empty spherical cavity of radius $ a $ within a vast dielectric material with permittivity $ \e $. We place an electric dipole with dipole momentum $ \pe $ in the cavity. What is the resulting electric potential inside and outside the cavity? Find the resulting effective dipole moment $ \pe' $ in the dielectric.}
+\textit{Consider an empty spherical cavity of radius $ \dmath{a} $ within a vast dielectric material with permittivity $ \dmath{\e} $. We place an electric dipole with dipole momentum $ \dmath{\pe} $ in the cavity. What is the resulting electric potential inside and outside the cavity? Find the resulting effective dipole moment $ \dmath{\pe'} $ in the dielectric.}
 \begin{itemize}
 	\item  We choose our coordinate system so that the dipole $ \pe $ within the cavity points in the $ z $ direction.
 	
@@ -2422,7 +2496,7 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 
 
 \subsection{Dielectric Constant of Cold Plasma} \label{ss:cold-plasma}
-\textit{Find the relative permittivity $ \e $ of a cold plasma, then find the dispersion relation for electromagnetic waves in the plasma.}
+\textit{Find the relative permittivity $ \dmath{\e} $ of a cold plasma, then find the dispersion relation for electromagnetic waves in the plasma.}
 \begin{itemize}
 	\item Plasma is a gas of ions, i.e. a gas of free electrons that have been ionized from their positive nuclear cores. We assume the plasma is cold to neglect thermal motion. Since the nuclei are much more massive than electrons, we assume the atoms are at rest as a first approximation. 
 	
@@ -2558,6 +2632,7 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	As expected, $ v_{\mathrm{group}} < c_{0} $, in agreement with special relativity. As a final comment, note that $ v_{\mathrm{phase}}v_{\mathrm{group}} = c_{0}^{2} $.
 \end{itemize}
 
+\newpage
 \section{Thirteenth Exercise Set}
 \subsection{Theory: Electromagnetic Wave Propagation in Waveguides}
 \begin{itemize}
@@ -2723,12 +2798,12 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 \end{itemize}
 
 \subsection{A Parallel-Plate Waveguide}
-\textit{Consider a waveguide consisting to two large parallel conducting plates separated by the distance $ a $, in which waves propagate along the $ z $ axis. For both transverse magnetic and transverse electric wave propagation, find:}
+\textit{Consider a waveguide consisting to two large parallel conducting plates separated by the distance $ \dmath{a} $, in which waves propagate along the $ \dmath{z} $ axis. For both transverse magnetic and transverse electric wave propagation, find:}
 \begin{enumerate}
 	\item \textit{The solution for the electric field in the waveguide}
 	\item \textit{The dispersion relation relating wave vector and wave frequency}
-	\item \textit{The wave impedance $ Z $}
-	\item \textit{The ratio of electric field amplitudes $ E_{x} $ to $ E_{z} $}
+    \item \textit{The wave impedance $ \dmath{Z} $}
+    \item \textit{The ratio of electric field amplitudes $ \dmath{E_{x}} $ to $ \dmath{E_{z}} $}
 \end{enumerate}
 
 \vspace{2mm}
@@ -2953,10 +3028,11 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 	
 \end{itemize}
 
+\newpage
 \section{Fourteenth Exercise Set}
 
 \subsection{Cylindrical Waveguide}
-\textit{Consider a waveguide with a circular cross section of radius $ a $. Find the time-dependent solution for the electric and magnetic field in the waveguide, along with the dispersion relation, for both TM and TE propagation modes.}
+\textit{Consider a waveguide with a circular cross section of radius $ \dmath{a} $. Find the time-dependent solution for the electric and magnetic field in the waveguide, along with the dispersion relation, for both TM and TE propagation modes.}
 
 \begin{itemize}
 	\item We begin with the wave equation for either $ E_{z} $ or $ H_{z} $ in a pipe-like waveguide:
@@ -3308,7 +3384,7 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 \end{itemize}
 
 \subsection{TEM Waves in a Coaxial Waveguide}
-\textit{Consider a coaxial waveguide with an inner conductor of radius $ a $ and an outer sheath of radius $ b $. To spice things up, we fill the interior with a material with the same dielectric constant as the cold plasma} in \hyperref[ss:cold-plasma]{Subsection \ref{ss:cold-plasma}}. \textit{Find the dispersion relation and impedance for TEM waves in the coaxial waveguide.}
+\textit{Consider a coaxial waveguide with an inner conductor of radius $ \dmath{a} $ and an outer sheath of radius $ \dmath{b} $. To make things more interesting, we fill the interior with a material with the same dielectric constant as the cold plasma} in \hyperref[ss:cold-plasma]{Subsection \ref{ss:cold-plasma}}. \textit{Find the dispersion relation and impedance for TEM waves in the coaxial waveguide.}
 \begin{itemize}
 	\item Because the waveguide is filled with a dielectric material, the wave speed is $ c < c_{0} $, and the dispersion relation is
 	\begin{equation*}
