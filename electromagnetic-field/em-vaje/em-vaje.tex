@@ -4,7 +4,7 @@
 \usepackage{amssymb}
 \usepackage{esint}
 \usepackage{mathtools}
-\usepackage{xcolor}
+\usepackage[svgnames]{xcolor}
 \usepackage{bm} % for bold vectors in math mode
 \usepackage{physics} % for differential notation, etc...
 \usepackage[separate-uncertainty=true]{siunitx}
@@ -23,8 +23,7 @@
 \newcommand{\diff}{\mathop{}\!\mathrm{d}} % differential
 \newcommand{\eqtext}[1]{\qquad \text{#1} \qquad}
 
-% \newcommand{\dmath}[1]{\color{blue}#1}  % to differentiate math inside questions, where the regular text is italicized.
-\newcommand{\dmath}[1]{\textcolor{blue}{#1}}  % to differentiate math inside questions, where the regular text is italicized.
+\newcommand{\dmath}[1]{\textcolor{Maroon}{#1}}  % to differentiate math inside questions, where the regular text is italicized.
 
 \renewcommand{\vec}[1]{\bm{#1}} % for vectors
 \newcommand{\uvec}[1]{\hat{\vec{#1}}} % for vectors
@@ -124,7 +123,7 @@
 \begin{center}
 \textbf{About These Notes}
 \end{center}
-These are my notes from the Exercises portion of the class \textit{Elektromagnetno Polje} (Electromagnetic Field), a required course for third-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. The exact problem sets herein are specific to the physics program at the University of Ljubljana, but the content is fairly standard for a late-undergraduate electromagnetism course. I am making the notes publicly available in the hope that they might help others learning similar material---the most up-to-date version can be found on \href{https://github.com/ejmastnak/fmf/tree/main/electromagnetic-field}{\underline{GitHub}}.
+These are my notes from the Exercises portion of the course \textit{Elektromagnetno Polje} (Electromagnetic Field), a required course for third-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. The exact problem sets herein are specific to the physics program at the University of Ljubljana, but the content is fairly standard for a late-undergraduate electromagnetism course. I am making the notes publicly available in the hope that they might help others learning similar material---the most up-to-date version can be found on \href{https://github.com/ejmastnak/fmf/tree/main/electromagnetic-field}{\underline{GitHub}}.
 
 \vspace{2mm}
 \textit{Navigation}: For easier document navigation, the table of contents is ``clickable'', meaning you can jump directly to a section by clicking the colored section names in the table of contents. Unfortunately, \textit{the clickable links do not work in most online or mobile PDF viewers}; you have to download the file first.
@@ -1475,7 +1474,7 @@ where $ \uvec{n} $ is the normal vector to the region's boundary $ \partial V $.
 
 \subsection{Resistance of a Thin Conducting Plate}
 \begin{figurequestion}{8-3}{\defaultQuestionWidth}{0.25}
-Consider a conducting plate is half of a thin annulus with inner radius $ \dmath{r_{1}} $, outer radius $ \dmath{r_{2}} $, thickness $ \dmath{h} $ and conductivity $ \dmath{\sigma} $ with electrodes at each end.  Find the plate's electric resistance $ \dmath{R} $ when we establish a potential difference $ \dmath{U_{0}}$ between the electrodes at the plate's ends.
+Consider a conducting plate consisting of half of a thin annulus with inner radius $ \dmath{r_{1}} $, outer radius $ \dmath{r_{2}} $, thickness $ \dmath{h} $ and conductivity $ \dmath{\sigma} $, with electrodes placed at each end.  Find the plate's electric resistance $ \dmath{R} $ when we establish a potential difference $ \dmath{U_{0}}$ between the electrodes at the plate's ends.
 \end{figurequestion}
 
 \begin{itemize}
