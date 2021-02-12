@@ -119,7 +119,7 @@
 \begin{center}
 \textbf{About These Notes}
 \end{center}
-These notes provide answers to typical questions\footnote{The oral exam questions are taken from a list of roughly 100 typical exam questions compiled in the year 2006. The original notes, as well as my English interpretations, are included in the \href{https://github.com/ejmastnak/fmf/tree/main/electromagnetic-field}{\underline{GitHub directory}} containing these notes.} from the oral exam required to pass the course \textit{Elektromagnetno polje} (Electromagnetic Field), a required course for third-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. I wrote the notes when studying for the exam and am making them publicly available in the hope that they might help others learning the same material. Although the exact oral exam questions are specific to the physics program at the University of Ljubljana, the content is fairly standard for an undergraduate electromagnetism course and might be useful to others learning similar material. The most up-to-date version can be found on \href{https://github.com/ejmastnak/fmf/tree/main/electromagnetic-field}{\underline{GitHub}}.
+These notes provide answers to typical questions\footnote{The oral exam questions are taken from a list of roughly 100 typical exam questions compiled in the year 2006. The original notes, as well as my English interpretations, are included in the \href{https://github.com/ejmastnak/fmf/tree/main/electromagnetic-field/em-oral-study-guide}{\underline{GitHub directory}} containing these notes.} from the oral exam required to pass the course \textit{Elektromagnetno polje} (Electromagnetic Field), a required course for third-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. I wrote the notes when studying for the exam and am making them publicly available in the hope that they might help others learning the same material. Although the exact oral exam questions are specific to the physics program at the University of Ljubljana, the content is fairly standard for an undergraduate electromagnetism course and might be useful to others learning similar material. The most up-to-date version can be found on \href{https://github.com/ejmastnak/fmf/tree/main/electromagnetic-field/}{\underline{GitHub}}.
 
 \vspace{2mm}
 \textit{Navigation}: For easier document navigation, the table of contents is ``clickable'', meaning you can jump directly to a section by clicking the colored section names in the table of contents. Unfortunately, the \textit{clickable links do not work in most online or mobile PDF viewers}; you have to download the file first.
@@ -154,14 +154,13 @@ These notes provide answers to typical questions\footnote{The oral exam question
 
 \section{Electrostatics}
 
-\subsection{Maxwell Equations for Electrostatics}
-\textit{Write the first two Maxwell equations for a static electric field. State the equation for electric field lines and derive the Poisson equation.}
+\subsection{Electric Field Lines and the First Maxwell Equation}
+\textit{Define electric field lines and electric circulation, and discuss the important properties of electric field lines. State and derive the first Maxwell equation in the regime of electrostatics and discuss its relationship to both electric field lines and electric potential.}
     
-\subsubsection{Electric Field Lines}
 \begin{itemize}
-    \item Electric field lines follow the direction of the electric field, and are defined in terms of the arc length parameter $ s $ via
+    \item Electric field lines follow the direction of the electric field, and are defined in terms of the arc length parameter $ s $ as
     \begin{equation*}
-        \dot{\vec{r}}(s) = \dv{\r}{s} = \frac{\E(\r(s))}{\abs{\E(\r(s))}}
+        \dot{\vec{r}}(s) = \dv{\r}{s} = \frac{\E(\r(s))}{\abs{\E(\r(s))}}.
     \end{equation*}
 
     \item Electric field lines obey the following important properties:
@@ -174,21 +173,23 @@ These notes provide answers to typical questions\footnote{The oral exam question
 
         \item Electric field lines are not closed curves.
     \end{enumerate}
-\end{itemize}
 
-\subsubsection{Electric Circulation and the First Maxwell Equation}
-\begin{itemize}
+    \item The electric circulation around a closed curve $ C $ is defined as the line integral
+    \begin{equation*}
+        \Gamma_{\text{E}} = \oint_{C} \E \cdot \diff \r,
+    \end{equation*}
+    which can be thought of a ``sum'' of the tangentional component of the electric field around the loop. The electric circulation around an arbitrary closed loop in a static electric field is zero. In electrostatics, electric circulation thus obeys
+    \begin{equation*}
+        \Gamma_{\text{E}} = \oint_{C} \E \cdot \diff \r = 0.
+    \end{equation*}
+
     \item The first of the Maxwell equations in electrostatics is
     \begin{equation*}
         \curl \E = 0.
     \end{equation*}
-    We derive this equation from the electric circulation around a closed curve $ C $, which is defined as the line integral
-    \begin{equation*}
-        \Gamma_{\text{E}} = \oint_{C} \E \cdot \diff \r,
-    \end{equation*}
-    which can be thought of a ``sum'' of the tangentional component of the electric field around the loop. 
-
-    \item Because the electrostatic field is conservative, the electric circulation of an arbitrary closed loop in a static electric field is zero. As a result, we have
+    This equation corresponds to the fact that, in electrostatics, the electric circulation around a closed curve is zero.
+    \begin{quote}
+        \textit{Derivation}: We begin with the electrostatic identity for electric circulation
     \begin{equation*}
         \Gamma_{\text{E}} = \oint_{C} \E \cdot \diff \r = 0.
     \end{equation*}
@@ -197,26 +198,88 @@ These notes provide answers to typical questions\footnote{The oral exam question
         0 \equiv \Gamma_{\text{E}} = \oint_{C}\E \cdot \diff \r = \iint_{S} \curl \E \cdot \diff \vec{S} \implies \curl \E = 0.
     \end{equation*}
     In other words, the curl of any static electric field is zero. Note that this result does not hold in general for time-varying electric fields.
+    \end{quote}
 
+    \item The fact that $ \curl \E = 0 $ implies that the electric field is conservative. As a result, we can assign the electric field an electrostatic potential, which we define via
+    \begin{equation*}
+        \E = - \grad \phi.
+    \end{equation*}
+    
 \end{itemize}
 
-\subsubsection{Gauss's Law, the Second Maxwell Equation and the Poisson Equation}
+\subsection{The Second Maxwell Equation and the Poisson Equation}
+\textit{State and derive Gauss's law (the second Maxwell equation) in both integral and differential form, then use Gauss's law to derive the Poisson equation for electrostatic potential.}
+
 \begin{itemize}
-    \item The second Maxwell equation for electrostatics reads
+
+    \item The second Maxwell equation for electrostatics, also called Gauss's law, reads
     \begin{equation*}
-        \div \E = \frac{\rho}{\ee}.
+        \oiint_{\partial V} \E \cdot \diff \vec{S} = \frac{1}{\ee} \iiint_{V} \rho(\r)\dr \qquad \text{or} \qquad \div \E = \frac{\rho}{\ee}.
     \end{equation*}
-    This equation is also the differential form of Gauss's law. To derive these results, we start with the integral form of Gauss's law for the electric flux through a closed surface $ S $
+
+    \item The Poisson equation for the electrostatic potential reads
     \begin{equation*}
-        \Phi_{\text{E}} = \oiint \E \cdot \diff \vec{S} = \frac{Q_{\text{enc}}}{\ee},
+        \laplacian \phi = - \frac{\rho}{\ee}.
     \end{equation*}
-    where $ Q_{\text{enc}} $ is the total electric charge enclosed within the surface $ S $. 
+    \begin{quote}
+        \textit{Derivation}: We first write electric field in terms of potential, $ \E = - \grad \phi $, and then substitute this into the differential form of Gauss's law to get
+        \begin{equation*}
+            \frac{\rho}{\ee} \equiv \div \E = \div \big[- \grad \phi \big]= - \laplacian \phi.
+        \end{equation*}
+        The result is the Poisson equation
+        \begin{equation*}
+            \laplacian \phi = - \frac{\rho}{\ee}.
+        \end{equation*}
+    \end{quote}
     
-	\item To find the differential form of Gauss's law, we first write $ Q_{\text{enc}} $ in terms of charge density to get
+    \item In empty space (i.e. in the absence of electric charge) charge density is simply $ \rho(\r) = 0 $, and the Poisson equation reduces to the Laplace equation
+    \begin{equation*}
+        \laplacian \phi = 0.
+    \end{equation*}
+    
+\end{itemize}
+
+\subsubsection{Derivation: Integral Form of Gauss's Law}
+\begin{itemize}
+	\item Consider a distribution of point charges $ \{q_{i}\} $ at the positions $ \{\r_{i}\} $. We enclose the charges with a sphere of radius $ r $ with normal vector $ \uvec{n} $. In general, the electric flux through a closed surface containing the charges is
 	\begin{equation*}
-        \oiint_{\text{S}} \E \cdot \diff \vec{S} = \frac{Q_{\text{enc}}}{\ee} = \frac{1}{\ee}\iiint_{V}\rho(\r) \dr.
+		\Phi_{\text{E}} = \oiint_{S} \E \cdot \diff \vec{S} = \oiint_{S} \E \cdot \uvec{n} \diff S = \oiint_{S} E \diff S \cos \theta,
 	\end{equation*}
-	We then recall the divergence theorem, which reads
+	where $ \theta $ is the angle between the electric field and normal vector to the surface.
+	
+    \item In our case, for the collection of point charges $ \{q_{i}\} $, which have electric fields of the form $ \E_{i} = \frac{q_{i}}{4\pi \ee}\frac{\r - \r_{i}}{\abs{\r - \r_{i}}^{3}} $, the electric flux is
+	\begin{align*}
+		\Phi_{\text{E}} &= \oiint_{S} \E \cdot \diff \vec{S} = \sum_{i} \frac{q_{i}}{4\pi \ee} \oiint_{S} \frac{\cos \theta_{i}}{\abs{\r - \r_{i}}^{2}} \diff S \\
+		& = \frac{1}{4\pi \ee} \left[ \oiint_{S} \frac{ q_{1} \cos \theta_{1}}{\abs{\r - \r_{2}}^{2}} \diff S + \oiint_{S} \frac{ q_{2} \cos \theta_{2}}{\abs{\r - \r_{2}}^{2}} \diff S  + \cdots \right],
+	\end{align*}
+	where $ \theta_{i} $ is the angle between each particle's electric field and the normal vector $ \uvec{n} $. 
+	
+	\item Next, note that for charges at the origin, the angle $ \theta_{i} $  is zero. We choose the origin so that $ \r_{1} = 0 $. Then $ \theta_{1} = 0 $, $ \cos \theta_{1} = 1 $ and the first integral is (using $ \diff S = \sin \theta \diff \theta \diff \phi $)
+	\begin{equation*}
+		\oiint_{S} \frac{q_{1}}{r^{2}} \diff S = \int_{\phi = 0}^{2\pi} \int_{\theta = 0}^{\pi} \frac{q_{1}}{r^{2}}r^{2} \sin \theta \diff \theta \diff \phi = 4\pi q_{1}.
+	\end{equation*}
+	The idea is to play the same game for each integral, switching the origin one at a time and arguing that the value of the integral is the same regardless of the choice of origin. The end result is Gauss's law:
+	\begin{equation*}
+		\Phi_{\text{E}} = \oiint_{S} \E \cdot \diff \S = \frac{1}{4\pi \ee} \big[4\pi q_{1} + 4\pi q_{2} + \cdots \big] = \frac{Q_{\text{enc}}}{\ee},
+	\end{equation*}
+	where $ Q_{\text{enc}} = \sum_{i} q_{i} $. In terms of charge density, this relationship reads
+	\begin{equation*}
+		\Phi_{\text{E}} = \oiint_{\partial V} \E \cdot \diff \vec{S} = \frac{1}{\ee}\iiint_{V} \rho(\r) \dr,
+	\end{equation*}
+	where $ \partial V $ denotes the boundary surface enclosing the charges in the volume $ V $.
+	
+\end{itemize}
+
+
+\textbf{Derivation: Differential Form of Gauss's Law}
+\begin{itemize}
+    
+    \item We begin with the just-derived integral form of Gauss's law, i.e.
+    \begin{equation*}
+		\oiint_{\partial V} \E \cdot \diff \vec{S} = \frac{1}{\ee}\iiint_{V} \rho(\r) \dr,
+    \end{equation*}
+    
+	\item We then recall the divergence theorem, which reads
 	\begin{equation*}
 		\oiint_{\partial V} \E \cdot \diff \vec{S} = \iiint_{V}\div \E \dr.
 	\end{equation*}
@@ -224,11 +287,15 @@ These notes provide answers to typical questions\footnote{The oral exam question
 	\begin{equation*}
 		\oiint_{\partial V} \E \cdot \diff \vec{S} = \iiint_{V}\div \E \dr = \frac{1}{\ee} \iiint_{V} \rho(\r) \dr.
 	\end{equation*}
-	We then equate the integrands in the last equality to get the desired differential form of Gauss's law and the second electrostatic Maxwell equation
+	We then equate the integrands in the last equality to get the desired differential form of Gauss's law and the second electrostatic Maxwell equation, i.e.
 	\begin{equation*}
 		\div \E = \frac{\rho}{\ee}.
 	\end{equation*}
 
+\end{itemize}
+
+\subsubsection{Derivation: Poisson Equation}
+\begin{itemize}
     \item The Poisson equation for the electrostatic potential $ \phi(\r) $ generated by a charge distribution $ \rho(\r) $ is
     \begin{equation*}
         \laplacian \phi = - \frac{\rho}{\ee}.
@@ -249,44 +316,13 @@ These notes provide answers to typical questions\footnote{The oral exam question
     
 \end{itemize}
     
-\subsubsection{Derivation: Integral Form of Gauss's Law}
-\begin{itemize}
-	\item Consider a distribution of point charges $ \{q_{i}\} $ at the positions $ \{\r_{i}\} $. We enclose the charges with a sphere of radius $ r $ with normal vector $ \uvec{n} $. In general, the electric flux through a closed surface containing the charges is
-	\begin{equation*}
-		\Phi_{\text{E}} = \oiint_{S} \E \cdot \diff \vec{S} = \oiint_{S} \E \cdot \uvec{n} \diff S = \oiint_{S} E \diff S \cos \theta,
-	\end{equation*}
-	where $ \theta $ is the angle between the electric field and normal vector to the surface.
-	
-    \item In our case, for the collection of point charges $ \{q_{i}\} $, which have electric fields of the form $ \E_{i} = \frac{q_{i}}{4\pi \ee}\frac{\r - \r_{i}}{\abs{\r - \r_{i}}^{3}} $, the electric flux is
-	\begin{align*}
-		\Phi_{\text{E}} &= \oiint_{S} \E \cdot \diff \vec{S} = \sum_{i} \frac{q_{i}}{4\pi \ee} \oiint_{S} \frac{\cos \theta_{i}}{\abs{\r - \r_{i}}^{2}} \diff S \\
-		& = \frac{1}{4\pi \ee} \left[ \oiint_{S} \frac{ q_{1} \cos \theta_{1}}{\abs{\r - \r_{2}}^{2}} \diff S + \oiint_{S} \frac{ q_{2} \cos \theta_{2}}{\abs{\r - \r_{2}}^{2}} \diff S  + \cdots \right],
-	\end{align*}
-	where $ \theta_{i} $ is the angle between each particle's $ \E $ field and the normal vector $ \uvec{n} $. 
-	
-	\item Next, note that for charges at the origin, the angle $ \theta_{i} $  is zero. We choose the origin so that $ \r_{1} = 0 $. Then $ \theta_{1} = 0 $, $ \cos \theta_{1} = 1 $ and the first integral is (using $ \diff S = \sin \theta \diff \theta \diff \phi $)
-	\begin{equation*}
-		\oiint_{S} \frac{q_{1}}{r^{2}} \diff S = \int_{\phi = 0}^{2\pi} \int_{\theta = 0}^{\pi} \frac{q_{1}}{r^{2}}r^{2} \sin \theta \diff \theta \diff \phi = 4\pi q_{1}.
-	\end{equation*}
-	The idea is to play the same game for each integral, switching the origin one at a time and arguing that the value of the integral is the same regardless of the choice of origin. The end result is Gauss's law:
-	\begin{equation*}
-		\Phi_{\text{E}} = \oiint_{S} \E \cdot \diff \S = \frac{1}{4\pi \ee} \big[4\pi q_{1} + 4\pi q_{2} + \cdots \big] = \frac{Q_{\text{enc}}}{\ee},
-	\end{equation*}
-	where $ Q_{\text{enc}} = \sum_{i} q_{i} $. In terms of charge density, this relationship reads
-	\begin{equation*}
-		\Phi_{\text{E}} = \oiint_{\partial V} \E \cdot \diff \vec{S} = \frac{1}{\ee}\iiint_{V} \rho(\r) \dr,
-	\end{equation*}
-	where $ \partial V $ denotes the boundary surface enclosing the charges in the volume $ V $.
-	
-\end{itemize}
 
 
 
 
 
-
-\subsection{Charge Distributions}
-\textit{Provide examples of a few common charge distributions. Derive the magnitude of the electric field's perpendicular component for a surface charge distribution.}
+\subsection{Examples of Charge Distributions}
+\textit{Provide examples of a few common charge distributions.}
     
 \vspace{2mm}
 \textbf{Point Charge} 
@@ -472,7 +508,7 @@ These notes provide answers to typical questions\footnote{The oral exam question
 \end{itemize}
 
 \subsection{Electrostatic Energy in an External Electric Field}
-\textit{Stat and derive the electrostatic energy of a charge distribution in an external electric field.}
+\textit{State and derive the electrostatic energy of a charge distribution in an external electric field.}
 
 \begin{itemize}
     \item The electrostatic energy $ W_{\text{E}} $ associated with a charge distribution $ \rho(\r) $ contained in the volume $ V $ placed in an external electric field $ \E(\r) $ is
