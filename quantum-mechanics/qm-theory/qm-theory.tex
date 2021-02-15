@@ -113,7 +113,7 @@
 \begin{center}
 \textbf{About These Notes}
 \end{center}
-These are my lecture notes from the course \textit{Kvanta Mehanika} (Quantum Mechanics), a mandatory course for third-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. The exact material herein is specific to the physics program at the University of Ljubljana, but the content is fairly standard for an late-undergraduate course in quantum mechanics. I am making the notes publicly available in the hope that they might help others learning the same material.
+These are my lecture notes from the course \textit{Kvanta Mehanika} (Quantum Mechanics), a mandatory course for third-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. The exact material herein is specific to the physics program at the University of Ljubljana, but the content is fairly standard for a late-undergraduate course in quantum mechanics. I am making the notes publicly available in the hope that they might help others learning the same material.
 
 
 \vspace{2mm}
@@ -3495,13 +3495,12 @@ We will now use the just-derived relations $ [L_{z}, L_{\pm}] = \pm \hbar L_{\pm
 	\begin{equation*}
 		\rho'(\r, t) = \abs{e^{i\delta}\P(\r, t)}^{2} = \rho(\r, t)
 	\end{equation*}
-	As an example, we consider the kinetic moment operator $ \pi $,
+    As an example, we consider the kinetic moment operator $ \vec{\pi} = \vec{p} - q\A $:
 	\begin{align*}
-		\mel{\P_{1}'}{\vec{\pi}'}{\P_{2}'} & = \mel{\P_{1}'}{\vec{p} - q\A'}{\P_{2}'} = \mel{e^{i\frac{1}{\hbar}\Lambda}\P_{1}}{\vec{p} - q(\A + \grad \Lambda)}{e^{i\frac{q}{\hbar}\Lambda}\P_{2}'}\\
-		& =  \mel{e^{i\frac{1}{\hbar}\Lambda}\P_{1}}{e^{i\frac{q}{\hbar}\Lambda}(\vec{p} - q \A)}{\P_{2}'} = \mel{\P_{1}}{(\vec{p} - q\A)}{\P_{2}}\\
-		& = \mel{\P_{1}}{\vec{\pi}}{\P_{2}}
+		\mel{\P_{1}'}{\vec{\pi}'}{\P_{2}'} & = \mel{\P_{1}'}{\vec{p} - q\A'}{\P_{2}'} = \mel{e^{i\frac{q}{\hbar}\Lambda}\P_{1}}{\vec{p} - q(\A + \grad \Lambda)}{e^{i\frac{q}{\hbar}\Lambda}\P_{2}}\\
+		& =  \mel{e^{i\frac{q}{\hbar}\Lambda}\P_{1}}{e^{i\frac{q}{\hbar}\Lambda}(\vec{p} - q \A)}{\P_{2}} = \mel{\P_{1}}{(\vec{p} - q\A)}{\P_{2}}\\
+		& = \mel{\P_{1}}{\vec{\pi}}{\P_{2}}.
 	\end{align*}
-	
 	
 	\iffalse
 
@@ -3571,7 +3570,7 @@ We will now use the just-derived relations $ [L_{z}, L_{\pm}] = \pm \hbar L_{\pm
 	
 	The corresponding wavefunction encoding the electron at the second junction is then
 	\begin{equation*}
-		\P_{\text{II}} = e^{i\delta_{1}} \P_{0_{1}} + e^{i\delta_{2}}\P_{0_{1}}
+		\P_{\text{II}} = e^{i\delta_{1}} \P_{0_{1}} + e^{i\delta_{2}}\P_{0_{2}}
 	\end{equation*}
 	where $ \P_{0_{1}} $ and $ \P_{0_{2}} $ are wavefunctions in the absence of $ \A $, while the phases in each branch are defined via
 	\begin{equation*}
@@ -4301,7 +4300,7 @@ We will now use the just-derived relations $ [L_{z}, L_{\pm}] = \pm \hbar L_{\pm
     
     \item Although $ \ket{m_{1}m_{2}} $ are not directly eigenstates of $ S^{2} $, we can expand the eigenstates $ \ket{sm} $ in the $ \ket{m_{1}m_{2}} $ basis in the form
     \begin{equation*}
-        \ket{sm} = \sum_{m_{1}m_{2}} s_{m_{1}m_{2}}\ket{m_{1}m_{2}}
+        \ket{sm} = \sum_{m_{1}m_{2}} c_{m_{1}m_{2}}\ket{m_{1}m_{2}}
     \end{equation*}
     where we sum over all $ m_{i} = \pm 1/2 $ obeying the condition $ m = m_{1} + m_{2} $. 
     

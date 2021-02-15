@@ -45,7 +45,7 @@
 \newcommand{\ee}{\epsilon_{0}}  % vacuum permittivity
 \newcommand{\eee}{\bm{\chi}}  % permittivity tensor
 \newcommand{\mm}{\mu_{0}}  % vacuum permeability (\m used for magnetic dipole moment)
-\newcommand{\pe}{\vec{p}_{e}}  % electric dipole moment
+\newcommand{\pe}{\vec{p}_{\text{e}}}  % electric dipole moment
 \newcommand{\m}{\vec{m}}  % magnetic dipole moment
 \renewcommand{\P}{\vec{P}}  % electric polarization
 
@@ -146,14 +146,16 @@ The exercises are led by Asst. Prof. Martin Klanj\v{s}ek, who has assembled the 
 
 \section{First Exercise Set}
 
-\subsection{Background Theory: Electric Field of a Charge Distribution}
+\textbf{Background Theory: Electric Field of a Charge Distribution}
+\vspace{2mm}
+
 The electric field of a spatial charge distribution with volume charge density $ \rho(\r) $ is
 \begin{equation*}
 	\vec{E}(\vec{r}) = \frac{1}{4\pi \ee}\iiint \frac{\rho(\tvec{r}) \diff^{3}\tvec{r} }{\abs{\vec{r} - \tvec{r}}^{2}} \frac{\vec{r} - \tvec{r}}{\abs{\vec{r} - \tvec{r}}},
 \end{equation*}
 where $ \tvec{r} $ is a placeholder variable for integration and $ \rho(\tvec{r}) \diff^{3}\tvec{r} $ is an infinitesimal element of charge at the position $ \tvec{r} $.
 
-\subsection{Charged Disk}
+\subsection{Electric Field of a Charged Disk}
 \textit{A charged disk has surface charge density $ \dmath{\sigma} $ and radius $ \dmath{a} $. Find the disk's electric field $ \dmath{E(z)} $ along an axis through the disk's center and normal to the disk. Analyze the limit behavior of $ \dmath{E(z)} $ for small and large $ \dmath{z} $.}
 \begin{itemize}
 	\item We begin by breaking the disk into concentric rings and integrating over the contributions $ \diff E $ of each ring, where $ r $ and $ \diff r $ represent the radius and thickness of a ring, respectively. We then further divide each ring into infinitesimal segments with area $ r \diff \phi \diff r $. Along the perpendicular $ z $ axis through the disk's center, a single such segment contributes the electric field

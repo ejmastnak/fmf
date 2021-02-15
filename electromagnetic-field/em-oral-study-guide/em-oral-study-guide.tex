@@ -52,7 +52,7 @@
 \newcommand{\e}{\epsilon}
 \newcommand{\ee}{\epsilon_{0}}  % vacuum permittivity
 \newcommand{\mm}{\mu_{0}}  % vacuum permeability
-\newcommand{\pe}{\vec{p}_{e}}  % electric dipole moment
+\newcommand{\pe}{\vec{p}_{\text{e}}}  % electric dipole moment
 \newcommand{\m}{\vec{m}}  % magnetic dipole moment
 \renewcommand{\j}{\vec{j}}  % electric current density
 
@@ -146,6 +146,7 @@ These notes provide answers to typical questions\footnote{The oral exam question
 \newpage
 
 \pagestyle{empty}  % no header in table of contents
+
 \tableofcontents
 
 \newpage
@@ -453,24 +454,24 @@ These notes provide answers to typical questions\footnote{The oral exam question
 	
 	As an auxiliary calculation, the Green's function in Fourier space is
 	\begin{equation*}
-		G(\r - \t{\r}) = \iiint \frac{\dk}{(2\pi)^{3}}e^{i\k(\r - \t{\r})}G(\k),
+		G(\r - \t{\r}) = \iiint \frac{\dk}{(2\pi)^{3}}e^{i\k \cdot (\r - \t{\r})}G(\k),
 	\end{equation*}
 	while the delta function in Fourier space is
 	\begin{equation*}
-		\delta(\r - \t{\r}) = \iiint \frac{\dk}{(2\pi)^{3}}e^{i\k(\r - \t{\r})}\cdot 1.
+		\delta(\r - \t{\r}) = \iiint \frac{\dk}{(2\pi)^{3}}e^{i\k \cdot (\r - \t{\r})}\cdot 1.
 	\end{equation*}
 	
     \item Substituting the above two results into the Poisson equation gives
 	\begin{equation*}
-		\laplacian \left(\iiint \frac{\dk}{(2\pi)^{3}} e^{i\k(\r - \t{\r})} G(\k)\right) = -\frac{1}{\ee} \left(\iiint \frac{\dk}{(2\pi)^{3}}e^{i\k(\r - \t{\r})} \right).
+		\laplacian \left(\iiint \frac{\dk}{(2\pi)^{3}} e^{i\k \cdot (\r - \t{\r})} G(\k)\right) = -\frac{1}{\ee} \left(\iiint \frac{\dk}{(2\pi)^{3}}e^{i\k \cdot (\r - \t{\r})} \right).
 	\end{equation*}
 	We write the equation in terms of a single integral to get
 	\begin{equation*}
-		\iiint \frac{\dk}{(2\pi)^{3}} \left[\laplacian e^{i\k(\r - \t{\r})}G(\k) + \frac{1}{\ee}e^{i\k(\r - \t{\r})}\right] = 0,
+		\iiint \frac{\dk}{(2\pi)^{3}} \left[\laplacian e^{i\k \cdot (\r - \t{\r})}G(\k) + \frac{1}{\ee}e^{i\k \cdot (\r - \t{\r})}\right] = 0,
 	\end{equation*}
 	and then factor out the exponential term to get
 	\begin{equation*}
-		\iiint \frac{\dk}{(2\pi)^{3}} \left[-k^{2} G(\k) + \frac{1}{\ee}\right]e^{i\k(\r - \t{\r})} = 0.
+		\iiint \frac{\dk}{(2\pi)^{3}} \left[-k^{2} G(\k) + \frac{1}{\ee}\right]e^{i\k \cdot (\r - \t{\r})} = 0.
 	\end{equation*}
 	For this equality to hold for all $ \k $ and $ \r $, the quantity in brackets must be zero, which gives us for the expression for the Green's function in $ \k $ space:
 	\begin{equation*}
@@ -479,11 +480,11 @@ These notes provide answers to typical questions\footnote{The oral exam question
 	
 	\item We now aim to transform $ G(\k) $ from $ \k $ space back into position space via
 	\begin{equation*}
-		G(\r - \t{\r}) = \iiint \frac{\dk}{(2\pi)^{3}}e^{i\k(\r - \t{\r})}G(\k) = \iiint \frac{\dk}{(2\pi)^{3}}e^{i\k(\r - \t{\r})}\left(\frac{1}{\ee k^{2}}\right).
+		G(\r - \t{\r}) = \iiint \frac{\dk}{(2\pi)^{3}}e^{i\k \cdot (\r - \t{\r})}G(\k) = \iiint \frac{\dk}{(2\pi)^{3}}e^{i\k \cdot (\r - \t{\r})}\left(\frac{1}{\ee k^{2}}\right).
 	\end{equation*}
 	We perform the integral over $ \k $ by converting to spherical coordinates
 	\begin{align*}
-		G(\r - \t{\r}) &= \frac{1}{\ee}\int_{0}^{\infty} \int_{0}^{\pi} \int_{0}^{2\pi} \diff \phi \sin \theta \diff \theta k^{2} \diff k \frac{1}{(2\pi)^{3}}e^{i\k(\r - \t{\r})} \frac{1}{k^{2}} \\
+		G(\r - \t{\r}) &= \frac{1}{\ee}\int_{0}^{\infty} \int_{0}^{\pi} \int_{0}^{2\pi} \diff \phi \sin \theta \diff \theta k^{2} \diff k \frac{1}{(2\pi)^{3}}e^{i\k \cdot (\r - \t{\r})} \frac{1}{k^{2}} \\
 		& = \frac{1}{\ee}\frac{1}{(2\pi)^{2}}\int_{0}^{\infty} \int_{-1}^{1} \diff [\cos \theta]  e^{ik\abs{\r - \t{\r}}\cos \theta} \diff k\\
 		& = \frac{1}{4\pi \ee \abs{\r - \t{\r}}},
 	\end{align*}
@@ -671,12 +672,12 @@ These notes provide answers to typical questions\footnote{The oral exam question
 	\end{equation*}
 	where $ \E $ is the total electric field. The integral currently runs over the entire body's volume, and our next step is to convert to an integral over the body's surface. To do this, we apply the vector calculus identity
 	\begin{equation*}
-		\div (\E \otimes \E) = \E \cdot (\grad \E) + (\E \cdot \grad) \E,
+		\div (\E \otimes \E) = \E (\div \E) + (\E \cdot \grad) \E,
 	\end{equation*}
 	in terms of which the electric force reads
 	\begin{align*}
 		\vec{F} &= \ee \iiint_{V} \big[\div (\E \otimes \E) - (\E \cdot \grad) \E \big] \dr \\
-		& = \ee \oiint_{\partial V} \E(\E \cdot
+		& = \ee \oiint_{\partial V} \E(\E \cdot \diff \vec{S}) - \ee \iiint_{V}(\E \cdot \grad)\E \dr,
 	\end{align*}
 	where the last equality uses the divergence theorem. 
 	
@@ -933,9 +934,9 @@ These notes provide answers to typical questions\footnote{The oral exam question
 
 \textbf{Current Density of a Moving Point Charge}
 \begin{itemize}
-	\item The current density of a point charge moving with velocity $ \vec{v} $ is
+	\item The current density of a point charge with velocity $ \vec{v} $ and position vector $ \r_{q} $ is
 	\begin{equation*}
-		\j(\r) = q \delta^{3}(\r - \r(t))\vec{v}(t).
+		\j(\r) = q \delta^{3}(\r - \r_{q}(t))\vec{v}(t).
 	\end{equation*}
 \end{itemize}
 	
@@ -953,108 +954,6 @@ These notes provide answers to typical questions\footnote{The oral exam question
 	% \end{equation*}
 	% This will come in handy later in Maxwell's equations.
 \end{itemize}
-
-\subsection{Magnetic Field and Current Density}
-\textit{State the relationship between magnetic flux density (i.e. the $ \B $ field) and electric current density. Define and discuss magnetic field lines.}
-
-\begin{itemize}
-    \item Current density and magnetic field are related by Ampere's law
-    \begin{equation*}
-        \oint_{\partial S} \B \cdot \diff \vec{S} = \mm \iint_{S} \j \cdot \diff \vec{S} \implies \curl \B = \mm \j.
-    \end{equation*}
-    
-    \item In terms of the arc length parameter $ s $, magnetic field lines $ \r(s) $ are closed curves related to magnetic field $ \B $ by
-	\begin{equation*}
-		\dot{\r}(s) = \dv{\r}{s} = \frac{\B(\dot{\r}(s))}{\abs{\B(\r(s))}}.
-	\end{equation*}
-    Note that all magnetic field lines are closed curves---which corresponds to the fact that magnetic monopoles do not exist (have not been observed) in nature.
-    
-\end{itemize}
-
-\textbf{Derivation: Ampere's Law}
-\begin{itemize}
-	\item We begin by considering a current loop $ C' $ parameterized by the following quantities:
-    \begin{itemize}
-        \item the arc length $ l' $,
-
-        \item the infinitesimal arc segment $ \diff \vec{l}' $ pointing tangent to the conductor in the direction of the electric current,
-
-        \item and the position $ \r(l')  $ along the conductor.
-    \end{itemize}
-
-	\item We then imagine enclosing a portion of the loop $ C' $ with another  loop $ C $ parameterized by the analogously defined quantities $ l $, $ \diff \vec{l} $ and $ \r(l) $.
-	
-	% We are interested in the relationship between $ \curl \B $ and $ \j $. 
-	
-	We begin by finding the magnetic circulation along the curve $ C $. Using the Biot-Savart to express $ \B $, the circulation $ \Gamma_{\text{M}} $ is
-	\begin{equation*}
-		\Gamma_{\text{M}} \equiv \oint_{C} \B \cdot \diff \vec{l} = \oint_{C}\left[ - \frac{\mm I}{4 \pi} \oint_{C'}\diff \vec{l}' \cross \grad \left(\frac{1}{\abs{\r(l) - \r(l')}}\right) \right] \cdot \diff \vec{l},
-	\end{equation*}
-	where we've written the integrand in the second equality with a reverse-engineered gradient. The integrand is a scalar triple product, which we can rearrange to get
-	\begin{equation*}
-		\Gamma_{\text{M}} =  - \frac{\mm I}{4\pi} \oint_{C} \oint_{C'} (\diff \vec{l} \cross \diff \vec{l}') \cdot \grad \left(\frac{1}{\abs{\r(l) - \r(l')}}\right).
-	\end{equation*}
-	
-    \item Next, we note that $ \diff \vec{l} \cross \diff \vec{l}' $ corresponds to a surface element---we'll call it $ \diff \vec{S} $. We then calculate the gradient and evaluate the dot product to get
-	\begin{align*}
-		\Gamma_{\text{M}} =  - \frac{\mm I}{4\pi} \iint_{S} \diff \vec{S}\cdot \grad \left(\frac{1}{\abs{\r(l) - \r(l')}}\right) \\
-		= +  \frac{\mm I}{4\pi} \iint_{S}  \frac{\diff S \cos \theta}{\abs{\r(l) - \r(l')}^{2}},
-	\end{align*}
-	where $ \theta $ is the angle between $ \diff \vec{S} $ and the gradient. The integrand is precisely the solid angle element $ \diff \Omega $, in terms of which the magnetic circulation becomes
-	\begin{equation*}
-		\Gamma_{\text{M}} = \frac{\mm I}{4\pi} \iint_{S} \diff \Omega =  \frac{\mm I}{4\pi}  \cdot 4 \pi = \mm I.
-	\end{equation*}
-	This result is Ampere's law, which, in terms of magnetic circulation, reads
-	\begin{equation*}
-		\Gamma_{\text{M}} = \mm I.
-	\end{equation*}
-    In words, Ampere's law states that the magnetic circulation in a loop (our $ C $) enclosing a current-carrying loop carrying current $ I $ (our $ C' $) is proportional to the current $ I $ through the $ C' $.
-	
-	\item Finally, we will combine Ampere's law with the definition of magnetic circulation. To review, the two relationships are
-	\begin{equation*}
-		\Gamma_{\text{M}} = \oint_{\partial S} \B \cdot \diff \vec{S} = \iint_{S} \curl \B \cdot \diff \vec{S} \eqtext{and} \Gamma_{\text{M}} = \mm I = \mm \iint_{S} \j \cdot \diff \vec{S}.
-	\end{equation*}
-    Combining the two relationships produces the important result
-	\begin{equation*}
-		\curl \B = \mm \j.
-	\end{equation*}
-	This is a Maxwell equation for magnetostatics and is an equivalent, often more common expression of Ampere's law.
-	
-\end{itemize}
-
-\subsection{The Magnetic Vector Potential} \label{ss:magnetic-potential}
-\textit{State and derive the expression for the magnetic vector potential. How is magnetic flux written in terms of vector potential?}
-
-\begin{itemize}
-    \item The magnetic vector potential $ \A $ associated with a magnetic field $ \B $ is defined by the relationship
-    \begin{equation*}
-        \B = \curl \A,
-    \end{equation*}
-    which rests on the Maxwell equation $ \div \B = 0 $.
-    
-	\item Magnetic flux is written in terms of $ \A $ using Stokes' theorem according to
-	\begin{equation*}
-		\Phi_{\text{M}} \equiv \iint_{S}\B \cdot \diff \vec{S} = \iint_{S} (\curl \A) \cdot \diff \vec{S} = \oint_{\partial S} \A \cdot \diff \r.
-	\end{equation*}
-	In other words, the magnetic flux through a surface equals the circulation of the magnetic potential $ \A $ around the surface's boundary $ \partial S $.
-
-\end{itemize}
-
-\textbf{Derivation: The Magnetic Vector Potential}
-\begin{itemize}
-	
-    \item First, we note that we cannot define a magnetic potential via $ \B = - \grad \phi_{\text{M}} $, as for electric field $ \E = - \grad \phi $. This is because magnetic field lines are closed, which results in $ \curl \B \neq 0 $. The equality $ \curl \B \neq 0 $ prohibits the introduction of a scalar potential in the style $ \B = - \grad \phi $.
-
-    The reasoning is straightforward: the curl of a gradient is always zero. If we were to take the curl of a hypothetical equality $ \B = - \grad \phi_{\text{M}} $, we would get $ \curl \B = - \curl \big[ \grad \phi_{\text{M}} \big] = 0 $, which contradicts $ \curl \B \neq 0 $. 
-	
-	\item As a solution, we use the relationship $ \div \B = 0 $ (which corresponds to the fact that magnetic field lines are closed). From vector calculus, the divergence of the curl of a vector field is always zero, which allows us to write $ \B $ as the curl of a vector field:
-	\begin{equation*}
-		\div \B \equiv \div \left(\curl \A\right) = 0 \implies \B = \curl \A. 
-	\end{equation*}
-    The relationship $ \B = \curl \A $ gives us an implicit definition of the magnetic vector potential $ \A $. Again, we stress that this definition rests on the identity $ \div \B = 0 $. 
-	
-\end{itemize}
-
 
 \subsection{Magnetic Field and the Biot-Savart Law}
 \textit{State and derive the Biot-Savart law for the magnetic field of a continuous charge distribution. Use the result to derive the magnetic field of a straight conducting wire.}
@@ -1105,6 +1004,105 @@ These notes provide answers to typical questions\footnote{The oral exam question
 
 \end{itemize}
 	
+\subsection{Magnetic Field and Current Density}
+\textit{State the relationship between magnetic flux density (i.e. the $ \B $ field) and electric current density. Define and discuss magnetic field lines.}
+
+\begin{itemize}
+    \item Current density and magnetic field are related by Ampere's law
+    \begin{equation*}
+        \oint_{\partial S} \B \cdot \diff \vec{S} = \mm \iint_{S} \j \cdot \diff \vec{S} \implies \curl \B = \mm \j.
+    \end{equation*}
+    
+    \item In terms of the arc length parameter $ s $, magnetic field lines $ \r(s) $ are closed curves related to magnetic field $ \B $ by
+	\begin{equation*}
+		\dot{\r}(s) = \dv{\r}{s} = \frac{\B(\dot{\r}(s))}{\abs{\B(\r(s))}}.
+	\end{equation*}
+    Note that all magnetic field lines are closed curves---which corresponds to the fact that magnetic monopoles do not exist (have not been observed) in nature.
+    
+\end{itemize}
+
+\textbf{Derivation: Ampere's Law}
+\begin{itemize}
+	\item We begin by considering a closed loop $ C' $ carrying current $ I $ and parameterized by the following quantities:
+    \begin{itemize}
+        \item the arc length $ l' $,
+
+        \item the infinitesimal arc segment $ \diff \vec{l}' $ pointing tangent to the conductor in the direction of the electric current,
+
+        \item and the position $ \r(l')  $ along the conductor.
+    \end{itemize}
+
+	\item We then imagine enclosing the loop $ C' $ with another  loop $ C $ parameterized by the analogously defined quantities $ l $, $ \diff \vec{l} $ and $ \r(l) $. We first find the magnetic circulation along the curve $ C $. Using the Biot-Savart law to express $ \B $, the circulation $ \Gamma_{\text{M}} $ is
+	\begin{align*}
+        \Gamma_{\text{M}} = \oint_{C} \B \cdot \diff \vec{l} & = \oint_{C}\left[\frac{\mm I}{4 \pi} \oint_{C'}\diff \vec{l}' \cross \left(\frac{\r(l) - \r(l')}{\abs{\r(l) - \r(l')}^{3}}\right) \right] \cdot \diff \vec{l}\\
+        & = \oint_{C}\left[ - \frac{\mm I}{4 \pi} \oint_{C'}\diff \vec{l}' \cross \grad \left(\frac{1}{\abs{\r(l) - \r(l')}}\right) \right] \cdot \diff \vec{l}.
+	\end{align*}
+	where we've written the integrand in the last equality with a reverse-engineered gradient. The integrand is a scalar triple product, which we can rearrange to get
+	\begin{equation*}
+		\Gamma_{\text{M}} =  - \frac{\mm I}{4\pi} \oint_{C} \oint_{C'} (\diff \vec{l} \cross \diff \vec{l}') \cdot \grad \left(\frac{1}{\abs{\r(l) - \r(l')}}\right).
+	\end{equation*}
+	
+    \item Next, we note that $ \diff \vec{l} \cross \diff \vec{l}' $ corresponds to a surface element---we'll call it $ \diff \vec{S} $. We then calculate the gradient and evaluate the dot product to get
+	\begin{align*}
+        \Gamma_{\text{M}} & =  - \frac{\mm I}{4\pi} \iint_{S} \diff \vec{S}\cdot \grad \left(\frac{1}{\abs{\r(l) - \r(l')}}\right) \\
+        & = +  \frac{\mm I}{4\pi} \iint_{S}  \frac{\diff S \cos \theta}{\abs{\r(l) - \r(l')}^{2}},
+	\end{align*}
+	where $ \theta $ is the angle between $ \diff \vec{S} $ and the gradient. The integrand is precisely the solid angle element $ \diff \Omega $, in terms of which the magnetic circulation becomes
+	\begin{equation*}
+		\Gamma_{\text{M}} = \frac{\mm I}{4\pi} \iint_{S} \diff \Omega =  \frac{\mm I}{4\pi}  \cdot 4 \pi = \mm I.
+	\end{equation*}
+	This result is Ampere's law, which, in terms of magnetic circulation, reads
+	\begin{equation*}
+		\Gamma_{\text{M}} = \mm I.
+	\end{equation*}
+    In words, Ampere's law states that the magnetic circulation in a loop (our $ C $) enclosing a current-carrying loop carrying current $ I $ (our $ C' $) is proportional to the current $ I $ through the $ C' $.
+	
+	\item Finally, we will combine Ampere's law with the definition of magnetic circulation. To review, the two relationships are
+	\begin{equation*}
+		\Gamma_{\text{M}} = \oint_{\partial S} \B \cdot \diff \vec{S} = \iint_{S} \curl \B \cdot \diff \vec{S} \eqtext{and} \Gamma_{\text{M}} = \mm I = \mm \iint_{S} \j \cdot \diff \vec{S}.
+	\end{equation*}
+    Combining the two relationships produces the important result
+	\begin{equation*}
+		\curl \B = \mm \j.
+	\end{equation*}
+	This is a Maxwell equation for magnetostatics and is an equivalent, often more common expression of Ampere's law.
+	
+\end{itemize}
+
+\subsection{The Magnetic Vector Potential} \label{ss:magnetic-potential}
+\textit{State the expression for the magnetic vector potential and discuss the mathematical foundation for its definition. How is magnetic flux written in terms of vector potential?}
+
+\begin{itemize}
+    \item The magnetic vector potential $ \A $ associated with a magnetic field $ \B $ is defined by the relationship
+    \begin{equation*}
+        \B = \curl \A,
+    \end{equation*}
+    which rests on the Maxwell equation $ \div \B = 0 $.
+    
+	\item Magnetic flux is written in terms of $ \A $ using Stokes' theorem according to
+	\begin{equation*}
+		\Phi_{\text{M}} \equiv \iint_{S}\B \cdot \diff \vec{S} = \iint_{S} (\curl \A) \cdot \diff \vec{S} = \oint_{\partial S} \A \cdot \diff \r.
+	\end{equation*}
+	In other words, the magnetic flux through a surface equals the circulation of the magnetic potential $ \A $ around the surface's boundary $ \partial S $.
+
+\end{itemize}
+
+\textbf{Discussion: The Magnetic Vector Potential}
+\begin{itemize}
+	
+    \item First, we note that we cannot define a magnetic potential via $ \B = - \grad \phi_{\text{M}} $, as for electric field $ \E = - \grad \phi $. This is because magnetic field lines are closed, which results in $ \curl \B \neq 0 $. The equality $ \curl \B \neq 0 $ prohibits the introduction of a scalar potential in the style $ \B = - \grad \phi $.
+
+    The reasoning is straightforward: the curl of a gradient is always zero. If we were to take the curl of a hypothetical equality $ \B = - \grad \phi_{\text{M}} $, we would get $ \curl \B = - \curl \big[ \grad \phi_{\text{M}} \big] = 0 $, which contradicts $ \curl \B \neq 0 $. 
+	
+	\item As a solution, we use the relationship $ \div \B = 0 $ (which corresponds to the fact that magnetic field lines are closed). From vector calculus, the divergence of the curl of a vector field is always zero, which allows us to write $ \B $ as the curl of a vector field:
+	\begin{equation*}
+		\div \B \equiv \div \left(\curl \A\right) = 0 \implies \B = \curl \A. 
+	\end{equation*}
+    The relationship $ \B = \curl \A $ gives us an implicit definition of the magnetic vector potential $ \A $. Again, we stress that this definition rests on the identity $ \div \B = 0 $. 
+	
+\end{itemize}
+
+
 
 \subsection{The Magnetic Poisson Equation}
 \textit{State and derive the magnetic analog of the Poisson equation relating magnetic potential and current density. State the general solution, and discuss its relationship to the Biot-Savart law.}
@@ -1142,7 +1140,7 @@ These notes provide answers to typical questions\footnote{The oral exam question
 	\end{equation*}
 	where $ \div \A_{1} = 0 $ and $ \curl \A_{2} = 0 $. In words, Helmholtz's decomposition theorem states that a vector field can be written as the sum of a solenoidal and irrotational vector field.
 	
-    \item We then introduce a gauge transformation of $ \A $ such that $ \A_{2} = 0 $. We are free to set $ \A_{2} = 0 $ because $ \curl \A_{2} = 0 $ and thus has zero contribution to $ \B = \curl \A $, regardless of what value we choose for $ \A_{2} $. Substituting $ \A_{2} = 0 $ into the Helmholtz composition gives $ \A = \A_{1} $. We then take the divergence of this equality and apply $ \div \A_{1} = 0 $ to get
+    \item We then introduce a gauge transformation of $ \A $ such that $ \A_{2} = 0 $. We are free to set $ \A_{2} $ to whatever value we want, since, after applying the definition $ \curl \A_{2} = 0 $, the value of $ \A_{2} $ will have zero contribution to $ \B $, which is defined as $ \B = \curl \A $. Substituting $ \A_{2} = 0 $ into the Helmholtz composition gives $ \A = \A_{1} $. We then take the divergence of this equality and apply $ \div \A_{1} = 0 $ to get
     \begin{equation*}
         \A = \A_{1} \implies \div \A = \div \A_{1} \equiv 0 \implies \div \A = 0.
     \end{equation*}
@@ -1426,9 +1424,9 @@ These notes provide answers to typical questions\footnote{The oral exam question
     \begin{equation*}
         W_{\text{M}} = \frac{1}{2} \iiint_{V} \j(\r) \A(\r) \dr = \frac{1}{2\mm}\iiint_{V}(\curl \B) \A \dr.
     \end{equation*}
-    Next, we reverse-engineer the vector identity $ \div (\B \cross \A) = - \B (\curl \A) + \A (\curl \B) $ to get
+    Next, we reverse-engineer the vector identity $ \div (\B \cross \A) = - \B \cdot (\curl \A) + \A \cdot (\curl \B) $ to get
     \begin{equation*}
-        W_{\text{M}} = \frac{1}{2\mm} \iiint_{V} \B(\curl \A)\dr + \frac{1}{2\mm} \iiint_{V} \div (\B \cross \A) \dr.
+        W_{\text{M}} = \frac{1}{2\mm} \iiint_{V} \B \cdot (\curl \A)\dr + \frac{1}{2\mm} \iiint_{V} \div (\B \cross \A) \dr.
     \end{equation*}
     \item Using $ \B = \curl \A $, the first integrand simplifies to $ B^{2} $, while the second can be rewritten using the divergence theorem. The result is
     \begin{equation*}
@@ -1447,9 +1445,9 @@ These notes provide answers to typical questions\footnote{The oral exam question
 \begin{itemize}
     \item In terms of magnetic field, the magnetic force on a current distribution in an external magnetic field is
     \begin{equation*}
-        \vec{F}_{\text{M}} = \frac{1}{\mm} \oiint_{\partial V} \left[ \B \otimes \B - \frac{1}{2}B^{2} \mat{I} \right] \diff \vec{S},
+        \vec{F}_{\text{M}} = \frac{1}{\mm} \oiint_{\partial V} \left[ \B (\B \cdot \uvec{n}) - \frac{1}{2}B^{2} \uvec{n} \right] \diff S,
     \end{equation*}
-    where $ \mat{I} $ is the identity matrix and $ \partial V $ is a surface enclosing the charge distribution.
+    where $ \partial V $ is a surface enclosing the charge distribution and $ \uvec{n} $ is the normal to the surface.
 
     \item In terms of magnetostatic stress tensor, the magnetic force on a current distribution in an external magnetic field is
     \begin{equation*}
@@ -1502,9 +1500,9 @@ These notes provide answers to typical questions\footnote{The oral exam question
 	
 	\item Finally, we write $ \vec{F}_{\text{M}} $ in terms of a surface integral using the divergence theorem:
 	\begin{equation*}
-		\vec{F}_{\text{M}} = \frac{1}{\mm}\oiint_{\partial V}\left(\B \otimes \B - \frac{1}{2}B^{2}\mat{I}\right)\diff \vec{S},
+        \vec{F}_{\text{M}} = \frac{1}{\mm}\oiint_{\partial V}\left(\B(\B \cdot \uvec{n}) - \frac{1}{2}B^{2} \uvec{n} \right)\diff S,
 	\end{equation*}
-    which is the equation quoted at the begining of this subsection. As before, $ \mat{I} $ is the identity matrix and $ \partial V $ is the surface of the region containing the original current distribution $ \j $. Note that the quantity $ \B $, which is the total field, now implicitly contains the current distribution $ \j $.
+    which is the equation quoted at the begining of this subsection. As before, $ \partial V $ is the surface of the region containing the original current distribution $ \j $ and $ \uvec{n}  $ is the normal to the surface. Note that the quantity $ \B $, which is the total field, now implicitly contains the current distribution $ \j $.
 \end{itemize}
 
 
@@ -1865,7 +1863,7 @@ These notes provide answers to typical questions\footnote{The oral exam question
 	
 \end{itemize}
 
-\subsection{Canonical Momentum}
+\subsection{Canonical Electromagnetic Momentum}
 \textit{Define canonical momentum in the context of electromagnetism, and explain the motivation for its definition.}
 
 \begin{itemize}
@@ -1875,7 +1873,7 @@ These notes provide answers to typical questions\footnote{The oral exam question
     \end{equation*}
     which rests on the fact that $ q\A $ has units of momentum. The quantity $ m \dot{\vec{r}} $ is called kinetic momentum.
 
-    \item Canonical momentum should really be discussed in the context of Hamiltonian mechanics---see e.g. \hyperref[ss:hamilton]{\underline{Subsection \ref{ss:hamilton}}}.
+    \item Canonical momentum is best discussed in the context of Hamiltonian mechanics---see e.g. \hyperref[ss:hamilton]{\underline{Subsection \ref{ss:hamilton}}}.
 
 \end{itemize}
 
@@ -2074,9 +2072,9 @@ These notes provide answers to typical questions\footnote{The oral exam question
 	
 	\item When $ \E \neq 0 $, we use the ansatz (which is quoted, not derived or explained further)
 	\begin{equation*}
-		\vec{v}(t) = \frac{q}{m}\int_{-\infty}^{t}e^{-\gamma(t - \t{t})}\E(\t{t}) \diff \t{t},
+		\vec{v}(t) = \frac{q}{m}\int_{-\infty}^{t}e^{-\gamma(t - \tau)}\E(\tau) \diff \tau,
 	\end{equation*}
-    where $ \tilde{t} $ is a placeholder variable for time integration.
+    where $ \tau $ is a placeholder variable for time integration.
 	
     \item Next, we write current density to charge carrier velocity $ \vec{v} $ via
 	\begin{equation*}
@@ -2084,7 +2082,7 @@ These notes provide answers to typical questions\footnote{The oral exam question
 	\end{equation*}
 	where $ q $ is the charge of a single charge carrier, $ n $ is the number density of charge carriers in the conductor, and $ \vec{v} $ is the charge carriers' drift velocity. Substituting the ansatz for charge carrier velocity $ \vec{v} $ into the equation for $ \j $ gives
 	\begin{equation*}
-		\j = \frac{nq^{2}}{m}\int_{-\infty}^{t}e^{-\gamma(t - \t{t})}\E(\t{t}) \diff \t{t}.
+		\j = \frac{nq^{2}}{m}\int_{-\infty}^{t}e^{-\gamma(t - \tau)}\E(\tau) \diff \tau.
 	\end{equation*}
 	
 	\item For a constant field, $ \E(t) = \E_{0} $, we can easily solve the integral to get Ohm's law
@@ -2175,7 +2173,11 @@ These notes provide answers to typical questions\footnote{The oral exam question
 		W_{\text{E}} = \frac{1}{2} \sum_{i, k} \frac{1}{4\pi \ee q_{i}q_{k}}q_{i}q_{k} \iint_{S} \iint_{S} \frac{\sigma_{i}\sigma_{k}\diff S_{i}\diff S_{k}}{\abs{\r_{i} - \r_{k}}}.
 	\end{equation*}
 	
-	\item Next, we equate the above expression for $ W_{\text{E}} $ to the earlier $ W_{\text{E}} $, which results in the general expression for capacitance
+	\item Next, we equate the above expression for $ W_{\text{E}} $ to the earlier $ W_{\text{E}} $ to get
+    \begin{equation*}
+        \frac{1}{2} \sum_{i} \phi_{i}q_{i} = \frac{1}{2} \sum_{i, k} \frac{1}{4\pi \ee q_{i}q_{k}}q_{i}q_{k} \iint_{S} \iint_{S} \frac{\sigma_{i}\sigma_{k}\diff S_{i}\diff S_{k}}{\abs{\r_{i} - \r_{k}}},
+    \end{equation*}
+    which motivates the general expression for capacitance as
 	\begin{equation*}
 		\frac{1}{C_{ik}} = \frac{1}{4\pi \ee q_{i} q_{k}} \iint_{S} \iint_{S} \frac{\sigma_{i}\sigma_{k}\diff S_{i}\diff S_{k}}{\abs{\r_{i} - \r_{k}}}.
 	\end{equation*}
@@ -2224,11 +2226,11 @@ These notes provide answers to typical questions\footnote{The oral exam question
 	
 	\item We first find the system's total magnetic field energy. We begin with the definition
 	\begin{equation*}
-		W_{\text{M}} = \frac{1}{2}\iiint_{V}\j \cdot \A \dr,
+        W_{\text{M}} = \frac{1}{2}\iiint_{V}\j(\r) \cdot \A(\r) \dr,
 	\end{equation*}
 	where we integrate over the volume with non-zero current density $ \j $. We then rewrite the current in the form $ \j \dr = I \diff \vec{l} $ and consider all $ N $ loops together to get
 	\begin{equation*}
-		W_{\text{M}} = \frac{1}{2}\sum_{i}I_{i}\oint_{C_{i}} \A \cdot \diff \vec{l}_{i},
+        W_{\text{M}} = \frac{1}{2}\sum_{i}I_{i}\oint_{C_{i}} \A(\r) \cdot \diff \vec{l}_{i},
 	\end{equation*}
 	where the current $ I_{i} $ in the $ i $-th conductor is constant along the conductor's curve $ C_{i} $, and thus moves out of the integral. Finally, we write the integrand in terms of magnetic flux, for which we use Stokes's theorem:
 	\begin{align*}
@@ -2256,13 +2258,13 @@ These notes provide answers to typical questions\footnote{The oral exam question
 	
 	\item We then equate the two expressions for $ W_{\text{M}} $ to get
 	\begin{equation*}
-		\frac{1}{2}\sum_{i}I_{i}\Phi_{\text{M}_{i}} = \frac{\mm}{8\pi}\sum_{i, k}I_{i}I_{k}\oint_{C_{i}}\oint_{C_{k}}\frac{\diff \vec{l}_{i}\diff \vec{l}_{k}}{\abs{\r(l_{1}) - \r(l_{k})}}.
+		\frac{1}{2}\sum_{i}I_{i}\Phi_{\text{M}_{i}} = \frac{\mm}{8\pi}\sum_{i, k}I_{i}I_{k}\oint_{C_{i}}\oint_{C_{k}}\frac{\diff \vec{l}_{i}\diff \vec{l}_{k}}{\abs{\r(l_{1}) - \r(l_{k})}},
 	\end{equation*}
-    This relationship motivates the definition of inductance $ L_{ik} $ as
+    which motivates the definition of inductance $ L_{ik} $ as
 	\begin{equation*}
-		L_{ik} = \frac{\mm}{4\pi}\oint_{C_{i}}\oint_{C_{k}}\frac{\diff \vec{l}_{i}\diff \vec{l}_{k}}{\abs{\r(l_{1}) - \r(l_{k})}},
+		L_{ik} = \frac{\mm}{4\pi}\oint_{C_{i}}\oint_{C_{k}}\frac{\diff \vec{l}_{i}\diff \vec{l}_{k}}{\abs{\r(l_{1}) - \r(l_{k})}}.
 	\end{equation*}
-    in terms of which the relationship between the two forms of $ W_{\text{M}} $ simplifies to
+    In terms of the above expression for inductance, the expressions for $ W_{\text{M}} $ simplify to
 	\begin{equation*}
         W_{\text{M}} = \frac{1}{2}\sum_{i}I_{i}\Phi_{\text{M}_{i}} = \frac{1}{2} \sum_{i, k}I_{i}I_{k} L_{ik}.
 	\end{equation*}
@@ -2503,7 +2505,7 @@ These notes provide answers to typical questions\footnote{The oral exam question
 \end{itemize}
 
 
-\subsubsection{Derivatino: Displacement Current}
+\subsubsection{Derivation: Displacement Current}
 \begin{itemize}
 	\item First, we recall the (incomplete) quasistatic Maxwell equations, which read 
 	\begin{align*}
@@ -2616,7 +2618,7 @@ These notes provide answers to typical questions\footnote{The oral exam question
 
     
 \subsection{Conservation of Electromagnetic Momentum}
-\textit{State, derive and interpret the Cauchy continuity equation encoding conservation of electromagnetic momentum in both differential form.}
+\textit{State and interpret the Cauchy continuity equation encoding conservation of electromagnetic momentum in both differential form, and sketch the equation's derivation.}
 
 \begin{itemize}
     \item In differential form, in terms of vector and tensor components, the Cauchy continuity equation for conservation of electromagnetic momentum reads
@@ -2629,7 +2631,7 @@ These notes provide answers to typical questions\footnote{The oral exam question
 
         \item the electromagnetic stress tensor 
         \begin{equation*}
-            \TT_{ik} = \ee \big(E_{i}E_{k} - \frac{1}{2}E^{2}\delta_{ik}\big) + \frac{1}{\mm}\left(B_{i}B_{k} + \frac{1}{2}B^{2}\delta_{ik}\right),
+            \TT_{ik} = \ee \left(E_{i}E_{k} - \frac{1}{2}E^{2}\delta_{ik}\right) + \frac{1}{\mm}\left(B_{i}B_{k} - \frac{1}{2}B^{2}\delta_{ik}\right),
         \end{equation*}
         
         \item and the Lorentz force density $ \vec{f}_{\text{em}} = \rho \E + \j \cross \B $.
@@ -2637,7 +2639,7 @@ These notes provide answers to typical questions\footnote{The oral exam question
     
     \item In integral form for a region of space $ V $ the Cauchy equation reads
     \begin{equation*}
-        \pdv{t} \iiint_{V} p_{\text{em}_{i}} \dr = \oiint_{\partial V} \TT_{ik}\hat{n}_{k}\diff \vec{S} - \iiint_{V}f_{\text{em}_{i}}\dr.
+        \pdv{t} \iiint_{V} p_{\text{em}_{i}} \dr - \oiint_{\partial V} \TT_{ik}\hat{n}_{k}\diff \vec{S} + \iiint_{V}f_{\text{em}_{i}}\dr = 0.
     \end{equation*}
 	Interpretation: electromagnetic momentum in a region of space $ V $ can change because of of momentum flux through the surface (encoded by $ \TT_{\text{ik}} $) and because of the Lorentz force acting on the entire volume (encoded by $ \vec{f}_{\text{em}} $). 
     
@@ -2645,7 +2647,7 @@ These notes provide answers to typical questions\footnote{The oral exam question
     
 \end{itemize}
 
-\subsubsection{Conservation of Momentum and Maxwell's Equations}
+\textbf{Sketched Derivation: The Cauchy Continuity Equation for EM Momentum}
 \begin{itemize}
 	\item We begin by considering the time derivative
 	\begin{equation*}
@@ -2653,11 +2655,11 @@ These notes provide answers to typical questions\footnote{The oral exam question
 	\end{equation*}
 	Evaluating the derivative with the product rule produces
 	\begin{equation*}
-		\pdv{t}\ee (\E \cross \B) = \ee \left[\pdv{\E}{t}\cross \B + \E \cross \pdv{B}{t}\right].
+		\pdv{t}\ee (\E \cross \B) = \ee \left[\pdv{\E}{t}\cross \B + \E \cross \pdv{\B}{t}\right].
 	\end{equation*}
 	We then substitute in the third and fourth Maxwell equation to replace the time derivatives, which leads to
 	\begin{equation*}
-		= \ee \left[\frac{1}{\ee \mm}(\curl \B)\cross \B - \frac{1}{ee}\j \cross \B - \E \cross (\curl \E)\right].
+		\pdv{t}\ee (\E \cross \B) = \ee \left[\frac{1}{\ee \mm}(\curl \B)\cross \B - \frac{1}{\ee}\j \cross \B - \E \cross (\curl \E)\right].
 	\end{equation*}
 	
     \item Next, some vector calculus acrobatics (quoted and not proven) leads to the expression
@@ -2672,7 +2674,7 @@ These notes provide answers to typical questions\footnote{The oral exam question
 
         \item the electromagnetic stress tensor 
         \begin{equation*}
-            \TT_{ik} = \ee \big(E_{i}E_{k} - \frac{1}{2}E^{2}\delta_{ik}\big) + \frac{1}{\mm}\left(B_{i}B_{k} + \frac{1}{2}B^{2}\delta_{ik}\right),
+            \TT_{ik} = \ee \left(E_{i}E_{k} - \frac{1}{2}E^{2}\delta_{ik}\right) + \frac{1}{\mm}\left(B_{i}B_{k} - \frac{1}{2}B^{2}\delta_{ik}\right),
         \end{equation*}
         
         \item and the Lorentz force density $ \vec{f}_{\text{em}} = \rho \E + \j \cross \B $.
@@ -2687,8 +2689,6 @@ These notes provide answers to typical questions\footnote{The oral exam question
 	\begin{equation*}
 		\pdv{t}\iiint_{V}p_{\text{em}_{i}}\dr = \oiint_{\partial V}\TT_{ik}\hat{n}_{k} \diff \vec{S} - \iiint_{V} f_{\text{em}_{i}}\dr.
 	\end{equation*}
-	
-%	\item Note: we have just ascribed momentum to a mass-less field, as opposed to a body with mass as in introductory mechanics. Cool!
 	
 \end{itemize}
 
@@ -2804,8 +2804,8 @@ These notes provide answers to typical questions\footnote{The oral exam question
 \end{itemize}
 
     
-\subsection{TODO: Electric Polarization and Electric Dipole Density}
-\textit{Show that electric polarization equals the volume density of electric dipoles in matter.}
+% \subsection{TODO: Electric Polarization and Electric Dipole Density}
+% \textit{Show that electric polarization equals the volume density of electric dipoles in matter.}
     
 \subsection{Bound Current Density, Magnetization and Magnetic Susceptibility}
 \textit{Define bound current density, magnetization and magnetic susceptibility. State the definition of the $ \H $ field, discuss some of its important properties, and explain its role in the study of magnetic fields in matter.}
@@ -2932,7 +2932,7 @@ These notes provide answers to typical questions\footnote{The oral exam question
 	
 	\item In terms of $ \chi_{\text{M}} $ and $ \mu $, the linear constitutive relation reads
 	\begin{equation*}
-        \H = \frac{\B}{\mm} - \M \approx \frac{\B}{\mm} - \chi_{\text{M}} \H = \frac{\B}{\mm} - (\m - 1)\H
+        \H = \frac{\B}{\mm} - \M \approx \frac{\B}{\mm} - \chi_{\text{M}} \H = \frac{\B}{\mm} - (\mu - 1)\H
 	\end{equation*}
     Thus, to first, order, the $ \B $ and $ \H $ fields are related by
 	\begin{equation*}
@@ -2947,8 +2947,8 @@ These notes provide answers to typical questions\footnote{The oral exam question
 \end{itemize}
 
     
-\subsection{TODO: Magnetization and Magnetic Dipole Density}
-\textit{Show that magnetization equals the volume density of the magnetic dipole moment in matter, and interpret the result in terms of Ampere equivalence.}
+% \subsection{TODO: Magnetization and Magnetic Dipole Density}
+% \textit{Show that magnetization equals the volume density of the magnetic dipole moment in matter, and interpret the result in terms of Ampere equivalence.}
     
 \subsection{Maxwell Equations in Matter and the Constitutive Relations}
 \textit{State Maxwell's equations in matter. State and discuss the constitutive relations for the electric and magnetic fields in the linear regime.}
@@ -3338,25 +3338,25 @@ These notes provide answers to typical questions\footnote{The oral exam question
 \begin{itemize}
 	\item We now consider an interface between two materials with $ \H $ fields $ \H_{1} $ and $ \H_{2} $, and base our analysis on the Maxwell equation
 	\begin{equation*}
-		\curl \H = \j + \pdv{D}{t}.
+		\curl \H = \j_{\text{f}} + \pdv{\D}{t}.
 	\end{equation*}
 	In an analogous procedure as for $ \E $, we introduce a small planar surface $ S $ in the interface between the two materials with height $ h $ perpendicular to the interface and length $ l $, defined by the tangent vectors $ \uvec{t}_{1} $ and $ \uvec{t}_{2} $, parallel to the interface.
 	
 	\item Using Stokes' theorem, the integral of the above Maxwell equation is
     \begin{equation*}
-        \iint_{S} \j \cdot \diff \vec{S} + \pdv{t} \iint_{S} \D \cdot \diff \vec{S} = \iint_{S} \curl \H \cdot \diff \vec{S} = \oint_{\partial S} \H \cdot \diff \vec{s}.
+        \iint_{S} \j_{\text{f}} \cdot \diff \vec{S} + \pdv{t} \iint_{S} \D \cdot \diff \vec{S} = \iint_{S} \curl \H \cdot \diff \vec{S} = \oint_{\partial S} \H \cdot \diff \vec{s}.
 	\end{equation*}
 
     \item We then perform a geometrically identical procedure as in the analysis of the $ \E $ field boundary condition, in which we send the loop height to zero, i.e. $ \diff h \to 0 $ and thus $ \diff S = \diff l \diff h \to 0 $. In this case, the $ \D $-dependent term vanishes, while the line integral over $ \partial S $ keeps only the portions over the loop's length, leaving us with
 	\begin{equation*}
-        \iint_{S} \j \cdot \diff \vec{S} = \iint_{S} \j \cdot \uvec{e} \diff S = \int (\H \cdot \uvec{t}_{1} + \H_{2}\cdot \uvec{t}_{2}) \diff l.
+        \iint_{S} \j_{\text{f}} \cdot \diff \vec{S} = \iint_{S} \j \cdot \uvec{e} \diff S = \int (\H \cdot \uvec{t}_{1} + \H_{2}\cdot \uvec{t}_{2}) \diff l.
 	\end{equation*}
     
-    \item Note that we have kept the surface integral containing $ \j $. The integrand contains $ \j \cdot \uvec{e} $, i.e. the component of $ \j $ parallel to the normal of the Stokes' theorem-derived integration surface $ \uvec{S} $. Keep in mind that $ \uvec{e} $ is normal to the vectors $ \uvec{n}_{1} $ and $ \uvec{n}_{2} $, which are the normal vectors to the interface between the two materials.
+    \item Note that we have kept the surface integral containing $ \j_{\text{f}} $. The integrand contains $ \j_{\text{f}} \cdot \uvec{e} $, i.e. the component of $ \j_{\text{f}} $ parallel to the normal of the Stokes' theorem-derived integration surface $ \uvec{S} $. Keep in mind that $ \uvec{e} $ is normal to the vectors $ \uvec{n}_{1} $ and $ \uvec{n}_{2} $, which are the normal vectors to the interface between the two materials.
 
-    \item As $ \diff h \to 0 $, the current density $ \j $ aligns with $ \uvec{n}_{S} $, and represents a ``surface current density'' with units $ \si{\ampere \, \meter^{-1}} $, which we will denote $ \vec{k} $; the direction of $ \vec{k} $ is determined by the right hand rule in the direction of the tangent vectors $ \uvec{t}_{1} $ and $ \uvec{t}_{1} $ round the loop. In terms of $ \vec{k} $ in the limit $ \diff h \to 0 $, the integral of $ \j $ over the surface becomes
+    \item As $ \diff h \to 0 $, the current density $ \j_{\text{f}} $ aligns with $ \uvec{n}_{S} $, and represents a ``surface current density'' with units $ \si{\ampere \, \meter^{-1}} $, which we will denote $ \vec{k} $; the direction of $ \vec{k} $ is determined by the right hand rule in the direction of the tangent vectors $ \uvec{t}_{1} $ and $ \uvec{t}_{1} $ round the loop. In terms of $ \vec{k} $ in the limit $ \diff h \to 0 $, the integral of $ \j_{\text{f}} $ over the surface becomes
     \begin{equation*}
-        \iint_{S} \j \cdot \uvec{e} \diff S \to \int \vec{k} \cdot \diff \vec{l},
+        \iint_{S} \j_{\text{f}} \cdot \uvec{e} \diff S \to \int \vec{k} \cdot \diff \vec{l},
     \end{equation*}
     which produces the relationship
     \begin{equation*}
@@ -3463,7 +3463,7 @@ These notes provide answers to typical questions\footnote{The oral exam question
     \begin{equation*}
         \P(\omega) = \frac{q^{2}n}{m\omega_{0}^{2}} \frac{\E(\omega)}{1 - i\omega\tau},
     \end{equation*}
-    where the Debye relaxation time $ \tau $ is defined as $ \tau = \frac{\gamma}{\omega_{0}} $.
+    where the Debye relaxation time $ \tau $ is defined as $ \tau = \frac{\gamma}{\omega_{0}^{2}} $.
     
     \item Using this expression for polarization, the dielectric constant in the Debye regime is
     \begin{equation*}
@@ -3536,8 +3536,8 @@ These notes provide answers to typical questions\footnote{The oral exam question
 
     \item Without derivation, the Kramers-Kronig relations read:
     \begin{align*}
-        & \Re(\epsilon) = 1 + \frac{2}{\pi} \mathcal{P} \int_{0}^{\infty} \frac{\omega' \Im \big[ \ln(\epsilon(\omega')) \big]}{\omega'^{2} - \omega^{2}} \diff \omega'\\
-        & \Im(\epsilon) = - \frac{2\omega}{\pi} \mathcal{P} \int_{0}^{\infty} \frac{\omega' \Re \big[ \ln(\epsilon(\omega'))  \big]- 1}{\omega'^{2} - \omega^{2}} \diff \omega'.
+        & \Re \big[\epsilon(\omega)\big ] = 1 + \frac{2}{\pi} \mathcal{P} \int_{0}^{\infty} \frac{\omega' \Im \big[ \epsilon(\omega') \big]}{\omega'^{2} - \omega^{2}} \diff \omega'\\
+        & \Im \big[ \epsilon(\omega) \big] = - \frac{2\omega}{\pi} \mathcal{P} \int_{0}^{\infty} \frac{ \Re \big[ \epsilon(\omega')  \big]- 1}{\omega'^{2} - \omega^{2}} \diff \omega'.
     \end{align*}
     Note that the real and imaginary components of $ \epsilon $ are coupled, and that each component is given in terms of an integral of the other component.
 
@@ -3691,7 +3691,7 @@ These notes provide answers to typical questions\footnote{The oral exam question
 \begin{itemize}
     \item We find the Hamiltonian $ H $ for a charged particle in an EM field using the Lagrangian function $ L $ (derived in \hyperref[ss:lagrangian]{\underline{Subsection \ref{ss:lagrangian}}}) together with the general relationship
     \begin{equation*}
-        H( \vec{p}, \vec{r}, t) = \dot{\vec{r}} \dot{\vec{p}} - L.
+        H( \vec{p}, \vec{r}, t) = \dot{\vec{r}} \cdot \vec{p} - L.
     \end{equation*}
     
     \item First, the appropriate canonical momentum $ \vec{p} $ is
@@ -3706,7 +3706,7 @@ These notes provide answers to typical questions\footnote{The oral exam question
 
     \item In terms of $ \vec{p} $, $ \dot{\vec{r}} $ and $ L $, the charged particle's Hamiltonian is then
     \begin{equation*}
-        H = \frac{1}{m} ( \vec{p} - q\A) \vec{p} - \frac{1}{2m} ( \vec{p} - q\A)^{2} - q\A \left( \frac{ \vec{p} - q \A}{m} \right) + q \phi.
+        H = \frac{1}{m} ( \vec{p} - q\A) \cdot \vec{p} - \frac{1}{2m} ( \vec{p} - q\A)^{2} - q\A \cdot \left( \frac{ \vec{p} - q \A}{m} \right) + q \phi.
     \end{equation*}
     Finally, we combine like terms to get the desired expression
     \begin{equation*}
@@ -3725,6 +3725,12 @@ These notes provide answers to typical questions\footnote{The oral exam question
 	\begin{equation*}
 		\L_{\text{EM}}(\r, t) = \frac{1}{2}\ee E^{2}(\r, t) - \frac{1}{2\mm}B^{2}(\r, t) - \rho(\r, t)\phi(\r, t) + \j(\r, t) \cdot \A(\r, t).
 	\end{equation*}
+    With the admittedly verbose function arguments left out for clarity, this reads
+    \begin{equation*}
+        \L_{\text{EM}} = \frac{1}{2}\ee E^{2} - \frac{1}{2 \mm}B^{2} - \rho\phi + \j \cdot \A.
+    \end{equation*}
+    
+    
 
 	\item The action $ S $ associated with the above total electromagnetic Lagrangian is 
 	\begin{equation*}
@@ -3843,8 +3849,8 @@ These notes provide answers to typical questions\footnote{The oral exam question
 	\begin{equation*}
 		 E^{2} - c^{2}B^{2} =  E'^{2} - c^{2}B'^{2}.
 	\end{equation*}
-    \begin{quote}
-        \textit{Derivation}: \textbf{TODO} We write the quantities $ E^{2} $ and $ B^{2} $ in component form and apply the electromagnetic field transformations, which leads to
+    \begin{quote} % TODO
+        \textit{Sketched Derivation}: We write the quantities $ E^{2} $ and $ B^{2} $ in component form and apply the electromagnetic field transformations, which leads to
 	\begin{equation*}
 		 E^{2} - c^{2}B^{2} =  E'^{2} - c^{2}B'^{2}.
 	\end{equation*}

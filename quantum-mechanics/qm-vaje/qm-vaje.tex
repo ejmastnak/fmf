@@ -66,13 +66,34 @@
 
 
 % begin header configuration
-\fancypagestyle{headerstyle}{
-\fancyhf{}  % clear default settings from header and footer; create blank slate
-\fancyhead[R]{\href{https://github.com/ejmastnak/fmf}{\small{\texttt{github.com/ejmastnak/fmf}}}}  % link in upper right
-\fancyhead[L]{\textit{\truncate{0.65\headwidth}{\rightmark}}}  % subsection name; truncate long names
-\fancyfoot[C]{\thepage}  % centered page number in footer
+\pagestyle{fancy}
+
+% Header and footer on non-section pages (default style)
+\fancyhf{}
+\fancyhead[R]{\href{https://github.com/ejmastnak/fmf}{\small{\texttt{github.com/ejmastnak/fmf}}}} 
+\fancyhead[L]{\textit{\truncate{0.65\headwidth}{\rightmark}}}
+\fancyfoot[C]{\thepage} 
 \renewcommand{\headrulewidth}{0.1pt}
+
+% Header and footer on section pages---identical to default style, but must be explicitly included
+\fancypagestyle{plain}{
+    \fancyhf{}  
+    \fancyhead[R]{\href{https://github.com/ejmastnak/fmf}{\small{\texttt{github.com/ejmastnak/fmf}}}}  
+    \fancyhead[L]{\textit{\truncate{0.65\headwidth}{\rightmark}}} 
+    \fancyfoot[C]{\thepage}  % centered page number in footer
+    \renewcommand{\headrulewidth}{0.1pt}
 }
+
+\renewcommand{\sectionmark}[1]{%
+  \markboth{\sectionname \thesection}
+  {\noexpand\firstsubsectiontitle}}
+\renewcommand{\sectionmark}[1]{}
+
+\renewcommand{\subsectionmark}[1]{%
+  \markright{\thesubsection\ \, #1}\gdef\firstsubsectiontitle{#1}}
+
+\newcommand\firstsubsectiontitle{}
+
 % end header configuration
 
 
@@ -81,9 +102,8 @@
 \author{Elijan Mastnak}
 \date{Winter Semester 2020-2021}
 \maketitle
-%\tableofcontents
 
-
+\thispagestyle{empty}  % remove headers from introductory page
 
 \begin{center}
 \textbf{About These Notes}
@@ -103,11 +123,13 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has assembled the prob
 
 \newpage
 
+\pagestyle{empty}  % no header in table of contents
+
 \tableofcontents
 
 \newpage
 
-\pagestyle{headerstyle}
+\pagestyle{fancy}
 \section{First Exercise Set}
 
 \subsection{Theory: Basic Concepts in Quantum Mechanics}

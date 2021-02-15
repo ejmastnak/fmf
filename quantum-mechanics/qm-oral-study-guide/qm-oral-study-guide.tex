@@ -12,10 +12,13 @@
 \usepackage{bm} % for bold vectors in math mode
 \usepackage{physics} % many useful physics commands
 \usepackage[separate-uncertainty=true]{siunitx} % for scientific notation and units
-\usepackage{xcolor}  % to color hyperref links
+\usepackage[svgnames]{xcolor}
 \usepackage[colorlinks = true, allcolors=blue]{hyperref}
 
 \setlength{\parindent}{0pt} % to stop indenting new paragraphs
+
+\newcommand{\qmath}[1]{\textcolor{Maroon}{#1}}  % to differentiate math inside questions, where the regular text is italicized. Requires xcolor with svgnames
+
 \newcommand{\diff}{\mathop{}\!\mathrm{d}} % differential
 \newcommand{\dr}{\diff^{3} \r}  % d^3 r
 \newcommand{\ddp}{\diff^{3} \vec{p}}  % d^3 p (\dp is a TeX primitive)
@@ -144,7 +147,7 @@
 \begin{center}
 \textbf{About These Notes}
 \end{center}
-These notes provide answers to typical questions from the oral exam required to pass the course \textit{Kvanta Mehanika} (Quantum Mechanics), a required course for third-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. I wrote the notes when studying for the exam and am making them publicly available in the hope that they might help others learning the same material. Although the exact oral exam questions are specific to the the physics program at the University of Ljubljana, the content is fairly standard for a late-undergraduate quantum mechanics course and might be useful to others learning similar material. The most up-to-date version can be found on \href{https://github.com/ejmastnak/fmf/tree/main/quantum-mechanics}{\underline{GitHub}}.
+These notes serve as a reference for typical questions from the oral exam required to pass the course \textit{Kvanta Mehanika} (Quantum Mechanics), a required course for third-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. I wrote the notes while studying for the exam and am making them publicly available in the hope that they might help others learning the same material. Although the exact oral exam questions are specific to the the physics program at the University of Ljubljana, the content is fairly standard for a late-undergraduate quantum mechanics course and might be useful to others learning similar material. The most up-to-date version can be found on \href{https://github.com/ejmastnak/fmf/tree/main/quantum-mechanics}{\underline{GitHub}}.
 
 \vspace{2mm}
 \textit{Navigation}: For easier document navigation, the table of contents is ``clickable'', meaning you can jump directly to a section by clicking the colored section names in the table of contents. Unfortunately, the \textit{clickable links do not work in most online or mobile PDF viewers}; you have to download the file first.
@@ -253,11 +256,11 @@ as desired for a wave-like quantum particle. However, the desired energy relatio
 	
     \item The probability current density $ \vec{j} $ associated with a particle with wavefunction $ \Psi $ is
     \begin{equation*}
-        \vec{j}(\r, t) = \frac{\hbar}{2im}\big[ \Psi(\r, t)\grad \P(\r, t) - \P(\r, t)\grad \P^{*}(\r, t) \big],
+        \vec{j}(\r, t) = \frac{\hbar}{2im}\big[ \Psi^{*}(\r, t)\grad \P(\r, t) - \P(\r, t)\grad \P^{*}(\r, t) \big],
     \end{equation*}
     and the continuity equation encoding conservation or probability reads
     \begin{equation*}
-        \pdv{r(\r, t)}{t} + \div \j(\r, t) = 0.
+        \pdv{\rho(\r, t)}{t} + \div \vec{j}(\r, t) = 0.
     \end{equation*}
     
 \end{itemize} 
@@ -286,7 +289,7 @@ as desired for a wave-like quantum particle. However, the desired energy relatio
 	\end{equation*}
 	which motivates the definition of \textit{probability current density} as
 	\begin{equation*}
-		\vec{j}(\r, t) = \frac{\hbar}{2im}\big[\P(\r, t)\grad\P(\r, t) - \P(\r, t)\grad\P^{*}(\r, t)\big],
+		\vec{j}(\r, t) = \frac{\hbar}{2im}\big[\P^{*}(\r, t)\grad\P(\r, t) - \P(\r, t)\grad\P^{*}(\r, t)\big],
 	\end{equation*}
 	and the \textit{probability source density} as
 	\begin{equation*}
@@ -546,7 +549,7 @@ For review, an energy eigenvalue $ E $ is degenerate if their exist multiple lin
 \end{itemize}
 
 
-\subsubsection{Functions of Operators}
+\textbf{Functions of Operators}
 \begin{itemize}
 	\item For an analytic complex function $ f(x) $ with the power series definition
 	\begin{equation*}
@@ -622,14 +625,16 @@ For review, an energy eigenvalue $ E $ is degenerate if their exist multiple lin
 \subsection{The Momentum Operator}
 \textit{How is the momentum operator defined in one and three dimensions? How is the momentum operator related to probability current? Explain the motivation behind the definition of the momentum operator.}
 \begin{itemize}
-	\item In one dimension, the momentum operator is defined as
+	\item In one dimension and three dimensions, the momentum operator is defined as
 	\begin{equation*}
-		p \to - \hbar \pdv{x} \implies \ev{p} = \int_{-\infty}^{\infty} \P p \P \diff x.
+		p \to - i \hbar \pdv{x} \qquad \text{and} \qquad \vec{p} \to - i \hbar \grad.
 	\end{equation*}
-	In three dimensions, the momentum operator generalizes to 
-	\begin{equation*}
-		\vec{p} \to i \hbar \grad \eqtext{and}  \ev{\vec{p}} = m \dv{\ev{\r}}{t}.
-	\end{equation*}
+    The momentum operator is related to the position operator by
+    \begin{equation*}
+        \ev{\vec{p}} = \frac{1}{m} \dv{\ev{\r}}{t}.
+    \end{equation*}
+    
+    
 	
     \item For a particle of mass $ m $ with wave function $ \Psi $, the momentum operator and probability current density $ \vec{j} $ are related by
 	\begin{equation*}
@@ -637,7 +642,7 @@ For review, an energy eigenvalue $ E $ is degenerate if their exist multiple lin
 	\end{equation*}
 \end{itemize}
 
-\textbf{Motivation for the Momentum Operator's Definition}
+\textbf{Derivation: Motivation for the Momentum Operator's Definition}
 \begin{itemize}
 	\item We begin by finding the time derivative of the position expectation value, i.e.
 	\begin{align*}
@@ -692,7 +697,7 @@ For review, an energy eigenvalue $ E $ is degenerate if their exist multiple lin
 \begin{itemize}
     \item We first consider the time-dependent expectation value $ \ev{x, t} $. Using the identity
 	\begin{equation*}
-		\dv{\ev{\O, t}}{t} =  \ev{\pdv{\O}{t}} + \frac{1}{i\hbar}\ev{[A, H]}
+		\dv{\ev{\O, t}}{t} =  \ev{\pdv{\O}{t}} + \frac{1}{i\hbar}\ev{[\O, H]}
 	\end{equation*}
 	with $ \O = x $ and the identity $ \pdv{x}{t} = 0 $ produces the relationship
 	\begin{align*}
@@ -806,7 +811,7 @@ For review, an energy eigenvalue $ E $ is degenerate if their exist multiple lin
 	\end{equation*}
 	where $ H $ is the Hamiltonian operator.
 	
-	\item When measuring an observable with operator $ \O $, the result of a single measurement is an eigenvalue of $ \O $ (e.g. the eigenvalue $ a \in \mathbb{R} $). The probability of this measurement result is $ \abs{\braket{a}{\psi}}^{2} $, where $ \ket{a} $ is $ \O $'s eigenstate corresponding to the eigenvalue $ a $. After a measurement, the system's wavefunction ``collapses'' into the state $ \ket{a} $.
+	\item When measuring an observable corresponding to the operator $ \O $, the result of a single measurement is an eigenvalue of $ \O $ (e.g. the eigenvalue $ \lambda \in \mathbb{R} $). The probability of this measurement result is $ \abs{\braket{\lambda}{\psi}}^{2} $, where $ \ket{\lambda} $ is $ \O $'s eigenstate corresponding to the eigenvalue $ \lambda $. After a measurement, the system's wavefunction ``collapses'' into the state $ \ket{\lambda} $.
 \end{enumerate}
 
 \subsection{Braket Notation and Hilbert Space}
@@ -1012,7 +1017,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
         \ket{\varphi} = \sum_{m}d_{m}\ket{m}, \qquad \text{where } d_{m} = \sum_{n} \O_{mn} c_{n}.
     \end{equation*}
 	
-    \item To derive this expression, we begin with the operator equation $ \O \ket{\psi} = \ket{\varphi} $ and write $ \O $ in the basis $ \{\ket{n}\} $ and apply $ c_{n} = \bra{n} \ket{\psi} $ to get
+    \item To derive this expression, we begin with the operator equation $ \O \ket{\psi} = \ket{\varphi} $, write $ \O $ in the basis $ \{\ket{n}\} $ and apply $ c_{n} = \bra{n} \ket{\psi} $ to get
 	\begin{align*}
 		\O \ket{\p} &\equiv \sum_{mn}\ket{m}\O_{mn}\bra{n}  \ket{\psi} = \sum_{mn}\ket{m} \O_{mn}  c_{n}\\
 		& = \sum_{m}\left(\sum_{n}\O_{mn}c_{n}\right) \ket{m} \\
@@ -1114,7 +1119,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 		\braket{\phi}{\O \p} = \bbraket{\O^{\dagger}\phi}{\p}.
 	\end{equation*}
 
-	\item Two operators $ A $ and $ B $ obey
+	\item Two self-adjoint operators $ A $ and $ B $ obey
 	\begin{equation*}
 		\big(AB\big)^{\dagger} = B^{\dagger}A^{\dagger},
 	\end{equation*}
@@ -1351,25 +1356,25 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 
     \item The time evolution operator gives an alternate way to find the time evolution of an initial state $ \ket{\psi(0)} $ via the formula
     \begin{equation*}
-        \ket{\psi(t)} = U(t) = \ket{\psi(0)}.
+        \ket{\psi(t)} = U(t) \ket{\psi(0)}.
     \end{equation*}
     
 \end{itemize}
 
 \textbf{Derivation: The Time Evolution Operator}
 \begin{itemize}
-    \item We begin by expanding an arbitrary, time-dependent state $ \ket{\psi(t)} $ with the known initial state $ \ket{\psi(0)} $ in a basis formed of the energy eigenstates $ \{\ket{\varphi_{n}}\} $, in the form
+    \item We begin by expanding an arbitrary, time-dependent state $ \ket{\psi(t)} $ with the known initial state $ \ket{\psi(0)} $ in a basis formed of the energy eigenstates $ \{\ket{n}\} $, in the form
 	\begin{equation*}
-		\ket{\p(t)} = \sum_{m}\braket{\varphi_{n}}{\p(0)}e^{-i\frac{E_{n}}{\hbar}t}\ket{\varphi_{n}}.
+		\ket{\p(t)} = \sum_{m}\braket{n}{\p(0)}e^{-i\frac{E_{n}}{\hbar}t}\ket{n}.
 	\end{equation*}
     
-    \item We then use the operator function identity $ f(\O)\varphi_{n} = f(\lambda_{n} )\varphi_{n} $ with $ f(x) = e^{-i \frac{x}{\hbar} t} $, to replace the energy eigenvalues $ E_{n} $ with the \Ham operator $ H $, producing
+    \item We then use the operator function identity $ f(\O) \varphi_{n} = f(\lambda_{n} )\varphi_{n} $ with $ f(x) = e^{-i \frac{x}{\hbar} t} $, to replace the energy eigenvalues $ E_{n} $ with the \Ham operator $ H $, producing
 	\begin{equation*}
-		\ket{\p(t)} = \sum_{n}\braket{\varphi_{n}}{\p(0)} e^{-i\frac{E_{n}}{\hbar}t}\ket{\varphi_{n}} = \sum_{n} \braket{\varphi_{n}}{\p(0)} e^{-i\frac{H}{\hbar}t}\ket{\varphi_{n}}.
+		\ket{\p(t)} = \sum_{n}\braket{n}{\p(0)} e^{-i\frac{E_{n}}{\hbar}t}\ket{n} = \sum_{n} \braket{n}{\p(0)} e^{-i\frac{H}{\hbar}t}\ket{n}.
 	\end{equation*}
 	Since $ e^{-i\frac{H}{\hbar}t} $ is independent of $ n $, we factor it out of the sum to get
 	\begin{align*}
-        \ket{\p(t)} &= e^{-i\frac{H}{\hbar}t} \sum_{n} \mel{\varphi_{n}}{\p(0)}{\varphi_{n}} = e^{-i \frac{H}{\hbar}t} \left( \sum_{n} \ket{\varphi_{n}}\bra{\varphi} \right) \ket{\psi(0)} \\
+        \ket{\p(t)} &= e^{-i\frac{H}{\hbar}t} \sum_{n} \mel{n}{\p(0)}{n} = e^{-i \frac{H}{\hbar}t} \left( \sum_{n} \ket{n}\bra{n} \right) \ket{\psi(0)} \\
         & = e^{-i \frac{H}{\hbar}t} \II \ket{\psi(0)}\\
         & \equiv U(t) \ket{\p(0)},
 	\end{align*}
@@ -1408,7 +1413,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
     
     \item The momentum eigenfunctions are normalized with the Dirac normalization
     \begin{equation*}
-       \braket{\varphi_{p_{0}}}{\varphi_{p}} = \delta(p - p_{0}),
+       \braket{\varphi_{p'}}{\varphi_{p}} = \delta(p - p'),
     \end{equation*}
     in terms of which the momentum eigenfunctions read
     \begin{equation*}
@@ -1481,7 +1486,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 
     \item The momentum eigenfunctions are plane waves, which follows from solving the momentum eigenvalue equation:
     \begin{equation*}
-        \hat{p}\varphi_{p} = - i \hbar \dv{x} \varphi_{p}(x) = p_{0}\varphi_{p}(x) \implies \varphi_{p}(x) = C e^{i \frac{p}{\hbar}x}.
+        \hat{p}\varphi_{p} = - i \hbar \dv{x} \varphi_{p}(x) = p\varphi_{p}(x) \implies \varphi_{p}(x) = C e^{i \frac{p}{\hbar}x}.
     \end{equation*}
     
     \item Momentum eigenfunctions are not normalizable in the usual sense, i.e.
@@ -1492,13 +1497,13 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 
     Instead, we normalize plane wave momentum eigenfunctions with the Dirac delta function, via
     \begin{align*}
-        \braket{\varphi_{p_{0}}}{\varphi_{p}} & =  \int_{-\infty}^{\infty}\varphi^{*}_{p_{0}}(x) \varphi_{p}(x) \diff x = C^{2} \int_{-\infty}^{\infty} e^{-i \frac{x}{\hbar}(p_{0} - p)}\diff x\\
-        & = 2\pi C^{2} \delta \left[ \tfrac{1}{\hbar} (p - p_{0}) \right] \\
-        & = 2 \pi \hbar C^{2} \delta(p - p_{0}),
+        \braket{\varphi_{p'}}{\varphi_{p}} & =  \int_{-\infty}^{\infty}\varphi^{*}_{p'}(x) \varphi_{p}(x) \diff x = C^{2} \int_{-\infty}^{\infty} e^{-i \frac{x}{\hbar}(p' - p)}\diff x\\
+        & = 2\pi C^{2} \delta \left[ \tfrac{1}{\hbar} (p - p') \right] \\
+        & = 2 \pi \hbar C^{2} \delta(p - p'),
     \end{align*}
-    where the last line uses $ \delta(ax) = \frac{1}{\abs{a}} \delta(x) $. The relationship $ \braket{\varphi_{p_{0}}}{\varphi_{p}} = 2 \pi \hbar C^{2} \delta(p - p_{0}) $ motivates a normalization constant $ C = \frac{1}{\sqrt{2\pi \hbar}} $, which leads to
+    where the last line uses $ \delta(ax) = \frac{1}{\abs{a}} \delta(x) $. The relationship $ \braket{\varphi_{p'}}{\varphi_{p}} = 2 \pi \hbar C^{2} \delta(p - p') $ motivates a normalization constant $ C = \frac{1}{\sqrt{2\pi \hbar}} $, which leads to
     \begin{equation*}
-        \varphi_{p}(x) = \frac{1}{\sqrt{2\pi \hbar}} e^{i \frac{p}{\hbar}x} \qquad \text{and} \qquad \braket{\varphi_{p_{0}}}{\varphi_{p}} = \delta(p - p_{0}).
+        \varphi_{p}(x) = \frac{1}{\sqrt{2\pi \hbar}} e^{i \frac{p}{\hbar}x} \qquad \text{and} \qquad \braket{\varphi_{p'}}{\varphi_{p}} = \delta(p - p').
     \end{equation*}
     This plane wave normalization convention is called Dirac normalization.
     
@@ -1600,10 +1605,10 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 
 \subsection{The Probability Amplitudes $ \braket{p}{\psi} $ and $ \braket{x}{\psi} $}
 
-\textit{State, derive, and interpret the meaning of the quantities $ \braket{p}{\psi} $ and $ \braket{x}{\psi} $.}
+\textit{State, derive, and interpret the meaning of the quantities $ \qmath{\braket{p}{\psi}} $ and $ \qmath{\braket{x}{\psi}} $.}
 
 \vspace{2mm}
-\textit{How is a state $ \ket{\psi} $ expanded in the momentum and position eigenstates in Dirac notation?}
+\textit{How is a state $ \qmath{\ket{\psi}} $ expanded in the momentum and position eigenstates in Dirac notation?}
 
 \begin{itemize}
     \item The quantity $ \braket{p}{\psi} $ is related to a quantum state with wavefunction $ \psi $ via
@@ -1732,7 +1737,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 
 \section{Examples}
 \subsection{The Harmonic Oscillator and The Ladder Operators}
-\textit{Discuss the quantum harmonic oscillator. How are the ladder operators $ a $ and $ a^{\dagger} $ defined, and how are the position, momentum and \Ham operators written in terms of the ladder operators? Discuss the matrix forms of the ladder operators, position, momentum, and \Ham.}
+\textit{Discuss the quantum harmonic oscillator. How are the ladder operators $ \qmath{a} $ and $ \qmath{a^{\dagger}} $ defined, and how are the position, momentum and \Ham operators written in terms of the ladder operators? Discuss the matrix forms of the ladder operators, position, momentum, and \Ham.}
 
 \begin{itemize}
 
@@ -1762,7 +1767,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
         \begin{align*}
             \big[ a, a^{\dagger} \big] &= \big( a a^{\dagger} - a^{\dagger}a \big) = \frac{1}{2}\left[ \frac{x^{2}}{x_{0}} - \frac{i}{x_{0}p_{0}} xp + \frac{i}{x_{0}p_{0}} px + \frac{p^{2}}{p_{0}^{2}}  \right]\\
             &{}\quad - \frac{1}{2}\left[ \frac{x^{2}}{x_{0}} + \frac{i}{x_{0}p_{0}} xp - \frac{i}{x_{0}p_{0}} px + \frac{p^{2}}{p_{0}^{2}}  \right]\\
-            & = - \frac{i}{\hbar} (xp - px) = -\frac{i}{\hbar} [x, p] = \frac{i}{\hbar}(i \hbar) = 1.
+            & = - \frac{i}{\hbar} (xp - px) = -\frac{i}{\hbar} [x, p] = - \frac{i}{\hbar}(i \hbar) = 1.
         \end{align*}
     \end{quote}
 
@@ -1772,7 +1777,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
     \end{equation*}
     while the Hamiltonian operator reads
     \begin{equation*}
-        H = \hbar \omega \big( aa^{\dagger} + a^{\dagger}a \big) = \hbar \omega \left( a^{\dagger}a + \tfrac{1}{2} \right),
+        H = \frac{\hbar \omega}{2} \big( aa^{\dagger} + a^{\dagger}a \big) = \hbar \omega \left( a^{\dagger}a + \tfrac{1}{2} \right),
     \end{equation*}
     where the last line uses the commutation relation $ \big[ a, a^{\dagger} \big] = 1 $.
     
@@ -1841,15 +1846,15 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 
     \item The action of the creation operator $ a^{\dagger} $ on the harmonic oscillator eigenfuncions is encoded by the recursion relation
     \begin{equation*}
-		\ket{n} = \frac{a^{\dagger}}{\sqrt{n}}\ket{n+1} = \frac{\big(a^{\dagger}\big)^{n}}{\sqrt{n!}}\ket{0},
+		\ket{n} = \frac{a^{\dagger}}{\sqrt{n}}\ket{n-1} = \frac{\big(a^{\dagger}\big)^{n}}{\sqrt{n!}}\ket{0},
     \end{equation*}
     while the analogous action of the annihilation operator $ a $ is encoded by
     \begin{equation*}
- 		\ket{n} = \frac{a}{n+1}\ket{n+1} \eqtext{and} \ket{0} = \frac{a^{n}}{\sqrt{n!}}\ket{n}.
+ 		\ket{n} = \frac{a}{\sqrt{n+1}}\ket{n+1} \eqtext{and} \ket{0} = \frac{a^{n}}{\sqrt{n!}}\ket{n}.
     \end{equation*}
     
-    
 \end{itemize}
+
 
 \subsubsection{Ground State Solution}
 \begin{itemize}
@@ -2059,7 +2064,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
         \end{equation*}
         We find the expression for $ U(s) $ with a Taylor series expansion of $ \p(x - s) $:
         \begin{align*}
-            U(s)\p(x) &= \p(x - s) = \p(x) - s \pdv{x}{\p(x)} \pm  \cdots + \frac{(-s)^{n}}{n!}\pdv[n]{\p(x)}{x} + \cdots \\
+            U(s)\p(x) &= \p(x - s) = \p(x) - s \pdv{\p(x)}{x} \pm  \cdots + \frac{(-s)^{n}}{n!}\pdv[n]{\p(x)}{x} + \cdots \\
             & = e^{-s \pdv{x}}\p(x) \\
             & = e^{-is\frac{p}{\hbar}}\p(x).
         \end{align*}
@@ -2163,17 +2168,17 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 		\Par \vec{p} = - \vec{p} \Par \eqtext{and} \Par (\r \cross \vec{p}) = \Par \vec{L} = \vec{L} \Par.
 	\end{equation*}
 	
-	\item For problems with an even potential, is always possible to create an even or odd stationary state eigenfunction for each energy eigenvalue $ E $, assuming $ E $ is nondegenerate.
+	\item For problems with an even potential, is always possible to create an even or odd stationary state eigenfunction for each energy eigenvalue $ E $.
 
 \end{itemize}
 
 \textbf{Derivation: Parity Operator and an Even Potential}
 \begin{itemize}
-    \item For an even potential, i.e. $ V(\r) = V(-\r) $, the parity operator acts on $ V $ according to $ \Par V(\r) = V(-\r)\Par = V(\r)\Par $, in which case $ \P $ and $ H $ commute, which follows from
+    \item For an even potential, i.e. $ V(\r) = V(-\r) $, the parity operator acts on $ V $ according to $ \Par V(\r) = V(-\r)\Par = V(\r)\Par $, in which case $ \Par $ and $ H $ commute, which follows from
 	\begin{equation*}
 		\Par H\p(\r) = H \Par \p(\r) \implies [\Par, H] = 0.
 	\end{equation*}
-	If $ \P $ and $ H $ commute, and if $ \ket{\p(\r)} $ is a stationary state of the \Ham and obeys the stationary \Schro equation
+	If $ \Par $ and $ H $ commute, and if $ \ket{\p(\r)} $ is a stationary state of the \Ham and obeys the stationary \Schro equation
 	\begin{equation*}
 		H\k{\p(\r)} = E \ket{\p(\r)},
 	\end{equation*}
@@ -2307,7 +2312,6 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 
 \subsection{Important Properties of Angular Momentum}
 \textit{Discuss the definition and basic properties of angular momentum in quantum mechancis. Be sure to include the important angular momentum commutation relations. How is the squared angular momentum operator defined?}
-\subsubsection{Introduction to Angular Momentum}
 \begin{itemize}
 	\item Angular momentum is assigned to the \Herm angular momentum operator $ \vec{L} $, which is defined as
     \begin{equation*}
@@ -2390,13 +2394,17 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 \subsection{The Ladder Operators}
 \textit{Define the ladder operators for angular momentum, and discuss some of their important properties.}
 \begin{itemize}
-	\item The angular momentum ladder operators $ L_{+} $ and $ L_{-} $, defined by
+	\item The angular momentum ladder operators $ L_{+} $ and $ L_{-} $ are defined as
 	\begin{equation*}
 		L_{+} \equiv L_{x} + iL_{y} \eqtext{and} L_{-} \equiv L_{x} - i L_{y}.
 	\end{equation*}
-	
-    \item The ladder operators obey $ L_{\pm} = L_{\mp}^{\dagger} $, i.e. they are each other's \Herm conjugates.
-	
+    The ladder operators obey $ L_{\pm} = L_{\mp}^{\dagger} $, i.e. they are each other's \Herm conjugates.
+    
+    \item To recover the operators $ L_{x} $ and $ L_{y} $, we invert the above relationships to get
+    \begin{equation*}
+        L_{x} = \frac{L_{+} + L_{-}}{2} \qquad \text{and} \qquad L_{y} = \frac{L_{+} - L_{-}}{2i}.
+    \end{equation*}
+    
 	\item The ladder operators commute with the squared angular momentum operator, i.e.
 	\begin{equation*}
 		[L^{2}, L_{+}] = [L^{2}, L_{-}] = 0.
@@ -2439,7 +2447,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
         \end{equation*}
         Finally, we subtract the two equations two get the desired identity
         \begin{equation*}
-            L_{+}L_{-} - L_{-}{+}  \equiv [L_{+}, L_{-}] = 2 \hbar L_{z}
+            L_{+}L_{-} - L_{-}L_{+}  \equiv [L_{+}, L_{-}] = 2 \hbar L_{z}
         \end{equation*}
     \end{quote}
     
@@ -2454,7 +2462,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 
 
 \subsection{Angular Momentum Eigenvalues and Eigenfunction}
-\textit{State and derive the angular momentum eigenfunctions, eigenvalues and eigenbasis. Discuss the degeneracy of the $ L^{2} $ eigenvalue spectrum.}
+\textit{State and derive the angular momentum eigenfunctions, eigenvalues and eigenbasis. Discuss the degeneracy of the $ \qmath{L^{2}} $ eigenvalue spectrum.}
 
 \vspace{2mm}
 \textit{How is the angular momentum operator written in matrix form in its eigenbasis?}
@@ -2472,6 +2480,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
     \begin{equation*}
         l \in \left\{ 0, 1, 2, \ldots \right\} \qquad \text{and} \qquad m \in \left\{\hspace{-0.3em}-l, -l+1, \ldots, l-1, l\right\}.
     \end{equation*}
+    Half-integer values of the angular quantum number correspond to spin, which is discussed in \hyperref[ss:spin-basics]{\underline{Subsection \ref{ss:spin-basics}}}.
 
 	\item Since $ m $ can take on $ 2l + 1 $ values at a given $ l $, the $ L^{2} $ eigenvalue spectrum has degeneracy $ 2l + 1 $, since at a given $ l $ there are $ 2l + 1 $ linearly independent eigenstates $ \ket{lm} $ with the same eigenvalue $ \lambda = l (l+1)\hbar^{2} $. 
 
@@ -2680,7 +2689,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 
 \subsubsection{Matrix Representation of Angular Momentum}
 \begin{itemize}
-	\item We write a generic state $ \ket{\p} $ in the basis $ \{\ket{lm}\} $ of angular momentum eigenfunctions as
+	\item We write a generic state $ \ket{\p} $ in the angular momentum eigenbasis $ \{\ket{lm}\} $ as
 	\begin{equation*}
 		\k{\p} = \sum_{l = 0}^{\infty}\sum_{m=-l}^{l}c_{lm}\ket{lm}
 	\end{equation*}
@@ -2886,10 +2895,10 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 \end{itemize}
 
 \subsection{The Radial Solution for $ r \to 0 $}
-\textit{State and derive the solution to the radial eigenvalue equation in the limit $ r \to 0 $. You may restrict yourself to potentials obeying the limit $ \lim_{r \to 0} r^{2}V(r) = 0. $}
+\textit{State and derive the solution to the radial eigenvalue equation in the limit $ \qmath{r \to 0} $. You may restrict your analysis to potentials obeying the limit $ \qmath{\lim_{r \to 0} r^{2}V(r) = 0.} $}
 
 \begin{itemize}
-    \item The solution to the radial eigenvalue equation in the limit $ \r \to 0 $ is
+    \item The solution to the radial eigenvalue equation in the limit $ r \to 0 $ is
     \begin{equation*}
         u(r) = C_{l}r^{l+1} \qquad \text{or} \qquad \psi(r) = C_{l}r^{l},
     \end{equation*}
@@ -2981,7 +2990,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 \end{itemize}
 
 \subsection{The Radial Solution for $ r \to \infty $}
-\textit{State, derive and interpret the solution to the radial eigenvalue equation in the limit $ r \to \infty $. You may restrict yourself to potentials vanishing at infinity, but be sure to formally discuss the validity of the results.}
+\textit{State, derive and interpret the solution to the radial eigenvalue equation in the limit $ \qmath{r \to \infty} $. You may restrict your analysis to potentials vanishing at infinity, but be sure to formally discuss the validity of the results.}
 
 
 \begin{itemize}
@@ -3161,7 +3170,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
     \end{equation*}
     and the ansatz
     \begin{equation*}
-        u(\rho) = \psi^{l + 1}v(\rho)e^{-\rho}.
+        u(\rho) = \rho^{l + 1}v(\rho)e^{-\rho}.
     \end{equation*}
     In terms of these quantities, the Coulomb potential radial equation is
     \begin{equation*}
@@ -3508,9 +3517,9 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
     \begin{equation*}
         i \frac{\hbar q}{m} \A \cdot \grad \P.
     \end{equation*}
-    For a homogeneous magnetic field, this term can be written
+    For a homogeneous magnetic field, the linear term can be written
     \begin{equation*}
-        i \frac{\hbar q}{m} \A \cdot \grad \P = - \frac{q}{2m}\L \cdot \B \P = - \m \cdot \B \equiv H_{\text{Zeeman}},
+        i \frac{\hbar q}{m} \A \cdot \grad = - \frac{q}{2m}\L \cdot \B = - \m \cdot \B \equiv H_{\text{Zeeman}},
     \end{equation*}
     and is often called the Zeeman coupling term.
     
@@ -3608,15 +3617,14 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 
 
 \subsection{Landau Levels}
-\textit{Explain Landau quantization and Landau levels. Define the Landau gauge potential. Restrict your analysis to the $ xy $ plane.}
+\textit{Explain Landau quantization and Landau levels and give a physical interpretation. Define the Landau gauge potential. Restrict your analysis to the $ \qmath{xy} $ plane.}
 
-\textit{What is the Landau level?}
 
 \begin{itemize}
 
-    \item The following is from \href{https://en.wikipedia.org/wiki/Landau\_quantization}{\underline{Wikipedia}}, which does a good job and I see no reason to redo.
+    \item The following is from \href{https://en.wikipedia.org/wiki/Landau\_quantization}{\underline{Wikipedia}}, which does a good job and I see no reason to change:
     \begin{quote}
-        Landau quantization is the quantization of the cyclotron orbits of charged particles in magnetic fields. Because of this quantization, charged particles can only occupy orbits discrete energy values, called Landau levels. 
+        Landau quantization is the quantization of the cyclotron orbits of charged particles in magnetic fields. Because of this quantization, charged particles can only occupy orbits with discrete energy values, called Landau levels. 
 
         The Landau levels are degenerate, with the number of electrons per level directly proportional to the strength of the applied magnetic field. 
     \end{quote}
@@ -3636,7 +3644,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
         \omega = \frac{q B}{m} \qquad \xi = \sqrt{\frac{\hbar}{qB}} \qquad y_{k} = - \xi^{2}k.
     \end{equation*}
 
-	\item In absence of an electric potential, the solutions for $ \chi $ are simply the eigenstates of a displaced harmonic oscillator, i.e.
+	\item For a particle confined to the $ xy $ plane in the absence of an electric potential, the solutions for $ \chi $ are simply the eigenstates of a displaced harmonic oscillator, i.e.
 	\begin{equation*}
 		\chi_{nk}(y) = \psi_{n}(y - y_{k}),
 	\end{equation*}
@@ -3683,7 +3691,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 	\end{align*}
 	where $ p_{x} $ on the right hand side is the eigenvalue of the operator $ \hat{p}_{x} \to -i\hbar \pdv{x}$ on the left hand side, and the corresponding function is $ f(x) = x^{2} $. When applied to the \Schro equation using the above ansatz for $ \P $, this identity produces
    \begin{equation*}
-       \left(-i\hbar \pdv{x} + qBy\right)^{2} \P(\r) = (p_{x} + qB_{y})^{2} \P(\r).
+       \left(-i\hbar \pdv{x} + qBy\right)^{2} \P(\r) \to (p_{x} + qBy)^{2} \P(\r).
    \end{equation*}
    
     \item We then substitute $ \P $ into the \Schro equation, apply the above identity, note that $ \phi = \phi(y) $ acts only on the $ \chi(y) $ factor of $ \P $, evaluate the relevant momentum eigenvalue relations for $ x $ and $ z $, and cancel out the common factor $ \exp\left[i \left(\frac{p_{x}}{\hbar}x + \frac{p_{z}}{\hbar}z \right)\right] $, which considerably simplifies the \Schro equation to
@@ -3750,7 +3758,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 
 
 \subsection{Gauge Transformations}
-\textit{Discuss gauge transformations in the context of a particle in an electromagnetic field. Discuss the quantization of magnetic flux.}
+\textit{Discuss gauge transformations in the context of a particle in an electromagnetic field.}
 
 \begin{itemize}
     \item A so-called local gauge transformation, encoding a time-dependent phase shift, reads
@@ -3784,8 +3792,8 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 	\end{equation*}
     As an example, we consider the kinetic moment operator $ \vec{\pi} = \vec{p} - q\A $:
 	\begin{align*}
-		\mel{\P_{1}'}{\vec{\pi}'}{\P_{2}'} & = \mel{\P_{1}'}{\vec{p} - q\A'}{\P_{2}'} = \mel{e^{i\frac{1}{\hbar}\Lambda}\P_{1}}{\vec{p} - q(\A + \grad \Lambda)}{e^{i\frac{q}{\hbar}\Lambda}\P_{2}'}\\
-		& =  \mel{e^{i\frac{1}{\hbar}\Lambda}\P_{1}}{e^{i\frac{q}{\hbar}\Lambda}(\vec{p} - q \A)}{\P_{2}'} = \mel{\P_{1}}{(\vec{p} - q\A)}{\P_{2}}\\
+		\mel{\P_{1}'}{\vec{\pi}'}{\P_{2}'} & = \mel{\P_{1}'}{\vec{p} - q\A'}{\P_{2}'} = \mel{e^{i\frac{q}{\hbar}\Lambda}\P_{1}}{\vec{p} - q(\A + \grad \Lambda)}{e^{i\frac{q}{\hbar}\Lambda}\P_{2}}\\
+		& =  \mel{e^{i\frac{q}{\hbar}\Lambda}\P_{1}}{e^{i\frac{q}{\hbar}\Lambda}(\vec{p} - q \A)}{\P_{2}} = \mel{\P_{1}}{(\vec{p} - q\A)}{\P_{2}}\\
 		& = \mel{\P_{1}}{\vec{\pi}}{\P_{2}}.
 	\end{align*}
 \end{itemize}
@@ -3857,6 +3865,8 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 	\end{equation*}
     where $ \P_{\text{A}} $ denotes the wavefunction for a particle of charge $ q $, evaluated in the presence of a non-zero vector potential, and $ \P_{0} $ denotes the wavefunction for the same particle, but evaluated in the absence of the vector potential, i.e. with $ \A = 0 $.
 
+    \item The necessary analytical formalism, followed by the actual Aharonov-Bohm experiment, is presented in the following to subsubsections, respectively.
+
 \end{itemize}
 
 \subsubsection{Aharonov-Bohm Effect: Necessary Formalism}
@@ -3865,14 +3875,14 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 	\begin{equation*}
 		\B = \curl \A = 0.
 	\end{equation*} 
-	Since $ \curl \A = 0 $, we can write $ \A $ as the gradient of a scalar field $ \A = \grad \Lambda $ to get
+	Since $ \curl \A = 0 $, we can write $ \A $ as the gradient of a scalar field $ \A = - \grad \Lambda $ to get
 	\begin{equation*}
 		\Lambda(\r) = \Lambda(\r_{0}) + \int_{\r_{0}}^{\r}\A(\t{\r})\cdot \diff \t{\r}.
 	\end{equation*}
 	
 	\item We then choose the origin $ \r_{0} $ to occur in the region without magnetic field, i.e. $ \B(\r_{0}) = 0 $. The constant $ \Lambda(\r_{0}) $ then represents a global phase shift, which we can freely set to zero without affecting any observable properties of the wavefunction.
 
-    \item The \Schro equation for a particle of charge $ q $ in the region of space with zero magnetic field reads
+    \item The \Schro equation for a particle of charge $ q $ reads
 	\begin{equation*}
 		i\hbar \pdv{t}\P = \frac{(\vec{p} - q \A)^{2}}{2m} \P + V\P.
 	\end{equation*}
@@ -3882,14 +3892,14 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 	\end{equation*}
 	where the vector potential $ \A' $ (but not necessarily $ \A $) vanishes in the absence of a magnetic field via
 	\begin{equation*}
-		\A' = \A + \grad(-\Lambda) = \A - \A = 0,
+		\A' = \A + \grad \Lambda = \A - \A = 0,
 	\end{equation*}
-    where the minus sign in the expression $ \grad(- \Lambda) $ occurs because $ \A $ was defined as $ \A = \grad \Lambda $ and not $ \A = - \grad \Lambda $.
+    where we have substituted in $ \A = - \grad \Lambda $.
 	
 	
 	\item In the absence of a magnetic field, both wavefunctions $ \P $ and $ \P' $ describe the same particle, and the two wavefunctions are related by the local gauge transformation
 	\begin{equation*}
-        \P'(\r, t) = e^{- i\frac{q}{\hbar} \Lambda} \P(\r, t) \qquad \text{where} \qquad  i \frac{q}{\hbar}\Lambda(\r) = i \frac{q}{\hbar} \int_{\r_{0}}^{\r}\A(\tilde{\r}) \cdot \diff \tilde{\r}.
+        \P'(\r, t) = e^{i\frac{q}{\hbar} \Lambda} \P(\r, t) \qquad \text{where} \qquad  i \frac{q}{\hbar}\Lambda(\r) = i \frac{q}{\hbar} \int_{\r_{0}}^{\r}\A(\tilde{\r}) \cdot \diff \tilde{\r}.
 	\end{equation*}
     The above expression motivates the definition of $ \Psi_{\text{A}} $ as
 	\begin{equation*}
@@ -3907,27 +3917,25 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 
 \subsubsection{The Aharonov-Bohm Experiment}
 \begin{itemize}
-    \item Consider the two-dimensional system shown in Figure \ref{aharonov-bohm}, in which an electron can move along a straight quantum wire, which briefly splits into two branches, which then join back into a single wire.
+    \item The experiment is based on the two-dimensional system shown in Figure \ref{aharonov-bohm}, in which an electron can move along a straight quantum wire, which briefly splits into two branches at junction ($ \mathrm{I} $), which then join back into a single wire at junction ($ \mathrm{II} $).
 	
-	\item Assume, in the absence of both a magnetic field and vector potential ($ \B = 0 $ and $ \A = 0 $), that an electron wave packet $ \P $ travels along the wire, splits at the first junction (numbered with Roman numeral I) into two equal parts $ \P_{\text{I}} = \P_{1} + \P_{2} $, where $ \P_{1} $ and $ \P_{2} $ encode the probability for taking either branch 1 and branch 2.
+	\item Assume, in the absence of both a magnetic field and vector potential (i.e. $ \B = 0 $ and $ \A = 0 $), that an electron wave packet $ \P $ travels along the wire, splits at the first junction (numbered with Roman numeral I) into two equal parts $ \P_{\text{I}} = \P_{1} + \P_{2} $, where $ \P_{1} $ and $ \P_{2} $ encode the probability for taking either branch 1 and branch 2.
 	
 	Both $ \P_{1} $ and $ \P_{2} $ propagate along their respective branches and joint back at the second junction (numbered with Roman numeral II) into the wavefunction $ \P_{\text{II}} $.
 	
 	The total electric current through the wire after the junction is proportional to $ \abs{\P_{\text{ii}}}^{2} $, the probability of finding the particle at the second junction.
 	
-	\item Next, assume the region between the two branches is permeated with a magnetic field $ \B $, and that $ \B = 0 $ everywhere else, including along the wires carrying the electron wave packet. 
-	
-	Although $ \B = 0 $ along the wires, the vector potential, defined via $ \B = \curl \A $ ``spills out'' from the region between the branches, and is non-zero along the wires. 
+	\item Next, assume the region between the two branches is permeated with a magnetic field $ \B $, and that $ \B = 0 $ everywhere else, including along the wires carrying the electron wave packet. Although $ \B = 0 $ along the wires, the vector potential, defined via $ \B = \curl \A $ ``spills out'' from the region between the branches, and is non-zero along the wires. 
 	
     \item Next, using the earlier result
     \begin{equation*}
 		\P_{\text{A}}(\r) = \exp\left(i\frac{q}{\hbar} \int_{\r_{0}}^{\r}\A(\t{\r})\cdot \diff\t{\r}\right) \P_{0}(\r),
     \end{equation*}
-	the wavefunction encoding the electron at the second junction is then
+	the wavefunction encoding the electron at the second junction is
 	\begin{equation*}
-		\P_{\text{II}} = e^{i\delta_{1}} \P_{0_{1}} + e^{i\delta_{2}}\P_{0_{1}},
+		\P_{\text{II}} = e^{i\delta_{1}} \P_{0_{1}} + e^{i\delta_{2}}\P_{0_{2}},
 	\end{equation*}
-	where $ \P_{0_{1}} $ and $ \P_{0_{2}} $ are wavefunction that would occur in branches 1 and 2 in the absence of $ \A $, while the phase shifts in each branch are defined via
+	where $ \P_{0_{1}} $ and $ \P_{0_{2}} $ are the wavefunctions that would occur in branches 1 and 2 in the absence of $ \A $, while the phase shifts in each branch are defined via
 	\begin{equation*}
 		\delta_{1} = \frac{q}{\hbar} \int_{\text{branch 1}} \A(\r) \cdot \diff \r \eqtext{and} \delta_{2} = \frac{q}{\hbar} \int_{\text{branch 2}} \A(\r) \cdot \diff \r.
 	\end{equation*}
@@ -3966,7 +3974,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 \section{Spin}
 
 
-\subsection{Basics of Spin}
+\subsection{Basics of Spin} \label{ss:spin-basics}
 \textit{Define spin, explain its relationship to angular momentum, and state some of the important spin properties.}
 
 \begin{itemize}
@@ -3974,7 +3982,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 	\begin{equation*}
 		[S_{\alpha}, S_{\beta}] = i \hbar \epsilon_{\alpha \beta \gamma}S_{\gamma} \eqtext{or, in vector form,} \S \cross \S = i \hbar \S.
 	\end{equation*}
-    In general, spin can be be analyzed with the same formalism as angular momentum $ \L $.
+    In general, spin can be analyzed with the same formalism as angular momentum $ \L $.
 	
     \item Spin corresponds to angular momentum with half-integer eigenvalues $ s = \frac{1}{2}, \frac{3}{2}, \ldots $, which do not lead to continuous solutions of the \Schro equation. As a result, the spin eigenvectors do not have a coordinate representation of the form $ \braket{\r}{sm_{s}} $. 
 	
@@ -3984,11 +3992,10 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 	\begin{equation*}
 		S_{z}\ket{sm_{s}} = m_{s}\hbar \ket{sm_{s}} \eqtext{and} S^{2}\ket{sm_{s}} = s(s+1) \hbar^{2} \ket{sm_{s}}
 	\end{equation*}
-	As for $ l $ and $ m_{l} $, the spin quantum numbers $ s $ and $ m_{s} $ can take on the values
+	Unlike, $ l $, the spin quantum nubmer $ s $ takes on half-integer values, while the relationship between $ m_{l} $ and $ m_{s} $ is analogous. In equation form:
 	\begin{equation*}
-		s \in \{0, 1, 2, \ldots\} \eqtext{and} m_{s} \in \{-s, -s+1, \ldots, s-1, s\}
+        s \in \{\tfrac{1}{2}, \tfrac{3}{2}, \tfrac{5}{2}, \ldots \} \eqtext{and} m_{s} \in \{-s, -s+1, \ldots, s-1, s\}.
 	\end{equation*}
-	Of course, states with $ s = 0 $ have no spin, and we consider only $ s \geq 1 $ in this chapter.
 
 	\item The spin ladder operators $ S_{+} $ and $ S_{-} $ are defined as
 	\begin{equation*}
@@ -4015,10 +4022,10 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 
 
 \subsection{Spin 1/2}
-\textit{Discuss the basis properties of a particle with spin $ s = 1/2 $, explain why such particles are physically important, and define the up and down arrow notation $ \ket{\ua} $ and $ \ket{\da} $.}
+\textit{Discuss the basis properties of a particle with spin $ \qmath{s = 1/2} $, explain why such particles are physically important, and define the up and down arrow notation $ \qmath{\ket{\ua}} $ and $ \qmath{\ket{\da}} $.}
 
 \vspace{2mm}
-\textit{State and derive the matrix representations of the common spin operators in the $ \ket{sm} $ basis for a particle with spin $ s = 1/2 $.}
+\textit{State and derive the matrix representations of the common spin operators in the $ \qmath{\ket{sm}} $ basis for a particle with spin $ \qmath{s = 1/2} $.}
 
 \begin{itemize}
 	
@@ -4273,7 +4280,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 \end{itemize}
 
 \subsection{Spinors and Spinor Transformations}
-\textit{Discuss spinors in the context of particles with spin $ s = 1/2 $, and discuss how spinors are transformed by rotation and time reversal. Describe the process of changing the axis of quantization from the conventional $ z $ axis to an arbitrary direction in space.}
+\textit{Discuss spinors in the context of particles with spin $ \qmath{s = 1/2} $, and discuss how spinors are transformed by rotation and time reversal. Describe the process of changing the axis of quantization from the conventional $ \qmath{z} $ axis to an arbitrary direction in space.}
 
 \begin{itemize}
     \item For particles with spin $ s = 1/2 $, spinors, which describe general spin states, are determined by $ 2s + 1 = 2 $ coordinates, e.g. $ a, b \in \mathbb{C} $, that satisfy the normalization condition $ \abs{a}^{2} + \abs{b}^{2} = 1 $. In various notations, spin $ s = 1/2 $ spinors are written
@@ -4302,7 +4309,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 
 	\item In terms of spin, the rotation operator reads by an angle $ \phi $ about the axis $ \uvec{n} $ reads
     \begin{equation*}
-        U(\phi \uvec{n}) = \exp \left( - i \phi \frac{\uvec{n\cdot \S}}{\hbar} \right) = \cos \left(\frac{\phi}{2}\right)\II - i \sin \left(\frac{\phi}{2}\right)\uvec{n} \cdot \vec{\sigma}.
+        U(\phi \uvec{n}) = \exp \left( - i \phi \frac{\uvec{n}\cdot \S}{\hbar} \right) = \cos \left(\frac{\phi}{2}\right)\II - i \sin \left(\frac{\phi}{2}\right)\uvec{n} \cdot \vec{\sigma}.
 	\end{equation*}
 	Note that rotating a spinor by an angle $ \phi = 2\pi $ corresponds to multiplication by $ -\II $, and not simply the identity $ \II $. We must rotate a spinor around ``twice'', i.e. by an angle of $ 4\pi $, to recover its original orientation.
 	
@@ -4466,7 +4473,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 		\T = i \sigma_{y} KT \equiv \tau KT, \qquad \tau = i \sigma_{y} =
 		\begin{pmatrix}
 			0 & 1\\
-			-1 & 1
+			-1 & 0
 		\end{pmatrix},
 	\end{equation*}
 	where $ K $ is the complex conjugation operator and $ T $ changes the sign of time. 
@@ -4614,7 +4621,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 \end{figure}
 
 \begin{itemize}
-    \item Figure \ref{fig:stern-gerlach} and the associated caption summarize the Stern-Gerlach experiment. The discrete distribution of detected particles along the $ z $ axis, which is different from the classically expected result (i.e. a continuous distribution along the $ z $ axis) implies the atoms passing through the \SG magnet have quantized magnetic dipole moment. The measured quantum of magnetic dipole moment in the \SG experiment is the Bohr magneton
+    \item Figure \ref{fig:stern-gerlach} and the associated caption summarize the Stern-Gerlach experiment. The discrete distribution of detected particles along the $ z $ axis, which differs from the classically expected result (i.e. a continuous distribution along the $ z $ axis) implies the atoms passing through the \SG magnet have quantized magnetic dipole moments. The measured quantum of magnetic dipole moment in the \SG experiment is the Bohr magneton
     \begin{equation*}
         \mu_{B} = \frac{e_{0}\hbar}{2m_{\text{e}}},
     \end{equation*}
@@ -4628,11 +4635,10 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 \textbf{Homogeneous Magnetic Field}
 \begin{itemize}
 
-    \item Consider a silver atom of mass $ m $ exiting the Stern-Gerlach oven. The silver atom's shells are fully closed up to $ 4 \mathrm{d}^{10} $, with a single electron in the $ 5 \mathrm{s} $ shell.
+    \item We first consider a simplified analysis with a homogeneous magnetic field. The actual experiment invovles a nonhomogeneous field, but this simplified analysis will serve as a good introduction to the experiment. 
+    Consider a silver atom of mass $ m $ exiting the Stern-Gerlach oven. The silver atom's shells are fully closed up to $ 4 \mathrm{d}^{10} $, with a single electron in the $ 5 \mathrm{s} $ shell. The electron in the $ 5 \mathrm{s} $ shell has magnetic dipole moment $ \m $.
 
-    The electron in the $ 5 \mathrm{s} $ shell has magnetic dipole moment $ \m $.
-
-    \item The atom flies through a region with a homogeneous magnetic field $ \B_{0} = (0, 0, B_{0}) $. The electron's magnetic momentum $ \m $ interacts with the magnetic field to produce a torque
+    \item The atom flies through a region with a homogeneous magnetic field $ \B_{0} = (0, 0, B_{0}) $, and the electron's magnetic moment $ \m $ interacts with the magnetic field to produce a magnetic torque
     \begin{equation*}
         \vec{M} = \m \cross \B_{0}.
     \end{equation*}
@@ -4685,7 +4691,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
     \end{equation*}
    
 
-    The expression for force rests on the assumption that $ \m $ is constant and $ \curl \B = 0 $, and is derived via
+    The expression for force rests on the assumption that $ \m $ is constant and the condition $ \curl \B = 0 $, and is derived via
     \begin{equation*}
         \grad (\m \cdot \B) = (\m \cdot \grad)\B + (\B \cdot \grad)\m + \m \cross (\curl \B) + \B \cross (\curl \m) = (\m \cdot \grad)\B.
     \end{equation*}
@@ -4694,7 +4700,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
     \begin{equation*}
         \B(\r) = \B_{0} + \sum_{a} \pdv{\B}{x_{\alpha}}x_{\alpha} + \cdots,
     \end{equation*}
-    Along the direction of travel along $ y $ axis, where $ x \sim 0 $ and $ z \sim 0 $, we can neglect the force in the $ x $ direction, and the resulting force on the atom is then
+    Along the direction of travel along the $ y $ axis, where $ x \sim 0 $ and $ z \sim 0 $, we can neglect the force in the $ x $ direction, and the resulting force on the atom is then
     \begin{equation*}
         \vec{F} = F_{z}\uvec{e}_{z} = \mu \pdv{B_{z}}{z}\bigg |_{z=0} \uvec{e}_{z}.
     \end{equation*}
@@ -4705,7 +4711,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
     \end{equation*}
     where the sign depends on whether the magnetic moment is parallel or antiparallel to the magnetic field.
 
-    The particle is thus incident on the detection screen either above or below the $ z $ axis, corresponding to either ``up'' or ``down'' states. By measuring the distribution of atoms on the detection screen, we can determine the probabilities $ P_{\ua} $ and $ P_{\da} $ for an up or down outcome. In terms of these probabilities, the expected value of spin in the $ z $ direction, i.e. $ \ev{\sigma_{z}} = \cos \theta $ is found with
+    The particle is thus incident on the detection screen either above or below the  plane $ z = 0 $, corresponding to either ``up'' or ``down'' states. By measuring the distribution of atoms on the detection screen, we can determine the probabilities $ P_{\ua} $ and $ P_{\da} $ for an up or down outcome. In terms of these probabilities, the expected value of spin in the $ z $ direction, i.e. $ \ev{\sigma_{z}} = \cos \theta $ is found with
     \begin{equation*}
         \ev{\sigma_{z}} = \cos \theta = P_{\ua} - P_{\da}.
     \end{equation*}
@@ -4935,7 +4941,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
     \begin{equation*}
         \ev{\sigma_{y}} = - e^{-\lambda t^{2}} \sin \theta \sin \delta \varphi.
     \end{equation*}
-    Note that both $ \ev{\sigma_{x}} $ and $ \ev{\sigma_{y}} $ approach zero for large times, in agreement with the semi-classical result.
+    Note that both $ \ev{\sigma_{x}} $ and $ \ev{\sigma_{y}} $ approach zero for large times, in agreement with the idealized semi-classical result $ \ev{\sigma_{x}} = \ev{\sigma_{y}} = 0 $.
     
 \end{itemize}
 
@@ -4944,7 +4950,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 \section{Addition of Angular Momentum}
 
 \subsection{Formalism: Addition of Angular Momentum for Spin $ 1/2 $ Particles}
-\textit{Explain the formalism for addition of angular momentum in quantum mechanics for a system of two particles with spin $ s = 1/2 $. Discuss the singlet and triplet states.}
+\textit{Explain the formalism for addition of angular momentum in quantum mechanics for a system of two particles with spin $ \qmath{s = 1/2} $.}
 \begin{itemize}
 	\item Our concrete system: a hydrogen atom consisting of an electron in the ground state with angular momentum quantum number $ l = 0 $ and the proton in the nucleus. Both particles have spin $ s_{i} = 1/2 $.
 
@@ -5028,14 +5034,14 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 
     \item Although the product states $ \ket{m_{1}m_{2}} $ are not directly eigenstates of $ S^{2} $, we can expand the eigenstates $ \ket{sm} $ in the $ \ket{m_{1}m_{2}} $ basis in the form
     \begin{equation*}
-        \ket{sm} = \sum_{m_{1}m_{2}} s_{m_{1}m_{2}}\ket{m_{1}m_{2}},
+        \ket{sm} = \sum_{m_{1}m_{2}} c_{m_{1}m_{2}}\ket{m_{1}m_{2}},
     \end{equation*}
     where we sum over all $ m_{i} = \pm 1/2 $ obeying the condition $ m = m_{1} + m_{2} $. 
     
 \end{itemize}
 
 \subsection{The Singlet and Triplet States}
-\textit{State and derive the singlet and triplet states for a system of two particles with spin $ s = 1/2 $.}
+\textit{State and derive the singlet and triplet states for a system of two particles with spin $ \qmath{s = 1/2} $.}
 \begin{itemize}
     \item The singlet and triplet states for a system of two particles with spin $ s = 1/2 $ are
     \begin{align*}
@@ -5064,6 +5070,10 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
     \item The largest possible value of $ m $ for the state $ \ket{\ua \ua} $ is $ m = \tfrac{1}{2} + \tfrac{1}{2} = 1 $. The corresponding $ \ket{sm} $ state for $ m = 1 $, i.e. $ \ket{sm} = \ket{11} $ is also an eigenstate of $ S^{2} $, as shown below:
     \begin{equation*}
         S^{2}\ket{sm} = S^{2}\ket{11} = 1(1 + 1)\hbar^{2}\ket{11} = 2\hbar^{2}\ket{\ua\ua}.
+    \end{equation*}
+    For the next step, we recall the action of the operator $ S_{-} $ on the state $ \ket{sm} $, which reads
+    \begin{equation*}
+        S_{-} \ket{sm} = \hbar \sqrt{s(s + 1) - m(m - 1) } \ket{s, m + 1}
     \end{equation*}
     
     \item Next, we apply the ladder operator $ S_{-} $ to the state $ \ket{11} $, which gives
@@ -5122,7 +5132,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 \end{itemize}
 
 \subsection{Heisenberg Coupling}
-\textit{Explain the Heisenberg coupling interaction between two particles with spin $ s = 1/2 $. Be sure to discuss the relevant eigenvalue equation and energy eigenvalues.}
+\textit{Explain the Heisenberg coupling interaction between two particles with spin $ \qmath{s = 1/2} $. Be sure to discuss the relevant eigenvalue equation and energy eigenvalues.}
 
 \begin{itemize}
     \item The Heisenberg coupling involves two particles with spin $ s_{i} = 1/2 $ and reads
@@ -5163,7 +5173,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 \begin{itemize}
     \item The Clebsch-Gordan coefficients are change-of-basis coefficients used to transform between the product basis and total angular momentum basis when analyzing two particles with angular momenta $ \J_{1} $ and $ \J_{2} $ and any value of spin---not just $ s = 1/2 $.
 
-    \item We consider a two-particle system with two angular momentum-like operators $ \J_{1} $ and $ \J_{2} $ that obey the usual angular momentum commutation relations
+    \item We consider a two-particle system with two angular momentum-like operators $ \J_{1} $ and $ \J_{2} $ that obey the usual angular momentum commutation relation
     \begin{align*}
         \big[ J_{\alpha_{i}}, J_{\beta_{j}} \big] = i \hbar \delta_{ij}\epsilon_{\alpha\beta\gamma}J_{\gamma_{j}}.
     \end{align*}
@@ -5180,7 +5190,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 
 \end{itemize}
 
-\subsubsection{Example: Addition of Angular Momenta in the Case $ l \cross 1/2 $}
+\subsubsection{Example: Addition of Angular Momenta in the Case $ 1 \cross 1/2 $}
 
 \textbf{Background}
 \begin{itemize}
@@ -5278,7 +5288,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 \section{Perturbation Theory}
 
 \subsection{Rayleigh-\Schro Method}
-\textit{Discuss the Rayleigh-\Schro method for analyzing first-order perturbative analysis of a quantum system with a non-degenerate spectrum. Be sure to state and derive the relevant eigenvalue and eigenfunction formulas.}
+\textit{Discuss the Rayleigh-\Schro method for first-order perturbative analysis of a quantum system with a non-degenerate spectrum. Be sure to state and derive the relevant eigenvalue and eigenfunction formulas.}
 
 
 \begin{itemize}
@@ -5349,11 +5359,13 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
             \lambda^{3} & H_{0}\ket{n_{3}} + V \ket{n_{2}} & = & E_{n}^{(0)}\ket{n_{3}} + E_{n}^{(1)}\ket{n_{2}} + E_{n}^{(2)}\ket{n_{1}} + E_{n}^{(3)}\ket{n_{1}}.
         \end{array}
     \end{equation*}
-    The first equation is trivial and represents the known eigenvalue relation for the \Ham $ H_{0} $. The second equation with $ \lambda^{1} $ is more useful---we first multiply this equation by $ \bra{n_{0}} $ to get
-    \begin{equation*}
-        E_{n}^{(0)} \braket{n_{0}}{n_{1}} + \mel{n_{0}}{V}{n_{0}} = E_{n}^{(0)}\braket{n_{0}}{n_{1}} + E_{n}^{(1)}\braket{n_{1}}{n_{1}}.
-    \end{equation*}
-     We then apply the orthonormality condition $ \braket{n_{0}}{n_{j}} = \delta_{0j} $ to get 
+    The first equation is trivial and represents the known eigenvalue relation for the \Ham $ H_{0} $. The second equation with $ \lambda^{1} $ is more useful---we multiply this equation by $ \bra{n_{0}} $, use the identity $ \bra{n_{0}} H_{0} = E_{n}^{(0)}\bra{n_{0}} $ and apply the orthonormality condition $ \braket{n_{0}}{n_{j}} = \delta_{0j} $ to get
+    \begin{align*}
+        \mel{n_{0}}{H_{0}}{n_{1}} + \mel{n_{0}}{V}{n_{0}} &= E_{n}^{(0)}\braket{n_{0}}{n_{1}} + E_{n}^{(1)}\braket{n_{0}}{n_{0}}\\
+        E_{n}^{(0)} \braket{n_{0}}{n_{1}} + \mel{n_{0}}{V}{n_{0}} &= 0 + E_{n}^{(1)}\\
+        0 + \mel{n_{0}}{V}{n_{0}} &= 0 + E_{n}^{(1)}.
+    \end{align*}
+    In terms of the matrix element $ \mel{n_{0}}{V}{n_{0}} \equiv V_{nn} $, the end result is
      \begin{equation*}
          E_{n}^{(1)} = \mel{n_{0}}{V}{n_{0}} = V_{nn},
      \end{equation*}
@@ -5374,22 +5386,11 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
         E_{n}^{(j)} = \mel{n_{0}}{V}{n_{j-1}}.
     \end{equation*}
     
-    \item Technically, the result $ E_{n}^{(2)} = \mel{n_{0}}{V}{n_{1}} $ is the desired second-order energy correction. However, this result is not particularly useful unless we know $ \ket{n_{1}} $.
-
-    To find $ \ket{n_{1}} $, we first expand the identity operator in the $ H_{0} $ basis to get
-    \begin{equation*}
-        \II = \sum_{m}\ket{m_{0}}\bra{m_{0}}.
-    \end{equation*}
-    We can then expand each higher-order correction $ \ket{n_{j}} $ in the $ H_{0} $ basis in the form
-    \begin{equation*}
-        \ket{n_{j}} = \sum_{m \neq n}\ket{m_{0}}\braket{m_{0}}{n_{j}}.
-    \end{equation*}
-    Note that the term $ \ket{n_{0}} $ is left out of the sum because of the identity $ \braket{n_{0}}{n_{j}} = 0 $. 
-
-    \item With the above expression for $ \ket{n_{j}} $ in mind, we multiply the earlier equation for $ \lambda^{1} $ by $ \ket{m_{0}} $ and then apply $ \ket{n_{1}} = \sum_{m \neq n}\ket{m_{0}}\braket{m_{0}}{n_{1}} $, which results in
-    \begin{equation*}
-        \left( E_{n}^{(0)} - E_{m}^{(0)} \right)\braket{m_{0}}{n_{1}} = \mel{m_{0}}{V}{n_{0}} = V_{mn}.
-    \end{equation*}
+    \item Technically, the result $ E_{n}^{(2)} = \mel{n_{0}}{V}{n_{1}} $ is the desired second-order energy correction. However, this result is not particularly useful unless we know $ \ket{n_{1}} $. To find $ \ket{n_{1}} $ we multiply the earlier equation for $ \lambda^{1} $ by $ \ket{m_{0}} $, use the earlier identity $ \bra{m_{0}}H_{0} = E_{m}^{(0)}\bra{m_{0}} $, apply $ \braket{n_{0}}{n_{j}} = \delta_{0j} $ and rearrange to get
+    \begin{align*}
+        E_{m}^{(0)}\braket{m_{0}}{n_{1}} + \mel{m_{0}}{V}{n_{0}} &= E_{n}^{(0)} \braket{m_{0}}{n_{1}} + 0\\
+        \left( E_{n}^{(0)} - E_{m}^{(0)} \right)\braket{m_{0}}{n_{1}} &= \mel{m_{0}}{V}{n_{0}} = V_{mn}.
+    \end{align*}
     The coefficients in the expansion of $ \ket{n_{1}} $ are thus
     \begin{equation*}
         \braket{m_{0}}{n_{1}} = \frac{V_{mn}}{E_{n}^{(0)} - E_{m}^{(0)}},
@@ -5515,7 +5516,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
     \end{equation*}
     where the matrix elements $ V_{ij} $ are given by
     \begin{equation*}
-        V_{ij} = \mel*{n_{0}^{(i)}}{V}{n_{0}^{j}}.
+        V_{ij} = \mel*{n_{0}^{(i)}}{V}{n_{0}^{(j)}}.
     \end{equation*}
     The matrix $ V_{ij} $'s eigenvalues are the first-order energy eigenvalue corrections $ E_{n_{l}}^{(1)} $, where $ l = 1, 2, \ldots N $, to the total \Ham $ H $'s energies $ E_{n} $.
 
@@ -5608,7 +5609,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 \textit{Explain the process for perturbatively finding the eigenfunctions of a system with a time-dependent \Ham.}
 
 \vspace{2mm}
-\textit{Define the interaction picture and state and derive the relevant equations.}
+\textit{Explain the interaction picture and state and derive the relevant equations.}
 
 \vspace{2mm}
 \textit{What are Rabi oscillations? Give a physical situation where the phenomenon might apply, and state the relevant equations.}
@@ -5730,9 +5731,9 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
             \lambda V(t) & t \geq 0
         \end{cases}
     \end{equation*}
-    and begin by expanding the coefficients $ c_{m} $ in the interaction picture in the form
+    and begin by expanding the coefficients $ c_{n} $ in the interaction picture in the form
     \begin{equation*}
-        c_{m} = c_{m}^{(0)} + \lambda c_{m}^{(1)} + \lambda^{2} c_{m}^{(2)} + \cdots.
+        c_{n} = c_{n}^{(0)} + \lambda c_{n}^{(1)} + \lambda^{2} c_{n}^{(2)} + \cdots.
     \end{equation*}
     
     \item We then assume the system occurs in one of the $ H_{0} $ eigenstates, i.e. $ \ket{\psi(0)} = \ket{m} $, expand the initial and time-dependent states in the $ H_{0} $ basis in the form
@@ -5924,7 +5925,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
 
 
 \subsection{The WKB Approximation}
-\textit{Provide an overview of the WKB method in the context of quantum mechanics. Define the WKB approximation, and explain how it connects quantum and classical mechanics.}
+\textit{Provide an overview of the \emph{WKB} method in the context of quantum mechanics. Define the \emph{WKB} approximation, and explain how it connects quantum and classical mechanics.}
 
 \begin{itemize}
 
@@ -6100,13 +6101,14 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
         & = \braket{\sum_{m} \braket{m}{\p}\bra{m}}{\sum_{n} \braket{n}{\p}E_{n}\ket{n}}\\
         &= \sum_{n} E_{n}\abs{c_{n}}^{2}.
     \end{align*}
-    We can bound this result from above according to
+    
+    \item We can bound this result from above according to
     \begin{equation*}
         E_{0}\sum_{n} \abs{c_{n}}^{2} \leq \sum_{n} E_{n}\abs{c_{n}}^{2},
     \end{equation*}
     where $ E_{0} $ is the ground state energy, which obeys $ E_{0} \leq E_{1} \leq \cdots \leq E_{n} \leq \cdots $. 
 
-    The above upper bound implies
+    \item The above upper bound implies
     \begin{equation*}
         \mel{\psi}{H}{\psi} \geq E_{0} \sum_{n}\abs{c_{n}}^{2} = E_{0} \braket{\psi}{\psi},
     \end{equation*}
@@ -6173,7 +6175,7 @@ Consider an orthonormal basis $ \{\ket{n}\} $ consisting of the eigenstates $ \k
     \end{equation*}
     \textit{Interpretation}: The sum of the currents entering the potential equals the sum of the currents leaving the potential, which may also be written
     \begin{equation*}
-        \Psi_{\text{out}}^{\dagger} \Psi_{\text{out}}^{\dagger} = \Psi_{\text{in}}^{\dagger} \Psi_{\text{in}}^{\dagger}.
+        \Psi_{\text{out}}^{\dagger} \Psi_{\text{out}} = \Psi_{\text{in}}^{\dagger} \Psi_{\text{in}}.
     \end{equation*}
     As a result, the system's probability current density is constant and equal to
     \begin{equation*}

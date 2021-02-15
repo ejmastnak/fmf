@@ -53,7 +53,7 @@
 \newcommand{\e}{\epsilon}
 \newcommand{\ee}{\epsilon_{0}}  % vacuum permittivity
 \newcommand{\mm}{\mu_{0}}  % vacuum permeability
-\newcommand{\pe}{\vec{p}_{e}}  % electric dipole moment
+\newcommand{\pe}{\vec{p}_{\text{e}}}  % electric dipole moment
 \newcommand{\m}{\vec{m}}  % magnetic dipole moment
 \renewcommand{\j}{\vec{j}}  % electric current density
 
@@ -72,13 +72,33 @@
 \newcommand{\laplacianp}{\nabla^{2}}
 
 % begin header configuration
-\fancypagestyle{headerstyle}{
-\fancyhf{}  % clear default settings from header and footer; create blank slate
-\fancyhead[R]{\href{https://github.com/ejmastnak/fmf}{\small{\texttt{github.com/ejmastnak/fmf}}}}  % link in upper right
-\fancyhead[L]{\textit{\truncate{0.65\headwidth}{\rightmark}}}  % subsection name; truncate long names
-\fancyfoot[C]{\thepage}  % centered page number in footer
+\pagestyle{fancy}
+
+% Header and footer on non-section pages (default style)
+\fancyhf{}
+\fancyhead[R]{\href{https://github.com/ejmastnak/fmf}{\small{\texttt{github.com/ejmastnak/fmf}}}} 
+\fancyhead[L]{\textit{\truncate{0.65\headwidth}{\rightmark}}}
+\fancyfoot[C]{\thepage} 
 \renewcommand{\headrulewidth}{0.1pt}
+
+% Header and footer on section pages---identical to default style, but must be explicitly included
+\fancypagestyle{plain}{
+    \fancyhf{}  
+    \fancyhead[R]{\href{https://github.com/ejmastnak/fmf}{\small{\texttt{github.com/ejmastnak/fmf}}}}  
+    \fancyhead[L]{\textit{\truncate{0.65\headwidth}{\rightmark}}} 
+    \fancyfoot[C]{\thepage}  % centered page number in footer
+    \renewcommand{\headrulewidth}{0.1pt}
 }
+
+\renewcommand{\sectionmark}[1]{%
+  \markboth{\sectionname \thesection}
+  {\noexpand\firstsubsectiontitle}}
+\renewcommand{\sectionmark}[1]{}
+
+\renewcommand{\subsectionmark}[1]{%
+  \markright{\thesubsection\ \, #1}\gdef\firstsubsectiontitle{#1}}
+
+\newcommand\firstsubsectiontitle{}
 % end header configuration
 
 \begin{document}
@@ -86,6 +106,8 @@
 \author{Elijan Mastnak}
 \date{Winter Semester 2020-2021}
 \maketitle
+
+\thispagestyle{empty}  % remove headers from introductory page
 
 \begin{center}
     \textbf{About These Notes}
@@ -97,17 +119,21 @@ These are my lecture notes from the course \textit{Elektromagnetno polje} (Elect
 \textit{Navigation}: For easier document navigation, the table of contents is ``clickable'', meaning you can jump directly to a section by clicking the colored section names in the table of contents. Unfortunately, the \textit{clickable links do not work in most online or mobile PDF viewers}; you have to download the file first.
 
 \vspace{2mm}
-\textit{On Authorship:} These content of these notes is far from original. The lectures were given by Professor Miha Ravnik and, to the best of my knowledge, draw from the content of the textbook \textit{Elektromagnetno polje} by Rudolf Podgornik and Andrej Vilfan, published by FMF's publishing house DMFA in 2012. Accordingly, credit for the material in these notes goes to Professors Ravnik, Podgornik and Vilfan; I have simply typeset the notes, translated to English and provided an additional explanation or two where I saw fit.
+\textit{On Authorship:} The content of these notes is far from original. The lectures were given by Professor Miha Ravnik and, to the best of my knowledge, draw from the content of the textbook \textit{Elektromagnetno polje} by Rudolf Podgornik and Andrej Vilfan, published by FMF's publishing house DMFA in 2012. Accordingly, credit for the material in these notes goes to Professors Ravnik, Podgornik and Vilfan; I have simply typeset the notes, translated to English and provided an additional explanation or two where I saw fit.
 
 \vspace{2mm}
 \textit{Disclaimer:} Mistakes---both trivial typos and legitimate errors---are likely. Keep in mind that these are the notes of an undergraduate student in the process of learning the material himself---take what you read with a grain of salt. If you find mistakes and feel like telling me, by \href{https://github.com/ejmastnak/fmf}{\underline{GitHub}} pull request, \href{mailto:ejmastnak@gmail.com}{\underline{email}} or some other means, I'll be happy to hear from you, even for the most trivial of errors.
 
 \newpage
+
+\pagestyle{empty}  % no header in table of contents
+
 \tableofcontents
+
 \newpage
 
+\pagestyle{fancy}  % turn on headers for remainder of document
 
-\pagestyle{headerstyle}
 \section{Electrostatics}
 Electrostatics is the study of static (time-independent) charge distributions.
 
@@ -275,7 +301,7 @@ Electrostatics is the study of static (time-independent) charge distributions.
 	\begin{equation*}
 		\E(\r) = \frac{q}{4\pi \ee} \frac{\r}{r^{3}}.
 	\end{equation*}
-	Using the above gradient identity $ \grad \frac{1}{\r} = - \frac{\r}{r^{3}} $,the electric potential $ \phi $  satisfying the equality $ \E(\r)  -\grad \phi(\r) $ is
+    Using the above gradient identity $ \grad \frac{1}{\r} = - \frac{\r}{r^{3}} $, the electric potential $ \phi $  satisfying the equality $ \E(\r) = -\grad \phi(\r) $ is
 	\begin{equation*}
 		\phi = \frac{q}{4\pi \ee}\frac{1}{r} + \phi_{0}.
 	\end{equation*}
@@ -309,7 +335,7 @@ Electrostatics is the study of static (time-independent) charge distributions.
 	\begin{equation*}
 		\rho (\r) = \sum_{i} q_{i}\delta^{3}(\r - \r_{i}),
 	\end{equation*}
-	where we note that the delta function has units $ \si{length^{-3}} $. We find the distribution's total charge by integrating the charge density over the volume $ V $ containing the charges:
+	where we note that the delta function $ \delta^{3} $ has units $ \si{length^{-3}} $. We find the distribution's total charge by integrating the charge density over the volume $ V $ containing the charges:
 	\begin{equation*}
 		\iiint_{V} \rho(\r) \dr  = \sum_{i} q_{i}\iiint_{V} \delta^{3}(\r - \r_{i})\dr = \sum_{i} q_{i} = q_{\text{total}}.
 	\end{equation*}
@@ -348,24 +374,24 @@ Electrostatics is the study of static (time-independent) charge distributions.
 	\begin{equation*}
 		\rho(\r) = q \delta^{3}(\r - \r_{0} - \delta \r) - q\delta^{3}(\r - \r_{0} + \delta \r).
 	\end{equation*}
-	Next, we consider the limit case $ \abs{\delta \r} \ll \abs{\r_{0}} $, i.e. when the distance $ \delta r $ between the dipole charges is small compared to the distance $ r_{0} $ to the dipole. We expand the charge density to get
+	Next, we consider the limit case $ \abs{\delta \r} \ll \abs{\r_{0}} $, i.e. when the distance $ \abs{\delta \vec{r}} $ between the dipole charges is small compared to the distance $ \abs{\vec{r}_{0}} $ to the dipole. We expand the charge density to get
 	\begin{equation*}
-		\rho(\r) \approx - q \delta \r \cdot \grad \big(\delta^{3}(\r - \r_{0})\big) - q \delta \r \cdot \grad \big(\delta^{3}(\r - \r_{0})\big) = -2 q \delta \r \cdot \grad \big(\delta^{3}(\r - \r_{0})\big).
+		\rho(\r) \approx - q \delta \r \cdot \grad \big[\delta^{3}(\r - \r_{0})\big] - q \delta \r \cdot \grad \big[\delta^{3}(\r - \r_{0})\big] = -2 q \delta \r \cdot \grad \big[\delta^{3}(\r - \r_{0})\big].
 	\end{equation*}
 	The term $ 2q\delta \r $ is the dipole moment $ \pe $, and the dipole's charge density is then
 	\begin{equation*}
-		\rho(\r) = -\pe \cdot \grad \big(\delta^{3}(\r - \r_{0})\big).
+		\rho(\r) = -\pe \cdot \grad \big[\delta^{3}(\r - \r_{0})\big].
 	\end{equation*}
 
-	Next, we make the auxiliary calculation
+	\item Next, we make the auxiliary calculation
 	\begin{align*}
-		\div \big(\pe \delta^{3}(\r - \r_{0})\big) &= (\div \pe) \delta^{3}(\r - \r_{0}) + \pe \cdot \grad \big(\delta^{3}(\r - \r_{0})\big) \\
-		&= 0 + \pe \cdot \grad \big(\delta^{3}(\r - \r_{0})\big)  \implies \\
-		\pe \cdot \grad \big(\delta^{3}(\r - \r_{0})\big)  & = - \div \big(\pe \delta^{3}(\r - \r_{0})\big).
+		\div \big[\pe \delta^{3}(\r - \r_{0})\big] &= (\div \pe) \delta^{3}(\r - \r_{0}) + \pe \cdot \grad \big[\delta^{3}(\r - \r_{0})\big] \\
+		&= 0 + \pe \cdot \grad \big[\delta^{3}(\r - \r_{0})\big]  \implies \\
+		\pe \cdot \grad \big[\delta^{3}(\r - \r_{0})\big]  & = - \div \big[\pe \delta^{3}(\r - \r_{0})\big].
 	\end{align*}
 	where we've used $ \div \pe = 0 $. The dipole's charge density is then
 	\begin{equation*}
-		\rho(\r) = - \div \big(\pe \delta^{3}(\r - \r_{0})\big) \equiv - \div \vec{P}(\r).
+		\rho(\r) = - \div \big[\pe \delta^{3}(\r - \r_{0})\big] \equiv - \div \vec{P}(\r).
 	\end{equation*}
 	where $ \vec{P} $ is electric polarization. The relationship 
 	\begin{equation*}
@@ -449,7 +475,7 @@ Electrostatics is the study of static (time-independent) charge distributions.
 \begin{itemize}
 	\item To find the differential form of Gauss's law, we begin with the integral form
 	\begin{equation*}
-		\oiint_{\text{S}} \E \cdot \diff \vec{S} = \frac{1}{\ee}\iiint_{V}\rho(\r) \dr.
+		\oiint_{\partial V} \E \cdot \diff \vec{S} = \frac{1}{\ee}\iiint_{V}\rho(\r) \dr.
 	\end{equation*}
 	We then recall the divergence theorem, which reads
 	\begin{equation*}
@@ -468,7 +494,7 @@ Electrostatics is the study of static (time-independent) charge distributions.
 \subsection{The General Expression for Electric Potential}
 \subsubsection{The Poisson and Laplace Equations for Electric Potential}
 \begin{itemize}
-	\item The Poisson equation is used to find the electrostatic potential $ \phi(\r) $ of an arbitrary charge distribution $ \rho(\r) $. To derive the Poisson equation, we substitute $ E = - \grad \phi $ into the differential form of Gauss's law to get
+	\item The Poisson equation is used to find the electrostatic potential $ \phi(\r) $ of an arbitrary charge distribution $ \rho(\r) $. To derive the Poisson equation, we substitute $ \E = - \grad \phi $ into the differential form of Gauss's law to get
 	\begin{equation*}
 		\frac{\rho}{\ee} \equiv \div \E = \div \big[- \grad \phi \big]= - \laplacian \phi.
 	\end{equation*}
@@ -559,7 +585,7 @@ Electrostatics is the study of static (time-independent) charge distributions.
 	
 	\item  Using the just-derived Green's function, the general solution to the Poisson equation for electric potential $ \phi(\r) $  is
 	\begin{equation*}
-		\phi(\r) = \phi(\r) = \iiint_{V} G(\r - \t{\r})\rho(\t{\r}) \dtr = \iiint_{V} \frac{\rho(\t{\r})}{4\pi \ee \abs{\r - \t{\r}}}\dtr.
+		\phi(\r) = \iiint_{V} G(\r - \t{\r})\rho(\t{\r}) \dtr = \iiint_{V} \frac{\rho(\t{\r})}{4\pi \ee \abs{\r - \t{\r}}}\dtr.
 	\end{equation*}
 	This result is important: it means that as long as we know a charge distribution charge density $ \rho(\r) $, we can find the corresponding electric potential $ \phi(\r) $. 
 	
@@ -669,7 +695,7 @@ Electrostatics is the study of static (time-independent) charge distributions.
 	\begin{equation*}
 		W_{\text{E}} = \frac{1}{2} \iiint_{V} \rho(\r) \phi(\r) \dr
 	\end{equation*}
-	and use Gauss's law $ \E = \div \frac{\rho}{\ee} $ to get
+	and use Gauss's law $ \div \E = \frac{\rho}{\ee} $ to get
 	\begin{equation*}
 		W_{\text{E}}  = \frac{1}{2} \iiint_{V} \ee (\div \E) \phi(\r) \dr.
 	\end{equation*}
@@ -685,7 +711,7 @@ Electrostatics is the study of static (time-independent) charge distributions.
 	\end{align*}
 	where we've used $ \grad \phi = - \E $ in the second integral. 
 	
-	\item We then assume the integratino volume $ V $ enclosing the charge distribution $ \rho $ is large, in which case the integral of $ \phi \E $ over the surface $ \partial V $ is zero. Here's why: The electric potential falls as $ \phi \sim r^{-1} $ with increasing distance $ r $, and the electric field falls as $ \E \sim r^{-2} $, while surface area grows as $ \vec{S} \sim r^{-2} $. The integrand  $ \phi \E \cdot \diff \vec{S} $ thus falls as $ r^{-1} $ and vanishes as $ r \to \infty $. What remains is the familiar formula
+	\item We then assume the integration volume $ V $ enclosing the charge distribution $ \rho $ is large, in which case the integral of $ \phi \E $ over the surface $ \partial V $ is zero. Here's why: The electric potential falls as $ \phi \sim r^{-1} $ with increasing distance $ r $, and the electric field falls as $ \E \sim r^{-2} $, while surface area grows as $ \vec{S} \sim r^{2} $. The integrand  $ \phi \E \cdot \diff \vec{S} $ thus falls as $ r^{-1} $ and vanishes as $ r \to \infty $. What remains is the familiar formula
 	\begin{equation*}
 		W_{\text{E}} = \frac{\ee}{2} \iiint_{V} E^{2} \dr.
 	\end{equation*} 
@@ -721,7 +747,7 @@ Electrostatics is the study of static (time-independent) charge distributions.
 
 	\item The integral currently runs over the entire body's volume. In practice, it is hard to measure the electric field inside a body, so our next step is to convert to an integral over the body's surface. We apply the vector analysis identity
 	\begin{equation*}
-		\div (\E \otimes \E) = \E \cdot (\grad \E) + (\E \cdot \grad) \E,
+		\div (\E \otimes \E) = \E (\div \E) + (\E \cdot \grad) \E,
 	\end{equation*}
 	in terms of which the electric force reads
 	\begin{align*}
@@ -909,7 +935,7 @@ Electrostatics is the study of static (time-independent) charge distributions.
 \section{Magnetostatics}
 In this chapter we consider only static magnetic fields that do not change with respect to time, hence the name magnetostatics. Magnetic fields are created by electric currents or time-varying electric fields. In this chapter we will consider current sources of magnetic fields---we will consider magnetic fields generated by time-varying electric fields when studying electrodynamics.
 
-\subsection{Fundamental Relationships in Magnetostatics}
+\subsection{Ampere's Force Law and Magnetic Force}
 
 \subsubsection{Magnetic Force Between Parallel Wires}
 \begin{itemize}
@@ -917,17 +943,17 @@ In this chapter we consider only static magnetic fields that do not change with 
 	
 	We work in a planar cross section, and assume the wires occur at the positions $ \r_{1} $ and $ \r_{2} $. In this case, the force between the wires is
 	\begin{equation*}
-		\vec{F} = \frac{\mm}{2\pi}\frac{LI_{1}I_{2}}{\abs{\r_{2}- \r_{1}}}\frac{\r_{2} - \r_{1}}{\abs{\r_{2} - \r_{1}}}
+        \vec{F} = \frac{\mm I_{1} I_{2} L}{2\pi} \frac{\r_{2}- \r_{1}}{\abs{\r_{2} - \r_{1}}^{2}}
 	\end{equation*}
 	where $ L $ is the length of the wires. 
 
-    \textit{Important:} We take this relationship as an empirical law---we have not derived it from theory. This expression for the magnetic force between parallel wires can be considered a magnetic analog for Coulomb's law for the electric force between static electric charges.
+    \textit{Important:} We take this relationship as an empirical law---we have not derived it from theory or fundamental principles. This expression for the magnetic force between parallel wires can be considered a magnetic analog to Coulomb's law for the electric force between static electric charges.
 	
 \end{itemize}
 
 \subsubsection{Force Between Current-Carrying Conductors}
 \begin{itemize}
-	\item We now consider the magnetic force between two conductors (wires) that are not necessarily parallel. We parameterize the position along each conductors with the following quantities:
+	\item We now consider the magnetic force between two conductors (wires) that are not necessarily parallel. We parameterize the position along each conductor with the following quantities:
     \begin{itemize}
         \item $ l_{1} $ and $ l_{2} $ are the distance travelled along the first and second conductor, respectively
 
@@ -956,6 +982,9 @@ In this chapter we consider only static magnetic fields that do not change with 
 	
 \end{itemize}
 
+
+\subsection{Fundamental Quantities in Magnetostatics}
+
 \subsubsection{Electric Current and its Magnitude}
 We dedicate a brief section to review electric current, since we will be working with electric current constantly in magnetostatics. 
 \begin{itemize}
@@ -981,9 +1010,6 @@ We dedicate a brief section to review electric current, since we will be working
 	\end{center}
 	
 \end{itemize}
-
-
-\subsection{Magnetic Flux Density}
 
 \subsubsection{The Biot-Savart Law for Magnetic Field}
 \begin{itemize}
@@ -1033,7 +1059,7 @@ We dedicate a brief section to review electric current, since we will be working
 \begin{itemize}
     \item In terms of the arc length parameter $ s $, magnetic field lines $ \r(s) $ are closed curves related to magnetic field $ \B $ by
 	\begin{equation*}
-		\dot{\r}(s) = \dv{\r}{s} = \frac{\B(\dot{\r}(s))}{\abs{\B(\r(s))}}.
+		\dot{\r}(s) = \dv{\r}{s} = \frac{\B(\r(s))}{\abs{\B(\r(s))}}.
 	\end{equation*}
 	Note that all magnetic field lines are closed curves---there are no magnetic monopoles. 
 	
@@ -1119,9 +1145,9 @@ We dedicate a brief section to review electric current, since we will be working
 	\end{equation*}
 	where $ \uvec{l} $ is the unit vector tangent to the conductor and parallel to the current.
 	
-	\item The current density of a point charge with velocity $ \vec{v} $ is
+	\item The current density of a point charge with velocity $ \vec{v} $ and position vector $ \r_{q} $ is
 	\begin{equation*}
-		\j(\r) = q \delta^{3}(\r - \r(t))\vec{v}(t).
+		\j(\r) = q \delta^{3}(\r - \r_{q}(t))\vec{v}(t).
 	\end{equation*}
 	
     \item The current density of charge distributed through a planar surface at $ z = z_{0} $ and moving with velocity $ \vec{v} $ is
@@ -1139,7 +1165,7 @@ We dedicate a brief section to review electric current, since we will be working
 
 \subsection{Ampere's Law}
 \begin{itemize}
-	\item Ampere's law will allow us to explicitly connect a magnetic field to its current sources. We begin by considering a current loop $ C' $ parameterized by the following quantities:
+	\item Ampere's law will allow us to explicitly connect a magnetic field to its current sources. We begin by considering a closed loop $ C' $ carrying current $ I $ and parameterized by the following quantities:
     \begin{itemize}
         \item the arc length $ l' $,
 
@@ -1153,19 +1179,20 @@ We dedicate a brief section to review electric current, since we will be working
 	% We are interested in the relationship between $ \curl \B $ and $ \j $. 
 	
 	We begin the analysis by finding the magnetic circulation along the curve $ C $. Using the Biot-Savart law to express $ \B $, the circulation $ \Gamma_{\text{M}} $ is
-	\begin{equation*}
-		\Gamma_{\text{M}} = \oint_{C} \B \cdot \diff \vec{l} = \oint_{C}\left[ - \frac{\mm I}{4 \pi} \oint_{C'}\diff \vec{l}' \cross \grad \left(\frac{1}{\abs{\r(l) - \r(l')}}\right) \right] \cdot \diff \vec{l},
-	\end{equation*}
-	where we've written the integrand in the second equality with a reverse-engineered gradient. 
+	\begin{align*}
+        \Gamma_{\text{M}} = \oint_{C} \B \cdot \diff \vec{l} & = \oint_{C}\left[\frac{\mm I}{4 \pi} \oint_{C'}\diff \vec{l}' \cross \left(\frac{\r(l) - \r(l')}{\abs{\r(l) - \r(l')}^{3}}\right) \right] \cdot \diff \vec{l}\\
+        & = \oint_{C}\left[ - \frac{\mm I}{4 \pi} \oint_{C'}\diff \vec{l}' \cross \grad \left(\frac{1}{\abs{\r(l) - \r(l')}}\right) \right] \cdot \diff \vec{l}.
+	\end{align*}
+	where we've written the last equality with a reverse-engineered gradient. 
 
-    \item The integrand then takes the form of a scalar triple product, which we can rearrange to get
+    \item The integrand is a scalar triple product, which we can rearrange to get
 	\begin{equation*}
 		\Gamma_{\text{M}} =  - \frac{\mm I}{4\pi} \oint_{C} \oint_{C'} (\diff \vec{l} \cross \diff \vec{l}') \cdot \grad \left(\frac{1}{\abs{\r(l) - \r(l')}}\right).
 	\end{equation*}
 	Note that $ \diff \vec{l} \cross \diff \vec{l}' $ corresponds to a surface element---we'll call it $ \diff \vec{S} $. We then calculate the gradient and evaluate the dot product to get
 	\begin{align*}
-		\Gamma_{\text{M}} =  - \frac{\mm I}{4\pi} \iint_{S} \diff \vec{S}\cdot \grad \left(\frac{1}{\abs{\r(l) - \r(l')}}\right) \\
-		= +  \frac{\mm I}{4\pi} \iint_{S}  \frac{\diff S \cos \theta}{\abs{\r(l) - \r(l')}^{2}},
+        \Gamma_{\text{M}} & =  - \frac{\mm I}{4\pi} \iint_{S} \diff \vec{S}\cdot \grad \left(\frac{1}{\abs{\r(l) - \r(l')}}\right) \\
+        & = +  \frac{\mm I}{4\pi} \iint_{S}  \frac{\diff S \cos \theta}{\abs{\r(l) - \r(l')}^{2}},
 	\end{align*}
 	where $ \theta $ is the angle between $ \diff \vec{S} $ and the gradient. 
 
@@ -1340,7 +1367,7 @@ We dedicate a brief section to review electric current, since we will be working
 	\end{equation*}
 	where $ \div \A_{1} = 0 $ and $ \curl \A_{2} = 0 $, i.e. $ \A $ can be written as the sum of a solenoidal and irrotational vector field.
 	
-    \item We then introduce a gauge transformation of $ \A $ such that $ \A_{2} = 0 $. We are free to set $ \A_{2} = 0 $ because $ \curl \A_{2} = 0 $ and thus has zero contribution to $ \B = \curl \A $, regardless of what value we choose for $ \A_{2} $. Substituting $ \A_{2} = 0 $ into the Helmholtz composition gives $ \A = \A_{1} $. We then take the divergence of this equality and apply $ \div \A_{1} = 0 $ to get
+    \item We then introduce a gauge transformation of $ \A $ such that $ \A_{2} = 0 $. We are free to set $ \A_{2} $ to whatever value we want, since, after applying the definition $ \curl \A_{2} = 0 $, the value of $ \A_{2} $ will have zero contribution to $ \B $, which is defined as $ \B = \curl \A $. Substituting $ \A_{2} = 0 $ into the Helmholtz composition gives $ \A = \A_{1} $. We then take the divergence of this equality and apply $ \div \A_{1} = 0 $ to get
     \begin{equation*}
         \A = \A_{1} \implies \div \A = \div \A_{1} \equiv 0 \implies \div \A = 0.
     \end{equation*}
@@ -1493,9 +1520,9 @@ We dedicate a brief section to review electric current, since we will be working
     \begin{equation*}
         W_{\text{M}} = \frac{1}{2} \iiint_{V} \j(\r) \A(\r) \dr = \frac{1}{2\mm}\iiint_{V}(\curl \B) \A \dr.
     \end{equation*}
-    Next, we reverse-engineer the vector identity $ \div (\B \cross \A) = - \B (\curl \A) + \A (\curl \B) $ to get
+    Next, we reverse-engineer the vector identity $ \div (\B \cross \A) = - \B \cdot (\curl \A) + \A \cdot (\curl \B) $ to get
     \begin{equation*}
-        W_{\text{M}} = \frac{1}{2\mm} \iiint_{V} \B(\curl \A)\dr + \frac{1}{2\mm} \iiint_{V} \div (\B \cross \A) \dr.
+        W_{\text{M}} = \frac{1}{2\mm} \iiint_{V} \B \cdot (\curl \A)\dr + \frac{1}{2\mm} \iiint_{V} \div (\B \cross \A) \dr.
     \end{equation*}
     Using $ \B = \curl \A $, the first integrand simplifies to $ B^{2} $, while the second can be rewritten using the divergence theorem. The result is
     \begin{equation*}
@@ -1634,7 +1661,7 @@ We dedicate a brief section to review electric current, since we will be working
 \begin{itemize}
 	\item We start with the magnetic dipole moment of a circular current loop of radius $ a $ and carrying current $ I $. From introductory electromagnetism, the magnetic dipole moment of a circular current loop is
     \begin{equation*}
-       \uvec{m} = IS\uvec{n},
+       \vec{m} = IS\uvec{n},
     \end{equation*}
     where $ \uvec{n} $ is the normal to the current loop. However, we will now formally derive this result.
 	
@@ -2512,11 +2539,11 @@ By convention, the quasi-static approximation to electromagnetic fields adds the
 	\end{equation*}
 	Evaluating the derivative with the product rule produces
 	\begin{equation*}
-		\pdv{t}\ee (\E \cross \B) = \ee \left[\pdv{\E}{t}\cross \B + \E \cross \pdv{B}{t}\right].
+		\pdv{t}\ee (\E \cross \B) = \ee \left[\pdv{\E}{t}\cross \B + \E \cross \pdv{\B}{t}\right].
 	\end{equation*}
 	We then substitute in the third and fourth Maxwell equation to replace the time derivatives, which leads to
 	\begin{equation*}
-		= \ee \left[\frac{1}{\ee \mm}(\curl \B)\cross \B - \frac{1}{ee}\j \cross \B - \E \cross (\curl \E)\right].
+		\pdv{t}\ee (\E \cross \B) = \ee \left[\frac{1}{\ee \mm}(\curl \B)\cross \B - \frac{1}{\ee}\j \cross \B - \E \cross (\curl \E)\right].
 	\end{equation*}
 	
     \item Next, some vector calculus acrobatics (only quoted and not proven) leads us to the expression
@@ -2531,7 +2558,7 @@ By convention, the quasi-static approximation to electromagnetic fields adds the
 
         \item the electromagnetic stress tensor 
         \begin{equation*}
-            \TT_{ik} = \ee \big(E_{i}E_{k} - \frac{1}{2}E^{2}\delta_{ik}\big) + \frac{1}{\mm}\left(B_{i}B_{k} + \frac{1}{2}B^{2}\delta_{ik}\right),
+            \TT_{ik} = \ee \left(E_{i}E_{k} - \frac{1}{2}E^{2}\delta_{ik}\right) + \frac{1}{\mm}\left(B_{i}B_{k} - \frac{1}{2}B^{2}\delta_{ik}\right),
         \end{equation*}
         
         \item and the Lorentz force density $ \vec{f}_{\text{em}} = \rho \E + \j \cross \B $.
@@ -2623,7 +2650,7 @@ In this chapter, we analyze how a material responds to the presence of an extern
 	\begin{equation*}
 		\rho_{\text{b}} = - \div \P.
 	\end{equation*}
-    We have already derived this relationship in the electric dipole section of the electrostatics chapter, but at that point we had not yet introduced the concept of bound charge.
+    We have already discussed this relationship in the electric dipole section of the electrostatics chapter, but at that point we had not yet introduced the concept of bound charge.
 	
 	\item Substituting the relationship $ \rho_{\text{b}} = - \div \P $ into the Mawell equation
     \begin{equation*}
@@ -3139,7 +3166,7 @@ Consider a boundary between two materials with different electromagnetic propert
 \begin{itemize}
 	\item We now consider an interface between two materials with $ \H $ fields $ \H_{1} $ and $ \H_{2} $, and base our analysis on the Maxwell equation
 	\begin{equation*}
-		\curl \H = \j + \pdv{D}{t}.
+		\curl \H = \j + \pdv{\D}{t}.
 	\end{equation*}
 	In an analogous procedure as for $ \E $, we introduce a small planar surface $ S $ in the interface between the two materials with height $ h $ perpendicular to the interface and length $ l $, defined by the tangent vectors $ \uvec{t}_{1} $ and $ \uvec{t}_{2} $, parallel to the interface.
 	
@@ -3206,8 +3233,8 @@ As mentioned in the previous chapter, the dielectric function is generally a fun
 
     \item Without derivation, the Kramers-Kronig relations read:
     \begin{align*}
-        & \Re(\epsilon) = 1 + \frac{2}{\pi} \mathcal{P} \int_{0}^{\infty} \frac{\omega' \Im \big[ \ln(\epsilon(\omega')) \big]}{\omega'^{2} - \omega^{2}} \diff \omega'\\
-        & \Im(\epsilon) = - \frac{2\omega}{\pi} \mathcal{P} \int_{0}^{\infty} \frac{\omega' \Re \big[ \ln(\epsilon(\omega'))  \big]- 1}{\omega'^{2} - \omega^{2}} \diff \omega'.
+        & \Re \big[\epsilon(\omega)\big ] = 1 + \frac{2}{\pi} \mathcal{P} \int_{0}^{\infty} \frac{\omega' \Im \big[ \epsilon(\omega') \big]}{\omega'^{2} - \omega^{2}} \diff \omega'\\
+        & \Im \big[ \epsilon(\omega) \big] = - \frac{2\omega}{\pi} \mathcal{P} \int_{0}^{\infty} \frac{ \Re \big[ \epsilon(\omega')  \big]- 1}{\omega'^{2} - \omega^{2}} \diff \omega'.
     \end{align*}
     Note that the real and imaginary components of $ \epsilon $ are coupled, and that each component is given in terms of an integral of the other component.
 
@@ -3325,7 +3352,7 @@ As mentioned in the previous chapter, the dielectric function is generally a fun
     \begin{equation*}
         \P(\omega) = \frac{q^{2}n}{m\omega_{0}^{2}} \frac{\E(\omega)}{1 - i\omega\tau},
     \end{equation*}
-    where the Debye relaxation time $ \tau $ is defined as $ \tau = \frac{\gamma}{\omega_{0}} $.
+    where the Debye relaxation time $ \tau $ is defined as $ \tau = \frac{\gamma}{\omega_{0}^{2}} $.
     
     \item Using this expression for polarization, the dielectric constant in the Debye regime is
     \begin{equation*}
@@ -3489,7 +3516,7 @@ Before analyzing the electromagnetic field, we briefly review the Hamiltonian fo
 \begin{itemize}
     \item We find the Hamiltonian $ H $ for a charged particle in an EM field using the just-derived Lagrangian $ L $ with the general relationship
     \begin{equation*}
-        H( \vec{p}, \vec{r}, t) = \dot{\vec{r}} \dot{\vec{p}} - L.
+        H( \vec{p}, \vec{r}, t) = \dot{\vec{r}} \vec{p} - L.
     \end{equation*}
     First, the appropriate generalized momentum $ \vec{p} $ is
     \begin{equation*}
