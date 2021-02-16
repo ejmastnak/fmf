@@ -138,7 +138,7 @@ Electrostatics is the study of static (time-independent) charge distributions.
 
 \subsection{The Electrostatic Force}
 \begin{itemize}
-    \item We begin with the funamental relationship of electrostatics: Coulomb's law. In equation form, the electrostatic force $ \vec{F} $ felt by a point charge $ q_{1} $ at position $ \r_{1} $ in the presence of a second point charge $ q_{2} $ at position $ \vec{r}_{2} $ is
+    \item We begin with the fundamental relationship of electrostatics: Coulomb's law. In equation form, the electrostatic force $ \vec{F} $ felt by a point charge $ q_{1} $ at position $ \r_{1} $ in the presence of a second point charge $ q_{2} $ at position $ \vec{r}_{2} $ is
     \begin{equation*}
         \vec{F} = \frac{q_{1}q_{2}}{4\pi \ee } \frac{\r_{1} - \r_{2}}{\abs{\r_{1} - \r_{2}}^{3}},
     \end{equation*}
@@ -171,7 +171,7 @@ Electrostatics is the study of static (time-independent) charge distributions.
 \subsection{Electric Field Strength}
 \begin{itemize}
 
-    \item For the entirety of this course, we will analyze the interaction of charged particles using the concept of an \textit{electric field}. To speak of an electric field, we must consider at least two charges: one charge creates the electric field, which is then experienced by the second charge. In terms of electric field, the Coulomb electrostatic force $ \vec{F}_{2} $ experienced by particle 2 because of the field created by particle $ 1 $ is
+    \item For the entirety of this course, we will analyze the interaction of charged particles using the concept of an \textit{electric field}. To speak of an electric field, we must consider at least two charges: one charge creates the electric field, which is then felt by a second charge. In terms of electric field, the Coulomb electrostatic force $ \vec{F}_{2} $ experienced by particle 2 in the presence of the electric field created by particle $ 1 $ is defined as
     \begin{equation*}
         \vec{F}_{2} = q_{2} \E_{1}.
     \end{equation*}
@@ -183,9 +183,9 @@ Electrostatics is the study of static (time-independent) charge distributions.
 
     \item The direct proportionality between the electrostatic force $ \vec{F} $ and the electric field $ \E $ has an important consequence: the direction of an electric field $ \E $ at any position in space is the same as the direction of the electrostatic force $ \vec{F} = q \E $ on a hypothetical charged particle at that position. 
 
-    \item By comparing the relationship $ \vec{F} = q \E $ to the Coulomb force, it follows that the electric field of a particle of charge $ q $ is
+    \item Comparing the relationship $ \vec{F} = q \E $ to the Coulomb force motivates the definition for the electric field of point charge $ q $  as
     \begin{equation*}
-        \E = \frac{q}{4\pi \ee r^{2}}\frac{\r}{r}.
+        \E = \frac{q}{4\pi \ee }\frac{\r}{r^{3}}.
     \end{equation*}
     By convention, the electric field of a positively charge particle points radially outward from the particle, while the electric field of a negatively charged particle points radially inward toward the particle. Also by convention, we use a positive ``test charge'' to determine the direction of an electric field---the field direction is the direction of the electrostatic force on a hypothetical \textit{positively} charged particle (as opposed to using a negatively charged particle).
 
@@ -195,12 +195,11 @@ Electrostatics is the study of static (time-independent) charge distributions.
 \begin{itemize}
     \item The electric field is a vector, and thus transforms like a vector under orthogonal transformations, i.e. rotations and reflections, which preserve the inner product. 
 
-    Under an orthogonal transformation in Euclidean space encoded by the orthogonal transformation $ \mat{Q} $, the electric field transforms in the familiar form
+    \item Under an orthogonal transformation in Euclidean space encoded by the orthogonal transformation $ \mat{Q} $, the electric field transforms in the familiar form
     \begin{equation*}
-        \E' = \mat{Q} \E \qquad \text{or} \qquad E_{j}' = \sum_{j = i}^{3} \mathrm{Q}_{ij}E_{j}.
+        \E' = \mat{Q} \E \qquad \text{or} \qquad E_{i}' = \sum_{j = 1}^{3} \mathrm{Q}_{ij}E_{j}.
     \end{equation*}
-
-    \item The quantity $ \abs{\E}^{2} = E^{2} $ is a scalar, and is preserved under orthogonal transformations.
+    The quantity $ \abs{\E}^{2} = E^{2} $ is a scalar and is preserved in orthogonal transformations.
     
 \end{itemize}
 
