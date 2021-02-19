@@ -70,16 +70,14 @@
 
 % Header and footer on non-section pages (default style)
 \fancyhf{}
-\fancyhead[R]{\href{https://github.com/ejmastnak/fmf}{\small{\texttt{github.com/ejmastnak/fmf}}}} 
-\fancyhead[L]{\textit{\truncate{0.65\headwidth}{\rightmark}}}
+\fancyhead[L]{\textit{\truncate{0.95\headwidth}{\rightmark}}}
 \fancyfoot[C]{\thepage} 
 \renewcommand{\headrulewidth}{0.1pt}
 
 % Header and footer on section pages---identical to default style, but must be explicitly included
 \fancypagestyle{plain}{
     \fancyhf{}  
-    \fancyhead[R]{\href{https://github.com/ejmastnak/fmf}{\small{\texttt{github.com/ejmastnak/fmf}}}}  
-    \fancyhead[L]{\textit{\truncate{0.65\headwidth}{\rightmark}}} 
+    \fancyhead[L]{\textit{\truncate{0.95\headwidth}{\rightmark}}} 
     \fancyfoot[C]{\thepage}  % centered page number in footer
     \renewcommand{\headrulewidth}{0.1pt}
 }
@@ -98,7 +96,7 @@
 
 
 \begin{document}
-\title{Quantum Mechanics Exercises Notes}
+\title{Quantum Mechanics Exercise Notes}
 \author{Elijan Mastnak}
 \date{Winter Semester 2020-2021}
 \maketitle
@@ -109,17 +107,17 @@
 \textbf{About These Notes}
 \end{center}
 
-These are my notes from the Exercises portion of the class \textit{Kvanta Mehanika} (Quantum Mechanics), a required course for third-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. The exact problem sets herein are specific to the physics program at the University of Ljubljana, but the content is fairly standard for a late-undergraduate quantum mechanics course. I am making the notes publically available in the hope that they might help others learning similar material---the most up-to-date version can be found on \href{https://github.com/ejmastnak/fmf/tree/main/quantum-mechanics/qm-vaje}{\underline{GitHub}}.
+These are my notes from the Exercises portion of the course \textit{Kvanta Mehanika} (Quantum Mechanics), a required course for third-year physics students at the Faculty of Math and Physics in Ljubljana, Slovenia. 
 
 \vspace{2mm}
-\textit{Navigation}: For easier document navigation, the table of contents is ``clickable'', meaning you can jump directly to a section by clicking the colored section names in the table of contents. Unfortunately, \textit{the clickable links do not work in most online or mobile PDF viewers}; you have to download the file first.
+\textit{Navigation}: For easier document navigation, the table of contents is ``clickable'', meaning you can jump directly to a section by clicking the colored section names in the table of contents. Unfortunately, \textit{the clickable links do not work in many online or mobile PDF viewers}; you have to download the file first.
 
 \vspace{2mm}
 \textit{On Authorship:} 
 The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has assembled the problem sets and guides us through the solutions. Accordingly, credit for the problems in these notes goes to Prof. Rejec. I take credit only for typesetting the notes, translating to English, and perhaps an additional comment or two for clarity.
 
 \vspace{2mm}
-\textit{Disclaimer:} Mistakes---both trivial typos and legitimate errors---are likely. Keep in mind that these are the notes of an undergraduate student in the process of learning the material himself---take what you read with a grain of salt. If you find mistakes and feel like telling me, by \href{https://github.com/ejmastnak/fmf}{\underline{Github}} pull request, \href{mailto:ejmastnak@gmail.com}{\underline{email}} or some other means, I'll be happy to hear from you, even for the most trivial of errors.
+\textit{Disclaimer:} Mistakes---both trivial typos and legitimate errors---are likely. Keep in mind that these are the notes of an undergraduate student in the process of learning the material himself---take what you read with a grain of salt. If you find mistakes and feel like telling me, e.g. by \href{mailto:ejmastnak@gmail.com}{\underline{email}}, I'll be happy to hear from you, even for the most trivial of errors.
 
 \newpage
 
@@ -208,7 +206,7 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has assembled the prob
 	\begin{equation*}
 		- \frac{\hbar^{2}}{2m}\pdv[2]{\psi}{x} + 0 \cdot \psi = E \psi,
 	\end{equation*}
-    where we have sbustituted in $ V = 0 $ in region 1. The general solution is a linear combination of exponential functions of the form
+    where we have substituted in $ V = 0 $ in region 1. The general solution is a linear combination of exponential functions of the form
 	\begin{equation*}
 		\psi_{1}(x) = A e^{\kappa x} + B e^{- \kappa x}.
 	\end{equation*}
@@ -481,7 +479,7 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has assembled the prob
 		\end{cases}
 		\eqtext{where} \kappa = \sqrt{\frac{2mE_{0}}{\hbar^{2}}} = \frac{m\lambda}{\hbar^{2}}.
 	\end{equation*}
-	Because the wave function is even, $ A = B $, allowing us to write $ \psi = Ae^{-\kappa \abs{x}} $. we find the coefficient $ A $ from the normalization condition
+	Because the wave function is even, $ A = B $, allowing us to write $ \psi = Ae^{-\kappa \abs{x}} $. We find the coefficient $ A $ from the normalization condition
 	\begin{equation*}
 		1 \equiv \int \abs{\psi(x)}^{2} \diff x = A^{2} \int_{-\infty}^{\infty} e^{-2\kappa \abs{x}} \diff x.
 	\end{equation*}
@@ -727,7 +725,7 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has assembled the prob
 	\begin{equation*}
 		\psi_{1}(0) = \psi_{3}(0) \implies 1 + r = t.
 	\end{equation*} 
-	For the the boundary conditions on the derivative $ \psi' $, we reuse the earlier differentiability condition $ \psi'(0_{+}) - \psi'(0_{-}) = \frac{2m\lambda\psi(0)}{\hbar^{2}} $ from the previous problem involving bound states in a delta potential. Changing the sign of of $ \lambda $ because the delta function in a scattering problem points upward, and changing notation from $ \psi'_{\pm} $ to $ \psi'_{1,3} $the differentiability condition becomes
+	For the boundary conditions on the derivative $ \psi' $, we reuse the earlier differentiability condition $ \psi'(0_{+}) - \psi'(0_{-}) = \frac{2m\lambda\psi(0)}{\hbar^{2}} $ from the previous problem involving bound states in a delta potential. Changing the sign of of $ \lambda $ because the delta function in a scattering problem points upward, and changing notation from $ \psi'_{\pm} $ to $ \psi'_{1,3} $the differentiability condition becomes
 	\begin{equation*}
 		\psi_{3}'(0) - \psi_{1}'(0) = \frac{2m\lambda}{\hbar^{2}} \psi(0) \implies ik(t + r -1) = \frac{2m\lambda}{\hbar^{2}} t.
 	\end{equation*}
@@ -1328,7 +1326,7 @@ The exercises are led by Asst. Prof. Toma\v{z} Rejec, who has assembled the prob
 	\begin{equation*}
 		\Delta x(t) = \sqrt{\ev{x^{2}, t} - \ev{x, t}^{2}} \eqtext{and} \Delta p(t) = \sqrt{\ev{p^{2}, t} - \ev{p, t}^{2}}.
 	\end{equation*}
-	It remains to find the the time evolution of the operators $ p^{2} $ and $ x^{2} $ and then the expectation values $ \ev{p^{2}, t} $ and $ \ev{x^{2}, t} $. We start with the operator $ p^{2}(t) $. 
+	It remains to find the time evolution of the operators $ p^{2} $ and $ x^{2} $ and then the expectation values $ \ev{p^{2}, t} $ and $ \ev{x^{2}, t} $. We start with the operator $ p^{2}(t) $. 
 	\begin{equation*}
 		\ev{p^{2}, t} = \bra{\psi, 0} p^{2}(t) \ket{\psi, 0} = \bra{\psi, 0} \big[p(t)\big]^{2} \ket{\psi, 0} = \bra{\psi, 0} p^{2} \ket{\psi, 0}.
 	\end{equation*}
@@ -2673,7 +2671,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\item Next, on to the momentum states $ \ket{\psi_{p}} $, which correspond to the kinetic energy operator. The eigenstates of the kinetic energy operator are plane waves of the form $ e^{i\vec{k}\cdot \vec{r}} $. Because the wave vectors $ \vec{k} $ are continuously distributed and $ \vec{k} $ generates a unique set of eigenvalues, the position space $ \H_{p} $ is infinitely dimensional.
 \end{itemize}
 
-\textbf{Finding Eigenfunctions and and Eigenvalues}
+\textbf{Finding Eigenfunctions and Eigenvalues}
 \begin{itemize}
 	
 	\item To find the Hamiltonian's eigenfunctions and eigenvalues, we need to solve the stationary \Schro equation
@@ -3155,7 +3153,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\begin{equation*}
 		\T H \T^{-1} = (i\sigma_{y}K)H(K^{-1}\sigma_{y}^{-1}i^{-1}).
 	\end{equation*}
-	We simplify this expres sion by noting that $ K^{2} = I \implies K^{-1} = K$;  $ \sigma_{y} = \sigma_{y}^{-1} $; and $ i^{-1} = -i $, which results in
+	We simplify this expression by noting that $ K^{2} = I \implies K^{-1} = K$;  $ \sigma_{y} = \sigma_{y}^{-1} $; and $ i^{-1} = -i $, which results in
 	\begin{align*}
 		\T H \T^{-1} &= (i\sigma_{y}K)H(K\sigma_{y}(-i)) = i \sigma_{y} H^{*} K (K\sigma_{y}(-i)) \\
 		&= i \sigma_{y} H^{\dagger} KK \sigma_{y}(-i) = i \sigma_{y}H^{*}\sigma_{y}(-i) \\
@@ -3179,7 +3177,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\end{equation*}
 	In other words, both $ \ket{\psi} $ and $ \T\ket{\psi} $ are eigenfunctions of $ H $. 
 	
-	\item Next, we consider the projection of $ \ket{\psi} $ onto $ \ket{\T \psi} $, i.e. $ \braket{\psi}{\T\psi} $. Since $ \T $ is anti-unitarity, we have
+	\item Next, we consider the projection of $ \ket{\psi} $ onto $ \ket{\T \psi} $, i.e. $ \braket{\psi}{\T\psi} $. Since $ \T $ is anti-unitary, we have
 	\begin{equation*}
 		\braket{\psi}{\T\psi} = \braket{\T\psi}{\T(\T\psi)}^{*} = \braket{\T\psi}{\T^{2}\psi}^{*}.
 	\end{equation*}
@@ -3314,7 +3312,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 \begin{itemize}
 	\item Review from the last exercise set: we had just begun the problem, and established the two possible bases to describe the problem---the product basis and the total angular momentum basis.
 	
-	\item Next we'll review the problem of scattering in a spinless delta potential (from the second exercise set) where the Hamiltonian is
+	\item Next we'll review the problem of scattering in a spin-less delta potential (from the second exercise set) where the Hamiltonian is
 	\begin{equation*}
 		H = \frac{p^{2}}{2m} + \lambda \delta (x).
 	\end{equation*}
@@ -3886,7 +3884,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 			\end{pmatrix}.
 		\end{equation*}
 		
-		\item Next, diagonalize the matrix and find its eigenvalues $ \lambda_{j} $ and and eigenvectors $ \vec{u}_{j} $. To first order in perturbation theory, the corrected energies are then
+		\item Next, diagonalize the matrix and find its eigenvalues $ \lambda_{j} $ and eigenvectors $ \vec{u}_{j} $. To first order in perturbation theory, the corrected energies are then
 		\begin{equation*}
 			E_{j} = E^{(0)} + \lambda_{j}.
 		\end{equation*}
@@ -3916,7 +3914,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 	\begin{equation*}
 		E_{2} = - \frac{\mathrm{Ry}}{4}.
 	\end{equation*}
-	We now conisder the degeneracy of the first excited state. There are 8 possible linearly independent eigenfunctions with energy $ E_{2} $; these are
+	We now consider the degeneracy of the first excited state. There are 8 possible linearly independent eigenfunctions with energy $ E_{2} $; these are
 	\[
 	\begin{array}{ll}
 		\ket{200}\ket{\ua}, & \ket{200}\ket{\da}\\
@@ -4668,7 +4666,7 @@ These are the two linearly independent states spanning the isotropic harmonic os
 		\sigma_{z} = \ket{\ua}\bra{\ua} - \ket{\da}\bra{\da} \eqtext{and} \sigma_{x} = \ket{\ua}\bra{\da} + \ket{\da}\bra{\ua}.
 	\end{equation*}
 	
-    \item We then subsitute the time-dependent wavefunction into the \Schro equation and apply the Dirac-notation definitions of the spin matrices to get
+    \item We then substitute the time-dependent wavefunction into the \Schro equation and apply the Dirac-notation definitions of the spin matrices to get
 	\begin{equation*}
         \frac{\Delta E}{2}c_{\ua}\ket{\ua} - \frac{\Delta E}{2}c_{\da}\ket{\da} + \lambda \cos (\omega t) c_{\ua}\ket{\da} + \lambda \cos (\omega t) c_{\da}\ket{\ua} = i \hbar \dot{c}_{\ua}\ket{\ua} + i \hbar \dot{c}_{\da}\ket{\da},
 	\end{equation*}
