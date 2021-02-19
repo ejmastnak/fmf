@@ -1,6 +1,0 @@
-# Counts (x - GM normal parallel to compartment sliding door)
-1.8
-1.1
-2.1
-1.4
-1.5

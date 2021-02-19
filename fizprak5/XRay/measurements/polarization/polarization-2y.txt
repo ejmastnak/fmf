@@ -1,6 +1,0 @@
-# Counts (y - GM normal facing camera wall)
-7.2
-7.0
-6.3
-6.2
-7.3

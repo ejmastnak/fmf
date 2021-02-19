@@ -1,9 +1,0 @@
-Cuvette width: a = 1.5 cm
-Distance between cuvette and screen: b = 72.0 cm
-Distance between laser and cuvette: c = 35.5 cm
-
-Original in original notation:
-a = 35.5 cm
-b = 72.0 cm
-d = 1.5 cm
-

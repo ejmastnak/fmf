@@ -1,2 +1,0 @@
-"1 sipalec, gor, 300 s" "1 sipalec, levo, 300 s" "2 sipalca, levo + gor, 600 s" "2 sipalca, levo + 45deg, 600 s "2 sipalca, levo + naprej, 600 s" 
-58367 68367 138 216 307
